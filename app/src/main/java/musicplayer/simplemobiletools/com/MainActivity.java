@@ -6,7 +6,11 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -19,8 +23,10 @@ import butterknife.OnClick;
 public class MainActivity extends AppCompatActivity {
     private static final int MIN_DURATION_SECS = 20;
     private ArrayList<Song> songs;
-
+    @Bind(R.id.playPauseBtn) ImageView playPauseBtn;
     @Bind(R.id.songs) ListView songsList;
+    @Bind(R.id.songTitle) TextView titleTV;
+    @Bind(R.id.songArtist) TextView artistTV;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +39,21 @@ public class MainActivity extends AppCompatActivity {
 
         final SongAdapter adapter = new SongAdapter(this, songs);
         songsList.setAdapter(adapter);
+        songsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                songPicked(position);
+            }
+        });
+    }
+
+    private void songPicked(int pos) {
+        updateSongInfo(songs.get(pos));
+    }
+
+    private void updateSongInfo(Song song) {
+        titleTV.setText(song.getTitle());
+        artistTV.setText(song.getArtist());
     }
 
     private void getSortedSongs() {

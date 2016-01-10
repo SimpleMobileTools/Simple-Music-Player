@@ -12,6 +12,7 @@
         android:id="@+id/controls"
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:layout_marginRight="@dimen/activity_margin"
         android:orientation="horizontal">
 
         <ImageView
@@ -44,11 +45,33 @@
 
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/songTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/controls"
+        android:layout_marginBottom="@dimen/song_item_padding"
+        android:layout_marginRight="@dimen/activity_margin"
+        android:layout_marginTop="@dimen/activity_margin"
+        android:gravity="center_horizontal"
+        android:text="Song Title"
+        android:textSize="18sp"/>
+
+    <TextView
+        android:id="@+id/songArtist"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/songTitle"
+        android:layout_marginRight="@dimen/activity_margin"
+        android:gravity="center_horizontal"
+        android:text="Song Artist"
+        android:textSize="16sp"/>
+
     <ListView
         android:id="@+id/songs"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/controls"
+        android:layout_below="@+id/songArtist"
         android:layout_marginTop="@dimen/activity_margin"/>
 
 </RelativeLayout>
