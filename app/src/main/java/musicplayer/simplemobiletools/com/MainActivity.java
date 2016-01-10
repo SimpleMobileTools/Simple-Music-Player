@@ -1,9 +1,14 @@
 package musicplayer.simplemobiletools.com;
 
+import android.content.ComponentName;
 import android.content.ContentResolver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -21,8 +26,11 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity {
-    private static final int MIN_DURATION_SECS = 20;
+    private static final int MIN_DURATION_MS = 20000;
     private ArrayList<Song> songs;
+    private MusicService musicService;
+    private boolean isMusicBound;
+
     @Bind(R.id.playPauseBtn) ImageView playPauseBtn;
     @Bind(R.id.songs) ListView songsList;
     @Bind(R.id.songTitle) TextView titleTV;
@@ -45,9 +53,14 @@ public class MainActivity extends AppCompatActivity {
                 songPicked(position);
             }
         });
+
+        final Intent intent = new Intent(this, MusicService.class);
+        bindService(intent, musicConnection, Context.BIND_AUTO_CREATE);
+        startService(intent);
     }
 
     private void songPicked(int pos) {
+        musicService.setSong(pos, true);
         updateSongInfo(songs.get(pos));
     }
 
@@ -76,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
             final int artistIndex = musicCursor.getColumnIndex(MediaStore.Audio.Media.ARTIST);
             final int durationIndex = musicCursor.getColumnIndex(MediaStore.Audio.Media.DURATION);
             do {
-                if (musicCursor.getInt(durationIndex) > MIN_DURATION_SECS) {
+                if (musicCursor.getInt(durationIndex) > MIN_DURATION_MS) {
                     final long id = musicCursor.getLong(idIndex);
                     final String title = musicCursor.getString(titleIndex);
                     final String artist = musicCursor.getString(artistIndex);
@@ -85,6 +98,31 @@ public class MainActivity extends AppCompatActivity {
             } while (musicCursor.moveToNext());
             musicCursor.close();
         }
+    }
+
+    private ServiceConnection musicConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
+            MusicService.MyBinder binder = (MusicService.MyBinder) iBinder;
+            musicService = binder.getService();
+            musicService.setSongs(songs);
+            isMusicBound = true;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName componentName) {
+            isMusicBound = false;
+        }
+    };
+
+    @Override
+    protected void onDestroy() {
+        if (isMusicBound) {
+            isMusicBound = false;
+            unbindService(musicConnection);
+        }
+
+        super.onDestroy();
     }
 
     @OnClick(R.id.previousBtn)
