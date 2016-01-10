@@ -4,9 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_margin"
     android:paddingLeft="@dimen/activity_margin"
-    android:paddingRight="@dimen/activity_margin"
     android:paddingTop="@dimen/activity_margin"
     tools:context="musicplayer.simplemobiletools.com.MainActivity">
 
@@ -45,4 +43,12 @@
             android:src="@mipmap/stop"/>
 
     </LinearLayout>
+
+    <ListView
+        android:id="@+id/songs"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/controls"
+        android:layout_marginTop="@dimen/activity_margin"/>
+
 </RelativeLayout>
