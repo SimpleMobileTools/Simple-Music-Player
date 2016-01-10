@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="musicplayer.simplemobiletools.com"
-          xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest
+    package="musicplayer.simplemobiletools.com"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <application
         android:allowBackup="true"
