@@ -89,21 +89,33 @@ public class MainActivity extends AppCompatActivity {
 
     @OnClick(R.id.previousBtn)
     public void previousClicked() {
-
+        if (isPlaylistEmpty())
+            return;
     }
 
     @OnClick(R.id.playPauseBtn)
     public void playPauseClicked() {
-
+        if (isPlaylistEmpty())
+            return;
     }
 
     @OnClick(R.id.nextBtn)
     public void nextClicked() {
-
+        if (isPlaylistEmpty())
+            return;
     }
 
     @OnClick(R.id.stopBtn)
     public void stopClicked() {
+        if (isPlaylistEmpty())
+            return;
+    }
 
+    private boolean isPlaylistEmpty() {
+        if (songs == null || songs.isEmpty()) {
+            Utils.showToast(this, R.string.playlist_empty);
+            return true;
+        }
+        return false;
     }
 }

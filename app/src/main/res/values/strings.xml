@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Simple Music Player</string>
+    <string name="playlist_empty">Your playlist is empty</string>
 </resources>
