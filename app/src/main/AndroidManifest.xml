@@ -24,5 +24,13 @@
 
         <service android:name="musicplayer.simplemobiletools.com.MusicService"/>
 
+        <receiver android:name=".MyAppWidgetProvider">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_info"/>
+        </receiver>
     </application>
 </manifest>

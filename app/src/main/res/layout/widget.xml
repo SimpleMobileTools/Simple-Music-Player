@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/black"
+                android:gravity="center_horizontal">
+
+    <TextView
+        android:id="@+id/songTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/activity_margin"
+        android:layout_marginRight="@dimen/activity_margin"
+        android:layout_marginTop="@dimen/medium_padding"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:lines="1"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"/>
+
+    <TextView
+        android:id="@+id/songArtist"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/songTitle"
+        android:layout_marginBottom="@dimen/medium_padding"
+        android:layout_marginLeft="@dimen/activity_margin"
+        android:layout_marginRight="@dimen/activity_margin"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:lines="1"
+        android:textColor="@android:color/white"
+        android:textSize="16sp"/>
+
+    <LinearLayout
+        android:id="@+id/controls"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_below="@+id/songArtist"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/previousBtn"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:paddingBottom="@dimen/medium_padding"
+            android:paddingTop="@dimen/medium_padding"
+            android:src="@mipmap/previous_white"/>
+
+        <ImageView
+            android:id="@+id/playPauseBtn"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:paddingBottom="@dimen/medium_padding"
+            android:paddingTop="@dimen/medium_padding"
+            android:src="@mipmap/play_white"/>
+
+        <ImageView
+            android:id="@+id/nextBtn"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:paddingBottom="@dimen/medium_padding"
+            android:paddingTop="@dimen/medium_padding"
+            android:src="@mipmap/next_white"/>
+
+        <ImageView
+            android:id="@+id/stopBtn"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:paddingBottom="@dimen/medium_padding"
+            android:paddingTop="@dimen/medium_padding"
+            android:src="@mipmap/stop_white"/>
+    </LinearLayout>
+</RelativeLayout>
