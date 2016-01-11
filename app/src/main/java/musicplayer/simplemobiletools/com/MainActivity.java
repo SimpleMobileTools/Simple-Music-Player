@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void getSongs() {
         final ContentResolver musicResolver = getContentResolver();
-        final Uri musicUri = android.provider.MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
+        final Uri musicUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
         final Cursor musicCursor = musicResolver.query(musicUri, null, null, null, null);
 
         if (musicCursor != null && musicCursor.moveToFirst()) {
@@ -106,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
     private ServiceConnection musicConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
-            MusicService.MyBinder binder = (MusicService.MyBinder) iBinder;
+            final MusicService.MyBinder binder = (MusicService.MyBinder) iBinder;
             musicService = binder.getService();
             musicService.setSongs(songs);
             isMusicBound = true;

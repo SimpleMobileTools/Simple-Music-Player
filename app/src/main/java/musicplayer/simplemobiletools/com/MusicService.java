@@ -20,8 +20,8 @@ import java.util.Random;
 public class MusicService extends Service
         implements MediaPlayer.OnPreparedListener, MediaPlayer.OnErrorListener, MediaPlayer.OnCompletionListener {
     private static final String TAG = MusicService.class.getSimpleName();
-    private ArrayList<Song> songs;
     private final IBinder musicBind = new MyBinder();
+    private ArrayList<Song> songs;
     private MediaPlayer player;
     private ArrayList<Integer> playedSongIDs;
     private Song currSong;
