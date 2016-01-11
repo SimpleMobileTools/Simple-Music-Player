@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
     private void songPicked(int pos) {
         musicService.setSong(pos, true);
         updateSongInfo(musicService.getCurrSong());
-        playPauseBtn.setImageDrawable(getResources().getDrawable(R.mipmap.pause));
+        setPauseIcon();
     }
 
     private void updateSongInfo(Song song) {
@@ -110,6 +110,10 @@ public class MainActivity extends AppCompatActivity {
             musicService = binder.getService();
             musicService.setSongs(songs);
             isMusicBound = true;
+
+            updateSongInfo(musicService.getCurrSong());
+            if (musicService.isPlaying())
+                setPauseIcon();
         }
 
         @Override
@@ -163,7 +167,7 @@ public class MainActivity extends AppCompatActivity {
     public void stopMusic() {
         if (musicService != null) {
             musicService.stopMusic();
-            playPauseBtn.setImageDrawable(getResources().getDrawable(R.mipmap.play));
+            setPlayIcon();
         }
     }
 
@@ -183,16 +187,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void resumeSong() {
-        playPauseBtn.setImageDrawable(getResources().getDrawable(R.mipmap.pause));
         musicService.resumePlayer();
+        setPauseIcon();
     }
 
     private void pauseSong() {
         if (musicService == null)
             return;
 
-        playPauseBtn.setImageDrawable(getResources().getDrawable(R.mipmap.play));
         musicService.pausePlayer();
+        setPlayIcon();
     }
 
     private void playPreviousSong() {
@@ -200,7 +204,7 @@ public class MainActivity extends AppCompatActivity {
             return;
 
         musicService.playPrevious();
-        playPauseBtn.setImageDrawable(getResources().getDrawable(R.mipmap.pause));
+        setPauseIcon();
         updateSongInfo(musicService.getCurrSong());
     }
 
@@ -209,8 +213,16 @@ public class MainActivity extends AppCompatActivity {
             return;
 
         musicService.playNext();
-        playPauseBtn.setImageDrawable(getResources().getDrawable(R.mipmap.pause));
         updateSongInfo(musicService.getCurrSong());
+        setPauseIcon();
+    }
+
+    private void setPlayIcon() {
+        playPauseBtn.setImageDrawable(getResources().getDrawable(R.mipmap.play));
+    }
+
+    private void setPauseIcon() {
+        playPauseBtn.setImageDrawable(getResources().getDrawable(R.mipmap.pause));
     }
 
     private boolean isPlaylistEmpty() {
