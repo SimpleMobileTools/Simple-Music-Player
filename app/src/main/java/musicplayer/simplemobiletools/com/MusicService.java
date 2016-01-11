@@ -44,10 +44,6 @@ public class MusicService extends Service
         player.setOnErrorListener(this);
     }
 
-    public void playNext() {
-        setSong(getNewSongId(), true);
-    }
-
     private int getNewSongId() {
         final int cnt = songs.size();
         if (cnt == 0) {
@@ -62,6 +58,50 @@ public class MusicService extends Service
                 newSongIndex = random.nextInt(cnt - 1);
             }
             return newSongIndex;
+        }
+    }
+
+    public boolean isPlaying() {
+        return player != null && player.isPlaying();
+    }
+
+    public void playPrevious() {
+        if (player == null)
+            initMediaPlayer();
+
+        // remove the latest song from the list
+        if (playedSongIDs.size() > 1) {
+            playedSongIDs.remove(playedSongIDs.size() - 1);
+            setSong(playedSongIDs.get(playedSongIDs.size() - 1), false);
+        }
+    }
+
+    public void pausePlayer() {
+        if (player == null)
+            initMediaPlayer();
+
+        player.pause();
+    }
+
+    public void resumePlayer() {
+        if (player == null)
+            initMediaPlayer();
+
+        if (currSong == null)
+            playNext();
+        else
+            player.start();
+    }
+
+    public void playNext() {
+        setSong(getNewSongId(), true);
+    }
+
+    public void stopMusic() {
+        if (player != null) {
+            // .stop() seems to misbehave weirdly
+            player.pause();
+            player.seekTo(0);
         }
     }
 
@@ -83,6 +123,10 @@ public class MusicService extends Service
         }
 
         player.prepareAsync();
+    }
+
+    public Song getCurrSong() {
+        return currSong;
     }
 
     @Nullable

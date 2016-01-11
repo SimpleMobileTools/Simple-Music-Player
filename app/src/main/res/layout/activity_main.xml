@@ -54,7 +54,6 @@
         android:layout_marginRight="@dimen/activity_margin"
         android:layout_marginTop="@dimen/activity_margin"
         android:gravity="center_horizontal"
-        android:text="Song Title"
         android:textSize="18sp"/>
 
     <TextView
@@ -64,7 +63,6 @@
         android:layout_below="@+id/songTitle"
         android:layout_marginRight="@dimen/activity_margin"
         android:gravity="center_horizontal"
-        android:text="Song Artist"
         android:textSize="16sp"/>
 
     <ListView

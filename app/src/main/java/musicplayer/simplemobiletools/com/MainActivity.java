@@ -61,12 +61,15 @@ public class MainActivity extends AppCompatActivity {
 
     private void songPicked(int pos) {
         musicService.setSong(pos, true);
-        updateSongInfo(songs.get(pos));
+        updateSongInfo(musicService.getCurrSong());
+        playPauseBtn.setImageDrawable(getResources().getDrawable(R.mipmap.pause));
     }
 
     private void updateSongInfo(Song song) {
-        titleTV.setText(song.getTitle());
-        artistTV.setText(song.getArtist());
+        if (song != null) {
+            titleTV.setText(song.getTitle());
+            artistTV.setText(song.getArtist());
+        }
     }
 
     private void getSortedSongs() {
@@ -129,24 +132,85 @@ public class MainActivity extends AppCompatActivity {
     public void previousClicked() {
         if (isPlaylistEmpty())
             return;
+
+        playPreviousSong();
     }
 
     @OnClick(R.id.playPauseBtn)
     public void playPauseClicked() {
         if (isPlaylistEmpty())
             return;
+
+        resumePauseSong();
     }
 
     @OnClick(R.id.nextBtn)
     public void nextClicked() {
         if (isPlaylistEmpty())
             return;
+
+        playNextSong();
     }
 
     @OnClick(R.id.stopBtn)
     public void stopClicked() {
         if (isPlaylistEmpty())
             return;
+
+        stopMusic();
+    }
+
+    public void stopMusic() {
+        if (musicService != null) {
+            musicService.stopMusic();
+            playPauseBtn.setImageDrawable(getResources().getDrawable(R.mipmap.play));
+        }
+    }
+
+    public void resumePauseSong() {
+        if (songs.isEmpty() || musicService == null)
+            return;
+
+        if (musicService.isPlaying()) {
+            pauseSong();
+        } else {
+            resumeSong();
+        }
+
+        // in case we just launched the app and pressed play, also update the song and artist name
+        if (artistTV.getText().toString().trim().isEmpty())
+            updateSongInfo(musicService.getCurrSong());
+    }
+
+    private void resumeSong() {
+        playPauseBtn.setImageDrawable(getResources().getDrawable(R.mipmap.pause));
+        musicService.resumePlayer();
+    }
+
+    private void pauseSong() {
+        if (musicService == null)
+            return;
+
+        playPauseBtn.setImageDrawable(getResources().getDrawable(R.mipmap.play));
+        musicService.pausePlayer();
+    }
+
+    private void playPreviousSong() {
+        if (songs.isEmpty() || musicService == null)
+            return;
+
+        musicService.playPrevious();
+        playPauseBtn.setImageDrawable(getResources().getDrawable(R.mipmap.pause));
+        updateSongInfo(musicService.getCurrSong());
+    }
+
+    private void playNextSong() {
+        if (songs.isEmpty() || musicService == null)
+            return;
+
+        musicService.playNext();
+        playPauseBtn.setImageDrawable(getResources().getDrawable(R.mipmap.pause));
+        updateSongInfo(musicService.getCurrSong());
     }
 
     private boolean isPlaylistEmpty() {
