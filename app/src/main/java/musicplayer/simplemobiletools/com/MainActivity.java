@@ -166,7 +166,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void stopMusic() {
         if (musicService != null) {
-            musicService.stopMusic();
+            musicService.stopSong();
             setPlayIcon();
         }
     }
@@ -187,7 +187,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void resumeSong() {
-        musicService.resumePlayer();
+        musicService.resumeSong();
         setPauseIcon();
     }
 
@@ -195,7 +195,7 @@ public class MainActivity extends AppCompatActivity {
         if (musicService == null)
             return;
 
-        musicService.pausePlayer();
+        musicService.pauseSong();
         setPlayIcon();
     }
 
@@ -203,7 +203,7 @@ public class MainActivity extends AppCompatActivity {
         if (songs.isEmpty() || musicService == null)
             return;
 
-        musicService.playPrevious();
+        musicService.playPreviousSong();
         setPauseIcon();
         updateSongInfo(musicService.getCurrSong());
     }
@@ -212,7 +212,7 @@ public class MainActivity extends AppCompatActivity {
         if (songs.isEmpty() || musicService == null)
             return;
 
-        musicService.playNext();
+        musicService.playNextSong();
         updateSongInfo(musicService.getCurrSong());
         setPauseIcon();
     }

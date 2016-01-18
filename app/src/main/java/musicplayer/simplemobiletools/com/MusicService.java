@@ -71,7 +71,7 @@ public class MusicService extends Service
         return player != null && player.isPlaying();
     }
 
-    public void playPrevious() {
+    public void playPreviousSong() {
         if (player == null)
             initMediaPlayer();
 
@@ -79,36 +79,43 @@ public class MusicService extends Service
         if (playedSongIDs.size() > 1) {
             playedSongIDs.remove(playedSongIDs.size() - 1);
             setSong(playedSongIDs.get(playedSongIDs.size() - 1), false);
+        } else {
+            restartSong();
         }
     }
 
-    public void pausePlayer() {
+    public void pauseSong() {
         if (player == null)
             initMediaPlayer();
 
         player.pause();
     }
 
-    public void resumePlayer() {
+    public void resumeSong() {
         if (player == null)
             initMediaPlayer();
 
         if (currSong == null)
-            playNext();
+            playNextSong();
         else
             player.start();
     }
 
-    public void playNext() {
+    public void playNextSong() {
         setSong(getNewSongId(), true);
     }
 
-    public void stopMusic() {
+    public void stopSong() {
         if (player != null) {
             // .stop() seems to misbehave weirdly
             player.pause();
             player.seekTo(0);
         }
+    }
+
+    private void restartSong() {
+        stopSong();
+        resumeSong();
     }
 
     public void setSong(int songId, boolean addNewSong) {
@@ -157,7 +164,7 @@ public class MusicService extends Service
     public void onCompletion(MediaPlayer mp) {
         if (player.getCurrentPosition() > 0) {
             player.reset();
-            playNext();
+            playNextSong();
         }
     }
 
@@ -194,21 +201,24 @@ public class MusicService extends Service
 
     @Subscribe
     public void musicPreviousEvent(Events.MusicPrevious event) {
-
+        playPreviousSong();
     }
 
     @Subscribe
     public void musicPlayPauseEvent(Events.MusicPlayPause event) {
-
+        if (isPlaying())
+            pauseSong();
+        else
+            resumeSong();
     }
 
     @Subscribe
     public void musicNextEvent(Events.MusicNext event) {
-
+        playNextSong();
     }
 
     @Subscribe
     public void musicStopEvent(Events.MusicStop event) {
-
+        stopSong();
     }
 }
