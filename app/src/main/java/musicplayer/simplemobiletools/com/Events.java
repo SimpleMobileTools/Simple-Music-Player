@@ -1,15 +1,27 @@
 package musicplayer.simplemobiletools.com;
 
 public class Events {
-    public static class MusicPrevious {
+    public static class PreviousSong {
     }
 
-    public static class MusicPlayPause {
+    public static class PlayPauseSong {
     }
 
-    public static class MusicNext {
+    public static class NextSong {
     }
 
-    public static class MusicStop {
+    public static class StopSong {
+    }
+
+    public static class SongChanged {
+        private Song song;
+
+        SongChanged(Song song) {
+            this.song = song;
+        }
+
+        public Song getSong() {
+            return song;
+        }
     }
 }

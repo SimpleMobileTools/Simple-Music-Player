@@ -35,8 +35,11 @@ public class MusicService extends Service
         super.onCreate();
         songs = new ArrayList<>();
         playedSongIDs = new ArrayList<>();
-        bus = BusProvider.getInstance();
-        bus.register(this);
+
+        if (bus == null) {
+            bus = BusProvider.getInstance();
+            bus.register(this);
+        }
 
         initMediaPlayer();
     }
@@ -136,6 +139,7 @@ public class MusicService extends Service
         }
 
         player.prepareAsync();
+        bus.post(new Events.SongChanged(currSong));
     }
 
     public Song getCurrSong() {
@@ -200,12 +204,12 @@ public class MusicService extends Service
     }
 
     @Subscribe
-    public void musicPreviousEvent(Events.MusicPrevious event) {
+    public void previousSongEvent(Events.PreviousSong event) {
         playPreviousSong();
     }
 
     @Subscribe
-    public void musicPlayPauseEvent(Events.MusicPlayPause event) {
+    public void playPauseSongEvent(Events.PlayPauseSong event) {
         if (isPlaying())
             pauseSong();
         else
@@ -213,12 +217,12 @@ public class MusicService extends Service
     }
 
     @Subscribe
-    public void musicNextEvent(Events.MusicNext event) {
+    public void nextSongEvent(Events.NextSong event) {
         playNextSong();
     }
 
     @Subscribe
-    public void musicStopEvent(Events.MusicStop event) {
+    public void stopSongEvent(Events.StopSong event) {
         stopSong();
     }
 }

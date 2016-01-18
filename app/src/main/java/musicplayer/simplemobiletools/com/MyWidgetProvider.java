@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.widget.RemoteViews;
 
 import com.squareup.otto.Bus;
+import com.squareup.otto.Subscribe;
 
 public class MyWidgetProvider extends AppWidgetProvider {
     private static final String PREVIOUS = "previous";
@@ -48,8 +49,22 @@ public class MyWidgetProvider extends AppWidgetProvider {
         remoteViews = new RemoteViews(context.getPackageName(), R.layout.widget);
         widgetManager = AppWidgetManager.getInstance(context);
         widgetIds = widgetManager.getAppWidgetIds(component);
-        bus = BusProvider.getInstance();
-        bus.register(this);
+        if (bus == null) {
+            bus = BusProvider.getInstance();
+            bus.register(this);
+        }
+    }
+
+    @Subscribe
+    public void songChangedEvent(Events.SongChanged event) {
+        final Song newSong = event.getSong();
+        remoteViews.setTextViewText(R.id.songTitle, newSong.getTitle());
+        remoteViews.setTextViewText(R.id.songArtist, newSong.getArtist());
+        updateWidget();
+    }
+
+    private void updateWidget() {
+        widgetManager.updateAppWidget(widgetIds, remoteViews);
     }
 
     @Override
@@ -60,16 +75,16 @@ public class MyWidgetProvider extends AppWidgetProvider {
         final String action = intent.getAction();
         switch (action) {
             case PREVIOUS:
-                bus.post(new Events.MusicPrevious());
+                bus.post(new Events.PreviousSong());
                 break;
             case PLAYPAUSE:
-                bus.post(new Events.MusicPlayPause());
+                bus.post(new Events.PlayPauseSong());
                 break;
             case NEXT:
-                bus.post(new Events.MusicNext());
+                bus.post(new Events.NextSong());
                 break;
             case STOP:
-                bus.post(new Events.MusicStop());
+                bus.post(new Events.StopSong());
                 break;
             default:
                 super.onReceive(context, intent);
