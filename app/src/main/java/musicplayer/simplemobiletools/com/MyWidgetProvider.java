@@ -8,6 +8,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.RemoteViews;
 
+import com.squareup.otto.Bus;
+
 public class MyWidgetProvider extends AppWidgetProvider {
     private static final String PREVIOUS = "previous";
     private static final String PLAYPAUSE = "playpause";
@@ -19,6 +21,7 @@ public class MyWidgetProvider extends AppWidgetProvider {
     private static AppWidgetManager widgetManager;
     private static Context cxt;
     private static Intent intent;
+    private static Bus bus;
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
@@ -45,22 +48,38 @@ public class MyWidgetProvider extends AppWidgetProvider {
         remoteViews = new RemoteViews(context.getPackageName(), R.layout.widget);
         widgetManager = AppWidgetManager.getInstance(context);
         widgetIds = widgetManager.getAppWidgetIds(component);
+        bus = BusProvider.getInstance();
+        bus.register(this);
     }
 
     @Override
     public void onReceive(Context context, Intent intent) {
+        if (remoteViews == null || widgetManager == null || widgetIds == null || bus == null)
+            initVariables(context);
+
         final String action = intent.getAction();
         switch (action) {
             case PREVIOUS:
+                bus.post(new Events.MusicPrevious());
                 break;
             case PLAYPAUSE:
+                bus.post(new Events.MusicPlayPause());
                 break;
             case NEXT:
+                bus.post(new Events.MusicNext());
                 break;
             case STOP:
+                bus.post(new Events.MusicStop());
                 break;
             default:
                 super.onReceive(context, intent);
         }
+    }
+
+    @Override
+    public void onDeleted(Context context, int[] appWidgetIds) {
+        super.onDeleted(context, appWidgetIds);
+        if (bus != null)
+            bus.unregister(this);
     }
 }

@@ -13,6 +13,9 @@ import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.squareup.otto.Bus;
+import com.squareup.otto.Subscribe;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
@@ -25,12 +28,15 @@ public class MusicService extends Service
     private MediaPlayer player;
     private ArrayList<Integer> playedSongIDs;
     private Song currSong;
+    private Bus bus;
 
     @Override
     public void onCreate() {
         super.onCreate();
         songs = new ArrayList<>();
         playedSongIDs = new ArrayList<>();
+        bus = BusProvider.getInstance();
+        bus.register(this);
 
         initMediaPlayer();
     }
@@ -170,6 +176,8 @@ public class MusicService extends Service
     public void onDestroy() {
         super.onDestroy();
         destroyPlayer();
+        if (bus != null)
+            bus.unregister(this);
     }
 
     private void destroyPlayer() {
@@ -182,5 +190,25 @@ public class MusicService extends Service
         MusicService getService() {
             return MusicService.this;
         }
+    }
+
+    @Subscribe
+    public void musicPreviousEvent(Events.MusicPrevious event) {
+
+    }
+
+    @Subscribe
+    public void musicPlayPauseEvent(Events.MusicPlayPause event) {
+
+    }
+
+    @Subscribe
+    public void musicNextEvent(Events.MusicNext event) {
+
+    }
+
+    @Subscribe
+    public void musicStopEvent(Events.MusicStop event) {
+
     }
 }
