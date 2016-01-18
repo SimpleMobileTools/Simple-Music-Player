@@ -92,6 +92,7 @@ public class MusicService extends Service
             initMediaPlayer();
 
         player.pause();
+        bus.post(new Events.SongStateChanged(false));
     }
 
     public void resumeSong() {
@@ -102,6 +103,7 @@ public class MusicService extends Service
             playNextSong();
         else
             player.start();
+        bus.post(new Events.SongStateChanged(true));
     }
 
     public void playNextSong() {
@@ -113,6 +115,7 @@ public class MusicService extends Service
             // .stop() seems to misbehave weirdly
             player.pause();
             player.seekTo(0);
+            bus.post(new Events.SongStateChanged(false));
         }
     }
 

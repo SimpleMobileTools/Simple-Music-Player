@@ -63,6 +63,17 @@ public class MyWidgetProvider extends AppWidgetProvider {
         updateWidget();
     }
 
+    @Subscribe
+    public void songStateChanged(Events.SongStateChanged event) {
+        final boolean isPlaying = event.getIsPlaying();
+        if (isPlaying) {
+            remoteViews.setImageViewResource(R.id.playPauseBtn, R.mipmap.pause_white);
+        } else {
+            remoteViews.setImageViewResource(R.id.playPauseBtn, R.mipmap.play_white);
+        }
+        updateWidget();
+    }
+
     private void updateWidget() {
         widgetManager.updateAppWidget(widgetIds, remoteViews);
     }

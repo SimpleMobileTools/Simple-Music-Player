@@ -24,4 +24,16 @@ public class Events {
             return song;
         }
     }
+
+    public static class SongStateChanged {
+        private boolean isPlaying;
+
+        SongStateChanged(boolean isPlaying) {
+            this.isPlaying = isPlaying;
+        }
+
+        public boolean getIsPlaying() {
+            return isPlaying;
+        }
+    }
 }
