@@ -3,6 +3,7 @@ package musicplayer.simplemobiletools.com;
 import android.app.Service;
 import android.content.ContentUris;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -29,6 +30,7 @@ public class MusicService extends Service
     private ArrayList<Integer> playedSongIDs;
     private Song currSong;
     private Bus bus;
+    private HeadsetPlugReceiver headsetPlugReceiver;
 
     @Override
     public void onCreate() {
@@ -41,6 +43,7 @@ public class MusicService extends Service
             bus.register(this);
         }
 
+        headsetPlugReceiver = new HeadsetPlugReceiver();
         initMediaPlayer();
     }
 
@@ -92,7 +95,10 @@ public class MusicService extends Service
             initMediaPlayer();
 
         player.pause();
-        bus.post(new Events.SongStateChanged(false));
+        songStateChanged(false);
+
+        final IntentFilter filter = new IntentFilter(Intent.ACTION_HEADSET_PLUG);
+        registerReceiver(headsetPlugReceiver, filter);
     }
 
     public void resumeSong() {
@@ -103,7 +109,8 @@ public class MusicService extends Service
             playNextSong();
         else
             player.start();
-        bus.post(new Events.SongStateChanged(true));
+
+        songStateChanged(true);
     }
 
     public void playNextSong() {
@@ -115,7 +122,7 @@ public class MusicService extends Service
             // .stop() seems to misbehave weirdly
             player.pause();
             player.seekTo(0);
-            bus.post(new Events.SongStateChanged(false));
+            songStateChanged(false);
         }
     }
 
@@ -206,6 +213,17 @@ public class MusicService extends Service
         }
     }
 
+    private void songStateChanged(boolean isPlaying) {
+        bus.post(new Events.SongStateChanged(isPlaying));
+
+        if (isPlaying) {
+            final IntentFilter filter = new IntentFilter(Intent.ACTION_HEADSET_PLUG);
+            registerReceiver(headsetPlugReceiver, filter);
+        } else {
+            unregisterReceiver(headsetPlugReceiver);
+        }
+    }
+
     @Subscribe
     public void previousSongEvent(Events.PreviousSong event) {
         playPreviousSong();
@@ -227,5 +245,11 @@ public class MusicService extends Service
     @Subscribe
     public void stopSongEvent(Events.StopSong event) {
         stopSong();
+    }
+
+    @Subscribe
+    public void pauseSongEvent(Events.PauseSong event) {
+        // if the headset is unplugged, pause the song
+        pauseSong();
     }
 }

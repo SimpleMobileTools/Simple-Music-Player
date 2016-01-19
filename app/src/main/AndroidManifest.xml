@@ -32,5 +32,11 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/widget_info"/>
         </receiver>
+
+        <receiver android:name=".HeadsetPlugReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.ACTION_HEADSET_PLUG"/>
+            </intent-filter>
+        </receiver>
     </application>
 </manifest>

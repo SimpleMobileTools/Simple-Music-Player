@@ -7,6 +7,9 @@ public class Events {
     public static class PlayPauseSong {
     }
 
+    public static class PauseSong {
+    }
+
     public static class NextSong {
     }
 
