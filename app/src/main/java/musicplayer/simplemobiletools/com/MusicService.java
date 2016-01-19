@@ -88,8 +88,9 @@ public class MusicService extends Service
         if (player == null)
             initMediaPlayer();
 
+        // play the previous song if we are less than 5 secs into the song, else restart
         // remove the latest song from the list
-        if (playedSongIDs.size() > 1) {
+        if (playedSongIDs.size() > 1 && player.getCurrentPosition() < 5000) {
             playedSongIDs.remove(playedSongIDs.size() - 1);
             setSong(playedSongIDs.get(playedSongIDs.size() - 1), false);
         } else {
