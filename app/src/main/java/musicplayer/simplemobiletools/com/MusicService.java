@@ -2,6 +2,7 @@ package musicplayer.simplemobiletools.com;
 
 import android.app.Service;
 import android.content.ContentUris;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.media.AudioManager;
@@ -12,6 +13,8 @@ import android.os.IBinder;
 import android.os.PowerManager;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
+import android.telephony.PhoneStateListener;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 
 import com.squareup.otto.Bus;
@@ -25,12 +28,14 @@ public class MusicService extends Service
         implements MediaPlayer.OnPreparedListener, MediaPlayer.OnErrorListener, MediaPlayer.OnCompletionListener {
     private static final String TAG = MusicService.class.getSimpleName();
     private final IBinder musicBind = new MyBinder();
+    private HeadsetPlugReceiver headsetPlugReceiver;
+    private IncomingCallReceiver incomingCallReceiver;
     private ArrayList<Song> songs;
     private MediaPlayer player;
     private ArrayList<Integer> playedSongIDs;
     private Song currSong;
     private Bus bus;
-    private HeadsetPlugReceiver headsetPlugReceiver;
+    private boolean wasPlayingAtCall;
 
     @Override
     public void onCreate() {
@@ -44,6 +49,8 @@ public class MusicService extends Service
         }
 
         headsetPlugReceiver = new HeadsetPlugReceiver();
+        incomingCallReceiver = new IncomingCallReceiver();
+        wasPlayingAtCall = false;
         initMediaPlayer();
     }
 
@@ -96,9 +103,6 @@ public class MusicService extends Service
 
         player.pause();
         songStateChanged(false);
-
-        final IntentFilter filter = new IntentFilter(Intent.ACTION_HEADSET_PLUG);
-        registerReceiver(headsetPlugReceiver, filter);
     }
 
     public void resumeSong() {
@@ -205,6 +209,9 @@ public class MusicService extends Service
         player.stop();
         player.release();
         player = null;
+
+        final TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+        telephonyManager.listen(incomingCallReceiver, PhoneStateListener.LISTEN_NONE);
     }
 
     public class MyBinder extends Binder {
@@ -217,10 +224,16 @@ public class MusicService extends Service
         bus.post(new Events.SongStateChanged(isPlaying));
 
         if (isPlaying) {
-            final IntentFilter filter = new IntentFilter(Intent.ACTION_HEADSET_PLUG);
+            IntentFilter filter = new IntentFilter(Intent.ACTION_HEADSET_PLUG);
             registerReceiver(headsetPlugReceiver, filter);
+
+            final TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+            telephonyManager.listen(incomingCallReceiver, PhoneStateListener.LISTEN_CALL_STATE);
         } else {
-            unregisterReceiver(headsetPlugReceiver);
+            try {
+                unregisterReceiver(headsetPlugReceiver);
+            } catch (IllegalArgumentException e) {
+            }
         }
     }
 
@@ -251,5 +264,23 @@ public class MusicService extends Service
     public void pauseSongEvent(Events.PauseSong event) {
         // if the headset is unplugged, pause the song
         pauseSong();
+    }
+
+    @Subscribe
+    public void incomingCallStart(Events.IncomingCallStart event) {
+        if (isPlaying()) {
+            wasPlayingAtCall = true;
+            pauseSong();
+        } else {
+            wasPlayingAtCall = false;
+        }
+    }
+
+    @Subscribe
+    public void incomingCallStop(Events.IncomingCallStop event) {
+        if (wasPlayingAtCall)
+            resumeSong();
+
+        wasPlayingAtCall = false;
     }
 }

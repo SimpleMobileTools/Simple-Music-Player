@@ -16,6 +16,12 @@ public class Events {
     public static class StopSong {
     }
 
+    public static class IncomingCallStart {
+    }
+
+    public static class IncomingCallStop {
+    }
+
     public static class SongChanged {
         private Song song;
 
