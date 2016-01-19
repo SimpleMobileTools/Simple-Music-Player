@@ -1,10 +1,12 @@
 package musicplayer.simplemobiletools.com;
 
 import android.app.Service;
+import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.database.Cursor;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -22,11 +24,14 @@ import com.squareup.otto.Subscribe;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Random;
 
 public class MusicService extends Service
         implements MediaPlayer.OnPreparedListener, MediaPlayer.OnErrorListener, MediaPlayer.OnCompletionListener {
     private static final String TAG = MusicService.class.getSimpleName();
+    private static final int MIN_DURATION_MS = 20000;
     private final IBinder musicBind = new MyBinder();
     private HeadsetPlugReceiver headsetPlugReceiver;
     private IncomingCallReceiver incomingCallReceiver;
@@ -48,6 +53,7 @@ public class MusicService extends Service
             bus.register(this);
         }
 
+        getSortedSongs();
         headsetPlugReceiver = new HeadsetPlugReceiver();
         incomingCallReceiver = new IncomingCallReceiver();
         wasPlayingAtCall = false;
@@ -61,6 +67,37 @@ public class MusicService extends Service
         player.setOnPreparedListener(this);
         player.setOnCompletionListener(this);
         player.setOnErrorListener(this);
+    }
+
+    private void fillPlaylist() {
+        final ContentResolver musicResolver = getContentResolver();
+        final Uri musicUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
+        final Cursor musicCursor = musicResolver.query(musicUri, null, null, null, null);
+
+        if (musicCursor != null && musicCursor.moveToFirst()) {
+            final int idIndex = musicCursor.getColumnIndex(MediaStore.Audio.Media._ID);
+            final int titleIndex = musicCursor.getColumnIndex(MediaStore.Audio.Media.TITLE);
+            final int artistIndex = musicCursor.getColumnIndex(MediaStore.Audio.Media.ARTIST);
+            final int durationIndex = musicCursor.getColumnIndex(MediaStore.Audio.Media.DURATION);
+            do {
+                if (musicCursor.getInt(durationIndex) > MIN_DURATION_MS) {
+                    final long id = musicCursor.getLong(idIndex);
+                    final String title = musicCursor.getString(titleIndex);
+                    final String artist = musicCursor.getString(artistIndex);
+                    songs.add(new Song(id, title, artist));
+                }
+            } while (musicCursor.moveToNext());
+            musicCursor.close();
+        }
+    }
+
+    private void getSortedSongs() {
+        fillPlaylist();
+        Collections.sort(songs, new Comparator<Song>() {
+            public int compare(Song a, Song b) {
+                return a.getTitle().compareTo(b.getTitle());
+            }
+        });
     }
 
     private int getNewSongId() {
@@ -85,6 +122,9 @@ public class MusicService extends Service
     }
 
     public void playPreviousSong() {
+        if (songs.isEmpty())
+            return;
+
         if (player == null)
             initMediaPlayer();
 
@@ -99,6 +139,9 @@ public class MusicService extends Service
     }
 
     public void pauseSong() {
+        if (songs.isEmpty())
+            return;
+
         if (player == null)
             initMediaPlayer();
 
@@ -107,6 +150,9 @@ public class MusicService extends Service
     }
 
     public void resumeSong() {
+        if (songs.isEmpty())
+            return;
+
         if (player == null)
             initMediaPlayer();
 
@@ -137,6 +183,9 @@ public class MusicService extends Service
     }
 
     public void setSong(int songId, boolean addNewSong) {
+        if (songs.isEmpty())
+            return;
+
         if (player == null)
             initMediaPlayer();
 
@@ -175,8 +224,8 @@ public class MusicService extends Service
         return false;
     }
 
-    public void setSongs(ArrayList<Song> songs) {
-        this.songs = songs;
+    public ArrayList<Song> getSongs() {
+        return songs;
     }
 
     @Override
