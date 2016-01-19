@@ -81,13 +81,26 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        if (musicService != null) {
+            updateSongInfo(musicService.getCurrSong());
+
+            if (musicService.isPlaying()) {
+                setPauseIcon();
+            } else {
+                setPlayIcon();
+            }
+        }
+    }
+
+    @Override
     protected void onDestroy() {
+        super.onDestroy();
         if (isMusicBound) {
             isMusicBound = false;
             unbindService(musicConnection);
         }
-
-        super.onDestroy();
     }
 
     @OnClick(R.id.previousBtn)

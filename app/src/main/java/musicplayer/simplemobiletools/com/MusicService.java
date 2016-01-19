@@ -204,6 +204,7 @@ public class MusicService extends Service
 
         player.prepareAsync();
         bus.post(new Events.SongChanged(currSong));
+        songStateChanged(true);
     }
 
     public Song getCurrSong() {
