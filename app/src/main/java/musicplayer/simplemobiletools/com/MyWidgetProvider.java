@@ -105,7 +105,11 @@ public class MyWidgetProvider extends AppWidgetProvider {
     @Override
     public void onDeleted(Context context, int[] appWidgetIds) {
         super.onDeleted(context, appWidgetIds);
-        if (bus != null)
-            bus.unregister(this);
+        if (bus != null) {
+            try {
+                bus.unregister(this);
+            } catch (Exception e) {
+            }
+        }
     }
 }
