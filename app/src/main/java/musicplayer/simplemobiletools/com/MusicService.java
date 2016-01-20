@@ -70,6 +70,7 @@ public class MusicService extends Service
     }
 
     private void fillPlaylist() {
+        songs.clear();
         final ContentResolver musicResolver = getContentResolver();
         final Uri musicUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
         final Cursor musicCursor = musicResolver.query(musicUri, null, null, null, null);
