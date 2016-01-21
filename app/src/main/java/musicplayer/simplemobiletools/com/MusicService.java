@@ -179,8 +179,7 @@ public class MusicService extends Service
     }
 
     private void restartSong() {
-        stopSong();
-        resumeSong();
+        player.seekTo(0);
     }
 
     public void setSong(int songId, boolean addNewSong) {
