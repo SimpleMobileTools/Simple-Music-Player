@@ -6,6 +6,7 @@ import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.widget.RemoteViews;
 
 import com.squareup.otto.Bus;
@@ -17,12 +18,14 @@ public class MyWidgetProvider extends AppWidgetProvider {
     private static final String NEXT = "next";
     private static final String STOP = "stop";
 
-    private int[] widgetIds;
+    private int widgetId;
     private static RemoteViews remoteViews;
     private static AppWidgetManager widgetManager;
     private static Context cxt;
     private static Intent intent;
     private static Bus bus;
+    private static Song currSong;
+    private static boolean isPlaying;
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
@@ -30,12 +33,7 @@ public class MyWidgetProvider extends AppWidgetProvider {
         cxt = context;
 
         intent = new Intent(context, MyWidgetProvider.class);
-        setupIntent(PREVIOUS, R.id.previousBtn);
-        setupIntent(PLAYPAUSE, R.id.playPauseBtn);
-        setupIntent(NEXT, R.id.nextBtn);
-        setupIntent(STOP, R.id.stopBtn);
-
-        appWidgetManager.updateAppWidget(appWidgetIds, remoteViews);
+        setupButtons(appWidgetManager);
     }
 
     private void setupIntent(String action, int id) {
@@ -46,9 +44,10 @@ public class MyWidgetProvider extends AppWidgetProvider {
 
     private void initVariables(Context context) {
         final ComponentName component = new ComponentName(context, MyWidgetProvider.class);
-        remoteViews = new RemoteViews(context.getPackageName(), R.layout.widget);
         widgetManager = AppWidgetManager.getInstance(context);
-        widgetIds = widgetManager.getAppWidgetIds(component);
+        widgetId = widgetManager.getAppWidgetIds(component)[0];
+        remoteViews = getRemoteViews(widgetManager, context, widgetId);
+
         if (bus == null) {
             bus = BusProvider.getInstance();
             bus.register(this);
@@ -57,30 +56,41 @@ public class MyWidgetProvider extends AppWidgetProvider {
 
     @Subscribe
     public void songChangedEvent(Events.SongChanged event) {
-        final Song newSong = event.getSong();
-        remoteViews.setTextViewText(R.id.songTitle, newSong.getTitle());
-        remoteViews.setTextViewText(R.id.songArtist, newSong.getArtist());
-        updateWidget();
+        currSong = event.getSong();
+        updateSongInfo();
+    }
+
+    private void updateSongInfo() {
+        if (currSong != null) {
+            remoteViews.setTextViewText(R.id.songTitle, currSong.getTitle());
+            remoteViews.setTextViewText(R.id.songArtist, currSong.getArtist());
+            updateWidget();
+        }
     }
 
     @Subscribe
     public void songStateChanged(Events.SongStateChanged event) {
-        final boolean isPlaying = event.getIsPlaying();
-        if (isPlaying) {
-            remoteViews.setImageViewResource(R.id.playPauseBtn, R.mipmap.pause_white);
-        } else {
-            remoteViews.setImageViewResource(R.id.playPauseBtn, R.mipmap.play_white);
-        }
+        isPlaying = event.getIsPlaying();
+        setupPlayPauseButton();
+    }
+
+    private void setupPlayPauseButton() {
+        int icon = R.mipmap.play_white;
+
+        if (isPlaying)
+            icon = R.mipmap.pause_white;
+
+        remoteViews.setImageViewResource(R.id.playPauseBtn, icon);
         updateWidget();
     }
 
     private void updateWidget() {
-        widgetManager.updateAppWidget(widgetIds, remoteViews);
+        widgetManager.updateAppWidget(widgetId, remoteViews);
     }
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        if (remoteViews == null || widgetManager == null || widgetIds == null || bus == null)
+        if (remoteViews == null || widgetManager == null || widgetId == 0 || bus == null)
             initVariables(context);
 
         final String action = intent.getAction();
@@ -111,5 +121,42 @@ public class MyWidgetProvider extends AppWidgetProvider {
             } catch (Exception e) {
             }
         }
+    }
+
+    private void setupButtons(AppWidgetManager appWidgetManager) {
+        setupIntent(PREVIOUS, R.id.previousBtn);
+        setupIntent(PLAYPAUSE, R.id.playPauseBtn);
+        setupIntent(NEXT, R.id.nextBtn);
+        setupIntent(STOP, R.id.stopBtn);
+        appWidgetManager.updateAppWidget(widgetId, remoteViews);
+    }
+
+    @Override
+    public void onAppWidgetOptionsChanged(Context context, AppWidgetManager appWidgetManager, int widgetId, Bundle newOptions) {
+        remoteViews = getRemoteViews(appWidgetManager, context, widgetId);
+        setupButtons(appWidgetManager);
+        updateSongInfo();
+        setupPlayPauseButton();
+        super.onAppWidgetOptionsChanged(context, appWidgetManager, widgetId, newOptions);
+    }
+
+    private RemoteViews getRemoteViews(AppWidgetManager appWidgetManager, Context context, int widgetId) {
+        final Bundle options = appWidgetManager.getAppWidgetOptions(widgetId);
+        final int minHeight = options.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT);
+        final int rows = getCellsForSize(minHeight);
+
+        int layoutId = R.layout.widget;
+        if (rows == 1)
+            layoutId = R.layout.small_widget;
+
+        return new RemoteViews(context.getPackageName(), layoutId);
+    }
+
+    private static int getCellsForSize(int size) {
+        int n = 2;
+        while (70 * n - 30 < size) {
+            ++n;
+        }
+        return n - 1;
     }
 }
