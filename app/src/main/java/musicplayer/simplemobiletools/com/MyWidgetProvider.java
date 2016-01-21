@@ -18,7 +18,7 @@ public class MyWidgetProvider extends AppWidgetProvider {
     private static final String NEXT = "next";
     private static final String STOP = "stop";
 
-    private int widgetId;
+    private static int widgetId;
     private static RemoteViews remoteViews;
     private static AppWidgetManager widgetManager;
     private static Context cxt;
