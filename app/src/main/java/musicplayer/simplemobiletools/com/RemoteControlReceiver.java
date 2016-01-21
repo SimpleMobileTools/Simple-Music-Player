@@ -9,7 +9,7 @@ import android.view.KeyEvent;
 import com.squareup.otto.Bus;
 
 public class RemoteControlReceiver extends BroadcastReceiver {
-    private static final int MAX_CLICK_DURATION = 700;
+    private static final int MAX_CLICK_DURATION = 1000;
     private static int clicksCnt;
     private static Handler handler = new Handler();
 
