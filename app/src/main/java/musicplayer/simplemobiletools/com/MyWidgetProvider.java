@@ -45,7 +45,11 @@ public class MyWidgetProvider extends AppWidgetProvider {
     private void initVariables(Context context) {
         final ComponentName component = new ComponentName(context, MyWidgetProvider.class);
         widgetManager = AppWidgetManager.getInstance(context);
-        widgetId = widgetManager.getAppWidgetIds(component)[0];
+        final int[] widgetIds = widgetManager.getAppWidgetIds(component);
+        if (widgetIds.length == 0)
+            return;
+
+        widgetId = widgetIds[0];
         remoteViews = getRemoteViews(widgetManager, context, widgetId);
 
         if (bus == null) {
