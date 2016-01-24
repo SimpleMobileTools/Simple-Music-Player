@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.RemoteViews;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -23,6 +24,7 @@ public class MyWidgetConfigure extends Activity implements SeekBar.OnSeekBarChan
     @Bind(R.id.config_background_color) View backgroundColorPicker;
     @Bind(R.id.songTitle) TextView songTitle;
     @Bind(R.id.songArtist) TextView songArtist;
+    @Bind(R.id.config_save) Button saveBtn;
     private int widgetId;
     private int newBgColor;
     private int colorWithoutTransparency;
@@ -54,6 +56,7 @@ public class MyWidgetConfigure extends Activity implements SeekBar.OnSeekBarChan
         newBgColor = adjustAlpha(newBgColor, alpha);
         colorWithoutTransparency = Color.BLACK;
         background.setBackgroundColor(newBgColor);
+        saveBtn.setBackgroundColor(newBgColor);
         backgroundColorPicker.setBackgroundColor(Color.BLACK);
         songTitle.setText("Song Title");
         songArtist.setText("Song Artist");
@@ -113,6 +116,7 @@ public class MyWidgetConfigure extends Activity implements SeekBar.OnSeekBarChan
     private void updateBackgroundColor() {
         newBgColor = adjustAlpha(colorWithoutTransparency, alpha);
         background.setBackgroundColor(newBgColor);
+        saveBtn.setBackgroundColor(newBgColor);
     }
 
     private int adjustAlpha(int color, float factor) {
