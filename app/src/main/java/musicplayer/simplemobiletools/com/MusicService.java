@@ -219,6 +219,9 @@ public class MusicService extends Service
 
     @Override
     public boolean onUnbind(Intent intent) {
+        bus.post(new Events.SongChanged(null));
+        songStateChanged(false);
+
         if (player != null && !player.isPlaying()) {
             destroyPlayer();
         }

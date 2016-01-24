@@ -34,6 +34,7 @@ public class MyWidgetProvider extends AppWidgetProvider {
 
         intent = new Intent(context, MyWidgetProvider.class);
         setupButtons(appWidgetManager);
+        updateSongInfo();
     }
 
     private void setupIntent(String action, int id) {
@@ -65,11 +66,15 @@ public class MyWidgetProvider extends AppWidgetProvider {
     }
 
     private void updateSongInfo() {
+        String title = "";
+        String artist = "";
         if (currSong != null) {
-            remoteViews.setTextViewText(R.id.songTitle, currSong.getTitle());
-            remoteViews.setTextViewText(R.id.songArtist, currSong.getArtist());
-            updateWidget();
+            title = currSong.getTitle();
+            artist = currSong.getArtist();
         }
+        remoteViews.setTextViewText(R.id.songTitle, title);
+        remoteViews.setTextViewText(R.id.songArtist, artist);
+        updateWidget();
     }
 
     @Subscribe
