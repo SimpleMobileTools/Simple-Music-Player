@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.RemoteViews;
 import android.widget.SeekBar;
+import android.widget.TextView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -20,6 +21,8 @@ public class MyWidgetConfigure extends Activity implements SeekBar.OnSeekBarChan
     @Bind(R.id.config_seekbar) SeekBar seekBar;
     @Bind(R.id.config_player) View background;
     @Bind(R.id.config_background_color) View backgroundColorPicker;
+    @Bind(R.id.songTitle) TextView songTitle;
+    @Bind(R.id.songArtist) TextView songArtist;
     private int widgetId;
     private int newBgColor;
     private int colorWithoutTransparency;
@@ -39,6 +42,8 @@ public class MyWidgetConfigure extends Activity implements SeekBar.OnSeekBarChan
         colorWithoutTransparency = Color.BLACK;
         background.setBackgroundColor(newBgColor);
         backgroundColorPicker.setBackgroundColor(Color.BLACK);
+        songTitle.setText("Song Title");
+        songArtist.setText("Song Artist");
 
         final Intent intent = getIntent();
         final Bundle extras = intent.getExtras();
