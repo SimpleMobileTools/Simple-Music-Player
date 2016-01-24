@@ -33,17 +33,7 @@ public class MyWidgetConfigure extends Activity implements SeekBar.OnSeekBarChan
         super.onCreate(savedInstanceState);
         setContentView(R.layout.widget_config);
         ButterKnife.bind(this);
-
-        alpha = 0.5f;
-        seekBar.setOnSeekBarChangeListener(this);
-        seekBar.setProgress((int) (alpha * 100));
-        newBgColor = Color.BLACK;
-        newBgColor = adjustAlpha(newBgColor, alpha);
-        colorWithoutTransparency = Color.BLACK;
-        background.setBackgroundColor(newBgColor);
-        backgroundColorPicker.setBackgroundColor(Color.BLACK);
-        songTitle.setText("Song Title");
-        songArtist.setText("Song Artist");
+        initVariables();
 
         final Intent intent = getIntent();
         final Bundle extras = intent.getExtras();
@@ -54,6 +44,19 @@ public class MyWidgetConfigure extends Activity implements SeekBar.OnSeekBarChan
             finish();
 
         setResult(RESULT_CANCELED);
+    }
+
+    private void initVariables() {
+        alpha = 0.5f;
+        seekBar.setOnSeekBarChangeListener(this);
+        seekBar.setProgress((int) (alpha * 100));
+        newBgColor = Color.BLACK;
+        newBgColor = adjustAlpha(newBgColor, alpha);
+        colorWithoutTransparency = Color.BLACK;
+        background.setBackgroundColor(newBgColor);
+        backgroundColorPicker.setBackgroundColor(Color.BLACK);
+        songTitle.setText("Song Title");
+        songArtist.setText("Song Artist");
     }
 
     @OnClick(R.id.config_save)
