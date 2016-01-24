@@ -24,6 +24,13 @@
         android:background="@android:color/white">
 
         <Button
+            android:id="@+id/config_background_color"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_alignBottom="@+id/config_save"
+            android:layout_alignTop="@+id/config_save"/>
+
+        <Button
             android:id="@+id/config_save"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -39,10 +46,10 @@
             android:id="@+id/config_seekbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/activity_margin"
             android:layout_marginRight="@dimen/activity_margin"
-            android:layout_toLeftOf="@id/config_save"/>
+            android:layout_toLeftOf="@id/config_save"
+            android:layout_toRightOf="@id/config_background_color"/>
     </RelativeLayout>
 </RelativeLayout>

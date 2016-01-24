@@ -14,12 +14,16 @@ import android.widget.SeekBar;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import yuku.ambilwarna.AmbilWarnaDialog;
 
 public class MyWidgetConfigure extends Activity implements SeekBar.OnSeekBarChangeListener {
     @Bind(R.id.config_seekbar) SeekBar seekBar;
     @Bind(R.id.config_player) View background;
+    @Bind(R.id.config_background_color) View backgroundColorPicker;
     private int widgetId;
     private int newBgColor;
+    private int colorWithoutTransparency;
+    private float alpha;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -27,8 +31,14 @@ public class MyWidgetConfigure extends Activity implements SeekBar.OnSeekBarChan
         setContentView(R.layout.widget_config);
         ButterKnife.bind(this);
 
+        alpha = 0.5f;
         seekBar.setOnSeekBarChangeListener(this);
-        seekBar.setProgress(50);
+        seekBar.setProgress((int) (alpha * 100));
+        newBgColor = Color.BLACK;
+        newBgColor = adjustAlpha(newBgColor, alpha);
+        colorWithoutTransparency = Color.BLACK;
+        background.setBackgroundColor(newBgColor);
+        backgroundColorPicker.setBackgroundColor(Color.BLACK);
 
         final Intent intent = getIntent();
         final Bundle extras = intent.getExtras();
@@ -57,6 +67,24 @@ public class MyWidgetConfigure extends Activity implements SeekBar.OnSeekBarChan
         finish();
     }
 
+    @OnClick(R.id.config_background_color)
+    public void pickBackgroundColor() {
+        AmbilWarnaDialog dialog = new AmbilWarnaDialog(this, colorWithoutTransparency, new AmbilWarnaDialog.OnAmbilWarnaListener() {
+            @Override
+            public void onCancel(AmbilWarnaDialog dialog) {
+            }
+
+            @Override
+            public void onOk(AmbilWarnaDialog dialog, int color) {
+                backgroundColorPicker.setBackgroundColor(color);
+                colorWithoutTransparency = color;
+                updateBackgroundColor();
+            }
+        });
+
+        dialog.show();
+    }
+
     private void storeWidgetBackground() {
         final SharedPreferences prefs = getSharedPreferences(Constants.PREFS, Context.MODE_PRIVATE);
         prefs.edit().putInt(Constants.WIDGET_BG_COLOR, newBgColor).apply();
@@ -70,10 +98,21 @@ public class MyWidgetConfigure extends Activity implements SeekBar.OnSeekBarChan
 
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-        final float percent = (float) progress / (float) 100;
-        final int alpha = (int) (255 * percent);
-        newBgColor = Color.argb(alpha, 0, 0, 0);
+        alpha = (float) progress / (float) 100;
+        updateBackgroundColor();
+    }
+
+    private void updateBackgroundColor() {
+        newBgColor = adjustAlpha(colorWithoutTransparency, alpha);
         background.setBackgroundColor(newBgColor);
+    }
+
+    private int adjustAlpha(int color, float factor) {
+        int alpha = Math.round(Color.alpha(color) * factor);
+        int red = Color.red(color);
+        int green = Color.green(color);
+        int blue = Color.blue(color);
+        return Color.argb(alpha, red, green, blue);
     }
 
     @Override

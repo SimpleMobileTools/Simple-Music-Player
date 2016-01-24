@@ -57,6 +57,7 @@ public class MyWidgetProvider extends AppWidgetProvider {
 
         remoteViews = getRemoteViews(widgetManager, context, widgetIds[0]);
         remoteViews.setInt(R.id.widget_holder, "setBackgroundColor", newBgColor);
+        updateSongInfo();
 
         if (bus == null) {
             bus = BusProvider.getInstance();
