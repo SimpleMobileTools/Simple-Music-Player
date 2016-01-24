@@ -6,6 +6,7 @@ import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.RemoteViews;
 
@@ -18,7 +19,7 @@ public class MyWidgetProvider extends AppWidgetProvider {
     private static final String NEXT = "next";
     private static final String STOP = "stop";
 
-    private static int widgetId;
+    private static int[] widgetIds;
     private static RemoteViews remoteViews;
     private static AppWidgetManager widgetManager;
     private static Context cxt;
@@ -44,19 +45,27 @@ public class MyWidgetProvider extends AppWidgetProvider {
     }
 
     private void initVariables(Context context) {
+        final SharedPreferences prefs = initPrefs(context);
+        final int defaultColor = context.getResources().getColor(R.color.dark_grey);
+        final int newBgColor = prefs.getInt(Constants.WIDGET_BG_COLOR, defaultColor);
         final ComponentName component = new ComponentName(context, MyWidgetProvider.class);
+
         widgetManager = AppWidgetManager.getInstance(context);
-        final int[] widgetIds = widgetManager.getAppWidgetIds(component);
+        widgetIds = widgetManager.getAppWidgetIds(component);
         if (widgetIds.length == 0)
             return;
 
-        widgetId = widgetIds[0];
-        remoteViews = getRemoteViews(widgetManager, context, widgetId);
+        remoteViews = getRemoteViews(widgetManager, context, widgetIds[0]);
+        remoteViews.setInt(R.id.widget_holder, "setBackgroundColor", newBgColor);
 
         if (bus == null) {
             bus = BusProvider.getInstance();
             bus.register(this);
         }
+    }
+
+    private SharedPreferences initPrefs(Context context) {
+        return context.getSharedPreferences(Constants.PREFS, Context.MODE_PRIVATE);
     }
 
     @Subscribe
@@ -75,15 +84,16 @@ public class MyWidgetProvider extends AppWidgetProvider {
         remoteViews.setTextViewText(R.id.songTitle, title);
         remoteViews.setTextViewText(R.id.songArtist, artist);
         updateWidget();
+        updatePlayPauseButton();
     }
 
     @Subscribe
     public void songStateChanged(Events.SongStateChanged event) {
         isPlaying = event.getIsPlaying();
-        setupPlayPauseButton();
+        updatePlayPauseButton();
     }
 
-    private void setupPlayPauseButton() {
+    private void updatePlayPauseButton() {
         int icon = R.mipmap.play_white;
 
         if (isPlaying)
@@ -94,12 +104,12 @@ public class MyWidgetProvider extends AppWidgetProvider {
     }
 
     private void updateWidget() {
-        widgetManager.updateAppWidget(widgetId, remoteViews);
+        widgetManager.updateAppWidget(widgetIds, remoteViews);
     }
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        if (remoteViews == null || widgetManager == null || widgetId == 0 || bus == null)
+        if (remoteViews == null || widgetManager == null || widgetIds == null || bus == null)
             initVariables(context);
 
         final String action = intent.getAction();
@@ -137,7 +147,7 @@ public class MyWidgetProvider extends AppWidgetProvider {
         setupIntent(PLAYPAUSE, R.id.playPauseBtn);
         setupIntent(NEXT, R.id.nextBtn);
         setupIntent(STOP, R.id.stopBtn);
-        appWidgetManager.updateAppWidget(widgetId, remoteViews);
+        appWidgetManager.updateAppWidget(widgetIds, remoteViews);
     }
 
     @Override
@@ -145,7 +155,7 @@ public class MyWidgetProvider extends AppWidgetProvider {
         remoteViews = getRemoteViews(appWidgetManager, context, widgetId);
         setupButtons(appWidgetManager);
         updateSongInfo();
-        setupPlayPauseButton();
+        updatePlayPauseButton();
         super.onAppWidgetOptionsChanged(context, appWidgetManager, widgetId, newOptions);
     }
 
