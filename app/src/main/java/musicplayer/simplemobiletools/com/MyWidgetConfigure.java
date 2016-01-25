@@ -27,8 +27,8 @@ public class MyWidgetConfigure extends Activity implements SeekBar.OnSeekBarChan
     @Bind(R.id.config_save) Button saveBtn;
     private int widgetId;
     private int newBgColor;
-    private int colorWithoutTransparency;
-    private float alpha;
+    private int bgColorWithoutTransparency;
+    private float bgAlpha;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -49,12 +49,12 @@ public class MyWidgetConfigure extends Activity implements SeekBar.OnSeekBarChan
     }
 
     private void initVariables() {
-        alpha = 0.5f;
+        bgAlpha = 0.5f;
         seekBar.setOnSeekBarChangeListener(this);
-        seekBar.setProgress((int) (alpha * 100));
+        seekBar.setProgress((int) (bgAlpha * 100));
         newBgColor = Color.BLACK;
-        newBgColor = adjustAlpha(newBgColor, alpha);
-        colorWithoutTransparency = Color.BLACK;
+        newBgColor = adjustAlpha(newBgColor, bgAlpha);
+        bgColorWithoutTransparency = Color.BLACK;
         background.setBackgroundColor(newBgColor);
         saveBtn.setBackgroundColor(newBgColor);
         backgroundColorPicker.setBackgroundColor(Color.BLACK);
@@ -80,7 +80,7 @@ public class MyWidgetConfigure extends Activity implements SeekBar.OnSeekBarChan
 
     @OnClick(R.id.config_background_color)
     public void pickBackgroundColor() {
-        AmbilWarnaDialog dialog = new AmbilWarnaDialog(this, colorWithoutTransparency, new AmbilWarnaDialog.OnAmbilWarnaListener() {
+        AmbilWarnaDialog dialog = new AmbilWarnaDialog(this, bgColorWithoutTransparency, new AmbilWarnaDialog.OnAmbilWarnaListener() {
             @Override
             public void onCancel(AmbilWarnaDialog dialog) {
             }
@@ -88,7 +88,7 @@ public class MyWidgetConfigure extends Activity implements SeekBar.OnSeekBarChan
             @Override
             public void onOk(AmbilWarnaDialog dialog, int color) {
                 backgroundColorPicker.setBackgroundColor(color);
-                colorWithoutTransparency = color;
+                bgColorWithoutTransparency = color;
                 updateBackgroundColor();
             }
         });
@@ -109,12 +109,12 @@ public class MyWidgetConfigure extends Activity implements SeekBar.OnSeekBarChan
 
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-        alpha = (float) progress / (float) 100;
+        bgAlpha = (float) progress / (float) 100;
         updateBackgroundColor();
     }
 
     private void updateBackgroundColor() {
-        newBgColor = adjustAlpha(colorWithoutTransparency, alpha);
+        newBgColor = adjustAlpha(bgColorWithoutTransparency, bgAlpha);
         background.setBackgroundColor(newBgColor);
         saveBtn.setBackgroundColor(newBgColor);
     }
