@@ -12,9 +12,8 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.ColorFilter;
+import android.graphics.LightingColorFilter;
 import android.graphics.Paint;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffColorFilter;
 import android.os.Bundle;
 import android.widget.RemoteViews;
 
@@ -40,12 +39,7 @@ public class MyWidgetProvider extends AppWidgetProvider {
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        initVariables(context);
-        cxt = context;
-
-        intent = new Intent(context, MyWidgetProvider.class);
-        setupButtons(appWidgetManager);
-        updateSongInfo();
+        initVariables(cxt);
     }
 
     private void setupIntent(String action, int id) {
@@ -57,63 +51,22 @@ public class MyWidgetProvider extends AppWidgetProvider {
     }
 
     private void initVariables(Context context) {
-        final SharedPreferences prefs = initPrefs(context);
-        final int defaultColor = context.getResources().getColor(R.color.dark_grey);
-        final int newBgColor = prefs.getInt(Constants.WIDGET_BG_COLOR, defaultColor);
-        final int newTextColor = prefs.getInt(Constants.WIDGET_TEXT_COLOR, defaultColor);
-        final ComponentName component = new ComponentName(context, MyWidgetProvider.class);
+        cxt = context;
+        final ComponentName component = new ComponentName(cxt, MyWidgetProvider.class);
 
-        widgetManager = AppWidgetManager.getInstance(context);
+        widgetManager = AppWidgetManager.getInstance(cxt);
         widgetIds = widgetManager.getAppWidgetIds(component);
         if (widgetIds.length == 0)
             return;
 
-        remoteViews = getRemoteViews(widgetManager, context, widgetIds[0]);
-        remoteViews.setInt(R.id.widget_holder, "setBackgroundColor", newBgColor);
-
-        final int alpha = Color.alpha(newTextColor);
-        remoteViews.setInt(R.id.songTitle, "setTextColor", newTextColor);
-        remoteViews.setInt(R.id.songTitle, "setAlpha", alpha);
-        remoteViews.setInt(R.id.songArtist, "setTextColor", newTextColor);
-        remoteViews.setInt(R.id.songArtist, "setAlpha", alpha);
-
-        Bitmap bmp = getColoredIcon(context, newTextColor, R.mipmap.previous_white);
-        remoteViews.setInt(R.id.previousBtn, "setAlpha", alpha);
-        remoteViews.setImageViewBitmap(R.id.previousBtn, bmp);
-        updateWidget();
-
-        playBitmap = getColoredIcon(context, newTextColor, R.mipmap.play_white);
-        pauseBitmap = getColoredIcon(context, newTextColor, R.mipmap.pause_white);
-        remoteViews.setInt(R.id.playPauseBtn, "setAlpha", alpha);
-        updatePlayPauseButton();
-
-        bmp = getColoredIcon(context, newTextColor, R.mipmap.next_white);
-        remoteViews.setInt(R.id.nextBtn, "setAlpha", alpha);
-        remoteViews.setImageViewBitmap(R.id.nextBtn, bmp);
-
-        bmp = getColoredIcon(context, newTextColor, R.mipmap.stop_white);
-        remoteViews.setInt(R.id.stopBtn, "setAlpha", alpha);
-        remoteViews.setImageViewBitmap(R.id.stopBtn, bmp);
-
-        updateWidget();
-        updateSongInfo();
+        remoteViews = getRemoteViews(widgetManager, cxt, widgetIds[0]);
+        intent = new Intent(cxt, MyWidgetProvider.class);
+        setupViews(cxt);
 
         if (bus == null) {
             bus = BusProvider.getInstance();
             bus.register(this);
         }
-    }
-
-    private Bitmap getColoredIcon(Context context, int newTextColor, int id) {
-        final BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inMutable = true;
-        final Bitmap bmp = BitmapFactory.decodeResource(context.getResources(), id, options);
-        final Paint paint = new Paint();
-        final ColorFilter filter = new PorterDuffColorFilter(newTextColor, PorterDuff.Mode.SRC_IN);
-        paint.setColorFilter(filter);
-        final Canvas canvas = new Canvas(bmp);
-        canvas.drawBitmap(bmp, 0, 0, paint);
-        return bmp;
     }
 
     private SharedPreferences initPrefs(Context context) {
@@ -163,6 +116,47 @@ public class MyWidgetProvider extends AppWidgetProvider {
         widgetManager.updateAppWidget(widgetIds, remoteViews);
     }
 
+    private void updateColors(Context context) {
+        final SharedPreferences prefs = initPrefs(context);
+        final int defaultColor = context.getResources().getColor(R.color.dark_grey);
+        final int newBgColor = prefs.getInt(Constants.WIDGET_BG_COLOR, defaultColor);
+        final int newTextColor = prefs.getInt(Constants.WIDGET_TEXT_COLOR, Color.WHITE);
+
+        remoteViews.setInt(R.id.widget_holder, "setBackgroundColor", newBgColor);
+
+        final int alpha = Color.alpha(newTextColor);
+        remoteViews.setInt(R.id.songTitle, "setTextColor", newTextColor);
+        remoteViews.setInt(R.id.songArtist, "setTextColor", newTextColor);
+
+        Bitmap bmp = getColoredIcon(context, newTextColor, R.mipmap.previous_white);
+        remoteViews.setInt(R.id.previousBtn, "setAlpha", alpha);
+        remoteViews.setImageViewBitmap(R.id.previousBtn, bmp);
+
+        playBitmap = getColoredIcon(context, newTextColor, R.mipmap.play_white);
+        pauseBitmap = getColoredIcon(context, newTextColor, R.mipmap.pause_white);
+        remoteViews.setInt(R.id.playPauseBtn, "setAlpha", alpha);
+
+        bmp = getColoredIcon(context, newTextColor, R.mipmap.next_white);
+        remoteViews.setInt(R.id.nextBtn, "setAlpha", alpha);
+        remoteViews.setImageViewBitmap(R.id.nextBtn, bmp);
+
+        bmp = getColoredIcon(context, newTextColor, R.mipmap.stop_white);
+        remoteViews.setInt(R.id.stopBtn, "setAlpha", alpha);
+        remoteViews.setImageViewBitmap(R.id.stopBtn, bmp);
+    }
+
+    private Bitmap getColoredIcon(Context context, int newTextColor, int id) {
+        final BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inMutable = true;
+        final Bitmap bmp = BitmapFactory.decodeResource(context.getResources(), id, options);
+        final Paint paint = new Paint();
+        final ColorFilter filter = new LightingColorFilter(newTextColor, 1);
+        paint.setColorFilter(filter);
+        final Canvas canvas = new Canvas(bmp);
+        canvas.drawBitmap(bmp, 0, 0, paint);
+        return bmp;
+    }
+
     @Override
     public void onReceive(Context context, Intent intent) {
         if (remoteViews == null || widgetManager == null || widgetIds == null || bus == null)
@@ -198,20 +192,26 @@ public class MyWidgetProvider extends AppWidgetProvider {
         }
     }
 
-    private void setupButtons(AppWidgetManager appWidgetManager) {
+    private void setupButtons() {
         setupIntent(PREVIOUS, R.id.previousBtn);
         setupIntent(PLAYPAUSE, R.id.playPauseBtn);
         setupIntent(NEXT, R.id.nextBtn);
         setupIntent(STOP, R.id.stopBtn);
-        appWidgetManager.updateAppWidget(widgetIds, remoteViews);
+    }
+
+    private void setupViews(Context context) {
+        updateColors(context);
+        setupButtons();
+        updateSongInfo();
+        updatePlayPauseButton();
+        updateWidget();
     }
 
     @Override
     public void onAppWidgetOptionsChanged(Context context, AppWidgetManager appWidgetManager, int widgetId, Bundle newOptions) {
         remoteViews = getRemoteViews(appWidgetManager, context, widgetId);
-        setupButtons(appWidgetManager);
-        updateSongInfo();
-        updatePlayPauseButton();
+        widgetManager = appWidgetManager;
+        setupViews(context);
         super.onAppWidgetOptionsChanged(context, appWidgetManager, widgetId, newOptions);
     }
 
