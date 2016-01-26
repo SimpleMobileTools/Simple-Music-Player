@@ -65,8 +65,8 @@ public class MyWidgetProvider extends AppWidgetProvider {
 
         if (bus == null) {
             bus = BusProvider.getInstance();
-            bus.register(this);
         }
+        registerBus();
     }
 
     private SharedPreferences initPrefs(Context context) {
@@ -184,12 +184,7 @@ public class MyWidgetProvider extends AppWidgetProvider {
     @Override
     public void onDeleted(Context context, int[] appWidgetIds) {
         super.onDeleted(context, appWidgetIds);
-        if (bus != null) {
-            try {
-                bus.unregister(this);
-            } catch (Exception e) {
-            }
-        }
+        unregisterBus();
     }
 
     private void setupButtons() {
@@ -233,5 +228,19 @@ public class MyWidgetProvider extends AppWidgetProvider {
             ++n;
         }
         return n - 1;
+    }
+
+    private void registerBus() {
+        try {
+            bus.register(this);
+        } catch (Exception e) {
+        }
+    }
+
+    private void unregisterBus() {
+        try {
+            bus.unregister(this);
+        } catch (Exception e) {
+        }
     }
 }
