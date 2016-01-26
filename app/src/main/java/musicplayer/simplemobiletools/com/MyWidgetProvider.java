@@ -77,6 +77,7 @@ public class MyWidgetProvider extends AppWidgetProvider {
     public void songChangedEvent(Events.SongChanged event) {
         currSong = event.getSong();
         updateSongInfo();
+        updateWidget();
     }
 
     private void updateSongInfo() {
@@ -92,14 +93,13 @@ public class MyWidgetProvider extends AppWidgetProvider {
 
         remoteViews.setTextViewText(R.id.songTitle, title);
         remoteViews.setTextViewText(R.id.songArtist, artist);
-        updateWidget();
-        updatePlayPauseButton();
     }
 
     @Subscribe
     public void songStateChanged(Events.SongStateChanged event) {
         isPlaying = event.getIsPlaying();
         updatePlayPauseButton();
+        updateWidget();
     }
 
     private void updatePlayPauseButton() {
@@ -109,7 +109,6 @@ public class MyWidgetProvider extends AppWidgetProvider {
             bmp = pauseBitmap;
 
         remoteViews.setImageViewBitmap(R.id.playPauseBtn, bmp);
-        updateWidget();
     }
 
     private void updateWidget() {
