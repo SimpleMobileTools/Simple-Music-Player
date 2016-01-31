@@ -22,7 +22,6 @@ import yuku.ambilwarna.AmbilWarnaDialog;
 
 public class MyWidgetConfigure extends AppCompatActivity {
     @Bind(R.id.config_bg_seekbar) SeekBar bgSeekBar;
-    @Bind(R.id.config_text_seekbar) SeekBar textSeekBar;
     @Bind(R.id.config_player) View widgetBackground;
     @Bind(R.id.config_bg_color) View bgColorPicker;
     @Bind(R.id.config_text_color) View textColorPicker;
@@ -37,13 +36,11 @@ public class MyWidgetConfigure extends AppCompatActivity {
     @Bind(R.id.stopBtn) ImageView stopBtn;
 
     private int widgetId;
-    private int newBgColor;
+    private int bgColor;
     private int bgColorWithoutTransparency;
     private float bgAlpha;
 
-    private int newTextColor;
-    private int textColorWithoutTransparency;
-    private float textAlpha;
+    private int textColor;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -63,18 +60,21 @@ public class MyWidgetConfigure extends AppCompatActivity {
     }
 
     private void initVariables() {
-        bgAlpha = 0.5f;
+        final SharedPreferences prefs = getSharedPreferences(Constants.PREFS, Context.MODE_PRIVATE);
+        bgColor = prefs.getInt(Constants.WIDGET_BG_COLOR, 0);
+        if (bgColor == 0) {
+            bgColor = Color.BLACK;
+            bgAlpha = .5f;
+        } else {
+            bgAlpha = Color.alpha(bgColor) / (float) 255;
+        }
+
+        bgColorWithoutTransparency = Color.rgb(Color.red(bgColor), Color.green(bgColor), Color.blue(bgColor));
         bgSeekBar.setOnSeekBarChangeListener(bgSeekbarChangeListener);
         bgSeekBar.setProgress((int) (bgAlpha * 100));
-        newBgColor = Color.BLACK;
-        bgColorWithoutTransparency = newBgColor;
         updateBackgroundColor();
 
-        textAlpha = 1.f;
-        textSeekBar.setOnSeekBarChangeListener(textSeekbarChangeListener);
-        textSeekBar.setProgress((int) (textAlpha * 100));
-        newTextColor = Color.WHITE;
-        textColorWithoutTransparency = newTextColor;
+        textColor = prefs.getInt(Constants.WIDGET_TEXT_COLOR, Color.WHITE);
         updateTextColor();
 
         songTitle.setText("Song Title");
@@ -85,7 +85,7 @@ public class MyWidgetConfigure extends AppCompatActivity {
     public void saveConfig() {
         final AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
         final RemoteViews views = new RemoteViews(getPackageName(), R.layout.widget);
-        views.setInt(R.id.widget_holder, "setBackgroundColor", newBgColor);
+        views.setInt(R.id.widget_holder, "setBackgroundColor", bgColor);
         appWidgetManager.updateAppWidget(widgetId, views);
 
         storeWidgetColors();
@@ -116,14 +116,14 @@ public class MyWidgetConfigure extends AppCompatActivity {
 
     @OnClick(R.id.config_text_color)
     public void pickTextColor() {
-        AmbilWarnaDialog dialog = new AmbilWarnaDialog(this, textColorWithoutTransparency, new AmbilWarnaDialog.OnAmbilWarnaListener() {
+        AmbilWarnaDialog dialog = new AmbilWarnaDialog(this, textColor, new AmbilWarnaDialog.OnAmbilWarnaListener() {
             @Override
             public void onCancel(AmbilWarnaDialog dialog) {
             }
 
             @Override
             public void onOk(AmbilWarnaDialog dialog, int color) {
-                textColorWithoutTransparency = color;
+                textColor = color;
                 updateTextColor();
             }
         });
@@ -133,8 +133,8 @@ public class MyWidgetConfigure extends AppCompatActivity {
 
     private void storeWidgetColors() {
         final SharedPreferences prefs = getSharedPreferences(Constants.PREFS, Context.MODE_PRIVATE);
-        prefs.edit().putInt(Constants.WIDGET_BG_COLOR, newBgColor).apply();
-        prefs.edit().putInt(Constants.WIDGET_TEXT_COLOR, newTextColor).apply();
+        prefs.edit().putInt(Constants.WIDGET_BG_COLOR, bgColor).apply();
+        prefs.edit().putInt(Constants.WIDGET_TEXT_COLOR, textColor).apply();
     }
 
     private void requestWidgetUpdate() {
@@ -144,24 +144,23 @@ public class MyWidgetConfigure extends AppCompatActivity {
     }
 
     private void updateBackgroundColor() {
-        newBgColor = adjustAlpha(bgColorWithoutTransparency, bgAlpha);
-        widgetBackground.setBackgroundColor(newBgColor);
-        bgColorPicker.setBackgroundColor(newBgColor);
-        saveBtn.setBackgroundColor(newBgColor);
+        bgColor = adjustAlpha(bgColorWithoutTransparency, bgAlpha);
+        widgetBackground.setBackgroundColor(bgColor);
+        bgColorPicker.setBackgroundColor(bgColor);
+        saveBtn.setBackgroundColor(bgColor);
     }
 
     private void updateTextColor() {
-        newTextColor = adjustAlpha(textColorWithoutTransparency, textAlpha);
-        textColorPicker.setBackgroundColor(newTextColor);
+        textColorPicker.setBackgroundColor(textColor);
 
-        saveBtn.setTextColor(newTextColor);
-        songTitle.setTextColor(newTextColor);
-        songArtist.setTextColor(newTextColor);
+        saveBtn.setTextColor(textColor);
+        songTitle.setTextColor(textColor);
+        songArtist.setTextColor(textColor);
 
-        prevBtn.getDrawable().mutate().setColorFilter(newTextColor, PorterDuff.Mode.SRC_IN);
-        playPauseBtn.getDrawable().mutate().setColorFilter(newTextColor, PorterDuff.Mode.SRC_IN);
-        nextBtn.getDrawable().mutate().setColorFilter(newTextColor, PorterDuff.Mode.SRC_IN);
-        stopBtn.getDrawable().mutate().setColorFilter(newTextColor, PorterDuff.Mode.SRC_IN);
+        prevBtn.getDrawable().mutate().setColorFilter(textColor, PorterDuff.Mode.SRC_IN);
+        playPauseBtn.getDrawable().mutate().setColorFilter(textColor, PorterDuff.Mode.SRC_IN);
+        nextBtn.getDrawable().mutate().setColorFilter(textColor, PorterDuff.Mode.SRC_IN);
+        stopBtn.getDrawable().mutate().setColorFilter(textColor, PorterDuff.Mode.SRC_IN);
     }
 
     private SeekBar.OnSeekBarChangeListener bgSeekbarChangeListener = new SeekBar.OnSeekBarChangeListener() {
@@ -169,24 +168,6 @@ public class MyWidgetConfigure extends AppCompatActivity {
         public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
             bgAlpha = (float) progress / (float) 100;
             updateBackgroundColor();
-        }
-
-        @Override
-        public void onStartTrackingTouch(SeekBar seekBar) {
-
-        }
-
-        @Override
-        public void onStopTrackingTouch(SeekBar seekBar) {
-
-        }
-    };
-
-    private SeekBar.OnSeekBarChangeListener textSeekbarChangeListener = new SeekBar.OnSeekBarChangeListener() {
-        @Override
-        public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-            textAlpha = (float) progress / (float) 100;
-            updateTextColor();
         }
 
         @Override

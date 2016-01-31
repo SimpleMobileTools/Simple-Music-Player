@@ -123,24 +123,19 @@ public class MyWidgetProvider extends AppWidgetProvider {
 
         remoteViews.setInt(R.id.widget_holder, "setBackgroundColor", newBgColor);
 
-        final int alpha = Color.alpha(newTextColor);
         remoteViews.setInt(R.id.songTitle, "setTextColor", newTextColor);
         remoteViews.setInt(R.id.songArtist, "setTextColor", newTextColor);
 
         Bitmap bmp = getColoredIcon(context, newTextColor, R.mipmap.previous_white);
-        remoteViews.setInt(R.id.previousBtn, "setAlpha", alpha);
         remoteViews.setImageViewBitmap(R.id.previousBtn, bmp);
 
         playBitmap = getColoredIcon(context, newTextColor, R.mipmap.play_white);
         pauseBitmap = getColoredIcon(context, newTextColor, R.mipmap.pause_white);
-        remoteViews.setInt(R.id.playPauseBtn, "setAlpha", alpha);
 
         bmp = getColoredIcon(context, newTextColor, R.mipmap.next_white);
-        remoteViews.setInt(R.id.nextBtn, "setAlpha", alpha);
         remoteViews.setImageViewBitmap(R.id.nextBtn, bmp);
 
         bmp = getColoredIcon(context, newTextColor, R.mipmap.stop_white);
-        remoteViews.setInt(R.id.stopBtn, "setAlpha", alpha);
         remoteViews.setImageViewBitmap(R.id.stopBtn, bmp);
     }
 
