@@ -48,6 +48,7 @@ public class MyWidgetConfigure extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setResult(RESULT_CANCELED);
         setContentView(R.layout.widget_config);
         ButterKnife.bind(this);
         initVariables();
@@ -59,8 +60,6 @@ public class MyWidgetConfigure extends AppCompatActivity {
 
         if (widgetId == AppWidgetManager.INVALID_APPWIDGET_ID)
             finish();
-
-        setResult(RESULT_CANCELED);
     }
 
     private void initVariables() {
@@ -89,7 +88,7 @@ public class MyWidgetConfigure extends AppCompatActivity {
         views.setInt(R.id.widget_holder, "setBackgroundColor", newBgColor);
         appWidgetManager.updateAppWidget(widgetId, views);
 
-        storeWidgetBackground();
+        storeWidgetColors();
         requestWidgetUpdate();
 
         final Intent resultValue = new Intent();
@@ -132,7 +131,7 @@ public class MyWidgetConfigure extends AppCompatActivity {
         dialog.show();
     }
 
-    private void storeWidgetBackground() {
+    private void storeWidgetColors() {
         final SharedPreferences prefs = getSharedPreferences(Constants.PREFS, Context.MODE_PRIVATE);
         prefs.edit().putInt(Constants.WIDGET_BG_COLOR, newBgColor).apply();
         prefs.edit().putInt(Constants.WIDGET_TEXT_COLOR, newTextColor).apply();
