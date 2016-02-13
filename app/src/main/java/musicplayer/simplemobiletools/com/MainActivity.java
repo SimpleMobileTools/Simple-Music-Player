@@ -1,25 +1,26 @@
 package musicplayer.simplemobiletools.com;
 
-import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
-import android.content.ServiceConnection;
 import android.os.Bundle;
-import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.squareup.otto.Bus;
+import com.squareup.otto.Subscribe;
+
+import java.util.ArrayList;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity {
-    private MusicService musicService;
-    private boolean isMusicBound;
+    private Bus bus;
 
     @Bind(R.id.playPauseBtn) ImageView playPauseBtn;
     @Bind(R.id.songs) ListView songsList;
@@ -31,16 +32,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-
-        final Intent intent = new Intent(this, MusicService.class);
-        bindService(intent, musicConnection, Context.BIND_AUTO_CREATE);
-        startService(intent);
+        bus = BusProvider.getInstance();
+        bus.register(this);
+        startService(new Intent(Constants.INIT));
     }
 
     private void songPicked(int pos) {
-        musicService.setSong(pos, true);
-        updateSongInfo(musicService.getCurrSong());
-        setPauseIcon();
+        final Intent intent = new Intent(Constants.PLAYPOS);
+        intent.putExtra(Constants.SONG_POS, pos);
+        startService(intent);
     }
 
     private void updateSongInfo(Song song) {
@@ -50,27 +50,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private ServiceConnection musicConnection = new ServiceConnection() {
-        @Override
-        public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
-            final MusicService.MyBinder binder = (MusicService.MyBinder) iBinder;
-            musicService = binder.getService();
-            isMusicBound = true;
-
-            updateSongInfo(musicService.getCurrSong());
-            if (musicService.isPlaying())
-                setPauseIcon();
-            fillSongsListView();
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName componentName) {
-            isMusicBound = false;
-        }
-    };
-
-    private void fillSongsListView() {
-        final SongAdapter adapter = new SongAdapter(this, musicService.getSongs());
+    private void fillSongsListView(ArrayList<Song> songs) {
+        final SongAdapter adapter = new SongAdapter(this, songs);
         songsList.setAdapter(adapter);
         songsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -81,126 +62,47 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        if (musicService != null) {
-            updateSongInfo(musicService.getCurrSong());
-
-            if (musicService.isPlaying()) {
-                setPauseIcon();
-            } else {
-                setPlayIcon();
-            }
-        }
-    }
-
-    @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (isMusicBound) {
-            isMusicBound = false;
-            unbindService(musicConnection);
-        }
+        bus.unregister(this);
     }
 
     @OnClick(R.id.previousBtn)
     public void previousClicked() {
-        if (isPlaylistEmpty())
-            return;
-
-        playPreviousSong();
+        startService(new Intent(Constants.PREVIOUS));
     }
 
     @OnClick(R.id.playPauseBtn)
     public void playPauseClicked() {
-        if (isPlaylistEmpty())
-            return;
-
-        resumePauseSong();
+        startService(new Intent(Constants.PLAYPAUSE));
     }
 
     @OnClick(R.id.nextBtn)
     public void nextClicked() {
-        if (isPlaylistEmpty())
-            return;
-
-        playNextSong();
+        startService(new Intent(Constants.NEXT));
     }
 
     @OnClick(R.id.stopBtn)
     public void stopClicked() {
-        if (isPlaylistEmpty())
-            return;
-
-        stopMusic();
+        startService(new Intent(Constants.STOP));
     }
 
-    public void stopMusic() {
-        if (musicService != null) {
-            musicService.stopSong();
-            setPlayIcon();
-        }
+    @Subscribe
+    public void songChangedEvent(Events.SongChanged event) {
+        updateSongInfo(event.getSong());
     }
 
-    public void resumePauseSong() {
-        if (musicService == null)
-            return;
+    @Subscribe
+    public void songStateChanged(Events.SongStateChanged event) {
+        int id = R.mipmap.play;
+        if (event.getIsPlaying())
+            id = R.mipmap.pause;
 
-        if (musicService.isPlaying()) {
-            pauseSong();
-        } else {
-            resumeSong();
-        }
-
-        // in case we just launched the app and pressed play, also update the song and artist name
-        if (artistTV.getText().toString().trim().isEmpty())
-            updateSongInfo(musicService.getCurrSong());
+        playPauseBtn.setImageDrawable(getResources().getDrawable(id));
     }
 
-    private void resumeSong() {
-        musicService.resumeSong();
-        setPauseIcon();
-    }
-
-    private void pauseSong() {
-        if (musicService == null)
-            return;
-
-        musicService.pauseSong();
-        setPlayIcon();
-    }
-
-    private void playPreviousSong() {
-        if (musicService == null)
-            return;
-
-        musicService.playPreviousSong();
-        setPauseIcon();
-        updateSongInfo(musicService.getCurrSong());
-    }
-
-    private void playNextSong() {
-        if (musicService == null)
-            return;
-
-        musicService.playNextSong();
-        updateSongInfo(musicService.getCurrSong());
-        setPauseIcon();
-    }
-
-    private void setPlayIcon() {
-        playPauseBtn.setImageDrawable(getResources().getDrawable(R.mipmap.play));
-    }
-
-    private void setPauseIcon() {
-        playPauseBtn.setImageDrawable(getResources().getDrawable(R.mipmap.pause));
-    }
-
-    private boolean isPlaylistEmpty() {
-        if (musicService == null || musicService.getSongs().isEmpty()) {
-            Utils.showToast(this, R.string.playlist_empty);
-            return true;
-        }
-        return false;
+    @Subscribe
+    public void playlistUpdated(Events.PlaylistUpdated event) {
+        fillSongsListView(event.getSongs());
     }
 }

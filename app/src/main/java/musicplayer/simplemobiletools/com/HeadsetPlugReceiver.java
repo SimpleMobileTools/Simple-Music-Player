@@ -4,8 +4,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import com.squareup.otto.Bus;
-
 public class HeadsetPlugReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -13,8 +11,7 @@ public class HeadsetPlugReceiver extends BroadcastReceiver {
             int state = intent.getIntExtra("state", -1);
             // we care only about the case where the headphone gets unplugged
             if (state == 0) {
-                final Bus bus = BusProvider.getInstance();
-                bus.post(new Events.PauseSong());
+                context.startService(new Intent(Constants.PAUSE));
             }
         }
     }

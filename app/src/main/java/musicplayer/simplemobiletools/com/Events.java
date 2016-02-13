@@ -1,21 +1,8 @@
 package musicplayer.simplemobiletools.com;
 
+import java.util.ArrayList;
+
 public class Events {
-    public static class PreviousSong {
-    }
-
-    public static class PlayPauseSong {
-    }
-
-    public static class PauseSong {
-    }
-
-    public static class NextSong {
-    }
-
-    public static class StopSong {
-    }
-
     public static class IncomingCallStart {
     }
 
@@ -43,6 +30,18 @@ public class Events {
 
         public boolean getIsPlaying() {
             return isPlaying;
+        }
+    }
+
+    public static class PlaylistUpdated {
+        private ArrayList<Song> songs;
+
+        PlaylistUpdated(ArrayList<Song> songs) {
+            this.songs = songs;
+        }
+
+        public ArrayList<Song> getSongs() {
+            return songs;
         }
     }
 }

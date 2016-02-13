@@ -40,6 +40,7 @@ public class MyWidgetProvider extends AppWidgetProvider {
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         initVariables(cxt);
+        super.onUpdate(context, appWidgetManager, appWidgetIds);
     }
 
     private void setupIntent(String action, int id) {
@@ -52,15 +53,14 @@ public class MyWidgetProvider extends AppWidgetProvider {
 
     private void initVariables(Context context) {
         cxt = context;
+        intent = new Intent(cxt, MyWidgetProvider.class);
         final ComponentName component = new ComponentName(cxt, MyWidgetProvider.class);
-
         widgetManager = AppWidgetManager.getInstance(cxt);
         widgetIds = widgetManager.getAppWidgetIds(component);
-        if (widgetIds.length == 0)
-            return;
+        for (int widgetId : widgetIds) {
+            remoteViews = getRemoteViews(widgetManager, cxt, widgetId);
+        }
 
-        remoteViews = getRemoteViews(widgetManager, cxt, widgetIds[0]);
-        intent = new Intent(cxt, MyWidgetProvider.class);
         setupViews(cxt);
 
         if (bus == null) {
@@ -77,7 +77,7 @@ public class MyWidgetProvider extends AppWidgetProvider {
     public void songChangedEvent(Events.SongChanged event) {
         currSong = event.getSong();
         updateSongInfo();
-        updateWidget();
+        updateWidgets();
     }
 
     private void updateSongInfo() {
@@ -99,7 +99,7 @@ public class MyWidgetProvider extends AppWidgetProvider {
     public void songStateChanged(Events.SongStateChanged event) {
         isPlaying = event.getIsPlaying();
         updatePlayPauseButton();
-        updateWidget();
+        updateWidgets();
     }
 
     private void updatePlayPauseButton() {
@@ -111,8 +111,10 @@ public class MyWidgetProvider extends AppWidgetProvider {
         remoteViews.setImageViewBitmap(R.id.playPauseBtn, bmp);
     }
 
-    private void updateWidget() {
-        widgetManager.updateAppWidget(widgetIds, remoteViews);
+    private void updateWidgets() {
+        for (int widgetId : widgetIds) {
+            widgetManager.updateAppWidget(widgetId, remoteViews);
+        }
     }
 
     private void updateColors(Context context) {
@@ -153,22 +155,23 @@ public class MyWidgetProvider extends AppWidgetProvider {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        if (remoteViews == null || widgetManager == null || widgetIds == null || bus == null)
+        if (remoteViews == null || widgetManager == null || bus == null) {
             initVariables(context);
+        }
 
         final String action = intent.getAction();
         switch (action) {
             case PREVIOUS:
-                bus.post(new Events.PreviousSong());
+                context.startService(new Intent(Constants.PREVIOUS));
                 break;
             case PLAYPAUSE:
-                bus.post(new Events.PlayPauseSong());
+                context.startService(new Intent(Constants.PLAYPAUSE));
                 break;
             case NEXT:
-                bus.post(new Events.NextSong());
+                context.startService(new Intent(Constants.NEXT));
                 break;
             case STOP:
-                bus.post(new Events.StopSong());
+                context.startService(new Intent(Constants.STOP));
                 break;
             default:
                 super.onReceive(context, intent);
@@ -193,7 +196,7 @@ public class MyWidgetProvider extends AppWidgetProvider {
         setupButtons();
         updateSongInfo();
         updatePlayPauseButton();
-        updateWidget();
+        updateWidgets();
     }
 
     @Override

@@ -10,17 +10,14 @@ import android.database.Cursor;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
-import android.os.Binder;
 import android.os.IBinder;
 import android.os.PowerManager;
 import android.provider.MediaStore;
-import android.support.annotation.Nullable;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 
 import com.squareup.otto.Bus;
-import com.squareup.otto.Subscribe;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -32,7 +29,6 @@ public class MusicService extends Service
         implements MediaPlayer.OnPreparedListener, MediaPlayer.OnErrorListener, MediaPlayer.OnCompletionListener {
     private static final String TAG = MusicService.class.getSimpleName();
     private static final int MIN_DURATION_MS = 20000;
-    private final IBinder musicBind = new MyBinder();
     private HeadsetPlugReceiver headsetPlugReceiver;
     private IncomingCallReceiver incomingCallReceiver;
     private ArrayList<Song> songs;
@@ -55,9 +51,54 @@ public class MusicService extends Service
 
         getSortedSongs();
         headsetPlugReceiver = new HeadsetPlugReceiver();
-        incomingCallReceiver = new IncomingCallReceiver();
+        incomingCallReceiver = new IncomingCallReceiver(this);
         wasPlayingAtCall = false;
         initMediaPlayer();
+    }
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        String action = intent.getAction();
+        if (action != null) {
+            switch (action) {
+                case Constants.INIT:
+                    bus.post(new Events.PlaylistUpdated(songs));
+                    bus.post(new Events.SongChanged(currSong));
+                    songStateChanged(isPlaying());
+                    break;
+                case Constants.PREVIOUS:
+                    playPreviousSong();
+                    break;
+                case Constants.PAUSE:
+                    pauseSong();
+                    break;
+                case Constants.PLAYPAUSE:
+                    if (isPlaying())
+                        pauseSong();
+                    else
+                        resumeSong();
+                    break;
+                case Constants.NEXT:
+                    playNextSong();
+                    break;
+                case Constants.STOP:
+                    stopSong();
+                    break;
+                case Constants.PLAYPOS:
+                    playSong(intent);
+                    break;
+                case Constants.CALL_START:
+                    incomingCallStart();
+                    break;
+                case Constants.CALL_STOP:
+                    incomingCallStop();
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        return START_NOT_STICKY;
     }
 
     public void initMediaPlayer() {
@@ -151,6 +192,10 @@ public class MusicService extends Service
     }
 
     public void resumeSong() {
+        if (songs.isEmpty()) {
+            fillPlaylist();
+        }
+
         if (songs.isEmpty())
             return;
 
@@ -182,10 +227,16 @@ public class MusicService extends Service
         player.seekTo(0);
     }
 
+    private void playSong(Intent intent) {
+        final int pos = intent.getIntExtra(Constants.SONG_POS, 0);
+        setSong(pos, true);
+    }
+
     public void setSong(int songId, boolean addNewSong) {
         if (songs.isEmpty())
             return;
 
+        final boolean wasPlaying = isPlaying();
         if (player == null)
             initMediaPlayer();
 
@@ -204,32 +255,15 @@ public class MusicService extends Service
 
         player.prepareAsync();
         bus.post(new Events.SongChanged(currSong));
-        songStateChanged(true);
+
+        if (!wasPlaying) {
+            songStateChanged(true);
+        }
     }
 
-    public Song getCurrSong() {
-        return currSong;
-    }
-
-    @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-        return musicBind;
-    }
-
-    @Override
-    public boolean onUnbind(Intent intent) {
-        bus.post(new Events.SongChanged(null));
-        songStateChanged(false);
-
-        if (player != null && !player.isPlaying()) {
-            destroyPlayer();
-        }
-        return false;
-    }
-
-    public ArrayList<Song> getSongs() {
-        return songs;
+        return null;
     }
 
     @Override
@@ -260,18 +294,30 @@ public class MusicService extends Service
     }
 
     private void destroyPlayer() {
-        player.stop();
-        player.release();
-        player = null;
+        if (player != null) {
+            player.stop();
+            player.release();
+            player = null;
+        }
 
         final TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
         telephonyManager.listen(incomingCallReceiver, PhoneStateListener.LISTEN_NONE);
     }
 
-    public class MyBinder extends Binder {
-        MusicService getService() {
-            return MusicService.this;
+    public void incomingCallStart() {
+        if (isPlaying()) {
+            wasPlayingAtCall = true;
+            pauseSong();
+        } else {
+            wasPlayingAtCall = false;
         }
+    }
+
+    public void incomingCallStop() {
+        if (wasPlayingAtCall)
+            resumeSong();
+
+        wasPlayingAtCall = false;
     }
 
     private void songStateChanged(boolean isPlaying) {
@@ -287,54 +333,8 @@ public class MusicService extends Service
             try {
                 unregisterReceiver(headsetPlugReceiver);
             } catch (IllegalArgumentException e) {
+                Log.e(TAG, "IllegalArgumentException " + e.getMessage());
             }
         }
-    }
-
-    @Subscribe
-    public void previousSongEvent(Events.PreviousSong event) {
-        playPreviousSong();
-    }
-
-    @Subscribe
-    public void playPauseSongEvent(Events.PlayPauseSong event) {
-        if (isPlaying())
-            pauseSong();
-        else
-            resumeSong();
-    }
-
-    @Subscribe
-    public void nextSongEvent(Events.NextSong event) {
-        playNextSong();
-    }
-
-    @Subscribe
-    public void stopSongEvent(Events.StopSong event) {
-        stopSong();
-    }
-
-    @Subscribe
-    public void pauseSongEvent(Events.PauseSong event) {
-        // if the headset is unplugged, pause the song
-        pauseSong();
-    }
-
-    @Subscribe
-    public void incomingCallStart(Events.IncomingCallStart event) {
-        if (isPlaying()) {
-            wasPlayingAtCall = true;
-            pauseSong();
-        } else {
-            wasPlayingAtCall = false;
-        }
-    }
-
-    @Subscribe
-    public void incomingCallStop(Events.IncomingCallStop event) {
-        if (wasPlayingAtCall)
-            resumeSong();
-
-        wasPlayingAtCall = false;
     }
 }

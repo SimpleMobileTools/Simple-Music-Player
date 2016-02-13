@@ -9,6 +9,7 @@
 
     <application
         android:allowBackup="true"
+        android:enabled="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
@@ -32,7 +33,21 @@
             </intent-filter>
         </activity>
 
-        <service android:name="musicplayer.simplemobiletools.com.MusicService"/>
+        <service
+            android:name="musicplayer.simplemobiletools.com.MusicService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="musicplayer.simplemobiletools.com.action.INIT"/>
+                <action android:name="musicplayer.simplemobiletools.com.action.PREVIOUS"/>
+                <action android:name="musicplayer.simplemobiletools.com.action.PAUSE"/>
+                <action android:name="musicplayer.simplemobiletools.com.action.PLAYPAUSE"/>
+                <action android:name="musicplayer.simplemobiletools.com.action.NEXT"/>
+                <action android:name="musicplayer.simplemobiletools.com.action.STOP"/>
+                <action android:name="musicplayer.simplemobiletools.com.action.PLAYPOS"/>
+                <action android:name="musicplayer.simplemobiletools.com.action.INCOMING_CALL_START"/>
+                <action android:name="musicplayer.simplemobiletools.com.action.INCOMING_CALL_STOP"/>
+            </intent-filter>
+        </service>
 
         <receiver android:name=".MyWidgetProvider">
             <intent-filter>
