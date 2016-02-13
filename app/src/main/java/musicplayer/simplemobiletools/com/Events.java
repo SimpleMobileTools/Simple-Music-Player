@@ -3,12 +3,6 @@ package musicplayer.simplemobiletools.com;
 import java.util.ArrayList;
 
 public class Events {
-    public static class IncomingCallStart {
-    }
-
-    public static class IncomingCallStop {
-    }
-
     public static class SongChanged {
         private Song song;
 

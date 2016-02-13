@@ -1,5 +1,7 @@
 package musicplayer.simplemobiletools.com;
 
+import android.app.Notification;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.ContentResolver;
 import android.content.ContentUris;
@@ -16,6 +18,8 @@ import android.provider.MediaStore;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.util.Log;
+import android.view.View;
+import android.widget.RemoteViews;
 
 import com.squareup.otto.Bus;
 
@@ -53,7 +57,8 @@ public class MusicService extends Service
         headsetPlugReceiver = new HeadsetPlugReceiver();
         incomingCallReceiver = new IncomingCallReceiver(this);
         wasPlayingAtCall = false;
-        initMediaPlayer();
+        initMediaPlayerIfNeeded();
+        setupNotification();
     }
 
     @Override
@@ -93,6 +98,9 @@ public class MusicService extends Service
                 case Constants.CALL_STOP:
                     incomingCallStop();
                     break;
+                case Constants.FINISH:
+                    destroyPlayer();
+                    break;
                 default:
                     break;
             }
@@ -101,7 +109,10 @@ public class MusicService extends Service
         return START_NOT_STICKY;
     }
 
-    public void initMediaPlayer() {
+    public void initMediaPlayerIfNeeded() {
+        if (player != null)
+            return;
+
         player = new MediaPlayer();
         player.setWakeMode(getApplicationContext(), PowerManager.PARTIAL_WAKE_LOCK);
         player.setAudioStreamType(AudioManager.STREAM_MUSIC);
@@ -142,6 +153,56 @@ public class MusicService extends Service
         });
     }
 
+    private void setupNotification() {
+        final Intent intent = new Intent(this, ControlActionsListener.class);
+
+        final RemoteViews remoteViews = new RemoteViews(getPackageName(), R.layout.notification);
+        remoteViews.setInt(R.id.widget_holder, "setBackgroundColor", 0);
+
+        updateSongInfo(remoteViews);
+        updatePlayPauseButton(remoteViews);
+
+        setupIntent(intent, remoteViews, Constants.PREVIOUS, R.id.previousBtn);
+        setupIntent(intent, remoteViews, Constants.PLAYPAUSE, R.id.playPauseBtn);
+        setupIntent(intent, remoteViews, Constants.NEXT, R.id.nextBtn);
+        setupIntent(intent, remoteViews, Constants.STOP, R.id.stopBtn);
+        setupIntent(intent, remoteViews, Constants.FINISH, R.id.closeBtn);
+
+        remoteViews.setViewVisibility(R.id.closeBtn, View.VISIBLE);
+
+        final Notification notification = new Notification.Builder(this).setSmallIcon(R.mipmap.ic_launcher).build();
+        notification.bigContentView = remoteViews;
+
+        final Intent contentIntent = new Intent(this, MainActivity.class);
+        notification.contentIntent = PendingIntent.getActivity(this, 0, contentIntent, 0);
+
+        startForeground(1, notification);
+    }
+
+    private void setupIntent(Intent intent, RemoteViews remoteViews, String action, int id) {
+        intent.setAction(action);
+        final PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, intent, 0);
+
+        if (remoteViews != null)
+            remoteViews.setOnClickPendingIntent(id, pendingIntent);
+    }
+
+    private void updateSongInfo(RemoteViews remoteViews) {
+        final String title = (currSong == null) ? "" : currSong.getTitle();
+        final String artist = (currSong == null) ? "" : currSong.getArtist();
+
+        remoteViews.setTextViewText(R.id.songTitle, title);
+        remoteViews.setTextViewText(R.id.songArtist, artist);
+    }
+
+    private void updatePlayPauseButton(RemoteViews remoteViews) {
+        int playPauseIcon = R.mipmap.play_white;
+        if (isPlaying())
+            playPauseIcon = R.mipmap.pause_white;
+
+        remoteViews.setImageViewResource(R.id.playPauseBtn, playPauseIcon);
+    }
+
     private int getNewSongId() {
         final int cnt = songs.size();
         if (cnt == 0) {
@@ -167,8 +228,7 @@ public class MusicService extends Service
         if (songs.isEmpty())
             return;
 
-        if (player == null)
-            initMediaPlayer();
+        initMediaPlayerIfNeeded();
 
         // play the previous song if we are less than 5 secs into the song, else restart
         // remove the latest song from the list
@@ -184,8 +244,7 @@ public class MusicService extends Service
         if (songs.isEmpty())
             return;
 
-        if (player == null)
-            initMediaPlayer();
+        initMediaPlayerIfNeeded();
 
         player.pause();
         songStateChanged(false);
@@ -199,8 +258,7 @@ public class MusicService extends Service
         if (songs.isEmpty())
             return;
 
-        if (player == null)
-            initMediaPlayer();
+        initMediaPlayerIfNeeded();
 
         if (currSong == null)
             playNextSong();
@@ -237,8 +295,7 @@ public class MusicService extends Service
             return;
 
         final boolean wasPlaying = isPlaying();
-        if (player == null)
-            initMediaPlayer();
+        initMediaPlayerIfNeeded();
 
         player.reset();
         if (addNewSong)
@@ -283,14 +340,13 @@ public class MusicService extends Service
     @Override
     public void onPrepared(MediaPlayer mp) {
         mp.start();
+        setupNotification();
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         destroyPlayer();
-        if (bus != null)
-            bus.unregister(this);
     }
 
     private void destroyPlayer() {
@@ -300,8 +356,17 @@ public class MusicService extends Service
             player = null;
         }
 
+        if (bus != null) {
+            songStateChanged(false);
+            bus.post(new Events.SongChanged(null));
+            bus.unregister(this);
+        }
+
         final TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
         telephonyManager.listen(incomingCallReceiver, PhoneStateListener.LISTEN_NONE);
+
+        stopForeground(true);
+        stopSelf();
     }
 
     public void incomingCallStart() {
@@ -321,6 +386,7 @@ public class MusicService extends Service
     }
 
     private void songStateChanged(boolean isPlaying) {
+        setupNotification();
         bus.post(new Events.SongStateChanged(isPlaying));
 
         if (isPlaying) {

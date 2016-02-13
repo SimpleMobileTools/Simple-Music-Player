@@ -38,6 +38,7 @@
             android:exported="false">
             <intent-filter>
                 <action android:name="musicplayer.simplemobiletools.com.action.INIT"/>
+                <action android:name="musicplayer.simplemobiletools.com.action.FINISH"/>
                 <action android:name="musicplayer.simplemobiletools.com.action.PREVIOUS"/>
                 <action android:name="musicplayer.simplemobiletools.com.action.PAUSE"/>
                 <action android:name="musicplayer.simplemobiletools.com.action.PLAYPAUSE"/>
@@ -69,5 +70,7 @@
                 <action android:name="android.intent.action.MEDIA_BUTTON"/>
             </intent-filter>
         </receiver>
+
+        <receiver android:name=".ControlActionsListener"/>
     </application>
 </manifest>

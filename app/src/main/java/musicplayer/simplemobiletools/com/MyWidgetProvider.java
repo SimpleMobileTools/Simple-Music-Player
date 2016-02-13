@@ -21,11 +21,6 @@ import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
 public class MyWidgetProvider extends AppWidgetProvider {
-    private static final String PREVIOUS = "previous";
-    private static final String PLAYPAUSE = "playpause";
-    private static final String NEXT = "next";
-    private static final String STOP = "stop";
-
     private static int[] widgetIds;
     private static RemoteViews remoteViews;
     private static AppWidgetManager widgetManager;
@@ -45,7 +40,7 @@ public class MyWidgetProvider extends AppWidgetProvider {
 
     private void setupIntent(String action, int id) {
         intent.setAction(action);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(cxt, 0, intent, 0);
+        final PendingIntent pendingIntent = PendingIntent.getBroadcast(cxt, 0, intent, 0);
 
         if (remoteViews != null)
             remoteViews.setOnClickPendingIntent(id, pendingIntent);
@@ -171,17 +166,11 @@ public class MyWidgetProvider extends AppWidgetProvider {
 
         final String action = intent.getAction();
         switch (action) {
-            case PREVIOUS:
-                context.startService(new Intent(Constants.PREVIOUS));
-                break;
-            case PLAYPAUSE:
-                context.startService(new Intent(Constants.PLAYPAUSE));
-                break;
-            case NEXT:
-                context.startService(new Intent(Constants.NEXT));
-                break;
-            case STOP:
-                context.startService(new Intent(Constants.STOP));
+            case Constants.PREVIOUS:
+            case Constants.PLAYPAUSE:
+            case Constants.NEXT:
+            case Constants.STOP:
+                context.startService(new Intent(action));
                 break;
             default:
                 super.onReceive(context, intent);
@@ -196,10 +185,10 @@ public class MyWidgetProvider extends AppWidgetProvider {
     }
 
     private void setupButtons() {
-        setupIntent(PREVIOUS, R.id.previousBtn);
-        setupIntent(PLAYPAUSE, R.id.playPauseBtn);
-        setupIntent(NEXT, R.id.nextBtn);
-        setupIntent(STOP, R.id.stopBtn);
+        setupIntent(Constants.PREVIOUS, R.id.previousBtn);
+        setupIntent(Constants.PLAYPAUSE, R.id.playPauseBtn);
+        setupIntent(Constants.NEXT, R.id.nextBtn);
+        setupIntent(Constants.STOP, R.id.stopBtn);
     }
 
     private void setupViews(Context context) {

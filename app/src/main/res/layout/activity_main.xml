@@ -11,8 +11,6 @@
         android:id="@+id/controls"
         android:layout_width="match_parent"
         android:layout_height="@dimen/widget_row_height"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
         android:layout_marginRight="@dimen/activity_margin"
         android:orientation="horizontal">
 
@@ -21,6 +19,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
             android:src="@mipmap/previous"/>
 
         <ImageView
@@ -28,6 +28,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
             android:src="@mipmap/play"/>
 
         <ImageView
@@ -35,6 +37,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
             android:src="@mipmap/next"/>
 
         <ImageView
@@ -42,6 +46,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
             android:src="@mipmap/stop"/>
 
     </LinearLayout>
