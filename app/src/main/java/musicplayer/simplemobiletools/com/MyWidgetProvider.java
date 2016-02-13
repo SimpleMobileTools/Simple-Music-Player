@@ -54,9 +54,7 @@ public class MyWidgetProvider extends AppWidgetProvider {
     private void initVariables(Context context) {
         cxt = context;
         intent = new Intent(cxt, MyWidgetProvider.class);
-        final ComponentName component = new ComponentName(cxt, MyWidgetProvider.class);
-        widgetManager = AppWidgetManager.getInstance(cxt);
-        widgetIds = widgetManager.getAppWidgetIds(component);
+        updateWidgetIds();
         for (int widgetId : widgetIds) {
             remoteViews = getRemoteViews(widgetManager, cxt, widgetId);
         }
@@ -69,12 +67,21 @@ public class MyWidgetProvider extends AppWidgetProvider {
         registerBus();
     }
 
+    private void updateWidgetIds() {
+        final ComponentName component = new ComponentName(cxt, MyWidgetProvider.class);
+        widgetManager = AppWidgetManager.getInstance(cxt);
+        widgetIds = widgetManager.getAppWidgetIds(component);
+    }
+
     private SharedPreferences initPrefs(Context context) {
         return context.getSharedPreferences(Constants.PREFS, Context.MODE_PRIVATE);
     }
 
     @Subscribe
     public void songChangedEvent(Events.SongChanged event) {
+        if (currSong == event.getSong())
+            return;
+
         currSong = event.getSong();
         updateSongInfo();
         updateWidgets();
@@ -97,6 +104,9 @@ public class MyWidgetProvider extends AppWidgetProvider {
 
     @Subscribe
     public void songStateChanged(Events.SongStateChanged event) {
+        if (isPlaying == event.getIsPlaying())
+            return;
+
         isPlaying = event.getIsPlaying();
         updatePlayPauseButton();
         updateWidgets();
@@ -182,6 +192,7 @@ public class MyWidgetProvider extends AppWidgetProvider {
     public void onDeleted(Context context, int[] appWidgetIds) {
         super.onDeleted(context, appWidgetIds);
         unregisterBus();
+        updateWidgetIds();
     }
 
     private void setupButtons() {
@@ -192,6 +203,7 @@ public class MyWidgetProvider extends AppWidgetProvider {
     }
 
     private void setupViews(Context context) {
+        updateWidgetIds();
         updateColors(context);
         setupButtons();
         updateSongInfo();
