@@ -273,7 +273,7 @@ public class MusicService extends Service
     }
 
     public void stopSong() {
-        if (player != null) {
+        if (player != null && isPlaying()) {
             // .stop() seems to misbehave weirdly
             player.pause();
             player.seekTo(0);
