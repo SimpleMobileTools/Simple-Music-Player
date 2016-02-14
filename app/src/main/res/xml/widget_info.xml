@@ -3,5 +3,7 @@
                     android:configure="musicplayer.simplemobiletools.com.MyWidgetConfigure"
                     android:initialLayout="@layout/widget"
                     android:minHeight="110dp"
-                    android:minWidth="250dp">
+                    android:minResizeHeight="30dp"
+                    android:minWidth="250dp"
+                    android:resizeMode="vertical">
 </appwidget-provider>
