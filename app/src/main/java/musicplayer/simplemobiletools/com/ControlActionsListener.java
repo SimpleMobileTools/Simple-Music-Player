@@ -14,7 +14,7 @@ public class ControlActionsListener extends BroadcastReceiver {
             case Constants.NEXT:
             case Constants.STOP:
             case Constants.FINISH:
-                context.startService(new Intent(action));
+                Utils.sendIntent(context, action);
                 break;
             default:
                 break;

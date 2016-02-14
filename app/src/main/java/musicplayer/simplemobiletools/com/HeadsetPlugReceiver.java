@@ -11,7 +11,7 @@ public class HeadsetPlugReceiver extends BroadcastReceiver {
             int state = intent.getIntExtra("state", -1);
             // we care only about the case where the headphone gets unplugged
             if (state == 0) {
-                context.startService(new Intent(Constants.PAUSE));
+                Utils.sendIntent(context, Constants.PAUSE);
             }
         }
     }

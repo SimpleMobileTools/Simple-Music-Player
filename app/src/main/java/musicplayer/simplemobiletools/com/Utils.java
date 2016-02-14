@@ -1,10 +1,12 @@
 package musicplayer.simplemobiletools.com;
 
 import android.content.Context;
-import android.widget.Toast;
+import android.content.Intent;
 
 public class Utils {
-    public static void showToast(Context context, int msgId) {
-        Toast.makeText(context, context.getResources().getString(msgId), Toast.LENGTH_SHORT).show();
+    public static void sendIntent(Context context, String action) {
+        Intent intent = new Intent(context, MusicService.class);
+        intent.setAction(action);
+        context.startService(intent);
     }
 }

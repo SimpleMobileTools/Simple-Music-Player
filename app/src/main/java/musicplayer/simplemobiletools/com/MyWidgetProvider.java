@@ -170,7 +170,7 @@ public class MyWidgetProvider extends AppWidgetProvider {
             case Constants.PLAYPAUSE:
             case Constants.NEXT:
             case Constants.STOP:
-                context.startService(new Intent(action));
+                Utils.sendIntent(context, action);
                 break;
             default:
                 super.onReceive(context, intent);

@@ -33,12 +33,13 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         bus = BusProvider.getInstance();
         bus.register(this);
-        startService(new Intent(Constants.INIT));
+        Utils.sendIntent(this, Constants.INIT);
     }
 
     private void songPicked(int pos) {
-        final Intent intent = new Intent(Constants.PLAYPOS);
+        final Intent intent = new Intent(this, MusicService.class);
         intent.putExtra(Constants.SONG_POS, pos);
+        intent.setAction(Constants.PLAYPOS);
         startService(intent);
     }
 
@@ -68,22 +69,22 @@ public class MainActivity extends AppCompatActivity {
 
     @OnClick(R.id.previousBtn)
     public void previousClicked() {
-        startService(new Intent(Constants.PREVIOUS));
+        Utils.sendIntent(this, Constants.PREVIOUS);
     }
 
     @OnClick(R.id.playPauseBtn)
     public void playPauseClicked() {
-        startService(new Intent(Constants.PLAYPAUSE));
+        Utils.sendIntent(this, Constants.PLAYPAUSE);
     }
 
     @OnClick(R.id.nextBtn)
     public void nextClicked() {
-        startService(new Intent(Constants.NEXT));
+        Utils.sendIntent(this, Constants.NEXT);
     }
 
     @OnClick(R.id.stopBtn)
     public void stopClicked() {
-        startService(new Intent(Constants.STOP));
+        Utils.sendIntent(this, Constants.STOP);
     }
 
     @Subscribe

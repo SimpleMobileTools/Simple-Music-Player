@@ -37,11 +37,11 @@ public class RemoteControlReceiver extends BroadcastReceiver {
                 return;
 
             if (clicksCnt == 1) {
-                cxt.startService(new Intent(Constants.PLAYPAUSE));
+                Utils.sendIntent(cxt, Constants.PLAYPAUSE);
             } else if (clicksCnt == 2) {
-                cxt.startService(new Intent(Constants.NEXT));
+                Utils.sendIntent(cxt, Constants.NEXT);
             } else {
-                cxt.startService(new Intent(Constants.PREVIOUS));
+                Utils.sendIntent(cxt, Constants.PREVIOUS);
             }
             clicksCnt = 0;
         }
