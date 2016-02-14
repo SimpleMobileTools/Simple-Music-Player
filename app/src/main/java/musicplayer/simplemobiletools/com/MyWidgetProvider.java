@@ -7,13 +7,9 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.ColorFilter;
-import android.graphics.LightingColorFilter;
-import android.graphics.Paint;
 import android.os.Bundle;
 import android.widget.RemoteViews;
 
@@ -124,7 +120,8 @@ public class MyWidgetProvider extends AppWidgetProvider {
 
     private void updateColors(Context context) {
         final SharedPreferences prefs = initPrefs(context);
-        final int defaultColor = context.getResources().getColor(R.color.dark_grey);
+        final Resources res = context.getResources();
+        final int defaultColor = res.getColor(R.color.dark_grey);
         final int newBgColor = prefs.getInt(Constants.WIDGET_BG_COLOR, defaultColor);
         final int newTextColor = prefs.getInt(Constants.WIDGET_TEXT_COLOR, Color.WHITE);
 
@@ -133,29 +130,17 @@ public class MyWidgetProvider extends AppWidgetProvider {
         remoteViews.setInt(R.id.songTitle, "setTextColor", newTextColor);
         remoteViews.setInt(R.id.songArtist, "setTextColor", newTextColor);
 
-        Bitmap bmp = getColoredIcon(context, newTextColor, R.mipmap.previous_white);
+        Bitmap bmp = Utils.getColoredIcon(res, newTextColor, R.mipmap.previous_white);
         remoteViews.setImageViewBitmap(R.id.previousBtn, bmp);
 
-        playBitmap = getColoredIcon(context, newTextColor, R.mipmap.play_white);
-        pauseBitmap = getColoredIcon(context, newTextColor, R.mipmap.pause_white);
+        playBitmap = Utils.getColoredIcon(res, newTextColor, R.mipmap.play_white);
+        pauseBitmap = Utils.getColoredIcon(res, newTextColor, R.mipmap.pause_white);
 
-        bmp = getColoredIcon(context, newTextColor, R.mipmap.next_white);
+        bmp = Utils.getColoredIcon(res, newTextColor, R.mipmap.next_white);
         remoteViews.setImageViewBitmap(R.id.nextBtn, bmp);
 
-        bmp = getColoredIcon(context, newTextColor, R.mipmap.stop_white);
+        bmp = Utils.getColoredIcon(res, newTextColor, R.mipmap.stop_white);
         remoteViews.setImageViewBitmap(R.id.stopBtn, bmp);
-    }
-
-    private Bitmap getColoredIcon(Context context, int newTextColor, int id) {
-        final BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inMutable = true;
-        final Bitmap bmp = BitmapFactory.decodeResource(context.getResources(), id, options);
-        final Paint paint = new Paint();
-        final ColorFilter filter = new LightingColorFilter(newTextColor, 1);
-        paint.setColorFilter(filter);
-        final Canvas canvas = new Canvas(bmp);
-        canvas.drawBitmap(bmp, 0, 0, paint);
-        return bmp;
     }
 
     @Override
