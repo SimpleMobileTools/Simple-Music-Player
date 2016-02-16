@@ -3,7 +3,6 @@ package musicplayer.simplemobiletools.com;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.Service;
-import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
@@ -134,9 +133,8 @@ public class MusicService extends Service
 
     private void fillPlaylist() {
         songs.clear();
-        final ContentResolver contentResolver = getContentResolver();
         final Uri uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
-        final Cursor cursor = contentResolver.query(uri, null, null, null, null);
+        final Cursor cursor = getContentResolver().query(uri, null, null, null, null);
 
         if (cursor != null && cursor.moveToFirst()) {
             final int idIndex = cursor.getColumnIndex(MediaStore.Audio.Media._ID);
