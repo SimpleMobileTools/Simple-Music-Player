@@ -134,24 +134,24 @@ public class MusicService extends Service
 
     private void fillPlaylist() {
         songs.clear();
-        final ContentResolver musicResolver = getContentResolver();
-        final Uri musicUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
-        final Cursor musicCursor = musicResolver.query(musicUri, null, null, null, null);
+        final ContentResolver contentResolver = getContentResolver();
+        final Uri uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
+        final Cursor cursor = contentResolver.query(uri, null, null, null, null);
 
-        if (musicCursor != null && musicCursor.moveToFirst()) {
-            final int idIndex = musicCursor.getColumnIndex(MediaStore.Audio.Media._ID);
-            final int titleIndex = musicCursor.getColumnIndex(MediaStore.Audio.Media.TITLE);
-            final int artistIndex = musicCursor.getColumnIndex(MediaStore.Audio.Media.ARTIST);
-            final int durationIndex = musicCursor.getColumnIndex(MediaStore.Audio.Media.DURATION);
+        if (cursor != null && cursor.moveToFirst()) {
+            final int idIndex = cursor.getColumnIndex(MediaStore.Audio.Media._ID);
+            final int titleIndex = cursor.getColumnIndex(MediaStore.Audio.Media.TITLE);
+            final int artistIndex = cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST);
+            final int durationIndex = cursor.getColumnIndex(MediaStore.Audio.Media.DURATION);
             do {
-                if (musicCursor.getInt(durationIndex) > MIN_DURATION_MS) {
-                    final long id = musicCursor.getLong(idIndex);
-                    final String title = musicCursor.getString(titleIndex);
-                    final String artist = musicCursor.getString(artistIndex);
+                if (cursor.getInt(durationIndex) > MIN_DURATION_MS) {
+                    final long id = cursor.getLong(idIndex);
+                    final String title = cursor.getString(titleIndex);
+                    final String artist = cursor.getString(artistIndex);
                     songs.add(new Song(id, title, artist));
                 }
-            } while (musicCursor.moveToNext());
-            musicCursor.close();
+            } while (cursor.moveToNext());
+            cursor.close();
         }
     }
 
