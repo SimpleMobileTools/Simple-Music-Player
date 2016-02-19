@@ -17,7 +17,7 @@ public class IncomingCallReceiver extends PhoneStateListener {
 
         if (state == TelephonyManager.CALL_STATE_RINGING) {
             Utils.sendIntent(cxt, Constants.CALL_START);
-        } else if (state == TelephonyManager.CALL_STATE_IDLE || state == TelephonyManager.CALL_STATE_OFFHOOK) {
+        } else if (state == TelephonyManager.CALL_STATE_IDLE) {
             Utils.sendIntent(cxt, Constants.CALL_STOP);
         }
     }
