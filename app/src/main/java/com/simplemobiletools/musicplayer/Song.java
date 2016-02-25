@@ -1,4 +1,4 @@
-package musicplayer.simplemobiletools.com;
+package com.simplemobiletools.musicplayer;
 
 public class Song {
     private long id;

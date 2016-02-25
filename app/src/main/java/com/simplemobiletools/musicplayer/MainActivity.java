@@ -1,4 +1,4 @@
-package musicplayer.simplemobiletools.com;
+package com.simplemobiletools.musicplayer;
 
 import android.content.Intent;
 import android.os.Bundle;

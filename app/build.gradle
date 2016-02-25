@@ -5,7 +5,7 @@ android {
     buildToolsVersion "23.0.2"
 
     defaultConfig {
-        applicationId "musicplayer.simplemobiletools.com"
+        applicationId "com.simplemobiletools.musicplayer"
         minSdkVersion 16
         targetSdkVersion 23
         versionCode 1

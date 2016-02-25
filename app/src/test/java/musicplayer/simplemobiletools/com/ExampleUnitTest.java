@@ -1,4 +1,4 @@
-package musicplayer.simplemobiletools.com;
+package com.simplemobiletools.musicplayer;
 
 import org.junit.Test;
 

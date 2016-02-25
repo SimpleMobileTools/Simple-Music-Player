@@ -4,8 +4,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:paddingLeft="@dimen/activity_margin"
-                android:paddingTop="@dimen/activity_margin"
-                tools:context="musicplayer.simplemobiletools.com.MainActivity">
+                android:paddingTop="@dimen/activity_margin">
 
     <LinearLayout
         android:id="@+id/controls"

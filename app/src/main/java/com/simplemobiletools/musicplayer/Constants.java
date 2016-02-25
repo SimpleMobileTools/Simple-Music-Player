@@ -1,4 +1,4 @@
-package musicplayer.simplemobiletools.com;
+package com.simplemobiletools.musicplayer;
 
 public class Constants {
     public static final String PREFS = "prefs";
@@ -6,7 +6,7 @@ public class Constants {
     public static final String WIDGET_TEXT_COLOR = "widget_text_color";
     public static final String SONG_POS = "song_position";
 
-    private static final String PATH = "musicplayer.simplemobiletools.com.action.";
+    private static final String PATH = "com.simplemobiletools.musicplayer.action.";
 
     public static final String INIT = PATH + "INIT";
     public static final String FINISH = PATH + "FINISH";

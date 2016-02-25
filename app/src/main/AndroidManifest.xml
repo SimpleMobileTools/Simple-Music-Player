@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest
-    package="musicplayer.simplemobiletools.com"
+    package="com.simplemobiletools.musicplayer"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name="com.simplemobiletools.musicplayer.MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -25,7 +25,7 @@
         </activity>
 
         <activity
-            android:name=".MyWidgetConfigure"
+            android:name="com.simplemobiletools.musicplayer.MyWidgetConfigure"
             android:screenOrientation="portrait"
             android:theme="@style/MyWidgetConfigTheme">
             <intent-filter>
@@ -34,23 +34,23 @@
         </activity>
 
         <service
-            android:name="musicplayer.simplemobiletools.com.MusicService"
+            android:name="com.simplemobiletools.musicplayer.MusicService"
             android:exported="false">
             <intent-filter>
-                <action android:name="musicplayer.simplemobiletools.com.action.INIT"/>
-                <action android:name="musicplayer.simplemobiletools.com.action.FINISH"/>
-                <action android:name="musicplayer.simplemobiletools.com.action.PREVIOUS"/>
-                <action android:name="musicplayer.simplemobiletools.com.action.PAUSE"/>
-                <action android:name="musicplayer.simplemobiletools.com.action.PLAYPAUSE"/>
-                <action android:name="musicplayer.simplemobiletools.com.action.NEXT"/>
-                <action android:name="musicplayer.simplemobiletools.com.action.STOP"/>
-                <action android:name="musicplayer.simplemobiletools.com.action.PLAYPOS"/>
-                <action android:name="musicplayer.simplemobiletools.com.action.INCOMING_CALL_START"/>
-                <action android:name="musicplayer.simplemobiletools.com.action.INCOMING_CALL_STOP"/>
+                <action android:name="com.simplemobiletools.musicplayer.action.INIT"/>
+                <action android:name="com.simplemobiletools.musicplayer.action.FINISH"/>
+                <action android:name="com.simplemobiletools.musicplayer.action.PREVIOUS"/>
+                <action android:name="com.simplemobiletools.musicplayer.action.PAUSE"/>
+                <action android:name="com.simplemobiletools.musicplayer.action.PLAYPAUSE"/>
+                <action android:name="com.simplemobiletools.musicplayer.action.NEXT"/>
+                <action android:name="com.simplemobiletools.musicplayer.action.STOP"/>
+                <action android:name="com.simplemobiletools.musicplayer.action.PLAYPOS"/>
+                <action android:name="com.simplemobiletools.musicplayer.action.INCOMING_CALL_START"/>
+                <action android:name="com.simplemobiletools.musicplayer.action.INCOMING_CALL_STOP"/>
             </intent-filter>
         </service>
 
-        <receiver android:name=".MyWidgetProvider">
+        <receiver android:name="com.simplemobiletools.musicplayer.MyWidgetProvider">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
             </intent-filter>
@@ -59,18 +59,18 @@
                 android:resource="@xml/widget_info"/>
         </receiver>
 
-        <receiver android:name=".HeadsetPlugReceiver">
+        <receiver android:name="com.simplemobiletools.musicplayer.HeadsetPlugReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.ACTION_HEADSET_PLUG"/>
             </intent-filter>
         </receiver>
 
-        <receiver android:name=".RemoteControlReceiver">
+        <receiver android:name="com.simplemobiletools.musicplayer.RemoteControlReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.MEDIA_BUTTON"/>
             </intent-filter>
         </receiver>
 
-        <receiver android:name=".ControlActionsListener"/>
+        <receiver android:name="com.simplemobiletools.musicplayer.ControlActionsListener"/>
     </application>
 </manifest>
