@@ -7,7 +7,7 @@ import android.os.Handler;
 import android.view.KeyEvent;
 
 public class RemoteControlReceiver extends BroadcastReceiver {
-    private static final int MAX_CLICK_DURATION = 1000;
+    private static final int MAX_CLICK_DURATION = 700;
     private static int clicksCnt;
     private static Context cxt;
     private static Handler handler = new Handler();
@@ -30,7 +30,7 @@ public class RemoteControlReceiver extends BroadcastReceiver {
         }
     }
 
-    private Runnable runnable = new Runnable() {
+    private static Runnable runnable = new Runnable() {
         @Override
         public void run() {
             if (clicksCnt == 0)
