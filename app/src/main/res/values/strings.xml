@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Simple Music Player</string>
     <string name="playlist_empty">Your playlist is empty</string>
+    <string name="no_permissions">Permission for accessing the songs has not been granted</string>
 </resources>

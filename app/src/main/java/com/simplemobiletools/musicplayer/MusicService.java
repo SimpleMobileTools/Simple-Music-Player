@@ -1,5 +1,6 @@
 package com.simplemobiletools.musicplayer;
 
+import android.Manifest;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.Service;
@@ -7,6 +8,7 @@ import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -18,11 +20,13 @@ import android.os.Build;
 import android.os.IBinder;
 import android.os.PowerManager;
 import android.provider.MediaStore;
+import android.support.v4.content.ContextCompat;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.RemoteViews;
+import android.widget.Toast;
 
 import com.squareup.otto.Bus;
 
@@ -62,17 +66,25 @@ public class MusicService extends Service
             bus.register(this);
         }
 
-        getSortedSongs();
-        headsetPlugReceiver = new HeadsetPlugReceiver();
-        incomingCallReceiver = new IncomingCallReceiver(this);
-        wasPlayingAtCall = false;
-        initMediaPlayerIfNeeded();
-        createNotificationButtons();
-        setupNotification();
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+            getSortedSongs();
+            headsetPlugReceiver = new HeadsetPlugReceiver();
+            incomingCallReceiver = new IncomingCallReceiver(this);
+            wasPlayingAtCall = false;
+            initMediaPlayerIfNeeded();
+            createNotificationButtons();
+            setupNotification();
+        } else {
+            Toast.makeText(this, getResources().getString(R.string.no_permissions), Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            return START_NOT_STICKY;
+        }
+
         String action = intent.getAction();
         if (action != null) {
             switch (action) {
