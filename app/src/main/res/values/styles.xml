@@ -11,4 +11,8 @@
         <item name="android:windowShowWallpaper">true</item>
     </style>
 
+    <style name="MyButton">
+        <item name="android:background">@drawable/button</item>
+    </style>
+
 </resources>

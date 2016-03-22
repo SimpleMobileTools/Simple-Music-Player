@@ -8,6 +8,7 @@
 
     <ImageView
         android:id="@+id/previousBtn"
+        style="@style/MyButton"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
@@ -17,6 +18,7 @@
 
     <ImageView
         android:id="@+id/playPauseBtn"
+        style="@style/MyButton"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
@@ -26,6 +28,7 @@
 
     <ImageView
         android:id="@+id/nextBtn"
+        style="@style/MyButton"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
@@ -35,6 +38,7 @@
 
     <ImageView
         android:id="@+id/stopBtn"
+        style="@style/MyButton"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
