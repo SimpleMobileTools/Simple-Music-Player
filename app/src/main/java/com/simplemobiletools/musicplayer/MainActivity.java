@@ -7,6 +7,10 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.view.ActionMode;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -23,9 +27,10 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ListView.MultiChoiceModeListener {
     private final int STORAGE_PERMISSION = 1;
     private Bus bus;
+    private int selectedItemsCnt;
 
     @Bind(R.id.playPauseBtn) ImageView playPauseBtn;
     @Bind(R.id.songs) ListView songsList;
@@ -61,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initializePlayer() {
+        songsList.setMultiChoiceModeListener(this);
         Utils.sendIntent(this, Constants.INIT);
     }
 
@@ -132,5 +138,52 @@ public class MainActivity extends AppCompatActivity {
     @Subscribe
     public void playlistUpdated(Events.PlaylistUpdated event) {
         fillSongsListView(event.getSongs());
+    }
+
+    @Override
+    public void onItemCheckedStateChanged(ActionMode mode, int position, long id, boolean checked) {
+        if (checked) {
+            selectedItemsCnt++;
+        } else {
+            selectedItemsCnt--;
+        }
+
+        if (selectedItemsCnt > 0) {
+            mode.setTitle(String.valueOf(selectedItemsCnt));
+        }
+
+        mode.invalidate();
+    }
+
+    @Override
+    public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+        final MenuInflater inflater = mode.getMenuInflater();
+        inflater.inflate(R.menu.cab, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+        final MenuItem menuItem = menu.findItem(R.id.cab_edit);
+        menuItem.setVisible(selectedItemsCnt == 1);
+        return true;
+    }
+
+    @Override
+    public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.cab_edit:
+                return true;
+            case R.id.cab_remove:
+                mode.finish();
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    @Override
+    public void onDestroyActionMode(ActionMode mode) {
+        selectedItemsCnt = 0;
     }
 }
