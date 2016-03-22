@@ -12,7 +12,7 @@
     </style>
 
     <style name="MyButton">
-        <item name="android:background">@drawable/button</item>
+        <item name="android:background">@drawable/selector</item>
     </style>
 
 </resources>
