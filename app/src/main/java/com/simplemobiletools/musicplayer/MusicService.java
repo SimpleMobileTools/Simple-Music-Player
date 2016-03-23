@@ -146,19 +146,29 @@ public class MusicService extends Service
     private void fillPlaylist() {
         songs.clear();
         final Uri uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
-        final Cursor cursor = getContentResolver().query(uri, null, null, null, null);
+        final String[] columns = {
+                MediaStore.Audio.Media._ID,
+                MediaStore.Audio.Media.TITLE,
+                MediaStore.Audio.Media.ARTIST,
+                MediaStore.Audio.Media.DURATION,
+                MediaStore.Audio.Media.DATA
+        };
+
+        final Cursor cursor = getContentResolver().query(uri, columns, null, null, null);
 
         if (cursor != null && cursor.moveToFirst()) {
             final int idIndex = cursor.getColumnIndex(MediaStore.Audio.Media._ID);
             final int titleIndex = cursor.getColumnIndex(MediaStore.Audio.Media.TITLE);
             final int artistIndex = cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST);
             final int durationIndex = cursor.getColumnIndex(MediaStore.Audio.Media.DURATION);
+            final int pathIndex = cursor.getColumnIndex(MediaStore.Audio.Media.DATA);
             do {
                 if (cursor.getInt(durationIndex) > MIN_DURATION_MS) {
                     final long id = cursor.getLong(idIndex);
                     final String title = cursor.getString(titleIndex);
                     final String artist = cursor.getString(artistIndex);
-                    songs.add(new Song(id, title, artist));
+                    final String path = cursor.getString(pathIndex);
+                    songs.add(new Song(id, title, artist, path));
                 }
             } while (cursor.moveToNext());
             cursor.close();
