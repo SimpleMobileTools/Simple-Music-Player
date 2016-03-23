@@ -167,7 +167,8 @@ public class MusicService extends Service
                 MediaStore.Audio.Media.DATA
         };
 
-        final Cursor cursor = getContentResolver().query(uri, columns, null, null, null);
+        final String order = MediaStore.Audio.Media.TITLE;
+        final Cursor cursor = getContentResolver().query(uri, columns, null, null, order);
 
         if (cursor != null && cursor.moveToFirst()) {
             final int idIndex = cursor.getColumnIndex(MediaStore.Audio.Media._ID);
