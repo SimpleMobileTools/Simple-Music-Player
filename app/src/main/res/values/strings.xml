@@ -4,4 +4,11 @@
     <string name="no_permissions">Permission for accessing the songs has not been granted</string>
     <string name="remove">Remove</string>
     <string name="edit">Edit</string>
+    <string name="deleting">Deleting</string>
+    <string name="undo">Undo</string>
+
+    <plurals name="songs_deleted">
+        <item quantity="one">1 song deleted</item>
+        <item quantity="other">%1$d songs deleted</item>
+    </plurals>
 </resources>

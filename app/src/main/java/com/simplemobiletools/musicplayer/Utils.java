@@ -9,10 +9,11 @@ import android.graphics.Canvas;
 import android.graphics.ColorFilter;
 import android.graphics.LightingColorFilter;
 import android.graphics.Paint;
+import android.widget.Toast;
 
 public class Utils {
     public static void sendIntent(Context context, String action) {
-        Intent intent = new Intent(context, MusicService.class);
+        final Intent intent = new Intent(context, MusicService.class);
         intent.setAction(action);
         context.startService(intent);
     }
@@ -27,5 +28,9 @@ public class Utils {
         final Canvas canvas = new Canvas(bmp);
         canvas.drawBitmap(bmp, 0, 0, paint);
         return bmp;
+    }
+
+    public static void showToast(Context context, int resId) {
+        Toast.makeText(context, context.getResources().getString(resId), Toast.LENGTH_SHORT).show();
     }
 }

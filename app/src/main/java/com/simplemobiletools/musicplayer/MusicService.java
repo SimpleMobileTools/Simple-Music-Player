@@ -32,8 +32,10 @@ import com.squareup.otto.Bus;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 import java.util.Random;
 
 public class MusicService extends Service
@@ -47,6 +49,7 @@ public class MusicService extends Service
     private ArrayList<Integer> playedSongIDs;
     private Song currSong;
     private Bus bus;
+    private List<String> ignoredPaths;
     private boolean wasPlayingAtCall;
     private Bitmap prevBitmap;
     private Bitmap playBitmap;
@@ -60,6 +63,7 @@ public class MusicService extends Service
         super.onCreate();
         songs = new ArrayList<>();
         playedSongIDs = new ArrayList<>();
+        ignoredPaths = new ArrayList<>();
 
         if (bus == null) {
             bus = BusProvider.getInstance();
@@ -123,6 +127,15 @@ public class MusicService extends Service
                 case Constants.FINISH:
                     destroyPlayer();
                     break;
+                case Constants.REFRESH_LIST:
+                    ignoredPaths = Arrays.asList(intent.getStringArrayExtra(Constants.DELETED_SONGS));
+                    fillPlaylist();
+                    bus.post(new Events.PlaylistUpdated(songs));
+
+                    if (currSong != null && ignoredPaths.contains(currSong.getPath())) {
+                        playNextSong();
+                    }
+                    break;
                 default:
                     break;
             }
@@ -168,7 +181,10 @@ public class MusicService extends Service
                     final String title = cursor.getString(titleIndex);
                     final String artist = cursor.getString(artistIndex);
                     final String path = cursor.getString(pathIndex);
-                    songs.add(new Song(id, title, artist, path));
+
+                    if (!ignoredPaths.contains(path)) {
+                        songs.add(new Song(id, title, artist, path));
+                    }
                 }
             } while (cursor.moveToNext());
             cursor.close();

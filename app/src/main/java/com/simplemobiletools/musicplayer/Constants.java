@@ -5,6 +5,7 @@ public class Constants {
     public static final String WIDGET_BG_COLOR = "widget_bg_color";
     public static final String WIDGET_TEXT_COLOR = "widget_text_color";
     public static final String SONG_POS = "song_position";
+    public static final String DELETED_SONGS = "deleted_songs";
 
     private static final String PATH = "com.simplemobiletools.musicplayer.action.";
 
@@ -16,6 +17,7 @@ public class Constants {
     public static final String NEXT = PATH + "NEXT";
     public static final String STOP = PATH + "STOP";
     public static final String PLAYPOS = PATH + "PLAYPOS";
+    public static final String REFRESH_LIST = PATH + "REFRESH_LIST";
     public static final String CALL_START = PATH + "CALL_START";
     public static final String CALL_STOP = PATH + "CALL_STOP";
 }

@@ -2,7 +2,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:paddingLeft="@dimen/activity_margin"
                 android:paddingTop="@dimen/activity_margin">
 
     <LinearLayout
@@ -10,7 +9,8 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/widget_row_height"
         android:layout_marginRight="@dimen/activity_margin"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/activity_margin">
 
         <ImageView
             android:id="@+id/previousBtn"
@@ -64,6 +64,7 @@
         android:layout_marginRight="@dimen/activity_margin"
         android:layout_marginTop="@dimen/activity_margin"
         android:gravity="center_horizontal"
+        android:paddingLeft="@dimen/activity_margin"
         android:textSize="18sp"/>
 
     <TextView
@@ -73,14 +74,22 @@
         android:layout_below="@+id/songTitle"
         android:layout_marginRight="@dimen/activity_margin"
         android:gravity="center_horizontal"
+        android:paddingLeft="@dimen/activity_margin"
         android:textSize="16sp"/>
 
-    <ListView
-        android:id="@+id/songs"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/coordinator_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_below="@+id/songArtist"
-        android:layout_marginTop="@dimen/activity_margin"
-        android:choiceMode="multipleChoiceModal"/>
+        android:layout_marginTop="@dimen/activity_margin">
 
+        <ListView
+            android:id="@+id/songs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:choiceMode="multipleChoiceModal"
+            android:paddingLeft="@dimen/activity_margin"/>
+
+    </android.support.design.widget.CoordinatorLayout>
 </RelativeLayout>

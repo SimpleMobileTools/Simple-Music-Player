@@ -3,14 +3,21 @@ package com.simplemobiletools.musicplayer;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
+import android.graphics.Color;
+import android.media.MediaScannerConnection;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.SparseBooleanArray;
 import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -21,16 +28,23 @@ import android.widget.Toast;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class MainActivity extends AppCompatActivity implements ListView.MultiChoiceModeListener {
+public class MainActivity extends AppCompatActivity
+        implements ListView.MultiChoiceModeListener, AdapterView.OnItemClickListener, ListView.OnTouchListener {
     private final int STORAGE_PERMISSION = 1;
     private Bus bus;
     private int selectedItemsCnt;
+    private List<Song> songs;
+    private Snackbar snackbar;
+    private boolean isSnackbarShown;
+    private List<String> toBeDeleted;
 
     @Bind(R.id.playPauseBtn) ImageView playPauseBtn;
     @Bind(R.id.songs) ListView songsList;
@@ -66,7 +80,10 @@ public class MainActivity extends AppCompatActivity implements ListView.MultiCho
     }
 
     private void initializePlayer() {
+        toBeDeleted = new ArrayList<>();
         songsList.setMultiChoiceModeListener(this);
+        songsList.setOnTouchListener(this);
+        songsList.setOnItemClickListener(this);
         Utils.sendIntent(this, Constants.INIT);
     }
 
@@ -85,14 +102,15 @@ public class MainActivity extends AppCompatActivity implements ListView.MultiCho
     }
 
     private void fillSongsListView(ArrayList<Song> songs) {
+        this.songs = songs;
         final SongAdapter adapter = new SongAdapter(this, songs);
         songsList.setAdapter(adapter);
-        songsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                songPicked(position);
-            }
-        });
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        deleteSongs();
     }
 
     @Override
@@ -175,6 +193,7 @@ public class MainActivity extends AppCompatActivity implements ListView.MultiCho
             case R.id.cab_edit:
                 return true;
             case R.id.cab_remove:
+                prepareForDeleting();
                 mode.finish();
                 return true;
             default:
@@ -182,8 +201,96 @@ public class MainActivity extends AppCompatActivity implements ListView.MultiCho
         }
     }
 
+    private void prepareForDeleting() {
+        toBeDeleted.clear();
+        Utils.showToast(this, R.string.deleting);
+        final SparseBooleanArray items = songsList.getCheckedItemPositions();
+        int cnt = items.size();
+        int deletedCnt = 0;
+        for (int i = 0; i < cnt; i++) {
+            if (items.valueAt(i)) {
+                final int id = items.keyAt(i);
+                final String path = songs.get(id).getPath();
+                toBeDeleted.add(path);
+                deletedCnt++;
+            }
+        }
+
+        notifyDeletion(deletedCnt);
+    }
+
+    private void notifyDeletion(int cnt) {
+        final CoordinatorLayout coordinator = (CoordinatorLayout) findViewById(R.id.coordinator_layout);
+        final Resources res = getResources();
+        final String msg = res.getQuantityString(R.plurals.songs_deleted, cnt, cnt);
+        snackbar = Snackbar.make(coordinator, msg, Snackbar.LENGTH_INDEFINITE);
+        snackbar.setAction(res.getString(R.string.undo), undoDeletion);
+        snackbar.setActionTextColor(Color.WHITE);
+        snackbar.show();
+        isSnackbarShown = true;
+        updateSongsList();
+    }
+
+    private void updateSongsList() {
+        final Intent intent = new Intent(this, MusicService.class);
+        final String[] deletedSongs = new String[toBeDeleted.size()];
+        toBeDeleted.toArray(deletedSongs);
+        intent.putExtra(Constants.DELETED_SONGS, deletedSongs);
+        intent.setAction(Constants.REFRESH_LIST);
+        startService(intent);
+    }
+
+    private void deleteSongs() {
+        if (toBeDeleted.isEmpty())
+            return;
+
+        if (snackbar != null) {
+            snackbar.dismiss();
+        }
+
+        isSnackbarShown = false;
+
+        final List<String> updatedFiles = new ArrayList<>();
+        for (String delPath : toBeDeleted) {
+            final File file = new File(delPath);
+            if (file.exists()) {
+                if (file.delete()) {
+                    updatedFiles.add(delPath);
+                }
+            }
+        }
+
+        final String[] deletedPaths = updatedFiles.toArray(new String[updatedFiles.size()]);
+        MediaScannerConnection.scanFile(this, deletedPaths, null, null);
+        toBeDeleted.clear();
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        songPicked(position);
+    }
+
+    private View.OnClickListener undoDeletion = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            toBeDeleted.clear();
+            snackbar.dismiss();
+            isSnackbarShown = false;
+            updateSongsList();
+        }
+    };
+
     @Override
     public void onDestroyActionMode(ActionMode mode) {
         selectedItemsCnt = 0;
+    }
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        if (isSnackbarShown) {
+            deleteSongs();
+        }
+
+        return false;
     }
 }

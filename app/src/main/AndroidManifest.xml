@@ -4,7 +4,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
 
     <application
@@ -45,6 +45,7 @@
                 <action android:name="com.simplemobiletools.musicplayer.action.NEXT"/>
                 <action android:name="com.simplemobiletools.musicplayer.action.STOP"/>
                 <action android:name="com.simplemobiletools.musicplayer.action.PLAYPOS"/>
+                <action android:name="com.simplemobiletools.musicplayer.action.REFRESH_LIST"/>
                 <action android:name="com.simplemobiletools.musicplayer.action.INCOMING_CALL_START"/>
                 <action android:name="com.simplemobiletools.musicplayer.action.INCOMING_CALL_STOP"/>
             </intent-filter>
