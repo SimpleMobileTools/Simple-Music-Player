@@ -203,7 +203,6 @@ public class MainActivity extends AppCompatActivity
 
     private void prepareForDeleting() {
         toBeDeleted.clear();
-        Utils.showToast(this, R.string.deleting);
         final SparseBooleanArray items = songsList.getCheckedItemPositions();
         int cnt = items.size();
         int deletedCnt = 0;
