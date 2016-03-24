@@ -1,16 +1,20 @@
 package com.simplemobiletools.musicplayer;
 
 import android.Manifest;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.media.MediaScannerConnection;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.SparseBooleanArray;
 import android.view.ActionMode;
@@ -20,6 +24,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -41,6 +46,7 @@ public class MainActivity extends AppCompatActivity
     private final int STORAGE_PERMISSION = 1;
     private Bus bus;
     private int selectedItemsCnt;
+    private Song currentSong;
     private List<Song> songs;
     private Snackbar snackbar;
     private boolean isSnackbarShown;
@@ -141,7 +147,8 @@ public class MainActivity extends AppCompatActivity
 
     @Subscribe
     public void songChangedEvent(Events.SongChanged event) {
-        updateSongInfo(event.getSong());
+        currentSong = event.getSong();
+        updateSongInfo(currentSong);
     }
 
     @Subscribe
@@ -191,6 +198,8 @@ public class MainActivity extends AppCompatActivity
     public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
         switch (item.getItemId()) {
             case R.id.cab_edit:
+                displayEditDialog();
+                mode.finish();
                 return true;
             case R.id.cab_remove:
                 prepareForDeleting();
@@ -199,6 +208,99 @@ public class MainActivity extends AppCompatActivity
             default:
                 return false;
         }
+    }
+
+    private void displayEditDialog() {
+        final int songIndex = getSelectedSongIndex();
+        if (songIndex == -1)
+            return;
+
+        final Song selectedSong = songs.get(songIndex);
+        if (selectedSong == null)
+            return;
+
+        final String title = selectedSong.getTitle();
+        final String artist = selectedSong.getArtist();
+
+        final View renameSongView = getLayoutInflater().inflate(R.layout.rename_song, null);
+        final EditText titleET = (EditText) renameSongView.findViewById(R.id.title);
+        titleET.setText(title);
+
+        final EditText artistET = (EditText) renameSongView.findViewById(R.id.artist);
+        artistET.setText(artist);
+
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(getResources().getString(R.string.rename_song));
+        builder.setView(renameSongView);
+
+        builder.setPositiveButton("OK", null);
+        builder.setNegativeButton("Cancel", null);
+
+        final AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+        alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final String newSongTitle = titleET.getText().toString().trim();
+                final String newSongArtist = artistET.getText().toString().trim();
+
+                if (!newSongTitle.isEmpty() && !newSongArtist.isEmpty()) {
+                    final Uri uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
+                    if (updateContentResolver(uri, selectedSong.getId(), newSongTitle, newSongArtist)) {
+                        getContentResolver().notifyChange(uri, null);
+                        boolean currSongChanged = false;
+                        if (currentSong != null && currentSong.equals(selectedSong)) {
+                            currSongChanged = true;
+                        }
+
+                        final Song songInList = songs.get(songIndex);
+                        songInList.setTitle(newSongTitle);
+                        songInList.setArtist(newSongArtist);
+
+                        if (currSongChanged) {
+                            notifyCurrentSongChanged(songInList);
+                        }
+
+                        alertDialog.dismiss();
+                    } else {
+                        Utils.showToast(getApplicationContext(), R.string.rename_song_error);
+                    }
+                } else {
+                    Utils.showToast(getApplicationContext(), R.string.rename_song_empty);
+                }
+            }
+        });
+    }
+
+    private boolean updateContentResolver(Uri uri, long songID, String newSongTitle, String newSongArtist) {
+        final String where = MediaStore.Images.Media._ID + " = ? ";
+        final String[] args = {String.valueOf(songID)};
+
+        final ContentValues values = new ContentValues();
+        values.put(MediaStore.Audio.Media.TITLE, newSongTitle);
+        values.put(MediaStore.Audio.Media.ARTIST, newSongArtist);
+
+        return getContentResolver().update(uri, values, where, args) == 1;
+    }
+
+    private int getSelectedSongIndex() {
+        final SparseBooleanArray items = songsList.getCheckedItemPositions();
+        int cnt = items.size();
+        for (int i = 0; i < cnt; i++) {
+            if (items.valueAt(i)) {
+                return items.keyAt(i);
+            }
+        }
+        return -1;
+    }
+
+    private void notifyCurrentSongChanged(Song newSong) {
+        final Intent intent = new Intent(this, MusicService.class);
+        intent.putExtra(Constants.EDITED_SONG, newSong);
+        intent.setAction(Constants.EDIT);
+        startService(intent);
+        currentSong = newSong;
+        ((SongAdapter) songsList.getAdapter()).notifyDataSetChanged();
     }
 
     private void prepareForDeleting() {

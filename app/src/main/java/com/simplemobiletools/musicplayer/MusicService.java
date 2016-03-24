@@ -104,10 +104,11 @@ public class MusicService extends Service
                     pauseSong();
                     break;
                 case Constants.PLAYPAUSE:
-                    if (isPlaying())
+                    if (isPlaying()) {
                         pauseSong();
-                    else
+                    } else {
                         resumeSong();
+                    }
                     break;
                 case Constants.NEXT:
                     playNextSong();
@@ -123,6 +124,11 @@ public class MusicService extends Service
                     break;
                 case Constants.CALL_STOP:
                     incomingCallStop();
+                    break;
+                case Constants.EDIT:
+                    currSong = (Song) intent.getSerializableExtra(Constants.EDITED_SONG);
+                    bus.post(new Events.SongChanged(currSong));
+                    setupNotification();
                     break;
                 case Constants.FINISH:
                     destroyPlayer();

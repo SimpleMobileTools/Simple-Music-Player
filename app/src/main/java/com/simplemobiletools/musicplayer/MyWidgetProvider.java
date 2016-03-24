@@ -70,9 +70,6 @@ public class MyWidgetProvider extends AppWidgetProvider {
 
     @Subscribe
     public void songChangedEvent(Events.SongChanged event) {
-        if (currSong == event.getSong())
-            return;
-
         currSong = event.getSong();
         updateSongInfo();
         updateWidgets();

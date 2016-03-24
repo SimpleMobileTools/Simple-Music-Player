@@ -1,6 +1,9 @@
 package com.simplemobiletools.musicplayer;
 
-public class Song {
+import java.io.Serializable;
+
+public class Song implements Serializable {
+    private static final long serialVersionUID = 6717978783256842145L;
     private long id;
     private String title;
     private String artist;
@@ -21,8 +24,16 @@ public class Song {
         return artist;
     }
 
+    public void setArtist(String newArtist) {
+        artist = newArtist;
+    }
+
     public String getTitle() {
         return title;
+    }
+
+    public void setTitle(String newTitle) {
+        title = newTitle;
     }
 
     public String getPath() {
@@ -37,5 +48,16 @@ public class Song {
                 + ", artist=" + getArtist()
                 + ", path=" + getPath()
                 + "}";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+
+        if (o == null)
+            return false;
+
+        return this.toString().equals(o.toString());
     }
 }

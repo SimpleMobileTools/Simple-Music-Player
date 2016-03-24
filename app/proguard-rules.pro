@@ -15,3 +15,11 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+-keepclassmembers class * implements java.io.Serializable {
+  static final long serialVersionUID;
+  java.lang.Object writeReplace();
+  java.lang.Object readResolve();
+  private static final java.io.ObjectStreamField[] serialPersistentFields;
+  private <fields>;
+  public <fields>;
+}
