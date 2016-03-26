@@ -7,6 +7,7 @@ public class Constants {
     public static final String SONG_POS = "song_position";
     public static final String DELETED_SONGS = "deleted_songs";
     public static final String EDITED_SONG = "edited_song";
+    public static final String UPDATE_ACTIVITY = "update_activity";
 
     private static final String PATH = "com.simplemobiletools.musicplayer.action.";
 

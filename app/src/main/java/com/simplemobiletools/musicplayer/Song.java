@@ -40,6 +40,10 @@ public class Song implements Serializable {
         return path;
     }
 
+    public void setPath(String newPath) {
+        path = newPath;
+    }
+
     @Override
     public String toString() {
         return "Song{"

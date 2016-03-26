@@ -42,7 +42,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity
-        implements ListView.MultiChoiceModeListener, AdapterView.OnItemClickListener, ListView.OnTouchListener {
+        implements ListView.MultiChoiceModeListener, AdapterView.OnItemClickListener, ListView.OnTouchListener,
+        MediaScannerConnection.OnScanCompletedListener {
     private final int STORAGE_PERMISSION = 1;
     private Bus bus;
     private int selectedItemsCnt;
@@ -229,6 +230,19 @@ public class MainActivity extends AppCompatActivity
         final EditText artistET = (EditText) renameSongView.findViewById(R.id.artist);
         artistET.setText(artist);
 
+        final String fullName = Utils.getFilename(selectedSong.getPath());
+        final int dotAt = fullName.lastIndexOf(".");
+        if (dotAt <= 0)
+            return;
+
+        final String fileName = fullName.substring(0, dotAt);
+        final EditText fileNameET = (EditText) renameSongView.findViewById(R.id.file_name);
+        fileNameET.setText(fileName);
+
+        final String fileExtension = fullName.substring(dotAt + 1, fullName.length());
+        final EditText fileExtensionET = (EditText) renameSongView.findViewById(R.id.extension);
+        fileExtensionET.setText(fileExtension);
+
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(getResources().getString(R.string.rename_song));
         builder.setView(renameSongView);
@@ -241,32 +255,49 @@ public class MainActivity extends AppCompatActivity
         alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final String newSongTitle = titleET.getText().toString().trim();
-                final String newSongArtist = artistET.getText().toString().trim();
+                final String newTitle = Utils.getViewText(titleET);
+                final String newArtist = Utils.getViewText(artistET);
+                final String newFileName = Utils.getViewText(fileNameET);
+                final String newFileExtension = Utils.getViewText(fileExtensionET);
 
-                if (!newSongTitle.isEmpty() && !newSongArtist.isEmpty()) {
-                    final Uri uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
-                    if (updateContentResolver(uri, selectedSong.getId(), newSongTitle, newSongArtist)) {
-                        getContentResolver().notifyChange(uri, null);
-                        boolean currSongChanged = false;
-                        if (currentSong != null && currentSong.equals(selectedSong)) {
-                            currSongChanged = true;
-                        }
+                if (newTitle.isEmpty() || newArtist.isEmpty() || newFileName.isEmpty() || newFileExtension.isEmpty()) {
+                    Utils.showToast(getApplicationContext(), R.string.rename_song_empty);
+                    return;
+                }
 
-                        final Song songInList = songs.get(songIndex);
-                        songInList.setTitle(newSongTitle);
-                        songInList.setArtist(newSongArtist);
+                final Uri uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
+                if (updateContentResolver(uri, selectedSong.getId(), newTitle, newArtist)) {
+                    getContentResolver().notifyChange(uri, null);
+                    boolean currSongChanged = false;
+                    if (currentSong != null && currentSong.equals(selectedSong)) {
+                        currSongChanged = true;
+                    }
 
-                        if (currSongChanged) {
-                            notifyCurrentSongChanged(songInList);
-                        }
+                    final Song songInList = songs.get(songIndex);
+                    songInList.setTitle(newTitle);
+                    songInList.setArtist(newArtist);
+
+                    if (currSongChanged) {
+                        notifyCurrentSongChanged(songInList);
+                    }
+
+                    final File file = new File(selectedSong.getPath());
+                    final File newFile = new File(file.getParent(), newFileName + "." + newFileExtension);
+                    if (file.equals(newFile)) {
+                        alertDialog.dismiss();
+                        return;
+                    }
+
+                    if (file.renameTo(newFile)) {
+                        songInList.setPath(newFile.getAbsolutePath());
+                        final String[] changedFiles = {file.getAbsolutePath(), newFile.getAbsolutePath()};
+                        MediaScannerConnection.scanFile(getApplicationContext(), changedFiles, null, MainActivity.this);
 
                         alertDialog.dismiss();
-                    } else {
-                        Utils.showToast(getApplicationContext(), R.string.rename_song_error);
+                        return;
                     }
-                } else {
-                    Utils.showToast(getApplicationContext(), R.string.rename_song_empty);
+
+                    Utils.showToast(getApplicationContext(), R.string.rename_song_error);
                 }
             }
         });
@@ -337,6 +368,7 @@ public class MainActivity extends AppCompatActivity
         final String[] deletedSongs = new String[toBeDeleted.size()];
         toBeDeleted.toArray(deletedSongs);
         intent.putExtra(Constants.DELETED_SONGS, deletedSongs);
+        intent.putExtra(Constants.UPDATE_ACTIVITY, true);
         intent.setAction(Constants.REFRESH_LIST);
         startService(intent);
     }
@@ -393,5 +425,10 @@ public class MainActivity extends AppCompatActivity
         }
 
         return false;
+    }
+
+    @Override
+    public void onScanCompleted(String path, Uri uri) {
+        Utils.sendIntent(this, Constants.REFRESH_LIST);
     }
 }

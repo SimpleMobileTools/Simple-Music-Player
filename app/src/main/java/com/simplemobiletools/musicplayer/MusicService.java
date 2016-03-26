@@ -134,9 +134,15 @@ public class MusicService extends Service
                     destroyPlayer();
                     break;
                 case Constants.REFRESH_LIST:
-                    ignoredPaths = Arrays.asList(intent.getStringArrayExtra(Constants.DELETED_SONGS));
+                    if (intent.getExtras() != null && intent.getExtras().containsKey(Constants.DELETED_SONGS)) {
+                        ignoredPaths = Arrays.asList(intent.getStringArrayExtra(Constants.DELETED_SONGS));
+                    }
+
                     fillPlaylist();
-                    bus.post(new Events.PlaylistUpdated(songs));
+
+                    if (intent.getExtras() != null && intent.getExtras().containsKey(Constants.UPDATE_ACTIVITY)) {
+                        bus.post(new Events.PlaylistUpdated(songs));
+                    }
 
                     if (currSong != null && ignoredPaths.contains(currSong.getPath())) {
                         playNextSong();
@@ -386,15 +392,15 @@ public class MusicService extends Service
         try {
             final Uri trackUri = ContentUris.withAppendedId(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, currSong.getId());
             player.setDataSource(getApplicationContext(), trackUri);
+            player.prepareAsync();
+
+            bus.post(new Events.SongChanged(currSong));
+
+            if (!wasPlaying) {
+                songStateChanged(true);
+            }
         } catch (IOException e) {
             Log.e(TAG, "setSong IOException " + e.getMessage());
-        }
-
-        player.prepareAsync();
-        bus.post(new Events.SongChanged(currSong));
-
-        if (!wasPlaying) {
-            songStateChanged(true);
         }
     }
 

@@ -9,6 +9,7 @@ import android.graphics.Canvas;
 import android.graphics.ColorFilter;
 import android.graphics.LightingColorFilter;
 import android.graphics.Paint;
+import android.widget.EditText;
 import android.widget.Toast;
 
 public class Utils {
@@ -32,5 +33,13 @@ public class Utils {
 
     public static void showToast(Context context, int resId) {
         Toast.makeText(context, context.getResources().getString(resId), Toast.LENGTH_SHORT).show();
+    }
+
+    public static String getFilename(final String path) {
+        return path.substring(path.lastIndexOf("/") + 1);
+    }
+
+    public static String getViewText(EditText editText) {
+        return editText.getText().toString().trim();
     }
 }

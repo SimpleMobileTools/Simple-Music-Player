@@ -7,9 +7,11 @@
     <string name="undo">Undo</string>
     <string name="title">Title</string>
     <string name="artist">Artist</string>
+    <string name="file_name">File name</string>
+    <string name="extension">Extension</string>
     <string name="rename_song">Rename song</string>
     <string name="rename_song_error">An error occurred during the renaming</string>
-    <string name="rename_song_empty">Please fill in both an artist and a title</string>
+    <string name="rename_song_empty">Please fill in all fields</string>
 
     <plurals name="songs_deleted">
         <item quantity="one">1 song deleted</item>
