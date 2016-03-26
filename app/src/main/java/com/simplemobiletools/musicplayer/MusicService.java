@@ -297,10 +297,16 @@ public class MusicService extends Service
             return 0;
         } else {
             final Random random = new Random();
-            int newSongIndex = playedSongIDs.size() - 1;
+            int newSongIndex = random.nextInt(cnt - 1);
+            long newSongId = songs.get(newSongIndex).getId();
+            if (currSong == null)
+                return newSongIndex;
+
+            final long currSongId = currSong.getId();
             // make sure we do not repeat the same song
-            while (newSongIndex == playedSongIDs.size() - 1) {
+            while (currSongId == newSongId) {
                 newSongIndex = random.nextInt(cnt - 1);
+                newSongId = songs.get(newSongIndex).getId();
             }
             return newSongIndex;
         }
