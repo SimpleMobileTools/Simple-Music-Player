@@ -297,7 +297,7 @@ public class MusicService extends Service
             return 0;
         } else {
             final Random random = new Random();
-            int newSongIndex = random.nextInt(cnt - 1);
+            int newSongIndex = random.nextInt(cnt);
             long newSongId = songs.get(newSongIndex).getId();
             if (currSong == null)
                 return newSongIndex;
@@ -305,7 +305,7 @@ public class MusicService extends Service
             final long currSongId = currSong.getId();
             // make sure we do not repeat the same song
             while (currSongId == newSongId) {
-                newSongIndex = random.nextInt(cnt - 1);
+                newSongIndex = random.nextInt(cnt);
                 newSongId = songs.get(newSongIndex).getId();
             }
             return newSongIndex;
