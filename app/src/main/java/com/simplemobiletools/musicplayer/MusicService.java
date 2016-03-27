@@ -262,8 +262,11 @@ public class MusicService extends Service
             remoteViews.setImageViewBitmap(R.id.closeBtn, closeBitmap);
         }
 
-        final Notification notification =
-                new Notification.Builder(this).setContentTitle(title).setContentText(artist).setSmallIcon(R.mipmap.ic_launcher).build();
+        final Notification notification = new Notification.Builder(this).
+                setContentTitle(title).
+                setContentText(artist).
+                setSmallIcon(R.mipmap.ic_launcher).
+                build();
         notification.bigContentView = remoteViews;
 
         final Intent contentIntent = new Intent(this, MainActivity.class);
