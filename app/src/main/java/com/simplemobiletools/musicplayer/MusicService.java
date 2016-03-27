@@ -46,7 +46,7 @@ public class MusicService extends Service
     private IncomingCallReceiver incomingCallReceiver;
     private ArrayList<Song> songs;
     private MediaPlayer player;
-    private ArrayList<Integer> playedSongIDs;
+    private ArrayList<Integer> playedSongIndexes;
     private Song currSong;
     private Bus bus;
     private List<String> ignoredPaths;
@@ -62,7 +62,7 @@ public class MusicService extends Service
     public void onCreate() {
         super.onCreate();
         songs = new ArrayList<>();
-        playedSongIDs = new ArrayList<>();
+        playedSongIndexes = new ArrayList<>();
         ignoredPaths = new ArrayList<>();
 
         if (bus == null) {
@@ -298,15 +298,8 @@ public class MusicService extends Service
         } else {
             final Random random = new Random();
             int newSongIndex = random.nextInt(cnt);
-            long newSongId = songs.get(newSongIndex).getId();
-            if (currSong == null)
-                return newSongIndex;
-
-            final long currSongId = currSong.getId();
-            // make sure we do not repeat the same song
-            while (currSongId == newSongId) {
+            while (playedSongIndexes.contains(newSongIndex)) {
                 newSongIndex = random.nextInt(cnt);
-                newSongId = songs.get(newSongIndex).getId();
             }
             return newSongIndex;
         }
@@ -324,9 +317,9 @@ public class MusicService extends Service
 
         // play the previous song if we are less than 5 secs into the song, else restart
         // remove the latest song from the list
-        if (playedSongIDs.size() > 1 && player.getCurrentPosition() < 5000) {
-            playedSongIDs.remove(playedSongIDs.size() - 1);
-            setSong(playedSongIDs.get(playedSongIDs.size() - 1), false);
+        if (playedSongIndexes.size() > 1 && player.getCurrentPosition() < 5000) {
+            playedSongIndexes.remove(playedSongIndexes.size() - 1);
+            setSong(playedSongIndexes.get(playedSongIndexes.size() - 1), false);
         } else {
             restartSong();
         }
@@ -382,7 +375,7 @@ public class MusicService extends Service
         setSong(pos, true);
     }
 
-    public void setSong(int songId, boolean addNewSong) {
+    public void setSong(int songIndex, boolean addNewSong) {
         if (songs.isEmpty())
             return;
 
@@ -390,10 +383,14 @@ public class MusicService extends Service
         initMediaPlayerIfNeeded();
 
         player.reset();
-        if (addNewSong)
-            playedSongIDs.add(songId);
+        if (addNewSong) {
+            playedSongIndexes.add(songIndex);
+            if (playedSongIndexes.size() >= songs.size()) {
+                playedSongIndexes.clear();
+            }
+        }
 
-        currSong = songs.get(songId);
+        currSong = songs.get(songIndex);
 
         try {
             final Uri trackUri = ContentUris.withAppendedId(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, currSong.getId());
