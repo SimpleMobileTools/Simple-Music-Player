@@ -43,7 +43,6 @@
                 <action android:name="com.simplemobiletools.musicplayer.action.PAUSE"/>
                 <action android:name="com.simplemobiletools.musicplayer.action.PLAYPAUSE"/>
                 <action android:name="com.simplemobiletools.musicplayer.action.NEXT"/>
-                <action android:name="com.simplemobiletools.musicplayer.action.STOP"/>
                 <action android:name="com.simplemobiletools.musicplayer.action.EDIT"/>
                 <action android:name="com.simplemobiletools.musicplayer.action.PLAYPOS"/>
                 <action android:name="com.simplemobiletools.musicplayer.action.REFRESH_LIST"/>

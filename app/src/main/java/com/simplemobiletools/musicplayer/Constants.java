@@ -17,7 +17,6 @@ public class Constants {
     public static final String PAUSE = PATH + "PAUSE";
     public static final String PLAYPAUSE = PATH + "PLAYPAUSE";
     public static final String NEXT = PATH + "NEXT";
-    public static final String STOP = PATH + "STOP";
     public static final String EDIT = PATH + "EDIT";
     public static final String PLAYPOS = PATH + "PLAYPOS";
     public static final String REFRESH_LIST = PATH + "REFRESH_LIST";

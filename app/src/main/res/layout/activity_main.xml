@@ -43,16 +43,6 @@
             android:paddingTop="5dp"
             android:src="@mipmap/next"/>
 
-        <ImageView
-            android:id="@+id/stopBtn"
-            style="@style/MyButton"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:paddingBottom="5dp"
-            android:paddingTop="5dp"
-            android:src="@mipmap/stop"/>
-
     </LinearLayout>
 
     <TextView

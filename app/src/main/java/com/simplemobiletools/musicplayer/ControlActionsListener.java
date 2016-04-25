@@ -12,7 +12,6 @@ public class ControlActionsListener extends BroadcastReceiver {
             case Constants.PREVIOUS:
             case Constants.PLAYPAUSE:
             case Constants.NEXT:
-            case Constants.STOP:
             case Constants.FINISH:
                 Utils.sendIntent(context, action);
                 break;

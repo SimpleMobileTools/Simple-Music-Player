@@ -135,9 +135,6 @@ public class MyWidgetProvider extends AppWidgetProvider {
 
         bmp = Utils.getColoredIcon(res, newTextColor, R.mipmap.next_white);
         remoteViews.setImageViewBitmap(R.id.nextBtn, bmp);
-
-        bmp = Utils.getColoredIcon(res, newTextColor, R.mipmap.stop_white);
-        remoteViews.setImageViewBitmap(R.id.stopBtn, bmp);
     }
 
     @Override
@@ -151,7 +148,6 @@ public class MyWidgetProvider extends AppWidgetProvider {
             case Constants.PREVIOUS:
             case Constants.PLAYPAUSE:
             case Constants.NEXT:
-            case Constants.STOP:
                 Utils.sendIntent(context, action);
                 break;
             default:
@@ -170,7 +166,6 @@ public class MyWidgetProvider extends AppWidgetProvider {
         setupIntent(Constants.PREVIOUS, R.id.previousBtn);
         setupIntent(Constants.PLAYPAUSE, R.id.playPauseBtn);
         setupIntent(Constants.NEXT, R.id.nextBtn);
-        setupIntent(Constants.STOP, R.id.stopBtn);
     }
 
     private void setupViews(Context context) {

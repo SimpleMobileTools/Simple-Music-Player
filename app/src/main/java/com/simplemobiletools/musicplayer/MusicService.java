@@ -55,7 +55,6 @@ public class MusicService extends Service
     private Bitmap playBitmap;
     private Bitmap pauseBitmap;
     private Bitmap nextBitmap;
-    private Bitmap stopBitmap;
     private Bitmap closeBitmap;
 
     @Override
@@ -113,9 +112,6 @@ public class MusicService extends Service
                 case Constants.NEXT:
                     playNextSong();
                     break;
-                case Constants.STOP:
-                    stopSong();
-                    break;
                 case Constants.PLAYPOS:
                     playSong(intent);
                     break;
@@ -171,13 +167,9 @@ public class MusicService extends Service
     private void fillPlaylist() {
         songs.clear();
         final Uri uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
-        final String[] columns = {
-                MediaStore.Audio.Media._ID,
-                MediaStore.Audio.Media.TITLE,
-                MediaStore.Audio.Media.ARTIST,
-                MediaStore.Audio.Media.DURATION,
-                MediaStore.Audio.Media.DATA
-        };
+        final String[] columns =
+                {MediaStore.Audio.Media._ID, MediaStore.Audio.Media.TITLE, MediaStore.Audio.Media.ARTIST, MediaStore.Audio.Media.DURATION,
+                        MediaStore.Audio.Media.DATA};
 
         final String order = MediaStore.Audio.Media.TITLE;
         final Cursor cursor = getContentResolver().query(uri, columns, null, null, order);
@@ -220,7 +212,6 @@ public class MusicService extends Service
             playBitmap = Utils.getColoredIcon(res, Color.BLACK, R.mipmap.play_white);
             pauseBitmap = Utils.getColoredIcon(res, Color.BLACK, R.mipmap.pause_white);
             nextBitmap = Utils.getColoredIcon(res, Color.BLACK, R.mipmap.next_white);
-            stopBitmap = Utils.getColoredIcon(res, Color.BLACK, R.mipmap.stop_white);
             closeBitmap = Utils.getColoredIcon(res, Color.BLACK, R.mipmap.close_white);
         }
     }
@@ -241,7 +232,6 @@ public class MusicService extends Service
         setupIntent(intent, remoteViews, Constants.PREVIOUS, R.id.previousBtn);
         setupIntent(intent, remoteViews, Constants.PLAYPAUSE, R.id.playPauseBtn);
         setupIntent(intent, remoteViews, Constants.NEXT, R.id.nextBtn);
-        setupIntent(intent, remoteViews, Constants.STOP, R.id.stopBtn);
         setupIntent(intent, remoteViews, Constants.FINISH, R.id.closeBtn);
 
         remoteViews.setViewVisibility(R.id.closeBtn, View.VISIBLE);
@@ -258,7 +248,6 @@ public class MusicService extends Service
                 remoteViews.setImageViewBitmap(R.id.playPauseBtn, playBitmap);
 
             remoteViews.setImageViewBitmap(R.id.nextBtn, nextBitmap);
-            remoteViews.setImageViewBitmap(R.id.stopBtn, stopBitmap);
             remoteViews.setImageViewBitmap(R.id.closeBtn, closeBitmap);
         }
 
@@ -358,15 +347,6 @@ public class MusicService extends Service
 
     public void playNextSong() {
         setSong(getNewSongId(), true);
-    }
-
-    public void stopSong() {
-        if (player != null && isPlaying()) {
-            // .stop() seems to misbehave weirdly
-            player.pause();
-            player.seekTo(0);
-            songStateChanged(false);
-        }
     }
 
     private void restartSong() {

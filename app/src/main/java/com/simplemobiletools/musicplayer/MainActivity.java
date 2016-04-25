@@ -141,11 +141,6 @@ public class MainActivity extends AppCompatActivity
         Utils.sendIntent(this, Constants.NEXT);
     }
 
-    @OnClick(R.id.stopBtn)
-    public void stopClicked() {
-        Utils.sendIntent(this, Constants.STOP);
-    }
-
     @Subscribe
     public void songChangedEvent(Events.SongChanged event) {
         currentSong = event.getSong();

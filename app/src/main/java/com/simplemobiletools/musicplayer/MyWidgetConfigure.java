@@ -33,7 +33,6 @@ public class MyWidgetConfigure extends AppCompatActivity {
     @Bind(R.id.previousBtn) ImageView prevBtn;
     @Bind(R.id.playPauseBtn) ImageView playPauseBtn;
     @Bind(R.id.nextBtn) ImageView nextBtn;
-    @Bind(R.id.stopBtn) ImageView stopBtn;
 
     private int widgetId;
     private int bgColor;
@@ -160,7 +159,6 @@ public class MyWidgetConfigure extends AppCompatActivity {
         prevBtn.getDrawable().mutate().setColorFilter(textColor, PorterDuff.Mode.SRC_IN);
         playPauseBtn.getDrawable().mutate().setColorFilter(textColor, PorterDuff.Mode.SRC_IN);
         nextBtn.getDrawable().mutate().setColorFilter(textColor, PorterDuff.Mode.SRC_IN);
-        stopBtn.getDrawable().mutate().setColorFilter(textColor, PorterDuff.Mode.SRC_IN);
     }
 
     private SeekBar.OnSeekBarChangeListener bgSeekbarChangeListener = new SeekBar.OnSeekBarChangeListener() {

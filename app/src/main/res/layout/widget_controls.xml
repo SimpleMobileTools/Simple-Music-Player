@@ -36,13 +36,4 @@
         android:paddingTop="@dimen/medium_padding"
         android:src="@mipmap/next_white"/>
 
-    <ImageView
-        android:id="@+id/stopBtn"
-        style="@style/MyButton"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:paddingBottom="@dimen/medium_padding"
-        android:paddingTop="@dimen/medium_padding"
-        android:src="@mipmap/stop_white"/>
 </LinearLayout>
