@@ -44,7 +44,7 @@ import butterknife.OnClick;
 public class MainActivity extends AppCompatActivity
         implements ListView.MultiChoiceModeListener, AdapterView.OnItemClickListener, ListView.OnTouchListener,
         MediaScannerConnection.OnScanCompletedListener {
-    private final int STORAGE_PERMISSION = 1;
+    private static final int STORAGE_PERMISSION = 1;
     private Bus bus;
     private int selectedItemsCnt;
     private Song currentSong;
