@@ -30,7 +30,7 @@ public class MyWidgetProvider extends AppWidgetProvider {
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        initVariables(cxt);
+        initVariables(context);
         super.onUpdate(context, appWidgetManager, appWidgetIds);
     }
 
@@ -139,7 +139,7 @@ public class MyWidgetProvider extends AppWidgetProvider {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        if (remoteViews == null || widgetManager == null || bus == null) {
+        if (remoteViews == null || widgetManager == null || bus == null || cxt == null) {
             initVariables(context);
         }
 
