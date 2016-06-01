@@ -216,7 +216,7 @@ public class MainActivity extends AppCompatActivity
                 displayEditDialog();
                 mode.finish();
                 return true;
-            case R.id.cab_remove:
+            case R.id.cab_delete:
                 prepareForDeleting();
                 mode.finish();
                 return true;

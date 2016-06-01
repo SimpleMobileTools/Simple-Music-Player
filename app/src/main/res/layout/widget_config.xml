@@ -52,6 +52,7 @@
         android:layout_alignBottom="@+id/config_text_color"
         android:layout_alignParentRight="true"
         android:layout_alignTop="@+id/config_text_color"
+        android:fontFamily="sans-serif-light"
         android:paddingLeft="@dimen/activity_margin"
         android:paddingRight="@dimen/activity_margin"
         android:text="OK"
