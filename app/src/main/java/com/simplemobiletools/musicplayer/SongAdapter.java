@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class SongAdapter extends BaseAdapter {
@@ -55,8 +55,8 @@ public class SongAdapter extends BaseAdapter {
     }
 
     static class ViewHolder {
-        @Bind(R.id.songTitle) TextView title;
-        @Bind(R.id.songArtist) TextView artist;
+        @BindView(R.id.songTitle) TextView title;
+        @BindView(R.id.songArtist) TextView artist;
 
         private ViewHolder(View v) {
             ButterKnife.bind(this, v);

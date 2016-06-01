@@ -37,7 +37,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -53,10 +53,10 @@ public class MainActivity extends AppCompatActivity
     private boolean isSnackbarShown;
     private List<String> toBeDeleted;
 
-    @Bind(R.id.playPauseBtn) ImageView playPauseBtn;
-    @Bind(R.id.songs) ListView songsList;
-    @Bind(R.id.songTitle) TextView titleTV;
-    @Bind(R.id.songArtist) TextView artistTV;
+    @BindView(R.id.playPauseBtn) ImageView playPauseBtn;
+    @BindView(R.id.songs) ListView songsList;
+    @BindView(R.id.songTitle) TextView titleTV;
+    @BindView(R.id.songArtist) TextView artistTV;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
