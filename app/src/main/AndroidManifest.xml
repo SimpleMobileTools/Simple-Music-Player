@@ -14,7 +14,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
         <activity
-            android:name="com.simplemobiletools.musicplayer.MainActivity"
+            android:name=".MainActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -25,7 +25,7 @@
         </activity>
 
         <activity
-            android:name="com.simplemobiletools.musicplayer.MyWidgetConfigure"
+            android:name=".MyWidgetConfigure"
             android:screenOrientation="portrait"
             android:theme="@style/MyWidgetConfigTheme">
             <intent-filter>
@@ -33,8 +33,13 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".AboutActivity"
+            android:label="@string/about"
+            android:screenOrientation="portrait"/>
+
         <service
-            android:name="com.simplemobiletools.musicplayer.MusicService"
+            android:name=".MusicService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.simplemobiletools.musicplayer.action.INIT"/>
@@ -51,7 +56,7 @@
             </intent-filter>
         </service>
 
-        <receiver android:name="com.simplemobiletools.musicplayer.MyWidgetProvider">
+        <receiver android:name=".MyWidgetProvider">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
             </intent-filter>
@@ -60,18 +65,18 @@
                 android:resource="@xml/widget_info"/>
         </receiver>
 
-        <receiver android:name="com.simplemobiletools.musicplayer.HeadsetPlugReceiver">
+        <receiver android:name=".HeadsetPlugReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.ACTION_HEADSET_PLUG"/>
             </intent-filter>
         </receiver>
 
-        <receiver android:name="com.simplemobiletools.musicplayer.RemoteControlReceiver">
+        <receiver android:name=".RemoteControlReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.MEDIA_BUTTON"/>
             </intent-filter>
         </receiver>
 
-        <receiver android:name="com.simplemobiletools.musicplayer.ControlActionsListener"/>
+        <receiver android:name=".ControlActionsListener"/>
     </application>
 </manifest>
