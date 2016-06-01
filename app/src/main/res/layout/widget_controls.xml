@@ -14,7 +14,7 @@
         android:layout_weight="1"
         android:paddingBottom="@dimen/medium_padding"
         android:paddingTop="@dimen/medium_padding"
-        android:src="@mipmap/previous_white"/>
+        android:src="@mipmap/previous"/>
 
     <ImageView
         android:id="@+id/playPauseBtn"
@@ -24,7 +24,7 @@
         android:layout_weight="1"
         android:paddingBottom="@dimen/medium_padding"
         android:paddingTop="@dimen/medium_padding"
-        android:src="@mipmap/play_white"/>
+        android:src="@mipmap/play"/>
 
     <ImageView
         android:id="@+id/nextBtn"
@@ -34,6 +34,6 @@
         android:layout_weight="1"
         android:paddingBottom="@dimen/medium_padding"
         android:paddingTop="@dimen/medium_padding"
-        android:src="@mipmap/next_white"/>
+        android:src="@mipmap/next"/>
 
 </LinearLayout>

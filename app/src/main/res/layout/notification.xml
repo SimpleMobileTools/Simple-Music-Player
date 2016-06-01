@@ -14,7 +14,7 @@
         android:layout_alignParentRight="true"
         android:paddingBottom="@dimen/medium_padding"
         android:paddingTop="@dimen/medium_padding"
-        android:src="@mipmap/close_white"
+        android:src="@mipmap/close"
         android:visibility="gone"/>
 
     <TextView

@@ -122,18 +122,21 @@ public class MyWidgetProvider extends AppWidgetProvider {
         final int newBgColor = prefs.getInt(Constants.WIDGET_BG_COLOR, defaultColor);
         final int newTextColor = prefs.getInt(Constants.WIDGET_TEXT_COLOR, Color.WHITE);
 
+        if (remoteViews == null)
+            initVariables(context);
+
         remoteViews.setInt(R.id.widget_holder, "setBackgroundColor", newBgColor);
 
         remoteViews.setInt(R.id.songTitle, "setTextColor", newTextColor);
         remoteViews.setInt(R.id.songArtist, "setTextColor", newTextColor);
 
-        Bitmap bmp = Utils.getColoredIcon(res, newTextColor, R.mipmap.previous_white);
+        Bitmap bmp = Utils.getColoredIcon(res, newTextColor, R.mipmap.previous);
         remoteViews.setImageViewBitmap(R.id.previousBtn, bmp);
 
-        playBitmap = Utils.getColoredIcon(res, newTextColor, R.mipmap.play_white);
-        pauseBitmap = Utils.getColoredIcon(res, newTextColor, R.mipmap.pause_white);
+        playBitmap = Utils.getColoredIcon(res, newTextColor, R.mipmap.play);
+        pauseBitmap = Utils.getColoredIcon(res, newTextColor, R.mipmap.pause);
 
-        bmp = Utils.getColoredIcon(res, newTextColor, R.mipmap.next_white);
+        bmp = Utils.getColoredIcon(res, newTextColor, R.mipmap.next);
         remoteViews.setImageViewBitmap(R.id.nextBtn, bmp);
     }
 

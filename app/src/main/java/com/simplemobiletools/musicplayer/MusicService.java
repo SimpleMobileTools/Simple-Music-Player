@@ -12,6 +12,7 @@ import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -208,11 +209,11 @@ public class MusicService extends Service
     private void createNotificationButtons() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Resources res = getResources();
-            prevBitmap = Utils.getColoredIcon(res, Color.BLACK, R.mipmap.previous_white);
-            playBitmap = Utils.getColoredIcon(res, Color.BLACK, R.mipmap.play_white);
-            pauseBitmap = Utils.getColoredIcon(res, Color.BLACK, R.mipmap.pause_white);
-            nextBitmap = Utils.getColoredIcon(res, Color.BLACK, R.mipmap.next_white);
-            closeBitmap = Utils.getColoredIcon(res, Color.BLACK, R.mipmap.close_white);
+            prevBitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.previous);
+            playBitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.play);
+            pauseBitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.pause);
+            nextBitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.next);
+            closeBitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.close);
         }
     }
 
@@ -274,9 +275,9 @@ public class MusicService extends Service
     }
 
     private void updatePlayPauseButton(RemoteViews remoteViews) {
-        int playPauseIcon = R.mipmap.play_white;
+        int playPauseIcon = R.mipmap.play;
         if (isPlaying())
-            playPauseIcon = R.mipmap.pause_white;
+            playPauseIcon = R.mipmap.pause;
 
         remoteViews.setImageViewResource(R.id.playPauseBtn, playPauseIcon);
     }

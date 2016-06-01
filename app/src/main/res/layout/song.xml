@@ -15,6 +15,7 @@
         <TextView
             android:id="@+id/songTitle"
             android:layout_width="match_parent"
+            android:fontFamily="sans-serif-light"
             android:layout_height="wrap_content"
             android:text="Song Title"
             android:textColor="@android:color/black"
@@ -22,6 +23,7 @@
 
         <TextView
             android:id="@+id/songArtist"
+            android:fontFamily="sans-serif-light"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Song Artist"
