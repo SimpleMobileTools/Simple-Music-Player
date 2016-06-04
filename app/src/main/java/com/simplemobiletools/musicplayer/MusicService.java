@@ -208,12 +208,12 @@ public class MusicService extends Service
 
     private void createNotificationButtons() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Resources res = getResources();
-            prevBitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.previous);
-            playBitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.play);
-            pauseBitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.pause);
-            nextBitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.next);
-            closeBitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.close);
+            final Resources res = getResources();
+            prevBitmap = BitmapFactory.decodeResource(res, R.mipmap.previous);
+            playBitmap = BitmapFactory.decodeResource(res, R.mipmap.play);
+            pauseBitmap = BitmapFactory.decodeResource(res, R.mipmap.pause);
+            nextBitmap = BitmapFactory.decodeResource(res, R.mipmap.next);
+            closeBitmap = BitmapFactory.decodeResource(res, R.mipmap.close);
         }
     }
 
