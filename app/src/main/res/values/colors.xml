@@ -5,5 +5,5 @@
     <color name="colorAccent">@color/colorPrimary</color>
     <color name="dark_grey">#11000000</color>
     <color name="pressed_item_foreground">#11000000</color>
-    <color name="activated_item_foreground">#33000000</color>
+    <color name="activated_item_foreground">#22000000</color>
 </resources>
