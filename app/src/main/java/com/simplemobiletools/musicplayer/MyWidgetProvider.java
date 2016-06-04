@@ -42,6 +42,12 @@ public class MyWidgetProvider extends AppWidgetProvider {
             remoteViews.setOnClickPendingIntent(id, pendingIntent);
     }
 
+    private void setupAppOpenIntent(int id) {
+        final Intent intent = new Intent(cxt, MainActivity.class);
+        final PendingIntent pendingIntent = PendingIntent.getActivity(cxt, 0, intent, 0);
+        remoteViews.setOnClickPendingIntent(id, pendingIntent);
+    }
+
     private void initVariables(Context context) {
         cxt = context;
         intent = new Intent(cxt, MyWidgetProvider.class);
@@ -169,6 +175,9 @@ public class MyWidgetProvider extends AppWidgetProvider {
         setupIntent(Constants.PREVIOUS, R.id.previousBtn);
         setupIntent(Constants.PLAYPAUSE, R.id.playPauseBtn);
         setupIntent(Constants.NEXT, R.id.nextBtn);
+
+        setupAppOpenIntent(R.id.songTitle);
+        setupAppOpenIntent(R.id.songArtist);
     }
 
     private void setupViews(Context context) {
