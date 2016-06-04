@@ -3,7 +3,7 @@
 
 A music player with the basic functions and a customizable widget.
 
-It takes every song from your device that is more than 20 seconds long, without the ability to filter by artist etc. The app can be used for renaming the song title, artist or filename. You can control it easily both from the status bar notification or with hardware button on your speakers.
+It takes every song from your device that is more than 20 seconds long, without the ability to filter by artist etc. The app can be used for renaming the song title, artist or filename. You can control it easily both from the status bar notification or with hardware button on your headset.
 
 It contains a customizable widget for your home screen, where you can change the font color, or the alpha and the color of the background. The widget can be of size 4x1 or 4x2.
 
