@@ -255,7 +255,7 @@ public class MusicService extends Service
         final Notification notification = new Notification.Builder(this).
                 setContentTitle(title).
                 setContentText(artist).
-                setSmallIcon(R.mipmap.ic_launcher).
+                setSmallIcon(R.mipmap.speakers).
                 build();
         notification.bigContentView = remoteViews;
 
