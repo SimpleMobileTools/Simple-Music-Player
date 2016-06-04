@@ -262,6 +262,8 @@ public class MusicService extends Service
         final Intent contentIntent = new Intent(this, MainActivity.class);
         notification.contentIntent = PendingIntent.getActivity(this, 0, contentIntent, 0);
         notification.flags |= Notification.FLAG_ONGOING_EVENT;
+        notification.priority = Notification.PRIORITY_MAX;
+        notification.when = System.currentTimeMillis();
 
         startForeground(1, notification);
     }
