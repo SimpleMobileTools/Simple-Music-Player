@@ -124,7 +124,7 @@ public class MyWidgetProvider extends AppWidgetProvider {
     private void updateColors(Context context) {
         final SharedPreferences prefs = initPrefs(context);
         final Resources res = context.getResources();
-        final int defaultColor = res.getColor(R.color.dark_grey);
+        final int defaultColor = res.getColor(R.color.dark_grey_transparent);
         final int newBgColor = prefs.getInt(Constants.WIDGET_BG_COLOR, defaultColor);
         final int newTextColor = prefs.getInt(Constants.WIDGET_TEXT_COLOR, Color.WHITE);
 

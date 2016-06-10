@@ -20,12 +20,12 @@ public class Utils {
         context.startService(intent);
     }
 
-    public static Bitmap getColoredIcon(Resources res, int newTextColor, int id) {
+    public static Bitmap getColoredIcon(Resources res, int newColor, int id) {
         final BitmapFactory.Options options = new BitmapFactory.Options();
         options.inMutable = true;
         final Bitmap bmp = BitmapFactory.decodeResource(res, id, options);
         final Paint paint = new Paint();
-        final ColorFilter filter = new PorterDuffColorFilter(newTextColor, PorterDuff.Mode.SRC_IN);
+        final ColorFilter filter = new PorterDuffColorFilter(newColor, PorterDuff.Mode.SRC_IN);
         paint.setColorFilter(filter);
         final Canvas canvas = new Canvas(bmp);
         canvas.drawBitmap(bmp, 0, 0, paint);

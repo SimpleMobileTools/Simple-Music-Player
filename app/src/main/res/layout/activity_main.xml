@@ -50,12 +50,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/controls"
-        android:layout_marginBottom="@dimen/song_item_padding"
+        android:layout_marginLeft="@dimen/activity_margin"
         android:layout_marginRight="@dimen/activity_margin"
-        android:layout_marginTop="@dimen/activity_margin"
+        android:layout_marginTop="@dimen/song_item_vertical_margin"
+        android:ellipsize="end"
         android:fontFamily="sans-serif-light"
         android:gravity="center_horizontal"
-        android:paddingLeft="@dimen/activity_margin"
+        android:maxLines="1"
         android:textColor="@android:color/black"
         android:textSize="18sp"/>
 
@@ -64,10 +65,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/songTitle"
+        android:layout_marginLeft="@dimen/activity_margin"
         android:layout_marginRight="@dimen/activity_margin"
+        android:layout_marginTop="@dimen/song_item_vertical_margin"
         android:fontFamily="sans-serif-light"
         android:gravity="center_horizontal"
-        android:paddingLeft="@dimen/activity_margin"
+        android:maxLines="1"
         android:textColor="@android:color/black"
         android:textSize="16sp"/>
 

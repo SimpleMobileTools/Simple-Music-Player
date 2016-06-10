@@ -10,22 +10,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="@dimen/song_item_padding">
+        android:padding="@dimen/song_item_vertical_margin">
 
         <TextView
             android:id="@+id/songTitle"
             android:layout_width="match_parent"
-            android:fontFamily="sans-serif-light"
             android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-light"
             android:text="Song Title"
             android:textColor="@android:color/black"
             android:textSize="16sp"/>
 
         <TextView
             android:id="@+id/songArtist"
-            android:fontFamily="sans-serif-light"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-light"
             android:text="Song Artist"
             android:textColor="@android:color/black"
             android:textSize="14sp"/>

@@ -1,6 +1,6 @@
 <resources>
     <dimen name="activity_margin">16dp</dimen>
-    <dimen name="song_item_padding">8dp</dimen>
+    <dimen name="song_item_vertical_margin">6dp</dimen>
     <dimen name="medium_padding">10dp</dimen>
     <dimen name="widget_row_height">60dp</dimen>
     <dimen name="config_text_size">18sp</dimen>
