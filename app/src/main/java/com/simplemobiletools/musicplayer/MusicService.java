@@ -12,7 +12,6 @@ import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -209,11 +208,12 @@ public class MusicService extends Service
     private void createNotificationButtons() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             final Resources res = getResources();
-            prevBitmap = BitmapFactory.decodeResource(res, R.mipmap.previous);
-            playBitmap = BitmapFactory.decodeResource(res, R.mipmap.play);
-            pauseBitmap = BitmapFactory.decodeResource(res, R.mipmap.pause);
-            nextBitmap = BitmapFactory.decodeResource(res, R.mipmap.next);
-            closeBitmap = BitmapFactory.decodeResource(res, R.mipmap.close);
+            final int darkGrey = res.getColor(R.color.dark_grey);
+            prevBitmap = Utils.getColoredIcon(res, darkGrey, R.mipmap.previous);
+            playBitmap = Utils.getColoredIcon(res, darkGrey, R.mipmap.play);
+            pauseBitmap = Utils.getColoredIcon(res, darkGrey, R.mipmap.pause);
+            nextBitmap = Utils.getColoredIcon(res, darkGrey, R.mipmap.next);
+            closeBitmap = Utils.getColoredIcon(res, darkGrey, R.mipmap.close);
         }
     }
 
@@ -236,11 +236,12 @@ public class MusicService extends Service
         setupIntent(intent, remoteViews, Constants.FINISH, R.id.closeBtn);
 
         remoteViews.setViewVisibility(R.id.closeBtn, View.VISIBLE);
+        remoteViews.setInt(R.id.widget_holder, "setBackgroundColor", Color.WHITE);
+        final int darkGrey = getResources().getColor(R.color.dark_grey);
+        remoteViews.setInt(R.id.songArtist, "setTextColor", darkGrey);
+        remoteViews.setInt(R.id.songTitle, "setTextColor", darkGrey);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            remoteViews.setInt(R.id.songArtist, "setTextColor", Color.BLACK);
-            remoteViews.setInt(R.id.songTitle, "setTextColor", Color.BLACK);
-
             remoteViews.setImageViewBitmap(R.id.previousBtn, prevBitmap);
 
             if (isPlaying())
