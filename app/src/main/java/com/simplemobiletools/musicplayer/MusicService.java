@@ -60,9 +60,6 @@ public class MusicService extends Service
     @Override
     public void onCreate() {
         super.onCreate();
-        songs = new ArrayList<>();
-        playedSongIndexes = new ArrayList<>();
-        ignoredPaths = new ArrayList<>();
 
         if (bus == null) {
             bus = BusProvider.getInstance();
@@ -70,16 +67,23 @@ public class MusicService extends Service
         }
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-            getSortedSongs();
-            headsetPlugReceiver = new HeadsetPlugReceiver();
-            incomingCallReceiver = new IncomingCallReceiver(this);
-            wasPlayingAtCall = false;
-            initMediaPlayerIfNeeded();
-            createNotificationButtons();
-            setupNotification();
+            initService();
         } else {
             Toast.makeText(this, getResources().getString(R.string.no_permissions), Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void initService() {
+        songs = new ArrayList<>();
+        playedSongIndexes = new ArrayList<>();
+        ignoredPaths = new ArrayList<>();
+        getSortedSongs();
+        headsetPlugReceiver = new HeadsetPlugReceiver();
+        incomingCallReceiver = new IncomingCallReceiver(this);
+        wasPlayingAtCall = false;
+        initMediaPlayerIfNeeded();
+        createNotificationButtons();
+        setupNotification();
     }
 
     @Override
@@ -92,6 +96,8 @@ public class MusicService extends Service
         if (action != null) {
             switch (action) {
                 case Constants.INIT:
+                    if (songs == null)
+                        initService();
                     bus.post(new Events.PlaylistUpdated(songs));
                     bus.post(new Events.SongChanged(currSong));
                     songStateChanged(isPlaying());
