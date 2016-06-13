@@ -124,6 +124,9 @@ public class MainActivity extends AppCompatActivity
         if (song != null) {
             titleTV.setText(song.getTitle());
             artistTV.setText(song.getArtist());
+        } else {
+            titleTV.setText("");
+            artistTV.setText("");
         }
     }
 
