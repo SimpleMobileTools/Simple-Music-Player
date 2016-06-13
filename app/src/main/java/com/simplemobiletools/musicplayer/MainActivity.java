@@ -388,7 +388,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void deleteSongs() {
-        if (toBeDeleted.isEmpty())
+        if (toBeDeleted == null || toBeDeleted.isEmpty())
             return;
 
         if (snackbar != null) {
