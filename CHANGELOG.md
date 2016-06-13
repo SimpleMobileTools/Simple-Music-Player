@@ -1,6 +1,12 @@
 Change Log
 ==========
 
+Version 1.2 *(2016-06-13)*
+----------------------------
+
+ * Properly handle storage permission on Android 6+
+ * Remove Phone permission
+
 Version 1.1 *(2016-06-10)*
 ----------------------------
 
