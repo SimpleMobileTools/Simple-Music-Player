@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+Version 1.3 *(2016-06-15)*
+----------------------------
+
+ * Add back the READ_PHONE_STATE permission
+
 Version 1.2 *(2016-06-13)*
 ----------------------------
 
