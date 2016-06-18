@@ -7,6 +7,8 @@ It takes every song from your device that is more than 20 seconds long, without 
 
 It contains a customizable widget for your home screen, where you can change the font color, or the alpha and the color of the background. The widget can be of size 4x1 or 4x2.
 
+<a href='https://play.google.com/store/apps/details?id=com.simplemobiletools.musicplayer'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png' height=60/></a>
+
 <img alt="App image" src="screenshots/app.png" width="250">
 <img alt="App image" src="screenshots/widget_config.png" width="250">
 <img alt="App image" src="screenshots/widget.png" width="250">
