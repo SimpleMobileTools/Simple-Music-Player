@@ -13,26 +13,26 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class SongAdapter extends BaseAdapter {
-    private ArrayList<Song> songs;
-    private LayoutInflater inflater;
+    private static ArrayList<Song> mSongs;
+    private static LayoutInflater mInflater;
 
     public SongAdapter(Context context, ArrayList<Song> songs) {
-        this.songs = songs;
-        inflater = LayoutInflater.from(context);
+        mSongs = songs;
+        mInflater = LayoutInflater.from(context);
     }
 
     @Override
     public View getView(int pos, View view, ViewGroup parent) {
         ViewHolder holder;
         if (view == null) {
-            view = inflater.inflate(R.layout.song, parent, false);
+            view = mInflater.inflate(R.layout.song, parent, false);
             holder = new ViewHolder(view);
             view.setTag(holder);
         } else {
             holder = (ViewHolder) view.getTag();
         }
 
-        final Song song = songs.get(pos);
+        final Song song = mSongs.get(pos);
         holder.title.setText(song.getTitle());
         holder.artist.setText(song.getArtist());
 
@@ -41,12 +41,12 @@ public class SongAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return songs.size();
+        return mSongs.size();
     }
 
     @Override
     public Object getItem(int i) {
-        return songs.get(i);
+        return mSongs.get(i);
     }
 
     @Override

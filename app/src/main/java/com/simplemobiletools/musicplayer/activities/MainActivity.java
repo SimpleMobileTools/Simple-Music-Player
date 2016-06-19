@@ -1,4 +1,4 @@
-package com.simplemobiletools.musicplayer;
+package com.simplemobiletools.musicplayer.activities;
 
 import android.Manifest;
 import android.content.ContentValues;
@@ -19,7 +19,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.SparseBooleanArray;
 import android.view.ActionMode;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -30,6 +29,14 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.simplemobiletools.musicplayer.BusProvider;
+import com.simplemobiletools.musicplayer.Constants;
+import com.simplemobiletools.musicplayer.Events;
+import com.simplemobiletools.musicplayer.MusicService;
+import com.simplemobiletools.musicplayer.R;
+import com.simplemobiletools.musicplayer.Song;
+import com.simplemobiletools.musicplayer.SongAdapter;
+import com.simplemobiletools.musicplayer.Utils;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
@@ -45,26 +52,28 @@ public class MainActivity extends AppCompatActivity
         implements ListView.MultiChoiceModeListener, AdapterView.OnItemClickListener, ListView.OnTouchListener,
         MediaScannerConnection.OnScanCompletedListener {
     private static final int STORAGE_PERMISSION = 1;
-    private Bus bus;
-    private int selectedItemsCnt;
-    private Song currentSong;
-    private List<Song> songs;
-    private Snackbar snackbar;
-    private boolean isSnackbarShown;
-    private List<String> toBeDeleted;
 
-    @BindView(R.id.playPauseBtn) ImageView playPauseBtn;
-    @BindView(R.id.songs) ListView songsList;
-    @BindView(R.id.songTitle) TextView titleTV;
-    @BindView(R.id.songArtist) TextView artistTV;
+    @BindView(R.id.playPauseBtn) ImageView mPlayPauseBtn;
+    @BindView(R.id.songs) ListView mSongsList;
+    @BindView(R.id.songTitle) TextView mTitleTV;
+    @BindView(R.id.songArtist) TextView mArtistTV;
+
+    private static Bus mBus;
+    private static Song mCurrentSong;
+    private static List<Song> mSongs;
+    private static Snackbar mSnackbar;
+    private static List<String> mToBeDeleted;
+
+    private static boolean mIsSnackbarShown;
+    private static int mSelectedItemsCnt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        bus = BusProvider.getInstance();
-        bus.register(this);
+        mBus = BusProvider.getInstance();
+        mBus.register(this);
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
             initializePlayer();
@@ -75,8 +84,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu, menu);
+        getMenuInflater().inflate(R.menu.menu, menu);
         return true;
     }
 
@@ -106,10 +114,10 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void initializePlayer() {
-        toBeDeleted = new ArrayList<>();
-        songsList.setMultiChoiceModeListener(this);
-        songsList.setOnTouchListener(this);
-        songsList.setOnItemClickListener(this);
+        mToBeDeleted = new ArrayList<>();
+        mSongsList.setMultiChoiceModeListener(this);
+        mSongsList.setOnTouchListener(this);
+        mSongsList.setOnItemClickListener(this);
         Utils.sendIntent(this, Constants.INIT);
     }
 
@@ -122,18 +130,18 @@ public class MainActivity extends AppCompatActivity
 
     private void updateSongInfo(Song song) {
         if (song != null) {
-            titleTV.setText(song.getTitle());
-            artistTV.setText(song.getArtist());
+            mTitleTV.setText(song.getTitle());
+            mArtistTV.setText(song.getArtist());
         } else {
-            titleTV.setText("");
-            artistTV.setText("");
+            mTitleTV.setText("");
+            mArtistTV.setText("");
         }
     }
 
     private void fillSongsListView(ArrayList<Song> songs) {
-        this.songs = songs;
+        mSongs = songs;
         final SongAdapter adapter = new SongAdapter(this, songs);
-        songsList.setAdapter(adapter);
+        mSongsList.setAdapter(adapter);
     }
 
     @Override
@@ -145,7 +153,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        bus.unregister(this);
+        mBus.unregister(this);
     }
 
     @OnClick(R.id.previousBtn)
@@ -165,8 +173,8 @@ public class MainActivity extends AppCompatActivity
 
     @Subscribe
     public void songChangedEvent(Events.SongChanged event) {
-        currentSong = event.getSong();
-        updateSongInfo(currentSong);
+        mCurrentSong = event.getSong();
+        updateSongInfo(mCurrentSong);
     }
 
     @Subscribe
@@ -175,7 +183,7 @@ public class MainActivity extends AppCompatActivity
         if (event.getIsPlaying())
             id = R.mipmap.pause;
 
-        playPauseBtn.setImageDrawable(getResources().getDrawable(id));
+        mPlayPauseBtn.setImageDrawable(getResources().getDrawable(id));
     }
 
     @Subscribe
@@ -186,13 +194,13 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onItemCheckedStateChanged(ActionMode mode, int position, long id, boolean checked) {
         if (checked) {
-            selectedItemsCnt++;
+            mSelectedItemsCnt++;
         } else {
-            selectedItemsCnt--;
+            mSelectedItemsCnt--;
         }
 
-        if (selectedItemsCnt > 0) {
-            mode.setTitle(String.valueOf(selectedItemsCnt));
+        if (mSelectedItemsCnt > 0) {
+            mode.setTitle(String.valueOf(mSelectedItemsCnt));
         }
 
         mode.invalidate();
@@ -200,15 +208,14 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-        final MenuInflater inflater = mode.getMenuInflater();
-        inflater.inflate(R.menu.cab, menu);
+        mode.getMenuInflater().inflate(R.menu.cab, menu);
         return true;
     }
 
     @Override
     public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
         final MenuItem menuItem = menu.findItem(R.id.cab_edit);
-        menuItem.setVisible(selectedItemsCnt == 1);
+        menuItem.setVisible(mSelectedItemsCnt == 1);
         return true;
     }
 
@@ -233,7 +240,7 @@ public class MainActivity extends AppCompatActivity
         if (songIndex == -1)
             return;
 
-        final Song selectedSong = songs.get(songIndex);
+        final Song selectedSong = mSongs.get(songIndex);
         if (selectedSong == null)
             return;
 
@@ -286,12 +293,12 @@ public class MainActivity extends AppCompatActivity
                 if (updateContentResolver(uri, selectedSong.getId(), newTitle, newArtist)) {
                     getContentResolver().notifyChange(uri, null);
                     boolean currSongChanged = false;
-                    if (currentSong != null && currentSong.equals(selectedSong)) {
+                    if (mCurrentSong != null && mCurrentSong.equals(selectedSong)) {
                         currSongChanged = true;
                     }
 
-                    final Song songInList = songs.get(songIndex);
-                    songInList.setTitle(newTitle);
+                    final Song songInList = mSongs.get(songIndex);
+                    songInList.setmTitle(newTitle);
                     songInList.setArtist(newArtist);
 
                     if (currSongChanged) {
@@ -332,7 +339,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private int getSelectedSongIndex() {
-        final SparseBooleanArray items = songsList.getCheckedItemPositions();
+        final SparseBooleanArray items = mSongsList.getCheckedItemPositions();
         int cnt = items.size();
         for (int i = 0; i < cnt; i++) {
             if (items.valueAt(i)) {
@@ -347,20 +354,20 @@ public class MainActivity extends AppCompatActivity
         intent.putExtra(Constants.EDITED_SONG, newSong);
         intent.setAction(Constants.EDIT);
         startService(intent);
-        currentSong = newSong;
-        ((SongAdapter) songsList.getAdapter()).notifyDataSetChanged();
+        mCurrentSong = newSong;
+        ((SongAdapter) mSongsList.getAdapter()).notifyDataSetChanged();
     }
 
     private void prepareForDeleting() {
-        toBeDeleted.clear();
-        final SparseBooleanArray items = songsList.getCheckedItemPositions();
-        int cnt = items.size();
+        mToBeDeleted.clear();
+        final SparseBooleanArray items = mSongsList.getCheckedItemPositions();
+        final int cnt = items.size();
         int deletedCnt = 0;
         for (int i = 0; i < cnt; i++) {
             if (items.valueAt(i)) {
                 final int id = items.keyAt(i);
-                final String path = songs.get(id).getPath();
-                toBeDeleted.add(path);
+                final String path = mSongs.get(id).getPath();
+                mToBeDeleted.add(path);
                 deletedCnt++;
             }
         }
@@ -372,18 +379,18 @@ public class MainActivity extends AppCompatActivity
         final CoordinatorLayout coordinator = (CoordinatorLayout) findViewById(R.id.coordinator_layout);
         final Resources res = getResources();
         final String msg = res.getQuantityString(R.plurals.songs_deleted, cnt, cnt);
-        snackbar = Snackbar.make(coordinator, msg, Snackbar.LENGTH_INDEFINITE);
-        snackbar.setAction(res.getString(R.string.undo), undoDeletion);
-        snackbar.setActionTextColor(Color.WHITE);
-        snackbar.show();
-        isSnackbarShown = true;
+        mSnackbar = Snackbar.make(coordinator, msg, Snackbar.LENGTH_INDEFINITE);
+        mSnackbar.setAction(res.getString(R.string.undo), undoDeletion);
+        mSnackbar.setActionTextColor(Color.WHITE);
+        mSnackbar.show();
+        mIsSnackbarShown = true;
         updateSongsList();
     }
 
     private void updateSongsList() {
         final Intent intent = new Intent(this, MusicService.class);
-        final String[] deletedSongs = new String[toBeDeleted.size()];
-        toBeDeleted.toArray(deletedSongs);
+        final String[] deletedSongs = new String[mToBeDeleted.size()];
+        mToBeDeleted.toArray(deletedSongs);
         intent.putExtra(Constants.DELETED_SONGS, deletedSongs);
         intent.putExtra(Constants.UPDATE_ACTIVITY, true);
         intent.setAction(Constants.REFRESH_LIST);
@@ -391,17 +398,17 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void deleteSongs() {
-        if (toBeDeleted == null || toBeDeleted.isEmpty())
+        if (mToBeDeleted == null || mToBeDeleted.isEmpty())
             return;
 
-        if (snackbar != null) {
-            snackbar.dismiss();
+        if (mSnackbar != null) {
+            mSnackbar.dismiss();
         }
 
-        isSnackbarShown = false;
+        mIsSnackbarShown = false;
 
         final List<String> updatedFiles = new ArrayList<>();
-        for (String delPath : toBeDeleted) {
+        for (String delPath : mToBeDeleted) {
             final File file = new File(delPath);
             if (file.exists()) {
                 if (file.delete()) {
@@ -412,7 +419,7 @@ public class MainActivity extends AppCompatActivity
 
         final String[] deletedPaths = updatedFiles.toArray(new String[updatedFiles.size()]);
         MediaScannerConnection.scanFile(this, deletedPaths, null, null);
-        toBeDeleted.clear();
+        mToBeDeleted.clear();
     }
 
     @Override
@@ -423,21 +430,21 @@ public class MainActivity extends AppCompatActivity
     private View.OnClickListener undoDeletion = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            toBeDeleted.clear();
-            snackbar.dismiss();
-            isSnackbarShown = false;
+            mToBeDeleted.clear();
+            mSnackbar.dismiss();
+            mIsSnackbarShown = false;
             updateSongsList();
         }
     };
 
     @Override
     public void onDestroyActionMode(ActionMode mode) {
-        selectedItemsCnt = 0;
+        mSelectedItemsCnt = 0;
     }
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
-        if (isSnackbarShown) {
+        if (mIsSnackbarShown) {
             deleteSongs();
         }
 

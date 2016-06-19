@@ -4,38 +4,38 @@ import java.util.ArrayList;
 
 public class Events {
     public static class SongChanged {
-        private Song song;
+        private static Song mSong;
 
         SongChanged(Song song) {
-            this.song = song;
+            mSong = song;
         }
 
         public Song getSong() {
-            return song;
+            return mSong;
         }
     }
 
     public static class SongStateChanged {
-        private boolean isPlaying;
+        private static boolean mIsPlaying;
 
         SongStateChanged(boolean isPlaying) {
-            this.isPlaying = isPlaying;
+            mIsPlaying = isPlaying;
         }
 
         public boolean getIsPlaying() {
-            return isPlaying;
+            return mIsPlaying;
         }
     }
 
     public static class PlaylistUpdated {
-        private ArrayList<Song> songs;
+        private static ArrayList<Song> mSongs;
 
         PlaylistUpdated(ArrayList<Song> songs) {
-            this.songs = songs;
+            mSongs = songs;
         }
 
         public ArrayList<Song> getSongs() {
-            return songs;
+            return mSongs;
         }
     }
 }

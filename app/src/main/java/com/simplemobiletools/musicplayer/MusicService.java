@@ -28,6 +28,7 @@ import android.view.View;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
+import com.simplemobiletools.musicplayer.activities.MainActivity;
 import com.squareup.otto.Bus;
 
 import java.io.IOException;
@@ -42,28 +43,30 @@ public class MusicService extends Service
         implements MediaPlayer.OnPreparedListener, MediaPlayer.OnErrorListener, MediaPlayer.OnCompletionListener {
     private static final String TAG = MusicService.class.getSimpleName();
     private static final int MIN_DURATION_MS = 20000;
-    private HeadsetPlugReceiver headsetPlugReceiver;
-    private IncomingCallReceiver incomingCallReceiver;
-    private ArrayList<Song> songs;
-    private MediaPlayer player;
-    private ArrayList<Integer> playedSongIndexes;
-    private Song currSong;
-    private Bus bus;
-    private List<String> ignoredPaths;
-    private boolean wasPlayingAtCall;
-    private Bitmap prevBitmap;
-    private Bitmap playBitmap;
-    private Bitmap pauseBitmap;
-    private Bitmap nextBitmap;
-    private Bitmap closeBitmap;
+
+    private HeadsetPlugReceiver mHeadsetPlugReceiver;
+    private IncomingCallReceiver mIncomingCallReceiver;
+    private ArrayList<Song> mSongs;
+    private MediaPlayer mPlayer;
+    private ArrayList<Integer> mPlayedSongIndexes;
+    private Song mCurrSong;
+    private Bus mBus;
+    private List<String> mIgnoredPaths;
+    private Bitmap mPrevBitmap;
+    private Bitmap mPlayBitmap;
+    private Bitmap mPauseBitmap;
+    private Bitmap mNextBitmap;
+    private Bitmap mCloseBitmap;
+
+    private boolean mWasPlayingAtCall;
 
     @Override
     public void onCreate() {
         super.onCreate();
 
-        if (bus == null) {
-            bus = BusProvider.getInstance();
-            bus.register(this);
+        if (mBus == null) {
+            mBus = BusProvider.getInstance();
+            mBus.register(this);
         }
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
@@ -74,13 +77,13 @@ public class MusicService extends Service
     }
 
     private void initService() {
-        songs = new ArrayList<>();
-        playedSongIndexes = new ArrayList<>();
-        ignoredPaths = new ArrayList<>();
+        mSongs = new ArrayList<>();
+        mPlayedSongIndexes = new ArrayList<>();
+        mIgnoredPaths = new ArrayList<>();
         getSortedSongs();
-        headsetPlugReceiver = new HeadsetPlugReceiver();
-        incomingCallReceiver = new IncomingCallReceiver(this);
-        wasPlayingAtCall = false;
+        mHeadsetPlugReceiver = new HeadsetPlugReceiver();
+        mIncomingCallReceiver = new IncomingCallReceiver(this);
+        mWasPlayingAtCall = false;
         initMediaPlayerIfNeeded();
         createNotificationButtons();
         setupNotification();
@@ -92,14 +95,14 @@ public class MusicService extends Service
             return START_NOT_STICKY;
         }
 
-        String action = intent.getAction();
+        final String action = intent.getAction();
         if (action != null) {
             switch (action) {
                 case Constants.INIT:
-                    if (songs == null)
+                    if (mSongs == null)
                         initService();
-                    bus.post(new Events.PlaylistUpdated(songs));
-                    bus.post(new Events.SongChanged(currSong));
+                    mBus.post(new Events.PlaylistUpdated(mSongs));
+                    mBus.post(new Events.SongChanged(mCurrSong));
                     songStateChanged(isPlaying());
                     break;
                 case Constants.PREVIOUS:
@@ -128,8 +131,8 @@ public class MusicService extends Service
                     incomingCallStop();
                     break;
                 case Constants.EDIT:
-                    currSong = (Song) intent.getSerializableExtra(Constants.EDITED_SONG);
-                    bus.post(new Events.SongChanged(currSong));
+                    mCurrSong = (Song) intent.getSerializableExtra(Constants.EDITED_SONG);
+                    mBus.post(new Events.SongChanged(mCurrSong));
                     setupNotification();
                     break;
                 case Constants.FINISH:
@@ -137,16 +140,16 @@ public class MusicService extends Service
                     break;
                 case Constants.REFRESH_LIST:
                     if (intent.getExtras() != null && intent.getExtras().containsKey(Constants.DELETED_SONGS)) {
-                        ignoredPaths = Arrays.asList(intent.getStringArrayExtra(Constants.DELETED_SONGS));
+                        mIgnoredPaths = Arrays.asList(intent.getStringArrayExtra(Constants.DELETED_SONGS));
                     }
 
                     fillPlaylist();
 
                     if (intent.getExtras() != null && intent.getExtras().containsKey(Constants.UPDATE_ACTIVITY)) {
-                        bus.post(new Events.PlaylistUpdated(songs));
+                        mBus.post(new Events.PlaylistUpdated(mSongs));
                     }
 
-                    if (currSong != null && ignoredPaths.contains(currSong.getPath())) {
+                    if (mCurrSong != null && mIgnoredPaths.contains(mCurrSong.getPath())) {
                         playNextSong();
                     }
                     break;
@@ -159,19 +162,19 @@ public class MusicService extends Service
     }
 
     public void initMediaPlayerIfNeeded() {
-        if (player != null)
+        if (mPlayer != null)
             return;
 
-        player = new MediaPlayer();
-        player.setWakeMode(getApplicationContext(), PowerManager.PARTIAL_WAKE_LOCK);
-        player.setAudioStreamType(AudioManager.STREAM_MUSIC);
-        player.setOnPreparedListener(this);
-        player.setOnCompletionListener(this);
-        player.setOnErrorListener(this);
+        mPlayer = new MediaPlayer();
+        mPlayer.setWakeMode(getApplicationContext(), PowerManager.PARTIAL_WAKE_LOCK);
+        mPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+        mPlayer.setOnPreparedListener(this);
+        mPlayer.setOnCompletionListener(this);
+        mPlayer.setOnErrorListener(this);
     }
 
     private void fillPlaylist() {
-        songs.clear();
+        mSongs.clear();
         final Uri uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
         final String[] columns =
                 {MediaStore.Audio.Media._ID, MediaStore.Audio.Media.TITLE, MediaStore.Audio.Media.ARTIST, MediaStore.Audio.Media.DURATION,
@@ -193,8 +196,8 @@ public class MusicService extends Service
                     final String artist = cursor.getString(artistIndex);
                     final String path = cursor.getString(pathIndex);
 
-                    if (!ignoredPaths.contains(path)) {
-                        songs.add(new Song(id, title, artist, path));
+                    if (!mIgnoredPaths.contains(path)) {
+                        mSongs.add(new Song(id, title, artist, path));
                     }
                 }
             } while (cursor.moveToNext());
@@ -204,7 +207,7 @@ public class MusicService extends Service
 
     private void getSortedSongs() {
         fillPlaylist();
-        Collections.sort(songs, new Comparator<Song>() {
+        Collections.sort(mSongs, new Comparator<Song>() {
             public int compare(Song a, Song b) {
                 return a.getTitle().compareTo(b.getTitle());
             }
@@ -215,11 +218,11 @@ public class MusicService extends Service
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             final Resources res = getResources();
             final int darkGrey = res.getColor(R.color.dark_grey);
-            prevBitmap = Utils.getColoredIcon(res, darkGrey, R.mipmap.previous);
-            playBitmap = Utils.getColoredIcon(res, darkGrey, R.mipmap.play);
-            pauseBitmap = Utils.getColoredIcon(res, darkGrey, R.mipmap.pause);
-            nextBitmap = Utils.getColoredIcon(res, darkGrey, R.mipmap.next);
-            closeBitmap = Utils.getColoredIcon(res, darkGrey, R.mipmap.close);
+            mPrevBitmap = Utils.getColoredIcon(res, darkGrey, R.mipmap.previous);
+            mPlayBitmap = Utils.getColoredIcon(res, darkGrey, R.mipmap.play);
+            mPauseBitmap = Utils.getColoredIcon(res, darkGrey, R.mipmap.pause);
+            mNextBitmap = Utils.getColoredIcon(res, darkGrey, R.mipmap.next);
+            mCloseBitmap = Utils.getColoredIcon(res, darkGrey, R.mipmap.close);
         }
     }
 
@@ -229,8 +232,8 @@ public class MusicService extends Service
         final RemoteViews remoteViews = new RemoteViews(getPackageName(), R.layout.notification);
         remoteViews.setInt(R.id.widget_holder, "setBackgroundColor", 0);
 
-        final String title = (currSong == null) ? "" : currSong.getTitle();
-        final String artist = (currSong == null) ? "" : currSong.getArtist();
+        final String title = (mCurrSong == null) ? "" : mCurrSong.getTitle();
+        final String artist = (mCurrSong == null) ? "" : mCurrSong.getArtist();
         remoteViews.setTextViewText(R.id.songTitle, title);
         remoteViews.setTextViewText(R.id.songArtist, artist);
 
@@ -248,15 +251,16 @@ public class MusicService extends Service
         remoteViews.setInt(R.id.songTitle, "setTextColor", darkGrey);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            remoteViews.setImageViewBitmap(R.id.previousBtn, prevBitmap);
+            remoteViews.setImageViewBitmap(R.id.previousBtn, mPrevBitmap);
 
-            if (isPlaying())
-                remoteViews.setImageViewBitmap(R.id.playPauseBtn, pauseBitmap);
-            else
-                remoteViews.setImageViewBitmap(R.id.playPauseBtn, playBitmap);
+            if (isPlaying()) {
+                remoteViews.setImageViewBitmap(R.id.playPauseBtn, mPauseBitmap);
+            } else {
+                remoteViews.setImageViewBitmap(R.id.playPauseBtn, mPlayBitmap);
+            }
 
-            remoteViews.setImageViewBitmap(R.id.nextBtn, nextBitmap);
-            remoteViews.setImageViewBitmap(R.id.closeBtn, closeBitmap);
+            remoteViews.setImageViewBitmap(R.id.nextBtn, mNextBitmap);
+            remoteViews.setImageViewBitmap(R.id.closeBtn, mCloseBitmap);
         }
 
         final Notification notification = new Notification.Builder(this).
@@ -292,7 +296,7 @@ public class MusicService extends Service
     }
 
     private int getNewSongId() {
-        final int cnt = songs.size();
+        final int cnt = mSongs.size();
         if (cnt == 0) {
             return -1;
         } else if (cnt == 1) {
@@ -300,7 +304,7 @@ public class MusicService extends Service
         } else {
             final Random random = new Random();
             int newSongIndex = random.nextInt(cnt);
-            while (playedSongIndexes.contains(newSongIndex)) {
+            while (mPlayedSongIndexes.contains(newSongIndex)) {
                 newSongIndex = random.nextInt(cnt);
             }
             return newSongIndex;
@@ -308,49 +312,50 @@ public class MusicService extends Service
     }
 
     public boolean isPlaying() {
-        return player != null && player.isPlaying();
+        return mPlayer != null && mPlayer.isPlaying();
     }
 
     public void playPreviousSong() {
-        if (songs.isEmpty())
+        if (mSongs.isEmpty())
             return;
 
         initMediaPlayerIfNeeded();
 
         // play the previous song if we are less than 5 secs into the song, else restart
         // remove the latest song from the list
-        if (playedSongIndexes.size() > 1 && player.getCurrentPosition() < 5000) {
-            playedSongIndexes.remove(playedSongIndexes.size() - 1);
-            setSong(playedSongIndexes.get(playedSongIndexes.size() - 1), false);
+        if (mPlayedSongIndexes.size() > 1 && mPlayer.getCurrentPosition() < 5000) {
+            mPlayedSongIndexes.remove(mPlayedSongIndexes.size() - 1);
+            setSong(mPlayedSongIndexes.get(mPlayedSongIndexes.size() - 1), false);
         } else {
             restartSong();
         }
     }
 
     public void pauseSong() {
-        if (songs.isEmpty())
+        if (mSongs.isEmpty())
             return;
 
         initMediaPlayerIfNeeded();
 
-        player.pause();
+        mPlayer.pause();
         songStateChanged(false);
     }
 
     public void resumeSong() {
-        if (songs.isEmpty()) {
+        if (mSongs.isEmpty()) {
             fillPlaylist();
         }
 
-        if (songs.isEmpty())
+        if (mSongs.isEmpty())
             return;
 
         initMediaPlayerIfNeeded();
 
-        if (currSong == null)
+        if (mCurrSong == null) {
             playNextSong();
-        else
-            player.start();
+        } else {
+            mPlayer.start();
+        }
 
         songStateChanged(true);
     }
@@ -360,7 +365,7 @@ public class MusicService extends Service
     }
 
     private void restartSong() {
-        player.seekTo(0);
+        mPlayer.seekTo(0);
     }
 
     private void playSong(Intent intent) {
@@ -369,28 +374,28 @@ public class MusicService extends Service
     }
 
     public void setSong(int songIndex, boolean addNewSong) {
-        if (songs.isEmpty())
+        if (mSongs.isEmpty())
             return;
 
         final boolean wasPlaying = isPlaying();
         initMediaPlayerIfNeeded();
 
-        player.reset();
+        mPlayer.reset();
         if (addNewSong) {
-            playedSongIndexes.add(songIndex);
-            if (playedSongIndexes.size() >= songs.size()) {
-                playedSongIndexes.clear();
+            mPlayedSongIndexes.add(songIndex);
+            if (mPlayedSongIndexes.size() >= mSongs.size()) {
+                mPlayedSongIndexes.clear();
             }
         }
 
-        currSong = songs.get(songIndex);
+        mCurrSong = mSongs.get(songIndex);
 
         try {
-            final Uri trackUri = ContentUris.withAppendedId(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, currSong.getId());
-            player.setDataSource(getApplicationContext(), trackUri);
-            player.prepareAsync();
+            final Uri trackUri = ContentUris.withAppendedId(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, mCurrSong.getId());
+            mPlayer.setDataSource(getApplicationContext(), trackUri);
+            mPlayer.prepareAsync();
 
-            bus.post(new Events.SongChanged(currSong));
+            mBus.post(new Events.SongChanged(mCurrSong));
 
             if (!wasPlaying) {
                 songStateChanged(true);
@@ -407,15 +412,15 @@ public class MusicService extends Service
 
     @Override
     public void onCompletion(MediaPlayer mp) {
-        if (player.getCurrentPosition() > 0) {
-            player.reset();
+        if (mPlayer.getCurrentPosition() > 0) {
+            mPlayer.reset();
             playNextSong();
         }
     }
 
     @Override
     public boolean onError(MediaPlayer mp, int what, int extra) {
-        player.reset();
+        mPlayer.reset();
         return false;
     }
 
@@ -432,20 +437,20 @@ public class MusicService extends Service
     }
 
     private void destroyPlayer() {
-        if (player != null) {
-            player.stop();
-            player.release();
-            player = null;
+        if (mPlayer != null) {
+            mPlayer.stop();
+            mPlayer.release();
+            mPlayer = null;
         }
 
-        if (bus != null) {
+        if (mBus != null) {
             songStateChanged(false);
-            bus.post(new Events.SongChanged(null));
-            bus.unregister(this);
+            mBus.post(new Events.SongChanged(null));
+            mBus.unregister(this);
         }
 
         final TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-        telephonyManager.listen(incomingCallReceiver, PhoneStateListener.LISTEN_NONE);
+        telephonyManager.listen(mIncomingCallReceiver, PhoneStateListener.LISTEN_NONE);
 
         stopForeground(true);
         stopSelf();
@@ -453,33 +458,33 @@ public class MusicService extends Service
 
     public void incomingCallStart() {
         if (isPlaying()) {
-            wasPlayingAtCall = true;
+            mWasPlayingAtCall = true;
             pauseSong();
         } else {
-            wasPlayingAtCall = false;
+            mWasPlayingAtCall = false;
         }
     }
 
     public void incomingCallStop() {
-        if (wasPlayingAtCall)
+        if (mWasPlayingAtCall)
             resumeSong();
 
-        wasPlayingAtCall = false;
+        mWasPlayingAtCall = false;
     }
 
     private void songStateChanged(boolean isPlaying) {
         setupNotification();
-        bus.post(new Events.SongStateChanged(isPlaying));
+        mBus.post(new Events.SongStateChanged(isPlaying));
 
         if (isPlaying) {
             IntentFilter filter = new IntentFilter(Intent.ACTION_HEADSET_PLUG);
-            registerReceiver(headsetPlugReceiver, filter);
+            registerReceiver(mHeadsetPlugReceiver, filter);
 
             final TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-            telephonyManager.listen(incomingCallReceiver, PhoneStateListener.LISTEN_CALL_STATE);
+            telephonyManager.listen(mIncomingCallReceiver, PhoneStateListener.LISTEN_CALL_STATE);
         } else {
             try {
-                unregisterReceiver(headsetPlugReceiver);
+                unregisterReceiver(mHeadsetPlugReceiver);
             } catch (IllegalArgumentException e) {
                 Log.e(TAG, "IllegalArgumentException " + e.getMessage());
             }

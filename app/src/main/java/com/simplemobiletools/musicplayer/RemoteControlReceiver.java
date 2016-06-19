@@ -8,23 +8,25 @@ import android.view.KeyEvent;
 
 public class RemoteControlReceiver extends BroadcastReceiver {
     private static final int MAX_CLICK_DURATION = 700;
-    private static int clicksCnt;
-    private static Context cxt;
-    private static Handler handler = new Handler();
+
+    private static Context mContext;
+    private static Handler mHandler = new Handler();
+
+    private static int mClicksCnt;
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        cxt = context;
+        mContext = context;
         if (Intent.ACTION_MEDIA_BUTTON.equals(intent.getAction())) {
             final KeyEvent event = intent.getParcelableExtra(Intent.EXTRA_KEY_EVENT);
             if (event.getAction() == KeyEvent.ACTION_UP && KeyEvent.KEYCODE_HEADSETHOOK == event.getKeyCode()) {
-                clicksCnt++;
+                mClicksCnt++;
 
-                handler.removeCallbacks(runnable);
-                if (clicksCnt >= 3) {
-                    handler.post(runnable);
+                mHandler.removeCallbacks(runnable);
+                if (mClicksCnt >= 3) {
+                    mHandler.post(runnable);
                 } else {
-                    handler.postDelayed(runnable, MAX_CLICK_DURATION);
+                    mHandler.postDelayed(runnable, MAX_CLICK_DURATION);
                 }
             }
         }
@@ -33,17 +35,17 @@ public class RemoteControlReceiver extends BroadcastReceiver {
     private static Runnable runnable = new Runnable() {
         @Override
         public void run() {
-            if (clicksCnt == 0)
+            if (mClicksCnt == 0)
                 return;
 
-            if (clicksCnt == 1) {
-                Utils.sendIntent(cxt, Constants.PLAYPAUSE);
-            } else if (clicksCnt == 2) {
-                Utils.sendIntent(cxt, Constants.NEXT);
+            if (mClicksCnt == 1) {
+                Utils.sendIntent(mContext, Constants.PLAYPAUSE);
+            } else if (mClicksCnt == 2) {
+                Utils.sendIntent(mContext, Constants.NEXT);
             } else {
-                Utils.sendIntent(cxt, Constants.PREVIOUS);
+                Utils.sendIntent(mContext, Constants.PREVIOUS);
             }
-            clicksCnt = 0;
+            mClicksCnt = 0;
         }
     };
 }

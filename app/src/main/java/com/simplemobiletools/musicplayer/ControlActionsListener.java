@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 
 public class ControlActionsListener extends BroadcastReceiver {
+
     @Override
     public void onReceive(Context context, Intent intent) {
         final String action = intent.getAction();

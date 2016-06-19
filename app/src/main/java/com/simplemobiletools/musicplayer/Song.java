@@ -4,54 +4,51 @@ import java.io.Serializable;
 
 public class Song implements Serializable {
     private static final long serialVersionUID = 6717978783256842145L;
-    private long id;
-    private String title;
-    private String artist;
-    private String path;
+
+    private String mTitle;
+    private String mArtist;
+    private String mPath;
+
+    private long mId;
 
     public Song(long id, String title, String artist, String path) {
-        this.id = id;
-        this.title = title;
-        this.artist = artist;
-        this.path = path;
+        mId = id;
+        mTitle = title;
+        mArtist = artist;
+        mPath = path;
     }
 
     public long getId() {
-        return id;
+        return mId;
     }
 
     public String getArtist() {
-        return artist;
+        return mArtist;
     }
 
     public void setArtist(String newArtist) {
-        artist = newArtist;
+        mArtist = newArtist;
     }
 
     public String getTitle() {
-        return title;
+        return mTitle;
     }
 
-    public void setTitle(String newTitle) {
-        title = newTitle;
+    public void setmTitle(String newTitle) {
+        mTitle = newTitle;
     }
 
     public String getPath() {
-        return path;
+        return mPath;
     }
 
     public void setPath(String newPath) {
-        path = newPath;
+        mPath = newPath;
     }
 
     @Override
     public String toString() {
-        return "Song{"
-                + "id=" + getId()
-                + ", title=" + getTitle()
-                + ", artist=" + getArtist()
-                + ", path=" + getPath()
-                + "}";
+        return "Song{" + "mId=" + getId() + ", mTitle=" + getTitle() + ", mArtist=" + getArtist() + ", mPath=" + getPath() + "}";
     }
 
     @Override

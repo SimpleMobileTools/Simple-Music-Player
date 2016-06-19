@@ -5,10 +5,10 @@ import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 
 public class IncomingCallReceiver extends PhoneStateListener {
-    private Context cxt;
+    private static Context mContext;
 
     public IncomingCallReceiver(Context context) {
-        cxt = context;
+        mContext = context;
     }
 
     @Override
@@ -16,9 +16,9 @@ public class IncomingCallReceiver extends PhoneStateListener {
         super.onCallStateChanged(state, incomingNumber);
 
         if (state == TelephonyManager.CALL_STATE_RINGING) {
-            Utils.sendIntent(cxt, Constants.CALL_START);
+            Utils.sendIntent(mContext, Constants.CALL_START);
         } else if (state == TelephonyManager.CALL_STATE_IDLE) {
-            Utils.sendIntent(cxt, Constants.CALL_STOP);
+            Utils.sendIntent(mContext, Constants.CALL_STOP);
         }
     }
 }

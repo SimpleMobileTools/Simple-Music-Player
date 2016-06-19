@@ -1,14 +1,17 @@
-package com.simplemobiletools.musicplayer;
+package com.simplemobiletools.musicplayer.activities;
 
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
+import com.simplemobiletools.musicplayer.R;
+
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class LicenseActivity extends AppCompatActivity {
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
