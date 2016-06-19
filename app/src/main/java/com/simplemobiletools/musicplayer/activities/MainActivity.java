@@ -462,6 +462,6 @@ public class MainActivity extends AppCompatActivity
 
     @Subscribe
     public void songChangedEvent(Events.ProgressUpdated event) {
-        final int progress = event.getProgress();
+        mProgressBar.setProgress(event.getProgress());
     }
 }

@@ -18,6 +18,7 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Handler;
 import android.os.IBinder;
 import android.os.PowerManager;
 import android.provider.MediaStore;
@@ -48,22 +49,24 @@ public class MusicService extends Service
         implements MediaPlayer.OnPreparedListener, MediaPlayer.OnErrorListener, MediaPlayer.OnCompletionListener {
     private static final String TAG = MusicService.class.getSimpleName();
     private static final int MIN_DURATION_MS = 20000;
+    private static final int PROGRESS_UPDATE_INTERVAL = 1000;
 
-    private HeadsetPlugReceiver mHeadsetPlugReceiver;
-    private IncomingCallReceiver mIncomingCallReceiver;
-    private ArrayList<Song> mSongs;
-    private MediaPlayer mPlayer;
-    private ArrayList<Integer> mPlayedSongIndexes;
-    private Song mCurrSong;
-    private Bus mBus;
-    private List<String> mIgnoredPaths;
-    private Bitmap mPrevBitmap;
-    private Bitmap mPlayBitmap;
-    private Bitmap mPauseBitmap;
-    private Bitmap mNextBitmap;
-    private Bitmap mCloseBitmap;
+    private static HeadsetPlugReceiver mHeadsetPlugReceiver;
+    private static IncomingCallReceiver mIncomingCallReceiver;
+    private static ArrayList<Song> mSongs;
+    private static MediaPlayer mPlayer;
+    private static ArrayList<Integer> mPlayedSongIndexes;
+    private static Song mCurrSong;
+    private static Bus mBus;
+    private static List<String> mIgnoredPaths;
+    private static Handler mProgressHandler;
+    private static Bitmap mPrevBitmap;
+    private static Bitmap mPlayBitmap;
+    private static Bitmap mPauseBitmap;
+    private static Bitmap mNextBitmap;
+    private static Bitmap mCloseBitmap;
 
-    private boolean mWasPlayingAtCall;
+    private static boolean mWasPlayingAtCall;
 
     @Override
     public void onCreate() {
@@ -74,6 +77,7 @@ public class MusicService extends Service
             mBus.register(this);
         }
 
+        mProgressHandler = new Handler();
         final ComponentName mRemoteControlComponent = new ComponentName(getPackageName(), RemoteControlReceiver.class.getName());
         final AudioManager mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         mAudioManager.registerMediaButtonEventReceiver(mRemoteControlComponent);
@@ -482,6 +486,7 @@ public class MusicService extends Service
     }
 
     private void songStateChanged(boolean isPlaying) {
+        handleProgressHandler(isPlaying);
         setupNotification();
         mBus.post(new Events.SongStateChanged(isPlaying));
 
@@ -497,6 +502,22 @@ public class MusicService extends Service
             } catch (IllegalArgumentException e) {
                 Log.e(TAG, "IllegalArgumentException " + e.getMessage());
             }
+        }
+    }
+
+    private void handleProgressHandler(final boolean isPlaying) {
+        if (isPlaying) {
+            mProgressHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    final int secs = mPlayer.getCurrentPosition() / 1000;
+                    mBus.post(new Events.ProgressUpdated(secs));
+                    mProgressHandler.removeCallbacksAndMessages(null);
+                    mProgressHandler.postDelayed(this, PROGRESS_UPDATE_INTERVAL);
+                }
+            });
+        } else {
+            mProgressHandler.removeCallbacksAndMessages(null);
         }
     }
 }
