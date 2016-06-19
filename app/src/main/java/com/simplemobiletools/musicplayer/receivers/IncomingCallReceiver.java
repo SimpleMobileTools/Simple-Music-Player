@@ -1,8 +1,11 @@
-package com.simplemobiletools.musicplayer;
+package com.simplemobiletools.musicplayer.receivers;
 
 import android.content.Context;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
+
+import com.simplemobiletools.musicplayer.Constants;
+import com.simplemobiletools.musicplayer.Utils;
 
 public class IncomingCallReceiver extends PhoneStateListener {
     private static Context mContext;

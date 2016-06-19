@@ -4,6 +4,8 @@ import android.Manifest;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
@@ -29,6 +31,10 @@ import android.widget.RemoteViews;
 import android.widget.Toast;
 
 import com.simplemobiletools.musicplayer.activities.MainActivity;
+import com.simplemobiletools.musicplayer.receivers.ControlActionsListener;
+import com.simplemobiletools.musicplayer.receivers.HeadsetPlugReceiver;
+import com.simplemobiletools.musicplayer.receivers.IncomingCallReceiver;
+import com.simplemobiletools.musicplayer.receivers.RemoteControlReceiver;
 import com.squareup.otto.Bus;
 
 import java.io.IOException;
@@ -47,6 +53,9 @@ public class MusicService extends Service
     private HeadsetPlugReceiver mHeadsetPlugReceiver;
     private IncomingCallReceiver mIncomingCallReceiver;
     private ArrayList<Song> mSongs;
+    private AudioManager mAudioManager;
+    private ComponentName mRemoteControlComponent;
+    private BroadcastReceiver headsetPlugReceiver;
     private MediaPlayer mPlayer;
     private ArrayList<Integer> mPlayedSongIndexes;
     private Song mCurrSong;
@@ -69,6 +78,9 @@ public class MusicService extends Service
             mBus.register(this);
         }
 
+        mRemoteControlComponent = new ComponentName(getPackageName(), RemoteControlReceiver.class.getName());
+        mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+        mAudioManager.registerMediaButtonEventReceiver(mRemoteControlComponent);
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
             initService();
         } else {
@@ -434,6 +446,7 @@ public class MusicService extends Service
     public void onDestroy() {
         super.onDestroy();
         destroyPlayer();
+        mAudioManager.unregisterMediaButtonEventReceiver(mRemoteControlComponent);
     }
 
     private void destroyPlayer() {

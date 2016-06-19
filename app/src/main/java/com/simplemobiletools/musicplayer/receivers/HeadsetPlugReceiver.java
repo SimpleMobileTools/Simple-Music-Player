@@ -1,8 +1,11 @@
-package com.simplemobiletools.musicplayer;
+package com.simplemobiletools.musicplayer.receivers;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+
+import com.simplemobiletools.musicplayer.Constants;
+import com.simplemobiletools.musicplayer.Utils;
 
 public class HeadsetPlugReceiver extends BroadcastReceiver {
 

@@ -72,18 +72,23 @@
                 android:resource="@xml/widget_info"/>
         </receiver>
 
-        <receiver android:name=".HeadsetPlugReceiver">
+        <receiver
+            android:name=".receivers.HeadsetPlugReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.ACTION_HEADSET_PLUG"/>
             </intent-filter>
         </receiver>
 
-        <receiver android:name=".RemoteControlReceiver">
-            <intent-filter>
+        <receiver
+            android:name=".receivers.RemoteControlReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter android:priority="999">
                 <action android:name="android.intent.action.MEDIA_BUTTON"/>
+                <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </receiver>
 
-        <receiver android:name=".ControlActionsListener"/>
+        <receiver android:name=".receivers.ControlActionsListener"/>
     </application>
 </manifest>
