@@ -38,4 +38,16 @@ public class Events {
             return mSongs;
         }
     }
+
+    public static class ProgressUpdated {
+        private static int mProgress;
+
+        ProgressUpdated(int progress) {
+            mProgress = progress;
+        }
+
+        public int getProgress() {
+            return mProgress;
+        }
+    }
 }

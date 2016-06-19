@@ -203,9 +203,10 @@ public class MusicService extends Service
                     final String title = cursor.getString(titleIndex);
                     final String artist = cursor.getString(artistIndex);
                     final String path = cursor.getString(pathIndex);
+                    final int duration = cursor.getInt(durationIndex) / 1000;
 
                     if (!mIgnoredPaths.contains(path)) {
-                        mSongs.add(new Song(id, title, artist, path));
+                        mSongs.add(new Song(id, title, artist, path, duration));
                     }
                 }
             } while (cursor.moveToNext());

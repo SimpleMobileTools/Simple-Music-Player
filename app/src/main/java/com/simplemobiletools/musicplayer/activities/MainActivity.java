@@ -26,6 +26,7 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -57,6 +58,7 @@ public class MainActivity extends AppCompatActivity
     @BindView(R.id.songs) ListView mSongsList;
     @BindView(R.id.songTitle) TextView mTitleTV;
     @BindView(R.id.songArtist) TextView mArtistTV;
+    @BindView(R.id.progressbar) SeekBar mProgressBar;
 
     private static Bus mBus;
     private static Song mCurrentSong;
@@ -132,6 +134,8 @@ public class MainActivity extends AppCompatActivity
         if (song != null) {
             mTitleTV.setText(song.getTitle());
             mArtistTV.setText(song.getArtist());
+            mProgressBar.setMax(song.getDuration());
+            mProgressBar.setProgress(0);
         } else {
             mTitleTV.setText("");
             mArtistTV.setText("");
@@ -454,5 +458,10 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onScanCompleted(String path, Uri uri) {
         Utils.sendIntent(this, Constants.REFRESH_LIST);
+    }
+
+    @Subscribe
+    public void songChangedEvent(Events.ProgressUpdated event) {
+        final int progress = event.getProgress();
     }
 }

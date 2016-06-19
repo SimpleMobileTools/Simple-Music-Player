@@ -10,12 +10,14 @@ public class Song implements Serializable {
     private String mPath;
 
     private long mId;
+    private int mDuration;
 
-    public Song(long id, String title, String artist, String path) {
+    public Song(long id, String title, String artist, String path, int duration) {
         mId = id;
         mTitle = title;
         mArtist = artist;
         mPath = path;
+        mDuration = duration;
     }
 
     public long getId() {
@@ -46,9 +48,17 @@ public class Song implements Serializable {
         mPath = newPath;
     }
 
+    public int getDuration() {
+        return mDuration;
+    }
+
     @Override
     public String toString() {
-        return "Song{" + "mId=" + getId() + ", mTitle=" + getTitle() + ", mArtist=" + getArtist() + ", mPath=" + getPath() + "}";
+        return "Song{" + "mId=" + getId() +
+                ", mTitle=" + getTitle() +
+                ", mArtist=" + getArtist() +
+                ", mPath=" + getPath() +
+                ", mDuration=" + getDuration() + "}";
     }
 
     @Override
