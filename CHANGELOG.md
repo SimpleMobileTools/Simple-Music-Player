@@ -1,10 +1,11 @@
 Change Log
 ==========
 
-Version 1.4 *(2016-06---)*
+Version 1.4 *(2016-06-19)*
 ----------------------------
 
  * Add a Facebook page link to the About section
+ * Add a progress bar
 
 Version 1.3 *(2016-06-15)*
 ----------------------------
