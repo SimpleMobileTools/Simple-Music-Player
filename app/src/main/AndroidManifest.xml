@@ -58,6 +58,7 @@
                 <action android:name="com.simplemobiletools.musicplayer.action.REFRESH_LIST"/>
                 <action android:name="com.simplemobiletools.musicplayer.action.INCOMING_CALL_START"/>
                 <action android:name="com.simplemobiletools.musicplayer.action.INCOMING_CALL_STOP"/>
+                <action android:name="com.simplemobiletools.musicplayer.action.SET_PROGRESS"/>
             </intent-filter>
         </service>
 

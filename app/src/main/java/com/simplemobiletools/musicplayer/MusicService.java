@@ -148,6 +148,7 @@ public class MusicService extends Service
                     setupNotification();
                     break;
                 case Constants.FINISH:
+                    mBus.post(new Events.ProgressUpdated(0));
                     destroyPlayer();
                     break;
                 case Constants.REFRESH_LIST:
@@ -163,6 +164,12 @@ public class MusicService extends Service
 
                     if (mCurrSong != null && mIgnoredPaths.contains(mCurrSong.getPath())) {
                         playNextSong();
+                    }
+                    break;
+                case Constants.SET_PROGRESS:
+                    if (mPlayer != null) {
+                        final int progress = intent.getIntExtra(Constants.PROGRESS, mPlayer.getCurrentPosition() / 1000);
+                        updateProgress(progress);
                     }
                     break;
                 default:
@@ -483,6 +490,11 @@ public class MusicService extends Service
             resumeSong();
 
         mWasPlayingAtCall = false;
+    }
+
+    private void updateProgress(int progress) {
+        mPlayer.seekTo(progress * 1000);
+        resumeSong();
     }
 
     private void songStateChanged(boolean isPlaying) {

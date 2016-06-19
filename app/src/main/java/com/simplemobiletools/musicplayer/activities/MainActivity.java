@@ -51,7 +51,7 @@ import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity
         implements ListView.MultiChoiceModeListener, AdapterView.OnItemClickListener, ListView.OnTouchListener,
-        MediaScannerConnection.OnScanCompletedListener {
+        MediaScannerConnection.OnScanCompletedListener, SeekBar.OnSeekBarChangeListener {
     private static final int STORAGE_PERMISSION = 1;
 
     @BindView(R.id.playPauseBtn) ImageView mPlayPauseBtn;
@@ -76,6 +76,7 @@ public class MainActivity extends AppCompatActivity
         ButterKnife.bind(this);
         mBus = BusProvider.getInstance();
         mBus.register(this);
+        mProgressBar.setOnSeekBarChangeListener(this);
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
             initializePlayer();
@@ -463,5 +464,23 @@ public class MainActivity extends AppCompatActivity
     @Subscribe
     public void songChangedEvent(Events.ProgressUpdated event) {
         mProgressBar.setProgress(event.getProgress());
+    }
+
+    @Override
+    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
+    }
+
+    @Override
+    public void onStartTrackingTouch(SeekBar seekBar) {
+
+    }
+
+    @Override
+    public void onStopTrackingTouch(SeekBar seekBar) {
+        final Intent intent = new Intent(this, MusicService.class);
+        intent.putExtra(Constants.PROGRESS, seekBar.getProgress());
+        intent.setAction(Constants.SET_PROGRESS);
+        startService(intent);
     }
 }
