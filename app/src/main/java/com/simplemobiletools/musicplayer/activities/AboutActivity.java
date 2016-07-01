@@ -1,5 +1,6 @@
 package com.simplemobiletools.musicplayer.activities;
 
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.net.Uri;
@@ -7,9 +8,11 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
+import android.view.View;
 import android.widget.TextView;
 
 import com.simplemobiletools.musicplayer.BuildConfig;
+import com.simplemobiletools.musicplayer.Config;
 import com.simplemobiletools.musicplayer.R;
 
 import java.util.Calendar;
@@ -22,6 +25,7 @@ public class AboutActivity extends AppCompatActivity {
     @BindView(R.id.about_copyright) TextView mCopyright;
     @BindView(R.id.about_version) TextView mVersion;
     @BindView(R.id.about_email) TextView mEmailTV;
+    @BindView(R.id.about_rate_us) View mRateUs;
 
     private static Resources mRes;
 
@@ -35,6 +39,7 @@ public class AboutActivity extends AppCompatActivity {
         setupEmail();
         setupVersion();
         setupCopyright();
+        setupRateUs();
     }
 
     private void setupEmail() {
@@ -55,6 +60,22 @@ public class AboutActivity extends AppCompatActivity {
         final int year = Calendar.getInstance().get(Calendar.YEAR);
         final String copyrightText = String.format(mRes.getString(R.string.copyright), year);
         mCopyright.setText(copyrightText);
+    }
+
+    private void setupRateUs() {
+        if (Config.newInstance(getApplicationContext()).getIsFirstRun()) {
+            mRateUs.setVisibility(View.GONE);
+        }
+    }
+
+    @OnClick(R.id.about_rate_us)
+    public void rateUsClicked() {
+        final Uri uri = Uri.parse("market://details?id=" + getPackageName());
+        try {
+            startActivity(new Intent(Intent.ACTION_VIEW, uri));
+        } catch (ActivityNotFoundException ignored) {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id=" + getPackageName())));
+        }
     }
 
     @OnClick(R.id.about_license)

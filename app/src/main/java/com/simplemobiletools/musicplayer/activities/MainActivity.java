@@ -31,6 +31,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.simplemobiletools.musicplayer.BusProvider;
+import com.simplemobiletools.musicplayer.Config;
 import com.simplemobiletools.musicplayer.Constants;
 import com.simplemobiletools.musicplayer.Events;
 import com.simplemobiletools.musicplayer.MusicService;
@@ -158,6 +159,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        Config.newInstance(getApplicationContext()).setIsFirstRun(false);
         mBus.unregister(this);
     }
 

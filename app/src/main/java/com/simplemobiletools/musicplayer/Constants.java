@@ -24,4 +24,8 @@ public class Constants {
     public static final String CALL_START = PATH + "CALL_START";
     public static final String CALL_STOP = PATH + "CALL_STOP";
     public static final String SET_PROGRESS = PATH + "SET_PROGRESS";
+
+    // shared preferences
+    public static final String PREFS_KEY = "Music Player";
+    public static final String IS_FIRST_RUN = "is_first_run";
 }
