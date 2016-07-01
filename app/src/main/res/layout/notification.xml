@@ -9,8 +9,8 @@
 
     <ImageView
         android:id="@+id/closeBtn"
-        android:layout_width="@dimen/widget_row_height"
-        android:layout_height="@dimen/widget_row_height"
+        android:layout_width="@dimen/controls_row_height"
+        android:layout_height="@dimen/controls_row_height"
         android:layout_alignParentRight="true"
         android:paddingBottom="@dimen/medium_padding"
         android:paddingTop="@dimen/medium_padding"
@@ -49,6 +49,6 @@
     <include
         layout="@layout/widget_controls"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/widget_row_height"
+        android:layout_height="@dimen/controls_row_height"
         android:layout_below="@+id/songArtist"/>
 </RelativeLayout>

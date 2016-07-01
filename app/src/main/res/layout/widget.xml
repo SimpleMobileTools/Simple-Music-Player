@@ -39,6 +39,6 @@
     <include
         layout="@layout/widget_controls"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/widget_row_height"
+        android:layout_height="@dimen/controls_row_height"
         android:layout_below="@+id/songArtist"/>
 </RelativeLayout>
