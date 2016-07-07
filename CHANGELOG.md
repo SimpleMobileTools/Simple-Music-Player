@@ -1,6 +1,12 @@
 Changelog
 ==========
 
+Version 1.9 *(2016-07-07)*
+----------------------------
+
+ * Use the proper widget preview image
+ * Allow toggling Shuffle and numeric progress
+
 Version 1.8 *(2016-07-05)*
 ----------------------------
 
