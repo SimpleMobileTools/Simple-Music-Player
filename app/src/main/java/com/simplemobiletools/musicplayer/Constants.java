@@ -28,4 +28,5 @@ public class Constants {
     // shared preferences
     public static final String PREFS_KEY = "Music Player";
     public static final String IS_FIRST_RUN = "is_first_run";
+    public static final String SHUFFLE = "shuffle";
 }

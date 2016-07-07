@@ -58,6 +58,7 @@ public class MusicService extends Service
     private static ArrayList<Integer> mPlayedSongIndexes;
     private static Song mCurrSong;
     private static Bus mBus;
+    private static Config mConfig;
     private static List<String> mIgnoredPaths;
     private static Handler mProgressHandler;
     private static Bitmap mPrevBitmap;
@@ -96,6 +97,7 @@ public class MusicService extends Service
         mHeadsetPlugReceiver = new HeadsetPlugReceiver();
         mIncomingCallReceiver = new IncomingCallReceiver(this);
         mWasPlayingAtCall = false;
+        mConfig = Config.newInstance(getApplicationContext());
         initMediaPlayerIfNeeded();
         createNotificationButtons();
         setupNotification();
@@ -316,18 +318,27 @@ public class MusicService extends Service
     }
 
     private int getNewSongId() {
-        final int cnt = mSongs.size();
-        if (cnt == 0) {
-            return -1;
-        } else if (cnt == 1) {
-            return 0;
-        } else {
-            final Random random = new Random();
-            int newSongIndex = random.nextInt(cnt);
-            while (mPlayedSongIndexes.contains(newSongIndex)) {
-                newSongIndex = random.nextInt(cnt);
+        if (mConfig.getIsShuffleEnabled()) {
+            final int cnt = mSongs.size();
+            if (cnt == 0) {
+                return -1;
+            } else if (cnt == 1) {
+                return 0;
+            } else {
+                final Random random = new Random();
+                int newSongIndex = random.nextInt(cnt);
+                while (mPlayedSongIndexes.contains(newSongIndex)) {
+                    newSongIndex = random.nextInt(cnt);
+                }
+                return newSongIndex;
             }
-            return newSongIndex;
+        } else {
+            if (mPlayedSongIndexes.isEmpty()) {
+                return 0;
+            }
+
+            final int lastIndex = mPlayedSongIndexes.get(mPlayedSongIndexes.size() - 1);
+            return (lastIndex + 1) % mSongs.size();
         }
     }
 

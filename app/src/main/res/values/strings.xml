@@ -20,6 +20,7 @@
 
     <!-- Settings -->
     <string name="settings">Settings</string>
+    <string name="shuffle">Shuffle</string>
 
     <!-- About -->
     <string name="about">About</string>

@@ -21,4 +21,12 @@ public class Config {
     public void setIsFirstRun(boolean firstRun) {
         mPrefs.edit().putBoolean(Constants.IS_FIRST_RUN, firstRun).apply();
     }
+
+    public boolean getIsShuffleEnabled() {
+        return mPrefs.getBoolean(Constants.SHUFFLE, true);
+    }
+
+    public void setShuffle(boolean shuffle) {
+        mPrefs.edit().putBoolean(Constants.SHUFFLE, shuffle).apply();
+    }
 }
