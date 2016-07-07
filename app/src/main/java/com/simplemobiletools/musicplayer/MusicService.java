@@ -93,6 +93,7 @@ public class MusicService extends Service
         mSongs = new ArrayList<>();
         mPlayedSongIndexes = new ArrayList<>();
         mIgnoredPaths = new ArrayList<>();
+        mCurrSong = null;
         getSortedSongs();
         mHeadsetPlugReceiver = new HeadsetPlugReceiver();
         mIncomingCallReceiver = new IncomingCallReceiver(this);
