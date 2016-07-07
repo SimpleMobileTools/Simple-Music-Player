@@ -5,5 +5,5 @@
                     android:minHeight="110dp"
                     android:minResizeHeight="30dp"
                     android:minWidth="250dp"
-                    android:resizeMode="vertical|horizontal">
-</appwidget-provider>
+                    android:previewImage="@mipmap/widget_preview"
+                    android:resizeMode="vertical|horizontal"/>
