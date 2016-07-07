@@ -43,6 +43,11 @@
             android:label="@string/third_party_licences"
             android:screenOrientation="portrait"/>
 
+        <activity
+            android:name=".activities.SettingsActivity"
+            android:label="@string/settings"
+            android:screenOrientation="portrait"/>
+
         <service
             android:name=".MusicService"
             android:exported="false">
