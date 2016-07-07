@@ -13,6 +13,8 @@ import android.graphics.PorterDuffColorFilter;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.Locale;
+
 public class Utils {
     public static void sendIntent(Context context, String action) {
         final Intent intent = new Intent(context, MusicService.class);
@@ -42,5 +44,21 @@ public class Utils {
 
     public static String getViewText(EditText editText) {
         return editText.getText().toString().trim();
+    }
+
+    public static String getTimeString(int duration) {
+        final StringBuilder sb = new StringBuilder(8);
+        final int hours = duration / (60 * 60);
+        final int minutes = (duration % (60 * 60)) / 60;
+        final int seconds = ((duration % (60 * 60)) % 60);
+
+        if (duration > 3600) {
+            sb.append(String.format(Locale.getDefault(), "%02d", hours)).append(":");
+        }
+
+        sb.append(String.format(Locale.getDefault(), "%02d", minutes));
+        sb.append(":").append(String.format(Locale.getDefault(), "%02d", seconds));
+
+        return sb.toString();
     }
 }

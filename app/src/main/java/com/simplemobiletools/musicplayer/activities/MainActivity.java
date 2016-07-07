@@ -60,6 +60,7 @@ public class MainActivity extends AppCompatActivity
     @BindView(R.id.songTitle) TextView mTitleTV;
     @BindView(R.id.songArtist) TextView mArtistTV;
     @BindView(R.id.progressbar) SeekBar mProgressBar;
+    @BindView(R.id.song_progress) TextView mProgress;
 
     private static Bus mBus;
     private static Song mCurrentSong;
@@ -470,7 +471,11 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+        final String duration = Utils.getTimeString(mProgressBar.getMax());
+        final String formattedProgress = Utils.getTimeString(progress);
 
+        final String progressText = String.format(getResources().getString(R.string.progress), formattedProgress, duration);
+        mProgress.setText(progressText);
     }
 
     @Override

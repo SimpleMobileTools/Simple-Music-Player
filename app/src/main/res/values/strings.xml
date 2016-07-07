@@ -12,6 +12,7 @@
     <string name="rename_song">Rename song</string>
     <string name="rename_song_error">An error occurred during the renaming</string>
     <string name="rename_song_empty">Please fill in all fields</string>
+    <string name="progress">%1$s / %2$s</string>
 
     <plurals name="songs_deleted">
         <item quantity="one">1 song deleted</item>
