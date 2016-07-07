@@ -29,4 +29,5 @@ public class Constants {
     public static final String PREFS_KEY = "Music Player";
     public static final String IS_FIRST_RUN = "is_first_run";
     public static final String SHUFFLE = "shuffle";
+    public static final String NUMERIC_PROGRESS = "numeric_progress";
 }

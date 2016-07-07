@@ -29,4 +29,12 @@ public class Config {
     public void setShuffle(boolean shuffle) {
         mPrefs.edit().putBoolean(Constants.SHUFFLE, shuffle).apply();
     }
+
+    public boolean getIsNumericProgressEnabled() {
+        return mPrefs.getBoolean(Constants.NUMERIC_PROGRESS, false);
+    }
+
+    public void setIsNumericProgressEnabled(boolean enabled) {
+        mPrefs.edit().putBoolean(Constants.NUMERIC_PROGRESS, enabled).apply();
+    }
 }

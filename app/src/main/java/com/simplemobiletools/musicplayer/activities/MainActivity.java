@@ -70,6 +70,7 @@ public class MainActivity extends AppCompatActivity
 
     private static boolean mIsSnackbarShown;
     private static int mSelectedItemsCnt;
+    private static boolean mIsNumericProgressShown;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +86,16 @@ public class MainActivity extends AppCompatActivity
         } else {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, STORAGE_PERMISSION);
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mIsNumericProgressShown = Config.newInstance(getApplicationContext()).getIsNumericProgressEnabled();
+        if (mIsNumericProgressShown)
+            mProgress.setVisibility(View.VISIBLE);
+        else
+            mProgress.setVisibility(View.GONE);
     }
 
     @Override
@@ -471,11 +482,13 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-        final String duration = Utils.getTimeString(mProgressBar.getMax());
-        final String formattedProgress = Utils.getTimeString(progress);
+        if (mIsNumericProgressShown) {
+            final String duration = Utils.getTimeString(mProgressBar.getMax());
+            final String formattedProgress = Utils.getTimeString(progress);
 
-        final String progressText = String.format(getResources().getString(R.string.progress), formattedProgress, duration);
-        mProgress.setText(progressText);
+            final String progressText = String.format(getResources().getString(R.string.progress), formattedProgress, duration);
+            mProgress.setText(progressText);
+        }
     }
 
     @Override

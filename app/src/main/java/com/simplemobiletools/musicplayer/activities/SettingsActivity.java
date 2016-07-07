@@ -13,6 +13,7 @@ import butterknife.OnClick;
 
 public class SettingsActivity extends AppCompatActivity {
     @BindView(R.id.settings_shuffle) SwitchCompat mShuffleSwitch;
+    @BindView(R.id.settings_numeric_progress) SwitchCompat mNumericProgressSwitch;
 
     private static Config mConfig;
 
@@ -24,15 +25,26 @@ public class SettingsActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         setupShuffle();
+        setupNumericProgress();
     }
 
     private void setupShuffle() {
         mShuffleSwitch.setChecked(mConfig.getIsShuffleEnabled());
     }
 
+    private void setupNumericProgress() {
+        mNumericProgressSwitch.setChecked(mConfig.getIsNumericProgressEnabled());
+    }
+
     @OnClick(R.id.settings_shuffle_holder)
-    public void handleLongTapToTrigger() {
+    public void handleShuffle() {
         mShuffleSwitch.setChecked(!mShuffleSwitch.isChecked());
         mConfig.setShuffle(mShuffleSwitch.isChecked());
+    }
+
+    @OnClick(R.id.settings_numeric_progress_holder)
+    public void handleNumericProgress() {
+        mNumericProgressSwitch.setChecked(!mNumericProgressSwitch.isChecked());
+        mConfig.setIsNumericProgressEnabled(mNumericProgressSwitch.isChecked());
     }
 }
