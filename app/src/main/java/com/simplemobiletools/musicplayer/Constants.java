@@ -24,6 +24,7 @@ public class Constants {
     public static final String CALL_START = PATH + "CALL_START";
     public static final String CALL_STOP = PATH + "CALL_STOP";
     public static final String SET_PROGRESS = PATH + "SET_PROGRESS";
+    public static final String SET_EQUALIZER = PATH + "SET_EQUALIZER";
 
     // shared preferences
     public static final String PREFS_KEY = "Music Player";
@@ -31,4 +32,5 @@ public class Constants {
     public static final String SHUFFLE = "shuffle";
     public static final String NUMERIC_PROGRESS = "numeric_progress";
     public static final String SORTING = "sorting";
+    public static final String EQUALIZER = "equalizer";
 }

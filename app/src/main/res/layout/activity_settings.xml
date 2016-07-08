@@ -84,4 +84,30 @@
             android:entries="@array/sorting"/>
 
     </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/settings_equalizer_holder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/settings_padding"
+        android:paddingBottom="@dimen/activity_margin"
+        android:paddingLeft="@dimen/activity_margin"
+        android:paddingRight="@dimen/settings_padding"
+        android:paddingTop="@dimen/activity_margin">
+
+        <TextView
+            android:id="@+id/settings_equalizer_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:paddingLeft="@dimen/settings_padding"
+            android:text="@string/equalizer"/>
+
+        <android.support.v7.widget.AppCompatSpinner
+            android:id="@+id/settings_equalizer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"/>
+
+    </RelativeLayout>
 </LinearLayout>

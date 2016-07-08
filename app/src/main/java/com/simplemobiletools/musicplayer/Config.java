@@ -46,4 +46,12 @@ public class Config {
     public void setSorting(int sorting) {
         mPrefs.edit().putInt(Constants.SORTING, sorting).apply();
     }
+
+    public int getEqualizer() {
+        return mPrefs.getInt(Constants.EQUALIZER, 0);
+    }
+
+    public void setEqualizer(int equalizer) {
+        mPrefs.edit().putInt(Constants.EQUALIZER, equalizer).apply();
+    }
 }

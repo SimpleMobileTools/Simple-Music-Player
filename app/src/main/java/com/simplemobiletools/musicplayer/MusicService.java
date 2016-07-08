@@ -16,6 +16,7 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.media.audiofx.Equalizer;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
@@ -51,6 +52,7 @@ public class MusicService extends Service
     private static final int MIN_DURATION_MS = 20000;
     private static final int PROGRESS_UPDATE_INTERVAL = 1000;
 
+    public static Equalizer mEqualizer;
     private static HeadsetPlugReceiver mHeadsetPlugReceiver;
     private static IncomingCallReceiver mIncomingCallReceiver;
     private static ArrayList<Song> mSongs;
@@ -175,6 +177,14 @@ public class MusicService extends Service
                         updateProgress(progress);
                     }
                     break;
+                case Constants.SET_EQUALIZER:
+                    if (intent.getExtras() != null && intent.getExtras().containsKey(Constants.EQUALIZER)) {
+                        final int presetID = intent.getExtras().getInt(Constants.EQUALIZER);
+                        if (mEqualizer != null) {
+                            mEqualizer.usePreset((short) presetID);
+                        }
+                    }
+                    break;
                 default:
                     break;
             }
@@ -193,6 +203,7 @@ public class MusicService extends Service
         mPlayer.setOnPreparedListener(this);
         mPlayer.setOnCompletionListener(this);
         mPlayer.setOnErrorListener(this);
+        setupEqualizer();
     }
 
     private void fillPlaylist() {
@@ -239,6 +250,12 @@ public class MusicService extends Service
                 }
             }
         });
+    }
+
+    private void setupEqualizer() {
+        mEqualizer = new Equalizer(0, mPlayer.getAudioSessionId());
+        mEqualizer.setEnabled(true);
+        mEqualizer.usePreset((short) mConfig.getEqualizer());
     }
 
     private void createNotificationButtons() {

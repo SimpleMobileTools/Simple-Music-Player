@@ -30,7 +30,9 @@
         <item name="android:textSize">20sp</item>
     </style>
 
-    <style name="SpinnerItem" parent="@android:style/Widget.TextView"/>
+    <style name="SpinnerItem" parent="@android:style/Widget.TextView">
+        <item name="android:gravity">right</item>
+    </style>
 
     <style name="SpinnerItem.DropDownItem" parent="@android:style/Widget.TextView">
         <item name="android:gravity">center_vertical</item>

@@ -1,10 +1,12 @@
 package com.simplemobiletools.musicplayer.activities;
 
 import android.content.Intent;
+import android.media.audiofx.Equalizer;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.SwitchCompat;
+import android.widget.ArrayAdapter;
 
 import com.simplemobiletools.musicplayer.Config;
 import com.simplemobiletools.musicplayer.Constants;
@@ -20,19 +22,23 @@ public class SettingsActivity extends AppCompatActivity {
     @BindView(R.id.settings_shuffle) SwitchCompat mShuffleSwitch;
     @BindView(R.id.settings_numeric_progress) SwitchCompat mNumericProgressSwitch;
     @BindView(R.id.settings_sorting) AppCompatSpinner mSortingSpinner;
+    @BindView(R.id.settings_equalizer) AppCompatSpinner mEqualizerSpinner;
 
     private static Config mConfig;
+    private static Equalizer mEqualizer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
         mConfig = Config.newInstance(getApplicationContext());
+        mEqualizer = MusicService.mEqualizer;
         ButterKnife.bind(this);
 
         setupShuffle();
         setupNumericProgress();
         setupSorting();
+        setupEqualizer();
     }
 
     private void setupShuffle() {
@@ -45,6 +51,18 @@ public class SettingsActivity extends AppCompatActivity {
 
     private void setupSorting() {
         mSortingSpinner.setSelection(mConfig.getSorting());
+    }
+
+    private void setupEqualizer() {
+        final int cnt = mEqualizer.getNumberOfPresets();
+        final String[] presets = new String[cnt];
+        for (short i = 0; i < cnt; i++) {
+            presets[i] = mEqualizer.getPresetName(i);
+        }
+        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, presets);
+        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mEqualizerSpinner.setAdapter(arrayAdapter);
+        mEqualizerSpinner.setSelection(mConfig.getEqualizer());
     }
 
     @OnClick(R.id.settings_shuffle_holder)
@@ -63,6 +81,17 @@ public class SettingsActivity extends AppCompatActivity {
     public void handleSorting() {
         mConfig.setSorting(mSortingSpinner.getSelectedItemPosition());
         updatePlaylist();
+    }
+
+    @OnItemSelected(R.id.settings_equalizer)
+    public void handleEqualizer() {
+        final int pos = mEqualizerSpinner.getSelectedItemPosition();
+        mConfig.setEqualizer(pos);
+
+        final Intent intent = new Intent(this, MusicService.class);
+        intent.putExtra(Constants.EQUALIZER, pos);
+        intent.setAction(Constants.SET_EQUALIZER);
+        startService(intent);
     }
 
     private void updatePlaylist() {
