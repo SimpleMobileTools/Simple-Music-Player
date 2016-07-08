@@ -90,6 +90,7 @@ public class MusicService extends Service
     }
 
     private void initService() {
+        mConfig = Config.newInstance(getApplicationContext());
         mSongs = new ArrayList<>();
         mPlayedSongIndexes = new ArrayList<>();
         mIgnoredPaths = new ArrayList<>();
@@ -98,7 +99,6 @@ public class MusicService extends Service
         mHeadsetPlugReceiver = new HeadsetPlugReceiver();
         mIncomingCallReceiver = new IncomingCallReceiver(this);
         mWasPlayingAtCall = false;
-        mConfig = Config.newInstance(getApplicationContext());
         initMediaPlayerIfNeeded();
         createNotificationButtons();
         setupNotification();
@@ -159,7 +159,7 @@ public class MusicService extends Service
                         mIgnoredPaths = Arrays.asList(intent.getStringArrayExtra(Constants.DELETED_SONGS));
                     }
 
-                    fillPlaylist();
+                    getSortedSongs();
 
                     if (intent.getExtras() != null && intent.getExtras().containsKey(Constants.UPDATE_ACTIVITY)) {
                         mBus.post(new Events.PlaylistUpdated(mSongs));
@@ -232,7 +232,11 @@ public class MusicService extends Service
         fillPlaylist();
         Collections.sort(mSongs, new Comparator<Song>() {
             public int compare(Song a, Song b) {
-                return a.getTitle().compareTo(b.getTitle());
+                if (mConfig.getSorting() == Config.SORT_BY_TITLE) {
+                    return a.getTitle().compareTo(b.getTitle());
+                } else {
+                    return a.getArtist().compareTo(b.getArtist());
+                }
             }
         });
     }

@@ -23,6 +23,7 @@
     <string name="settings">Settings</string>
     <string name="shuffle">Shuffle</string>
     <string name="numeric_progress">Display progress with numbers too</string>
+    <string name="sort_by">Sort tracks by</string>
 
     <!-- About -->
     <string name="about">About</string>

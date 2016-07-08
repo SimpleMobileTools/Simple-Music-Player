@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 
 public class Config {
     private SharedPreferences mPrefs;
+    public static final int SORT_BY_TITLE = 0;
 
     public static Config newInstance(Context context) {
         return new Config(context);
@@ -36,5 +37,13 @@ public class Config {
 
     public void setIsNumericProgressEnabled(boolean enabled) {
         mPrefs.edit().putBoolean(Constants.NUMERIC_PROGRESS, enabled).apply();
+    }
+
+    public int getSorting() {
+        return mPrefs.getInt(Constants.SORTING, SORT_BY_TITLE);
+    }
+
+    public void setSorting(int sorting) {
+        mPrefs.edit().putInt(Constants.SORTING, sorting).apply();
     }
 }
