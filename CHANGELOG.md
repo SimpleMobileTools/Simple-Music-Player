@@ -1,6 +1,12 @@
 Changelog
 ==========
 
+Version 1.10 *(2016-07-09)*
+----------------------------
+
+ * Allow toggling between sorting by Title and Artist
+ * Add an Equalizer with a couple Presets
+
 Version 1.9 *(2016-07-07)*
 ----------------------------
 
