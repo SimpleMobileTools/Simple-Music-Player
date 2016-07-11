@@ -15,8 +15,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".activities.MainActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait">
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -35,18 +34,15 @@
 
         <activity
             android:name=".activities.AboutActivity"
-            android:label="@string/about"
-            android:screenOrientation="portrait"/>
+            android:label="@string/about"/>
 
         <activity
             android:name=".activities.LicenseActivity"
-            android:label="@string/third_party_licences"
-            android:screenOrientation="portrait"/>
+            android:label="@string/third_party_licences"/>
 
         <activity
             android:name=".activities.SettingsActivity"
-            android:label="@string/settings"
-            android:screenOrientation="portrait"/>
+            android:label="@string/settings"/>
 
         <service
             android:name=".MusicService"

@@ -1,113 +1,119 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    android:id="@+id/settings_holder"
+<ScrollView
+    android:id="@+id/settings_scrollview"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="wrap_content">
 
-    <RelativeLayout
-        android:id="@+id/settings_shuffle_holder"
+    <LinearLayout
+        android:id="@+id/settings_holder"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/settings_padding"
-        android:background="?android:attr/selectableItemBackground"
-        android:padding="@dimen/activity_margin">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/settings_shuffle_label"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:id="@+id/settings_shuffle_holder"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:paddingLeft="@dimen/settings_padding"
-            android:text="@string/shuffle"/>
+            android:layout_marginTop="@dimen/settings_padding"
+            android:background="?android:attr/selectableItemBackground"
+            android:padding="@dimen/activity_margin">
 
-        <android.support.v7.widget.SwitchCompat
-            android:id="@+id/settings_shuffle"
-            android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/settings_shuffle_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:paddingLeft="@dimen/settings_padding"
+                android:text="@string/shuffle"/>
+
+            <android.support.v7.widget.SwitchCompat
+                android:id="@+id/settings_shuffle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:background="@null"
+                android:clickable="false"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/settings_numeric_progress_holder"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:background="@null"
-            android:clickable="false"/>
+            android:layout_marginTop="@dimen/settings_padding"
+            android:background="?android:attr/selectableItemBackground"
+            android:padding="@dimen/activity_margin">
 
-    </RelativeLayout>
+            <TextView
+                android:id="@+id/settings_numeric_progress_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:paddingLeft="@dimen/settings_padding"
+                android:text="@string/numeric_progress"/>
 
-    <RelativeLayout
-        android:id="@+id/settings_numeric_progress_holder"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/settings_padding"
-        android:background="?android:attr/selectableItemBackground"
-        android:padding="@dimen/activity_margin">
+            <android.support.v7.widget.SwitchCompat
+                android:id="@+id/settings_numeric_progress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:background="@null"
+                android:clickable="false"/>
 
-        <TextView
-            android:id="@+id/settings_numeric_progress_label"
-            android:layout_width="wrap_content"
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/settings_sorting_holder"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:paddingLeft="@dimen/settings_padding"
-            android:text="@string/numeric_progress"/>
+            android:layout_marginTop="@dimen/settings_padding"
+            android:paddingBottom="@dimen/activity_margin"
+            android:paddingLeft="@dimen/activity_margin"
+            android:paddingRight="@dimen/settings_padding"
+            android:paddingTop="@dimen/activity_margin">
 
-        <android.support.v7.widget.SwitchCompat
-            android:id="@+id/settings_numeric_progress"
-            android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/settings_sorting_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:paddingLeft="@dimen/settings_padding"
+                android:text="@string/sort_by"/>
+
+            <android.support.v7.widget.AppCompatSpinner
+                android:id="@+id/settings_sorting"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:entries="@array/sorting"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/settings_equalizer_holder"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:background="@null"
-            android:clickable="false"/>
+            android:layout_marginTop="@dimen/settings_padding"
+            android:paddingBottom="@dimen/activity_margin"
+            android:paddingLeft="@dimen/activity_margin"
+            android:paddingRight="@dimen/settings_padding"
+            android:paddingTop="@dimen/activity_margin">
 
-    </RelativeLayout>
+            <TextView
+                android:id="@+id/settings_equalizer_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:paddingLeft="@dimen/settings_padding"
+                android:text="@string/equalizer"/>
 
-    <RelativeLayout
-        android:id="@+id/settings_sorting_holder"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/settings_padding"
-        android:paddingBottom="@dimen/activity_margin"
-        android:paddingLeft="@dimen/activity_margin"
-        android:paddingRight="@dimen/settings_padding"
-        android:paddingTop="@dimen/activity_margin">
+            <android.support.v7.widget.AppCompatSpinner
+                android:id="@+id/settings_equalizer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"/>
 
-        <TextView
-            android:id="@+id/settings_sorting_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:paddingLeft="@dimen/settings_padding"
-            android:text="@string/sort_by"/>
-
-        <android.support.v7.widget.AppCompatSpinner
-            android:id="@+id/settings_sorting"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:entries="@array/sorting"/>
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/settings_equalizer_holder"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/settings_padding"
-        android:paddingBottom="@dimen/activity_margin"
-        android:paddingLeft="@dimen/activity_margin"
-        android:paddingRight="@dimen/settings_padding"
-        android:paddingTop="@dimen/activity_margin">
-
-        <TextView
-            android:id="@+id/settings_equalizer_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:paddingLeft="@dimen/settings_padding"
-            android:text="@string/equalizer"/>
-
-        <android.support.v7.widget.AppCompatSpinner
-            android:id="@+id/settings_equalizer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"/>
-
-    </RelativeLayout>
-</LinearLayout>
+        </RelativeLayout>
+    </LinearLayout>
+</ScrollView>
