@@ -20,7 +20,7 @@ public class RemoteControlReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         mContext = context;
-        if (Intent.ACTION_MEDIA_BUTTON.equals(intent.getAction())) {
+        if (intent.getAction().equals(Intent.ACTION_MEDIA_BUTTON)) {
             final KeyEvent event = intent.getParcelableExtra(Intent.EXTRA_KEY_EVENT);
             if (event.getAction() == KeyEvent.ACTION_UP && KeyEvent.KEYCODE_HEADSETHOOK == event.getKeyCode()) {
                 mClicksCnt++;

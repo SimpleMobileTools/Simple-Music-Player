@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.media.AudioManager;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Bundle;
@@ -135,6 +136,7 @@ public class MainActivity extends AppCompatActivity
         mSongsList.setOnTouchListener(this);
         mSongsList.setOnItemClickListener(this);
         Utils.sendIntent(this, Constants.INIT);
+        setVolumeControlStream(AudioManager.STREAM_MUSIC);
     }
 
     private void songPicked(int pos) {
