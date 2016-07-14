@@ -108,6 +108,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:choiceMode="multipleChoiceModal"
+            android:clipToPadding="false"
             android:paddingLeft="@dimen/activity_margin"/>
 
     </android.support.design.widget.CoordinatorLayout>
