@@ -24,6 +24,7 @@ import android.os.IBinder;
 import android.os.PowerManager;
 import android.provider.MediaStore;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.NotificationCompat;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.util.Log;
@@ -315,18 +316,19 @@ public class MusicService extends Service
             remoteViews.setImageViewBitmap(R.id.closeBtn, mCloseBitmap);
         }
 
-        final Notification notification = new Notification.Builder(this).
+        final Notification notification = new NotificationCompat.Builder(this).
                 setContentTitle(title).
                 setContentText(artist).
                 setSmallIcon(R.mipmap.speakers).
+                setVisibility(Notification.VISIBILITY_PUBLIC).
+                setPriority(Notification.PRIORITY_MAX).
+                setWhen(System.currentTimeMillis()).
                 build();
         notification.bigContentView = remoteViews;
 
         final Intent contentIntent = new Intent(this, MainActivity.class);
         notification.contentIntent = PendingIntent.getActivity(this, 0, contentIntent, 0);
         notification.flags |= Notification.FLAG_ONGOING_EVENT;
-        notification.priority = Notification.PRIORITY_MAX;
-        notification.when = System.currentTimeMillis();
 
         startForeground(1, notification);
     }

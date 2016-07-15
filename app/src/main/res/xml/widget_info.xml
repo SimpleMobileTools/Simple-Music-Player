@@ -6,4 +6,5 @@
                     android:minResizeHeight="30dp"
                     android:minWidth="250dp"
                     android:previewImage="@mipmap/widget_preview"
-                    android:resizeMode="vertical|horizontal"/>
+                    android:resizeMode="vertical|horizontal"
+                    android:widgetCategory="keyguard|home_screen"/>
