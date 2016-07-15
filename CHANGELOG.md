@@ -1,6 +1,12 @@
 Changelog
 ==========
 
+Version 1.12 *(2016-07-15)*
+----------------------------
+
+ * A couple UI and crashfixes for some devices
+ * Added Italian and Japanese translation
+
 Version 1.11 *(2016-07-12)*
 ----------------------------
 
