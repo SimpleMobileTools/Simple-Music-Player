@@ -181,7 +181,7 @@ public class MusicService extends Service
                     if (intent.getExtras() != null && intent.getExtras().containsKey(Constants.EQUALIZER)) {
                         final int presetID = intent.getExtras().getInt(Constants.EQUALIZER);
                         if (mEqualizer != null) {
-                            mEqualizer.usePreset((short) presetID);
+                            setPreset(presetID);
                         }
                     }
                     break;
@@ -255,8 +255,12 @@ public class MusicService extends Service
     private void setupEqualizer() {
         mEqualizer = new Equalizer(0, mPlayer.getAudioSessionId());
         mEqualizer.setEnabled(true);
+        setPreset(mConfig.getEqualizer());
+    }
+
+    private void setPreset(int id) {
         try {
-            mEqualizer.usePreset((short) mConfig.getEqualizer());
+            mEqualizer.usePreset((short) id);
         } catch (IllegalArgumentException e) {
             Log.e(TAG, "setupEqualizer " + e);
         }
