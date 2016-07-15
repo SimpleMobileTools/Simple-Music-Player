@@ -32,6 +32,7 @@
 
     <style name="SpinnerItem" parent="@android:style/Widget.TextView">
         <item name="android:gravity">right</item>
+        <item name="android:paddingRight">@dimen/spinner_padding_right</item>
     </style>
 
     <style name="SpinnerItem.DropDownItem" parent="@android:style/Widget.TextView">
