@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Simple Music Player</string>
     <string name="playlist_empty">La tua playlist è vuota</string>
-    <string name="no_permissions">L'autorizzazione per l'accesso alle canzoni non è stata consentita</string>
+    <string name="no_permissions">L\'autorizzazione per l\'accesso alle canzoni non è stata consentita</string>
     <string name="delete">Elimina</string>
     <string name="edit">Modifica</string>
     <string name="undo">Annulla</string>
@@ -22,7 +22,7 @@
     <!-- Settings -->
     <string name="settings">Impostazioni</string>
     <string name="shuffle">Mischia</string>
-    <string name="numeric_progress">Mostra anche l'avanzamento in numeri</string>
+    <string name="numeric_progress">Mostra anche l\'avanzamento in numeri</string>
     <string name="sort_by">Ordina tracce per</string>
     <string name="equalizer">Equalizzatore</string>
 
