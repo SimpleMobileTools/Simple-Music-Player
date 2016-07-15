@@ -502,6 +502,10 @@ public class MusicService extends Service
             mBus.unregister(this);
         }
 
+        if (mEqualizer != null) {
+            mEqualizer.release();
+        }
+
         final TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
         telephonyManager.listen(mIncomingCallReceiver, PhoneStateListener.LISTEN_NONE);
 
