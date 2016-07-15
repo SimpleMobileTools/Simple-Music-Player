@@ -255,7 +255,11 @@ public class MusicService extends Service
     private void setupEqualizer() {
         mEqualizer = new Equalizer(0, mPlayer.getAudioSessionId());
         mEqualizer.setEnabled(true);
-        mEqualizer.usePreset((short) mConfig.getEqualizer());
+        try {
+            mEqualizer.usePreset((short) mConfig.getEqualizer());
+        } catch (IllegalArgumentException e) {
+            Log.e(TAG, "setupEqualizer " + e);
+        }
     }
 
     private void createNotificationButtons() {
