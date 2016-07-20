@@ -3,7 +3,7 @@ package com.simplemobiletools.musicplayer.activities;
 import android.content.Intent;
 import android.media.audiofx.Equalizer;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.SwitchCompat;
 import android.widget.ArrayAdapter;
@@ -18,7 +18,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnItemSelected;
 
-public class SettingsActivity extends AppCompatActivity {
+public class SettingsActivity extends SimpleActivity {
+    @BindView(R.id.settings_dark_theme) SwitchCompat mDarkThemeSwitch;
     @BindView(R.id.settings_shuffle) SwitchCompat mShuffleSwitch;
     @BindView(R.id.settings_numeric_progress) SwitchCompat mNumericProgressSwitch;
     @BindView(R.id.settings_sorting) AppCompatSpinner mSortingSpinner;
@@ -39,6 +40,11 @@ public class SettingsActivity extends AppCompatActivity {
         setupNumericProgress();
         setupSorting();
         setupEqualizer();
+        setupDarkTheme();
+    }
+
+    private void setupDarkTheme() {
+        mDarkThemeSwitch.setChecked(mConfig.getIsDarkTheme());
     }
 
     private void setupShuffle() {
@@ -53,16 +59,11 @@ public class SettingsActivity extends AppCompatActivity {
         mSortingSpinner.setSelection(mConfig.getSorting());
     }
 
-    private void setupEqualizer() {
-        final int cnt = mEqualizer.getNumberOfPresets();
-        final String[] presets = new String[cnt];
-        for (short i = 0; i < cnt; i++) {
-            presets[i] = mEqualizer.getPresetName(i);
-        }
-        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, presets);
-        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        mEqualizerSpinner.setAdapter(arrayAdapter);
-        mEqualizerSpinner.setSelection(mConfig.getEqualizer());
+    @OnClick(R.id.settings_dark_theme_holder)
+    public void handleDarkTheme() {
+        mDarkThemeSwitch.setChecked(!mDarkThemeSwitch.isChecked());
+        mConfig.setIsDarkTheme(mDarkThemeSwitch.isChecked());
+        restartActivity();
     }
 
     @OnClick(R.id.settings_shuffle_holder)
@@ -92,6 +93,22 @@ public class SettingsActivity extends AppCompatActivity {
         intent.putExtra(Constants.EQUALIZER, pos);
         intent.setAction(Constants.SET_EQUALIZER);
         startService(intent);
+    }
+
+    private void restartActivity() {
+        TaskStackBuilder.create(getApplicationContext()).addNextIntentWithParentStack(getIntent()).startActivities();
+    }
+
+    private void setupEqualizer() {
+        final int cnt = mEqualizer.getNumberOfPresets();
+        final String[] presets = new String[cnt];
+        for (short i = 0; i < cnt; i++) {
+            presets[i] = mEqualizer.getPresetName(i);
+        }
+        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, presets);
+        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mEqualizerSpinner.setAdapter(arrayAdapter);
+        mEqualizerSpinner.setSelection(mConfig.getEqualizer());
     }
 
     private void updatePlaylist() {

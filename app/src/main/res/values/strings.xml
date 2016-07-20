@@ -21,6 +21,7 @@
 
     <!-- Settings -->
     <string name="settings">Settings</string>
+    <string name="dark_theme">Dark theme</string>
     <string name="shuffle">Shuffle</string>
     <string name="numeric_progress">Display progress in numbers too</string>
     <string name="sort_by">Sort tracks by</string>

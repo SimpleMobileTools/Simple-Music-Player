@@ -11,6 +11,17 @@
         <item name="android:spinnerDropDownItemStyle">@style/SpinnerItem.DropDownItem</item>
     </style>
 
+    <style name="AppTheme.Dark" parent="Theme.AppCompat">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="actionBarStyle">@style/AppTheme.ActionBarStyle</item>
+        <item name="android:textSize">@dimen/normal_text_size</item>
+        <item name="android:spinnerItemStyle">@style/SpinnerItem</item>
+        <item name="spinnerDropDownItemStyle">@style/SpinnerItem.DropDownItem</item>
+        <item name="android:spinnerDropDownItemStyle">@style/SpinnerItem.DropDownItem</item>
+    </style>
+
     <style name="MyWidgetConfigTheme" parent="@style/AppTheme">
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowShowWallpaper">true</item>

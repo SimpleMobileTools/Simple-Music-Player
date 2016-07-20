@@ -20,6 +20,7 @@
 
     <!-- Settings -->
     <string name="settings">設定</string>
+    <string name="dark_theme">ダークテーマ</string>
     <string name="shuffle">シャッフル</string>
     <string name="numeric_progress">再生状況を数値でも表示する</string>
     <string name="sort_by">トラックの並び替え</string>

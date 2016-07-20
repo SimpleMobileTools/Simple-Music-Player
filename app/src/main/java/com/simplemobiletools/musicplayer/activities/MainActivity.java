@@ -5,6 +5,7 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.media.AudioManager;
 import android.media.MediaScannerConnection;
@@ -16,7 +17,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.util.SparseBooleanArray;
 import android.view.ActionMode;
 import android.view.Menu;
@@ -51,7 +51,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class MainActivity extends AppCompatActivity
+public class MainActivity extends SimpleActivity
         implements ListView.MultiChoiceModeListener, AdapterView.OnItemClickListener, ListView.OnTouchListener,
         MediaScannerConnection.OnScanCompletedListener, SeekBar.OnSeekBarChangeListener {
     private static final int STORAGE_PERMISSION = 1;
@@ -62,16 +62,20 @@ public class MainActivity extends AppCompatActivity
     @BindView(R.id.songArtist) TextView mArtistTV;
     @BindView(R.id.progressbar) SeekBar mProgressBar;
     @BindView(R.id.song_progress) TextView mProgress;
+    @BindView(R.id.previousBtn) ImageView mPreviousBtn;
+    @BindView(R.id.nextBtn) ImageView mNextBtn;
 
     private static Bus mBus;
     private static Song mCurrentSong;
     private static List<Song> mSongs;
     private static Snackbar mSnackbar;
     private static List<String> mToBeDeleted;
+    private static Bitmap mPlayBitmap;
+    private static Bitmap mPauseBitmap;
 
     private static boolean mIsSnackbarShown;
-    private static int mSelectedItemsCnt;
     private static boolean mIsNumericProgressShown;
+    private static int mSelectedItemsCnt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +85,7 @@ public class MainActivity extends AppCompatActivity
         mBus = BusProvider.getInstance();
         mBus.register(this);
         mProgressBar.setOnSeekBarChangeListener(this);
+        mConfig = Config.newInstance(getApplicationContext());
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
             initializePlayer();
@@ -93,10 +98,12 @@ public class MainActivity extends AppCompatActivity
     protected void onResume() {
         super.onResume();
         mIsNumericProgressShown = Config.newInstance(getApplicationContext()).getIsNumericProgressEnabled();
-        if (mIsNumericProgressShown)
+        setupIconColors();
+        if (mIsNumericProgressShown) {
             mProgress.setVisibility(View.VISIBLE);
-        else
+        } else {
             mProgress.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -139,6 +146,15 @@ public class MainActivity extends AppCompatActivity
         mSongsList.setOnItemClickListener(this);
         Utils.sendIntent(this, Constants.INIT);
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
+    }
+
+    private void setupIconColors() {
+        final Resources res = getResources();
+        final int color = mTitleTV.getCurrentTextColor();
+        mPreviousBtn.setImageBitmap(Utils.getColoredIcon(res, color, R.mipmap.previous));
+        mNextBtn.setImageBitmap(Utils.getColoredIcon(res, color, R.mipmap.next));
+        mPlayBitmap = Utils.getColoredIcon(res, color, R.mipmap.play);
+        mPauseBitmap = Utils.getColoredIcon(res, color, R.mipmap.pause);
     }
 
     private void songPicked(int pos) {
@@ -202,11 +218,11 @@ public class MainActivity extends AppCompatActivity
 
     @Subscribe
     public void songStateChanged(Events.SongStateChanged event) {
-        int id = R.mipmap.play;
-        if (event.getIsPlaying())
-            id = R.mipmap.pause;
-
-        mPlayPauseBtn.setImageDrawable(getResources().getDrawable(id));
+        if (event.getIsPlaying()) {
+            mPlayPauseBtn.setImageBitmap(mPauseBitmap);
+        } else {
+            mPlayPauseBtn.setImageBitmap(mPlayBitmap);
+        }
     }
 
     @Subscribe

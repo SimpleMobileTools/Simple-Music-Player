@@ -18,7 +18,6 @@
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-light"
             android:text="Song Title"
-            android:textColor="@android:color/black"
             android:textSize="16sp"/>
 
         <TextView
@@ -27,7 +26,6 @@
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-light"
             android:text="Song Artist"
-            android:textColor="@android:color/black"
             android:textSize="14sp"/>
 
     </LinearLayout>

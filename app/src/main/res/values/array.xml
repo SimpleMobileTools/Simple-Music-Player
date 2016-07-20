@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="sorting">
+    <string-array name="sorting" translatable="false">
         <item>@string/title</item>
         <item>@string/artist</item>
     </string-array>

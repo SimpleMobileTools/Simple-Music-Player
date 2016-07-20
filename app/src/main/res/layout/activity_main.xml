@@ -57,7 +57,6 @@
         android:fontFamily="sans-serif-light"
         android:gravity="center_horizontal"
         android:maxLines="1"
-        android:textColor="@android:color/black"
         android:textSize="18sp"/>
 
     <TextView
@@ -71,7 +70,6 @@
         android:fontFamily="sans-serif-light"
         android:gravity="center_horizontal"
         android:maxLines="1"
-        android:textColor="@android:color/black"
         android:textSize="16sp"/>
 
     <SeekBar

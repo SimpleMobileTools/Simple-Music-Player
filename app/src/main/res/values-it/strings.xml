@@ -20,6 +20,7 @@
 
     <!-- Settings -->
     <string name="settings">Impostazioni</string>
+    <string name="dark_theme">Tema scuro</string>
     <string name="shuffle">Mischia</string>
     <string name="numeric_progress">Mostra anche l\'avanzamento in numeri</string>
     <string name="sort_by">Ordina tracce per</string>
