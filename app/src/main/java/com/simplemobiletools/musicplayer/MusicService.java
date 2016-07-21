@@ -10,15 +10,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
-import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.Color;
+import android.graphics.BitmapFactory;
 import android.media.AudioManager;
+import android.media.MediaMetadataRetriever;
 import android.media.MediaPlayer;
 import android.media.audiofx.Equalizer;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.PowerManager;
@@ -28,8 +27,6 @@ import android.support.v7.app.NotificationCompat;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.util.Log;
-import android.view.View;
-import android.widget.RemoteViews;
 import android.widget.Toast;
 
 import com.simplemobiletools.musicplayer.activities.MainActivity;
@@ -52,6 +49,7 @@ public class MusicService extends Service
     private static final String TAG = MusicService.class.getSimpleName();
     private static final int MIN_DURATION_MS = 20000;
     private static final int PROGRESS_UPDATE_INTERVAL = 1000;
+    private static final int NOTIFICATION_ID = 78;
 
     public static Equalizer mEqualizer;
     private static HeadsetPlugReceiver mHeadsetPlugReceiver;
@@ -64,11 +62,9 @@ public class MusicService extends Service
     private static Config mConfig;
     private static List<String> mIgnoredPaths;
     private static Handler mProgressHandler;
-    private static Bitmap mPrevBitmap;
-    private static Bitmap mPlayBitmap;
-    private static Bitmap mPauseBitmap;
-    private static Bitmap mNextBitmap;
-    private static Bitmap mCloseBitmap;
+    private static PendingIntent mPreviousIntent;
+    private static PendingIntent mNextIntent;
+    private static PendingIntent mPlayPauseIntent;
 
     private static boolean mWasPlayingAtCall;
 
@@ -98,13 +94,19 @@ public class MusicService extends Service
         mPlayedSongIndexes = new ArrayList<>();
         mIgnoredPaths = new ArrayList<>();
         mCurrSong = null;
+        setupIntents();
         getSortedSongs();
         mHeadsetPlugReceiver = new HeadsetPlugReceiver();
         mIncomingCallReceiver = new IncomingCallReceiver(this);
         mWasPlayingAtCall = false;
         initMediaPlayerIfNeeded();
-        createNotificationButtons();
         setupNotification();
+    }
+
+    private void setupIntents() {
+        mPreviousIntent = getIntent(Constants.PREVIOUS);
+        mNextIntent = getIntent(Constants.NEXT);
+        mPlayPauseIntent = getIntent(Constants.PLAYPAUSE);
     }
 
     @Override
@@ -267,86 +269,76 @@ public class MusicService extends Service
         }
     }
 
-    private void createNotificationButtons() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            final Resources res = getResources();
-            final int darkGrey = res.getColor(R.color.dark_grey);
-            mPrevBitmap = Utils.getColoredIcon(res, darkGrey, R.mipmap.previous);
-            mPlayBitmap = Utils.getColoredIcon(res, darkGrey, R.mipmap.play);
-            mPauseBitmap = Utils.getColoredIcon(res, darkGrey, R.mipmap.pause);
-            mNextBitmap = Utils.getColoredIcon(res, darkGrey, R.mipmap.next);
-            mCloseBitmap = Utils.getColoredIcon(res, darkGrey, R.mipmap.close);
-        }
-    }
-
     private void setupNotification() {
-        final Intent intent = new Intent(this, ControlActionsListener.class);
-
-        final RemoteViews remoteViews = new RemoteViews(getPackageName(), R.layout.notification);
-        remoteViews.setInt(R.id.widget_holder, "setBackgroundColor", 0);
-
         final String title = (mCurrSong == null) ? "" : mCurrSong.getTitle();
         final String artist = (mCurrSong == null) ? "" : mCurrSong.getArtist();
-        remoteViews.setTextViewText(R.id.songTitle, title);
-        remoteViews.setTextViewText(R.id.songArtist, artist);
-
-        updatePlayPauseButton(remoteViews);
-
-        setupIntent(intent, remoteViews, Constants.PREVIOUS, R.id.previousBtn);
-        setupIntent(intent, remoteViews, Constants.PLAYPAUSE, R.id.playPauseBtn);
-        setupIntent(intent, remoteViews, Constants.NEXT, R.id.nextBtn);
-        setupIntent(intent, remoteViews, Constants.FINISH, R.id.closeBtn);
-
-        remoteViews.setViewVisibility(R.id.closeBtn, View.VISIBLE);
-        remoteViews.setInt(R.id.widget_holder, "setBackgroundColor", Color.WHITE);
-        final int darkGrey = getResources().getColor(R.color.dark_grey);
-        remoteViews.setInt(R.id.songArtist, "setTextColor", darkGrey);
-        remoteViews.setInt(R.id.songTitle, "setTextColor", darkGrey);
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            remoteViews.setImageViewBitmap(R.id.previousBtn, mPrevBitmap);
-
-            if (isPlaying()) {
-                remoteViews.setImageViewBitmap(R.id.playPauseBtn, mPauseBitmap);
-            } else {
-                remoteViews.setImageViewBitmap(R.id.playPauseBtn, mPlayBitmap);
-            }
-
-            remoteViews.setImageViewBitmap(R.id.nextBtn, mNextBitmap);
-            remoteViews.setImageViewBitmap(R.id.closeBtn, mCloseBitmap);
+        final int playPauseButtonPosition = 1;
+        int playPauseIcon = R.mipmap.play;
+        if (isPlaying()) {
+            playPauseIcon = R.mipmap.pause;
         }
 
+        long when = 0;
+        boolean showWhen = false;
+        boolean usesChronometer = false;
+        boolean ongoing = false;
+        if (isPlaying()) {
+            when = System.currentTimeMillis() - mPlayer.getCurrentPosition();
+            showWhen = true;
+            usesChronometer = true;
+            ongoing = true;
+        }
+
+        final Bitmap albumImage = getAlbumImage();
+
         final Notification notification = new NotificationCompat.Builder(this).
+                setStyle(new NotificationCompat.MediaStyle().setShowActionsInCompactView(new int[]{playPauseButtonPosition})).
                 setContentTitle(title).
                 setContentText(artist).
                 setSmallIcon(R.mipmap.speakers).
+                setLargeIcon(albumImage).
                 setVisibility(Notification.VISIBILITY_PUBLIC).
                 setPriority(Notification.PRIORITY_MAX).
-                setWhen(System.currentTimeMillis()).
+                setWhen(when).
+                setShowWhen(showWhen).
+                setUsesChronometer(usesChronometer).
+                setContentIntent(getContentIntent()).
+                setOngoing(ongoing).
+                addAction(R.mipmap.previous, getString(R.string.previous), mPreviousIntent).
+                addAction(playPauseIcon, getString(R.string.playpause), mPlayPauseIntent).
+                addAction(R.mipmap.next, getString(R.string.next), mNextIntent).
                 build();
-        notification.bigContentView = remoteViews;
 
+        startForeground(NOTIFICATION_ID, notification);
+
+        if (!isPlaying()) {
+            stopForeground(false);
+        }
+    }
+
+    private Bitmap getAlbumImage() {
+        if (mCurrSong != null) {
+            final MediaMetadataRetriever mediaMetadataRetriever = new MediaMetadataRetriever();
+            mediaMetadataRetriever.setDataSource(mCurrSong.getPath());
+            byte[] rawArt = mediaMetadataRetriever.getEmbeddedPicture();
+            if (rawArt != null) {
+                final BitmapFactory.Options options = new BitmapFactory.Options();
+                return BitmapFactory.decodeByteArray(rawArt, 0, rawArt.length, options);
+            }
+        }
+
+        return BitmapFactory.decodeResource(getResources(), R.mipmap.no_album);
+    }
+
+    private PendingIntent getContentIntent() {
         final Intent contentIntent = new Intent(this, MainActivity.class);
-        notification.contentIntent = PendingIntent.getActivity(this, 0, contentIntent, 0);
-        notification.flags |= Notification.FLAG_ONGOING_EVENT;
-
-        startForeground(1, notification);
+        return PendingIntent.getActivity(this, 0, contentIntent, 0);
     }
 
-    private void setupIntent(Intent intent, RemoteViews remoteViews, String action, int id) {
+    private PendingIntent getIntent(String action) {
+        final Intent intent = new Intent(this, ControlActionsListener.class);
         intent.setAction(action);
-        final PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, intent, 0);
-
-        if (remoteViews != null)
-            remoteViews.setOnClickPendingIntent(id, pendingIntent);
-    }
-
-    private void updatePlayPauseButton(RemoteViews remoteViews) {
-        int playPauseIcon = R.mipmap.play;
-        if (isPlaying())
-            playPauseIcon = R.mipmap.pause;
-
-        remoteViews.setImageViewResource(R.id.playPauseBtn, playPauseIcon);
+        return PendingIntent.getBroadcast(getApplicationContext(), 0, intent, 0);
     }
 
     private int getNewSongId() {
