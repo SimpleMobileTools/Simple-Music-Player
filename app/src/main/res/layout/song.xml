@@ -16,7 +16,6 @@
             android:id="@+id/songTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-light"
             android:text="Song Title"
             android:textSize="16sp"/>
 
@@ -24,7 +23,6 @@
             android:id="@+id/songArtist"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-light"
             android:text="Song Artist"
             android:textSize="14sp"/>
 
