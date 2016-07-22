@@ -274,6 +274,7 @@ public class MusicService extends Service
         final String title = (mCurrSong == null) ? "" : mCurrSong.getTitle();
         final String artist = (mCurrSong == null) ? "" : mCurrSong.getArtist();
         final int playPauseButtonPosition = 1;
+        final int nextButtonPosition = 2;
         int playPauseIcon = R.mipmap.play;
         if (isPlaying()) {
             playPauseIcon = R.mipmap.pause;
@@ -292,8 +293,9 @@ public class MusicService extends Service
 
         final Bitmap albumImage = getAlbumImage();
 
-        final Notification notification = new NotificationCompat.Builder(this).
-                setStyle(new NotificationCompat.MediaStyle().setShowActionsInCompactView(new int[]{playPauseButtonPosition})).
+        final NotificationCompat.Builder notification = (NotificationCompat.Builder) new NotificationCompat.Builder(this).
+                setStyle(new NotificationCompat.MediaStyle()
+                        .setShowActionsInCompactView(new int[]{playPauseButtonPosition, nextButtonPosition})).
                 setContentTitle(title).
                 setContentText(artist).
                 setSmallIcon(R.mipmap.speakers).
@@ -307,10 +309,9 @@ public class MusicService extends Service
                 setOngoing(ongoing).
                 addAction(R.mipmap.previous, getString(R.string.previous), mPreviousIntent).
                 addAction(playPauseIcon, getString(R.string.playpause), mPlayPauseIntent).
-                addAction(R.mipmap.next, getString(R.string.next), mNextIntent).
-                build();
+                addAction(R.mipmap.next, getString(R.string.next), mNextIntent);
 
-        startForeground(NOTIFICATION_ID, notification);
+        startForeground(NOTIFICATION_ID, notification.build());
 
         if (!isPlaying()) {
             stopForeground(Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP);
