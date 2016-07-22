@@ -18,6 +18,7 @@ import android.media.MediaMetadataRetriever;
 import android.media.MediaPlayer;
 import android.media.audiofx.Equalizer;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.PowerManager;
@@ -312,7 +313,7 @@ public class MusicService extends Service
         startForeground(NOTIFICATION_ID, notification);
 
         if (!isPlaying()) {
-            stopForeground(false);
+            stopForeground(Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP);
         }
     }
 
