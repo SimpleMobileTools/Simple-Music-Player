@@ -36,11 +36,11 @@ public class SettingsActivity extends SimpleActivity {
         mEqualizer = MusicService.mEqualizer;
         ButterKnife.bind(this);
 
+        setupDarkTheme();
         setupShuffle();
         setupNumericProgress();
         setupSorting();
         setupEqualizer();
-        setupDarkTheme();
     }
 
     private void setupDarkTheme() {

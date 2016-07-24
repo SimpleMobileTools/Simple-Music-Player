@@ -54,7 +54,7 @@
         android:layout_alignTop="@+id/config_text_color"
         android:paddingLeft="@dimen/activity_margin"
         android:paddingRight="@dimen/activity_margin"
-        android:text="OK"
+        android:text="@android:string/ok"
         android:textColor="@android:color/white"
         android:textSize="@dimen/config_text_size"/>
 

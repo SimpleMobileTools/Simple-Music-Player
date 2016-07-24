@@ -310,8 +310,8 @@ public class MainActivity extends SimpleActivity
         builder.setTitle(getResources().getString(R.string.rename_song));
         builder.setView(renameSongView);
 
-        builder.setPositiveButton("OK", null);
-        builder.setNegativeButton("Cancel", null);
+        builder.setPositiveButton(android.R.string.ok, null);
+        builder.setNegativeButton(android.R.string.cancel, null);
 
         final AlertDialog alertDialog = builder.create();
         alertDialog.show();
