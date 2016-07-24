@@ -1,6 +1,13 @@
 Changelog
 ==========
 
+Version 1.13 *(2016-07-24)*
+----------------------------
+
+ * Added Dark theme
+ * Added lockscreen widget
+ * Added Swedish translation
+
 Version 1.12 *(2016-07-15)*
 ----------------------------
 
