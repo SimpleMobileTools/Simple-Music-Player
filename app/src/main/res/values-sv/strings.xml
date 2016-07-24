@@ -12,7 +12,6 @@
     <string name="rename_song">Döp om låt</string>
     <string name="rename_song_error">Ett fel uppstod vid omdöpningen</string>
     <string name="rename_song_empty">Alla fält måste fyllas i</string>
-    <string name="progress" translatable="false">%1$s / %2$s</string>
 
     <plurals name="songs_deleted">
         <item quantity="one">1 låt borttagen</item>
