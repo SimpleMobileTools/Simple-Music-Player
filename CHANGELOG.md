@@ -1,6 +1,11 @@
 Changelog
 ==========
 
+Version 1.15 *(2016-07-27)*
+----------------------------
+
+ * Do not kill the player at pause on Android 4
+
 Version 1.14 *(2016-07-26)*
 ----------------------------
 
