@@ -422,6 +422,7 @@ public class MusicService extends Service
 
     private void restartSong() {
         mPlayer.seekTo(0);
+        setupNotification();
     }
 
     private void playSong(Intent intent) {
