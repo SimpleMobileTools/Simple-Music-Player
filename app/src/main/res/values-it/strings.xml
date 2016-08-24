@@ -1,0 +1,49 @@
+<resources>
+    <string name="app_name">Lettore musicale</string>
+    <string name="playlist_empty">La tua playlist è vuota</string>
+    <string name="no_permissions">L\'autorizzazione per l\'accesso alle canzoni non è stata consentita</string>
+    <string name="delete">Elimina</string>
+    <string name="edit">Modifica</string>
+    <string name="undo">Annulla</string>
+    <string name="title">Titolo</string>
+    <string name="artist">Artista</string>
+    <string name="file_name">Nome file</string>
+    <string name="extension">Estensione</string>
+    <string name="rename_song">Rinomina canzone</string>
+    <string name="rename_song_error">Errore durante la rinominazione</string>
+    <string name="rename_song_empty">Completa tutti i campi</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+
+    <plurals name="songs_deleted">
+        <item quantity="one">1 canzone eliminata</item>
+        <item quantity="other">%1$d canzoni eliminate</item>
+    </plurals>
+
+    <!-- Settings -->
+    <string name="settings">Impostazioni</string>
+    <string name="dark_theme">Tema scuro</string>
+    <string name="shuffle">Mischia</string>
+    <string name="numeric_progress">Mostra anche l\'avanzamento in numeri</string>
+    <string name="sort_by">Ordina tracce per</string>
+    <string name="equalizer">Equalizzatore</string>
+
+    <!-- About -->
+    <string name="about">Informazioni</string>
+    <string name="website">Altre semplici app e codici sorgenti in:\nhttp://simplemobiletools.com</string>
+    <string name="email_label">Invia la tua opinione o i tuoi suggerimenti a:</string>
+    <string name="third_party_licences_underlined"><u>Licenze di terze parti</u></string>
+    <string name="invite_friends_underlined"><u>Invite friends</u></string>
+    <string name="share_text">Hey, come check out %1$s at %2$s</string>
+    <string name="invite_via">Invite via</string>
+    <string name="rate_us_underlined"><u>Dacci un voto sul Play Store</u></string>
+    <string name="follow_us">Seguici:</string>
+    <string name="copyright">v %1$s\nCopyright © Simple Mobile Tools %2$d</string>
+
+    <!--License-->
+    <string name="notice">Questa app usa le seguenti librerie di terze parti per semplificarmi la vita. Grazie.</string>
+    <string name="third_party_licences">Licenze di terze parti</string>
+    <string name="butterknife_title"><u>Butter Knife (view injector)</u></string>
+    <string name="ambilwarna_title"><u>AmbilWarna (color picker)</u></string>
+    <string name="otto_title"><u>Otto (event bus)</u></string>
+</resources>
