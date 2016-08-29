@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Simple Music Player</string>
+    <string name="app_launcher_name">Music Player</string>
     <string name="playlist_empty">Your playlist is empty</string>
     <string name="no_permissions">Permission for accessing the songs has not been granted</string>
     <string name="delete">Delete</string>
