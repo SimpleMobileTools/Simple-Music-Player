@@ -1,6 +1,12 @@
 Changelog
 ==========
 
+Version 1.17 *(2016-08-29)*
+----------------------------
+
+ * Rename the app launcher to Music Player
+ * Update the launcher icon
+
 Version 1.16 *(2016-08-22)*
 ----------------------------
 
