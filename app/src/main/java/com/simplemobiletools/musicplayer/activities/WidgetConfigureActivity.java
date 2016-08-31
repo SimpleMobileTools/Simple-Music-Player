@@ -72,7 +72,7 @@ public class WidgetConfigureActivity extends AppCompatActivity {
         }
 
         mBgColorWithoutTransparency = Color.rgb(Color.red(mBgColor), Color.green(mBgColor), Color.blue(mBgColor));
-        mBgSeekBar.setOnSeekBarChangeListener(bgSeekbarChangeListener);
+        mBgSeekBar.setOnSeekBarChangeListener(seekbarChangeListener);
         mBgSeekBar.setProgress((int) (mBgAlpha * 100));
         updateBackgroundColor();
 
@@ -164,7 +164,7 @@ public class WidgetConfigureActivity extends AppCompatActivity {
         mNextBtn.getDrawable().mutate().setColorFilter(mTextColor, PorterDuff.Mode.SRC_IN);
     }
 
-    private SeekBar.OnSeekBarChangeListener bgSeekbarChangeListener = new SeekBar.OnSeekBarChangeListener() {
+    private SeekBar.OnSeekBarChangeListener seekbarChangeListener = new SeekBar.OnSeekBarChangeListener() {
         @Override
         public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
             mBgAlpha = (float) progress / (float) 100;
