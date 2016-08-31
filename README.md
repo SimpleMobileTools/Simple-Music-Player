@@ -1,9 +1,11 @@
 # Simple Music Player
 <img alt="Logo" src="app/src/main/res/mipmap-xxxhdpi/launcher.png" width="80">
 
-A simple music player without ads, unnecessary permissions and advanced features. It is fully opensource, comes with a Dark theme. The app can be used for renaming the song title, artist or filename. You can control it easily both from the status bar notification or with hardware button on your headset. You can sort the tracks by the Title or Artist, as well as change the Equalizer.
+A music player easily controllable from the status bar, home screen widget or by hardware buttons on your headset. You can sort the tracks by the Title or Artist, as well as change the Equalizer. Does not yet support filtering by artist or album, stay tuned!
 
-It contains a customizable widget for your home screen, where you can change the font color, or the alpha and the color of the background. The widget can be of size 4x1 or 4x2.
+It contains a widget with customizable text color, alpha and the color of the background.
+
+Contains no ads or unnecessary permissions. It is fully opensource, provides a Dark theme too.
 
 <a href='https://play.google.com/store/apps/details?id=com.simplemobiletools.musicplayer'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png' height=60/></a>
 <a href="https://f-droid.org/app/com.simplemobiletools.musicplayer"><img src="https://f-droid.org/badge/get-it-on.png" alt="Get it on F-Droid" height="60"></a>
