@@ -21,6 +21,10 @@
         <item quantity="other">%1$d låtar borttagna</item>
     </plurals>
 
+    <string name="previous">Previous</string>
+    <string name="playpause">Play Pause</string>
+    <string name="next">Next</string>
+
     <!-- Settings -->
     <string name="settings">Inställningar</string>
     <string name="dark_theme">Mörkt tema</string>

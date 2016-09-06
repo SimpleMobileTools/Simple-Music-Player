@@ -22,9 +22,9 @@
         <item quantity="other">%1$d songs deleted</item>
     </plurals>
 
-    <string name="previous" translatable="false">Previous</string>
-    <string name="playpause" translatable="false">Play Pause</string>
-    <string name="next" translatable="false">Next</string>
+    <string name="previous">Previous</string>
+    <string name="playpause">Play Pause</string>
+    <string name="next">Next</string>
 
     <!-- Settings -->
     <string name="settings">Settings</string>
