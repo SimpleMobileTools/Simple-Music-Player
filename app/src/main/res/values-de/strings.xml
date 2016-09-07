@@ -21,9 +21,9 @@
         <item quantity="other">%1$d Titel gelöscht</item>
     </plurals>
 
-    <string name="previous" translatable="false">Voriger Titel</string>
-    <string name="playpause" translatable="false">Play Pause</string>
-    <string name="next" translatable="false">Nächter Titel</string>
+    <string name="previous">Voriger Titel</string>
+    <string name="playpause">Play Pause</string>
+    <string name="next">Nächter Titel</string>
 
     <!-- Settings -->
     <string name="settings">Einstellungen</string>
