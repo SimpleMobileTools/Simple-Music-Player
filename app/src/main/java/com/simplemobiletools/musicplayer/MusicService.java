@@ -78,9 +78,9 @@ public class MusicService extends Service
         }
 
         mProgressHandler = new Handler();
-        final ComponentName mRemoteControlComponent = new ComponentName(getPackageName(), RemoteControlReceiver.class.getName());
-        final AudioManager mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-        mAudioManager.registerMediaButtonEventReceiver(mRemoteControlComponent);
+        final ComponentName remoteControlComponent = new ComponentName(getPackageName(), RemoteControlReceiver.class.getName());
+        final AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+        audioManager.registerMediaButtonEventReceiver(remoteControlComponent);
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
             initService();
         } else {
