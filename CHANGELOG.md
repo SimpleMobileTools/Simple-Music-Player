@@ -1,6 +1,11 @@
 Changelog
 ==========
 
+Version 1.19 *(2016-10-09)*
+----------------------------
+
+ * Add a button for repeating the current track
+
 Version 1.18 *(2016-09-07)*
 ----------------------------
 
