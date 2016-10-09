@@ -469,7 +469,11 @@ public class MusicService extends Service
 
     @Override
     public void onCompletion(MediaPlayer mp) {
-        if (mPlayer.getCurrentPosition() > 0) {
+        if (mConfig.getRepeatSong()) {
+            mPlayer.seekTo(0);
+            mPlayer.start();
+            setupNotification();
+        } else if (mPlayer.getCurrentPosition() > 0) {
             mPlayer.reset();
             playNextSong();
         }
