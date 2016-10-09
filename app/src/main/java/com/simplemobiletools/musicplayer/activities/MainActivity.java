@@ -168,7 +168,6 @@ public class MainActivity extends SimpleActivity
         mNextBtn.setImageBitmap(Utils.getColoredIcon(res, color, R.mipmap.next));
         mPlayBitmap = Utils.getColoredIcon(res, color, R.mipmap.play);
         mPauseBitmap = Utils.getColoredIcon(res, color, R.mipmap.pause);
-        mPlayPauseBtn.setImageBitmap(mPlayBitmap);
     }
 
     private void songPicked(int pos) {
