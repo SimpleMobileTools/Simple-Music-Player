@@ -15,6 +15,8 @@
     <string name="rename_song_empty">Fülle bitte alle Felder aus</string>
     <string name="ok">OK</string>
     <string name="cancel">Abbrechen</string>
+    <string name="enable_song_repetition">Repeat current song</string>
+    <string name="disable_song_repetition">Stop repeating current song</string>
 
     <plurals name="songs_deleted">
         <item quantity="one">1 Titel gelöscht</item>

@@ -11,7 +11,7 @@ public class Config {
         return new Config(context);
     }
 
-    public Config(Context context) {
+    private Config(Context context) {
         mPrefs = context.getSharedPreferences(Constants.PREFS_KEY, Context.MODE_PRIVATE);
     }
 
@@ -61,5 +61,13 @@ public class Config {
 
     public void setEqualizer(int equalizer) {
         mPrefs.edit().putInt(Constants.EQUALIZER, equalizer).apply();
+    }
+
+    public boolean getRepeatSong() {
+        return mPrefs.getBoolean(Constants.REPEAT_SONG, false);
+    }
+
+    public void setRepeatSong(boolean repeat) {
+        mPrefs.edit().putBoolean(Constants.REPEAT_SONG, repeat).apply();
     }
 }

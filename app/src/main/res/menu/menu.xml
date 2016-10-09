@@ -2,6 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        android:id="@+id/enable_song_repetition"
+        android:title="@string/enable_song_repetition"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/disable_song_repetition"
+        android:title="@string/disable_song_repetition"
+        app:showAsAction="never"/>
+    <item
         android:id="@+id/settings"
         android:title="@string/settings"
         app:showAsAction="never"/>

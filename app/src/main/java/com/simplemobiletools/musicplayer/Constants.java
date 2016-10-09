@@ -34,4 +34,5 @@ public class Constants {
     public static final String NUMERIC_PROGRESS = "numeric_progress";
     public static final String SORTING = "sorting";
     public static final String EQUALIZER = "equalizer";
+    public static final String REPEAT_SONG = "repeat_song";
 }

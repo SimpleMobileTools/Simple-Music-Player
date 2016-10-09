@@ -109,6 +109,8 @@ public class MainActivity extends SimpleActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
+        menu.findItem(R.id.enable_song_repetition).setVisible(!mConfig.getRepeatSong());
+        menu.findItem(R.id.disable_song_repetition).setVisible(mConfig.getRepeatSong());
         return true;
     }
 
@@ -120,6 +122,12 @@ public class MainActivity extends SimpleActivity
                 return true;
             case R.id.about:
                 startActivity(new Intent(getApplicationContext(), AboutActivity.class));
+                return true;
+            case R.id.enable_song_repetition:
+                toggleSongRepetition(true);
+                return true;
+            case R.id.disable_song_repetition:
+                toggleSongRepetition(false);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -137,6 +145,11 @@ public class MainActivity extends SimpleActivity
                 Toast.makeText(this, getResources().getString(R.string.no_permissions), Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+    private void toggleSongRepetition(boolean enable) {
+        mConfig.setRepeatSong(enable);
+        invalidateOptionsMenu();
     }
 
     private void initializePlayer() {
