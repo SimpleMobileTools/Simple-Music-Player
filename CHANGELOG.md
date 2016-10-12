@@ -1,6 +1,11 @@
 Changelog
 ==========
 
+Version 1.20 *(2016-10-12)*
+----------------------------
+
+ * Fixing a crash at starting the music
+
 Version 1.19 *(2016-10-09)*
 ----------------------------
 
