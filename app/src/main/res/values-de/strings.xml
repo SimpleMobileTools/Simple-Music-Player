@@ -15,8 +15,8 @@
     <string name="rename_song_empty">Fülle bitte alle Felder aus</string>
     <string name="ok">OK</string>
     <string name="cancel">Abbrechen</string>
-    <string name="enable_song_repetition">Repeat current song</string>
-    <string name="disable_song_repetition">Stop repeating current song</string>
+    <string name="enable_song_repetition">Aktuelles Lied wiederholen</string>
+    <string name="disable_song_repetition">Aktuelles Lied nicht mehr wiederholen</string>
 
     <plurals name="songs_deleted">
         <item quantity="one">1 Titel gelöscht</item>
@@ -29,7 +29,7 @@
 
     <!-- Settings -->
     <string name="settings">Einstellungen</string>
-    <string name="dark_theme">Dunkles Thema</string>
+    <string name="dark_theme">Dunkles Design</string>
     <string name="shuffle">Zufallswiedergabe</string>
     <string name="numeric_progress">Zeige Fortschritt in Zahlen an</string>
     <string name="sort_by">Sortiere Titel nach</string>
@@ -50,7 +50,7 @@
     <!--License-->
     <string name="notice">Diese App nutzt die folgenden Drittanbieterbibliotheken, die mein Leben einfacher machen. Danke.</string>
     <string name="third_party_licences">Drittanbieterlizenzen</string>
-    <string name="butterknife_title"><u>Butter Knife (view injector)</u></string>
-    <string name="ambilwarna_title"><u>AmbilWarna (color picker)</u></string>
-    <string name="otto_title"><u>Otto (event bus)</u></string>
+    <string name="butterknife_title"><u>Butter Knife (View Injector)</u></string>
+    <string name="ambilwarna_title"><u>AmbilWarna (Color Picker)</u></string>
+    <string name="otto_title"><u>Otto (Event Bus)</u></string>
 </resources>
