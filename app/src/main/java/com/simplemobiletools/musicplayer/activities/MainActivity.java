@@ -31,6 +31,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.simplemobiletools.fileproperties.dialogs.PropertiesDialog;
 import com.simplemobiletools.musicplayer.BusProvider;
 import com.simplemobiletools.musicplayer.Config;
 import com.simplemobiletools.musicplayer.Constants;
@@ -394,7 +395,22 @@ public class MainActivity extends SimpleActivity
     }
 
     private void showProperties() {
+        final SparseBooleanArray items = mSongsList.getCheckedItemPositions();
+        if (items.size() == 1) {
+            final Song selectedSong = mSongs.get(getSelectedSongIndex());
+            new PropertiesDialog(this, selectedSong.getPath(), false);
+        } else {
+            final List<String> paths = new ArrayList<>(items.size());
+            final int cnt = items.size();
+            for (int i = 0; i < cnt; i++) {
+                if (items.valueAt(i)) {
+                    final int id = items.keyAt(i);
+                    paths.add(mSongs.get(id).getPath());
+                }
+            }
 
+            new PropertiesDialog(this, paths, false);
+        }
     }
 
     private int getSelectedSongIndex() {
