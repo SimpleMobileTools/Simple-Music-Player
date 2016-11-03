@@ -4,6 +4,7 @@
     <string name="playlist_empty">プレイリストは空です</string>
     <string name="no_permissions">曲のアクセス許可が付与されていません</string>
     <string name="delete">削除</string>
+    <string name="properties">Properties</string>
     <string name="edit">編集</string>
     <string name="undo">元に戻す</string>
     <string name="title">タイトル</string>

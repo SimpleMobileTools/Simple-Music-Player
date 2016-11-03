@@ -4,6 +4,7 @@
     <string name="playlist_empty">A lista de reprodução está vazia</string>
     <string name="no_permissions">A permissão para aceder às músicas não foi concedida</string>
     <string name="delete">Eliminar</string>
+    <string name="properties">Propriedades</string>
     <string name="edit">Editar</string>
     <string name="undo">Desfazer</string>
     <string name="title">Título</string>

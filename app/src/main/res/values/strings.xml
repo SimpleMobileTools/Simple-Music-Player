@@ -4,6 +4,7 @@
     <string name="playlist_empty">Your playlist is empty</string>
     <string name="no_permissions">Permission for accessing the songs has not been granted</string>
     <string name="delete">Delete</string>
+    <string name="properties">Properties</string>
     <string name="edit">Edit</string>
     <string name="undo">Undo</string>
     <string name="title">Title</string>

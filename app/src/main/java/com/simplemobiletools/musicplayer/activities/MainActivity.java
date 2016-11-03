@@ -282,6 +282,9 @@ public class MainActivity extends SimpleActivity
                 prepareForDeleting();
                 mode.finish();
                 return true;
+            case R.id.cab_properties:
+                showProperties();
+                return true;
             default:
                 return false;
         }
@@ -388,6 +391,10 @@ public class MainActivity extends SimpleActivity
         values.put(MediaStore.Audio.Media.ARTIST, newSongArtist);
 
         return getContentResolver().update(uri, values, where, args) == 1;
+    }
+
+    private void showProperties() {
+
     }
 
     private int getSelectedSongIndex() {
