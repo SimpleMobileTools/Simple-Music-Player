@@ -1,5 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'android-apt'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdkVersion 23
@@ -24,6 +26,10 @@ android {
             signingConfig signingConfigs.release
         }
     }
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+    }
 }
 
 dependencies {
@@ -35,8 +41,21 @@ dependencies {
     compile 'com.github.yukuku:ambilwarna:2.0.1'
     compile 'com.simplemobiletools:fileproperties:1.0.2@aar'
     compile 'com.github.bumptech.glide:glide:3.7.0' // remove when https://github.com/bumptech/glide/issues/882 is fixed
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
     apt 'com.jakewharton:butterknife-compiler:8.0.1'
+}
+
+buildscript {
+    ext.kotlin_version = '1.0.3'
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "org.jetbrains.kotlin:kotlin-android-extensions:$kotlin_version"
+    }
 }
 
 def Properties props = new Properties()
