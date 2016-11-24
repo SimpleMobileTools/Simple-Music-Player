@@ -50,7 +50,7 @@
     <string name="follow_us">Follow us:</string>
     <string name="copyright">v %1$s\nCopyright © Simple Mobile Tools %2$d</string>
 
-    <!--License-->
+    <!-- License -->
     <string name="notice">This app uses the following third party libraries to make my life easier. Thank you.</string>
     <string name="third_party_licences">Third party licences</string>
     <string name="butterknife_title"><u>Butter Knife (view injector)</u></string>
@@ -62,4 +62,17 @@
     <string name="otto_title"><u>Otto (event bus)</u></string>
     <string name="otto_text" translatable="false">Copyright 2012 Square, Inc.\nCopyright 2010 Google, Inc.\n\nLicensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at\n\nhttp://www.apache.org/licenses/LICENSE-2.0\n\nUnless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.</string>
     <string name="otto_url" translatable="false">https://github.com/square/otto</string>
+
+    <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
+    <string name="app_short_description">A clean music player with a customizable widget.</string>
+    <string name="app_long_description">
+        A music player easily controllable from the status bar, home screen widget or by hardware buttons on your headset. You can sort the tracks by the Title or Artist, as well as change the Equalizer. Does not yet support filtering by artist or album, stay tuned!
+
+
+        It contains a widget with customizable text color, alpha and the color of the background.
+
+        Contains no ads or unnecessary permissions. It is fully opensource, provides a Dark theme too.
+
+        This app is just one piece of a bigger series of apps. You can find the rest of them at http://www.simplemobiletools.com
+    </string>
 </resources>
