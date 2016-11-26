@@ -56,15 +56,15 @@
     <string name="otto_title"><u>Otto (canal de eventos)</u></string>
 
     <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
-    <string name="app_short_description">A clean music player with a customizable widget.</string>
+    <string name="app_short_description">Um reprodutor de músicas com um widget personalizável.</string>
     <string name="app_long_description">
-        A music player easily controllable from the status bar, home screen widget or by hardware buttons on your headset. You can sort the tracks by the Title or Artist, as well as change the Equalizer. Does not yet support filtering by artist or album, stay tuned!
+        Um reprodutor de músicas que pode ser controlado através da barra de estado, do widget ou através dos botões do seu dispositivo ou auricular. Pode ordenar as faixas por Título ou Artista, bem como ajustar o seu equalizador. Ainda não possui suporte a filtrar por artista ou álbum, mas está planeado. Fique atento!
 
 
-        It contains a widget with customizable text color, alpha and the color of the background.
+        Pode personalizar a cor do texto do widget, bem como a cor e o valor alfa do fundo.
 
-        Contains no ads or unnecessary permissions. It is fully opensource, provides a Dark theme too.
+        Não contém anúncios nem permissões desnecessárias. Disponibiliza um tema escuro e é totalmente 'open source'.
 
-        This app is just one piece of a bigger series of apps. You can find the rest of them at http://www.simplemobiletools.com
+        Esta aplicação é apenas parte de um conjunto mais vasto de aplicações. Saiba mais em http://www.simplemobiletools.com
     </string>
 </resources>
