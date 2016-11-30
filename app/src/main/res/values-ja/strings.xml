@@ -1,10 +1,10 @@
-<resources>
+﻿<resources>
     <string name="app_name">シンプル ミュージック プレイヤー</string>
-    <string name="app_launcher_name">Music Player</string>
+    <string name="app_launcher_name">ミュージック プレイヤー</string>
     <string name="playlist_empty">プレイリストは空です</string>
     <string name="no_permissions">曲のアクセス許可が付与されていません</string>
     <string name="delete">削除</string>
-    <string name="properties">Properties</string>
+    <string name="properties">プロパティ</string>
     <string name="edit">編集</string>
     <string name="undo">元に戻す</string>
     <string name="title">タイトル</string>
@@ -15,18 +15,18 @@
     <string name="rename_song_error">名前を変更中にエラーが発生しました</string>
     <string name="rename_song_empty">すべてのフィールドを入力してください</string>
     <string name="ok">OK</string>
-    <string name="cancel">Cancel</string>
-    <string name="enable_song_repetition">Repeat current song</string>
-    <string name="disable_song_repetition">Stop repeating current song</string>
+    <string name="cancel">キャンセル</string>
+    <string name="enable_song_repetition">現在の曲を繰り返し</string>
+    <string name="disable_song_repetition">現在の曲の繰り返しを停止</string>
 
     <plurals name="songs_deleted">
         <item quantity="one">1 曲削除しました</item>
         <item quantity="other">%1$d 曲削除しました</item>
     </plurals>
 
-    <string name="previous">Previous</string>
-    <string name="playpause">Play Pause</string>
-    <string name="next">Next</string>
+    <string name="previous">前へ</string>
+    <string name="playpause">再生 一時停止</string>
+    <string name="next">次へ</string>
 
     <!-- Settings -->
     <string name="settings">設定</string>
@@ -41,30 +41,30 @@
     <string name="website">もっとシンプルなアプリとソースコードは:\nhttp://simplemobiletools.com</string>
     <string name="email_label">ご意見やご提案をお送りください:</string>
     <string name="third_party_licences_underlined"><u>サードパーティー ライセンス</u></string>
-    <string name="invite_friends_underlined"><u>Invite friends</u></string>
-    <string name="share_text">Hey, come check out %1$s at %2$s</string>
-    <string name="invite_via">Invite via</string>
+    <string name="invite_friends_underlined"><u>友達を招待</u></string>
+    <string name="share_text">%2$s で %1$s を確認してください</string>
+    <string name="invite_via">招待...</string>
     <string name="rate_us_underlined"><u>Play ストアで評価してください</u></string>
     <string name="follow_us">フォローしてください:</string>
     <string name="copyright">v %1$s\nCopyright © Simple Mobile Tools %2$d</string>
 
     <!-- License -->
-    <string name="notice">このアプリは、私の人生を容易にするために、次のサードパーティのライブラリーを使用しています。 ありがとうございます。</string>
+    <string name="notice">このアプリは、私の暮らしにゆとりを持たせるために、次のサードパーティのライブラリーを使用しています。 ありがとうございます。</string>
     <string name="third_party_licences">サードパーティー ライセンス</string>
     <string name="butterknife_title"><u>Butter Knife (ビュー インジェクター)</u></string>
     <string name="ambilwarna_title"><u>AmbilWarna (カラーピッカー)</u></string>
     <string name="otto_title"><u>Otto (イベントバス)</u></string>
 
     <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
-    <string name="app_short_description">A clean music player with a customizable widget.</string>
+    <string name="app_short_description">カスタマイズ可能なウィジェットを持つクリーンなミュージック プレイヤー。</string>
     <string name="app_long_description">
-        A music player easily controllable from the status bar, home screen widget or by hardware buttons on your headset. You can sort the tracks by the Title or Artist, as well as change the Equalizer. Does not yet support filtering by artist or album, stay tuned!
+        ステータスバー、ホーム画面ウィジェット、またはヘッドセットのハードウェアボタンから簡単にコントロールできるミュージック プレイヤー。 タイトルやアーティストでトラックを並べ替えるだけでなく、イコライザーを変更することもできます。 アーティストやアルバムによるフィルタリングはまだサポートしていません。乞うご期待!
 
 
-        It contains a widget with customizable text color, alpha and the color of the background.
+        文字の色、背景のアルファと色をカスタマイズ可能なウィジェットを含みます。
 
-        Contains no ads or unnecessary permissions. It is fully opensource, provides a Dark theme too.
+        広告や不要なアクセス許可は含まれていません。 完全にオープンソースで、ダークテーマも提供しています。
 
-        This app is just one piece of a bigger series of apps. You can find the rest of them at http://www.simplemobiletools.com
+        このアプリは、大きな一連のアプリの一つです。 他のアプリは http://www.simplemobiletools.com で見つけることができます
     </string>
 </resources>
