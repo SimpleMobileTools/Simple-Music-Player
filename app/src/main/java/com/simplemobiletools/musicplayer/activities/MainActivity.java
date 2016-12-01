@@ -86,7 +86,7 @@ public class MainActivity extends SimpleActivity
         mBus = BusProvider.getInstance();
         mBus.register(this);
         mProgressBar.setOnSeekBarChangeListener(this);
-        mConfig = Config.Companion.newInstance(getApplicationContext());
+        setMConfig(Config.Companion.newInstance(getApplicationContext()));
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
             initializePlayer();
@@ -110,8 +110,8 @@ public class MainActivity extends SimpleActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
-        menu.findItem(R.id.enable_song_repetition).setVisible(!mConfig.getRepeatSong());
-        menu.findItem(R.id.disable_song_repetition).setVisible(mConfig.getRepeatSong());
+        menu.findItem(R.id.enable_song_repetition).setVisible(!getMConfig().getRepeatSong());
+        menu.findItem(R.id.disable_song_repetition).setVisible(getMConfig().getRepeatSong());
         return true;
     }
 
@@ -149,7 +149,7 @@ public class MainActivity extends SimpleActivity
     }
 
     private void toggleSongRepetition(boolean enable) {
-        mConfig.setRepeatSong(enable);
+        getMConfig().setRepeatSong(enable);
         invalidateOptionsMenu();
     }
 
