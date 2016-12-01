@@ -32,7 +32,7 @@ public class SettingsActivity extends SimpleActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
-        mConfig = Config.newInstance(getApplicationContext());
+        mConfig = Config.Companion.newInstance(getApplicationContext());
         mEqualizer = MusicService.mEqualizer;
         ButterKnife.bind(this);
 
@@ -44,15 +44,15 @@ public class SettingsActivity extends SimpleActivity {
     }
 
     private void setupDarkTheme() {
-        mDarkThemeSwitch.setChecked(mConfig.getIsDarkTheme());
+        mDarkThemeSwitch.setChecked(mConfig.isDarkTheme());
     }
 
     private void setupShuffle() {
-        mShuffleSwitch.setChecked(mConfig.getIsShuffleEnabled());
+        mShuffleSwitch.setChecked(mConfig.isShuffleEnabled());
     }
 
     private void setupNumericProgress() {
-        mNumericProgressSwitch.setChecked(mConfig.getIsNumericProgressEnabled());
+        mNumericProgressSwitch.setChecked(mConfig.isNumericProgressEnabled());
     }
 
     private void setupSorting() {
@@ -62,20 +62,20 @@ public class SettingsActivity extends SimpleActivity {
     @OnClick(R.id.settings_dark_theme_holder)
     public void handleDarkTheme() {
         mDarkThemeSwitch.setChecked(!mDarkThemeSwitch.isChecked());
-        mConfig.setIsDarkTheme(mDarkThemeSwitch.isChecked());
+        mConfig.setDarkTheme(mDarkThemeSwitch.isChecked());
         restartActivity();
     }
 
     @OnClick(R.id.settings_shuffle_holder)
     public void handleShuffle() {
         mShuffleSwitch.setChecked(!mShuffleSwitch.isChecked());
-        mConfig.setShuffle(mShuffleSwitch.isChecked());
+        mConfig.setShuffleEnabled(mShuffleSwitch.isChecked());
     }
 
     @OnClick(R.id.settings_numeric_progress_holder)
     public void handleNumericProgress() {
         mNumericProgressSwitch.setChecked(!mNumericProgressSwitch.isChecked());
-        mConfig.setIsNumericProgressEnabled(mNumericProgressSwitch.isChecked());
+        mConfig.setNumericProgressEnabled(mNumericProgressSwitch.isChecked());
     }
 
     @OnItemSelected(R.id.settings_sorting)

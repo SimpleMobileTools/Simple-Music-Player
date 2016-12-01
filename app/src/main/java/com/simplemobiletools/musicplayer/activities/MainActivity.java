@@ -86,7 +86,7 @@ public class MainActivity extends SimpleActivity
         mBus = BusProvider.getInstance();
         mBus.register(this);
         mProgressBar.setOnSeekBarChangeListener(this);
-        mConfig = Config.newInstance(getApplicationContext());
+        mConfig = Config.Companion.newInstance(getApplicationContext());
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
             initializePlayer();
@@ -98,7 +98,7 @@ public class MainActivity extends SimpleActivity
     @Override
     protected void onResume() {
         super.onResume();
-        mIsNumericProgressShown = Config.newInstance(getApplicationContext()).getIsNumericProgressEnabled();
+        mIsNumericProgressShown = Config.Companion.newInstance(getApplicationContext()).isNumericProgressEnabled();
         setupIconColors();
         if (mIsNumericProgressShown) {
             mProgress.setVisibility(View.VISIBLE);
@@ -205,7 +205,7 @@ public class MainActivity extends SimpleActivity
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Config.newInstance(getApplicationContext()).setIsFirstRun(false);
+        Config.Companion.newInstance(getApplicationContext()).setFirstRun(false);
         mBus.unregister(this);
     }
 

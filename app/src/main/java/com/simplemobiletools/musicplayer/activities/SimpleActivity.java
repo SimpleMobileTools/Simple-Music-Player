@@ -13,8 +13,8 @@ public class SimpleActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        mConfig = Config.newInstance(getApplicationContext());
-        setTheme(mConfig.getIsDarkTheme() ? R.style.AppTheme_Dark : R.style.AppTheme);
+        mConfig = Config.Companion.newInstance(getApplicationContext());
+        setTheme(mConfig.isDarkTheme() ? R.style.AppTheme_Dark : R.style.AppTheme);
         super.onCreate(savedInstanceState);
     }
 

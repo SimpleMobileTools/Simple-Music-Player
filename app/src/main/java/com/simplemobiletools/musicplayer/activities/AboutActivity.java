@@ -55,7 +55,7 @@ public class AboutActivity extends SimpleActivity {
     }
 
     private void setupRateUs() {
-        if (Config.newInstance(getApplicationContext()).getIsFirstRun()) {
+        if (Config.Companion.newInstance(getApplicationContext()).isFirstRun()) {
             mRateUs.setVisibility(View.GONE);
         }
     }

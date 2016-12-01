@@ -89,7 +89,7 @@ public class MusicService extends Service
     }
 
     private void initService() {
-        mConfig = Config.newInstance(getApplicationContext());
+        mConfig = Config.Companion.newInstance(getApplicationContext());
         mSongs = new ArrayList<>();
         mPlayedSongIndexes = new ArrayList<>();
         mIgnoredPaths = new ArrayList<>();
@@ -246,7 +246,7 @@ public class MusicService extends Service
         fillPlaylist();
         Collections.sort(mSongs, new Comparator<Song>() {
             public int compare(Song a, Song b) {
-                if (mConfig.getSorting() == Config.SORT_BY_TITLE) {
+                if (mConfig.getSorting() == Config.Companion.getSORT_BY_TITLE()) {
                     return a.getTitle().compareTo(b.getTitle());
                 } else {
                     return a.getArtist().compareTo(b.getArtist());
@@ -343,7 +343,7 @@ public class MusicService extends Service
     }
 
     private int getNewSongId() {
-        if (mConfig.getIsShuffleEnabled()) {
+        if (mConfig.isShuffleEnabled()) {
             final int cnt = mSongs.size();
             if (cnt == 0) {
                 return -1;
