@@ -1,7 +1,8 @@
-package com.simplemobiletools.musicplayer
+package com.simplemobiletools.musicplayer.helpers
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.simplemobiletools.musicplayer.Constants
 
 class Config private constructor(context: Context) {
     private val mPrefs: SharedPreferences

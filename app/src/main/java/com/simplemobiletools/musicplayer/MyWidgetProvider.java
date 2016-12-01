@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.widget.RemoteViews;
 
 import com.simplemobiletools.musicplayer.activities.MainActivity;
+import com.simplemobiletools.musicplayer.helpers.BusProvider;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
@@ -61,7 +62,7 @@ public class MyWidgetProvider extends AppWidgetProvider {
         setupViews(mContext);
 
         if (mBus == null) {
-            mBus = BusProvider.getInstance();
+            mBus = BusProvider.Companion.getInstance();
         }
         registerBus();
     }

@@ -30,6 +30,8 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.simplemobiletools.musicplayer.activities.MainActivity;
+import com.simplemobiletools.musicplayer.helpers.BusProvider;
+import com.simplemobiletools.musicplayer.helpers.Config;
 import com.simplemobiletools.musicplayer.receivers.ControlActionsListener;
 import com.simplemobiletools.musicplayer.receivers.HeadsetPlugReceiver;
 import com.simplemobiletools.musicplayer.receivers.IncomingCallReceiver;
@@ -73,7 +75,7 @@ public class MusicService extends Service
         super.onCreate();
 
         if (mBus == null) {
-            mBus = BusProvider.getInstance();
+            mBus = BusProvider.Companion.getInstance();
             mBus.register(this);
         }
 

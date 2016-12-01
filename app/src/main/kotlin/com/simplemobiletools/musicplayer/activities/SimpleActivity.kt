@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 
-import com.simplemobiletools.musicplayer.Config
+import com.simplemobiletools.musicplayer.helpers.Config
 import com.simplemobiletools.musicplayer.R
 
 open class SimpleActivity : AppCompatActivity() {

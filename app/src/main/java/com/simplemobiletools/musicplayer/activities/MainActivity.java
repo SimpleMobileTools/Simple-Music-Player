@@ -32,8 +32,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.simplemobiletools.fileproperties.dialogs.PropertiesDialog;
-import com.simplemobiletools.musicplayer.BusProvider;
-import com.simplemobiletools.musicplayer.Config;
+import com.simplemobiletools.musicplayer.helpers.BusProvider;
 import com.simplemobiletools.musicplayer.Constants;
 import com.simplemobiletools.musicplayer.Events;
 import com.simplemobiletools.musicplayer.MusicService;
@@ -83,10 +82,9 @@ public class MainActivity extends SimpleActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        mBus = BusProvider.getInstance();
+        mBus = BusProvider.Companion.getInstance();
         mBus.register(this);
         mProgressBar.setOnSeekBarChangeListener(this);
-        setMConfig(Config.Companion.newInstance(getApplicationContext()));
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
             initializePlayer();
@@ -98,7 +96,7 @@ public class MainActivity extends SimpleActivity
     @Override
     protected void onResume() {
         super.onResume();
-        mIsNumericProgressShown = Config.Companion.newInstance(getApplicationContext()).isNumericProgressEnabled();
+        mIsNumericProgressShown = mConfig.isNumericProgressEnabled();
         setupIconColors();
         if (mIsNumericProgressShown) {
             mProgress.setVisibility(View.VISIBLE);
@@ -205,7 +203,7 @@ public class MainActivity extends SimpleActivity
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Config.Companion.newInstance(getApplicationContext()).setFirstRun(false);
+        mConfig.setFirstRun(false);
         mBus.unregister(this);
     }
 
