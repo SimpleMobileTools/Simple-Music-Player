@@ -1,7 +1,6 @@
 package com.simplemobiletools.musicplayer.activities;
 
 import android.Manifest;
-import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
@@ -11,13 +10,10 @@ import android.media.AudioManager;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.ActionMode;
 import android.view.Menu;
@@ -25,7 +21,6 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SeekBar;
@@ -36,11 +31,12 @@ import com.simplemobiletools.fileproperties.dialogs.PropertiesDialog;
 import com.simplemobiletools.musicplayer.Constants;
 import com.simplemobiletools.musicplayer.MusicService;
 import com.simplemobiletools.musicplayer.R;
-import com.simplemobiletools.musicplayer.models.Song;
-import com.simplemobiletools.musicplayer.adapters.SongAdapter;
 import com.simplemobiletools.musicplayer.Utils;
+import com.simplemobiletools.musicplayer.adapters.SongAdapter;
+import com.simplemobiletools.musicplayer.dialogs.EditDialog;
 import com.simplemobiletools.musicplayer.helpers.BusProvider;
 import com.simplemobiletools.musicplayer.models.Events;
+import com.simplemobiletools.musicplayer.models.Song;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
@@ -67,7 +63,6 @@ public class MainActivity extends SimpleActivity
     @BindView(R.id.nextBtn) ImageView mNextBtn;
 
     private static Bus mBus;
-    private static Song mCurrentSong;
     private static List<Song> mSongs;
     private static Snackbar mSnackbar;
     private static List<String> mToBeDeleted;
@@ -225,9 +220,7 @@ public class MainActivity extends SimpleActivity
 
     @Subscribe
     public void songChangedEvent(Events.SongChanged event) {
-        mCurrentSong = event.getSong();
-        Log.e("DEBUG", "cur " + mCurrentSong);
-        updateSongInfo(mCurrentSong);
+        updateSongInfo(event.getSong());
     }
 
     @Subscribe
@@ -300,98 +293,7 @@ public class MainActivity extends SimpleActivity
         if (selectedSong == null)
             return;
 
-        final String title = selectedSong.getTitle();
-        final String artist = selectedSong.getArtist();
-
-        final View renameSongView = getLayoutInflater().inflate(R.layout.rename_song, null);
-        final EditText titleET = (EditText) renameSongView.findViewById(R.id.title);
-        titleET.setText(title);
-
-        final EditText artistET = (EditText) renameSongView.findViewById(R.id.artist);
-        artistET.setText(artist);
-
-        final String fullName = Utils.getFilename(selectedSong.getPath());
-        final int dotAt = fullName.lastIndexOf(".");
-        if (dotAt <= 0)
-            return;
-
-        final String fileName = fullName.substring(0, dotAt);
-        final EditText fileNameET = (EditText) renameSongView.findViewById(R.id.file_name);
-        fileNameET.setText(fileName);
-
-        final String fileExtension = fullName.substring(dotAt + 1, fullName.length());
-        final EditText fileExtensionET = (EditText) renameSongView.findViewById(R.id.extension);
-        fileExtensionET.setText(fileExtension);
-
-        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(getResources().getString(R.string.rename_song));
-        builder.setView(renameSongView);
-
-        builder.setPositiveButton(R.string.ok, null);
-        builder.setNegativeButton(R.string.cancel, null);
-
-        final AlertDialog alertDialog = builder.create();
-        alertDialog.show();
-        alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final String newTitle = Utils.getViewText(titleET);
-                final String newArtist = Utils.getViewText(artistET);
-                final String newFileName = Utils.getViewText(fileNameET);
-                final String newFileExtension = Utils.getViewText(fileExtensionET);
-
-                if (newTitle.isEmpty() || newArtist.isEmpty() || newFileName.isEmpty() || newFileExtension.isEmpty()) {
-                    Utils.showToast(getApplicationContext(), R.string.rename_song_empty);
-                    return;
-                }
-
-                final Uri uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
-                if (updateContentResolver(uri, selectedSong.getId(), newTitle, newArtist)) {
-                    getContentResolver().notifyChange(uri, null);
-                    boolean currSongChanged = false;
-                    if (mCurrentSong != null && mCurrentSong.equals(selectedSong)) {
-                        currSongChanged = true;
-                    }
-
-                    final Song songInList = mSongs.get(songIndex);
-                    songInList.setTitle(newTitle);
-                    songInList.setArtist(newArtist);
-
-                    if (currSongChanged) {
-                        notifyCurrentSongChanged(songInList);
-                    }
-
-                    final File file = new File(selectedSong.getPath());
-                    final File newFile = new File(file.getParent(), newFileName + "." + newFileExtension);
-                    if (file.equals(newFile)) {
-                        alertDialog.dismiss();
-                        return;
-                    }
-
-                    if (file.renameTo(newFile)) {
-                        songInList.setPath(newFile.getAbsolutePath());
-                        final String[] changedFiles = {file.getAbsolutePath(), newFile.getAbsolutePath()};
-                        MediaScannerConnection.scanFile(getApplicationContext(), changedFiles, null, MainActivity.this);
-
-                        alertDialog.dismiss();
-                        return;
-                    }
-
-                    Utils.showToast(getApplicationContext(), R.string.rename_song_error);
-                }
-            }
-        });
-    }
-
-    private boolean updateContentResolver(Uri uri, long songID, String newSongTitle, String newSongArtist) {
-        final String where = MediaStore.Images.Media._ID + " = ? ";
-        final String[] args = {String.valueOf(songID)};
-
-        final ContentValues values = new ContentValues();
-        values.put(MediaStore.Audio.Media.TITLE, newSongTitle);
-        values.put(MediaStore.Audio.Media.ARTIST, newSongArtist);
-
-        return getContentResolver().update(uri, values, where, args) == 1;
+        new EditDialog(this, selectedSong);
     }
 
     private void showProperties() {
@@ -422,15 +324,6 @@ public class MainActivity extends SimpleActivity
             }
         }
         return -1;
-    }
-
-    private void notifyCurrentSongChanged(Song newSong) {
-        final Intent intent = new Intent(this, MusicService.class);
-        intent.putExtra(Constants.EDITED_SONG, newSong);
-        intent.setAction(Constants.EDIT);
-        startService(intent);
-        mCurrentSong = newSong;
-        ((SongAdapter) mSongsList.getAdapter()).notifyDataSetChanged();
     }
 
     private void prepareForDeleting() {
