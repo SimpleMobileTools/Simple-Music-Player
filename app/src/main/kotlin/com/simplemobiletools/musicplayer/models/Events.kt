@@ -1,6 +1,5 @@
 package com.simplemobiletools.musicplayer.models
 
-import com.simplemobiletools.musicplayer.Song
 import java.util.*
 
 class Events {

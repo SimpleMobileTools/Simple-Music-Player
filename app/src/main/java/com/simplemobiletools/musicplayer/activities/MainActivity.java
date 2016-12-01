@@ -17,6 +17,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.ActionMode;
 import android.view.Menu;
@@ -32,14 +33,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.simplemobiletools.fileproperties.dialogs.PropertiesDialog;
-import com.simplemobiletools.musicplayer.helpers.BusProvider;
 import com.simplemobiletools.musicplayer.Constants;
-import com.simplemobiletools.musicplayer.models.Events;
 import com.simplemobiletools.musicplayer.MusicService;
 import com.simplemobiletools.musicplayer.R;
-import com.simplemobiletools.musicplayer.Song;
+import com.simplemobiletools.musicplayer.models.Song;
 import com.simplemobiletools.musicplayer.SongAdapter;
 import com.simplemobiletools.musicplayer.Utils;
+import com.simplemobiletools.musicplayer.helpers.BusProvider;
+import com.simplemobiletools.musicplayer.models.Events;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
@@ -225,6 +226,7 @@ public class MainActivity extends SimpleActivity
     @Subscribe
     public void songChangedEvent(Events.SongChanged event) {
         mCurrentSong = event.getSong();
+        Log.e("DEBUG", "cur " + mCurrentSong);
         updateSongInfo(mCurrentSong);
     }
 
@@ -352,7 +354,7 @@ public class MainActivity extends SimpleActivity
                     }
 
                     final Song songInList = mSongs.get(songIndex);
-                    songInList.setmTitle(newTitle);
+                    songInList.setTitle(newTitle);
                     songInList.setArtist(newArtist);
 
                     if (currSongChanged) {

@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.simplemobiletools.musicplayer.models.Song;
+
 import java.util.ArrayList;
 
 import butterknife.BindView;

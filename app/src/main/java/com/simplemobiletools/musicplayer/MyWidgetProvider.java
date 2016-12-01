@@ -16,6 +16,7 @@ import android.widget.RemoteViews;
 import com.simplemobiletools.musicplayer.activities.MainActivity;
 import com.simplemobiletools.musicplayer.helpers.BusProvider;
 import com.simplemobiletools.musicplayer.models.Events;
+import com.simplemobiletools.musicplayer.models.Song;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
