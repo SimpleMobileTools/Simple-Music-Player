@@ -37,7 +37,7 @@ import com.simplemobiletools.musicplayer.Constants;
 import com.simplemobiletools.musicplayer.MusicService;
 import com.simplemobiletools.musicplayer.R;
 import com.simplemobiletools.musicplayer.models.Song;
-import com.simplemobiletools.musicplayer.SongAdapter;
+import com.simplemobiletools.musicplayer.adapters.SongAdapter;
 import com.simplemobiletools.musicplayer.Utils;
 import com.simplemobiletools.musicplayer.helpers.BusProvider;
 import com.simplemobiletools.musicplayer.models.Events;
