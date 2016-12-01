@@ -133,12 +133,12 @@ class WidgetConfigureActivity : AppCompatActivity() {
         config_text_color.setBackgroundColor(mTextColor)
 
         config_save.setTextColor(mTextColor)
-        songTitle.setTextColor(mTextColor)
-        songArtist.setTextColor(mTextColor)
+        song_title.setTextColor(mTextColor)
+        song_artist.setTextColor(mTextColor)
 
-        previousBtn.drawable.mutate().setColorFilter(mTextColor, PorterDuff.Mode.SRC_IN)
-        playPauseBtn.drawable.mutate().setColorFilter(mTextColor, PorterDuff.Mode.SRC_IN)
-        nextBtn.drawable.mutate().setColorFilter(mTextColor, PorterDuff.Mode.SRC_IN)
+        previous_btn.drawable.mutate().setColorFilter(mTextColor, PorterDuff.Mode.SRC_IN)
+        play_pause_btn.drawable.mutate().setColorFilter(mTextColor, PorterDuff.Mode.SRC_IN)
+        next_btn.drawable.mutate().setColorFilter(mTextColor, PorterDuff.Mode.SRC_IN)
     }
 
     private val seekbarChangeListener = object : SeekBar.OnSeekBarChangeListener {

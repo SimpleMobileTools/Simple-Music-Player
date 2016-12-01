@@ -10,14 +10,12 @@ import com.simplemobiletools.musicplayer.models.Song
 import kotlinx.android.synthetic.main.song.view.*
 import java.util.*
 
-class SongAdapter(context: Context, songs: ArrayList<Song>) : BaseAdapter() {
+class SongAdapter(context: Context, val songs: ArrayList<Song>) : BaseAdapter() {
     companion object {
-        lateinit var mSongs: ArrayList<Song>
         lateinit var mInflater: LayoutInflater
     }
 
     init {
-        mSongs = songs
         mInflater = LayoutInflater.from(context)
     }
 
@@ -32,21 +30,21 @@ class SongAdapter(context: Context, songs: ArrayList<Song>) : BaseAdapter() {
             holder = view.tag as ViewHolder
         }
 
-        val song = mSongs[position]
+        val song = songs[position]
         holder.title.text = song.title
         holder.artist.text = song.artist
 
         return view!!
     }
 
-    override fun getCount() = mSongs.size
+    override fun getCount() = songs.size
 
-    override fun getItem(i: Int) = mSongs[i]
+    override fun getItem(i: Int) = songs[i]
 
     override fun getItemId(i: Int) = 0L
 
     internal class ViewHolder constructor(view: View) {
-        val title = view.songTitle
-        val artist = view.songArtist
+        val title = view.song_title
+        val artist = view.song_artist
     }
 }

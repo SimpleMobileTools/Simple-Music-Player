@@ -8,7 +8,7 @@
     android:gravity="center_horizontal">
 
     <TextView
-        android:id="@+id/songTitle"
+        android:id="@+id/song_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/activity_margin"
@@ -22,10 +22,10 @@
         android:textSize="18sp"/>
 
     <TextView
-        android:id="@+id/songArtist"
+        android:id="@+id/song_artist"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/songTitle"
+        android:layout_below="@+id/song_title"
         android:layout_marginBottom="@dimen/medium_padding"
         android:layout_marginLeft="@dimen/activity_margin"
         android:layout_marginRight="@dimen/activity_margin"
@@ -40,6 +40,6 @@
         layout="@layout/widget_controls"
         android:layout_width="match_parent"
         android:layout_height="@dimen/controls_row_height"
-        android:layout_below="@+id/songArtist"/>
+        android:layout_below="@+id/song_artist"/>
 
 </RelativeLayout>

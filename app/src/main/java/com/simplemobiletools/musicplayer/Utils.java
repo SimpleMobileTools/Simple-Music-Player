@@ -10,8 +10,6 @@ import android.graphics.ColorFilter;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
-import android.widget.EditText;
-import android.widget.Toast;
 
 import java.util.Locale;
 
@@ -32,18 +30,6 @@ public class Utils {
         final Canvas canvas = new Canvas(bmp);
         canvas.drawBitmap(bmp, 0, 0, paint);
         return bmp;
-    }
-
-    public static void showToast(Context context, int resId) {
-        Toast.makeText(context, context.getResources().getString(resId), Toast.LENGTH_SHORT).show();
-    }
-
-    public static String getFilename(final String path) {
-        return path.substring(path.lastIndexOf("/") + 1);
-    }
-
-    public static String getViewText(EditText editText) {
-        return editText.getText().toString().trim();
     }
 
     public static String getTimeString(int duration) {

@@ -97,8 +97,8 @@ class MyWidgetProvider : AppWidgetProvider() {
             artist = mCurrSong!!.artist
         }
 
-        mRemoteViews.setTextViewText(R.id.songTitle, title)
-        mRemoteViews.setTextViewText(R.id.songArtist, artist)
+        mRemoteViews.setTextViewText(R.id.song_title, title)
+        mRemoteViews.setTextViewText(R.id.song_artist, artist)
     }
 
     @Subscribe
@@ -113,7 +113,7 @@ class MyWidgetProvider : AppWidgetProvider() {
 
     private fun updatePlayPauseButton() {
         val bmp = if (mIsPlaying) mPauseBitmap else mPlayBitmap
-        mRemoteViews.setImageViewBitmap(R.id.playPauseBtn, bmp)
+        mRemoteViews.setImageViewBitmap(R.id.play_pause_btn, bmp)
     }
 
     private fun updateWidgets() {
@@ -132,16 +132,16 @@ class MyWidgetProvider : AppWidgetProvider() {
 
         mRemoteViews.apply {
             setInt(R.id.widget_holder, "setBackgroundColor", newBgColor)
-            setInt(R.id.songTitle, "setTextColor", newTextColor)
-            setInt(R.id.songArtist, "setTextColor", newTextColor)
+            setInt(R.id.song_title, "setTextColor", newTextColor)
+            setInt(R.id.song_artist, "setTextColor", newTextColor)
 
-            setImageViewBitmap(R.id.previousBtn, bmp)
+            setImageViewBitmap(R.id.previous_btn, bmp)
 
             mPlayBitmap = Utils.getColoredIcon(res, newTextColor, R.mipmap.play)
             mPauseBitmap = Utils.getColoredIcon(res, newTextColor, R.mipmap.pause)
 
             bmp = Utils.getColoredIcon(res, newTextColor, R.mipmap.next)
-            setImageViewBitmap(R.id.nextBtn, bmp)
+            setImageViewBitmap(R.id.next_btn, bmp)
         }
     }
 
@@ -161,12 +161,12 @@ class MyWidgetProvider : AppWidgetProvider() {
     }
 
     private fun setupButtons() {
-        setupIntent(Constants.PREVIOUS, R.id.previousBtn)
-        setupIntent(Constants.PLAYPAUSE, R.id.playPauseBtn)
-        setupIntent(Constants.NEXT, R.id.nextBtn)
+        setupIntent(Constants.PREVIOUS, R.id.previous_btn)
+        setupIntent(Constants.PLAYPAUSE, R.id.play_pause_btn)
+        setupIntent(Constants.NEXT, R.id.next_btn)
 
-        setupAppOpenIntent(R.id.songTitle)
-        setupAppOpenIntent(R.id.songArtist)
+        setupAppOpenIntent(R.id.song_title)
+        setupAppOpenIntent(R.id.song_artist)
     }
 
     private fun setupViews(context: Context) {
