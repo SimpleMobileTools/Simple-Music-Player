@@ -3,6 +3,7 @@ package com.simplemobiletools.musicplayer.helpers
 import android.content.Context
 import android.content.SharedPreferences
 import com.simplemobiletools.musicplayer.Constants
+import com.simplemobiletools.musicplayer.extensions.getSharedPrefs
 
 class Config private constructor(context: Context) {
     private val mPrefs: SharedPreferences
@@ -14,7 +15,7 @@ class Config private constructor(context: Context) {
     }
 
     init {
-        mPrefs = context.getSharedPreferences(Constants.PREFS_KEY, Context.MODE_PRIVATE)
+        mPrefs = context.getSharedPrefs()
     }
 
     var isFirstRun: Boolean

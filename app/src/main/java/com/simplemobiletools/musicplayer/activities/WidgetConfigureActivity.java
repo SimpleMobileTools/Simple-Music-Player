@@ -16,7 +16,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.simplemobiletools.musicplayer.Constants;
-import com.simplemobiletools.musicplayer.MyWidgetProvider;
+import com.simplemobiletools.musicplayer.helpers.MyWidgetProvider;
 import com.simplemobiletools.musicplayer.R;
 
 import butterknife.BindView;

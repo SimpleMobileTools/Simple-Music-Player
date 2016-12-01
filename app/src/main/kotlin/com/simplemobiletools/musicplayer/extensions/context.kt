@@ -2,6 +2,7 @@ package com.simplemobiletools.musicplayer.extensions
 
 import android.content.Context
 import android.content.Intent
+import com.simplemobiletools.musicplayer.Constants
 import com.simplemobiletools.musicplayer.MusicService
 
 fun Context.sendIntent(action: String) {
@@ -10,3 +11,5 @@ fun Context.sendIntent(action: String) {
         startService(this)
     }
 }
+
+fun Context.getSharedPrefs() = getSharedPreferences(Constants.PREFS, Context.MODE_PRIVATE)
