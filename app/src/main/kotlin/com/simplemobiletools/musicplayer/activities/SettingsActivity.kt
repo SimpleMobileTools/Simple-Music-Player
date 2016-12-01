@@ -7,8 +7,8 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import com.simplemobiletools.musicplayer.Constants
-import com.simplemobiletools.musicplayer.MusicService
 import com.simplemobiletools.musicplayer.R
+import com.simplemobiletools.musicplayer.services.MusicService
 import kotlinx.android.synthetic.main.activity_settings.*
 
 class SettingsActivity : SimpleActivity() {
@@ -62,7 +62,7 @@ class SettingsActivity : SimpleActivity() {
     }
 
     private fun setupEqualizer() {
-        val equalizer = MusicService.mEqualizer
+        val equalizer = MusicService.mEqualizer ?: return
         val cnt = equalizer.numberOfPresets.toInt()
         val presets = arrayOfNulls<String>(cnt)
         for (i in 0..cnt - 1) {

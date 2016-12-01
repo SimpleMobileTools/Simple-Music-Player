@@ -12,8 +12,6 @@ class ControlActionsListener : BroadcastReceiver() {
         val action = intent.action
         when (action) {
             Constants.PREVIOUS, Constants.PLAYPAUSE, Constants.NEXT, Constants.FINISH -> context.sendIntent(action)
-            else -> {
-            }
         }
     }
 }

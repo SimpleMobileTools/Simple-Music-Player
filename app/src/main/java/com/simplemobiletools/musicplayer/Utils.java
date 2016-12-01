@@ -11,6 +11,8 @@ import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 
+import com.simplemobiletools.musicplayer.services.MusicService;
+
 import java.util.Locale;
 
 public class Utils {

@@ -3,7 +3,7 @@ package com.simplemobiletools.musicplayer.extensions
 import android.content.Context
 import android.content.Intent
 import com.simplemobiletools.musicplayer.Constants
-import com.simplemobiletools.musicplayer.MusicService
+import com.simplemobiletools.musicplayer.services.MusicService
 
 fun Context.sendIntent(action: String) {
     Intent(this, MusicService::class.java).apply {

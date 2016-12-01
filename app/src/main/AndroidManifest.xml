@@ -48,7 +48,7 @@
             android:parentActivityName=".activities.MainActivity"/>
 
         <service
-            android:name=".MusicService"
+            android:name=".services.MusicService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.simplemobiletools.musicplayer.action.INIT"/>

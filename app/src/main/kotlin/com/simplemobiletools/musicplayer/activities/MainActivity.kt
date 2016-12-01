@@ -21,7 +21,7 @@ import android.widget.SeekBar
 import com.simplemobiletools.filepicker.extensions.toast
 import com.simplemobiletools.fileproperties.dialogs.PropertiesDialog
 import com.simplemobiletools.musicplayer.Constants
-import com.simplemobiletools.musicplayer.MusicService
+import com.simplemobiletools.musicplayer.services.MusicService
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.Utils
 import com.simplemobiletools.musicplayer.adapters.SongAdapter
