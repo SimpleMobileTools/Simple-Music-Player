@@ -51,9 +51,12 @@
     <!-- License -->
     <string name="notice">Esta aplicação usa as seguintes bibliotecas de terceiros para facilitar a minha vida. Obrigado.</string>
     <string name="third_party_licences">Licenças de terceiros</string>
+    <string name="kotlin_title"><u>Kotlin (linguagem de programação)</u></string>
     <string name="butterknife_title"><u>Butter Knife (injetor de vistas)</u></string>
     <string name="ambilwarna_title"><u>AmbilWarna (seletor de cores)</u></string>
     <string name="otto_title"><u>Otto (canal de eventos)</u></string>
+    <string name="filepicker_title"><u>Simple File Picker (diálogo de seleção de ficheiros)</u></string>
+    <string name="fileproperties_title"><u>Simple File Properties (diálogo de propriedades)</u></string>
 
     <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
     <string name="app_short_description">Um reprodutor de músicas com um widget personalizável.</string>

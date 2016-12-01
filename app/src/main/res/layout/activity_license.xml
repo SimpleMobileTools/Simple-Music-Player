@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView
-    android:id="@+id/license_holder"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/license_holder"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -13,9 +13,24 @@
         android:padding="@dimen/activity_margin">
 
         <TextView
+            android:id="@+id/license_notice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/notice"/>
+
+        <TextView
+            android:id="@+id/license_kotlin_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/activity_margin"
+            android:text="@string/kotlin_title"
+            android:textColor="@color/colorPrimary"/>
+
+        <TextView
+            android:id="@+id/license_kotlin_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/kotlin_text"/>
 
         <TextView
             android:id="@+id/license_butterknife_title"
@@ -59,5 +74,32 @@
             android:layout_height="wrap_content"
             android:text="@string/otto_text"/>
 
+        <TextView
+            android:id="@+id/license_filepicker_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/activity_margin"
+            android:text="@string/filepicker_title"
+            android:textColor="@color/colorPrimary"/>
+
+        <TextView
+            android:id="@+id/license_filepicker_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/filepicker_text"/>
+
+        <TextView
+            android:id="@+id/license_fileproperties_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/activity_margin"
+            android:text="@string/fileproperties_title"
+            android:textColor="@color/colorPrimary"/>
+
+        <TextView
+            android:id="@+id/license_fileproperties_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/fileproperties_text"/>
     </LinearLayout>
 </ScrollView>
