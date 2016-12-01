@@ -12,9 +12,10 @@ import android.os.Bundle
 import android.widget.RemoteViews
 import com.simplemobiletools.musicplayer.Constants
 import com.simplemobiletools.musicplayer.R
-import com.simplemobiletools.musicplayer.Utils
 import com.simplemobiletools.musicplayer.activities.MainActivity
+import com.simplemobiletools.musicplayer.extensions.getColoredIcon
 import com.simplemobiletools.musicplayer.extensions.getSharedPrefs
+import com.simplemobiletools.musicplayer.extensions.sendIntent
 import com.simplemobiletools.musicplayer.models.Events
 import com.simplemobiletools.musicplayer.models.Song
 import com.squareup.otto.Bus
@@ -128,7 +129,7 @@ class MyWidgetProvider : AppWidgetProvider() {
         val defaultColor = res.getColor(R.color.dark_grey_transparent)
         val newBgColor = prefs.getInt(Constants.WIDGET_BG_COLOR, defaultColor)
         val newTextColor = prefs.getInt(Constants.WIDGET_TEXT_COLOR, Color.WHITE)
-        var bmp = Utils.getColoredIcon(res, newTextColor, R.mipmap.previous)
+        var bmp = res.getColoredIcon(newTextColor, R.mipmap.previous)
 
         mRemoteViews.apply {
             setInt(R.id.widget_holder, "setBackgroundColor", newBgColor)
@@ -137,10 +138,10 @@ class MyWidgetProvider : AppWidgetProvider() {
 
             setImageViewBitmap(R.id.previous_btn, bmp)
 
-            mPlayBitmap = Utils.getColoredIcon(res, newTextColor, R.mipmap.play)
-            mPauseBitmap = Utils.getColoredIcon(res, newTextColor, R.mipmap.pause)
+            mPlayBitmap = res.getColoredIcon(newTextColor, R.mipmap.play)
+            mPauseBitmap = res.getColoredIcon(newTextColor, R.mipmap.pause)
 
-            bmp = Utils.getColoredIcon(res, newTextColor, R.mipmap.next)
+            bmp = res.getColoredIcon(newTextColor, R.mipmap.next)
             setImageViewBitmap(R.id.next_btn, bmp)
         }
     }
@@ -148,7 +149,7 @@ class MyWidgetProvider : AppWidgetProvider() {
     override fun onReceive(context: Context, intent: Intent) {
         val action = intent.action
         when (action) {
-            Constants.PREVIOUS, Constants.PLAYPAUSE, Constants.NEXT -> Utils.sendIntent(context, action)
+            Constants.PREVIOUS, Constants.PLAYPAUSE, Constants.NEXT -> context.sendIntent(action)
             else -> super.onReceive(context, intent)
         }
     }

@@ -21,15 +21,16 @@ import android.widget.SeekBar
 import com.simplemobiletools.filepicker.extensions.toast
 import com.simplemobiletools.fileproperties.dialogs.PropertiesDialog
 import com.simplemobiletools.musicplayer.Constants
-import com.simplemobiletools.musicplayer.services.MusicService
 import com.simplemobiletools.musicplayer.R
-import com.simplemobiletools.musicplayer.Utils
 import com.simplemobiletools.musicplayer.adapters.SongAdapter
 import com.simplemobiletools.musicplayer.dialogs.EditDialog
+import com.simplemobiletools.musicplayer.extensions.getColoredIcon
+import com.simplemobiletools.musicplayer.extensions.getTimeString
 import com.simplemobiletools.musicplayer.extensions.sendIntent
 import com.simplemobiletools.musicplayer.helpers.BusProvider
 import com.simplemobiletools.musicplayer.models.Events
 import com.simplemobiletools.musicplayer.models.Song
+import com.simplemobiletools.musicplayer.services.MusicService
 import com.squareup.otto.Bus
 import com.squareup.otto.Subscribe
 import kotlinx.android.synthetic.main.activity_main.*
@@ -132,10 +133,10 @@ class MainActivity : SimpleActivity(), View.OnTouchListener, MediaScannerConnect
     private fun setupIconColors() {
         val res = resources
         val color = song_title.currentTextColor
-        previous_btn.setImageBitmap(Utils.getColoredIcon(res, color, R.mipmap.previous))
-        next_btn.setImageBitmap(Utils.getColoredIcon(res, color, R.mipmap.next))
-        mPlayBitmap = Utils.getColoredIcon(res, color, R.mipmap.play)
-        mPauseBitmap = Utils.getColoredIcon(res, color, R.mipmap.pause)
+        previous_btn.setImageBitmap(res.getColoredIcon(color, R.mipmap.previous))
+        next_btn.setImageBitmap(res.getColoredIcon(color, R.mipmap.next))
+        mPlayBitmap = res.getColoredIcon(color, R.mipmap.play)
+        mPauseBitmap = res.getColoredIcon(color, R.mipmap.pause)
     }
 
     private fun songPicked(pos: Int) {
@@ -357,7 +358,7 @@ class MainActivity : SimpleActivity(), View.OnTouchListener, MediaScannerConnect
     }
 
     override fun onScanCompleted(path: String, uri: Uri) {
-        Utils.sendIntent(this, Constants.REFRESH_LIST)
+        sendIntent(Constants.REFRESH_LIST)
     }
 
     @Subscribe
@@ -367,8 +368,8 @@ class MainActivity : SimpleActivity(), View.OnTouchListener, MediaScannerConnect
 
     override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
         if (mIsNumericProgressShown) {
-            val duration = Utils.getTimeString(progressbar.max)
-            val formattedProgress = Utils.getTimeString(progress)
+            val duration = progressbar.max.getTimeString()
+            val formattedProgress = progress.getTimeString()
 
             val progressText = String.format(resources.getString(R.string.progress), formattedProgress, duration)
             song_progress.text = progressText
