@@ -34,7 +34,7 @@ import android.widget.Toast;
 import com.simplemobiletools.fileproperties.dialogs.PropertiesDialog;
 import com.simplemobiletools.musicplayer.helpers.BusProvider;
 import com.simplemobiletools.musicplayer.Constants;
-import com.simplemobiletools.musicplayer.Events;
+import com.simplemobiletools.musicplayer.models.Events;
 import com.simplemobiletools.musicplayer.MusicService;
 import com.simplemobiletools.musicplayer.R;
 import com.simplemobiletools.musicplayer.Song;
@@ -230,7 +230,7 @@ public class MainActivity extends SimpleActivity
 
     @Subscribe
     public void songStateChanged(Events.SongStateChanged event) {
-        if (event.getIsPlaying()) {
+        if (event.isPlaying()) {
             mPlayPauseBtn.setImageBitmap(mPauseBitmap);
         } else {
             mPlayPauseBtn.setImageBitmap(mPlayBitmap);

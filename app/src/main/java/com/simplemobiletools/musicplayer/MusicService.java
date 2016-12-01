@@ -32,6 +32,7 @@ import android.widget.Toast;
 import com.simplemobiletools.musicplayer.activities.MainActivity;
 import com.simplemobiletools.musicplayer.helpers.BusProvider;
 import com.simplemobiletools.musicplayer.helpers.Config;
+import com.simplemobiletools.musicplayer.models.Events;
 import com.simplemobiletools.musicplayer.receivers.ControlActionsListener;
 import com.simplemobiletools.musicplayer.receivers.HeadsetPlugReceiver;
 import com.simplemobiletools.musicplayer.receivers.IncomingCallReceiver;
