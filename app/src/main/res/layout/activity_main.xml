@@ -92,19 +92,13 @@
         android:maxLines="1"
         android:visibility="gone"/>
 
-    <android.support.design.widget.CoordinatorLayout
-        android:id="@+id/coordinator_layout"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/songs_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/song_progress">
+        android:layout_below="@+id/song_progress"
+        android:clipToPadding="false"
+        android:paddingLeft="@dimen/activity_margin"
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager"/>
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/songs_list"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:clipToPadding="false"
-            android:paddingLeft="@dimen/activity_margin"
-            app:layoutManager="android.support.v7.widget.LinearLayoutManager"/>
-
-    </android.support.design.widget.CoordinatorLayout>
 </RelativeLayout>

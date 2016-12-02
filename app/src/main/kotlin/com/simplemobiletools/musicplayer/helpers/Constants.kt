@@ -5,7 +5,6 @@ val WIDGET_BG_COLOR = "widget_bg_color"
 val WIDGET_TEXT_COLOR = "widget_text_color"
 val SONG_POS = "song_position"
 val PROGRESS = "progress"
-val DELETED_SONGS = "deleted_songs"
 val EDITED_SONG = "edited_song"
 val UPDATE_ACTIVITY = "update_activity"
 

@@ -8,7 +8,6 @@ import android.media.AudioManager
 import android.media.MediaScannerConnection
 import android.net.Uri
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.view.Menu
@@ -37,8 +36,6 @@ class MainActivity : SimpleActivity(), MediaScannerConnection.OnScanCompletedLis
 
         lateinit var mBus: Bus
         private var mSongs: List<Song> = ArrayList()
-        private var mSnackbar: Snackbar? = null
-        private var mToBeDeleted: MutableList<String>? = null
         private var mPlayBitmap: Bitmap? = null
         private var mPauseBitmap: Bitmap? = null
 
@@ -118,7 +115,6 @@ class MainActivity : SimpleActivity(), MediaScannerConnection.OnScanCompletedLis
     }
 
     private fun initializePlayer() {
-        mToBeDeleted = ArrayList<String>()
         sendIntent(INIT)
         volumeControlStream = AudioManager.STREAM_MUSIC
     }

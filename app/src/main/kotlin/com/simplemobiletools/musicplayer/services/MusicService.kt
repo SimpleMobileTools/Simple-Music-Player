@@ -51,7 +51,6 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         private var mCurrSong: Song? = null
         private var mBus: Bus? = null
         private var mConfig: Config? = null
-        private var mIgnoredPaths: List<String>? = null
         private var mProgressHandler: Handler? = null
         private var mPreviousIntent: PendingIntent? = null
         private var mNextIntent: PendingIntent? = null
@@ -83,7 +82,6 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         mConfig = Config.newInstance(applicationContext)
         mSongs = ArrayList<Song>()
         mPlayedSongIndexes = ArrayList<Int>()
-        mIgnoredPaths = ArrayList<String>()
         mCurrSong = null
         setupIntents()
         getSortedSongs()
@@ -138,18 +136,10 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
                     destroyPlayer()
                 }
                 REFRESH_LIST -> {
-                    if (intent.extras?.containsKey(DELETED_SONGS) == true) {
-                        mIgnoredPaths = Arrays.asList(*intent.getStringArrayExtra(DELETED_SONGS))
-                    }
-
                     getSortedSongs()
 
                     if (intent.extras?.containsKey(UPDATE_ACTIVITY) == true) {
                         mBus!!.post(Events.PlaylistUpdated(mSongs!!))
-                    }
-
-                    if (mIgnoredPaths!!.contains(mCurrSong?.path)) {
-                        playNextSong()
                     }
                 }
                 SET_PROGRESS -> {
@@ -211,10 +201,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
                         val artist = cursor.getString(artistIndex)
                         val path = cursor.getString(pathIndex)
                         val duration = cursor.getInt(durationIndex) / 1000
-
-                        if (!mIgnoredPaths!!.contains(path)) {
-                            mSongs!!.add(Song(id, title, artist, path, duration))
-                        }
+                        mSongs!!.add(Song(id, title, artist, path, duration))
                     }
                 } while (cursor.moveToNext())
             }
