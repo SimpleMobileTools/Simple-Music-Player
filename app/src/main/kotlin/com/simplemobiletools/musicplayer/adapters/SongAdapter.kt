@@ -1,16 +1,23 @@
 package com.simplemobiletools.musicplayer.adapters
 
+import android.content.Intent
 import android.support.v7.view.ActionMode
 import android.support.v7.widget.RecyclerView
 import android.view.*
 import com.bignerdranch.android.multiselector.ModalMultiSelectorCallback
 import com.bignerdranch.android.multiselector.MultiSelector
 import com.bignerdranch.android.multiselector.SwappingHolder
+import com.simplemobiletools.filepicker.dialogs.ConfirmationDialog
+import com.simplemobiletools.filepicker.extensions.scanPaths
 import com.simplemobiletools.fileproperties.dialogs.PropertiesDialog
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
+import com.simplemobiletools.musicplayer.helpers.REFRESH_LIST
+import com.simplemobiletools.musicplayer.helpers.UPDATE_ACTIVITY
 import com.simplemobiletools.musicplayer.models.Song
+import com.simplemobiletools.musicplayer.services.MusicService
 import kotlinx.android.synthetic.main.song.view.*
+import java.io.File
 import java.util.*
 
 class SongAdapter(val activity: SimpleActivity, val songs: ArrayList<Song>, val itemClick: (Int) -> Unit) : RecyclerView.Adapter<SongAdapter.ViewHolder>() {
@@ -38,6 +45,10 @@ class SongAdapter(val activity: SimpleActivity, val songs: ArrayList<Song>, val 
             return when (item.itemId) {
                 R.id.cab_properties -> {
                     showProperties()
+                    true
+                }
+                R.id.cab_delete -> {
+                    askConfirmDelete()
                     true
                 }
                 else -> false
@@ -72,6 +83,30 @@ class SongAdapter(val activity: SimpleActivity, val songs: ArrayList<Song>, val 
             val paths = ArrayList<String>()
             selections.forEach { paths.add(songs[it].path) }
             PropertiesDialog(activity, paths)
+        }
+    }
+
+    private fun askConfirmDelete() {
+        ConfirmationDialog(activity) {
+            actMode?.finish()
+            deleteSongs()
+        }
+    }
+
+    private fun deleteSongs() {
+        val selections = multiSelector.selectedPositions
+        val paths = ArrayList<String>(selections.size)
+        selections.forEach { paths.add(songs[it].path) }
+        for (path in paths) {
+            File(path).delete()
+        }
+
+        activity.scanPaths(paths) {
+            Intent(activity, MusicService::class.java).apply {
+                putExtra(UPDATE_ACTIVITY, true)
+                action = REFRESH_LIST
+                activity.startService(this)
+            }
         }
     }
 

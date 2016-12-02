@@ -4,18 +4,15 @@ import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
-import android.graphics.Color
 import android.media.AudioManager
 import android.media.MediaScannerConnection
 import android.net.Uri
 import android.os.Bundle
-import android.support.design.widget.CoordinatorLayout
 import android.support.design.widget.Snackbar
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.view.Menu
 import android.view.MenuItem
-import android.view.MotionEvent
 import android.view.View
 import android.widget.SeekBar
 import com.simplemobiletools.filepicker.extensions.toast
@@ -32,10 +29,9 @@ import com.simplemobiletools.musicplayer.services.MusicService
 import com.squareup.otto.Bus
 import com.squareup.otto.Subscribe
 import kotlinx.android.synthetic.main.activity_main.*
-import java.io.File
 import java.util.*
 
-class MainActivity : SimpleActivity(), View.OnTouchListener, MediaScannerConnection.OnScanCompletedListener, SeekBar.OnSeekBarChangeListener {
+class MainActivity : SimpleActivity(), MediaScannerConnection.OnScanCompletedListener, SeekBar.OnSeekBarChangeListener {
     companion object {
         private val STORAGE_PERMISSION = 1
 
@@ -123,7 +119,6 @@ class MainActivity : SimpleActivity(), View.OnTouchListener, MediaScannerConnect
 
     private fun initializePlayer() {
         mToBeDeleted = ArrayList<String>()
-        songs_list.setOnTouchListener(this)
         sendIntent(INIT)
         volumeControlStream = AudioManager.STREAM_MUSIC
     }
@@ -167,11 +162,6 @@ class MainActivity : SimpleActivity(), View.OnTouchListener, MediaScannerConnect
             this@apply.adapter = adapter
             addItemDecoration(RecyclerViewDivider(context))
         }
-    }
-
-    override fun onPause() {
-        super.onPause()
-        deleteSongs()
     }
 
     override fun onDestroy() {
@@ -221,65 +211,6 @@ class MainActivity : SimpleActivity(), View.OnTouchListener, MediaScannerConnect
 
         EditDialog(this, selectedSong)
     }*/
-
-    private fun notifyDeletion(cnt: Int) {
-        val coordinator = findViewById(R.id.coordinator_layout) as CoordinatorLayout
-        val res = resources
-        val msg = res.getQuantityString(R.plurals.songs_deleted, cnt, cnt)
-        mSnackbar = Snackbar.make(coordinator, msg, Snackbar.LENGTH_INDEFINITE)
-        mSnackbar!!.apply {
-            setAction(res.getString(R.string.undo), undoDeletion)
-            setActionTextColor(Color.WHITE)
-            show()
-        }
-        updateSongsList()
-    }
-
-    private fun updateSongsList() {
-        val deletedSongs = arrayOfNulls<String>(mToBeDeleted!!.size)
-        mToBeDeleted!!.toTypedArray()
-        Intent(this, MusicService::class.java).apply {
-            putExtra(DELETED_SONGS, deletedSongs)
-            putExtra(UPDATE_ACTIVITY, true)
-            action = REFRESH_LIST
-            startService(this)
-        }
-    }
-
-    private fun deleteSongs() {
-        if (mToBeDeleted == null || mToBeDeleted!!.isEmpty())
-            return
-
-        mSnackbar?.dismiss()
-
-        val updatedFiles = ArrayList<String>()
-        for (delPath in mToBeDeleted!!) {
-            val file = File(delPath)
-            if (file.exists()) {
-                if (file.delete()) {
-                    updatedFiles.add(delPath)
-                }
-            }
-        }
-
-        val deletedPaths = updatedFiles.toTypedArray()
-        MediaScannerConnection.scanFile(this, deletedPaths, null, null)
-        mToBeDeleted!!.clear()
-    }
-
-    private val undoDeletion = View.OnClickListener {
-        mToBeDeleted!!.clear()
-        mSnackbar!!.dismiss()
-        updateSongsList()
-    }
-
-    override fun onTouch(v: View, event: MotionEvent): Boolean {
-        if (mSnackbar?.isShown == true) {
-            deleteSongs()
-        }
-
-        return false
-    }
 
     override fun onScanCompleted(path: String, uri: Uri) {
         sendIntent(REFRESH_LIST)
