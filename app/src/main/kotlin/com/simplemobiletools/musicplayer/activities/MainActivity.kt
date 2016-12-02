@@ -208,10 +208,6 @@ class MainActivity : SimpleActivity(), View.OnTouchListener, MediaScannerConnect
                 mode.finish()
                 true
             }
-            R.id.cab_properties -> {
-                showProperties()
-                true
-            }
             else -> false
         }
     }

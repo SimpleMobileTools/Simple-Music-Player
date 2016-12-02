@@ -6,6 +6,7 @@ import android.view.*
 import com.bignerdranch.android.multiselector.ModalMultiSelectorCallback
 import com.bignerdranch.android.multiselector.MultiSelector
 import com.bignerdranch.android.multiselector.SwappingHolder
+import com.simplemobiletools.fileproperties.dialogs.PropertiesDialog
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
 import com.simplemobiletools.musicplayer.models.Song
@@ -35,6 +36,10 @@ class SongAdapter(val activity: SimpleActivity, val songs: ArrayList<Song>, val 
     val multiSelectorMode = object : ModalMultiSelectorCallback(multiSelector) {
         override fun onActionItemClicked(mode: ActionMode, item: MenuItem): Boolean {
             return when (item.itemId) {
+                R.id.cab_properties -> {
+                    showProperties()
+                    true
+                }
                 else -> false
             }
         }
@@ -56,6 +61,17 @@ class SongAdapter(val activity: SimpleActivity, val songs: ArrayList<Song>, val 
             super.onDestroyActionMode(actionMode)
             views.forEach { toggleItemSelection(it, false) }
             markedItems.clear()
+        }
+    }
+
+    private fun showProperties() {
+        val selections = multiSelector.selectedPositions
+        if (selections.size <= 1) {
+            PropertiesDialog(activity, songs[selections[0]].path)
+        } else {
+            val paths = ArrayList<String>()
+            selections.forEach { paths.add(songs[it].path) }
+            PropertiesDialog(activity, paths)
         }
     }
 
