@@ -195,31 +195,7 @@ class MainActivity : SimpleActivity(), View.OnTouchListener, MediaScannerConnect
         fillSongsListView(event.songs)
     }
 
-    /*override fun onItemCheckedStateChanged(mode: ActionMode, position: Int, id: Long, checked: Boolean) {
-        if (checked) {
-            mSelectedItemsCnt++
-        } else {
-            mSelectedItemsCnt--
-        }
-
-        if (mSelectedItemsCnt > 0) {
-            mode.title = mSelectedItemsCnt.toString()
-        }
-
-        mode.invalidate()
-    }
-
-    override fun onCreateActionMode(mode: ActionMode, menu: Menu): Boolean {
-        mode.menuInflater.inflate(R.menu.cab, menu)
-        return true
-    }
-
-    override fun onPrepareActionMode(mode: ActionMode, menu: Menu): Boolean {
-        val menuItem = menu.findItem(R.id.cab_edit)
-        menuItem.isVisible = mSelectedItemsCnt == 1
-        return true
-    }
-
+    /*
     override fun onActionItemClicked(mode: ActionMode, item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.cab_edit -> {
