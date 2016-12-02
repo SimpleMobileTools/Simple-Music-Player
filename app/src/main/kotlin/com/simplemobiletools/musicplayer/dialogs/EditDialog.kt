@@ -10,13 +10,11 @@ import android.view.WindowManager
 import com.simplemobiletools.filepicker.extensions.*
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
-import com.simplemobiletools.musicplayer.extensions.sendIntent
-import com.simplemobiletools.musicplayer.helpers.REFRESH_LIST
 import com.simplemobiletools.musicplayer.models.Song
 import kotlinx.android.synthetic.main.rename_song.view.*
 import java.io.File
 
-class EditDialog(val activity: SimpleActivity, val song: Song) {
+class EditDialog(val activity: SimpleActivity, val song: Song, val callback: () -> Unit) {
     init {
         val view = LayoutInflater.from(activity).inflate(R.layout.rename_song, null)
         view.title.setText(song.title)
@@ -52,15 +50,15 @@ class EditDialog(val activity: SimpleActivity, val song: Song) {
                     val file = File(song.path)
                     val newFile = File(file.parent, "$newFilename.$newFileExtension")
                     if (file == newFile) {
+                        callback.invoke()
                         dismiss()
                         return@setOnClickListener
                     }
 
                     if (file.renameTo(newFile)) {
                         context.scanFiles(arrayListOf(file, newFile)) {
-                            context.sendIntent(REFRESH_LIST)
+                            callback.invoke()
                         }
-
                         dismiss()
                         return@setOnClickListener
                     }

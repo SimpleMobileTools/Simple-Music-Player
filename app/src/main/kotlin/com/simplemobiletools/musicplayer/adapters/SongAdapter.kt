@@ -1,6 +1,5 @@
 package com.simplemobiletools.musicplayer.adapters
 
-import android.content.Intent
 import android.support.v7.view.ActionMode
 import android.support.v7.widget.RecyclerView
 import android.view.*
@@ -12,10 +11,10 @@ import com.simplemobiletools.filepicker.extensions.scanPaths
 import com.simplemobiletools.fileproperties.dialogs.PropertiesDialog
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
+import com.simplemobiletools.musicplayer.dialogs.EditDialog
+import com.simplemobiletools.musicplayer.extensions.sendIntent
 import com.simplemobiletools.musicplayer.helpers.REFRESH_LIST
-import com.simplemobiletools.musicplayer.helpers.UPDATE_ACTIVITY
 import com.simplemobiletools.musicplayer.models.Song
-import com.simplemobiletools.musicplayer.services.MusicService
 import kotlinx.android.synthetic.main.song.view.*
 import java.io.File
 import java.util.*
@@ -45,6 +44,10 @@ class SongAdapter(val activity: SimpleActivity, val songs: ArrayList<Song>, val 
             return when (item.itemId) {
                 R.id.cab_properties -> {
                     showProperties()
+                    true
+                }
+                R.id.cab_edit -> {
+                    displayEditDialog()
                     true
                 }
                 R.id.cab_delete -> {
@@ -86,6 +89,16 @@ class SongAdapter(val activity: SimpleActivity, val songs: ArrayList<Song>, val 
         }
     }
 
+    private fun displayEditDialog() {
+        val selections = multiSelector.selectedPositions
+        if (selections.size == 1) {
+            EditDialog(activity, songs[selections[0]]) {
+                activity.sendIntent(REFRESH_LIST)
+                activity.runOnUiThread { actMode?.finish() }
+            }
+        }
+    }
+
     private fun askConfirmDelete() {
         ConfirmationDialog(activity) {
             actMode?.finish()
@@ -102,11 +115,7 @@ class SongAdapter(val activity: SimpleActivity, val songs: ArrayList<Song>, val 
         }
 
         activity.scanPaths(paths) {
-            Intent(activity, MusicService::class.java).apply {
-                putExtra(UPDATE_ACTIVITY, true)
-                action = REFRESH_LIST
-                activity.startService(this)
-            }
+            activity.sendIntent(REFRESH_LIST)
         }
     }
 

@@ -5,8 +5,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.media.AudioManager
-import android.media.MediaScannerConnection
-import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
@@ -30,7 +28,7 @@ import com.squareup.otto.Subscribe
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 
-class MainActivity : SimpleActivity(), MediaScannerConnection.OnScanCompletedListener, SeekBar.OnSeekBarChangeListener {
+class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
     companion object {
         private val STORAGE_PERMISSION = 1
 
@@ -181,37 +179,6 @@ class MainActivity : SimpleActivity(), MediaScannerConnection.OnScanCompletedLis
         fillSongsListView(event.songs)
     }
 
-    /*
-    override fun onActionItemClicked(mode: ActionMode, item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.cab_edit -> {
-                displayEditDialog()
-                mode.finish()
-                true
-            }
-            R.id.cab_delete -> {
-                prepareForDeleting()
-                mode.finish()
-                true
-            }
-            else -> false
-        }
-    }
-
-    private fun displayEditDialog() {
-        val songIndex = selectedSongIndex
-        if (songIndex == -1)
-            return
-
-        val selectedSong = mSongs[songIndex]
-
-        EditDialog(this, selectedSong)
-    }*/
-
-    override fun onScanCompleted(path: String, uri: Uri) {
-        sendIntent(REFRESH_LIST)
-    }
-
     @Subscribe
     fun songChangedEvent(event: Events.ProgressUpdated) {
         progressbar.progress = event.progress
@@ -228,7 +195,6 @@ class MainActivity : SimpleActivity(), MediaScannerConnection.OnScanCompletedLis
     }
 
     override fun onStartTrackingTouch(seekBar: SeekBar) {
-
     }
 
     override fun onStopTrackingTouch(seekBar: SeekBar) {

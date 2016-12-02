@@ -137,10 +137,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
                 }
                 REFRESH_LIST -> {
                     getSortedSongs()
-
-                    if (intent.extras?.containsKey(UPDATE_ACTIVITY) == true) {
-                        mBus!!.post(Events.PlaylistUpdated(mSongs!!))
-                    }
+                    mBus!!.post(Events.PlaylistUpdated(mSongs!!))
                 }
                 SET_PROGRESS -> {
                     if (mPlayer != null) {

@@ -7,10 +7,10 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import com.simplemobiletools.musicplayer.R
+import com.simplemobiletools.musicplayer.extensions.sendIntent
 import com.simplemobiletools.musicplayer.helpers.EQUALIZER
 import com.simplemobiletools.musicplayer.helpers.REFRESH_LIST
 import com.simplemobiletools.musicplayer.helpers.SET_EQUALIZER
-import com.simplemobiletools.musicplayer.helpers.UPDATE_ACTIVITY
 import com.simplemobiletools.musicplayer.services.MusicService
 import kotlinx.android.synthetic.main.activity_settings.*
 
@@ -56,7 +56,7 @@ class SettingsActivity : SimpleActivity() {
         settings_sorting.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 mConfig.sorting = settings_sorting.selectedItemPosition
-                updatePlaylist()
+                sendIntent(REFRESH_LIST)
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -96,13 +96,5 @@ class SettingsActivity : SimpleActivity() {
 
     private fun restartActivity() {
         TaskStackBuilder.create(applicationContext).addNextIntentWithParentStack(intent).startActivities()
-    }
-
-    private fun updatePlaylist() {
-        Intent(this, MusicService::class.java).apply {
-            putExtra(UPDATE_ACTIVITY, true)
-            action = REFRESH_LIST
-            startService(this)
-        }
     }
 }

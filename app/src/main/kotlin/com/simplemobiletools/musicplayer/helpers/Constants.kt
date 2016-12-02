@@ -1,12 +1,8 @@
 package com.simplemobiletools.musicplayer.helpers
 
-val PREFS = "prefs"
-val WIDGET_BG_COLOR = "widget_bg_color"
-val WIDGET_TEXT_COLOR = "widget_text_color"
 val SONG_POS = "song_position"
 val PROGRESS = "progress"
 val EDITED_SONG = "edited_song"
-val UPDATE_ACTIVITY = "update_activity"
 
 private val PATH = "com.simplemobiletools.musicplayer.action."
 
@@ -33,3 +29,5 @@ val NUMERIC_PROGRESS = "numeric_progress"
 val SORTING = "sorting"
 val EQUALIZER = "equalizer"
 val REPEAT_SONG = "repeat_song"
+val WIDGET_BG_COLOR = "widget_bg_color"
+val WIDGET_TEXT_COLOR = "widget_text_color"
