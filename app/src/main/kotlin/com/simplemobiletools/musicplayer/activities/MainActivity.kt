@@ -19,6 +19,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.widget.SeekBar
 import com.simplemobiletools.filepicker.extensions.toast
+import com.simplemobiletools.filepicker.views.RecyclerViewDivider
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.adapters.SongAdapter
 import com.simplemobiletools.musicplayer.extensions.getColoredIcon
@@ -161,7 +162,11 @@ class MainActivity : SimpleActivity(), View.OnTouchListener, MediaScannerConnect
         val adapter = SongAdapter(this, songs) {
             songPicked(it)
         }
-        songs_list.adapter = adapter
+
+        songs_list.apply {
+            this@apply.adapter = adapter
+            addItemDecoration(RecyclerViewDivider(context))
+        }
     }
 
     override fun onPause() {
