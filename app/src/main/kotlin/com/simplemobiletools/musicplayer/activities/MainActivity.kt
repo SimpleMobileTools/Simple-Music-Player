@@ -160,7 +160,9 @@ class MainActivity : SimpleActivity(), View.OnTouchListener, MediaScannerConnect
 
     private fun fillSongsListView(songs: ArrayList<Song>) {
         mSongs = songs
-        val adapter = SongAdapter(this, songs)
+        val adapter = SongAdapter(this, songs) {
+
+        }
         songs_list.adapter = adapter
     }
 
@@ -233,7 +235,7 @@ class MainActivity : SimpleActivity(), View.OnTouchListener, MediaScannerConnect
             }
             else -> false
         }
-    }*/
+    }
 
     private fun displayEditDialog() {
         val songIndex = selectedSongIndex
@@ -243,55 +245,7 @@ class MainActivity : SimpleActivity(), View.OnTouchListener, MediaScannerConnect
         val selectedSong = mSongs[songIndex]
 
         EditDialog(this, selectedSong)
-    }
-
-    private fun showProperties() {
-        val items = songs_list.checkedItemPositions
-        if (items.size() == 1) {
-            val selectedSong = mSongs[selectedSongIndex]
-            PropertiesDialog(this, selectedSong.path, false)
-        } else {
-            val paths = ArrayList<String>(items.size())
-            val cnt = items.size()
-            for (i in 0..cnt - 1) {
-                if (items.valueAt(i)) {
-                    val id = items.keyAt(i)
-                    paths.add(mSongs[id].path)
-                }
-            }
-
-            PropertiesDialog(this, paths, false)
-        }
-    }
-
-    private val selectedSongIndex: Int
-        get() {
-            val items = songs_list.checkedItemPositions
-            val cnt = items.size()
-            for (i in 0..cnt - 1) {
-                if (items.valueAt(i)) {
-                    return items.keyAt(i)
-                }
-            }
-            return -1
-        }
-
-    private fun prepareForDeleting() {
-        mToBeDeleted!!.clear()
-        val items = songs_list.checkedItemPositions
-        val cnt = items.size()
-        var deletedCnt = 0
-        for (i in 0..cnt - 1) {
-            if (items.valueAt(i)) {
-                val id = items.keyAt(i)
-                val path = mSongs[id].path
-                mToBeDeleted!!.add(path)
-                deletedCnt++
-            }
-        }
-
-        notifyDeletion(deletedCnt)
-    }
+    }*/
 
     private fun notifyDeletion(cnt: Int) {
         val coordinator = findViewById(R.id.coordinator_layout) as CoordinatorLayout
