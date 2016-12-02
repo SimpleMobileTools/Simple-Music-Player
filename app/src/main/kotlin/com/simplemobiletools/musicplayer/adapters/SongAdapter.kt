@@ -9,7 +9,7 @@ import com.bignerdranch.android.multiselector.SwappingHolder
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
 import com.simplemobiletools.musicplayer.models.Song
-import kotlinx.android.synthetic.main.activity_main.view.*
+import kotlinx.android.synthetic.main.song.view.*
 import java.util.*
 
 class SongAdapter(val activity: SimpleActivity, val songs: ArrayList<Song>, val itemClick: (Song) -> Unit) : RecyclerView.Adapter<SongAdapter.ViewHolder>() {
@@ -21,14 +21,14 @@ class SongAdapter(val activity: SimpleActivity, val songs: ArrayList<Song>, val 
         val markedItems = HashSet<Int>()
 
         fun toggleItemSelection(itemView: View, select: Boolean, pos: Int = -1) {
-            /*itemView.item_frame.isSelected = select
+            itemView.song_frame.isSelected = select
             if (pos == -1)
                 return
 
             if (select)
                 markedItems.add(pos)
             else
-                markedItems.remove(pos)*/
+                markedItems.remove(pos)
         }
     }
 
