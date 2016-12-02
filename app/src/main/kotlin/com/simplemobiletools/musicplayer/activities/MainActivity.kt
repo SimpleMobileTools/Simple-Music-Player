@@ -19,10 +19,8 @@ import android.view.MotionEvent
 import android.view.View
 import android.widget.SeekBar
 import com.simplemobiletools.filepicker.extensions.toast
-import com.simplemobiletools.fileproperties.dialogs.PropertiesDialog
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.adapters.SongAdapter
-import com.simplemobiletools.musicplayer.dialogs.EditDialog
 import com.simplemobiletools.musicplayer.extensions.getColoredIcon
 import com.simplemobiletools.musicplayer.extensions.getTimeString
 import com.simplemobiletools.musicplayer.extensions.sendIntent
@@ -161,7 +159,7 @@ class MainActivity : SimpleActivity(), View.OnTouchListener, MediaScannerConnect
     private fun fillSongsListView(songs: ArrayList<Song>) {
         mSongs = songs
         val adapter = SongAdapter(this, songs) {
-
+            songPicked(it)
         }
         songs_list.adapter = adapter
     }
@@ -291,10 +289,6 @@ class MainActivity : SimpleActivity(), View.OnTouchListener, MediaScannerConnect
         MediaScannerConnection.scanFile(this, deletedPaths, null, null)
         mToBeDeleted!!.clear()
     }
-
-    /*override fun onItemClick(parent: AdapterView<*>, view: View, position: Int, id: Long) {
-        songPicked(position)
-    }*/
 
     private val undoDeletion = View.OnClickListener {
         mToBeDeleted!!.clear()

@@ -12,7 +12,7 @@ import com.simplemobiletools.musicplayer.models.Song
 import kotlinx.android.synthetic.main.song.view.*
 import java.util.*
 
-class SongAdapter(val activity: SimpleActivity, val songs: ArrayList<Song>, val itemClick: (Song) -> Unit) : RecyclerView.Adapter<SongAdapter.ViewHolder>() {
+class SongAdapter(val activity: SimpleActivity, val songs: ArrayList<Song>, val itemClick: (Int) -> Unit) : RecyclerView.Adapter<SongAdapter.ViewHolder>() {
     val multiSelector = MultiSelector()
     val views = ArrayList<View>()
 
@@ -70,12 +70,32 @@ class SongAdapter(val activity: SimpleActivity, val songs: ArrayList<Song>, val 
 
     override fun getItemCount() = songs.size
 
-    class ViewHolder(val activity: SimpleActivity, view: View, val itemClick: (Song) -> (Unit)) : SwappingHolder(view, MultiSelector()) {
+    class ViewHolder(val activity: SimpleActivity, view: View, val itemClick: (Int) -> (Unit)) : SwappingHolder(view, MultiSelector()) {
         fun bindView(multiSelectorCallback: ModalMultiSelectorCallback, multiSelector: MultiSelector, song: Song, pos: Int): View {
             itemView.song_title.text = song.title
             itemView.song_artist.text = song.artist
 
+            itemView.setOnClickListener { viewClicked(multiSelector, pos) }
+
             return itemView
+        }
+
+        fun viewClicked(multiSelector: MultiSelector, pos: Int) {
+            if (multiSelector.isSelectable) {
+                val isSelected = multiSelector.selectedPositions.contains(layoutPosition)
+                multiSelector.setSelected(this, !isSelected)
+                toggleItemSelection(itemView, !isSelected, pos)
+
+                val selectedCnt = multiSelector.selectedPositions.size
+                if (selectedCnt == 0) {
+                    actMode?.finish()
+                } else {
+                    actMode?.title = selectedCnt.toString()
+                }
+                actMode?.invalidate()
+            } else {
+                itemClick(pos)
+            }
         }
     }
 }
