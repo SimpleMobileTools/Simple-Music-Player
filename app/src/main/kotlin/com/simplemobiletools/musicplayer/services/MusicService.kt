@@ -22,11 +22,9 @@ import android.telephony.PhoneStateListener
 import android.telephony.TelephonyManager
 import android.util.Log
 import com.simplemobiletools.filepicker.extensions.toast
-import com.simplemobiletools.musicplayer.Constants
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.MainActivity
-import com.simplemobiletools.musicplayer.helpers.BusProvider
-import com.simplemobiletools.musicplayer.helpers.Config
+import com.simplemobiletools.musicplayer.helpers.*
 import com.simplemobiletools.musicplayer.models.Events
 import com.simplemobiletools.musicplayer.models.Song
 import com.simplemobiletools.musicplayer.receivers.ControlActionsListener
@@ -97,9 +95,9 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     }
 
     private fun setupIntents() {
-        mPreviousIntent = getIntent(Constants.PREVIOUS)
-        mNextIntent = getIntent(Constants.NEXT)
-        mPlayPauseIntent = getIntent(Constants.PLAYPAUSE)
+        mPreviousIntent = getIntent(PREVIOUS)
+        mNextIntent = getIntent(NEXT)
+        mPlayPauseIntent = getIntent(PLAYPAUSE)
     }
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
@@ -110,43 +108,43 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         val action = intent.action
         if (action != null) {
             when (action) {
-                Constants.INIT -> {
+                INIT -> {
                     if (mSongs == null)
                         initService()
                     mBus!!.post(Events.PlaylistUpdated(mSongs!!))
                     mBus!!.post(Events.SongChanged(mCurrSong))
                     songStateChanged(getIsPlaying())
                 }
-                Constants.PREVIOUS -> playPreviousSong()
-                Constants.PAUSE -> pauseSong()
-                Constants.PLAYPAUSE -> {
+                PREVIOUS -> playPreviousSong()
+                PAUSE -> pauseSong()
+                PLAYPAUSE -> {
                     if (getIsPlaying()) {
                         pauseSong()
                     } else {
                         resumeSong()
                     }
                 }
-                Constants.NEXT -> playNextSong()
-                Constants.PLAYPOS -> playSong(intent)
-                Constants.CALL_START -> incomingCallStart()
-                Constants.CALL_STOP -> incomingCallStop()
-                Constants.EDIT -> {
-                    mCurrSong = intent.getSerializableExtra(Constants.EDITED_SONG) as Song
+                NEXT -> playNextSong()
+                PLAYPOS -> playSong(intent)
+                CALL_START -> incomingCallStart()
+                CALL_STOP -> incomingCallStop()
+                EDIT -> {
+                    mCurrSong = intent.getSerializableExtra(EDITED_SONG) as Song
                     mBus!!.post(Events.SongChanged(mCurrSong))
                     setupNotification()
                 }
-                Constants.FINISH -> {
+                FINISH -> {
                     mBus!!.post(Events.ProgressUpdated(0))
                     destroyPlayer()
                 }
-                Constants.REFRESH_LIST -> {
-                    if (intent.extras?.containsKey(Constants.DELETED_SONGS) == true) {
-                        mIgnoredPaths = Arrays.asList(*intent.getStringArrayExtra(Constants.DELETED_SONGS))
+                REFRESH_LIST -> {
+                    if (intent.extras?.containsKey(DELETED_SONGS) == true) {
+                        mIgnoredPaths = Arrays.asList(*intent.getStringArrayExtra(DELETED_SONGS))
                     }
 
                     getSortedSongs()
 
-                    if (intent.extras?.containsKey(Constants.UPDATE_ACTIVITY) == true) {
+                    if (intent.extras?.containsKey(UPDATE_ACTIVITY) == true) {
                         mBus!!.post(Events.PlaylistUpdated(mSongs!!))
                     }
 
@@ -154,15 +152,15 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
                         playNextSong()
                     }
                 }
-                Constants.SET_PROGRESS -> {
+                SET_PROGRESS -> {
                     if (mPlayer != null) {
-                        val progress = intent.getIntExtra(Constants.PROGRESS, mPlayer!!.currentPosition / 1000)
+                        val progress = intent.getIntExtra(PROGRESS, mPlayer!!.currentPosition / 1000)
                         updateProgress(progress)
                     }
                 }
-                Constants.SET_EQUALIZER -> {
-                    if (intent.extras?.containsKey(Constants.EQUALIZER) == true) {
-                        val presetID = intent.extras.getInt(Constants.EQUALIZER)
+                SET_EQUALIZER -> {
+                    if (intent.extras?.containsKey(EQUALIZER) == true) {
+                        val presetID = intent.extras.getInt(EQUALIZER)
                         if (mEqualizer != null) {
                             setPreset(presetID)
                         }
@@ -399,7 +397,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     }
 
     private fun playSong(intent: Intent) {
-        val pos = intent.getIntExtra(Constants.SONG_POS, 0)
+        val pos = intent.getIntExtra(SONG_POS, 0)
         setSong(pos, true)
     }
 

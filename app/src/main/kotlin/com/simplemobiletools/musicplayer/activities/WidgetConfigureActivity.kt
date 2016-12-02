@@ -10,9 +10,11 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.RemoteViews
 import android.widget.SeekBar
-import com.simplemobiletools.musicplayer.Constants
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.helpers.MyWidgetProvider
+import com.simplemobiletools.musicplayer.helpers.PREFS
+import com.simplemobiletools.musicplayer.helpers.WIDGET_BG_COLOR
+import com.simplemobiletools.musicplayer.helpers.WIDGET_TEXT_COLOR
 import kotlinx.android.synthetic.main.widget.*
 import kotlinx.android.synthetic.main.widget_config.*
 import kotlinx.android.synthetic.main.widget_controls.*
@@ -47,8 +49,8 @@ class WidgetConfigureActivity : AppCompatActivity() {
     }
 
     private fun initVariables() {
-        val prefs = getSharedPreferences(Constants.PREFS, Context.MODE_PRIVATE)
-        mBgColor = prefs.getInt(Constants.WIDGET_BG_COLOR, 1)
+        val prefs = getSharedPreferences(PREFS, Context.MODE_PRIVATE)
+        mBgColor = prefs.getInt(WIDGET_BG_COLOR, 1)
         if (mBgColor == 1) {
             mBgColor = Color.BLACK
             mBgAlpha = .2f
@@ -61,7 +63,7 @@ class WidgetConfigureActivity : AppCompatActivity() {
         config_bg_seekbar.progress = (mBgAlpha * 100).toInt()
         updateBackgroundColor()
 
-        mTextColor = prefs.getInt(Constants.WIDGET_TEXT_COLOR, resources.getColor(R.color.colorPrimary))
+        mTextColor = prefs.getInt(WIDGET_TEXT_COLOR, resources.getColor(R.color.colorPrimary))
         updateTextColor()
     }
 
@@ -110,8 +112,8 @@ class WidgetConfigureActivity : AppCompatActivity() {
     }
 
     private fun storeWidgetColors() {
-        getSharedPreferences(Constants.PREFS, Context.MODE_PRIVATE).apply {
-            edit().putInt(Constants.WIDGET_BG_COLOR, mBgColor).putInt(Constants.WIDGET_TEXT_COLOR, mTextColor).apply()
+        getSharedPreferences(PREFS, Context.MODE_PRIVATE).apply {
+            edit().putInt(WIDGET_BG_COLOR, mBgColor).putInt(WIDGET_TEXT_COLOR, mTextColor).apply()
         }
     }
 

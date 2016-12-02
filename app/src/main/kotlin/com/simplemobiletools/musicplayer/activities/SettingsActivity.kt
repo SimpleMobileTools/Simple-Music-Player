@@ -6,8 +6,11 @@ import android.support.v4.app.TaskStackBuilder
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import com.simplemobiletools.musicplayer.Constants
 import com.simplemobiletools.musicplayer.R
+import com.simplemobiletools.musicplayer.helpers.EQUALIZER
+import com.simplemobiletools.musicplayer.helpers.REFRESH_LIST
+import com.simplemobiletools.musicplayer.helpers.SET_EQUALIZER
+import com.simplemobiletools.musicplayer.helpers.UPDATE_ACTIVITY
 import com.simplemobiletools.musicplayer.services.MusicService
 import kotlinx.android.synthetic.main.activity_settings.*
 
@@ -79,8 +82,8 @@ class SettingsActivity : SimpleActivity() {
                     mConfig.equalizer = selectedItemPosition
 
                     Intent(applicationContext, MusicService::class.java).apply {
-                        putExtra(Constants.EQUALIZER, selectedItemPosition)
-                        action = Constants.SET_EQUALIZER
+                        putExtra(EQUALIZER, selectedItemPosition)
+                        action = SET_EQUALIZER
                         startService(this)
                     }
                 }
@@ -97,8 +100,8 @@ class SettingsActivity : SimpleActivity() {
 
     private fun updatePlaylist() {
         Intent(this, MusicService::class.java).apply {
-            putExtra(Constants.UPDATE_ACTIVITY, true)
-            action = Constants.REFRESH_LIST
+            putExtra(UPDATE_ACTIVITY, true)
+            action = REFRESH_LIST
             startService(this)
         }
     }

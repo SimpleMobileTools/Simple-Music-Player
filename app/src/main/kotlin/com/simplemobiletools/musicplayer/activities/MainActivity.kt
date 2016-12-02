@@ -20,14 +20,13 @@ import android.view.View
 import android.widget.SeekBar
 import com.simplemobiletools.filepicker.extensions.toast
 import com.simplemobiletools.fileproperties.dialogs.PropertiesDialog
-import com.simplemobiletools.musicplayer.Constants
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.adapters.SongAdapter
 import com.simplemobiletools.musicplayer.dialogs.EditDialog
 import com.simplemobiletools.musicplayer.extensions.getColoredIcon
 import com.simplemobiletools.musicplayer.extensions.getTimeString
 import com.simplemobiletools.musicplayer.extensions.sendIntent
-import com.simplemobiletools.musicplayer.helpers.BusProvider
+import com.simplemobiletools.musicplayer.helpers.*
 import com.simplemobiletools.musicplayer.models.Events
 import com.simplemobiletools.musicplayer.models.Song
 import com.simplemobiletools.musicplayer.services.MusicService
@@ -65,9 +64,9 @@ class MainActivity : SimpleActivity(), View.OnTouchListener, MediaScannerConnect
             ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), STORAGE_PERMISSION)
         }
 
-        previous_btn.setOnClickListener { sendIntent(Constants.PREVIOUS) }
-        play_pause_btn.setOnClickListener { sendIntent(Constants.PLAYPAUSE) }
-        next_btn.setOnClickListener { sendIntent(Constants.NEXT) }
+        previous_btn.setOnClickListener { sendIntent(PREVIOUS) }
+        play_pause_btn.setOnClickListener { sendIntent(PLAYPAUSE) }
+        next_btn.setOnClickListener { sendIntent(NEXT) }
     }
 
     override fun onResume() {
@@ -126,7 +125,7 @@ class MainActivity : SimpleActivity(), View.OnTouchListener, MediaScannerConnect
     private fun initializePlayer() {
         mToBeDeleted = ArrayList<String>()
         songs_list.setOnTouchListener(this)
-        sendIntent(Constants.INIT)
+        sendIntent(INIT)
         volumeControlStream = AudioManager.STREAM_MUSIC
     }
 
@@ -141,8 +140,8 @@ class MainActivity : SimpleActivity(), View.OnTouchListener, MediaScannerConnect
 
     private fun songPicked(pos: Int) {
         Intent(this, MusicService::class.java).apply {
-            putExtra(Constants.SONG_POS, pos)
-            action = Constants.PLAYPOS
+            putExtra(SONG_POS, pos)
+            action = PLAYPOS
             startService(this)
         }
     }
@@ -311,9 +310,9 @@ class MainActivity : SimpleActivity(), View.OnTouchListener, MediaScannerConnect
         val deletedSongs = arrayOfNulls<String>(mToBeDeleted!!.size)
         mToBeDeleted!!.toTypedArray()
         Intent(this, MusicService::class.java).apply {
-            putExtra(Constants.DELETED_SONGS, deletedSongs)
-            putExtra(Constants.UPDATE_ACTIVITY, true)
-            action = Constants.REFRESH_LIST
+            putExtra(DELETED_SONGS, deletedSongs)
+            putExtra(UPDATE_ACTIVITY, true)
+            action = REFRESH_LIST
             startService(this)
         }
     }
@@ -358,7 +357,7 @@ class MainActivity : SimpleActivity(), View.OnTouchListener, MediaScannerConnect
     }
 
     override fun onScanCompleted(path: String, uri: Uri) {
-        sendIntent(Constants.REFRESH_LIST)
+        sendIntent(REFRESH_LIST)
     }
 
     @Subscribe
@@ -382,8 +381,8 @@ class MainActivity : SimpleActivity(), View.OnTouchListener, MediaScannerConnect
 
     override fun onStopTrackingTouch(seekBar: SeekBar) {
         Intent(this, MusicService::class.java).apply {
-            putExtra(Constants.PROGRESS, seekBar.progress)
-            action = Constants.SET_PROGRESS
+            putExtra(PROGRESS, seekBar.progress)
+            action = SET_PROGRESS
             startService(this)
         }
     }

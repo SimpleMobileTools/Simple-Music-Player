@@ -10,7 +10,6 @@ import android.graphics.Bitmap
 import android.graphics.Color
 import android.os.Bundle
 import android.widget.RemoteViews
-import com.simplemobiletools.musicplayer.Constants
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.MainActivity
 import com.simplemobiletools.musicplayer.extensions.getColoredIcon
@@ -127,8 +126,8 @@ class MyWidgetProvider : AppWidgetProvider() {
         val prefs = mContext.getSharedPrefs()
         val res = mContext.resources
         val defaultColor = res.getColor(R.color.dark_grey_transparent)
-        val newBgColor = prefs.getInt(Constants.WIDGET_BG_COLOR, defaultColor)
-        val newTextColor = prefs.getInt(Constants.WIDGET_TEXT_COLOR, Color.WHITE)
+        val newBgColor = prefs.getInt(WIDGET_BG_COLOR, defaultColor)
+        val newTextColor = prefs.getInt(WIDGET_TEXT_COLOR, Color.WHITE)
         var bmp = res.getColoredIcon(newTextColor, R.mipmap.previous)
 
         mRemoteViews.apply {
@@ -149,7 +148,7 @@ class MyWidgetProvider : AppWidgetProvider() {
     override fun onReceive(context: Context, intent: Intent) {
         val action = intent.action
         when (action) {
-            Constants.PREVIOUS, Constants.PLAYPAUSE, Constants.NEXT -> context.sendIntent(action)
+            PREVIOUS, PLAYPAUSE, NEXT -> context.sendIntent(action)
             else -> super.onReceive(context, intent)
         }
     }
@@ -162,9 +161,9 @@ class MyWidgetProvider : AppWidgetProvider() {
     }
 
     private fun setupButtons() {
-        setupIntent(Constants.PREVIOUS, R.id.previous_btn)
-        setupIntent(Constants.PLAYPAUSE, R.id.play_pause_btn)
-        setupIntent(Constants.NEXT, R.id.next_btn)
+        setupIntent(PREVIOUS, R.id.previous_btn)
+        setupIntent(PLAYPAUSE, R.id.play_pause_btn)
+        setupIntent(NEXT, R.id.next_btn)
 
         setupAppOpenIntent(R.id.song_title)
         setupAppOpenIntent(R.id.song_artist)

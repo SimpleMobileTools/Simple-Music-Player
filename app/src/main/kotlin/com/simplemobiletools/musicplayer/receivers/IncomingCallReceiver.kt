@@ -3,8 +3,9 @@ package com.simplemobiletools.musicplayer.receivers
 import android.content.Context
 import android.telephony.PhoneStateListener
 import android.telephony.TelephonyManager
-import com.simplemobiletools.musicplayer.Constants
 import com.simplemobiletools.musicplayer.extensions.sendIntent
+import com.simplemobiletools.musicplayer.helpers.CALL_START
+import com.simplemobiletools.musicplayer.helpers.CALL_STOP
 
 class IncomingCallReceiver(val context: Context) : PhoneStateListener() {
 
@@ -12,9 +13,9 @@ class IncomingCallReceiver(val context: Context) : PhoneStateListener() {
         super.onCallStateChanged(state, incomingNumber)
 
         if (state == TelephonyManager.CALL_STATE_RINGING) {
-            context.sendIntent(Constants.CALL_START)
+            context.sendIntent(CALL_START)
         } else if (state == TelephonyManager.CALL_STATE_IDLE) {
-            context.sendIntent(Constants.CALL_STOP)
+            context.sendIntent(CALL_STOP)
         }
     }
 }

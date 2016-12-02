@@ -5,8 +5,10 @@ import android.content.Context
 import android.content.Intent
 import android.os.Handler
 import android.view.KeyEvent
-import com.simplemobiletools.musicplayer.Constants
 import com.simplemobiletools.musicplayer.extensions.sendIntent
+import com.simplemobiletools.musicplayer.helpers.NEXT
+import com.simplemobiletools.musicplayer.helpers.PLAYPAUSE
+import com.simplemobiletools.musicplayer.helpers.PREVIOUS
 
 class RemoteControlReceiver : BroadcastReceiver() {
     companion object {
@@ -23,11 +25,11 @@ class RemoteControlReceiver : BroadcastReceiver() {
 
             mContext!!.sendIntent(
                     if (mClicksCnt == 1) {
-                        Constants.PLAYPAUSE
+                        PLAYPAUSE
                     } else if (mClicksCnt == 2) {
-                        Constants.NEXT
+                        NEXT
                     } else {
-                        Constants.PREVIOUS
+                        PREVIOUS
                     }
             )
             mClicksCnt = 0
