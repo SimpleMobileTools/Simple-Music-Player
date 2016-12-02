@@ -152,9 +152,14 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
             songPicked(it)
         }
 
-        songs_list.apply {
-            this@apply.adapter = adapter
-            addItemDecoration(RecyclerViewDivider(context))
+        val currAdapter = songs_list.adapter
+        if (currAdapter != null) {
+            (currAdapter as SongAdapter).updateSongs(songs)
+        } else {
+            songs_list.apply {
+                this@apply.adapter = adapter
+                addItemDecoration(RecyclerViewDivider(context))
+            }
         }
     }
 

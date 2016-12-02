@@ -19,7 +19,7 @@ import kotlinx.android.synthetic.main.song.view.*
 import java.io.File
 import java.util.*
 
-class SongAdapter(val activity: SimpleActivity, val songs: ArrayList<Song>, val itemClick: (Int) -> Unit) : RecyclerView.Adapter<SongAdapter.ViewHolder>() {
+class SongAdapter(val activity: SimpleActivity, var songs: ArrayList<Song>, val itemClick: (Int) -> Unit) : RecyclerView.Adapter<SongAdapter.ViewHolder>() {
     val multiSelector = MultiSelector()
     val views = ArrayList<View>()
 
@@ -117,6 +117,11 @@ class SongAdapter(val activity: SimpleActivity, val songs: ArrayList<Song>, val 
         activity.scanPaths(paths) {
             activity.sendIntent(REFRESH_LIST)
         }
+    }
+
+    fun updateSongs(newSongs: ArrayList<Song>) {
+        songs = newSongs
+        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder {
