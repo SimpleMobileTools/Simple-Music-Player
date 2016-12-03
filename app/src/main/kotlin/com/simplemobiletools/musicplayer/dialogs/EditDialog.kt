@@ -60,7 +60,7 @@ class EditDialog(val activity: SimpleActivity, val song: Song, val callback: (So
 
                     if (file.renameTo(newFile)) {
                         context.scanFiles(arrayListOf(file, newFile)) {
-                            song.path = file.absolutePath
+                            song.path = newFile.absolutePath
                             callback.invoke(song)
                         }
                         dismiss()
