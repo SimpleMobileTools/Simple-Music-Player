@@ -15,6 +15,10 @@
         android:title="@string/disable_song_repetition"
         app:showAsAction="never"/>
     <item
+        android:id="@+id/toggle_shuffle"
+        android:title="@string/disable_shuffle"
+        app:showAsAction="never"/>
+    <item
         android:id="@+id/settings"
         android:title="@string/settings"
         app:showAsAction="never"/>

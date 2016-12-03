@@ -18,7 +18,6 @@ class SettingsActivity : SimpleActivity() {
         setContentView(R.layout.activity_settings)
 
         setupDarkTheme()
-        setupShuffle()
         setupNumericProgress()
         setupEqualizer()
     }
@@ -29,14 +28,6 @@ class SettingsActivity : SimpleActivity() {
             settings_dark_theme.toggle()
             mConfig.isDarkTheme = settings_dark_theme.isChecked
             restartActivity()
-        }
-    }
-
-    private fun setupShuffle() {
-        settings_shuffle.isChecked = mConfig.isShuffleEnabled
-        settings_shuffle_holder.setOnClickListener {
-            settings_shuffle.toggle()
-            mConfig.isShuffleEnabled = settings_shuffle.isChecked
         }
     }
 

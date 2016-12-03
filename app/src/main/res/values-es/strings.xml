@@ -15,6 +15,8 @@
     <string name="cancel">Cancelar</string>
     <string name="enable_song_repetition">Repetir la canción actual</string>
     <string name="disable_song_repetition">Parar la repetición de la canción actual</string>
+    <string name="enable_shuffle">Enable shuffle</string>
+    <string name="disable_shuffle">Disable shuffle</string>
 
     <plurals name="songs_deleted">
         <item quantity="one">Una canción eliminada</item>
@@ -37,7 +39,6 @@
     <!-- Settings -->
     <string name="settings">Opciones</string>
     <string name="dark_theme">Tema oscuro</string>
-    <string name="shuffle">Aleatorio</string>
     <string name="numeric_progress">Mostrar el progreso también en números</string>
     <string name="equalizer">Ecualizador</string>
 

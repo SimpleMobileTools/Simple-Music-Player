@@ -69,6 +69,10 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
         menuInflater.inflate(R.menu.menu, menu)
         menu.findItem(R.id.enable_song_repetition).isVisible = !mConfig.repeatSong
         menu.findItem(R.id.disable_song_repetition).isVisible = mConfig.repeatSong
+
+        val shuffle = menu.findItem(R.id.toggle_shuffle)
+        shuffle.title = getString(if (mConfig.isShuffleEnabled) R.string.disable_shuffle else R.string.enable_shuffle)
+
         return true
     }
 
@@ -76,6 +80,10 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
         return when (item.itemId) {
             R.id.sort -> {
                 showSortingDialog()
+                true
+            }
+            R.id.toggle_shuffle -> {
+                toggleShuffle()
                 true
             }
             R.id.settings -> {
@@ -114,6 +122,11 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
         ChangeSortingDialog(this) {
             sendIntent(REFRESH_LIST)
         }
+    }
+
+    private fun toggleShuffle() {
+        mConfig.isShuffleEnabled = !mConfig.isShuffleEnabled
+        invalidateOptionsMenu()
     }
 
     private fun toggleSongRepetition(enable: Boolean) {

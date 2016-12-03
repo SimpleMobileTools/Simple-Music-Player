@@ -16,6 +16,8 @@
     <string name="cancel">Cancel</string>
     <string name="enable_song_repetition">Repeat current song</string>
     <string name="disable_song_repetition">Stop repeating current song</string>
+    <string name="enable_shuffle">Enable shuffle</string>
+    <string name="disable_shuffle">Disable shuffle</string>
 
     <!-- Sorting -->
     <string name="sort_by">Sort by</string>
@@ -38,7 +40,6 @@
     <!-- Settings -->
     <string name="settings">Settings</string>
     <string name="dark_theme">Dark theme</string>
-    <string name="shuffle">Shuffle</string>
     <string name="numeric_progress">Display progress in numbers too</string>
     <string name="equalizer">Equalizer</string>
 
