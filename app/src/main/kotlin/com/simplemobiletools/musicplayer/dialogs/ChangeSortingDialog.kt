@@ -35,39 +35,39 @@ class ChangeSortingDialog(val activity: Activity, val callback: () -> Unit) : Di
     }
 
     private fun setupSortRadio() {
-        val sortingRadio = view.dialog_radio_sorting
-        var sortBtn = sortingRadio.dialog_radio_duration
+        val sortingRadio = view.sorting_dialog_radio_sorting
+        var sortBtn = sortingRadio.sorting_dialog_radio_duration
 
         if (currSorting and SORT_BY_TITLE != 0) {
-            sortBtn = sortingRadio.dialog_radio_title
+            sortBtn = sortingRadio.sorting_dialog_radio_title
         } else if (currSorting and SORT_BY_ARTIST != 0) {
-            sortBtn = sortingRadio.dialog_radio_artist
+            sortBtn = sortingRadio.sorting_dialog_radio_artist
         } else if (currSorting and SORT_BY_FILE_NAME != 0) {
-            sortBtn = sortingRadio.dialog_radio_file_name
+            sortBtn = sortingRadio.sorting_dialog_radio_file_name
         }
         sortBtn.isChecked = true
     }
 
     private fun setupOrderRadio() {
-        val orderRadio = view.dialog_radio_order
-        var orderBtn = orderRadio.dialog_radio_ascending
+        val orderRadio = view.sorting_dialog_radio_order
+        var orderBtn = orderRadio.sorting_dialog_radio_ascending
 
         if (currSorting and SORT_DESCENDING != 0) {
-            orderBtn = orderRadio.dialog_radio_descending
+            orderBtn = orderRadio.sorting_dialog_radio_descending
         }
         orderBtn.isChecked = true
     }
 
     override fun onClick(dialog: DialogInterface, which: Int) {
-        val sortingRadio = view.dialog_radio_sorting
+        val sortingRadio = view.sorting_dialog_radio_sorting
         var sorting = when (sortingRadio.checkedRadioButtonId) {
-            R.id.dialog_radio_title -> SORT_BY_TITLE
-            R.id.dialog_radio_artist -> SORT_BY_ARTIST
-            R.id.dialog_radio_file_name -> SORT_BY_FILE_NAME
+            R.id.sorting_dialog_radio_title -> SORT_BY_TITLE
+            R.id.sorting_dialog_radio_artist -> SORT_BY_ARTIST
+            R.id.sorting_dialog_radio_file_name -> SORT_BY_FILE_NAME
             else -> SORT_BY_DURATION
         }
 
-        if (view.dialog_radio_order.checkedRadioButtonId == R.id.dialog_radio_descending) {
+        if (view.sorting_dialog_radio_order.checkedRadioButtonId == R.id.sorting_dialog_radio_descending) {
             sorting = sorting or SORT_DESCENDING
         }
 
