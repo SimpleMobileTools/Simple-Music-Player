@@ -7,7 +7,7 @@
     android:background="?attr/selectableItemBackground"
     android:foreground="@drawable/selector">
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/song_holder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -25,8 +25,20 @@
             android:id="@+id/song_artist"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/song_title"
             android:text="Song Artist"
             android:textSize="14sp"/>
 
-    </LinearLayout>
+        <ImageView
+            android:id="@+id/song_note_image"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/medium_padding"
+            android:layout_marginRight="@dimen/medium_padding"
+            android:src="@mipmap/music_note"/>
+
+    </RelativeLayout>
 </FrameLayout>

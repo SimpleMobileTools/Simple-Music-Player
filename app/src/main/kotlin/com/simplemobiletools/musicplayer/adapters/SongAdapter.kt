@@ -1,6 +1,7 @@
 package com.simplemobiletools.musicplayer.adapters
 
 import android.content.Intent
+import android.graphics.PorterDuff
 import android.support.v7.view.ActionMode
 import android.support.v7.widget.RecyclerView
 import android.view.*
@@ -30,6 +31,7 @@ class SongAdapter(val activity: SimpleActivity, var songs: ArrayList<Song>, val 
     companion object {
         var actMode: ActionMode? = null
         val markedItems = HashSet<Int>()
+        var iconColor = 0
 
         fun toggleItemSelection(itemView: View, select: Boolean, pos: Int = -1) {
             itemView.song_frame.isSelected = select
@@ -152,6 +154,7 @@ class SongAdapter(val activity: SimpleActivity, var songs: ArrayList<Song>, val 
             itemView.apply {
                 song_title.text = song.title
                 song_artist.text = song.artist
+                song_note_image.setColorFilter(iconColor, PorterDuff.Mode.SRC_IN)
                 toggleItemSelection(itemView, markedItems.contains(pos), pos)
 
                 setOnClickListener { viewClicked(multiSelector, pos) }

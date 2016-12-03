@@ -3,7 +3,7 @@ package com.simplemobiletools.musicplayer.activities
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
+import android.graphics.PorterDuff
 import android.media.AudioManager
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
@@ -16,7 +16,6 @@ import com.simplemobiletools.filepicker.extensions.toast
 import com.simplemobiletools.filepicker.views.RecyclerViewDivider
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.adapters.SongAdapter
-import com.simplemobiletools.musicplayer.extensions.getColoredIcon
 import com.simplemobiletools.musicplayer.extensions.getTimeString
 import com.simplemobiletools.musicplayer.extensions.sendIntent
 import com.simplemobiletools.musicplayer.helpers.*
@@ -34,8 +33,6 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
 
         lateinit var mBus: Bus
         private var mSongs: List<Song> = ArrayList()
-        private var mPlayBitmap: Bitmap? = null
-        private var mPauseBitmap: Bitmap? = null
 
         private var mIsNumericProgressShown = false
     }
@@ -118,15 +115,16 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
     }
 
     private fun setupIconColors() {
-        val res = resources
         val color = song_title.currentTextColor
-        previous_btn.setImageBitmap(res.getColoredIcon(color, R.mipmap.previous))
-        next_btn.setImageBitmap(res.getColoredIcon(color, R.mipmap.next))
-        mPlayBitmap = res.getColoredIcon(color, R.mipmap.play)
-        mPauseBitmap = res.getColoredIcon(color, R.mipmap.pause)
+        previous_btn.setColorFilter(color, PorterDuff.Mode.SRC_IN)
+        play_pause_btn.setColorFilter(color, PorterDuff.Mode.SRC_IN)
+        next_btn.setColorFilter(color, PorterDuff.Mode.SRC_IN)
+
+        SongAdapter.iconColor = color
     }
 
     private fun songPicked(pos: Int) {
+        setupIconColors()
         Intent(this, MusicService::class.java).apply {
             putExtra(SONG_POS, pos)
             action = PLAYPOS
@@ -176,7 +174,7 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
 
     @Subscribe
     fun songStateChanged(event: Events.SongStateChanged) {
-        play_pause_btn.setImageBitmap(if (event.isPlaying) mPauseBitmap else mPlayBitmap)
+        play_pause_btn.setImageDrawable(resources.getDrawable(if (event.isPlaying) R.mipmap.pause else R.mipmap.play))
     }
 
     @Subscribe
