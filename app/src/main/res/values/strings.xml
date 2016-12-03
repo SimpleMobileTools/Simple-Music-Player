@@ -16,17 +16,12 @@
     <string name="cancel">Cancel</string>
     <string name="enable_song_repetition">Repeat current song</string>
     <string name="disable_song_repetition">Stop repeating current song</string>
+    <string name="song_repetition_enabled">Current song repetition enabled</string>
+    <string name="song_repetition_disabled">Current song repetition disabled</string>
     <string name="enable_shuffle">Enable shuffle</string>
     <string name="disable_shuffle">Disable shuffle</string>
-
-    <!-- Sorting -->
-    <string name="sort_by">Sort by</string>
-    <string name="title">Title</string>
-    <string name="artist">Artist</string>
-    <string name="file_name">File name</string>
-    <string name="duration">Duration</string>
-    <string name="ascending">Ascending</string>
-    <string name="descending">Descending</string>
+    <string name="shuffle_enabled">Shuffle enabled</string>
+    <string name="shuffle_disabled">Shuffle disabled</string>
 
     <plurals name="songs_deleted">
         <item quantity="one">1 song deleted</item>
@@ -36,6 +31,15 @@
     <string name="previous">Previous</string>
     <string name="playpause">Play Pause</string>
     <string name="next">Next</string>
+
+    <!-- Sorting -->
+    <string name="sort_by">Sort by</string>
+    <string name="title">Title</string>
+    <string name="artist">Artist</string>
+    <string name="file_name">File name</string>
+    <string name="duration">Duration</string>
+    <string name="ascending">Ascending</string>
+    <string name="descending">Descending</string>
 
     <!-- Settings -->
     <string name="settings">Settings</string>

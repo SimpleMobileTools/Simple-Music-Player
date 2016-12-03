@@ -124,11 +124,13 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
     private fun toggleShuffle() {
         mConfig.isShuffleEnabled = !mConfig.isShuffleEnabled
         invalidateOptionsMenu()
+        toast(if (mConfig.isShuffleEnabled) R.string.shuffle_enabled else R.string.shuffle_disabled)
     }
 
     private fun toggleSongRepetition() {
         mConfig.repeatSong = !mConfig.repeatSong
         invalidateOptionsMenu()
+        toast(if (mConfig.repeatSong) R.string.song_repetition_enabled else R.string.song_repetition_disabled)
     }
 
     private fun initializePlayer() {

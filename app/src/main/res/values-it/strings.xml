@@ -15,8 +15,12 @@
     <string name="cancel">Cancel</string>
     <string name="enable_song_repetition">Repeat current song</string>
     <string name="disable_song_repetition">Stop repeating current song</string>
+    <string name="song_repetition_enabled">Current song repetition enabled</string>
+    <string name="song_repetition_disabled">Current song repetition disabled</string>
     <string name="enable_shuffle">Enable shuffle</string>
     <string name="disable_shuffle">Disable shuffle</string>
+    <string name="shuffle_enabled">Shuffle enabled</string>
+    <string name="shuffle_disabled">Shuffle disabled</string>
 
     <plurals name="songs_deleted">
         <item quantity="one">1 canzone eliminata</item>
