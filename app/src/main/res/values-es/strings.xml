@@ -7,9 +7,6 @@
     <string name="properties">Propiedades</string>
     <string name="edit">Editar</string>
     <string name="undo">Deshacer</string>
-    <string name="title">Título</string>
-    <string name="artist">Artista</string>
-    <string name="file_name">Nombre del archivo</string>
     <string name="extension">Extensión</string>
     <string name="rename_song">Renombrar canción</string>
     <string name="rename_song_error">Ha ocurrido un error durante el renombrado</string>
@@ -18,7 +15,6 @@
     <string name="cancel">Cancelar</string>
     <string name="enable_song_repetition">Repetir la canción actual</string>
     <string name="disable_song_repetition">Parar la repetición de la canción actual</string>
-    <string name="sort_by">Ordenar por</string>
 
     <plurals name="songs_deleted">
         <item quantity="one">Una canción eliminada</item>
@@ -28,6 +24,15 @@
     <string name="previous">Anterior</string>
     <string name="playpause">Reproducir Pausar</string>
     <string name="next">Siguiente</string>
+
+    <!-- Sorting -->
+    <string name="sort_by">Ordenar por</string>
+    <string name="title">Título</string>
+    <string name="artist">Artista</string>
+    <string name="file_name">Nombre del archivo</string>
+    <string name="duration">Duración</string>
+    <string name="ascending">Ascendente</string>
+    <string name="descending">Descendente</string>
 
     <!-- Settings -->
     <string name="settings">Opciones</string>

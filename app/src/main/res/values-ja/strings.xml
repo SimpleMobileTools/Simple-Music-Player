@@ -7,9 +7,6 @@
     <string name="properties">プロパティ</string>
     <string name="edit">編集</string>
     <string name="undo">元に戻す</string>
-    <string name="title">タイトル</string>
-    <string name="artist">アーティスト</string>
-    <string name="file_name">ファイル名</string>
     <string name="extension">拡張子</string>
     <string name="rename_song">曲の名前を変更</string>
     <string name="rename_song_error">名前を変更中にエラーが発生しました</string>
@@ -18,7 +15,6 @@
     <string name="cancel">キャンセル</string>
     <string name="enable_song_repetition">現在の曲を繰り返し</string>
     <string name="disable_song_repetition">現在の曲の繰り返しを停止</string>
-    <string name="sort_by">並び替え</string>
 
     <plurals name="songs_deleted">
         <item quantity="one">1 曲削除しました</item>
@@ -28,6 +24,15 @@
     <string name="previous">前へ</string>
     <string name="playpause">再生 一時停止</string>
     <string name="next">次へ</string>
+
+    <!-- Sorting -->
+    <string name="sort_by">並び替え</string>
+    <string name="title">タイトル</string>
+    <string name="artist">アーティスト</string>
+    <string name="file_name">ファイル名</string>
+    <string name="duration">期間</string>
+    <string name="ascending">昇順</string>
+    <string name="descending">降順</string>
 
     <!-- Settings -->
     <string name="settings">設定</string>
