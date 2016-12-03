@@ -17,6 +17,7 @@ import com.simplemobiletools.musicplayer.extensions.getSharedPrefs
 import com.simplemobiletools.musicplayer.extensions.sendIntent
 import com.simplemobiletools.musicplayer.models.Events
 import com.simplemobiletools.musicplayer.models.Song
+import com.simplemobiletools.musicplayer.services.MusicService
 import com.squareup.otto.Bus
 import com.squareup.otto.Subscribe
 
@@ -63,6 +64,8 @@ class MyWidgetProvider : AppWidgetProvider() {
             mBus = BusProvider.instance
         }
         registerBus()
+        updateSong(MusicService.mCurrSong)
+        updateSongState(MusicService.getIsPlaying())
     }
 
     private fun setupIntent(action: String, id: Int) {
@@ -84,7 +87,11 @@ class MyWidgetProvider : AppWidgetProvider() {
 
     @Subscribe
     fun songChangedEvent(event: Events.SongChanged) {
-        mCurrSong = event.song
+        updateSong(event.song)
+    }
+
+    private fun updateSong(song: Song?) {
+        mCurrSong = song
         updateSongInfo()
         updateWidgets()
     }
@@ -103,10 +110,14 @@ class MyWidgetProvider : AppWidgetProvider() {
 
     @Subscribe
     fun songStateChanged(event: Events.SongStateChanged) {
-        if (mIsPlaying == event.isPlaying)
+        updateSongState(event.isPlaying)
+    }
+
+    private fun updateSongState(isPlaying: Boolean) {
+        if (mIsPlaying == isPlaying)
             return
 
-        mIsPlaying = event.isPlaying
+        mIsPlaying = isPlaying
         updatePlayPauseButton()
         updateWidgets()
     }

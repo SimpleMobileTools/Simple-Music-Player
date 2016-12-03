@@ -57,6 +57,8 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         private var mPlayPauseIntent: PendingIntent? = null
 
         private var mWasPlayingAtCall = false
+
+        fun getIsPlaying() = mPlayer?.isPlaying == true
     }
 
     override fun onCreate() {
@@ -318,8 +320,6 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             (lastIndex + 1) % mSongs!!.size
         }
     }
-
-    fun getIsPlaying() = mPlayer?.isPlaying == true
 
     fun playPreviousSong() {
         if (mSongs!!.isEmpty())
