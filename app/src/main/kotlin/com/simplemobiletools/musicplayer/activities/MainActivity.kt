@@ -61,6 +61,7 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
         mIsNumericProgressShown = mConfig.isNumericProgressEnabled
         setupIconColors()
         song_progress.visibility = if (mIsNumericProgressShown) View.VISIBLE else View.GONE
+        markCurrentSong()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -178,10 +179,7 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
     @Subscribe
     fun songChangedEvent(event: Events.SongChanged) {
         updateSongInfo(event.song)
-        val newSongId = event.song?.id ?: -1L
-        val cnt = mSongs.size - 1
-        val songIndex = (0..cnt).firstOrNull { mSongs[it].id == newSongId } ?: -1
-        (songs_list.adapter as SongAdapter).updateCurrentSongIndex(songIndex)
+        markCurrentSong()
     }
 
     @Subscribe
@@ -195,8 +193,16 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
     }
 
     @Subscribe
-    fun songChangedEvent(event: Events.ProgressUpdated) {
+    fun progressUpdated(event: Events.ProgressUpdated) {
         progressbar.progress = event.progress
+    }
+
+    private fun markCurrentSong() {
+        val newSongId = MusicService.mCurrSong?.id ?: -1L
+        val cnt = mSongs.size - 1
+        val songIndex = (0..cnt).firstOrNull { mSongs[it].id == newSongId } ?: -1
+        if (songs_list.adapter != null)
+            (songs_list.adapter as SongAdapter).updateCurrentSongIndex(songIndex)
     }
 
     override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
