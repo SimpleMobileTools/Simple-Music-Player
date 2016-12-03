@@ -13,7 +13,6 @@ class LicenseActivity : SimpleActivity() {
         setContentView(R.layout.activity_license)
 
         license_kotlin_title.setOnClickListener { openUrl(R.string.kotlin_url) }
-        license_butterknife_title.setOnClickListener { openUrl(R.string.butterknife_url) }
         license_ambilwarna_title.setOnClickListener { openUrl(R.string.ambilwarna_url) }
         license_otto_title.setOnClickListener { openUrl(R.string.otto_url) }
         license_filepicker_title.setOnClickListener { openUrl(R.string.filepicker_url) }

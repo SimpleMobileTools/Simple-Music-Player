@@ -62,7 +62,6 @@
     <string name="notice">Diese App nutzt die folgenden Drittanbieterbibliotheken, die mein Leben einfacher machen. Danke.</string>
     <string name="third_party_licences">Drittanbieterlizenzen</string>
     <string name="kotlin_title"><u>Kotlin (Programmiersprache)</u></string>
-    <string name="butterknife_title"><u>Butter Knife (View Injector)</u></string>
     <string name="ambilwarna_title"><u>AmbilWarna (Color Picker)</u></string>
     <string name="otto_title"><u>Otto (Event Bus)</u></string>
     <string name="filepicker_title"><u>Simple File Picker (filepicker dialog)</u></string>
