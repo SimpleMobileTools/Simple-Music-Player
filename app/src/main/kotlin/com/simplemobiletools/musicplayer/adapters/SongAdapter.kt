@@ -140,6 +140,8 @@ class SongAdapter(val activity: SimpleActivity, var songs: ArrayList<Song>, val 
             itemView.apply {
                 song_title.text = song.title
                 song_artist.text = song.artist
+                toggleItemSelection(itemView, markedItems.contains(pos), pos)
+
                 setOnClickListener { viewClicked(multiSelector, pos) }
                 setOnLongClickListener {
                     if (!multiSelector.isSelectable) {
