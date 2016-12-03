@@ -265,7 +265,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         startForeground(NOTIFICATION_ID, notification.build())
 
         if (!getIsPlaying()) {
-            stopForeground(false)
+            Handler().postDelayed({ stopForeground(false) }, 500)
         }
     }
 
