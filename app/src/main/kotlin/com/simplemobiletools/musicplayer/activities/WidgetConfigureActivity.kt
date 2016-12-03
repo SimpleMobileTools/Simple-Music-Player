@@ -15,6 +15,7 @@ import com.simplemobiletools.musicplayer.helpers.MyWidgetProvider
 import com.simplemobiletools.musicplayer.helpers.PREFS_KEY
 import com.simplemobiletools.musicplayer.helpers.WIDGET_BG_COLOR
 import com.simplemobiletools.musicplayer.helpers.WIDGET_TEXT_COLOR
+import com.simplemobiletools.musicplayer.services.MusicService
 import kotlinx.android.synthetic.main.widget.*
 import kotlinx.android.synthetic.main.widget_config.*
 import kotlinx.android.synthetic.main.widget_controls.*
@@ -46,6 +47,12 @@ class WidgetConfigureActivity : AppCompatActivity() {
         config_save.setOnClickListener { saveConfig() }
         config_bg_color.setOnClickListener { pickBackgroundColor() }
         config_text_color.setOnClickListener { pickTextColor() }
+
+        val currSong = MusicService.mCurrSong
+        if (currSong != null) {
+            song_title.text = currSong.title
+            song_artist.text = currSong.artist
+        }
     }
 
     private fun initVariables() {
