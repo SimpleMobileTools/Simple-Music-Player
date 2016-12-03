@@ -67,8 +67,9 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu, menu)
-        menu.findItem(R.id.enable_song_repetition).isVisible = !mConfig.repeatSong
-        menu.findItem(R.id.disable_song_repetition).isVisible = mConfig.repeatSong
+
+        val songRepetition = menu.findItem(R.id.toggle_song_repetition)
+        songRepetition.title = getString(if (mConfig.repeatSong) R.string.disable_song_repetition else R.string.enable_song_repetition)
 
         val shuffle = menu.findItem(R.id.toggle_shuffle)
         shuffle.title = getString(if (mConfig.isShuffleEnabled) R.string.disable_shuffle else R.string.enable_shuffle)
@@ -86,20 +87,16 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
                 toggleShuffle()
                 true
             }
+            R.id.toggle_song_repetition -> {
+                toggleSongRepetition()
+                true
+            }
             R.id.settings -> {
                 startActivity(Intent(applicationContext, SettingsActivity::class.java))
                 true
             }
             R.id.about -> {
                 startActivity(Intent(applicationContext, AboutActivity::class.java))
-                true
-            }
-            R.id.enable_song_repetition -> {
-                toggleSongRepetition(true)
-                true
-            }
-            R.id.disable_song_repetition -> {
-                toggleSongRepetition(false)
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -129,8 +126,8 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
         invalidateOptionsMenu()
     }
 
-    private fun toggleSongRepetition(enable: Boolean) {
-        mConfig.repeatSong = enable
+    private fun toggleSongRepetition() {
+        mConfig.repeatSong = !mConfig.repeatSong
         invalidateOptionsMenu()
     }
 
