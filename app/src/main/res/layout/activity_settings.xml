@@ -25,12 +25,14 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:paddingLeft="@dimen/settings_padding"
+                android:paddingStart="@dimen/settings_padding"
                 android:text="@string/dark_theme"/>
 
             <android.support.v7.widget.SwitchCompat
                 android:id="@+id/settings_dark_theme"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:background="@null"
                 android:clickable="false"/>
@@ -51,12 +53,14 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:paddingLeft="@dimen/settings_padding"
+                android:paddingStart="@dimen/settings_padding"
                 android:text="@string/numeric_progress"/>
 
             <android.support.v7.widget.SwitchCompat
                 android:id="@+id/settings_numeric_progress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:background="@null"
                 android:clickable="false"/>
@@ -79,12 +83,14 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:paddingLeft="@dimen/settings_padding"
+                android:paddingStart="@dimen/settings_padding"
                 android:text="@string/equalizer"/>
 
             <android.support.v7.widget.AppCompatSpinner
                 android:id="@+id/settings_equalizer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"/>
 
         </RelativeLayout>

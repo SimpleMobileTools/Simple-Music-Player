@@ -35,8 +35,6 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginEnd="@dimen/medium_padding"
-            android:layout_marginRight="@dimen/medium_padding"
             android:src="@mipmap/music_note"
             android:visibility="invisible"/>
 

@@ -82,6 +82,7 @@ class MyWidgetProvider : AppWidgetProvider() {
 
     private fun updateWidgetIds() {
         val component = ComponentName(mContext, MyWidgetProvider::class.java)
+        mWidgetManager = AppWidgetManager.getInstance(mContext)
         mWidgetIds = mWidgetManager.getAppWidgetIds(component)
     }
 

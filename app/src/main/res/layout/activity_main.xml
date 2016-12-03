@@ -99,6 +99,7 @@
         android:layout_below="@+id/song_progress"
         android:clipToPadding="false"
         android:paddingLeft="@dimen/activity_margin"
+        android:paddingRight="@dimen/activity_margin"
         app:layoutManager="android.support.v7.widget.LinearLayoutManager"/>
 
 </RelativeLayout>
