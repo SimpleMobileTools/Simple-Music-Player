@@ -1,6 +1,19 @@
 Changelog
 ==========
 
+Version 1.23 *(2016-12-03)*
+----------------------------
+
+ * Add some new sorting options
+ * Moved shuffle and song repeat from Settings to actionbar
+ * Added a current song indicator
+ * Many other small improvements and bugfixes
+
+Version 1.22 *(2016-11-03)*
+----------------------------
+
+ * Resolving some Google Play conflicts
+
 Version 1.21 *(2016-11-03)*
 ----------------------------
 
