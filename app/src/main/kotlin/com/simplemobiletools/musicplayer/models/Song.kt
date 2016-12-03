@@ -15,6 +15,6 @@ class Song(val id: Long, var title: String, var artist: String, var path: String
         else if (o == null)
             false
         else
-            toString() == o.toString()
+            id == (o as Song).id
     }
 }

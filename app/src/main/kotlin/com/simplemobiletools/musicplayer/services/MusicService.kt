@@ -42,13 +42,13 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         private val PROGRESS_UPDATE_INTERVAL = 1000
         private val NOTIFICATION_ID = 78
 
+        var mCurrSong: Song? = null
         var mEqualizer: Equalizer? = null
         private var mHeadsetPlugReceiver: HeadsetPlugReceiver? = null
         private var mIncomingCallReceiver: IncomingCallReceiver? = null
         private var mSongs: ArrayList<Song>? = null
         private var mPlayer: MediaPlayer? = null
         private var mPlayedSongIndexes: ArrayList<Int>? = null
-        private var mCurrSong: Song? = null
         private var mBus: Bus? = null
         private var mConfig: Config? = null
         private var mProgressHandler: Handler? = null

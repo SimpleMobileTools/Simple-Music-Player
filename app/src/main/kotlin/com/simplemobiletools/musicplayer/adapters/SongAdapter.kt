@@ -1,5 +1,6 @@
 package com.simplemobiletools.musicplayer.adapters
 
+import android.content.Intent
 import android.support.v7.view.ActionMode
 import android.support.v7.widget.RecyclerView
 import android.view.*
@@ -13,8 +14,11 @@ import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
 import com.simplemobiletools.musicplayer.dialogs.EditDialog
 import com.simplemobiletools.musicplayer.extensions.sendIntent
+import com.simplemobiletools.musicplayer.helpers.EDIT
+import com.simplemobiletools.musicplayer.helpers.EDITED_SONG
 import com.simplemobiletools.musicplayer.helpers.REFRESH_LIST
 import com.simplemobiletools.musicplayer.models.Song
+import com.simplemobiletools.musicplayer.services.MusicService
 import kotlinx.android.synthetic.main.song.view.*
 import java.io.File
 import java.util.*
@@ -93,6 +97,14 @@ class SongAdapter(val activity: SimpleActivity, var songs: ArrayList<Song>, val 
         val selections = multiSelector.selectedPositions
         if (selections.size == 1) {
             EditDialog(activity, songs[selections[0]]) {
+                if (it == MusicService.mCurrSong) {
+                    Intent(activity, MusicService::class.java).apply {
+                        putExtra(EDITED_SONG, it)
+                        action = EDIT
+                        activity.startService(this)
+                    }
+                }
+
                 activity.sendIntent(REFRESH_LIST)
                 activity.runOnUiThread { actMode?.finish() }
             }

@@ -14,7 +14,7 @@ import com.simplemobiletools.musicplayer.models.Song
 import kotlinx.android.synthetic.main.rename_song.view.*
 import java.io.File
 
-class EditDialog(val activity: SimpleActivity, val song: Song, val callback: () -> Unit) {
+class EditDialog(val activity: SimpleActivity, val song: Song, val callback: (Song) -> Unit) {
     init {
         val view = LayoutInflater.from(activity).inflate(R.layout.rename_song, null)
         view.title.setText(song.title)
@@ -44,20 +44,24 @@ class EditDialog(val activity: SimpleActivity, val song: Song, val callback: () 
                 }
 
                 val uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
+                song.artist = newArtist
+                song.title = newTitle
+
                 if (updateContentResolver(context, uri, song.id, newTitle, newArtist)) {
                     context.contentResolver.notifyChange(uri, null)
 
                     val file = File(song.path)
                     val newFile = File(file.parent, "$newFilename.$newFileExtension")
                     if (file == newFile) {
-                        callback.invoke()
+                        callback.invoke(song)
                         dismiss()
                         return@setOnClickListener
                     }
 
                     if (file.renameTo(newFile)) {
                         context.scanFiles(arrayListOf(file, newFile)) {
-                            callback.invoke()
+                            song.path = file.absolutePath
+                            callback.invoke(song)
                         }
                         dismiss()
                         return@setOnClickListener
