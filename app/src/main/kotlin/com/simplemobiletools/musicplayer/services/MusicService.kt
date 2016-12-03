@@ -371,8 +371,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     }
 
     private fun restartSong() {
-        mPlayer!!.seekTo(0)
-        setupNotification()
+        setSong(mPlayedSongIndexes!![mPlayedSongIndexes!!.size - 1], false)
     }
 
     private fun playSong(intent: Intent) {
@@ -417,9 +416,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
     override fun onCompletion(mp: MediaPlayer) {
         if (mConfig!!.repeatSong) {
-            mPlayer!!.seekTo(0)
-            mPlayer!!.start()
-            setupNotification()
+            restartSong()
         } else if (mPlayer!!.currentPosition > 0) {
             mPlayer!!.reset()
             playNextSong()
