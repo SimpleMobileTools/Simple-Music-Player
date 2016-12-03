@@ -8,8 +8,6 @@ class Config private constructor(context: Context) {
     private val mPrefs: SharedPreferences
 
     companion object {
-        val SORT_BY_TITLE = 0
-
         fun newInstance(context: Context) = Config(context)
     }
 

@@ -7,9 +7,7 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import com.simplemobiletools.musicplayer.R
-import com.simplemobiletools.musicplayer.extensions.sendIntent
 import com.simplemobiletools.musicplayer.helpers.EQUALIZER
-import com.simplemobiletools.musicplayer.helpers.REFRESH_LIST
 import com.simplemobiletools.musicplayer.helpers.SET_EQUALIZER
 import com.simplemobiletools.musicplayer.services.MusicService
 import kotlinx.android.synthetic.main.activity_settings.*
@@ -22,7 +20,6 @@ class SettingsActivity : SimpleActivity() {
         setupDarkTheme()
         setupShuffle()
         setupNumericProgress()
-        setupSorting()
         setupEqualizer()
     }
 
@@ -48,19 +45,6 @@ class SettingsActivity : SimpleActivity() {
         settings_numeric_progress_holder.setOnClickListener {
             settings_numeric_progress.toggle()
             mConfig.isNumericProgressEnabled = settings_numeric_progress.isChecked
-        }
-    }
-
-    private fun setupSorting() {
-        settings_sorting.setSelection(mConfig.sorting)
-        settings_sorting.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                mConfig.sorting = settings_sorting.selectedItemPosition
-                sendIntent(REFRESH_LIST)
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-            }
         }
     }
 

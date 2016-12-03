@@ -209,13 +209,8 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
     private fun getSortedSongs() {
         fillPlaylist()
-        Collections.sort(mSongs!!) { a, b ->
-            if (mConfig!!.sorting == Config.SORT_BY_TITLE) {
-                a.title.compareTo(b.title)
-            } else {
-                a.artist.compareTo(b.artist)
-            }
-        }
+        Song.sorting = mConfig!!.sorting
+        mSongs?.sort()
     }
 
     private fun setupEqualizer() {

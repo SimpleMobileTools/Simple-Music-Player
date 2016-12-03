@@ -16,6 +16,7 @@ import com.simplemobiletools.filepicker.extensions.toast
 import com.simplemobiletools.filepicker.views.RecyclerViewDivider
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.adapters.SongAdapter
+import com.simplemobiletools.musicplayer.dialogs.ChangeSortingDialog
 import com.simplemobiletools.musicplayer.extensions.getTimeString
 import com.simplemobiletools.musicplayer.extensions.sendIntent
 import com.simplemobiletools.musicplayer.helpers.*
@@ -110,7 +111,9 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
     }
 
     private fun showSortingDialog() {
-
+        ChangeSortingDialog(this) {
+            sendIntent(REFRESH_LIST)
+        }
     }
 
     private fun toggleSongRepetition(enable: Boolean) {
@@ -168,6 +171,7 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
                 addItemDecoration(RecyclerViewDivider(context))
             }
         }
+        markCurrentSong()
     }
 
     override fun onDestroy() {
