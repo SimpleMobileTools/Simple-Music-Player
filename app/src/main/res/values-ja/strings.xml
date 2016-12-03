@@ -18,6 +18,7 @@
     <string name="cancel">キャンセル</string>
     <string name="enable_song_repetition">現在の曲を繰り返し</string>
     <string name="disable_song_repetition">現在の曲の繰り返しを停止</string>
+    <string name="sort_by">並び替え</string>
 
     <plurals name="songs_deleted">
         <item quantity="one">1 曲削除しました</item>
@@ -33,7 +34,6 @@
     <string name="dark_theme">ダークテーマ</string>
     <string name="shuffle">シャッフル</string>
     <string name="numeric_progress">再生状況を数値でも表示する</string>
-    <string name="sort_by">トラックの並び替え</string>
     <string name="equalizer">イコライザー</string>
 
     <!-- About -->

@@ -31,3 +31,10 @@ val EQUALIZER = "equalizer"
 val REPEAT_SONG = "repeat_song"
 val WIDGET_BG_COLOR = "widget_bg_color"
 val WIDGET_TEXT_COLOR = "widget_text_color"
+
+// sorting
+val SORT_BY_TITLE = 1
+val SORT_BY_ARTIST = 2
+val SORT_BY_FILE_NAME = 4
+
+val SORT_DESCENDING = 1024

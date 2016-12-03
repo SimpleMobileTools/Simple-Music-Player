@@ -18,6 +18,7 @@
     <string name="cancel">Cancel</string>
     <string name="enable_song_repetition">Repeat current song</string>
     <string name="disable_song_repetition">Stop repeating current song</string>
+    <string name="sort_by">Sortera efter</string>
 
     <plurals name="songs_deleted">
         <item quantity="one">1 låt borttagen</item>
@@ -33,7 +34,6 @@
     <string name="dark_theme">Mörkt tema</string>
     <string name="shuffle">Blanda</string>
     <string name="numeric_progress">Visa även förloppet i siffror</string>
-    <string name="sort_by">Sortera låtar efter</string>
     <string name="equalizer">Equalizer</string>
 
     <!-- About -->

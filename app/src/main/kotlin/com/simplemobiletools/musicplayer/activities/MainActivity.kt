@@ -72,6 +72,10 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
+            R.id.sort -> {
+                showSortingDialog()
+                true
+            }
             R.id.settings -> {
                 startActivity(Intent(applicationContext, SettingsActivity::class.java))
                 true
@@ -102,6 +106,10 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
                 toast(R.string.no_permissions)
             }
         }
+    }
+
+    private fun showSortingDialog() {
+
     }
 
     private fun toggleSongRepetition(enable: Boolean) {

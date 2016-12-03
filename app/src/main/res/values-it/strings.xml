@@ -18,6 +18,7 @@
     <string name="cancel">Cancel</string>
     <string name="enable_song_repetition">Repeat current song</string>
     <string name="disable_song_repetition">Stop repeating current song</string>
+    <string name="sort_by">Ordina per</string>
 
     <plurals name="songs_deleted">
         <item quantity="one">1 canzone eliminata</item>
@@ -33,7 +34,6 @@
     <string name="dark_theme">Tema scuro</string>
     <string name="shuffle">Mischia</string>
     <string name="numeric_progress">Mostra anche l\'avanzamento in numeri</string>
-    <string name="sort_by">Ordina tracce per</string>
     <string name="equalizer">Equalizzatore</string>
 
     <!-- About -->

@@ -2,6 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        android:id="@+id/sort"
+        android:icon="@mipmap/sort"
+        android:title="@string/sort_by"
+        app:showAsAction="ifRoom"/>
+    <item
         android:id="@+id/enable_song_repetition"
         android:title="@string/enable_song_repetition"
         app:showAsAction="never"/>
