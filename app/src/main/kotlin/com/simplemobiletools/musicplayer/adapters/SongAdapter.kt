@@ -32,6 +32,7 @@ class SongAdapter(val activity: SimpleActivity, var songs: ArrayList<Song>, val 
         var actMode: ActionMode? = null
         val markedItems = HashSet<Int>()
         var iconColor = 0
+        var currentSongIndex = 0
 
         fun toggleItemSelection(itemView: View, select: Boolean, pos: Int = -1) {
             itemView.song_frame.isSelected = select
@@ -135,7 +136,18 @@ class SongAdapter(val activity: SimpleActivity, var songs: ArrayList<Song>, val 
 
     fun updateSongs(newSongs: ArrayList<Song>) {
         songs = newSongs
+        currentSongIndex = -1
         notifyDataSetChanged()
+    }
+
+    fun updateCurrentSongIndex(index: Int) {
+        val prevIndex = currentSongIndex
+        currentSongIndex = -1
+        notifyItemChanged(prevIndex)
+
+        currentSongIndex = index
+        if (index >= 0)
+            notifyItemChanged(index)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder {
@@ -154,7 +166,12 @@ class SongAdapter(val activity: SimpleActivity, var songs: ArrayList<Song>, val 
             itemView.apply {
                 song_title.text = song.title
                 song_artist.text = song.artist
-                song_note_image.setColorFilter(iconColor, PorterDuff.Mode.SRC_IN)
+                if (currentSongIndex == pos) {
+                    song_note_image.setColorFilter(iconColor, PorterDuff.Mode.SRC_IN)
+                    song_note_image.visibility = View.VISIBLE
+                } else {
+                    song_note_image.visibility = View.INVISIBLE
+                }
                 toggleItemSelection(itemView, markedItems.contains(pos), pos)
 
                 setOnClickListener { viewClicked(multiSelector, pos) }

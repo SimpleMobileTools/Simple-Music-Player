@@ -11,7 +11,6 @@
         android:id="@+id/song_holder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:padding="@dimen/song_item_vertical_margin">
 
         <TextView
@@ -38,7 +37,8 @@
             android:layout_centerVertical="true"
             android:layout_marginEnd="@dimen/medium_padding"
             android:layout_marginRight="@dimen/medium_padding"
-            android:src="@mipmap/music_note"/>
+            android:src="@mipmap/music_note"
+            android:visibility="invisible"/>
 
     </RelativeLayout>
 </FrameLayout>

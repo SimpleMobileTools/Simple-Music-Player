@@ -170,6 +170,10 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
     @Subscribe
     fun songChangedEvent(event: Events.SongChanged) {
         updateSongInfo(event.song)
+        val newSongId = event.song?.id ?: -1L
+        val cnt = mSongs.size - 1
+        val songIndex = (0..cnt).firstOrNull { mSongs[it].id == newSongId } ?: -1
+        (songs_list.adapter as SongAdapter).updateCurrentSongIndex(songIndex)
     }
 
     @Subscribe
