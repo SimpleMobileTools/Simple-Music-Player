@@ -50,11 +50,13 @@
     <string name="about">アプリについて</string>
     <string name="website">もっとシンプルなアプリとソースコードは:\nhttp://simplemobiletools.com</string>
     <string name="email_label">ご意見やご提案をお送りください:</string>
+    <string name="more_apps_underlined"><u>More apps</u></string>
     <string name="third_party_licences_underlined"><u>サードパーティー ライセンス</u></string>
     <string name="invite_friends_underlined"><u>友達を招待</u></string>
     <string name="share_text">%2$s で %1$s を確認してください</string>
     <string name="invite_via">招待...</string>
     <string name="rate_us_underlined"><u>Play ストアで評価してください</u></string>
+    <string name="donate_underlined"><u>Donate</u></string>
     <string name="follow_us">フォローしてください:</string>
     <string name="copyright">v %1$s\nCopyright © Simple Mobile Tools %2$d</string>
 
@@ -68,6 +70,7 @@
     <string name="fileproperties_title"><u>Simple File Properties (プロパティ ダイアログ)</u></string>
 
     <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
+    <!-- Short description has to have less than 80 chars -->
     <string name="app_short_description">カスタマイズ可能なウィジェットを持つクリーンなミュージック プレイヤー。</string>
     <string name="app_long_description">
         ステータスバー、ホーム画面ウィジェット、またはヘッドセットのハードウェアボタンから簡単にコントロールできるミュージック プレイヤー。 タイトルやアーティストでトラックを並べ替えるだけでなく、イコライザーを変更することもできます。 アーティストやアルバムによるフィルタリングはまだサポートしていません。乞うご期待!
@@ -79,4 +82,11 @@
 
         このアプリは、大きな一連のアプリの一つです。 他のアプリは http://www.simplemobiletools.com で見つけることができます
     </string>
+
+    <!--
+        Haven't found some strings? There's more at
+        https://github.com/SimpleMobileTools/Simple-Commons/tree/master/library/src/main/res
+        https://github.com/SimpleMobileTools/Simple-File-Picker/tree/master/library/src/main/res
+        https://github.com/SimpleMobileTools/Simple-File-Properties/tree/master/library/src/main/res
+    -->
 </resources>

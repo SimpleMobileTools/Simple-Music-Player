@@ -50,11 +50,13 @@
     <string name="about">Acerca de Simple Music Player</string>
     <string name="website">Más aplicaciones simples y su código fuente en:\nhttp://simplemobiletools.com</string>
     <string name="email_label">Envíe sus comentarios y sugerencias a:</string>
+    <string name="more_apps_underlined"><u>More apps</u></string>
     <string name="third_party_licences_underlined"><u>Licencias de terceros</u></string>
     <string name="invite_friends_underlined"><u>Invitar a amigos</u></string>
     <string name="share_text">Hola, venga y échele un vistazo a %1$s en %2$s</string>
     <string name="invite_via">Invitar vía</string>
     <string name="rate_us_underlined"><u>Evalúenos en Google Play Store</u></string>
+    <string name="donate_underlined"><u>Donate</u></string>
     <string name="follow_us">Síganos:</string>
     <string name="copyright">v %1$s\nCopyright © Simple Mobile Tools %2$d</string>
 
@@ -68,6 +70,7 @@
     <string name="fileproperties_title"><u>Simple File Properties (properties dialog)</u></string>
 
     <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
+    <!-- Short description has to have less than 80 chars -->
     <string name="app_short_description">A clean music player with a customizable widget.</string>
     <string name="app_long_description">
         A music player easily controllable from the status bar, home screen widget or by hardware buttons on your headset. You can sort the tracks by the Title or Artist, as well as change the Equalizer. Does not yet support filtering by artist or album, stay tuned!
@@ -79,4 +82,11 @@
 
         This app is just one piece of a bigger series of apps. You can find the rest of them at http://www.simplemobiletools.com
     </string>
+
+    <!--
+        Haven't found some strings? There's more at
+        https://github.com/SimpleMobileTools/Simple-Commons/tree/master/library/src/main/res
+        https://github.com/SimpleMobileTools/Simple-File-Picker/tree/master/library/src/main/res
+        https://github.com/SimpleMobileTools/Simple-File-Properties/tree/master/library/src/main/res
+    -->
 </resources>
