@@ -53,7 +53,7 @@ class SongAdapter(val activity: SimpleActivity, var songs: ArrayList<Song>, val 
                     showProperties()
                     true
                 }
-                R.id.cab_edit -> {
+                R.id.cab_rename -> {
                     displayEditDialog()
                     true
                 }
@@ -73,7 +73,7 @@ class SongAdapter(val activity: SimpleActivity, var songs: ArrayList<Song>, val 
         }
 
         override fun onPrepareActionMode(actionMode: ActionMode?, menu: Menu): Boolean {
-            val menuItem = menu.findItem(R.id.cab_edit)
+            val menuItem = menu.findItem(R.id.cab_rename)
             menuItem.isVisible = multiSelector.selectedPositions.size <= 1
             return true
         }

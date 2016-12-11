@@ -7,9 +7,9 @@
         android:title="@string/properties"
         app:showAsAction="ifRoom"/>
     <item
-        android:id="@+id/cab_edit"
-        android:icon="@mipmap/edit"
-        android:title="@string/edit"
+        android:id="@+id/cab_rename"
+        android:icon="@mipmap/rename"
+        android:title="@string/rename"
         app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/cab_delete"

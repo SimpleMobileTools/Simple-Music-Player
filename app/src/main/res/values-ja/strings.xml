@@ -5,7 +5,7 @@
     <string name="no_permissions">曲のアクセス許可が付与されていません</string>
     <string name="delete">削除</string>
     <string name="properties">プロパティ</string>
-    <string name="edit">編集</string>
+    <string name="rename">編集</string>
     <string name="undo">元に戻す</string>
     <string name="extension">拡張子</string>
     <string name="rename_song">曲の名前を変更</string>

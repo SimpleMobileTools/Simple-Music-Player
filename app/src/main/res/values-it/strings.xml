@@ -5,7 +5,7 @@
     <string name="no_permissions">L\'autorizzazione per l\'accesso alle canzoni non è stata consentita</string>
     <string name="delete">Elimina</string>
     <string name="properties">Proprietà</string>
-    <string name="edit">Modifica</string>
+    <string name="rename">Modifica</string>
     <string name="undo">Annulla</string>
     <string name="extension">Estensione</string>
     <string name="rename_song">Rinomina canzone</string>

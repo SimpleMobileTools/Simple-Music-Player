@@ -5,7 +5,7 @@
     <string name="no_permissions">Permission for accessing the songs has not been granted</string>
     <string name="delete">Delete</string>
     <string name="properties">Properties</string>
-    <string name="edit">Edit</string>
+    <string name="rename">Edit</string>
     <string name="undo">Undo</string>
     <string name="extension">Extension</string>
     <string name="rename_song">Rename song</string>

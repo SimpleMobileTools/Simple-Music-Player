@@ -5,7 +5,7 @@
     <string name="no_permissions">Tillstånd att komma åt låtarna har inte beviljats</string>
     <string name="delete">Ta bort</string>
     <string name="properties">Properties</string>
-    <string name="edit">Redigera</string>
+    <string name="rename">Redigera</string>
     <string name="undo">Ångra</string>
     <string name="extension">Filändelse</string>
     <string name="rename_song">Döp om låt</string>
