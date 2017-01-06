@@ -140,7 +140,7 @@ class MyWidgetProvider : AppWidgetProvider() {
         val defaultColor = Color.BLACK
         val newBgColor = prefs.getInt(WIDGET_BG_COLOR, defaultColor)
         val newTextColor = prefs.getInt(WIDGET_TEXT_COLOR, Color.WHITE)
-        var bmp = res.getColoredIcon(newTextColor, R.mipmap.previous)
+        var bmp = res.getColoredIcon(newTextColor, R.drawable.ic_previous)
 
         mRemoteViews.apply {
             setInt(R.id.widget_holder, "setBackgroundColor", newBgColor)
@@ -149,10 +149,10 @@ class MyWidgetProvider : AppWidgetProvider() {
 
             setImageViewBitmap(R.id.previous_btn, bmp)
 
-            mPlayBitmap = res.getColoredIcon(newTextColor, R.mipmap.play)
-            mPauseBitmap = res.getColoredIcon(newTextColor, R.mipmap.pause)
+            mPlayBitmap = res.getColoredIcon(newTextColor, R.drawable.ic_play)
+            mPauseBitmap = res.getColoredIcon(newTextColor, R.drawable.ic_pause)
 
-            bmp = res.getColoredIcon(newTextColor, R.mipmap.next)
+            bmp = res.getColoredIcon(newTextColor, R.drawable.ic_next)
             setImageViewBitmap(R.id.next_btn, bmp)
         }
     }

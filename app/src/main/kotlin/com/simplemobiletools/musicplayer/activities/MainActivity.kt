@@ -200,7 +200,7 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
 
     @Subscribe
     fun songStateChanged(event: Events.SongStateChanged) {
-        play_pause_btn.setImageDrawable(resources.getDrawable(if (event.isPlaying) R.mipmap.pause else R.mipmap.play))
+        play_pause_btn.setImageDrawable(resources.getDrawable(if (event.isPlaying) R.drawable.ic_pause else R.drawable.ic_play))
     }
 
     @Subscribe

@@ -35,7 +35,7 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:src="@mipmap/music_note"
+            android:src="@drawable/ic_music_note"
             android:visibility="invisible"/>
 
     </RelativeLayout>

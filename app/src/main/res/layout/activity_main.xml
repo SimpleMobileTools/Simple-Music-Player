@@ -24,7 +24,7 @@
             android:background="?attr/selectableItemBackgroundBorderless"
             android:paddingBottom="5dp"
             android:paddingTop="5dp"
-            android:src="@mipmap/previous"/>
+            android:src="@drawable/ic_previous"/>
 
         <ImageView
             android:id="@+id/play_pause_btn"
@@ -34,7 +34,7 @@
             android:layout_weight="1"
             android:paddingBottom="5dp"
             android:paddingTop="5dp"
-            android:src="@mipmap/play"/>
+            android:src="@drawable/ic_play"/>
 
         <ImageView
             android:id="@+id/next_btn"
@@ -44,7 +44,7 @@
             android:layout_weight="1"
             android:paddingBottom="5dp"
             android:paddingTop="5dp"
-            android:src="@mipmap/next"/>
+            android:src="@drawable/ic_next"/>
 
     </LinearLayout>
 

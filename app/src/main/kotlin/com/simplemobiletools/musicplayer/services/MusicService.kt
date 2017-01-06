@@ -234,7 +234,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         val artist = mCurrSong?.artist ?: ""
         val playPauseButtonPosition = 1
         val nextButtonPosition = 2
-        val playPauseIcon = if (getIsPlaying()) R.mipmap.pause else R.mipmap.play
+        val playPauseIcon = if (getIsPlaying()) R.drawable.ic_pause else R.drawable.ic_play
 
         var notifWhen: Long = 0
         var showWhen = false
@@ -251,7 +251,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
                 .setStyle(NotificationCompat.MediaStyle().setShowActionsInCompactView(*intArrayOf(playPauseButtonPosition, nextButtonPosition)))
                 .setContentTitle(title)
                 .setContentText(artist)
-                .setSmallIcon(R.mipmap.speakers)
+                .setSmallIcon(R.drawable.ic_headset_small)
                 .setLargeIcon(getAlbumImage())
                 .setVisibility(Notification.VISIBILITY_PUBLIC)
                 .setPriority(Notification.PRIORITY_MAX)
@@ -260,9 +260,9 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
                 .setUsesChronometer(usesChronometer)
                 .setContentIntent(getContentIntent())
                 .setOngoing(ongoing)
-                .addAction(R.mipmap.previous, getString(R.string.previous), mPreviousIntent)
+                .addAction(R.drawable.ic_previous, getString(R.string.previous), mPreviousIntent)
                 .addAction(playPauseIcon, getString(R.string.playpause), mPlayPauseIntent)
-                .addAction(R.mipmap.next, getString(R.string.next), mNextIntent)
+                .addAction(R.drawable.ic_next, getString(R.string.next), mNextIntent)
 
         startForeground(NOTIFICATION_ID, notification.build())
 
@@ -282,7 +282,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             }
         }
 
-        return BitmapFactory.decodeResource(resources, R.mipmap.no_album)
+        return BitmapFactory.decodeResource(resources, R.drawable.ic_headset)
     }
 
     private fun getContentIntent(): PendingIntent {
