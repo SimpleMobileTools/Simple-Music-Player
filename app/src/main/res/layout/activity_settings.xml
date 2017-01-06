@@ -15,7 +15,7 @@
             android:id="@+id/settings_dark_theme_holder"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/settings_padding"
+            android:layout_marginTop="@dimen/medium_margin"
             android:background="?attr/selectableItemBackground"
             android:padding="@dimen/activity_margin">
 
@@ -24,8 +24,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:paddingLeft="@dimen/settings_padding"
-                android:paddingStart="@dimen/settings_padding"
+                android:paddingLeft="@dimen/medium_margin"
+                android:paddingStart="@dimen/medium_margin"
                 android:text="@string/dark_theme"/>
 
             <android.support.v7.widget.SwitchCompat
@@ -43,7 +43,7 @@
             android:id="@+id/settings_numeric_progress_holder"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/settings_padding"
+            android:layout_marginTop="@dimen/medium_margin"
             android:background="?attr/selectableItemBackground"
             android:padding="@dimen/activity_margin">
 
@@ -52,8 +52,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:paddingLeft="@dimen/settings_padding"
-                android:paddingStart="@dimen/settings_padding"
+                android:paddingLeft="@dimen/medium_margin"
+                android:paddingStart="@dimen/medium_margin"
                 android:text="@string/numeric_progress"/>
 
             <android.support.v7.widget.SwitchCompat
@@ -71,10 +71,10 @@
             android:id="@+id/settings_equalizer_holder"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/settings_padding"
+            android:layout_marginTop="@dimen/medium_margin"
             android:paddingBottom="@dimen/activity_margin"
             android:paddingLeft="@dimen/activity_margin"
-            android:paddingRight="@dimen/settings_padding"
+            android:paddingRight="@dimen/medium_margin"
             android:paddingTop="@dimen/activity_margin">
 
             <TextView
@@ -82,8 +82,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:paddingLeft="@dimen/settings_padding"
-                android:paddingStart="@dimen/settings_padding"
+                android:paddingLeft="@dimen/medium_margin"
+                android:paddingStart="@dimen/medium_margin"
                 android:text="@string/equalizer"/>
 
             <android.support.v7.widget.AppCompatSpinner
