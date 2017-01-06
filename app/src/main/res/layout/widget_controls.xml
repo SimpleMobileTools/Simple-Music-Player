@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-    android:id="@+id/main_controls"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main_controls"
     android:layout_width="match_parent"
     android:layout_height="@dimen/controls_row_height"
     android:orientation="horizontal">
 
     <ImageView
         android:id="@+id/previous_btn"
-        style="@style/MyButton"
+        style="@style/MyTransparentButton"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
@@ -18,7 +18,7 @@
 
     <ImageView
         android:id="@+id/play_pause_btn"
-        style="@style/MyButton"
+        style="@style/MyTransparentButton"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
@@ -28,7 +28,7 @@
 
     <ImageView
         android:id="@+id/next_btn"
-        style="@style/MyButton"
+        style="@style/MyTransparentButton"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
