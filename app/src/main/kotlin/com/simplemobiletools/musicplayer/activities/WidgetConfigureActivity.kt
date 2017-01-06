@@ -70,7 +70,7 @@ class WidgetConfigureActivity : AppCompatActivity() {
         config_bg_seekbar.progress = (mBgAlpha * 100).toInt()
         updateBackgroundColor()
 
-        mTextColor = prefs.getInt(WIDGET_TEXT_COLOR, resources.getColor(R.color.colorPrimary))
+        mTextColor = prefs.getInt(WIDGET_TEXT_COLOR, resources.getColor(R.color.color_primary))
         updateTextColor()
     }
 

@@ -137,7 +137,7 @@ class MyWidgetProvider : AppWidgetProvider() {
     private fun updateColors() {
         val prefs = mContext.getSharedPrefs()
         val res = mContext.resources
-        val defaultColor = res.getColor(R.color.dark_grey_transparent)
+        val defaultColor = Color.BLACK
         val newBgColor = prefs.getInt(WIDGET_BG_COLOR, defaultColor)
         val newTextColor = prefs.getInt(WIDGET_TEXT_COLOR, Color.WHITE)
         var bmp = res.getColoredIcon(newTextColor, R.mipmap.previous)
