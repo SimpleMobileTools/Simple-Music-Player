@@ -3,16 +3,9 @@
     <string name="app_launcher_name">Reprodutor de músicas</string>
     <string name="playlist_empty">A lista de reprodução está vazia</string>
     <string name="no_permissions">Não foi concedida a permissão para aceder às músicas</string>
-    <string name="delete">Apagar</string>
-    <string name="properties">Propriedades</string>
-    <string name="rename">Editar</string>
-    <string name="undo">Desfazer</string>
-    <string name="extension">Extensão</string>
     <string name="rename_song">Renomear música</string>
     <string name="rename_song_error">Ocorreu um erro ao renomear</string>
     <string name="rename_song_empty">Por favor preencha todos os campos</string>
-    <string name="ok">OK</string>
-    <string name="cancel">Cancelar</string>
     <string name="enable_song_repetition">Repetir faixa atual</string>
     <string name="disable_song_repetition">Parar de repetir a faixa atual</string>
     <string name="song_repetition_enabled">Current song repetition enabled</string>
@@ -31,43 +24,9 @@
     <string name="playpause">Reproduzir/Pausa</string>
     <string name="next">Seguinte</string>
 
-    <!-- Sorting -->
-    <string name="sort_by">Ordenar por</string>
-    <string name="title">Título</string>
-    <string name="artist">Artista</string>
-    <string name="file_name">Nome do ficheiro</string>
-    <string name="duration">Duração</string>
-    <string name="ascending">Ascendente</string>
-    <string name="descending">Descendente</string>
-
     <!-- Settings -->
-    <string name="settings">Definições</string>
-    <string name="dark_theme">Tema escuro</string>
     <string name="numeric_progress">Mostrar também evolução em números</string>
     <string name="equalizer">Equalizador</string>
-
-    <!-- About -->
-    <string name="about">Acerca</string>
-    <string name="website">Mais aplicações Simple e código fonte em:\nhttp://simplemobiletools.com</string>
-    <string name="email_label">Envie os seus comentários ou sugestões para:</string>
-    <string name="more_apps_underlined"><u>Mais aplicações</u></string>
-    <string name="third_party_licences_underlined"><u>Licenças de terceiros</u></string>
-    <string name="invite_friends_underlined"><u>Convidar amigos</u></string>
-    <string name="share_text">Olá, experimenta %1$s em %2$s</string>
-    <string name="invite_via">Convidar via</string>
-    <string name="rate_us_underlined"><u>Avalie-nos na Play Store</u></string>
-    <string name="donate_underlined"><u>Donativos</u></string>
-    <string name="follow_us">Siga-nos:</string>
-    <string name="copyright">V %1$s\nCopyright © Simple Mobile Tools %2$d</string>
-
-    <!-- License -->
-    <string name="notice">Esta aplicação usa as seguintes bibliotecas de terceiros para facilitar a minha vida. Obrigado.</string>
-    <string name="third_party_licences">Licenças de terceiros</string>
-    <string name="kotlin_title"><u>Kotlin (linguagem de programação)</u></string>
-    <string name="ambilwarna_title"><u>AmbilWarna (seletor de cores)</u></string>
-    <string name="otto_title"><u>Otto (canal de eventos)</u></string>
-    <string name="filepicker_title"><u>Simple File Picker (diálogo de seleção de ficheiros)</u></string>
-    <string name="fileproperties_title"><u>Simple File Properties (diálogo de propriedades)</u></string>
 
     <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
     <!-- Short description has to have less than 80 chars -->
@@ -86,7 +45,5 @@
     <!--
         Não encontrou todas as cadeias a traduzir? Existem mais algumas em:
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/library/src/main/res
-        https://github.com/SimpleMobileTools/Simple-File-Picker/tree/master/library/src/main/res
-        https://github.com/SimpleMobileTools/Simple-File-Properties/tree/master/library/src/main/res
     -->
 </resources>

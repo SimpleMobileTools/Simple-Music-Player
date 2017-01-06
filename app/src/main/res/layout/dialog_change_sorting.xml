@@ -41,7 +41,7 @@
                 android:layout_height="wrap_content"
                 android:paddingBottom="@dimen/medium_padding"
                 android:paddingTop="@dimen/medium_padding"
-                android:text="@string/file_name"/>
+                android:text="@string/filename"/>
 
             <RadioButton
                 android:id="@+id/sorting_dialog_radio_duration"
