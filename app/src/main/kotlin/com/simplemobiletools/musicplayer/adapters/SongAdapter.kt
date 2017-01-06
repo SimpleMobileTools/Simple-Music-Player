@@ -8,9 +8,9 @@ import android.view.*
 import com.bignerdranch.android.multiselector.ModalMultiSelectorCallback
 import com.bignerdranch.android.multiselector.MultiSelector
 import com.bignerdranch.android.multiselector.SwappingHolder
-import com.simplemobiletools.filepicker.dialogs.ConfirmationDialog
-import com.simplemobiletools.filepicker.extensions.scanPaths
-import com.simplemobiletools.fileproperties.dialogs.PropertiesDialog
+import com.simplemobiletools.commons.dialogs.ConfirmationDialog
+import com.simplemobiletools.commons.dialogs.PropertiesDialog
+import com.simplemobiletools.commons.extensions.scanPaths
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
 import com.simplemobiletools.musicplayer.dialogs.EditDialog

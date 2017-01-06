@@ -12,8 +12,8 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.SeekBar
-import com.simplemobiletools.filepicker.extensions.toast
-import com.simplemobiletools.filepicker.views.RecyclerViewDivider
+import com.simplemobiletools.commons.extensions.toast
+import com.simplemobiletools.commons.views.RecyclerViewDivider
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.adapters.SongAdapter
 import com.simplemobiletools.musicplayer.dialogs.ChangeSortingDialog

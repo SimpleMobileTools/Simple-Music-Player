@@ -7,7 +7,7 @@ import android.net.Uri
 import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.WindowManager
-import com.simplemobiletools.filepicker.extensions.*
+import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
 import com.simplemobiletools.musicplayer.models.Song
