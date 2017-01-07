@@ -71,7 +71,7 @@
         android:maxLines="1"
         android:textSize="16sp"/>
 
-    <SeekBar
+    <com.simplemobiletools.commons.views.MySeekBar
         android:id="@+id/progressbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -9,9 +9,9 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.widget.RemoteViews
+import com.simplemobiletools.commons.extensions.getColoredIcon
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.MainActivity
-import com.simplemobiletools.musicplayer.extensions.getColoredIcon
 import com.simplemobiletools.musicplayer.extensions.sendIntent
 import com.simplemobiletools.musicplayer.models.Events
 import com.simplemobiletools.musicplayer.models.Song

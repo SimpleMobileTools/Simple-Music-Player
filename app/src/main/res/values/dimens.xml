@@ -2,5 +2,4 @@
     <dimen name="song_item_vertical_margin">6dp</dimen>
     <dimen name="medium_padding">10dp</dimen>
     <dimen name="controls_row_height">60dp</dimen>
-    <dimen name="spinner_padding_right">10dp</dimen>
 </resources>
