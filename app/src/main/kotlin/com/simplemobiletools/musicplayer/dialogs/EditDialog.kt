@@ -11,12 +11,12 @@ import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
 import com.simplemobiletools.musicplayer.models.Song
-import kotlinx.android.synthetic.main.rename_song.view.*
+import kotlinx.android.synthetic.main.dialog_rename_song.view.*
 import java.io.File
 
 class EditDialog(val activity: SimpleActivity, val song: Song, val callback: (Song) -> Unit) {
     init {
-        val view = LayoutInflater.from(activity).inflate(R.layout.rename_song, null).apply {
+        val view = LayoutInflater.from(activity).inflate(R.layout.dialog_rename_song, null).apply {
             title.setText(song.title)
             artist.setText(song.artist)
 

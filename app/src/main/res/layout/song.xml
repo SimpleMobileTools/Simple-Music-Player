@@ -13,14 +13,14 @@
         android:layout_height="wrap_content"
         android:padding="@dimen/song_item_vertical_margin">
 
-        <TextView
+        <com.simplemobiletools.commons.views.MyTextView
             android:id="@+id/song_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Song Title"
             android:textSize="16sp"/>
 
-        <TextView
+        <com.simplemobiletools.commons.views.MyTextView
             android:id="@+id/song_artist"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

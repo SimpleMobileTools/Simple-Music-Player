@@ -14,6 +14,7 @@ import android.widget.SeekBar
 import com.simplemobiletools.commons.extensions.getFormattedDuration
 import com.simplemobiletools.commons.extensions.hasStoragePermission
 import com.simplemobiletools.commons.extensions.toast
+import com.simplemobiletools.commons.extensions.updateTextColors
 import com.simplemobiletools.commons.helpers.LICENSE_AMBILWARNA
 import com.simplemobiletools.commons.helpers.LICENSE_KOTLIN
 import com.simplemobiletools.commons.helpers.LICENSE_MULTISELECT
@@ -68,6 +69,7 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
         setupIconColors()
         song_progress.visibility = if (mIsNumericProgressShown) View.VISIBLE else View.GONE
         markCurrentSong()
+        updateTextColors(main_holder)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -138,7 +140,7 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
     }
 
     private fun setupIconColors() {
-        val color = song_title.currentTextColor
+        val color = config.textColor
         previous_btn.setColorFilter(color, PorterDuff.Mode.SRC_IN)
         play_pause_btn.setColorFilter(color, PorterDuff.Mode.SRC_IN)
         next_btn.setColorFilter(color, PorterDuff.Mode.SRC_IN)

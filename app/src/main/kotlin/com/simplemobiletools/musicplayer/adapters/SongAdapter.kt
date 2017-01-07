@@ -15,6 +15,7 @@ import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
 import com.simplemobiletools.musicplayer.dialogs.EditDialog
 import com.simplemobiletools.musicplayer.extensions.sendIntent
+import com.simplemobiletools.musicplayer.helpers.Config
 import com.simplemobiletools.musicplayer.helpers.EDIT
 import com.simplemobiletools.musicplayer.helpers.EDITED_SONG
 import com.simplemobiletools.musicplayer.helpers.REFRESH_LIST
@@ -33,6 +34,7 @@ class SongAdapter(val activity: SimpleActivity, var songs: ArrayList<Song>, val 
         val markedItems = HashSet<Int>()
         var iconColor = 0
         var currentSongIndex = 0
+        var textColor = 0
 
         fun toggleItemSelection(itemView: View, select: Boolean, pos: Int = -1) {
             itemView.song_frame.isSelected = select
@@ -44,6 +46,10 @@ class SongAdapter(val activity: SimpleActivity, var songs: ArrayList<Song>, val 
             else
                 markedItems.remove(pos)
         }
+    }
+
+    init {
+        textColor = Config.newInstance(activity).textColor
     }
 
     val multiSelectorMode = object : ModalMultiSelectorCallback(multiSelector) {
@@ -157,7 +163,11 @@ class SongAdapter(val activity: SimpleActivity, var songs: ArrayList<Song>, val 
         fun bindView(multiSelectorCallback: ModalMultiSelectorCallback, multiSelector: MultiSelector, song: Song, pos: Int): View {
             itemView.apply {
                 song_title.text = song.title
+                song_title.setTextColor(textColor)
+
                 song_artist.text = song.artist
+                song_artist.setTextColor(textColor)
+
                 if (currentSongIndex == pos) {
                     song_note_image.setColorFilter(iconColor, PorterDuff.Mode.SRC_IN)
                     song_note_image.visibility = View.VISIBLE

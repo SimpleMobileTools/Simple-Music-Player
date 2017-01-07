@@ -48,7 +48,7 @@
 
     </LinearLayout>
 
-    <TextView
+    <com.simplemobiletools.commons.views.MyTextView
         android:id="@+id/song_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -60,7 +60,7 @@
         android:maxLines="1"
         android:textSize="18sp"/>
 
-    <TextView
+    <com.simplemobiletools.commons.views.MyTextView
         android:id="@+id/song_artist"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -80,7 +80,7 @@
         android:layout_marginRight="@dimen/activity_margin"
         android:padding="@dimen/song_item_vertical_margin"/>
 
-    <TextView
+    <com.simplemobiletools.commons.views.MyTextView
         android:id="@+id/song_progress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
