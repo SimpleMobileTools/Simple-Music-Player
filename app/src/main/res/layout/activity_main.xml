@@ -78,7 +78,10 @@
         android:layout_below="@+id/song_artist"
         android:layout_marginLeft="@dimen/activity_margin"
         android:layout_marginRight="@dimen/activity_margin"
-        android:padding="@dimen/song_item_vertical_margin"/>
+        android:paddingBottom="@dimen/medium_margin"
+        android:paddingLeft="@dimen/activity_margin"
+        android:paddingRight="@dimen/activity_margin"
+        android:paddingTop="@dimen/medium_margin"/>
 
     <com.simplemobiletools.commons.views.MyTextView
         android:id="@+id/song_progress"
