@@ -7,7 +7,7 @@ A music player easily controllable from the status bar, home screen widget or by
 
 It contains a widget with customizable text color, alpha and the color of the background.
 
-Contains no ads or unnecessary permissions. It is fully opensource, provides a Dark theme too.
+Contains no ads or unnecessary permissions. It is fully opensource, provides customizable colors.
 
 This app is just one piece of a bigger series of apps. You can find the rest of them at http://www.simplemobiletools.com
 
