@@ -18,8 +18,7 @@ import android.support.v7.app.NotificationCompat
 import android.telephony.PhoneStateListener
 import android.telephony.TelephonyManager
 import android.util.Log
-import com.simplemobiletools.commons.extensions.hasStoragePermission
-import com.simplemobiletools.commons.extensions.toast
+import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.MainActivity
 import com.simplemobiletools.musicplayer.helpers.*
@@ -36,7 +35,7 @@ import java.util.*
 class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnErrorListener, MediaPlayer.OnCompletionListener {
     companion object {
         private val TAG = MusicService::class.java.simpleName
-        private val MIN_DURATION_MS = 20000
+        private val MIN_DURATION = 20
         private val PROGRESS_UPDATE_INTERVAL = 1000
         private val NOTIFICATION_ID = 78
 
@@ -184,20 +183,14 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
         try {
             cursor = contentResolver.query(uri, columns, null, null, order)
-
-            if (cursor?.moveToFirst() == true) {
-                val idIndex = cursor.getColumnIndex(MediaStore.Audio.Media._ID)
-                val titleIndex = cursor.getColumnIndex(MediaStore.Audio.Media.TITLE)
-                val artistIndex = cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST)
-                val durationIndex = cursor.getColumnIndex(MediaStore.Audio.Media.DURATION)
-                val pathIndex = cursor.getColumnIndex(MediaStore.Audio.Media.DATA)
+            if (cursor != null && cursor.moveToFirst()) {
                 do {
-                    if (cursor.getInt(durationIndex) > MIN_DURATION_MS) {
-                        val id = cursor.getLong(idIndex)
-                        val title = cursor.getString(titleIndex)
-                        val artist = cursor.getString(artistIndex)
-                        val path = cursor.getString(pathIndex)
-                        val duration = cursor.getInt(durationIndex) / 1000
+                    val duration = cursor.getIntValue(MediaStore.Audio.Media.DURATION) / 1000
+                    if (duration > MIN_DURATION) {
+                        val id = cursor.getLongValue(MediaStore.Audio.Media._ID)
+                        val title = cursor.getStringValue(MediaStore.Audio.Media.TITLE)
+                        val artist = cursor.getStringValue(MediaStore.Audio.Media.ARTIST)
+                        val path = cursor.getStringValue(MediaStore.Audio.Media.DATA)
                         mSongs!!.add(Song(id, title, artist, path, duration))
                     }
                 } while (cursor.moveToNext())
