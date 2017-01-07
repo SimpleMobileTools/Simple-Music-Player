@@ -1,11 +1,9 @@
 package com.simplemobiletools.musicplayer.services
 
-import android.Manifest
 import android.app.Notification
 import android.app.PendingIntent
 import android.app.Service
 import android.content.*
-import android.content.pm.PackageManager
 import android.database.Cursor
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -16,11 +14,11 @@ import android.media.audiofx.Equalizer
 import android.os.Handler
 import android.os.PowerManager
 import android.provider.MediaStore
-import android.support.v4.content.ContextCompat
 import android.support.v7.app.NotificationCompat
 import android.telephony.PhoneStateListener
 import android.telephony.TelephonyManager
 import android.util.Log
+import com.simplemobiletools.commons.extensions.hasStoragePermission
 import com.simplemobiletools.commons.extensions.toast
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.MainActivity
@@ -73,7 +71,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         val remoteControlComponent = ComponentName(packageName, RemoteControlReceiver::class.java.name)
         val audioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager
         audioManager.registerMediaButtonEventReceiver(remoteControlComponent)
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+        if (hasStoragePermission()) {
             initService()
         } else {
             toast(R.string.no_permissions)
@@ -101,7 +99,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     }
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+        if (!hasStoragePermission()) {
             return START_NOT_STICKY
         }
 

@@ -7,11 +7,11 @@ import android.graphics.PorterDuff
 import android.media.AudioManager
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
-import android.support.v4.content.ContextCompat
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.SeekBar
+import com.simplemobiletools.commons.extensions.hasStoragePermission
 import com.simplemobiletools.commons.extensions.toast
 import com.simplemobiletools.commons.views.RecyclerViewDivider
 import com.simplemobiletools.musicplayer.R
@@ -46,10 +46,10 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
         mBus.register(this)
         progressbar.setOnSeekBarChangeListener(this)
 
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+        if (hasStoragePermission()) {
             initializePlayer()
         } else {
-            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), STORAGE_PERMISSION)
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), STORAGE_PERMISSION)
         }
 
         previous_btn.setOnClickListener { sendIntent(PREVIOUS) }
