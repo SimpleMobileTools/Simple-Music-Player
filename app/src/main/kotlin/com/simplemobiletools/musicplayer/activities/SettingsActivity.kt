@@ -42,17 +42,8 @@ class SettingsActivity : SimpleActivity() {
     }
 
     private fun setupEqualizer() {
-        val equalizer = MusicService.mEqualizer ?: return
-        val cnt = equalizer.numberOfPresets.toInt()
-        val presets = arrayOfNulls<String>(cnt)
-        for (i in 0..cnt - 1) {
-            presets[i] = equalizer.getPresetName(i.toShort())
-        }
-        val arrayAdapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, presets)
-        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-
         settings_equalizer.apply {
-            adapter = arrayAdapter
+            adapter = getPresetsAdapter()
             setSelection(config.equalizer)
             onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
@@ -69,5 +60,19 @@ class SettingsActivity : SimpleActivity() {
                 }
             }
         }
+    }
+
+    private fun getPresetsAdapter(): ArrayAdapter<String> {
+        val adapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item)
+        val equalizer = MusicService.mEqualizer ?: return adapter
+        val cnt = equalizer.numberOfPresets.toInt()
+        val presets = arrayOfNulls<String>(cnt)
+        for (i in 0..cnt - 1) {
+            presets[i] = equalizer.getPresetName(i.toShort())
+        }
+        for (preset in presets)
+            adapter.add(preset)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        return adapter
     }
 }
