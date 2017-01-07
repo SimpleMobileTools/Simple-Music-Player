@@ -91,7 +91,7 @@ class WidgetConfigureActivity : AppCompatActivity() {
     }
 
     fun pickBackgroundColor() {
-        val dialog = AmbilWarnaDialog(this, mBgColorWithoutTransparency, object : AmbilWarnaDialog.OnAmbilWarnaListener {
+        AmbilWarnaDialog(this, mBgColorWithoutTransparency, object : AmbilWarnaDialog.OnAmbilWarnaListener {
             override fun onCancel(dialog: AmbilWarnaDialog) {
             }
 
@@ -99,13 +99,11 @@ class WidgetConfigureActivity : AppCompatActivity() {
                 mBgColorWithoutTransparency = color
                 updateBackgroundColor()
             }
-        })
-
-        dialog.show()
+        }).show()
     }
 
     fun pickTextColor() {
-        val dialog = AmbilWarnaDialog(this, mTextColor, object : AmbilWarnaDialog.OnAmbilWarnaListener {
+        AmbilWarnaDialog(this, mTextColor, object : AmbilWarnaDialog.OnAmbilWarnaListener {
             override fun onCancel(dialog: AmbilWarnaDialog) {
             }
 
@@ -113,9 +111,7 @@ class WidgetConfigureActivity : AppCompatActivity() {
                 mTextColor = color
                 updateTextColor()
             }
-        })
-
-        dialog.show()
+        }).show()
     }
 
     private fun storeWidgetColors() {

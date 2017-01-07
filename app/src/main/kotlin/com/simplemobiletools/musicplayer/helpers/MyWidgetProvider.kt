@@ -215,7 +215,6 @@ class MyWidgetProvider : AppWidgetProvider() {
             mBus!!.register(this)
         } catch (e: Exception) {
         }
-
     }
 
     private fun unregisterBus() {
@@ -223,6 +222,5 @@ class MyWidgetProvider : AppWidgetProvider() {
             mBus!!.unregister(this)
         } catch (e: Exception) {
         }
-
     }
 }

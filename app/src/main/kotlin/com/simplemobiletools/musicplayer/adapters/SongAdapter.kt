@@ -48,21 +48,13 @@ class SongAdapter(val activity: SimpleActivity, var songs: ArrayList<Song>, val 
 
     val multiSelectorMode = object : ModalMultiSelectorCallback(multiSelector) {
         override fun onActionItemClicked(mode: ActionMode, item: MenuItem): Boolean {
-            return when (item.itemId) {
-                R.id.cab_properties -> {
-                    showProperties()
-                    true
-                }
-                R.id.cab_rename -> {
-                    displayEditDialog()
-                    true
-                }
-                R.id.cab_delete -> {
-                    askConfirmDelete()
-                    true
-                }
-                else -> false
+            when (item.itemId) {
+                R.id.cab_properties -> showProperties()
+                R.id.cab_rename -> displayEditDialog()
+                R.id.cab_delete -> askConfirmDelete()
+                else -> return false
             }
+            return true
         }
 
         override fun onCreateActionMode(actionMode: ActionMode?, menu: Menu?): Boolean {

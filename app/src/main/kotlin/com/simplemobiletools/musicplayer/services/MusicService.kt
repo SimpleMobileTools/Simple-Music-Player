@@ -269,7 +269,12 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             val rawArt = mediaMetadataRetriever.embeddedPicture
             if (rawArt != null) {
                 val options = BitmapFactory.Options()
-                return BitmapFactory.decodeByteArray(rawArt, 0, rawArt.size, options)
+                try {
+                    val bitmap = BitmapFactory.decodeByteArray(rawArt, 0, rawArt.size, options)
+                    if (bitmap != null)
+                        return bitmap
+                } catch (e: Exception) {
+                }
             }
         }
 

@@ -83,29 +83,15 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.sort -> {
-                showSortingDialog()
-                true
-            }
-            R.id.toggle_shuffle -> {
-                toggleShuffle()
-                true
-            }
-            R.id.toggle_song_repetition -> {
-                toggleSongRepetition()
-                true
-            }
-            R.id.settings -> {
-                launchSettings()
-                true
-            }
-            R.id.about -> {
-                launchAbout()
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
+        when (item.itemId) {
+            R.id.sort -> showSortingDialog()
+            R.id.toggle_shuffle -> toggleShuffle()
+            R.id.toggle_song_repetition -> toggleSongRepetition()
+            R.id.settings -> launchSettings()
+            R.id.about -> launchAbout()
+            else -> return super.onOptionsItemSelected(item)
         }
+        return true
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {

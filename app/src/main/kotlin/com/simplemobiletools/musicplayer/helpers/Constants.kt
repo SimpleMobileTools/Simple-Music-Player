@@ -22,8 +22,6 @@ val SET_EQUALIZER = PATH + "SET_EQUALIZER"
 
 // shared preferences
 val PREFS_KEY = "Music Player"
-val IS_FIRST_RUN = "is_first_run"
-val IS_DARK_THEME = "is_dark_theme"
 val SHUFFLE = "shuffle"
 val NUMERIC_PROGRESS = "numeric_progress"
 val SORTING = "track_sorting"
