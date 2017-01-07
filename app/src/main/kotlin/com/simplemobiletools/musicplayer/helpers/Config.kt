@@ -1,45 +1,30 @@
 package com.simplemobiletools.musicplayer.helpers
 
 import android.content.Context
-import android.content.SharedPreferences
-import com.simplemobiletools.musicplayer.extensions.getSharedPrefs
+import com.simplemobiletools.commons.helpers.BaseConfig
 
-class Config private constructor(context: Context) {
-    private val mPrefs: SharedPreferences
-
+class Config(context: Context) : BaseConfig(context) {
     companion object {
         fun newInstance(context: Context) = Config(context)
     }
 
-    init {
-        mPrefs = context.getSharedPrefs()
-    }
-
-    var isFirstRun: Boolean
-        get() = mPrefs.getBoolean(IS_FIRST_RUN, true)
-        set(firstRun) = mPrefs.edit().putBoolean(IS_FIRST_RUN, firstRun).apply()
-
-    var isDarkTheme: Boolean
-        get() = mPrefs.getBoolean(IS_DARK_THEME, false)
-        set(isDarkTheme) = mPrefs.edit().putBoolean(IS_DARK_THEME, isDarkTheme).apply()
-
     var isShuffleEnabled: Boolean
-        get() = mPrefs.getBoolean(SHUFFLE, true)
-        set(shuffle) = mPrefs.edit().putBoolean(SHUFFLE, shuffle).apply()
+        get() = prefs.getBoolean(SHUFFLE, true)
+        set(shuffle) = prefs.edit().putBoolean(SHUFFLE, shuffle).apply()
 
     var isNumericProgressEnabled: Boolean
-        get() = mPrefs.getBoolean(NUMERIC_PROGRESS, false)
-        set(enabled) = mPrefs.edit().putBoolean(NUMERIC_PROGRESS, enabled).apply()
+        get() = prefs.getBoolean(NUMERIC_PROGRESS, false)
+        set(enabled) = prefs.edit().putBoolean(NUMERIC_PROGRESS, enabled).apply()
 
     var sorting: Int
-        get() = mPrefs.getInt(SORTING, SORT_BY_TITLE)
-        set(sorting) = mPrefs.edit().putInt(SORTING, sorting).apply()
+        get() = prefs.getInt(SORTING, SORT_BY_TITLE)
+        set(sorting) = prefs.edit().putInt(SORTING, sorting).apply()
 
     var equalizer: Int
-        get() = mPrefs.getInt(EQUALIZER, 0)
-        set(equalizer) = mPrefs.edit().putInt(EQUALIZER, equalizer).apply()
+        get() = prefs.getInt(EQUALIZER, 0)
+        set(equalizer) = prefs.edit().putInt(EQUALIZER, equalizer).apply()
 
     var repeatSong: Boolean
-        get() = mPrefs.getBoolean(REPEAT_SONG, false)
-        set(repeat) = mPrefs.edit().putBoolean(REPEAT_SONG, repeat).apply()
+        get() = prefs.getBoolean(REPEAT_SONG, false)
+        set(repeat) = prefs.edit().putBoolean(REPEAT_SONG, repeat).apply()
 }

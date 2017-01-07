@@ -17,18 +17,8 @@ class SettingsActivity : SimpleActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
 
-        setupDarkTheme()
         setupNumericProgress()
         setupEqualizer()
-    }
-
-    private fun setupDarkTheme() {
-        settings_dark_theme.isChecked = config.isDarkTheme
-        settings_dark_theme_holder.setOnClickListener {
-            settings_dark_theme.toggle()
-            config.isDarkTheme = settings_dark_theme.isChecked
-            restartActivity()
-        }
     }
 
     private fun setupNumericProgress() {
