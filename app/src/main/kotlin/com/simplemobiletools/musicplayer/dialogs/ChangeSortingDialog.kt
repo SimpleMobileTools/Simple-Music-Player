@@ -1,35 +1,27 @@
 package com.simplemobiletools.musicplayer.dialogs
 
 import android.app.Activity
-import android.app.AlertDialog
 import android.content.DialogInterface
+import android.support.v7.app.AlertDialog
 import android.view.LayoutInflater
 import android.view.View
+import com.simplemobiletools.commons.extensions.setupDialogStuff
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.helpers.*
 import kotlinx.android.synthetic.main.dialog_change_sorting.view.*
 
 class ChangeSortingDialog(val activity: Activity, val callback: () -> Unit) : DialogInterface.OnClickListener {
-    companion object {
-        private var currSorting = 0
-
-        lateinit var config: Config
-        lateinit var view: View
-    }
+    private var currSorting = 0
+    var config: Config = Config.newInstance(activity)
+    var view: View = LayoutInflater.from(activity).inflate(R.layout.dialog_change_sorting, null)
 
     init {
-        config = Config.newInstance(activity)
-        view = LayoutInflater.from(activity).inflate(R.layout.dialog_change_sorting, null)
-
-        val dialog = AlertDialog.Builder(activity)
-                .setTitle(activity.resources.getString(R.string.sort_by))
-                .setView(view)
+        AlertDialog.Builder(activity)
                 .setPositiveButton(R.string.ok, this)
                 .setNegativeButton(R.string.cancel, null)
-                .create()
-
-        dialog.setCanceledOnTouchOutside(true)
-        dialog.show()
+                .create().apply {
+            activity.setupDialogStuff(view, this, R.string.sort_by)
+        }
 
         currSorting = config.sorting
         setupSortRadio()

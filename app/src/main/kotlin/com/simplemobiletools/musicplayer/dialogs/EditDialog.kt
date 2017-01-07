@@ -1,10 +1,10 @@
 package com.simplemobiletools.musicplayer.dialogs
 
-import android.app.AlertDialog
 import android.content.ContentValues
 import android.content.Context
 import android.net.Uri
 import android.provider.MediaStore
+import android.support.v7.app.AlertDialog
 import android.view.LayoutInflater
 import android.view.WindowManager
 import com.simplemobiletools.commons.extensions.*
@@ -16,23 +16,21 @@ import java.io.File
 
 class EditDialog(val activity: SimpleActivity, val song: Song, val callback: (Song) -> Unit) {
     init {
-        val view = LayoutInflater.from(activity).inflate(R.layout.rename_song, null)
-        view.title.setText(song.title)
-        view.artist.setText(song.artist)
+        val view = LayoutInflater.from(activity).inflate(R.layout.rename_song, null).apply {
+            title.setText(song.title)
+            artist.setText(song.artist)
 
-        val filename = song.path.getFilenameFromPath()
-        view.file_name.setText(filename.substring(0, filename.lastIndexOf(".")))
-        view.extension.setText(song.path.getFilenameExtension())
+            val filename = song.path.getFilenameFromPath()
+            file_name.setText(filename.substring(0, filename.lastIndexOf(".")))
+            extension.setText(song.path.getFilenameExtension())
+        }
 
         AlertDialog.Builder(activity)
-                .setTitle(activity.resources.getString(R.string.rename_song))
-                .setView(view)
                 .setPositiveButton(R.string.ok, null)
                 .setNegativeButton(R.string.cancel, null)
                 .create().apply {
             window!!.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE)
-            setCanceledOnTouchOutside(true)
-            show()
+            activity.setupDialogStuff(view, this, R.string.rename_song)
             getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener({
                 val newTitle = view.title.value
                 val newArtist = view.artist.value
@@ -78,9 +76,10 @@ class EditDialog(val activity: SimpleActivity, val song: Song, val callback: (So
         val where = "${MediaStore.Images.Media._ID} = ?"
         val args = arrayOf(songID.toString())
 
-        val values = ContentValues()
-        values.put(MediaStore.Audio.Media.TITLE, newSongTitle)
-        values.put(MediaStore.Audio.Media.ARTIST, newSongArtist)
+        val values = ContentValues().apply {
+            put(MediaStore.Audio.Media.TITLE, newSongTitle)
+            put(MediaStore.Audio.Media.ARTIST, newSongArtist)
+        }
         return context.contentResolver.update(uri, values, where, args) == 1
     }
 }

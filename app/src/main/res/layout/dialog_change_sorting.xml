@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <RadioButton
+            <com.simplemobiletools.commons.views.MyCompatRadioButton
                 android:id="@+id/sorting_dialog_radio_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -27,7 +27,7 @@
                 android:paddingTop="@dimen/medium_padding"
                 android:text="@string/title"/>
 
-            <RadioButton
+            <com.simplemobiletools.commons.views.MyCompatRadioButton
                 android:id="@+id/sorting_dialog_radio_artist"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -35,7 +35,7 @@
                 android:paddingTop="@dimen/medium_padding"
                 android:text="@string/artist"/>
 
-            <RadioButton
+            <com.simplemobiletools.commons.views.MyCompatRadioButton
                 android:id="@+id/sorting_dialog_radio_file_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -43,7 +43,7 @@
                 android:paddingTop="@dimen/medium_padding"
                 android:text="@string/filename"/>
 
-            <RadioButton
+            <com.simplemobiletools.commons.views.MyCompatRadioButton
                 android:id="@+id/sorting_dialog_radio_duration"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -64,7 +64,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <RadioButton
+            <com.simplemobiletools.commons.views.MyCompatRadioButton
                 android:id="@+id/sorting_dialog_radio_ascending"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -72,7 +72,7 @@
                 android:paddingTop="@dimen/medium_padding"
                 android:text="@string/ascending"/>
 
-            <RadioButton
+            <com.simplemobiletools.commons.views.MyCompatRadioButton
                 android:id="@+id/sorting_dialog_radio_descending"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
