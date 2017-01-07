@@ -2,10 +2,10 @@ package com.simplemobiletools.musicplayer.activities
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.TaskStackBuilder
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import com.simplemobiletools.commons.extensions.updateTextColors
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.helpers.EQUALIZER
 import com.simplemobiletools.musicplayer.helpers.SET_EQUALIZER
@@ -16,9 +16,21 @@ class SettingsActivity : SimpleActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
+    }
 
+    override fun onResume() {
+        super.onResume()
+
+        setupCustomizeColors()
         setupNumericProgress()
         setupEqualizer()
+        updateTextColors(settings_scrollview)
+    }
+
+    private fun setupCustomizeColors() {
+        settings_customize_colors_holder.setOnClickListener {
+            startCustomizationActivity()
+        }
     }
 
     private fun setupNumericProgress() {
@@ -57,9 +69,5 @@ class SettingsActivity : SimpleActivity() {
                 }
             }
         }
-    }
-
-    private fun restartActivity() {
-        TaskStackBuilder.create(applicationContext).addNextIntentWithParentStack(intent).startActivities()
     }
 }
