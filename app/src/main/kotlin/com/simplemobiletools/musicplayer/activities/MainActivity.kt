@@ -13,7 +13,12 @@ import android.view.View
 import android.widget.SeekBar
 import com.simplemobiletools.commons.extensions.hasStoragePermission
 import com.simplemobiletools.commons.extensions.toast
+import com.simplemobiletools.commons.helpers.LICENSE_AMBILWARNA
+import com.simplemobiletools.commons.helpers.LICENSE_KOTLIN
+import com.simplemobiletools.commons.helpers.LICENSE_MULTISELECT
+import com.simplemobiletools.commons.helpers.LICENSE_OTTO
 import com.simplemobiletools.commons.views.RecyclerViewDivider
+import com.simplemobiletools.musicplayer.BuildConfig
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.adapters.SongAdapter
 import com.simplemobiletools.musicplayer.dialogs.ChangeSortingDialog
@@ -92,11 +97,11 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
                 true
             }
             R.id.settings -> {
-                startActivity(Intent(applicationContext, SettingsActivity::class.java))
+                launchSettings()
                 true
             }
             R.id.about -> {
-                startActivity(Intent(applicationContext, AboutActivity::class.java))
+                launchAbout()
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -113,6 +118,14 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
                 toast(R.string.no_permissions)
             }
         }
+    }
+
+    private fun launchSettings() {
+        startActivity(Intent(applicationContext, SettingsActivity::class.java))
+    }
+
+    private fun launchAbout() {
+        startAboutActivity(R.string.app_name, LICENSE_KOTLIN or LICENSE_AMBILWARNA or LICENSE_OTTO or LICENSE_MULTISELECT, BuildConfig.VERSION_NAME)
     }
 
     private fun showSortingDialog() {
