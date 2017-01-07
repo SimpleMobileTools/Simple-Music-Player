@@ -59,7 +59,7 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
 
     override fun onResume() {
         super.onResume()
-        mIsNumericProgressShown = mConfig.isNumericProgressEnabled
+        mIsNumericProgressShown = config.isNumericProgressEnabled
         setupIconColors()
         song_progress.visibility = if (mIsNumericProgressShown) View.VISIBLE else View.GONE
         markCurrentSong()
@@ -69,10 +69,10 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
         menuInflater.inflate(R.menu.menu, menu)
 
         val songRepetition = menu.findItem(R.id.toggle_song_repetition)
-        songRepetition.title = getString(if (mConfig.repeatSong) R.string.disable_song_repetition else R.string.enable_song_repetition)
+        songRepetition.title = getString(if (config.repeatSong) R.string.disable_song_repetition else R.string.enable_song_repetition)
 
         val shuffle = menu.findItem(R.id.toggle_shuffle)
-        shuffle.title = getString(if (mConfig.isShuffleEnabled) R.string.disable_shuffle else R.string.enable_shuffle)
+        shuffle.title = getString(if (config.isShuffleEnabled) R.string.disable_shuffle else R.string.enable_shuffle)
 
         return true
     }
@@ -122,15 +122,15 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
     }
 
     private fun toggleShuffle() {
-        mConfig.isShuffleEnabled = !mConfig.isShuffleEnabled
+        config.isShuffleEnabled = !config.isShuffleEnabled
         invalidateOptionsMenu()
-        toast(if (mConfig.isShuffleEnabled) R.string.shuffle_enabled else R.string.shuffle_disabled)
+        toast(if (config.isShuffleEnabled) R.string.shuffle_enabled else R.string.shuffle_disabled)
     }
 
     private fun toggleSongRepetition() {
-        mConfig.repeatSong = !mConfig.repeatSong
+        config.repeatSong = !config.repeatSong
         invalidateOptionsMenu()
-        toast(if (mConfig.repeatSong) R.string.song_repetition_enabled else R.string.song_repetition_disabled)
+        toast(if (config.repeatSong) R.string.song_repetition_enabled else R.string.song_repetition_disabled)
     }
 
     private fun initializePlayer() {
@@ -188,7 +188,7 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
 
     override fun onDestroy() {
         super.onDestroy()
-        mConfig.isFirstRun = false
+        config.isFirstRun = false
         mBus.unregister(this)
     }
 

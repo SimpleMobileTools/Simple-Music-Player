@@ -23,19 +23,19 @@ class SettingsActivity : SimpleActivity() {
     }
 
     private fun setupDarkTheme() {
-        settings_dark_theme.isChecked = mConfig.isDarkTheme
+        settings_dark_theme.isChecked = config.isDarkTheme
         settings_dark_theme_holder.setOnClickListener {
             settings_dark_theme.toggle()
-            mConfig.isDarkTheme = settings_dark_theme.isChecked
+            config.isDarkTheme = settings_dark_theme.isChecked
             restartActivity()
         }
     }
 
     private fun setupNumericProgress() {
-        settings_numeric_progress.isChecked = mConfig.isNumericProgressEnabled
+        settings_numeric_progress.isChecked = config.isNumericProgressEnabled
         settings_numeric_progress_holder.setOnClickListener {
             settings_numeric_progress.toggle()
-            mConfig.isNumericProgressEnabled = settings_numeric_progress.isChecked
+            config.isNumericProgressEnabled = settings_numeric_progress.isChecked
         }
     }
 
@@ -51,10 +51,10 @@ class SettingsActivity : SimpleActivity() {
 
         settings_equalizer.apply {
             adapter = arrayAdapter
-            setSelection(mConfig.equalizer)
+            setSelection(config.equalizer)
             onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                    mConfig.equalizer = selectedItemPosition
+                    config.equalizer = selectedItemPosition
 
                     Intent(applicationContext, MusicService::class.java).apply {
                         putExtra(EQUALIZER, selectedItemPosition)
