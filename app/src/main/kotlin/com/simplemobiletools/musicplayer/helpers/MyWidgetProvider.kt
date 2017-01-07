@@ -7,13 +7,11 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.Color
 import android.os.Bundle
 import android.widget.RemoteViews
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.MainActivity
 import com.simplemobiletools.musicplayer.extensions.getColoredIcon
-import com.simplemobiletools.musicplayer.extensions.getSharedPrefs
 import com.simplemobiletools.musicplayer.extensions.sendIntent
 import com.simplemobiletools.musicplayer.models.Events
 import com.simplemobiletools.musicplayer.models.Song
@@ -135,24 +133,23 @@ class MyWidgetProvider : AppWidgetProvider() {
     }
 
     private fun updateColors() {
-        val prefs = mContext.getSharedPrefs()
+        val config = Config.newInstance(mContext)
         val res = mContext.resources
-        val defaultColor = Color.BLACK
-        val newBgColor = prefs.getInt(WIDGET_BG_COLOR, defaultColor)
-        val newTextColor = prefs.getInt(WIDGET_TEXT_COLOR, Color.WHITE)
-        var bmp = res.getColoredIcon(newTextColor, R.drawable.ic_previous)
+        val widgetBgColor = config.widgetBgColor
+        val widgetTextColor = config.textColor
+        var bmp = res.getColoredIcon(widgetTextColor, R.drawable.ic_previous)
 
         mRemoteViews.apply {
-            setInt(R.id.widget_holder, "setBackgroundColor", newBgColor)
-            setInt(R.id.song_title, "setTextColor", newTextColor)
-            setInt(R.id.song_artist, "setTextColor", newTextColor)
+            setInt(R.id.widget_holder, "setBackgroundColor", widgetBgColor)
+            setInt(R.id.song_title, "setTextColor", widgetTextColor)
+            setInt(R.id.song_artist, "setTextColor", widgetTextColor)
 
             setImageViewBitmap(R.id.previous_btn, bmp)
 
-            mPlayBitmap = res.getColoredIcon(newTextColor, R.drawable.ic_play)
-            mPauseBitmap = res.getColoredIcon(newTextColor, R.drawable.ic_pause)
+            mPlayBitmap = res.getColoredIcon(widgetTextColor, R.drawable.ic_play)
+            mPauseBitmap = res.getColoredIcon(widgetTextColor, R.drawable.ic_pause)
 
-            bmp = res.getColoredIcon(newTextColor, R.drawable.ic_next)
+            bmp = res.getColoredIcon(widgetTextColor, R.drawable.ic_next)
             setImageViewBitmap(R.id.next_btn, bmp)
         }
     }

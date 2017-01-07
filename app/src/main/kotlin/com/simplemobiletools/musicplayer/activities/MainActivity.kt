@@ -11,6 +11,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.SeekBar
+import com.simplemobiletools.commons.extensions.getFormattedDuration
 import com.simplemobiletools.commons.extensions.hasStoragePermission
 import com.simplemobiletools.commons.extensions.toast
 import com.simplemobiletools.commons.helpers.LICENSE_AMBILWARNA
@@ -22,7 +23,6 @@ import com.simplemobiletools.musicplayer.BuildConfig
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.adapters.SongAdapter
 import com.simplemobiletools.musicplayer.dialogs.ChangeSortingDialog
-import com.simplemobiletools.musicplayer.extensions.getTimeString
 import com.simplemobiletools.musicplayer.extensions.sendIntent
 import com.simplemobiletools.musicplayer.helpers.*
 import com.simplemobiletools.musicplayer.models.Events
@@ -222,8 +222,8 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
 
     override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
         if (mIsNumericProgressShown) {
-            val duration = progressbar.max.getTimeString()
-            val formattedProgress = progress.getTimeString()
+            val duration = progressbar.max.getFormattedDuration()
+            val formattedProgress = progress.getFormattedDuration()
 
             val progressText = String.format(resources.getString(R.string.progress), formattedProgress, duration)
             song_progress.text = progressText
