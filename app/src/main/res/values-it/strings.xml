@@ -28,6 +28,11 @@
     <string name="numeric_progress">Mostra anche l\'avanzamento in numeri</string>
     <string name="equalizer">Equalizzatore</string>
 
+    <!-- Release notes -->
+    <string name="release_25">
+        Added more color customization options\n
+        Your settings have been cleared, please reset them</string>
+
     <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
     <!-- Short description has to have less than 80 chars -->
     <string name="app_short_description">A clean music player with a customizable widget.</string>
@@ -37,7 +42,7 @@
 
         It contains a widget with customizable text color, alpha and the color of the background.
 
-        Contains no ads or unnecessary permissions. It is fully opensource, provides a Dark theme too.
+        Contains no ads or unnecessary permissions. It is fully opensource, provides customizable colors.
 
         This app is just one piece of a bigger series of apps. You can find the rest of them at http://www.simplemobiletools.com
     </string>

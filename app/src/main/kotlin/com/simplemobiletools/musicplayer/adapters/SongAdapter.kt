@@ -32,7 +32,6 @@ class SongAdapter(val activity: SimpleActivity, var songs: ArrayList<Song>, val 
     companion object {
         var actMode: ActionMode? = null
         val markedItems = HashSet<Int>()
-        var iconColor = 0
         var currentSongIndex = 0
         var textColor = 0
 
@@ -169,7 +168,7 @@ class SongAdapter(val activity: SimpleActivity, var songs: ArrayList<Song>, val 
                 song_artist.setTextColor(textColor)
 
                 if (currentSongIndex == pos) {
-                    song_note_image.setColorFilter(iconColor, PorterDuff.Mode.SRC_IN)
+                    song_note_image.setColorFilter(textColor, PorterDuff.Mode.SRC_IN)
                     song_note_image.visibility = View.VISIBLE
                 } else {
                     song_note_image.visibility = View.INVISIBLE

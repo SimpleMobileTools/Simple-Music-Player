@@ -28,6 +28,11 @@
     <string name="numeric_progress">Mostrar também evolução em números</string>
     <string name="equalizer">Equalizador</string>
 
+    <!-- Release notes -->
+    <string name="release_25">
+        Added more color customization options\n
+        Your settings have been cleared, please reset them</string>
+
     <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
     <!-- Short description has to have less than 80 chars -->
     <string name="app_short_description">Um reprodutor de músicas com um widget personalizável.</string>

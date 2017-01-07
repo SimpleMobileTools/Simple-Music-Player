@@ -11,14 +11,12 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.SeekBar
-import com.simplemobiletools.commons.extensions.getFormattedDuration
-import com.simplemobiletools.commons.extensions.hasStoragePermission
-import com.simplemobiletools.commons.extensions.toast
-import com.simplemobiletools.commons.extensions.updateTextColors
+import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.LICENSE_AMBILWARNA
 import com.simplemobiletools.commons.helpers.LICENSE_KOTLIN
 import com.simplemobiletools.commons.helpers.LICENSE_MULTISELECT
 import com.simplemobiletools.commons.helpers.LICENSE_OTTO
+import com.simplemobiletools.commons.models.Release
 import com.simplemobiletools.commons.views.RecyclerViewDivider
 import com.simplemobiletools.musicplayer.BuildConfig
 import com.simplemobiletools.musicplayer.R
@@ -61,6 +59,7 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
         previous_btn.setOnClickListener { sendIntent(PREVIOUS) }
         play_pause_btn.setOnClickListener { sendIntent(PLAYPAUSE) }
         next_btn.setOnClickListener { sendIntent(NEXT) }
+        checkWhatsNewDialog()
     }
 
     override fun onResume() {
@@ -145,7 +144,7 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
         play_pause_btn.setColorFilter(color, PorterDuff.Mode.SRC_IN)
         next_btn.setColorFilter(color, PorterDuff.Mode.SRC_IN)
 
-        SongAdapter.iconColor = color
+        SongAdapter.textColor = color
     }
 
     private fun songPicked(pos: Int) {
@@ -240,6 +239,13 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
             putExtra(PROGRESS, seekBar.progress)
             action = SET_PROGRESS
             startService(this)
+        }
+    }
+
+    private fun checkWhatsNewDialog() {
+        arrayListOf<Release>().apply {
+            add(Release(25, R.string.release_25))
+            checkWhatsNew(this, BuildConfig.VERSION_CODE)
         }
     }
 }

@@ -28,6 +28,11 @@
     <string name="numeric_progress">再生状況を数値でも表示する</string>
     <string name="equalizer">イコライザー</string>
 
+    <!-- Release notes -->
+    <string name="release_25">
+        Added more color customization options\n
+        Your settings have been cleared, please reset them</string>
+
     <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
     <!-- Short description has to have less than 80 chars -->
     <string name="app_short_description">カスタマイズ可能なウィジェットを持つクリーンなミュージック プレイヤー。</string>
