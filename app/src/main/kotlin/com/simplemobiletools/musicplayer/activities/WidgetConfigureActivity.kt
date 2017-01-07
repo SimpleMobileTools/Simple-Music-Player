@@ -2,7 +2,6 @@ package com.simplemobiletools.musicplayer.activities
 
 import android.app.Activity
 import android.appwidget.AppWidgetManager
-import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.PorterDuff
@@ -11,10 +10,8 @@ import android.support.v7.app.AppCompatActivity
 import android.widget.RemoteViews
 import android.widget.SeekBar
 import com.simplemobiletools.musicplayer.R
+import com.simplemobiletools.musicplayer.helpers.Config
 import com.simplemobiletools.musicplayer.helpers.MyWidgetProvider
-import com.simplemobiletools.musicplayer.helpers.PREFS_KEY
-import com.simplemobiletools.musicplayer.helpers.WIDGET_BG_COLOR
-import com.simplemobiletools.musicplayer.helpers.WIDGET_TEXT_COLOR
 import com.simplemobiletools.musicplayer.services.MusicService
 import kotlinx.android.synthetic.main.widget.*
 import kotlinx.android.synthetic.main.widget_config.*
@@ -56,8 +53,8 @@ class WidgetConfigureActivity : AppCompatActivity() {
     }
 
     private fun initVariables() {
-        val prefs = getSharedPreferences(PREFS_KEY, Context.MODE_PRIVATE)
-        mBgColor = prefs.getInt(WIDGET_BG_COLOR, 1)
+        val config = Config.newInstance(this)
+        mBgColor = config.widgetBgColor
         if (mBgColor == 1) {
             mBgColor = Color.BLACK
             mBgAlpha = .2f
@@ -70,7 +67,7 @@ class WidgetConfigureActivity : AppCompatActivity() {
         config_bg_seekbar.progress = (mBgAlpha * 100).toInt()
         updateBackgroundColor()
 
-        mTextColor = prefs.getInt(WIDGET_TEXT_COLOR, resources.getColor(R.color.color_primary))
+        mTextColor = config.widgetTextColor
         updateTextColor()
     }
 
@@ -115,8 +112,9 @@ class WidgetConfigureActivity : AppCompatActivity() {
     }
 
     private fun storeWidgetColors() {
-        getSharedPreferences(PREFS_KEY, Context.MODE_PRIVATE).apply {
-            edit().putInt(WIDGET_BG_COLOR, mBgColor).putInt(WIDGET_TEXT_COLOR, mTextColor).apply()
+        Config.newInstance(this).apply {
+            widgetBgColor = mBgColor
+            widgetTextColor = mTextColor
         }
     }
 

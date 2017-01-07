@@ -21,14 +21,11 @@ val SET_PROGRESS = PATH + "SET_PROGRESS"
 val SET_EQUALIZER = PATH + "SET_EQUALIZER"
 
 // shared preferences
-val PREFS_KEY = "Music Player"
 val SHUFFLE = "shuffle"
 val NUMERIC_PROGRESS = "numeric_progress"
 val SORTING = "track_sorting"
 val EQUALIZER = "equalizer"
 val REPEAT_SONG = "repeat_song"
-val WIDGET_BG_COLOR = "widget_bg_color"
-val WIDGET_TEXT_COLOR = "widget_text_color"
 
 // sorting
 val SORT_BY_TITLE = 1

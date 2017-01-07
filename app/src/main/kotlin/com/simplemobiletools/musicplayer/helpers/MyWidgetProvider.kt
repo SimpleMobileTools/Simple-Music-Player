@@ -136,7 +136,7 @@ class MyWidgetProvider : AppWidgetProvider() {
         val config = Config.newInstance(mContext)
         val res = mContext.resources
         val widgetBgColor = config.widgetBgColor
-        val widgetTextColor = config.textColor
+        val widgetTextColor = config.widgetTextColor
         var bmp = res.getColoredIcon(widgetTextColor, R.drawable.ic_previous)
 
         mRemoteViews.apply {
