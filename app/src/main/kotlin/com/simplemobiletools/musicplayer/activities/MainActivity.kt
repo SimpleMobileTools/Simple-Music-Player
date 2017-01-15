@@ -12,7 +12,6 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.SeekBar
 import com.simplemobiletools.commons.extensions.*
-import com.simplemobiletools.commons.helpers.LICENSE_AMBILWARNA
 import com.simplemobiletools.commons.helpers.LICENSE_KOTLIN
 import com.simplemobiletools.commons.helpers.LICENSE_MULTISELECT
 import com.simplemobiletools.commons.helpers.LICENSE_OTTO
@@ -112,7 +111,7 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
     }
 
     private fun launchAbout() {
-        startAboutActivity(R.string.app_name, LICENSE_KOTLIN or LICENSE_AMBILWARNA or LICENSE_OTTO or LICENSE_MULTISELECT, BuildConfig.VERSION_NAME)
+        startAboutActivity(R.string.app_name, LICENSE_KOTLIN or LICENSE_OTTO or LICENSE_MULTISELECT, BuildConfig.VERSION_NAME)
     }
 
     private fun showSortingDialog() {
