@@ -7,12 +7,13 @@ import android.view.LayoutInflater
 import android.view.View
 import com.simplemobiletools.commons.extensions.setupDialogStuff
 import com.simplemobiletools.musicplayer.R
+import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.helpers.*
 import kotlinx.android.synthetic.main.dialog_change_sorting.view.*
 
 class ChangeSortingDialog(val activity: Activity, val callback: () -> Unit) : DialogInterface.OnClickListener {
     private var currSorting = 0
-    var config: Config = Config.newInstance(activity)
+    var config = activity.config
     var view: View = LayoutInflater.from(activity).inflate(R.layout.dialog_change_sorting, null)
 
     init {

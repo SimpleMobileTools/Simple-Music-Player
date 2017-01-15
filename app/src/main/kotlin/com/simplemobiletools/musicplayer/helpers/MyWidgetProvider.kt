@@ -12,6 +12,7 @@ import android.widget.RemoteViews
 import com.simplemobiletools.commons.extensions.getColoredIcon
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.MainActivity
+import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.extensions.sendIntent
 import com.simplemobiletools.musicplayer.models.Events
 import com.simplemobiletools.musicplayer.models.Song
@@ -133,7 +134,7 @@ class MyWidgetProvider : AppWidgetProvider() {
     }
 
     private fun updateColors() {
-        val config = Config.newInstance(mContext)
+        val config = mContext.config
         val res = mContext.resources
         val widgetBgColor = config.widgetBgColor
         val widgetTextColor = config.widgetTextColor

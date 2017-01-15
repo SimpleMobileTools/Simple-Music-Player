@@ -21,6 +21,7 @@ import android.util.Log
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.MainActivity
+import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.helpers.*
 import com.simplemobiletools.musicplayer.models.Events
 import com.simplemobiletools.musicplayer.models.Song
@@ -78,7 +79,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     }
 
     private fun initService() {
-        mConfig = Config.newInstance(applicationContext)
+        mConfig = applicationContext.config
         mSongs = ArrayList<Song>()
         mPlayedSongIndexes = ArrayList<Int>()
         mCurrSong = null

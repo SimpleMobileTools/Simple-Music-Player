@@ -11,7 +11,7 @@ import android.widget.RemoteViews
 import android.widget.SeekBar
 import com.simplemobiletools.commons.dialogs.ColorPickerDialog
 import com.simplemobiletools.musicplayer.R
-import com.simplemobiletools.musicplayer.helpers.Config
+import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.helpers.MyWidgetProvider
 import com.simplemobiletools.musicplayer.services.MusicService
 import kotlinx.android.synthetic.main.widget.*
@@ -53,7 +53,6 @@ class WidgetConfigureActivity : AppCompatActivity() {
     }
 
     private fun initVariables() {
-        val config = Config.newInstance(this)
         mBgColor = config.widgetBgColor
         if (mBgColor == 1) {
             mBgColor = Color.BLACK
@@ -102,7 +101,7 @@ class WidgetConfigureActivity : AppCompatActivity() {
     }
 
     private fun storeWidgetColors() {
-        Config.newInstance(this).apply {
+        config.apply {
             widgetBgColor = mBgColor
             widgetTextColor = mTextColor
         }

@@ -14,8 +14,8 @@ import com.simplemobiletools.commons.extensions.scanPaths
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
 import com.simplemobiletools.musicplayer.dialogs.EditDialog
+import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.extensions.sendIntent
-import com.simplemobiletools.musicplayer.helpers.Config
 import com.simplemobiletools.musicplayer.helpers.EDIT
 import com.simplemobiletools.musicplayer.helpers.EDITED_SONG
 import com.simplemobiletools.musicplayer.helpers.REFRESH_LIST
@@ -48,7 +48,7 @@ class SongAdapter(val activity: SimpleActivity, var songs: ArrayList<Song>, val 
     }
 
     init {
-        textColor = Config.newInstance(activity).textColor
+        textColor = activity.config.textColor
     }
 
     val multiSelectorMode = object : ModalMultiSelectorCallback(multiSelector) {
