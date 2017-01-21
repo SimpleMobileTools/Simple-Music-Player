@@ -1,28 +1,28 @@
 <resources>
     <string name="app_name">Simple Music Player</string>
-    <string name="app_launcher_name">Music Player</string>
+    <string name="app_launcher_name">Musickspelare</string>
     <string name="playlist_empty">Din spellista är tom</string>
     <string name="no_permissions">Tillstånd att komma åt låtarna har inte beviljats</string>
     <string name="rename_song">Döp om låt</string>
     <string name="rename_song_error">Ett fel uppstod vid omdöpningen</string>
     <string name="rename_song_empty">Alla fält måste fyllas i</string>
-    <string name="enable_song_repetition">Repeat current song</string>
-    <string name="disable_song_repetition">Stop repeating current song</string>
-    <string name="song_repetition_enabled">Current song repetition enabled</string>
-    <string name="song_repetition_disabled">Current song repetition disabled</string>
-    <string name="enable_shuffle">Enable shuffle</string>
-    <string name="disable_shuffle">Disable shuffle</string>
-    <string name="shuffle_enabled">Shuffle enabled</string>
-    <string name="shuffle_disabled">Shuffle disabled</string>
+    <string name="enable_song_repetition">Repetera nuvarande låt</string>
+    <string name="disable_song_repetition">Sluta repetera nuvarande låt</string>
+    <string name="song_repetition_enabled">Repetering av nuvarande låt är aktiverad</string>
+    <string name="song_repetition_disabled">Repetering av nuvarande låt är inaktiverad</string>
+    <string name="enable_shuffle">Aktivera blanda</string>
+    <string name="disable_shuffle">Inaktivera blanda</string>
+    <string name="shuffle_enabled">Blanda är nu aktiverad</string>
+    <string name="shuffle_disabled">Blanda är nu inaktiverad</string>
 
     <plurals name="songs_deleted">
         <item quantity="one">1 låt borttagen</item>
         <item quantity="other">%1$d låtar borttagna</item>
     </plurals>
 
-    <string name="previous">Previous</string>
-    <string name="playpause">Play Pause</string>
-    <string name="next">Next</string>
+    <string name="previous">Föregående</string>
+    <string name="playpause">Spela Pausa</string>
+    <string name="next">Nästa</string>
 
     <!-- Settings -->
     <string name="numeric_progress">Visa även förloppet i siffror</string>
@@ -35,16 +35,16 @@
 
     <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
     <!-- Short description has to have less than 80 chars -->
-    <string name="app_short_description">A clean music player with a customizable widget.</string>
+    <string name="app_short_description">En enkel och ren musikspelare med en anpassningsbar widget.</string>
     <string name="app_long_description">
-        A music player easily controllable from the status bar, home screen widget or by hardware buttons on your headset. You can sort the tracks by the Title or Artist, as well as change the Equalizer. Does not yet support filtering by artist or album, stay tuned!
+        En musikspelare som du enkelt styr från statusbaren, widget på hemskärmen eller via dina knappar på headsettet. Du kan sortera dina låtar efter Titel eller Artisten, och även ändra Equalizern. Stöder ännu inte filtrering efter artist eller album, men håll ögonen öppna!
 
 
-        It contains a widget with customizable text color, alpha and the color of the background.
+        Den innehåller en widget där du kan ändra textfärgen och färgen på bakgrunden.
 
-        Contains no ads or unnecessary permissions. It is fully opensource, provides customizable colors.
+        Innehåller ingen reklam eller onödiga behörigheter. Det är helt och hållet opensource, innehåller anpassningsbara färger.
 
-        This app is just one piece of a bigger series of apps. You can find the rest of them at http://www.simplemobiletools.com
+        Detta är bara en app i en serie av appar. Du hittar resten av dem här http://www.simplemobiletools.com
     </string>
 
     <!--
