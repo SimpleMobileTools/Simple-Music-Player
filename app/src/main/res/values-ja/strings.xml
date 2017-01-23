@@ -29,6 +29,7 @@
     <string name="equalizer">イコライザー</string>
 
     <!-- Release notes -->
+    <string name="release_27">Allow picking colors by hex codes</string>
     <string name="release_25">
         Added more color customization options\n
         Your settings have been cleared, please reset them</string>

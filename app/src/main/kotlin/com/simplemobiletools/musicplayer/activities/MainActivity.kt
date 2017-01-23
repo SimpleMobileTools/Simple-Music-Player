@@ -245,6 +245,7 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
     private fun checkWhatsNewDialog() {
         arrayListOf<Release>().apply {
             add(Release(25, R.string.release_25))
+            add(Release(27, R.string.release_27))
             checkWhatsNew(this, BuildConfig.VERSION_CODE)
         }
     }
