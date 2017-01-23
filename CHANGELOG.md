@@ -1,6 +1,12 @@
 Changelog
 ==========
 
+Version 2.0.2 *(2017-01-23)*
+----------------------------
+
+ * Allow selecting colors by hex codes
+ * Added a button for restoring default colors
+
 Version 2.0.1 *(2017-01-15)*
 ----------------------------
 
