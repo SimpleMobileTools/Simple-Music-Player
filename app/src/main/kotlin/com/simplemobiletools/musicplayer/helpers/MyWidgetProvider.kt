@@ -11,7 +11,7 @@ import android.os.Bundle
 import android.widget.RemoteViews
 import com.simplemobiletools.commons.extensions.getColoredIcon
 import com.simplemobiletools.musicplayer.R
-import com.simplemobiletools.musicplayer.activities.MainActivity
+import com.simplemobiletools.musicplayer.activities.SplashActivity
 import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.extensions.sendIntent
 import com.simplemobiletools.musicplayer.models.Events
@@ -74,7 +74,7 @@ class MyWidgetProvider : AppWidgetProvider() {
     }
 
     private fun setupAppOpenIntent(id: Int) {
-        val intent = Intent(mContext, MainActivity::class.java)
+        val intent = Intent(mContext, SplashActivity::class.java)
         val pendingIntent = PendingIntent.getActivity(mContext, 0, intent, 0)
         mRemoteViews.setOnClickPendingIntent(id, pendingIntent)
     }
