@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Simple Music Player</string>
-    <string name="app_launcher_name">Reproductor de música</string>
+    <string name="app_launcher_name">Música</string>
     <string name="playlist_empty">Su lista de reproducción está vacía</string>
     <string name="no_permissions">El permiso para acceder a las canciones no ha sido concedido</string>
     <string name="rename_song">Renombrar canción</string>
@@ -8,12 +8,12 @@
     <string name="rename_song_empty">Por favor, rellene todos los campos</string>
     <string name="enable_song_repetition">Repetir la canción actual</string>
     <string name="disable_song_repetition">Parar la repetición de la canción actual</string>
-    <string name="song_repetition_enabled">Current song repetition enabled</string>
-    <string name="song_repetition_disabled">Current song repetition disabled</string>
-    <string name="enable_shuffle">Enable shuffle</string>
-    <string name="disable_shuffle">Disable shuffle</string>
-    <string name="shuffle_enabled">Shuffle enabled</string>
-    <string name="shuffle_disabled">Shuffle disabled</string>
+    <string name="song_repetition_enabled">Reproducción en bucle activada</string>
+    <string name="song_repetition_disabled">Reproducción en bucle desactivada</string>
+    <string name="enable_shuffle">Activar aleatorio</string>
+    <string name="disable_shuffle">Desactivar aleatorio</string>
+    <string name="shuffle_enabled">Reproducción aleatoria activada</string>
+    <string name="shuffle_disabled">Reproducción aleatoria desactivada</string>
 
     <plurals name="songs_deleted">
         <item quantity="one">Una canción eliminada</item>
@@ -25,7 +25,7 @@
     <string name="next">Siguiente</string>
 
     <!-- Settings -->
-    <string name="numeric_progress">Mostrar el progreso también en números</string>
+    <string name="numeric_progress">Mostrar progreso en tiempo</string>
     <string name="equalizer">Ecualizador</string>
 
     <!-- Release notes -->
