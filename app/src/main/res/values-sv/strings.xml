@@ -38,7 +38,7 @@
     <!-- Short description has to have less than 80 chars -->
     <string name="app_short_description">En enkel och ren musikspelare med en anpassningsbar widget.</string>
     <string name="app_long_description">
-        En musikspelare som du enkelt styr från statusbaren, widget på hemskärmen eller via dina knappar på headsettet. Du kan sortera dina låtar efter Titel eller Artisten, och även ändra Equalizern. Stöder ännu inte filtrering efter artist eller album, men håll ögonen öppna!
+        En musikspelare som du enkelt styr från statusbaren, widget på hemskärmen eller via dina knappar på headsettet. Du kan sortera dina låtar efter Titel eller Artisten, och även ändra Equalizern. Stöder ännu inte filtrering efter artist eller album, men håll ögonen öppna! The Phone Status permission is required for pausing the song once there is an incoming call.
 
 
         Den innehåller en widget där du kan ändra textfärgen och färgen på bakgrunden.

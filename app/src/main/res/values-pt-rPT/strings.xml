@@ -38,7 +38,7 @@
     <!-- Short description has to have less than 80 chars -->
     <string name="app_short_description">Um reprodutor de músicas com um widget personalizável.</string>
     <string name="app_long_description">
-        Um reprodutor de músicas que pode ser controlado através da barra de estado, do widget ou através dos botões do seu dispositivo ou auricular. Pode ordenar as faixas por Título ou Artista, bem como ajustar o seu equalizador. Ainda não possui suporte a filtrar por artista ou álbum, mas está planeado. Fique atento!
+        Um reprodutor de músicas que pode ser controlado através da barra de estado, do widget ou através dos botões do seu dispositivo ou auricular. Pode ordenar as faixas por Título ou Artista, bem como ajustar o seu equalizador. Ainda não possui suporte a filtrar por artista ou álbum, mas está planeado. Fique atento! The Phone Status permission is required for pausing the song once there is an incoming call.
 
 
         Pode personalizar a cor do texto do widget, bem como a cor e o valor alfa do fundo.
