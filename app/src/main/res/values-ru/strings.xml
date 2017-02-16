@@ -1,0 +1,55 @@
+<resources>
+    <string name="app_name">Simple Music Player</string>
+    <string name="app_launcher_name">Проигрыватель музыки</string>
+    <string name="playlist_empty">Ваш плейлист пуст</string>
+    <string name="no_permissions">Не было предоставлено разрешения для доступа к музыке</string>
+    <string name="rename_song">Переименовать композицию</string>
+    <string name="rename_song_error">Во время переименования произошла ошибка</string>
+    <string name="rename_song_empty">Пожалуйста, заполните все поля</string>
+    <string name="enable_song_repetition">Повторять текущую композицию</string>
+    <string name="disable_song_repetition">Больше не повторять</string>
+    <string name="song_repetition_enabled">Включен повтор текущей композиции</string>
+    <string name="song_repetition_disabled">Повтор текущей композиции отключен</string>
+    <string name="enable_shuffle">Играть в случайном порядке</string>
+    <string name="disable_shuffle">Играть подряд</string>
+    <string name="shuffle_enabled">Включено воспроизведение в случайном порядке</string>
+    <string name="shuffle_disabled">Воспроизведение в случайном порядке отключено</string>
+
+    <plurals name="songs_deleted">
+        <item quantity="one">1 композиция удалена</item>
+        <item quantity="other">%1$d композиции(-ий) удалены(-о)</item>
+    </plurals>
+
+    <string name="previous">Предыдущая</string>
+    <string name="playpause">Воспроизведение Пауза</string>
+    <string name="next">Следующая</string>
+
+    <!-- Settings -->
+    <string name="numeric_progress">Отображать время воспроизведения</string>
+    <string name="equalizer">Эквалайзер</string>
+
+    <!-- Release notes -->
+    <string name="release_27">Добавлена возможность выбирать цвета по hex-кодам</string>
+    <string name="release_25">
+        Добавлена возможность изменять цветовое оформление\n
+        Настройки приложения в этой версии были сброшены к первоначальным, пожалуйста, настройте снова</string>
+
+    <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
+    <!-- Short description has to have less than 80 chars -->
+    <string name="app_short_description">Чистый музыкальный проигрыватель с настраиваемым виджетом.</string>
+    <string name="app_long_description">
+        Музыкальный проигрыватель, который легко управляется из статус-бара, с помощью виджета на домашнем экране или с помощью кнопок на гарникуре. Можно сортировать композиции по названию или исполнителю, а также настраивать эквалайзер. Пока что фильтрация по исполнителю или альбому не поддерживается, следите за обновлениями! Разрешение "Статус телефона" необходимо для того, чтобы приостановить воспроизведение при входящем звонке.
+
+
+        У приложения есть виджет, у которого можно изменить цвет текста, цвет и прозрачность фона.
+
+        Это приложение не будет показывать рекламу или запрашивать ненужные разрешения. У него полностью открытый исходный код и настраиваемые цвета оформления.
+
+        Simple Calendar - это приложение из серии Simple Mobile Tools. Остальные приложения из этой серии можно найти здесь: http://www.simplemobiletools.com
+    </string>
+
+    <!--
+        Haven't found some strings? There's more at
+        https://github.com/SimpleMobileTools/Simple-Commons/tree/master/library/src/main/res
+    -->
+</resources>
