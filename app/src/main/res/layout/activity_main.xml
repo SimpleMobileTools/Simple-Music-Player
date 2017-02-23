@@ -2,6 +2,7 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_holder"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -13,7 +14,8 @@
         android:layout_height="@dimen/controls_row_height"
         android:layout_marginRight="@dimen/activity_margin"
         android:orientation="horizontal"
-        android:paddingLeft="@dimen/activity_margin">
+        android:paddingLeft="@dimen/activity_margin"
+        tools:ignore="RtlHardcoded,RtlSymmetry">
 
         <ImageView
             android:id="@+id/previous_btn"
@@ -24,7 +26,8 @@
             android:background="?attr/selectableItemBackgroundBorderless"
             android:paddingBottom="5dp"
             android:paddingTop="5dp"
-            android:src="@drawable/ic_previous"/>
+            android:src="@drawable/ic_previous"
+            android:contentDescription="@string/previous" />
 
         <ImageView
             android:id="@+id/play_pause_btn"
@@ -34,7 +37,8 @@
             android:layout_weight="1"
             android:paddingBottom="5dp"
             android:paddingTop="5dp"
-            android:src="@drawable/ic_play"/>
+            android:src="@drawable/ic_play"
+            android:contentDescription="@string/playpause" />
 
         <ImageView
             android:id="@+id/next_btn"
@@ -44,7 +48,8 @@
             android:layout_weight="1"
             android:paddingBottom="5dp"
             android:paddingTop="5dp"
-            android:src="@drawable/ic_next"/>
+            android:src="@drawable/ic_next"
+            android:contentDescription="@string/next" />
 
     </LinearLayout>
 
