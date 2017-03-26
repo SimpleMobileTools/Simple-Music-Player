@@ -30,6 +30,8 @@
     <string name="remove_from_playlist">Remove from playlist</string>
     <string name="remove_from_playlist_description">This will only remove the items from the current playlist, the actual files will not be deleted.</string>
     <string name="delete_the_files_too">Delete the files too</string>
+    <string name="open_playlist">Open playlist</string>
+    <string name="initial_playlist">Initial playlist</string>
 
     <!-- Settings -->
     <string name="equalizer">Ecualizador</string>
