@@ -30,6 +30,7 @@ import com.simplemobiletools.musicplayer.receivers.HeadsetPlugReceiver
 import com.simplemobiletools.musicplayer.receivers.IncomingCallReceiver
 import com.simplemobiletools.musicplayer.receivers.RemoteControlReceiver
 import com.squareup.otto.Bus
+import java.io.File
 import java.io.IOException
 import java.util.*
 
@@ -264,7 +265,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     }
 
     private fun getAlbumImage(): Bitmap {
-        if (mCurrSong != null) {
+        if (File(mCurrSong?.path ?: "").exists()) {
             val mediaMetadataRetriever = MediaMetadataRetriever()
             mediaMetadataRetriever.setDataSource(mCurrSong!!.path)
             val rawArt = mediaMetadataRetriever.embeddedPicture
@@ -278,7 +279,6 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
                 }
             }
         }
-
         return BitmapFactory.decodeResource(resources, R.drawable.ic_headset)
     }
 
