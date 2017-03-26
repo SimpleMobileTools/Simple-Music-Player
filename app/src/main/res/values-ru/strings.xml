@@ -19,6 +19,18 @@
     <string name="playpause">Воспроизведение Пауза</string>
     <string name="next">Следующая</string>
 
+    <!-- Playlists -->
+    <string name="import_from_folder">Import from folder</string>
+    <string name="manage_playlists">Manage playlists</string>
+    <string name="playlists">Playlists</string>
+    <string name="add_playlist">Add playlist</string>
+    <string name="playlist_name_exists">A playlist with that name already exists</string>
+    <string name="remove_playlist">Remove playlist</string>
+    <string name="remove_playlist_description">This will only remove the playlist, not the actual files.</string>
+    <string name="remove_from_playlist">Remove from playlist</string>
+    <string name="remove_from_playlist_description">This will only remove the items from the current playlist, the actual files will not be deleted.</string>
+    <string name="delete_the_files_too">Delete the files too</string>
+
     <!-- Settings -->
     <string name="equalizer">Эквалайзер</string>
 
@@ -26,7 +38,8 @@
     <string name="release_27">Добавлена возможность выбирать цвета по hex-кодам</string>
     <string name="release_25">
         Добавлена возможность изменять цветовое оформление\n
-        Настройки приложения в этой версии были сброшены к первоначальным, пожалуйста, настройте снова</string>
+        Настройки приложения в этой версии были сброшены к первоначальным, пожалуйста, настройте снова
+    </string>
 
     <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
     <!-- Short description has to have less than 80 chars -->

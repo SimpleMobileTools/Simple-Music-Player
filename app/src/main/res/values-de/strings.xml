@@ -19,6 +19,18 @@
     <string name="playpause">Play Pause</string>
     <string name="next">Nächter Titel</string>
 
+    <!-- Playlists -->
+    <string name="import_from_folder">Import from folder</string>
+    <string name="manage_playlists">Manage playlists</string>
+    <string name="playlists">Playlists</string>
+    <string name="add_playlist">Add playlist</string>
+    <string name="playlist_name_exists">A playlist with that name already exists</string>
+    <string name="remove_playlist">Remove playlist</string>
+    <string name="remove_playlist_description">This will only remove the playlist, not the actual files.</string>
+    <string name="remove_from_playlist">Remove from playlist</string>
+    <string name="remove_from_playlist_description">This will only remove the items from the current playlist, the actual files will not be deleted.</string>
+    <string name="delete_the_files_too">Delete the files too</string>
+
     <!-- Settings -->
     <string name="equalizer">Equalizer</string>
 
@@ -26,7 +38,8 @@
     <string name="release_27">Allow picking colors by hex codes</string>
     <string name="release_25">
         Added more color customization options\n
-        Your settings have been cleared, please reset them</string>
+        Your settings have been cleared, please reset them
+    </string>
 
     <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
     <!-- Short description has to have less than 80 chars -->
