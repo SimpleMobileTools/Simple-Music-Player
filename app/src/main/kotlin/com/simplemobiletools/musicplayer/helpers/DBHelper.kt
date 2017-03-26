@@ -1,8 +1,11 @@
 package com.simplemobiletools.musicplayer.helpers
 
+import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import com.simplemobiletools.musicplayer.R
+import com.simplemobiletools.musicplayer.models.Playlist
 
 class DBHelper private constructor(val context: Context) : SQLiteOpenHelper(context, DB_NAME, null, DB_VERSION) {
     private val TABLE_NAME_PLAYLISTS = "playlists"
@@ -26,8 +29,8 @@ class DBHelper private constructor(val context: Context) : SQLiteOpenHelper(cont
 
     override fun onCreate(db: SQLiteDatabase) {
         db.execSQL("CREATE TABLE $TABLE_NAME_PLAYLISTS ($COL_ID INTEGER PRIMARY KEY, $COL_TITLE TEXT)")
-
         createSongsTable(db)
+        addInitialPlaylist(db)
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
@@ -35,5 +38,27 @@ class DBHelper private constructor(val context: Context) : SQLiteOpenHelper(cont
 
     private fun createSongsTable(db: SQLiteDatabase) {
         db.execSQL("CREATE TABLE $TABLE_NAME_SONGS ($COL_ID INTEGER PRIMARY KEY, $COL_PATH TEXT)")
+    }
+
+    private fun addInitialPlaylist(db: SQLiteDatabase) {
+        val initialPlaylist = context.resources.getString(R.string.initial_playlist)
+        val playlist = Playlist(INITIAL_PLAYLIST_ID, initialPlaylist)
+        addPlaylist(playlist, db)
+    }
+
+    private fun addPlaylist(playlist: Playlist, db: SQLiteDatabase) {
+        insertPlaylist(playlist, db)
+    }
+
+    fun insertPlaylist(playlist: Playlist, db: SQLiteDatabase = mDb): Int {
+        val values = fillPlaylistValues(playlist)
+        val insertedId = db.insert(TABLE_NAME_PLAYLISTS, null, values).toInt()
+        return insertedId
+    }
+
+    private fun fillPlaylistValues(playlist: Playlist): ContentValues {
+        return ContentValues().apply {
+            put(COL_TITLE, playlist.title)
+        }
     }
 }
