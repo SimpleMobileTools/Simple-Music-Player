@@ -58,6 +58,7 @@ class SongAdapter(val activity: SimpleActivity, var songs: ArrayList<Song>, val 
             when (item.itemId) {
                 R.id.cab_properties -> showProperties()
                 R.id.cab_rename -> displayEditDialog()
+                R.id.cab_select_all -> selectAll()
                 R.id.cab_delete -> askConfirmDelete()
                 else -> return false
             }
@@ -110,6 +111,15 @@ class SongAdapter(val activity: SimpleActivity, var songs: ArrayList<Song>, val 
                 activity.sendIntent(REFRESH_LIST)
                 activity.runOnUiThread { actMode?.finish() }
             }
+        }
+    }
+
+    private fun selectAll() {
+        val cnt = songs.size
+        for (i in 0..cnt - 1) {
+            markedItems.add(i)
+            multiSelector.setSelected(i, 0, true)
+            notifyItemChanged(i)
         }
     }
 
