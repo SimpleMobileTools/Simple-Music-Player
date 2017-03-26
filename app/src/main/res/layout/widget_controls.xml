@@ -12,8 +12,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:paddingBottom="@dimen/medium_padding"
-        android:paddingTop="@dimen/medium_padding"
+        android:paddingBottom="@dimen/medium_margin"
+        android:paddingTop="@dimen/medium_margin"
         android:src="@drawable/ic_previous"/>
 
     <ImageView
@@ -22,8 +22,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:paddingBottom="@dimen/medium_padding"
-        android:paddingTop="@dimen/medium_padding"
+        android:paddingBottom="@dimen/medium_margin"
+        android:paddingTop="@dimen/medium_margin"
         android:src="@drawable/ic_play"/>
 
     <ImageView
@@ -32,8 +32,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:paddingBottom="@dimen/medium_padding"
-        android:paddingTop="@dimen/medium_padding"
+        android:paddingBottom="@dimen/medium_margin"
+        android:paddingTop="@dimen/medium_margin"
         android:src="@drawable/ic_next"/>
 
 </LinearLayout>

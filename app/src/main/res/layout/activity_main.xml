@@ -5,7 +5,7 @@
     android:id="@+id/main_holder"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="@dimen/song_item_vertical_margin">
+    android:paddingTop="@dimen/medium_margin">
 
     <LinearLayout
         android:id="@+id/main_controls"
@@ -22,8 +22,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:paddingBottom="5dp"
-            android:paddingTop="5dp"
+            android:paddingBottom="@dimen/small_margin"
+            android:paddingTop="@dimen/small_margin"
             android:src="@drawable/ic_previous"/>
 
         <ImageView
@@ -32,8 +32,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:paddingBottom="5dp"
-            android:paddingTop="5dp"
+            android:paddingBottom="@dimen/small_margin"
+            android:paddingTop="@dimen/small_margin"
             android:src="@drawable/ic_play"/>
 
         <ImageView
@@ -42,8 +42,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:paddingBottom="5dp"
-            android:paddingTop="5dp"
+            android:paddingBottom="@dimen/small_margin"
+            android:paddingTop="@dimen/small_margin"
             android:src="@drawable/ic_next"/>
 
     </LinearLayout>
@@ -58,7 +58,7 @@
         android:ellipsize="end"
         android:gravity="center_horizontal"
         android:maxLines="1"
-        android:textSize="18sp"/>
+        android:textSize="@dimen/big_text_size"/>
 
     <com.simplemobiletools.commons.views.MyTextView
         android:id="@+id/song_artist"
@@ -69,7 +69,7 @@
         android:layout_marginRight="@dimen/activity_margin"
         android:gravity="center_horizontal"
         android:maxLines="1"
-        android:textSize="16sp"/>
+        android:textSize="@dimen/bigger_text_size"/>
 
     <com.simplemobiletools.commons.views.MySeekBar
         android:id="@+id/progressbar"
@@ -88,7 +88,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/progressbar"
-        android:layout_marginBottom="@dimen/medium_padding"
+        android:layout_marginBottom="@dimen/medium_margin"
         android:layout_marginLeft="@dimen/activity_margin"
         android:layout_marginRight="@dimen/activity_margin"
         android:gravity="center_horizontal"

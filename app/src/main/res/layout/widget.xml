@@ -13,20 +13,20 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/activity_margin"
         android:layout_marginRight="@dimen/activity_margin"
-        android:layout_marginTop="@dimen/medium_padding"
+        android:layout_marginTop="@dimen/small_margin"
         android:ellipsize="end"
         android:gravity="center"
         android:lines="1"
         android:text="@string/title"
         android:textColor="@android:color/white"
-        android:textSize="18sp"/>
+        android:textSize="@dimen/big_text_size"/>
 
     <TextView
         android:id="@+id/song_artist"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/song_title"
-        android:layout_marginBottom="@dimen/medium_padding"
+        android:layout_marginBottom="@dimen/small_margin"
         android:layout_marginLeft="@dimen/activity_margin"
         android:layout_marginRight="@dimen/activity_margin"
         android:ellipsize="end"
@@ -34,7 +34,7 @@
         android:lines="1"
         android:text="@string/artist"
         android:textColor="@android:color/white"
-        android:textSize="16sp"/>
+        android:textSize="@dimen/bigger_text_size"/>
 
     <include
         layout="@layout/widget_controls"

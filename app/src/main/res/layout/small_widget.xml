@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
-    android:id="@+id/widget_holder"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/widget_holder"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@android:color/black"
     android:gravity="center_horizontal">
 
     <include layout="@layout/widget_controls"/>
+
 </RelativeLayout>
