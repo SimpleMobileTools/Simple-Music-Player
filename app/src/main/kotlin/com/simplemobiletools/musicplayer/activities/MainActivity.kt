@@ -50,7 +50,7 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
         mBus.register(this)
         progressbar.setOnSeekBarChangeListener(this)
 
-        if (hasStoragePermission()) {
+        if (hasWriteStoragePermission()) {
             initializePlayer()
         } else {
             ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), STORAGE_PERMISSION)

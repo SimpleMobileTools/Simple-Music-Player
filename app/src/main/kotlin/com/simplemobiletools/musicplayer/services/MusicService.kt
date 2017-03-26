@@ -71,7 +71,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         val remoteControlComponent = ComponentName(packageName, RemoteControlReceiver::class.java.name)
         val audioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager
         audioManager.registerMediaButtonEventReceiver(remoteControlComponent)
-        if (hasStoragePermission()) {
+        if (hasWriteStoragePermission()) {
             initService()
         } else {
             toast(R.string.no_permissions)
@@ -99,7 +99,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     }
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
-        if (!hasStoragePermission()) {
+        if (!hasWriteStoragePermission()) {
             return START_NOT_STICKY
         }
 

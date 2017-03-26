@@ -57,7 +57,7 @@
             android:layout_height="1px"
             android:layout_marginBottom="@dimen/medium_padding"
             android:layout_marginTop="@dimen/medium_padding"
-            android:background="@color/divider_grey"/>
+            android:background="@color/divider_weak"/>
 
         <RadioGroup
             android:id="@+id/sorting_dialog_radio_order"
