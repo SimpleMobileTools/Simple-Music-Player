@@ -141,9 +141,22 @@ class SongAdapter(val activity: SimpleActivity, var songs: ArrayList<Song>, val 
     private fun deleteSongs() {
         val selections = multiSelector.selectedPositions
         val files = ArrayList<File>(selections.size)
-        selections.forEach { files.add(File(songs[it].path)) }
-        activity.deleteFiles(files) {
-            activity.sendIntent(REFRESH_LIST)
+        val removeSongs = ArrayList<Song>(selections.size)
+
+        activity.handleSAFDialog(File(songs[selections[0]].path)) {
+            selections.reverse()
+            selections.forEach {
+                val song = songs[it]
+                files.add(File(song.path))
+                removeSongs.add(song)
+                notifyItemRemoved(it)
+            }
+
+            songs.removeAll(removeSongs)
+            markedItems.clear()
+            itemCnt = songs.size
+
+            activity.deleteFiles(files) { }
         }
     }
 
