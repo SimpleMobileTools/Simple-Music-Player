@@ -25,6 +25,7 @@ val SHUFFLE = "shuffle"
 val SORTING = "track_sorting"
 val EQUALIZER = "equalizer"
 val REPEAT_SONG = "repeat_song"
+val CURRENT_PLAYLIST = "current_playlist"
 
 // sorting
 val SORT_BY_TITLE = 1
