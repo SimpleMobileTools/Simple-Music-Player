@@ -15,11 +15,6 @@
     <string name="shuffle_enabled">Shuffle enabled</string>
     <string name="shuffle_disabled">Shuffle disabled</string>
 
-    <plurals name="songs_deleted">
-        <item quantity="one">1 曲削除しました</item>
-        <item quantity="other">%1$d 曲削除しました</item>
-    </plurals>
-
     <string name="previous">前へ</string>
     <string name="playpause">再生 一時停止</string>
     <string name="next">次へ</string>
@@ -39,7 +34,6 @@
     <string name="app_short_description">カスタマイズ可能なウィジェットを持つクリーンなミュージック プレイヤー。</string>
     <string name="app_long_description">
         ステータスバー、ホーム画面ウィジェット、またはヘッドセットのハードウェアボタンから簡単にコントロールできるミュージック プレイヤー。 タイトルやアーティストでトラックを並べ替えるだけでなく、イコライザーを変更することもできます。 アーティストやアルバムによるフィルタリングはまだサポートしていません。乞うご期待! The Phone Status permission is required for pausing the song once there is an incoming call.
-
 
         文字の色、背景のアルファと色をカスタマイズ可能なウィジェットを含みます。
 
