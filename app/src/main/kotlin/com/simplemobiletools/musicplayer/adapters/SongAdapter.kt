@@ -36,6 +36,7 @@ class SongAdapter(val activity: SimpleActivity, var songs: ArrayList<Song>, val 
         val markedItems = HashSet<Int>()
         var currentSongIndex = 0
         var textColor = 0
+        var itemCnt = 0
 
         fun toggleItemSelection(itemView: View, select: Boolean, pos: Int = -1) {
             itemView.song_frame.isSelected = select
@@ -47,10 +48,15 @@ class SongAdapter(val activity: SimpleActivity, var songs: ArrayList<Song>, val 
             else
                 markedItems.remove(pos)
         }
+
+        fun updateTitle(cnt: Int) {
+            actMode?.title = "$cnt / $itemCnt"
+        }
     }
 
     init {
         textColor = activity.config.textColor
+        itemCnt = songs.size
     }
 
     val multiSelectorMode = object : ModalMultiSelectorCallback(multiSelector) {
@@ -121,6 +127,8 @@ class SongAdapter(val activity: SimpleActivity, var songs: ArrayList<Song>, val 
             multiSelector.setSelected(i, 0, true)
             notifyItemChanged(i)
         }
+        updateTitle(cnt)
+        actMode?.invalidate()
     }
 
     private fun askConfirmDelete() {
@@ -188,7 +196,7 @@ class SongAdapter(val activity: SimpleActivity, var songs: ArrayList<Song>, val 
                     if (!multiSelector.isSelectable) {
                         activity.startSupportActionMode(multiSelectorCallback)
                         multiSelector.setSelected(this@ViewHolder, true)
-                        actMode?.title = multiSelector.selectedPositions.size.toString()
+                        updateTitle(multiSelector.selectedPositions.size)
                         toggleItemSelection(itemView, true, pos)
                         actMode?.invalidate()
                     }
@@ -209,7 +217,7 @@ class SongAdapter(val activity: SimpleActivity, var songs: ArrayList<Song>, val 
                 if (selectedCnt == 0) {
                     actMode?.finish()
                 } else {
-                    actMode?.title = selectedCnt.toString()
+                    updateTitle(selectedCnt)
                 }
                 actMode?.invalidate()
             } else {
