@@ -10,7 +10,9 @@ import com.bignerdranch.android.multiselector.MultiSelector
 import com.bignerdranch.android.multiselector.SwappingHolder
 import com.simplemobiletools.commons.dialogs.ConfirmationDialog
 import com.simplemobiletools.commons.dialogs.PropertiesDialog
-import com.simplemobiletools.commons.extensions.scanPaths
+import com.simplemobiletools.commons.extensions.beInvisible
+import com.simplemobiletools.commons.extensions.beVisible
+import com.simplemobiletools.commons.extensions.deleteFiles
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
 import com.simplemobiletools.musicplayer.dialogs.EditDialog
@@ -120,13 +122,9 @@ class SongAdapter(val activity: SimpleActivity, var songs: ArrayList<Song>, val 
 
     private fun deleteSongs() {
         val selections = multiSelector.selectedPositions
-        val paths = ArrayList<String>(selections.size)
-        selections.forEach { paths.add(songs[it].path) }
-        for (path in paths) {
-            File(path).delete()
-        }
-
-        activity.scanPaths(paths) {
+        val files = ArrayList<File>(selections.size)
+        selections.forEach { files.add(File(songs[it].path)) }
+        activity.deleteFiles(files) {
             activity.sendIntent(REFRESH_LIST)
         }
     }
@@ -169,9 +167,9 @@ class SongAdapter(val activity: SimpleActivity, var songs: ArrayList<Song>, val 
 
                 if (currentSongIndex == pos) {
                     song_note_image.setColorFilter(textColor, PorterDuff.Mode.SRC_IN)
-                    song_note_image.visibility = View.VISIBLE
+                    song_note_image.beVisible()
                 } else {
-                    song_note_image.visibility = View.INVISIBLE
+                    song_note_image.beInvisible()
                 }
                 toggleItemSelection(itemView, markedItems.contains(pos), pos)
 
