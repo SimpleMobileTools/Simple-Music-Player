@@ -1,15 +1,11 @@
 package com.simplemobiletools.musicplayer.activities
 
-import android.content.Intent
 import android.os.Bundle
-import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
+import com.simplemobiletools.commons.dialogs.RadioGroupDialog
 import com.simplemobiletools.commons.extensions.updateTextColors
+import com.simplemobiletools.commons.models.RadioItem
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.extensions.config
-import com.simplemobiletools.musicplayer.helpers.EQUALIZER
-import com.simplemobiletools.musicplayer.helpers.SET_EQUALIZER
 import com.simplemobiletools.musicplayer.services.MusicService
 import kotlinx.android.synthetic.main.activity_settings.*
 
@@ -34,37 +30,16 @@ class SettingsActivity : SimpleActivity() {
     }
 
     private fun setupEqualizer() {
-        settings_equalizer.apply {
-            adapter = getPresetsAdapter()
-            setSelection(config.equalizer)
-            onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                    config.equalizer = selectedItemPosition
+        val equalizer = MusicService.mEqualizer ?: return
+        val items = arrayListOf<RadioItem>()
+        (0..equalizer.numberOfPresets - 1).mapTo(items) { RadioItem(it, equalizer.getPresetName(it.toShort())) }
 
-                    Intent(applicationContext, MusicService::class.java).apply {
-                        putExtra(EQUALIZER, selectedItemPosition)
-                        action = SET_EQUALIZER
-                        startService(this)
-                    }
-                }
-
-                override fun onNothingSelected(parent: AdapterView<*>?) {
-                }
+        settings_equalizer.text = items[config.equalizer].title
+        settings_equalizer_holder.setOnClickListener {
+            RadioGroupDialog(this@SettingsActivity, items, config.equalizer) {
+                config.equalizer = it as Int
+                settings_equalizer.text = items[it].title
             }
         }
-    }
-
-    private fun getPresetsAdapter(): ArrayAdapter<String> {
-        val adapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item)
-        val equalizer = MusicService.mEqualizer ?: return adapter
-        val cnt = equalizer.numberOfPresets.toInt()
-        val presets = arrayOfNulls<String>(cnt)
-        for (i in 0..cnt - 1) {
-            presets[i] = equalizer.getPresetName(i.toShort())
-        }
-        for (preset in presets)
-            adapter.add(preset)
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        return adapter
     }
 }
