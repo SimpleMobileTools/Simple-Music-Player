@@ -11,12 +11,15 @@
         android:id="@+id/song_holder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/medium_margin">
+        android:paddingBottom="@dimen/medium_margin"
+        android:paddingLeft="@dimen/medium_margin"
+        android:paddingTop="@dimen/medium_margin">
 
         <com.simplemobiletools.commons.views.MyTextView
             android:id="@+id/song_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/song_note_image"
             android:text="Song Title"
             android:textSize="@dimen/bigger_text_size"/>
 
@@ -25,6 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/song_title"
+            android:layout_toLeftOf="@+id/song_note_image"
             android:text="Song Artist"
             android:textSize="@dimen/normal_text_size"/>
 
