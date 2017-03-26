@@ -1,9 +1,9 @@
 package com.simplemobiletools.musicplayer.models
 
+import com.simplemobiletools.commons.helpers.SORT_DESCENDING
 import com.simplemobiletools.musicplayer.helpers.SORT_BY_ARTIST
 import com.simplemobiletools.musicplayer.helpers.SORT_BY_FILE_NAME
 import com.simplemobiletools.musicplayer.helpers.SORT_BY_TITLE
-import com.simplemobiletools.musicplayer.helpers.SORT_DESCENDING
 import java.io.Serializable
 
 data class Song(val id: Long, var title: String, var artist: String, var path: String, val duration: Int) : Serializable, Comparable<Song> {

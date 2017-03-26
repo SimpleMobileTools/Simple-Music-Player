@@ -20,7 +20,6 @@
     <string name="next">次へ</string>
 
     <!-- Settings -->
-    <string name="numeric_progress">再生状況を数値でも表示する</string>
     <string name="equalizer">イコライザー</string>
 
     <!-- Release notes -->

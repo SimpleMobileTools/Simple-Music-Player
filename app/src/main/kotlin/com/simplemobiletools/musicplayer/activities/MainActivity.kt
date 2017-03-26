@@ -9,7 +9,6 @@ import android.os.Bundle
 import android.support.v4.app.ActivityCompat
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import android.widget.SeekBar
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.LICENSE_KOTLIN
@@ -38,8 +37,6 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
 
         lateinit var mBus: Bus
         private var mSongs: List<Song> = ArrayList()
-
-        private var mIsNumericProgressShown = false
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -64,9 +61,7 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
 
     override fun onResume() {
         super.onResume()
-        mIsNumericProgressShown = config.isNumericProgressEnabled
         setupIconColors()
-        song_progress.visibility = if (mIsNumericProgressShown) View.VISIBLE else View.GONE
         markCurrentSong()
         updateTextColors(main_holder)
     }
@@ -222,13 +217,11 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
     }
 
     override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
-        if (mIsNumericProgressShown) {
-            val duration = progressbar.max.getFormattedDuration()
-            val formattedProgress = progress.getFormattedDuration()
+        val duration = progressbar.max.getFormattedDuration()
+        val formattedProgress = progress.getFormattedDuration()
 
-            val progressText = String.format(resources.getString(R.string.progress), formattedProgress, duration)
-            song_progress.text = progressText
-        }
+        val progressText = String.format(resources.getString(R.string.progress), formattedProgress, duration)
+        song_progress.text = progressText
     }
 
     override fun onStartTrackingTouch(seekBar: SeekBar) {

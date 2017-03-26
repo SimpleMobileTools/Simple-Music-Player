@@ -92,8 +92,7 @@
         android:layout_marginLeft="@dimen/activity_margin"
         android:layout_marginRight="@dimen/activity_margin"
         android:gravity="center_horizontal"
-        android:maxLines="1"
-        android:visibility="gone"/>
+        android:maxLines="1"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/songs_list"

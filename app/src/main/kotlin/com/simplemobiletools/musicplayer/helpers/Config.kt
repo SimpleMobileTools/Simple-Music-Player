@@ -12,10 +12,6 @@ class Config(context: Context) : BaseConfig(context) {
         get() = prefs.getBoolean(SHUFFLE, true)
         set(shuffle) = prefs.edit().putBoolean(SHUFFLE, shuffle).apply()
 
-    var isNumericProgressEnabled: Boolean
-        get() = prefs.getBoolean(NUMERIC_PROGRESS, false)
-        set(enabled) = prefs.edit().putBoolean(NUMERIC_PROGRESS, enabled).apply()
-
     var sorting: Int
         get() = prefs.getInt(SORTING, SORT_BY_TITLE)
         set(sorting) = prefs.edit().putInt(SORTING, sorting).apply()

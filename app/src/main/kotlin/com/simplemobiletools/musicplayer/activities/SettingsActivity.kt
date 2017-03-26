@@ -23,7 +23,6 @@ class SettingsActivity : SimpleActivity() {
         super.onResume()
 
         setupCustomizeColors()
-        setupNumericProgress()
         setupEqualizer()
         updateTextColors(settings_scrollview)
     }
@@ -31,14 +30,6 @@ class SettingsActivity : SimpleActivity() {
     private fun setupCustomizeColors() {
         settings_customize_colors_holder.setOnClickListener {
             startCustomizationActivity()
-        }
-    }
-
-    private fun setupNumericProgress() {
-        settings_numeric_progress.isChecked = config.isNumericProgressEnabled
-        settings_numeric_progress_holder.setOnClickListener {
-            settings_numeric_progress.toggle()
-            config.isNumericProgressEnabled = settings_numeric_progress.isChecked
         }
     }
 
