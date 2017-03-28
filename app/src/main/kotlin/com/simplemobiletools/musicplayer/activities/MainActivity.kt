@@ -6,10 +6,12 @@ import android.content.pm.PackageManager
 import android.graphics.PorterDuff
 import android.media.AudioManager
 import android.os.Bundle
+import android.os.Environment
 import android.support.v4.app.ActivityCompat
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.SeekBar
+import com.simplemobiletools.commons.dialogs.FilePickerDialog
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.LICENSE_KOTLIN
 import com.simplemobiletools.commons.helpers.LICENSE_MULTISELECT
@@ -21,6 +23,7 @@ import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.adapters.SongAdapter
 import com.simplemobiletools.musicplayer.dialogs.ChangeSortingDialog
 import com.simplemobiletools.musicplayer.extensions.config
+import com.simplemobiletools.musicplayer.extensions.dbHelper
 import com.simplemobiletools.musicplayer.extensions.sendIntent
 import com.simplemobiletools.musicplayer.helpers.*
 import com.simplemobiletools.musicplayer.models.Events
@@ -83,8 +86,8 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
         when (item.itemId) {
             R.id.sort -> showSortingDialog()
             R.id.toggle_song_repetition -> toggleSongRepetition()
-            R.id.add_folder_to_playlist -> addFolderToPlaylist()
             R.id.toggle_shuffle -> toggleShuffle()
+            R.id.add_folder_to_playlist -> addFolderToPlaylist()
             R.id.add_file_to_playlist -> addFileToPlaylist()
             R.id.settings -> launchSettings()
             R.id.about -> launchAbout()
@@ -131,12 +134,15 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
         toast(if (config.repeatSong) R.string.song_repetition_enabled else R.string.song_repetition_disabled)
     }
 
-    private fun addFileToPlaylist() {
+    private fun addFolderToPlaylist() {
 
     }
 
-    private fun addFolderToPlaylist() {
-
+    private fun addFileToPlaylist() {
+        val initialPath = if (mSongs.isEmpty()) Environment.getExternalStorageDirectory().toString() else mSongs[0].path
+        FilePickerDialog(this, initialPath) {
+            dbHelper.addSongToPlaylist(it)
+        }
     }
 
     private fun initializePlayer() {

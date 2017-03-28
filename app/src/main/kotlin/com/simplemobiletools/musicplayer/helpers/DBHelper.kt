@@ -66,6 +66,10 @@ class DBHelper private constructor(val context: Context) : SQLiteOpenHelper(cont
         return insertedId
     }
 
+    fun addSongToPlaylist(path: String) {
+        addSongsToPlaylist(ArrayList<String>().apply { add(path) })
+    }
+
     fun addSongsToPlaylist(paths: ArrayList<String>) {
         val playlistId = context.config.currentPlaylist
         for (path in paths) {
