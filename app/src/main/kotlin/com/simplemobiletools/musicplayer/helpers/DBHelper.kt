@@ -5,10 +5,15 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.provider.MediaStore
+import android.text.TextUtils
+import com.simplemobiletools.commons.extensions.getIntValue
+import com.simplemobiletools.commons.extensions.getLongValue
 import com.simplemobiletools.commons.extensions.getStringValue
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.models.Playlist
+import com.simplemobiletools.musicplayer.models.Song
 
 class DBHelper private constructor(val context: Context) : SQLiteOpenHelper(context, DB_NAME, null, DB_VERSION) {
     private val TABLE_NAME_PLAYLISTS = "playlists"
@@ -72,7 +77,7 @@ class DBHelper private constructor(val context: Context) : SQLiteOpenHelper(cont
         }
     }
 
-    fun getCurrentPlaylistPaths(): ArrayList<String> {
+    private fun getCurrentPlaylistSongPaths(): ArrayList<String> {
         val paths = ArrayList<String>()
         val cols = arrayOf(COL_PATH)
         val selection = "$COL_PLAYLIST_ID = ?"
@@ -90,5 +95,34 @@ class DBHelper private constructor(val context: Context) : SQLiteOpenHelper(cont
             cursor?.close()
         }
         return paths
+    }
+
+    fun getSongs(): ArrayList<Song> {
+        val songPaths = getCurrentPlaylistSongPaths()
+        val songs = ArrayList<Song>(songPaths.size)
+        val uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
+        val columns = arrayOf(MediaStore.Audio.Media._ID, MediaStore.Audio.Media.TITLE, MediaStore.Audio.Media.ARTIST, MediaStore.Audio.Media.DURATION, MediaStore.Audio.Media.DATA)
+
+        val args = "\"" + TextUtils.join("\",\"", songPaths) + "\""
+        val selection = "${MediaStore.Audio.Media.DATA} IN ($args)"
+
+        var cursor: Cursor? = null
+        try {
+            cursor = context.contentResolver.query(uri, columns, selection, null, null)
+            if (cursor != null && cursor.moveToFirst()) {
+                do {
+                    val id = cursor.getLongValue(MediaStore.Audio.Media._ID)
+                    val title = cursor.getStringValue(MediaStore.Audio.Media.TITLE)
+                    val artist = cursor.getStringValue(MediaStore.Audio.Media.ARTIST)
+                    val path = cursor.getStringValue(MediaStore.Audio.Media.DATA)
+                    val duration = cursor.getIntValue(MediaStore.Audio.Media.DURATION) / 1000
+                    val song = Song(id, title, artist, path, duration)
+                    songs.add(song)
+                } while (cursor.moveToNext())
+            }
+        } finally {
+            cursor?.close()
+        }
+        return songs
     }
 }

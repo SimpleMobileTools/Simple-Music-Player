@@ -210,7 +210,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             config.wasInitialPlaylistFilled = true
         }
 
-        val songPaths = dbHelper.getCurrentPlaylistPaths()
+        mSongs = dbHelper.getSongs()
 
         Song.sorting = mConfig!!.sorting
         mSongs?.sort()
