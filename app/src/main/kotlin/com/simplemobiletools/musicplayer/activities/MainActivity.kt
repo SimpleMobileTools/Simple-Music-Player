@@ -57,6 +57,7 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
         play_pause_btn.setOnClickListener { sendIntent(PLAYPAUSE) }
         next_btn.setOnClickListener { sendIntent(NEXT) }
         checkWhatsNewDialog()
+        storeStoragePaths()
     }
 
     override fun onResume() {
