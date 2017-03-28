@@ -20,7 +20,8 @@
     <string name="next">Nächter Titel</string>
 
     <!-- Playlists -->
-    <string name="import_from_folder">Import from folder</string>
+    <string name="add_file_to_playlist">Add file to playlist</string>
+    <string name="add_folder_to_playlist">Add folder to playlist</string>
     <string name="manage_playlists">Manage playlists</string>
     <string name="playlists">Playlists</string>
     <string name="create_playlist">Create playlist</string>

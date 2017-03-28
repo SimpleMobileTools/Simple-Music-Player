@@ -81,8 +81,10 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.sort -> showSortingDialog()
-            R.id.toggle_shuffle -> toggleShuffle()
             R.id.toggle_song_repetition -> toggleSongRepetition()
+            R.id.add_folder_to_playlist -> addFolderToPlaylist()
+            R.id.toggle_shuffle -> toggleShuffle()
+            R.id.add_file_to_playlist -> addFileToPlaylist()
             R.id.settings -> launchSettings()
             R.id.about -> launchAbout()
             else -> return super.onOptionsItemSelected(item)
@@ -126,6 +128,14 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
         config.repeatSong = !config.repeatSong
         invalidateOptionsMenu()
         toast(if (config.repeatSong) R.string.song_repetition_enabled else R.string.song_repetition_disabled)
+    }
+
+    private fun addFileToPlaylist() {
+
+    }
+
+    private fun addFolderToPlaylist() {
+
     }
 
     private fun initializePlayer() {

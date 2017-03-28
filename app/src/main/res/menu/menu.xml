@@ -12,10 +12,19 @@
         android:title="@string/disable_song_repetition"
         app:showAsAction="ifRoom"/>
     <item
+        android:id="@+id/add_folder_to_playlist"
+        android:icon="@drawable/ic_plus"
+        android:title="@string/add_folder_to_playlist"
+        app:showAsAction="ifRoom"/>
+    <item
         android:id="@+id/toggle_shuffle"
         android:icon="@drawable/ic_shuffle"
         android:title="@string/disable_shuffle"
         app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/add_file_to_playlist"
+        android:title="@string/add_file_to_playlist"
+        app:showAsAction="never"/>
     <item
         android:id="@+id/settings"
         android:title="@string/settings"
