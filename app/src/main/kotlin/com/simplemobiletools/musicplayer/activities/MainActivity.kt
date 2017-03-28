@@ -32,6 +32,7 @@ import com.simplemobiletools.musicplayer.services.MusicService
 import com.squareup.otto.Bus
 import com.squareup.otto.Subscribe
 import kotlinx.android.synthetic.main.activity_main.*
+import java.io.File
 import java.util.*
 
 class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
@@ -135,7 +136,12 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
     }
 
     private fun addFolderToPlaylist() {
-
+        val initialPath = if (mSongs.isEmpty()) Environment.getExternalStorageDirectory().toString() else mSongs[0].path
+        FilePickerDialog(this, initialPath, pickFile = false) {
+            val files = File(it).listFiles() ?: return@FilePickerDialog
+            val paths = files.mapTo(ArrayList<String>()) { it.absolutePath }
+            dbHelper.addSongsToPlaylist(paths)
+        }
     }
 
     private fun addFileToPlaylist() {
