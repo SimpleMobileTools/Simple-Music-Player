@@ -54,15 +54,9 @@ class DBHelper private constructor(val context: Context) : SQLiteOpenHelper(cont
     }
 
     fun insertPlaylist(playlist: Playlist, db: SQLiteDatabase = mDb): Int {
-        val values = fillPlaylistValues(playlist)
+        val values = ContentValues().apply { put(COL_TITLE, playlist.title) }
         val insertedId = db.insert(TABLE_NAME_PLAYLISTS, null, values).toInt()
         return insertedId
-    }
-
-    private fun fillPlaylistValues(playlist: Playlist): ContentValues {
-        return ContentValues().apply {
-            put(COL_TITLE, playlist.title)
-        }
     }
 
     fun addSongsToPlaylist(paths: ArrayList<String>) {
