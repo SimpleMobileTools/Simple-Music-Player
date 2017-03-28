@@ -141,6 +141,7 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
             val files = File(it).listFiles() ?: return@FilePickerDialog
             val paths = files.mapTo(ArrayList<String>()) { it.absolutePath }
             dbHelper.addSongsToPlaylist(paths)
+            sendIntent(REFRESH_LIST)
         }
     }
 
@@ -148,6 +149,7 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
         val initialPath = if (mSongs.isEmpty()) Environment.getExternalStorageDirectory().toString() else mSongs[0].path
         FilePickerDialog(this, initialPath) {
             dbHelper.addSongToPlaylist(it)
+            sendIntent(REFRESH_LIST)
         }
     }
 

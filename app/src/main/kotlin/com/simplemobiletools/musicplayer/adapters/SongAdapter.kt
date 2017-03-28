@@ -165,13 +165,13 @@ class SongAdapter(val activity: SimpleActivity, var songs: ArrayList<Song>, val 
 
     }
 
-    private fun updateSongs(newSongs: ArrayList<Song>) {
+    fun updateSongs(newSongs: ArrayList<Song>) {
         songs = newSongs
         currentSongIndex = -1
         notifyDataSetChanged()
     }
 
-    private fun updateCurrentSongIndex(index: Int) {
+    fun updateCurrentSongIndex(index: Int) {
         val prevIndex = currentSongIndex
         currentSongIndex = -1
         notifyItemChanged(prevIndex)
