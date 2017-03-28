@@ -26,6 +26,7 @@ val SORTING = "track_sorting"
 val EQUALIZER = "equalizer"
 val REPEAT_SONG = "repeat_song"
 val CURRENT_PLAYLIST = "current_playlist"
+val WAS_INITIAL_PLAYLIST_FILLED = "was_initial_playlist_filled"
 
 // sorting
 val SORT_BY_TITLE = 1

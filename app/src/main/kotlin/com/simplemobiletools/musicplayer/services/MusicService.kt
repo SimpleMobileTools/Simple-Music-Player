@@ -18,7 +18,10 @@ import android.support.v7.app.NotificationCompat
 import android.telephony.PhoneStateListener
 import android.telephony.TelephonyManager
 import android.util.Log
-import com.simplemobiletools.commons.extensions.*
+import com.simplemobiletools.commons.extensions.getIntValue
+import com.simplemobiletools.commons.extensions.getStringValue
+import com.simplemobiletools.commons.extensions.hasWriteStoragePermission
+import com.simplemobiletools.commons.extensions.toast
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.MainActivity
 import com.simplemobiletools.musicplayer.extensions.config
@@ -37,7 +40,7 @@ import java.util.*
 class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnErrorListener, MediaPlayer.OnCompletionListener {
     companion object {
         private val TAG = MusicService::class.java.simpleName
-        private val MIN_DURATION = 20
+        private val MIN_INITIAL_DURATION = 30
         private val PROGRESS_UPDATE_INTERVAL = 1000
         private val NOTIFICATION_ID = 78
 
@@ -175,35 +178,37 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         setupEqualizer()
     }
 
-    private fun fillPlaylist() {
-        mSongs!!.clear()
+    private fun fillInitialPlaylist() {
         val uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
-        val columns = arrayOf(MediaStore.Audio.Media._ID, MediaStore.Audio.Media.TITLE, MediaStore.Audio.Media.ARTIST, MediaStore.Audio.Media.DURATION, MediaStore.Audio.Media.DATA)
+        val columns = arrayOf(MediaStore.Audio.Media.DURATION, MediaStore.Audio.Media.DATA)
 
-        val order = MediaStore.Audio.Media.TITLE
         var cursor: Cursor? = null
+        val paths = ArrayList<String>()
 
         try {
-            cursor = contentResolver.query(uri, columns, null, null, order)
+            cursor = contentResolver.query(uri, columns, null, null, null)
             if (cursor != null && cursor.moveToFirst()) {
                 do {
                     val duration = cursor.getIntValue(MediaStore.Audio.Media.DURATION) / 1000
-                    if (duration > MIN_DURATION) {
-                        val id = cursor.getLongValue(MediaStore.Audio.Media._ID)
-                        val title = cursor.getStringValue(MediaStore.Audio.Media.TITLE)
-                        val artist = cursor.getStringValue(MediaStore.Audio.Media.ARTIST)
+                    if (duration > MIN_INITIAL_DURATION) {
                         val path = cursor.getStringValue(MediaStore.Audio.Media.DATA)
-                        mSongs!!.add(Song(id, title, artist, path, duration))
+                        paths.add(path)
                     }
                 } while (cursor.moveToNext())
             }
         } finally {
             cursor?.close()
         }
+
+        DBHelper.newInstance(this).addSongsToPlaylist(paths)
     }
 
     private fun getSortedSongs() {
-        fillPlaylist()
+        if (!config.wasInitialPlaylistFilled) {
+            fillInitialPlaylist()
+            config.wasInitialPlaylistFilled = true
+        }
+
         Song.sorting = mConfig!!.sorting
         mSongs?.sort()
     }
@@ -345,10 +350,6 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     }
 
     fun resumeSong() {
-        if (mSongs!!.isEmpty()) {
-            fillPlaylist()
-        }
-
         if (mSongs!!.isEmpty())
             return
 
