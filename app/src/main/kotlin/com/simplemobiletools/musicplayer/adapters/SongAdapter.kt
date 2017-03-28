@@ -17,6 +17,7 @@ import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
 import com.simplemobiletools.musicplayer.dialogs.EditDialog
 import com.simplemobiletools.musicplayer.extensions.config
+import com.simplemobiletools.musicplayer.extensions.dbHelper
 import com.simplemobiletools.musicplayer.extensions.sendIntent
 import com.simplemobiletools.musicplayer.helpers.EDIT
 import com.simplemobiletools.musicplayer.helpers.EDITED_SONG
@@ -65,8 +66,8 @@ class SongAdapter(val activity: SimpleActivity, var songs: ArrayList<Song>, val 
                 R.id.cab_properties -> showProperties()
                 R.id.cab_rename -> displayEditDialog()
                 R.id.cab_select_all -> selectAll()
-                R.id.cab_delete -> askConfirmDelete()
                 R.id.cab_remove_from_playlist -> removeFromPlaylist()
+                R.id.cab_delete -> askConfirmDelete()
                 else -> return false
             }
             return true
@@ -141,6 +142,7 @@ class SongAdapter(val activity: SimpleActivity, var songs: ArrayList<Song>, val 
 
     private fun deleteSongs() {
         val selections = multiSelector.selectedPositions
+        val paths = ArrayList<String>(selections.size)
         val files = ArrayList<File>(selections.size)
         val removeSongs = ArrayList<Song>(selections.size)
 
@@ -148,6 +150,7 @@ class SongAdapter(val activity: SimpleActivity, var songs: ArrayList<Song>, val 
             selections.reverse()
             selections.forEach {
                 val song = songs[it]
+                paths.add(song.path)
                 files.add(File(song.path))
                 removeSongs.add(song)
                 notifyItemRemoved(it)
@@ -156,13 +159,29 @@ class SongAdapter(val activity: SimpleActivity, var songs: ArrayList<Song>, val 
             songs.removeAll(removeSongs)
             markedItems.clear()
             itemCnt = songs.size
-
+            activity.dbHelper.removeSongsFromPlaylist(paths)
             activity.deleteFiles(files) { }
         }
     }
 
     private fun removeFromPlaylist() {
+        val selections = multiSelector.selectedPositions
+        val paths = ArrayList<String>(selections.size)
+        val removeSongs = ArrayList<Song>(selections.size)
 
+        selections.reverse()
+        selections.forEach {
+            val song = songs[it]
+            paths.add(song.path)
+            removeSongs.add(song)
+            notifyItemRemoved(it)
+        }
+
+        songs.removeAll(removeSongs)
+        markedItems.clear()
+        itemCnt = songs.size
+        activity.dbHelper.removeSongsFromPlaylist(paths)
+        actMode?.finish()
     }
 
     fun updateSongs(newSongs: ArrayList<Song>) {

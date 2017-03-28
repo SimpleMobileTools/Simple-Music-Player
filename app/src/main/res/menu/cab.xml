@@ -17,12 +17,12 @@
         android:title="@string/select_all"
         app:showAsAction="ifRoom"/>
     <item
+        android:id="@+id/cab_remove_from_playlist"
+        android:title="@string/remove_from_playlist"
+        app:showAsAction="never"/>
+    <item
         android:id="@+id/cab_delete"
         android:icon="@drawable/ic_delete"
         android:title="@string/delete"
         app:showAsAction="ifRoom"/>
-    <item
-        android:id="@+id/cab_remove_from_playlist"
-        android:title="@string/remove_from_playlist"
-        app:showAsAction="never"/>
 </menu>

@@ -14,6 +14,7 @@ import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.models.Playlist
 import com.simplemobiletools.musicplayer.models.Song
+import java.io.File
 
 class DBHelper private constructor(val context: Context) : SQLiteOpenHelper(context, DB_NAME, null, DB_VERSION) {
     private val TABLE_NAME_PLAYLISTS = "playlists"
@@ -81,6 +82,18 @@ class DBHelper private constructor(val context: Context) : SQLiteOpenHelper(cont
         }
     }
 
+    fun removeSongFromPlaylist(path: String) {
+        removeSongsFromPlaylist(ArrayList<String>().apply { add(path) })
+    }
+
+    fun removeSongsFromPlaylist(paths: ArrayList<String>) {
+        val playlistId = context.config.currentPlaylist
+
+        val args = "\"" + TextUtils.join("\",\"", paths) + "\""
+        val selection = "$COL_PLAYLIST_ID = $playlistId AND $COL_PATH IN ($args)"
+        mDb.delete(TABLE_NAME_SONGS, selection, null)
+    }
+
     private fun getCurrentPlaylistSongPaths(): ArrayList<String> {
         val paths = ArrayList<String>()
         val cols = arrayOf(COL_PATH)
@@ -92,7 +105,11 @@ class DBHelper private constructor(val context: Context) : SQLiteOpenHelper(cont
             if (cursor?.moveToFirst() == true) {
                 do {
                     val path = cursor.getStringValue(COL_PATH)
-                    paths.add(path)
+                    if (File(path).exists()) {
+                        paths.add(path)
+                    } else {
+                        removeSongFromPlaylist(path)
+                    }
                 } while (cursor.moveToNext())
             }
         } finally {
@@ -102,12 +119,12 @@ class DBHelper private constructor(val context: Context) : SQLiteOpenHelper(cont
     }
 
     fun getSongs(): ArrayList<Song> {
-        val songPaths = getCurrentPlaylistSongPaths()
-        val songs = ArrayList<Song>(songPaths.size)
+        val paths = getCurrentPlaylistSongPaths()
+        val songs = ArrayList<Song>(paths.size)
         val uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
         val columns = arrayOf(MediaStore.Audio.Media._ID, MediaStore.Audio.Media.TITLE, MediaStore.Audio.Media.ARTIST, MediaStore.Audio.Media.DURATION, MediaStore.Audio.Media.DATA)
 
-        val args = "\"" + TextUtils.join("\",\"", songPaths) + "\""
+        val args = "\"" + TextUtils.join("\",\"", paths) + "\""
         val selection = "${MediaStore.Audio.Media.DATA} IN ($args)"
 
         var cursor: Cursor? = null
