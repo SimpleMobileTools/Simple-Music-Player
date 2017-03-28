@@ -66,6 +66,7 @@ class SongAdapter(val activity: SimpleActivity, var songs: ArrayList<Song>, val 
                 R.id.cab_rename -> displayEditDialog()
                 R.id.cab_select_all -> selectAll()
                 R.id.cab_delete -> askConfirmDelete()
+                R.id.cab_remove_from_playlist -> removeFromPlaylist()
                 else -> return false
             }
             return true
@@ -160,13 +161,17 @@ class SongAdapter(val activity: SimpleActivity, var songs: ArrayList<Song>, val 
         }
     }
 
-    fun updateSongs(newSongs: ArrayList<Song>) {
+    private fun removeFromPlaylist() {
+
+    }
+
+    private fun updateSongs(newSongs: ArrayList<Song>) {
         songs = newSongs
         currentSongIndex = -1
         notifyDataSetChanged()
     }
 
-    fun updateCurrentSongIndex(index: Int) {
+    private fun updateCurrentSongIndex(index: Int) {
         val prevIndex = currentSongIndex
         currentSongIndex = -1
         notifyItemChanged(prevIndex)
