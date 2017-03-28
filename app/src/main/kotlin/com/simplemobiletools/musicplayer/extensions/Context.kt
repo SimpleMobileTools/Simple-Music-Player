@@ -3,6 +3,7 @@ package com.simplemobiletools.musicplayer.extensions
 import android.content.Context
 import android.content.Intent
 import com.simplemobiletools.musicplayer.helpers.Config
+import com.simplemobiletools.musicplayer.helpers.DBHelper
 import com.simplemobiletools.musicplayer.services.MusicService
 
 fun Context.sendIntent(action: String) {
@@ -13,3 +14,5 @@ fun Context.sendIntent(action: String) {
 }
 
 val Context.config: Config get() = Config.newInstance(this)
+
+val Context.dbHelper: DBHelper get() = DBHelper.newInstance(this)

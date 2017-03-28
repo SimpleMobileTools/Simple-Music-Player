@@ -25,6 +25,7 @@ import com.simplemobiletools.commons.extensions.toast
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.MainActivity
 import com.simplemobiletools.musicplayer.extensions.config
+import com.simplemobiletools.musicplayer.extensions.dbHelper
 import com.simplemobiletools.musicplayer.helpers.*
 import com.simplemobiletools.musicplayer.models.Events
 import com.simplemobiletools.musicplayer.models.Song
@@ -200,7 +201,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             cursor?.close()
         }
 
-        DBHelper.newInstance(this).addSongsToPlaylist(paths)
+        dbHelper.addSongsToPlaylist(paths)
     }
 
     private fun getSortedSongs() {
@@ -208,6 +209,8 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             fillInitialPlaylist()
             config.wasInitialPlaylistFilled = true
         }
+
+        val songPaths = dbHelper.getCurrentPlaylistPaths()
 
         Song.sorting = mConfig!!.sorting
         mSongs?.sort()

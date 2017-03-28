@@ -2,8 +2,10 @@ package com.simplemobiletools.musicplayer.helpers
 
 import android.content.ContentValues
 import android.content.Context
+import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import com.simplemobiletools.commons.extensions.getStringValue
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.models.Playlist
@@ -68,5 +70,25 @@ class DBHelper private constructor(val context: Context) : SQLiteOpenHelper(cont
                 mDb.insert(TABLE_NAME_SONGS, null, this)
             }
         }
+    }
+
+    fun getCurrentPlaylistPaths(): ArrayList<String> {
+        val paths = ArrayList<String>()
+        val cols = arrayOf(COL_PATH)
+        val selection = "$COL_PLAYLIST_ID = ?"
+        val selectionArgs = arrayOf(context.config.currentPlaylist.toString())
+        var cursor: Cursor? = null
+        try {
+            cursor = mDb.query(TABLE_NAME_SONGS, cols, selection, selectionArgs, null, null, null)
+            if (cursor?.moveToFirst() == true) {
+                do {
+                    val path = cursor.getStringValue(COL_PATH)
+                    paths.add(path)
+                } while (cursor.moveToNext())
+            }
+        } finally {
+            cursor?.close()
+        }
+        return paths
     }
 }
