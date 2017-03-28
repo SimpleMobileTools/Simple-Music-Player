@@ -23,7 +23,7 @@
     <string name="import_from_folder">Import from folder</string>
     <string name="manage_playlists">Manage playlists</string>
     <string name="playlists">Playlists</string>
-    <string name="add_playlist">Add playlist</string>
+    <string name="create_playlist">Create playlist</string>
     <string name="playlist_name_exists">A playlist with that name already exists</string>
     <string name="remove_playlist">Remove playlist</string>
     <string name="remove_playlist_description">This will only remove playlist \"%1$s\", not the actual files.</string>
