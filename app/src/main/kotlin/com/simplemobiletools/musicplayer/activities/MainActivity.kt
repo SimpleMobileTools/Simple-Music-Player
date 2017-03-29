@@ -72,7 +72,7 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.menu, menu)
+        menuInflater.inflate(R.menu.menu_main, menu)
 
         val songRepetition = menu.findItem(R.id.toggle_song_repetition)
         songRepetition.title = getString(if (config.repeatSong) R.string.disable_song_repetition else R.string.enable_song_repetition)

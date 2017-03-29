@@ -1,6 +1,8 @@
 package com.simplemobiletools.musicplayer.activities
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.adapters.PlaylistsAdapter
 import com.simplemobiletools.musicplayer.extensions.dbHelper
@@ -26,6 +28,23 @@ class PlaylistsActivity : SimpleActivity(), DeleteItemsListener {
     }
 
     override fun deleteItems(ids: ArrayList<Int>) {
+
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_playlists, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.create_playlist -> showCreatePlaylistFolder()
+            else -> return super.onOptionsItemSelected(item)
+        }
+        return true
+    }
+
+    private fun showCreatePlaylistFolder() {
 
     }
 }
