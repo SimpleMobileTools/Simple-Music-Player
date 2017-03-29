@@ -1,5 +1,6 @@
 package com.simplemobiletools.musicplayer.activities
 
+import android.content.Intent
 import android.os.Bundle
 import com.simplemobiletools.commons.dialogs.RadioGroupDialog
 import com.simplemobiletools.commons.extensions.updateTextColors
@@ -19,6 +20,7 @@ class SettingsActivity : SimpleActivity() {
         super.onResume()
 
         setupCustomizeColors()
+        setupManagePlaylists()
         setupEqualizer()
         updateTextColors(settings_scrollview)
     }
@@ -26,6 +28,12 @@ class SettingsActivity : SimpleActivity() {
     private fun setupCustomizeColors() {
         settings_customize_colors_holder.setOnClickListener {
             startCustomizationActivity()
+        }
+    }
+
+    private fun setupManagePlaylists() {
+        settings_manage_playlists_holder.setOnClickListener {
+            startActivity(Intent(this, PlaylistsActivity::class.java))
         }
     }
 

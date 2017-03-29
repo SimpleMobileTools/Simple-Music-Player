@@ -58,6 +58,11 @@
             android:label="@string/settings"
             android:parentActivityName=".activities.MainActivity"/>
 
+        <activity
+            android:name=".activities.PlaylistsActivity"
+            android:label="@string/manage_playlists"
+            android:parentActivityName=".activities.SettingsActivity"/>
+
         <service
             android:name=".services.MusicService"
             android:exported="false">
