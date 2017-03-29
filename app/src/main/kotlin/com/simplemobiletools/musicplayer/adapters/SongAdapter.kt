@@ -24,7 +24,7 @@ import com.simplemobiletools.musicplayer.helpers.EDITED_SONG
 import com.simplemobiletools.musicplayer.helpers.REFRESH_LIST
 import com.simplemobiletools.musicplayer.models.Song
 import com.simplemobiletools.musicplayer.services.MusicService
-import kotlinx.android.synthetic.main.song.view.*
+import kotlinx.android.synthetic.main.item_song.view.*
 import java.io.File
 import java.util.*
 
@@ -201,7 +201,7 @@ class SongAdapter(val activity: SimpleActivity, var songs: ArrayList<Song>, val 
     }
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent?.context).inflate(R.layout.song, parent, false)
+        val view = LayoutInflater.from(parent?.context).inflate(R.layout.item_song, parent, false)
         return ViewHolder(activity, view, itemClick)
     }
 
