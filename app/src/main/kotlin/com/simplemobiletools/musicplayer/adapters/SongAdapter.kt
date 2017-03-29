@@ -159,7 +159,7 @@ class SongAdapter(val activity: SimpleActivity, var songs: ArrayList<Song>, val 
             songs.removeAll(removeSongs)
             markedItems.clear()
             itemCnt = songs.size
-            activity.dbHelper.removeSongsFromPlaylist(paths)
+            activity.dbHelper.removeSongsFromPlaylist(paths, -1)
             activity.deleteFiles(files) { }
         }
     }

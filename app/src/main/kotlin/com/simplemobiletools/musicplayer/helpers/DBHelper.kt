@@ -82,15 +82,17 @@ class DBHelper private constructor(val context: Context) : SQLiteOpenHelper(cont
         }
     }
 
-    fun removeSongFromPlaylist(path: String) {
-        removeSongsFromPlaylist(ArrayList<String>().apply { add(path) })
+    fun removeSongFromPlaylist(path: String, playlistId: Int) {
+        removeSongsFromPlaylist(ArrayList<String>().apply { add(path) }, playlistId)
     }
 
-    fun removeSongsFromPlaylist(paths: ArrayList<String>) {
-        val playlistId = context.config.currentPlaylist
-
+    fun removeSongsFromPlaylist(paths: ArrayList<String>, playlistId: Int = context.config.currentPlaylist) {
         val args = "\"" + TextUtils.join("\",\"", paths) + "\""
-        val selection = "$COL_PLAYLIST_ID = $playlistId AND $COL_PATH IN ($args)"
+        var selection = "$COL_PATH IN ($args)"
+        if (playlistId != -1) {
+            selection += " AND $COL_PLAYLIST_ID = $playlistId"
+        }
+
         mDb.delete(TABLE_NAME_SONGS, selection, null)
     }
 
@@ -108,7 +110,7 @@ class DBHelper private constructor(val context: Context) : SQLiteOpenHelper(cont
                     if (File(path).exists()) {
                         paths.add(path)
                     } else {
-                        removeSongFromPlaylist(path)
+                        removeSongFromPlaylist(path, -1)
                     }
                 } while (cursor.moveToNext())
             }
