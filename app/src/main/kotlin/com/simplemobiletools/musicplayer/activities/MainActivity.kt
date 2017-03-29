@@ -40,7 +40,7 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
         private val STORAGE_PERMISSION = 1
 
         lateinit var mBus: Bus
-        private var mSongs: List<Song> = ArrayList()
+        private var mSongs: ArrayList<Song> = ArrayList()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -165,6 +165,7 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
         next_btn.setColorFilter(color, PorterDuff.Mode.SRC_IN)
 
         SongAdapter.textColor = color
+        songs_fastscroller.updateHandleColor()
     }
 
     private fun songPicked(pos: Int) {
@@ -195,6 +196,7 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
         }
 
         val currAdapter = songs_list.adapter
+        songs_fastscroller.setViews(songs_list)
         if (currAdapter != null) {
             (currAdapter as SongAdapter).updateSongs(songs)
         } else {

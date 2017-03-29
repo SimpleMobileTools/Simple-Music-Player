@@ -94,14 +94,29 @@
         android:gravity="center_horizontal"
         android:maxLines="1"/>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/songs_list"
+    <RelativeLayout
+        android:id="@+id/song_list_holder"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/song_progress"
-        android:clipToPadding="false"
-        android:paddingLeft="@dimen/activity_margin"
-        android:paddingRight="@dimen/activity_margin"
-        app:layoutManager="android.support.v7.widget.LinearLayoutManager"/>
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/song_progress">
 
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/songs_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingLeft="@dimen/activity_margin"
+            android:paddingRight="@dimen/activity_margin"
+            app:layoutManager="android.support.v7.widget.LinearLayoutManager"/>
+
+        <com.simplemobiletools.commons.views.FastScroller
+            android:id="@+id/songs_fastscroller"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:paddingLeft="@dimen/normal_margin"
+            android:paddingStart="@dimen/normal_margin"/>
+
+    </RelativeLayout>
 </RelativeLayout>
