@@ -81,6 +81,26 @@ class DBHelper private constructor(val context: Context) : SQLiteOpenHelper(cont
         }
     }
 
+    fun getPlaylists(callback: (types: ArrayList<Playlist>) -> Unit) {
+        val playlists = ArrayList<Playlist>(3)
+        val cols = arrayOf(COL_ID, COL_TITLE)
+        var cursor: Cursor? = null
+        try {
+            cursor = mDb.query(TABLE_NAME_PLAYLISTS, cols, null, null, null, null, "$COL_TITLE ASC")
+            if (cursor?.moveToFirst() == true) {
+                do {
+                    val id = cursor.getIntValue(COL_ID)
+                    val title = cursor.getStringValue(COL_TITLE)
+                    val playlist = Playlist(id, title)
+                    playlists.add(playlist)
+                } while (cursor.moveToNext())
+            }
+        } finally {
+            cursor?.close()
+        }
+        callback.invoke(playlists)
+    }
+
     fun removeSongFromPlaylist(path: String, playlistId: Int) {
         removeSongsFromPlaylist(ArrayList<String>().apply { add(path) }, playlistId)
     }
