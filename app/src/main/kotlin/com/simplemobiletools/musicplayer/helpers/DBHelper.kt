@@ -6,7 +6,6 @@ import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.provider.MediaStore
-import android.text.TextUtils
 import com.simplemobiletools.commons.extensions.getIntValue
 import com.simplemobiletools.commons.extensions.getLongValue
 import com.simplemobiletools.commons.extensions.getStringValue
@@ -87,13 +86,14 @@ class DBHelper private constructor(val context: Context) : SQLiteOpenHelper(cont
     }
 
     fun removeSongsFromPlaylist(paths: ArrayList<String>, playlistId: Int = context.config.currentPlaylist) {
-        val args = "\"" + TextUtils.join("\",\"", paths) + "\""
-        var selection = "$COL_PATH IN ($args)"
+        val questionMarks = getQuestionMarks(paths.size)
+        var selection = "$COL_PATH IN ($questionMarks)"
         if (playlistId != -1) {
             selection += " AND $COL_PLAYLIST_ID = $playlistId"
         }
+        val selectionArgs = paths.toTypedArray()
 
-        mDb.delete(TABLE_NAME_SONGS, selection, null)
+        mDb.delete(TABLE_NAME_SONGS, selection, selectionArgs)
     }
 
     private fun getCurrentPlaylistSongPaths(): ArrayList<String> {
@@ -125,13 +125,13 @@ class DBHelper private constructor(val context: Context) : SQLiteOpenHelper(cont
         val songs = ArrayList<Song>(paths.size)
         val uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
         val columns = arrayOf(MediaStore.Audio.Media._ID, MediaStore.Audio.Media.TITLE, MediaStore.Audio.Media.ARTIST, MediaStore.Audio.Media.DURATION, MediaStore.Audio.Media.DATA)
-
-        val args = "\"" + TextUtils.join("\",\"", paths) + "\""
-        val selection = "${MediaStore.Audio.Media.DATA} IN ($args)"
+        val questionMarks = getQuestionMarks(paths.size)
+        val selection = "${MediaStore.Audio.Media.DATA} IN ($questionMarks)"
+        val selectionArgs = paths.toTypedArray()
 
         var cursor: Cursor? = null
         try {
-            cursor = context.contentResolver.query(uri, columns, selection, null, null)
+            cursor = context.contentResolver.query(uri, columns, selection, selectionArgs, null)
             if (cursor != null && cursor.moveToFirst()) {
                 do {
                     val id = cursor.getLongValue(MediaStore.Audio.Media._ID)
@@ -148,4 +148,6 @@ class DBHelper private constructor(val context: Context) : SQLiteOpenHelper(cont
         }
         return songs
     }
+
+    private fun getQuestionMarks(cnt: Int) = "?" + ",?".repeat(Math.max(cnt - 1, 0))
 }
