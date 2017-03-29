@@ -1,11 +1,13 @@
 package com.simplemobiletools.musicplayer.adapters
 
+import android.graphics.PorterDuff
 import android.support.v7.view.ActionMode
 import android.support.v7.widget.RecyclerView
 import android.view.*
 import com.bignerdranch.android.multiselector.ModalMultiSelectorCallback
 import com.bignerdranch.android.multiselector.MultiSelector
 import com.bignerdranch.android.multiselector.SwappingHolder
+import com.simplemobiletools.commons.extensions.beInvisibleIf
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
 import com.simplemobiletools.musicplayer.extensions.config
@@ -93,6 +95,8 @@ class PlaylistsAdapter(val activity: SimpleActivity, val mItems: List<Playlist>,
                 toggleItemSelection(this, markedItems.contains(pos), pos)
 
                 playlist_title.setTextColor(textColor)
+                playlist_icon.setColorFilter(textColor, PorterDuff.Mode.SRC_IN)
+                playlist_icon.beInvisibleIf(playlist.id != context.config.currentPlaylist)
 
                 setOnClickListener { viewClicked(multiSelector, playlist, pos) }
                 setOnLongClickListener {

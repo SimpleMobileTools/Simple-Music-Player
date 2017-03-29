@@ -16,17 +16,18 @@
 
         <com.simplemobiletools.commons.views.MyTextView
             android:id="@+id/playlist_title"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/playlist_icon"
             android:paddingLeft="@dimen/medium_margin"
             android:paddingRight="@dimen/medium_margin"
             android:text="@string/text_color"/>
 
         <ImageView
             android:id="@+id/playlist_icon"
-            android:layout_width="@dimen/color_sample_size"
-            android:layout_height="@dimen/color_sample_size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_marginEnd="@dimen/medium_margin"
