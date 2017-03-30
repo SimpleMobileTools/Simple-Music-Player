@@ -327,8 +327,10 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     }
 
     fun playPreviousSong() {
-        if (mSongs!!.isEmpty())
+        if (mSongs!!.isEmpty()) {
+            handleEmptyPlaylist()
             return
+        }
 
         initMediaPlayerIfNeeded()
 
@@ -353,8 +355,10 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     }
 
     fun resumeSong() {
-        if (mSongs!!.isEmpty())
+        if (mSongs!!.isEmpty()) {
+            handleEmptyPlaylist()
             return
+        }
 
         initMediaPlayerIfNeeded()
 
@@ -382,9 +386,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
     fun setSong(songIndex: Int, addNewSong: Boolean) {
         if (mSongs!!.isEmpty()) {
-            mCurrSong = null
-            mBus!!.post(Events.SongChanged(null))
-            songStateChanged(false)
+            handleEmptyPlaylist()
             return
         }
 
@@ -414,7 +416,12 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         } catch (e: IOException) {
             Log.e(TAG, "setSong IOException $e")
         }
+    }
 
+    private fun handleEmptyPlaylist() {
+        mCurrSong = null
+        mBus!!.post(Events.SongChanged(null))
+        songStateChanged(false)
     }
 
     override fun onBind(intent: Intent) = null

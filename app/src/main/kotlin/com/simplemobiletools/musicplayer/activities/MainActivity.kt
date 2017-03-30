@@ -178,16 +178,13 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
     }
 
     private fun updateSongInfo(song: Song?) {
-        if (song != null) {
-            song_title.text = song.title
-            song_artist.text = song.artist
-            progressbar.max = song.duration
-            progressbar.progress = 0
-        } else {
-            song_title.text = ""
-            song_artist.text = ""
-            progressbar.max = 0
-            progressbar.progress = 0
+        song_title.text = song?.title ?: ""
+        song_artist.text = song?.artist ?: ""
+        progressbar.max = song?.duration ?: 0
+        progressbar.progress = 0
+
+        if (mSongs.isEmpty()) {
+            toast(R.string.empty_playlist)
         }
     }
 

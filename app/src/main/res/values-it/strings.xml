@@ -35,6 +35,7 @@
     <string name="open_playlist">Open playlist</string>
     <string name="initial_playlist">Initial playlist</string>
     <string name="initial_playlist_cannot_be_deleted">The initial playlist cannot be deleted</string>
+    <string name="empty_playlist">Current playlist is empty</string>
 
     <!-- Settings -->
     <string name="equalizer">Equalizzatore</string>
