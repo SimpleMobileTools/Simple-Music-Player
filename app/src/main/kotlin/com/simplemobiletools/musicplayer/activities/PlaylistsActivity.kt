@@ -7,11 +7,10 @@ import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.adapters.PlaylistsAdapter
 import com.simplemobiletools.musicplayer.dialogs.NewPlaylistDialog
 import com.simplemobiletools.musicplayer.extensions.dbHelper
-import com.simplemobiletools.musicplayer.interfaces.DeleteItemsListener
+import com.simplemobiletools.musicplayer.interfaces.RefreshItemsListener
 import kotlinx.android.synthetic.main.activity_playlists.*
-import java.util.*
 
-class PlaylistsActivity : SimpleActivity(), DeleteItemsListener {
+class PlaylistsActivity : SimpleActivity(), RefreshItemsListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_playlists)
@@ -28,8 +27,8 @@ class PlaylistsActivity : SimpleActivity(), DeleteItemsListener {
         }
     }
 
-    override fun deleteItems(ids: ArrayList<Int>) {
-
+    override fun refreshItems() {
+        getPlaylists()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

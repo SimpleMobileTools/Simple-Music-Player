@@ -10,13 +10,14 @@ import com.bignerdranch.android.multiselector.SwappingHolder
 import com.simplemobiletools.commons.extensions.beInvisibleIf
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
+import com.simplemobiletools.musicplayer.dialogs.NewPlaylistDialog
 import com.simplemobiletools.musicplayer.extensions.config
-import com.simplemobiletools.musicplayer.interfaces.DeleteItemsListener
+import com.simplemobiletools.musicplayer.interfaces.RefreshItemsListener
 import com.simplemobiletools.musicplayer.models.Playlist
 import kotlinx.android.synthetic.main.item_playlist.view.*
 import java.util.*
 
-class PlaylistsAdapter(val activity: SimpleActivity, val mItems: List<Playlist>, val listener: DeleteItemsListener?, val itemClick: (Playlist) -> Unit) :
+class PlaylistsAdapter(val activity: SimpleActivity, val mItems: List<Playlist>, val listener: RefreshItemsListener?, val itemClick: (Playlist) -> Unit) :
         RecyclerView.Adapter<PlaylistsAdapter.ViewHolder>() {
     val multiSelector = MultiSelector()
     val views = ArrayList<View>()
@@ -73,7 +74,11 @@ class PlaylistsAdapter(val activity: SimpleActivity, val mItems: List<Playlist>,
     }
 
     private fun showRenameDialog() {
-
+        val selections = multiSelector.selectedPositions
+        NewPlaylistDialog(activity, mItems[selections[0]]) {
+            actMode?.finish()
+            listener?.refreshItems()
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder {
