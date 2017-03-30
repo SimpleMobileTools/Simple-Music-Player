@@ -1,6 +1,11 @@
 Changelog
 ==========
 
+Version 2.1.0 *(2017-03-30)*
+----------------------------
+
+ * Added playlists and the ability to include files/folders
+
 Version 2.0.2 *(2017-01-23)*
 ----------------------------
 
