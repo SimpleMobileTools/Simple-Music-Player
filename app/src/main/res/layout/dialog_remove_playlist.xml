@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/remove_playlist_dialog_holder"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/activity_margin"
+    android:paddingRight="@dimen/activity_margin"
+    android:paddingTop="@dimen/activity_margin">
+
+    <com.simplemobiletools.commons.views.MyTextView
+        android:id="@+id/remove_playlist_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/activity_margin"
+        android:paddingLeft="@dimen/small_margin"
+        android:paddingRight="@dimen/activity_margin"
+        android:paddingTop="@dimen/activity_margin"
+        android:text="@string/remove_from_playlist_description"
+        android:textSize="@dimen/bigger_text_size"/>
+
+    <com.simplemobiletools.commons.views.MyAppCompatCheckbox
+        android:id="@+id/remove_playlist_checkbox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/small_margin"
+        android:paddingTop="@dimen/small_margin"
+        android:text="@string/delete_the_files_too"/>
+
+</LinearLayout>

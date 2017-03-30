@@ -2,13 +2,12 @@ package com.simplemobiletools.musicplayer.dialogs
 
 import android.app.Activity
 import android.support.v7.app.AlertDialog
-import android.view.LayoutInflater
 import android.view.WindowManager
 import com.simplemobiletools.commons.extensions.setupDialogStuff
 import com.simplemobiletools.commons.extensions.toast
 import com.simplemobiletools.commons.extensions.value
 import com.simplemobiletools.musicplayer.R
-import com.simplemobiletools.musicplayer.helpers.DBHelper
+import com.simplemobiletools.musicplayer.extensions.dbHelper
 import com.simplemobiletools.musicplayer.models.Playlist
 import kotlinx.android.synthetic.main.dialog_new_playlist.view.*
 
@@ -19,11 +18,10 @@ class NewPlaylistDialog(val activity: Activity, var playlist: Playlist? = null, 
         if (playlist == null)
             playlist = Playlist(0, "")
 
-        val view = LayoutInflater.from(activity).inflate(R.layout.dialog_new_playlist, null).apply {
+        val view = activity.layoutInflater.inflate(R.layout.dialog_new_playlist, null).apply {
             new_playlist_title.setText(playlist!!.title)
         }
 
-        val db = DBHelper.newInstance(activity)
         AlertDialog.Builder(activity)
                 .setPositiveButton(R.string.ok, null)
                 .setNegativeButton(R.string.cancel, null)
@@ -32,7 +30,7 @@ class NewPlaylistDialog(val activity: Activity, var playlist: Playlist? = null, 
             activity.setupDialogStuff(view, this, if (isNewPlaylist) R.string.create_playlist else R.string.rename_playlist)
             getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener({
                 val title = view.new_playlist_title.value
-                val playlistIdWithTitle = db.getPlaylistIdWithTitle(title)
+                val playlistIdWithTitle = activity.dbHelper.getPlaylistIdWithTitle(title)
                 var isPlaylistTitleTaken = isNewPlaylist && playlistIdWithTitle != -1
                 if (!isPlaylistTitleTaken)
                     isPlaylistTitleTaken = !isNewPlaylist && playlist!!.id != playlistIdWithTitle && playlistIdWithTitle != -1
@@ -49,9 +47,9 @@ class NewPlaylistDialog(val activity: Activity, var playlist: Playlist? = null, 
 
                 val eventTypeId: Int
                 if (isNewPlaylist) {
-                    eventTypeId = db.insertPlaylist(playlist!!)
+                    eventTypeId = activity.dbHelper.insertPlaylist(playlist!!)
                 } else {
-                    eventTypeId = db.updatePlaylist(playlist!!)
+                    eventTypeId = activity.dbHelper.updatePlaylist(playlist!!)
                 }
 
                 if (eventTypeId != -1) {

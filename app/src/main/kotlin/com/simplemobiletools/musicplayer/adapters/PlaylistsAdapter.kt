@@ -8,10 +8,14 @@ import com.bignerdranch.android.multiselector.ModalMultiSelectorCallback
 import com.bignerdranch.android.multiselector.MultiSelector
 import com.bignerdranch.android.multiselector.SwappingHolder
 import com.simplemobiletools.commons.extensions.beInvisibleIf
+import com.simplemobiletools.commons.extensions.toast
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
 import com.simplemobiletools.musicplayer.dialogs.NewPlaylistDialog
+import com.simplemobiletools.musicplayer.dialogs.RemovePlaylistDialog
 import com.simplemobiletools.musicplayer.extensions.config
+import com.simplemobiletools.musicplayer.extensions.dbHelper
+import com.simplemobiletools.musicplayer.helpers.DBHelper
 import com.simplemobiletools.musicplayer.interfaces.RefreshItemsListener
 import com.simplemobiletools.musicplayer.models.Playlist
 import kotlinx.android.synthetic.main.item_playlist.view.*
@@ -67,8 +71,7 @@ class PlaylistsAdapter(val activity: SimpleActivity, val mItems: List<Playlist>,
         }
 
         override fun onPrepareActionMode(actionMode: ActionMode?, menu: Menu): Boolean {
-            val positions = multiSelector.selectedPositions
-            menu.findItem(R.id.cab_rename).isVisible = positions.size <= 1
+            menu.findItem(R.id.cab_rename).isVisible = multiSelector.selectedPositions.size <= 1
             return true
         }
 
@@ -80,7 +83,16 @@ class PlaylistsAdapter(val activity: SimpleActivity, val mItems: List<Playlist>,
     }
 
     private fun askConfirmDelete() {
-
+        RemovePlaylistDialog(activity) {
+            actMode?.finish()
+            val selections = multiSelector.selectedPositions
+            val ids = selections.map { mItems[it].id } as ArrayList<Int>
+            activity.dbHelper.removePlaylists(ids)
+            if (ids.contains(DBHelper.INITIAL_PLAYLIST_ID)) {
+                activity.toast(R.string.initial_playlist_cannot_be_deleted)
+            }
+            listener?.refreshItems()
+        }
     }
 
     private fun showRenameDialog() {

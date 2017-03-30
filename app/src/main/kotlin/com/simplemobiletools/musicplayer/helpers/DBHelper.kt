@@ -6,6 +6,7 @@ import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.provider.MediaStore
+import android.text.TextUtils
 import com.simplemobiletools.commons.extensions.getIntValue
 import com.simplemobiletools.commons.extensions.getLongValue
 import com.simplemobiletools.commons.extensions.getStringValue
@@ -64,6 +65,12 @@ class DBHelper private constructor(val context: Context) : SQLiteOpenHelper(cont
         val values = ContentValues().apply { put(COL_TITLE, playlist.title) }
         val insertedId = db.insert(TABLE_NAME_PLAYLISTS, null, values).toInt()
         return insertedId
+    }
+
+    fun removePlaylists(ids: ArrayList<Int>) {
+        val args = TextUtils.join(", ", ids.filter { it != INITIAL_PLAYLIST_ID })
+        val selection = "$COL_ID IN ($args)"
+        mDb.delete(TABLE_NAME_PLAYLISTS, selection, null)
     }
 
     fun updatePlaylist(playlist: Playlist): Int {
