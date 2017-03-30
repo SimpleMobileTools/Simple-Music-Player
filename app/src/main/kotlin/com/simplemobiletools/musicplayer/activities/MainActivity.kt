@@ -24,6 +24,7 @@ import com.simplemobiletools.musicplayer.BuildConfig
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.adapters.SongAdapter
 import com.simplemobiletools.musicplayer.dialogs.ChangeSortingDialog
+import com.simplemobiletools.musicplayer.dialogs.NewPlaylistDialog
 import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.extensions.dbHelper
 import com.simplemobiletools.musicplayer.extensions.sendIntent
@@ -142,8 +143,16 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
         dbHelper.getPlaylists {
             val items = arrayListOf<RadioItem>()
             it.mapTo(items) { RadioItem(it.id, it.title) }
+            items.add(RadioItem(-1, getString(R.string.create_playlist)))
+
             RadioGroupDialog(this, items, config.currentPlaylist) {
-                playlistChanged(it as Int)
+                if (it == -1) {
+                    NewPlaylistDialog(this) {
+                        playlistChanged(it)
+                    }
+                } else {
+                    playlistChanged(it as Int)
+                }
             }
         }
     }
