@@ -12,10 +12,12 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.SeekBar
 import com.simplemobiletools.commons.dialogs.FilePickerDialog
+import com.simplemobiletools.commons.dialogs.RadioGroupDialog
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.LICENSE_KOTLIN
 import com.simplemobiletools.commons.helpers.LICENSE_MULTISELECT
 import com.simplemobiletools.commons.helpers.LICENSE_OTTO
+import com.simplemobiletools.commons.models.RadioItem
 import com.simplemobiletools.commons.models.Release
 import com.simplemobiletools.commons.views.RecyclerViewDivider
 import com.simplemobiletools.musicplayer.BuildConfig
@@ -87,6 +89,7 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
         when (item.itemId) {
             R.id.sort -> showSortingDialog()
             R.id.toggle_song_repetition -> toggleSongRepetition()
+            R.id.open_playlist -> openPlaylist()
             R.id.toggle_shuffle -> toggleShuffle()
             R.id.add_folder_to_playlist -> addFolderToPlaylist()
             R.id.add_file_to_playlist -> addFileToPlaylist()
@@ -133,6 +136,16 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
         config.repeatSong = !config.repeatSong
         invalidateOptionsMenu()
         toast(if (config.repeatSong) R.string.song_repetition_enabled else R.string.song_repetition_disabled)
+    }
+
+    private fun openPlaylist() {
+        dbHelper.getPlaylists {
+            val items = arrayListOf<RadioItem>()
+            it.mapTo(items) { RadioItem(it.id, it.title) }
+            RadioGroupDialog(this, items, config.currentPlaylist) {
+                playlistChanged(it as Int)
+            }
+        }
     }
 
     private fun addFolderToPlaylist() {

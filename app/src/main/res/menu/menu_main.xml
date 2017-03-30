@@ -12,6 +12,11 @@
         android:title="@string/disable_song_repetition"
         app:showAsAction="ifRoom"/>
     <item
+        android:id="@+id/open_playlist"
+        android:icon="@drawable/ic_open_playlist"
+        android:title="@string/open_playlist"
+        app:showAsAction="ifRoom"/>
+    <item
         android:id="@+id/toggle_shuffle"
         android:icon="@drawable/ic_shuffle"
         android:title="@string/disable_shuffle"
