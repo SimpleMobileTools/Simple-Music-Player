@@ -41,13 +41,6 @@
     <!-- Settings -->
     <string name="equalizer">Equalizer</string>
 
-    <!-- Release notes -->
-    <string name="release_27">Allow picking colors by hex codes</string>
-    <string name="release_25">
-        Added more color customization options\n
-        Your settings have been cleared, please reset them
-    </string>
-
     <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
     <!-- Short description has to have less than 80 chars -->
     <string name="app_short_description">A clean music player with a customizable widget.</string>
