@@ -322,7 +322,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             }
 
             val lastIndex = mPlayedSongIndexes!![mPlayedSongIndexes!!.size - 1]
-            (lastIndex + 1) % mSongs!!.size
+            (lastIndex + 1) % Math.max(mSongs!!.size, 1)
         }
     }
 
