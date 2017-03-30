@@ -66,7 +66,11 @@ class PlaylistsAdapter(val activity: SimpleActivity, val mItems: List<Playlist>,
             return true
         }
 
-        override fun onPrepareActionMode(actionMode: ActionMode?, menu: Menu) = true
+        override fun onPrepareActionMode(actionMode: ActionMode?, menu: Menu): Boolean {
+            val positions = multiSelector.selectedPositions
+            menu.findItem(R.id.cab_rename).isVisible = positions.size <= 1
+            return true
+        }
 
         override fun onDestroyActionMode(actionMode: ActionMode?) {
             super.onDestroyActionMode(actionMode)
