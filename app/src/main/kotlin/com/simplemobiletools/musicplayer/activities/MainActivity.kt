@@ -186,6 +186,8 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
         } else {
             song_title.text = ""
             song_artist.text = ""
+            progressbar.max = 0
+            progressbar.progress = 0
         }
     }
 

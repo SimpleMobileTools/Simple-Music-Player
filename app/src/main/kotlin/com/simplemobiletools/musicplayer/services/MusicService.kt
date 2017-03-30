@@ -381,8 +381,12 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     }
 
     fun setSong(songIndex: Int, addNewSong: Boolean) {
-        if (mSongs!!.isEmpty())
+        if (mSongs!!.isEmpty()) {
+            mCurrSong = null
+            mBus!!.post(Events.SongChanged(null))
+            songStateChanged(false)
             return
+        }
 
         val wasPlaying = getIsPlaying()
         initMediaPlayerIfNeeded()

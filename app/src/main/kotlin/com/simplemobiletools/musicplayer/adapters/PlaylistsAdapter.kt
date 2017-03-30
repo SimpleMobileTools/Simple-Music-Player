@@ -116,6 +116,9 @@ class PlaylistsAdapter(val activity: SimpleActivity, val mItems: List<Playlist>,
         if (ids.contains(DBHelper.INITIAL_PLAYLIST_ID)) {
             activity.toast(R.string.initial_playlist_cannot_be_deleted)
         }
+        if (ids.contains(activity.config.currentPlaylist)) {
+            activity.playlistChanged(DBHelper.INITIAL_PLAYLIST_ID)
+        }
         listener?.refreshItems()
     }
 

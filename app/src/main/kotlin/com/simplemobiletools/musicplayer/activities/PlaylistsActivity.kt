@@ -21,7 +21,8 @@ class PlaylistsActivity : SimpleActivity(), RefreshItemsListener {
         dbHelper.getPlaylists {
             runOnUiThread {
                 playlists_list.adapter = PlaylistsAdapter(this, it, this) {
-
+                    getPlaylists()
+                    playlistChanged(it.id)
                 }
             }
         }
