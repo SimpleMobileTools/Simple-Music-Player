@@ -77,6 +77,9 @@ class DBHelper private constructor(val context: Context) : SQLiteOpenHelper(cont
         val selection = "$COL_ID IN ($args)"
         mDb.delete(TABLE_NAME_PLAYLISTS, selection, null)
 
+        val songSelection = "$COL_PLAYLIST_ID IN ($args)"
+        mDb.delete(TABLE_NAME_SONGS, songSelection, null)
+
         if (ids.contains(context.config.currentPlaylist)) {
             context.playlistChanged(DBHelper.INITIAL_PLAYLIST_ID)
         }

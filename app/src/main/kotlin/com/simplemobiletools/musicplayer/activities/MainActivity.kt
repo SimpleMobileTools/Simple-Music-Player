@@ -149,7 +149,11 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
             val playlist = dbHelper.getPlaylistWithId(config.currentPlaylist)
             RemovePlaylistDialog(this, playlist) {
                 if (it) {
-
+                    val paths = dbHelper.getPlaylistSongPaths(config.currentPlaylist)
+                    val files = paths.map(::File) as ArrayList<File>
+                    dbHelper.removeSongsFromPlaylist(paths, -1)
+                    dbHelper.removePlaylist(config.currentPlaylist)
+                    deleteFiles(files) { }
                 } else {
                     dbHelper.removePlaylist(config.currentPlaylist)
                 }
