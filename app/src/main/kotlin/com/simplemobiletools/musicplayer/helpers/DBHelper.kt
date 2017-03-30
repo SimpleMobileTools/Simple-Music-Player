@@ -12,6 +12,7 @@ import com.simplemobiletools.commons.extensions.getLongValue
 import com.simplemobiletools.commons.extensions.getStringValue
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.extensions.config
+import com.simplemobiletools.musicplayer.extensions.playlistChanged
 import com.simplemobiletools.musicplayer.models.Playlist
 import com.simplemobiletools.musicplayer.models.Song
 import java.io.File
@@ -67,10 +68,18 @@ class DBHelper private constructor(val context: Context) : SQLiteOpenHelper(cont
         return insertedId
     }
 
+    fun removePlaylist(id: Int) {
+        removePlaylists(arrayListOf(id))
+    }
+
     fun removePlaylists(ids: ArrayList<Int>) {
         val args = TextUtils.join(", ", ids.filter { it != INITIAL_PLAYLIST_ID })
         val selection = "$COL_ID IN ($args)"
         mDb.delete(TABLE_NAME_PLAYLISTS, selection, null)
+
+        if (ids.contains(context.config.currentPlaylist)) {
+            context.playlistChanged(DBHelper.INITIAL_PLAYLIST_ID)
+        }
     }
 
     fun updatePlaylist(playlist: Playlist): Int {
@@ -129,6 +138,23 @@ class DBHelper private constructor(val context: Context) : SQLiteOpenHelper(cont
             cursor?.close()
         }
         return -1
+    }
+
+    fun getPlaylistWithId(id: Int): Playlist? {
+        val cols = arrayOf(COL_TITLE)
+        val selection = "$COL_ID = ?"
+        val selectionArgs = arrayOf(id.toString())
+        var cursor: Cursor? = null
+        try {
+            cursor = mDb.query(TABLE_NAME_PLAYLISTS, cols, selection, selectionArgs, null, null, null)
+            if (cursor?.moveToFirst() == true) {
+                val title = cursor.getStringValue(COL_TITLE)
+                return Playlist(id, title)
+            }
+        } finally {
+            cursor?.close()
+        }
+        return null
     }
 
     fun removeSongFromPlaylist(path: String, playlistId: Int) {

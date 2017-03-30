@@ -25,8 +25,10 @@ import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.adapters.SongAdapter
 import com.simplemobiletools.musicplayer.dialogs.ChangeSortingDialog
 import com.simplemobiletools.musicplayer.dialogs.NewPlaylistDialog
+import com.simplemobiletools.musicplayer.dialogs.RemovePlaylistDialog
 import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.extensions.dbHelper
+import com.simplemobiletools.musicplayer.extensions.playlistChanged
 import com.simplemobiletools.musicplayer.extensions.sendIntent
 import com.simplemobiletools.musicplayer.helpers.*
 import com.simplemobiletools.musicplayer.models.Events
@@ -94,6 +96,7 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
             R.id.toggle_shuffle -> toggleShuffle()
             R.id.add_folder_to_playlist -> addFolderToPlaylist()
             R.id.add_file_to_playlist -> addFileToPlaylist()
+            R.id.remove_playlist -> removePlaylist()
             R.id.settings -> launchSettings()
             R.id.about -> launchAbout()
             else -> return super.onOptionsItemSelected(item)
@@ -137,6 +140,21 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
         config.repeatSong = !config.repeatSong
         invalidateOptionsMenu()
         toast(if (config.repeatSong) R.string.song_repetition_enabled else R.string.song_repetition_disabled)
+    }
+
+    private fun removePlaylist() {
+        if (config.currentPlaylist == DBHelper.INITIAL_PLAYLIST_ID) {
+            toast(R.string.initial_playlist_cannot_be_deleted)
+        } else {
+            val playlist = dbHelper.getPlaylistWithId(config.currentPlaylist)
+            RemovePlaylistDialog(this, playlist) {
+                if (it) {
+
+                } else {
+                    dbHelper.removePlaylist(config.currentPlaylist)
+                }
+            }
+        }
     }
 
     private fun openPlaylist() {

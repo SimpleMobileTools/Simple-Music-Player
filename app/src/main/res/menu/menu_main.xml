@@ -31,6 +31,11 @@
         android:title="@string/add_file_to_playlist"
         app:showAsAction="never"/>
     <item
+        android:id="@+id/remove_playlist"
+        android:icon="@drawable/ic_delete"
+        android:title="@string/remove_playlist"
+        app:showAsAction="ifRoom"/>
+    <item
         android:id="@+id/settings"
         android:title="@string/settings"
         app:showAsAction="never"/>
