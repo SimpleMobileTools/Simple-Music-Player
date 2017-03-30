@@ -309,6 +309,7 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
         arrayListOf<Release>().apply {
             add(Release(25, R.string.release_25))
             add(Release(27, R.string.release_27))
+            add(Release(28, R.string.release_28))
             checkWhatsNew(this, BuildConfig.VERSION_CODE)
         }
     }
