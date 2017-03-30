@@ -8,6 +8,7 @@ import com.bignerdranch.android.multiselector.ModalMultiSelectorCallback
 import com.bignerdranch.android.multiselector.MultiSelector
 import com.bignerdranch.android.multiselector.SwappingHolder
 import com.simplemobiletools.commons.extensions.beInvisibleIf
+import com.simplemobiletools.commons.extensions.deleteFiles
 import com.simplemobiletools.commons.extensions.toast
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
@@ -19,6 +20,7 @@ import com.simplemobiletools.musicplayer.helpers.DBHelper
 import com.simplemobiletools.musicplayer.interfaces.RefreshItemsListener
 import com.simplemobiletools.musicplayer.models.Playlist
 import kotlinx.android.synthetic.main.item_playlist.view.*
+import java.io.File
 import java.util.*
 
 class PlaylistsAdapter(val activity: SimpleActivity, val mItems: List<Playlist>, val listener: RefreshItemsListener?, val itemClick: (Playlist) -> Unit) :
@@ -87,12 +89,34 @@ class PlaylistsAdapter(val activity: SimpleActivity, val mItems: List<Playlist>,
             actMode?.finish()
             val selections = multiSelector.selectedPositions
             val ids = selections.map { mItems[it].id } as ArrayList<Int>
-            activity.dbHelper.removePlaylists(ids)
-            if (ids.contains(DBHelper.INITIAL_PLAYLIST_ID)) {
-                activity.toast(R.string.initial_playlist_cannot_be_deleted)
+            if (it) {
+                deletePlaylistSongs(ids) {
+                    removePlaylists(ids)
+                }
+            } else {
+                removePlaylists(ids)
             }
-            listener?.refreshItems()
         }
+    }
+
+    private fun deletePlaylistSongs(ids: ArrayList<Int>, callback: () -> Unit) {
+        var cnt = ids.size
+        ids.map { activity.dbHelper.getPlaylistSongPaths(it).map(::File) as ArrayList<File> }
+                .forEach {
+                    activity.deleteFiles(it) {
+                        if (--cnt <= 0) {
+                            callback()
+                        }
+                    }
+                }
+    }
+
+    private fun removePlaylists(ids: ArrayList<Int>) {
+        activity.dbHelper.removePlaylists(ids)
+        if (ids.contains(DBHelper.INITIAL_PLAYLIST_ID)) {
+            activity.toast(R.string.initial_playlist_cannot_be_deleted)
+        }
+        listener?.refreshItems()
     }
 
     private fun showRenameDialog() {

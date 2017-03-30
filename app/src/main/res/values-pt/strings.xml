@@ -28,7 +28,7 @@
     <string name="rename_playlist">Rename playlist</string>
     <string name="playlist_name_exists">A playlist with that name already exists</string>
     <string name="remove_playlist">Remove playlist</string>
-    <string name="remove_playlist_description">This will only remove playlist \"%1$s\", not the actual files.</string>
+    <string name="remove_playlist_description">This will only remove the selected playlists, not the actual files.</string>
     <string name="remove_from_playlist">Remove from playlist</string>
     <string name="remove_from_playlist_description">This will only remove the items from playlist \"%1$s\", the actual files will not be deleted.</string>
     <string name="delete_the_files_too">Delete the files too</string>

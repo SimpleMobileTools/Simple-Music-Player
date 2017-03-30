@@ -17,7 +17,7 @@
         android:paddingLeft="@dimen/small_margin"
         android:paddingRight="@dimen/activity_margin"
         android:paddingTop="@dimen/activity_margin"
-        android:text="@string/remove_from_playlist_description"
+        android:text="@string/remove_playlist_description"
         android:textSize="@dimen/bigger_text_size"/>
 
     <com.simplemobiletools.commons.views.MyAppCompatCheckbox

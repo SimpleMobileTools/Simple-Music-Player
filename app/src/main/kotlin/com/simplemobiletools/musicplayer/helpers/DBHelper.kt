@@ -146,11 +146,11 @@ class DBHelper private constructor(val context: Context) : SQLiteOpenHelper(cont
         mDb.delete(TABLE_NAME_SONGS, selection, selectionArgs)
     }
 
-    private fun getCurrentPlaylistSongPaths(): ArrayList<String> {
+    fun getPlaylistSongPaths(playlistId: Int): ArrayList<String> {
         val paths = ArrayList<String>()
         val cols = arrayOf(COL_PATH)
         val selection = "$COL_PLAYLIST_ID = ?"
-        val selectionArgs = arrayOf(context.config.currentPlaylist.toString())
+        val selectionArgs = arrayOf(playlistId.toString())
         var cursor: Cursor? = null
         try {
             cursor = mDb.query(TABLE_NAME_SONGS, cols, selection, selectionArgs, null, null, null)
@@ -171,7 +171,7 @@ class DBHelper private constructor(val context: Context) : SQLiteOpenHelper(cont
     }
 
     fun getSongs(): ArrayList<Song> {
-        val paths = getCurrentPlaylistSongPaths()
+        val paths = getPlaylistSongPaths(context.config.currentPlaylist)
         val songs = ArrayList<Song>(paths.size)
         val uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
         val columns = arrayOf(MediaStore.Audio.Media._ID, MediaStore.Audio.Media.TITLE, MediaStore.Audio.Media.ARTIST, MediaStore.Audio.Media.DURATION, MediaStore.Audio.Media.DATA)
