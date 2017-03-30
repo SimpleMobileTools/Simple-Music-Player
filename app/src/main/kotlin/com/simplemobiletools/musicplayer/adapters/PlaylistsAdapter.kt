@@ -26,6 +26,7 @@ class PlaylistsAdapter(val activity: SimpleActivity, val mItems: List<Playlist>,
         var actMode: ActionMode? = null
         val markedItems = HashSet<Int>()
         var textColor = 0
+        var itemCnt = 0
 
         fun toggleItemSelection(itemView: View, select: Boolean, pos: Int = -1) {
             itemView.playlist_frame.isSelected = select
@@ -37,10 +38,15 @@ class PlaylistsAdapter(val activity: SimpleActivity, val mItems: List<Playlist>,
             else
                 markedItems.remove(pos)
         }
+
+        fun updateTitle(cnt: Int) {
+            actMode?.title = "$cnt / $itemCnt"
+        }
     }
 
     init {
         textColor = activity.config.textColor
+        itemCnt = mItems.size
     }
 
     val multiSelectorMode = object : ModalMultiSelectorCallback(multiSelector) {
@@ -108,7 +114,7 @@ class PlaylistsAdapter(val activity: SimpleActivity, val mItems: List<Playlist>,
                     if (!multiSelector.isSelectable) {
                         activity.startSupportActionMode(multiSelectorCallback)
                         multiSelector.setSelected(this@ViewHolder, true)
-                        actMode?.title = multiSelector.selectedPositions.size.toString()
+                        updateTitle(multiSelector.selectedPositions.size)
                         toggleItemSelection(itemView, true, pos)
                         actMode?.invalidate()
                     }
@@ -129,7 +135,7 @@ class PlaylistsAdapter(val activity: SimpleActivity, val mItems: List<Playlist>,
                 if (selectedCnt == 0) {
                     actMode?.finish()
                 } else {
-                    actMode?.title = selectedCnt.toString()
+                    updateTitle(selectedCnt)
                 }
                 actMode?.invalidate()
             } else {
