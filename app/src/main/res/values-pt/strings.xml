@@ -8,8 +8,8 @@
     <string name="rename_song_empty">Por favor preencha todos os campos</string>
     <string name="enable_song_repetition">Repetir faixa atual</string>
     <string name="disable_song_repetition">Parar de repetir a faixa atual</string>
-    <string name="song_repetition_enabled">Current song repetition enabled</string>
-    <string name="song_repetition_disabled">Current song repetition disabled</string>
+    <string name="song_repetition_enabled">Repetição de faixa ativada</string>
+    <string name="song_repetition_disabled">Repetição de faixa desativada</string>
     <string name="enable_shuffle">Ativar modo aleatório</string>
     <string name="disable_shuffle">Desativar modo aleatório</string>
     <string name="shuffle_enabled">Modo aleatório ativado</string>
@@ -20,23 +20,23 @@
     <string name="next">Seguinte</string>
 
     <!-- Playlists -->
-    <string name="add_file_to_playlist">Add file to playlist</string>
-    <string name="add_folder_to_playlist">Add folder to playlist</string>
-    <string name="manage_playlists">Manage playlists</string>
-    <string name="playlists">Playlists</string>
-    <string name="create_playlist">Create playlist</string>
-    <string name="rename_playlist">Rename playlist</string>
-    <string name="playlist_name_exists">A playlist with that name already exists</string>
-    <string name="remove_playlist">Remove playlist</string>
-    <string name="remove_playlist_description">This will only remove the selected playlists, not the actual files.</string>
-    <string name="remove_playlist_description_placeholder">This will only remove playlist \"%1$s\", not the actual files.</string>
-    <string name="remove_from_playlist">Remove from playlist</string>
-    <string name="remove_from_playlist_description">This will only remove the items from playlist \"%1$s\", the actual files will not be deleted.</string>
-    <string name="delete_the_files_too">Delete the files too</string>
-    <string name="open_playlist">Open playlist</string>
-    <string name="initial_playlist">Initial playlist</string>
-    <string name="initial_playlist_cannot_be_deleted">The initial playlist cannot be deleted</string>
-    <string name="empty_playlist">Current playlist is empty</string>
+    <string name="add_file_to_playlist">Adicionar ficheiro à lista de reprodução</string>
+    <string name="add_folder_to_playlist">Adicionar pasta à lista de reprodução</string>
+    <string name="manage_playlists">Gerir listas de reprodução</string>
+    <string name="playlists">Listas de reprodução</string>
+    <string name="create_playlist">Criar lista de reprodução</string>
+    <string name="rename_playlist">Renomear lista de reprodução</string>
+    <string name="playlist_name_exists">Já existe uma lista de reprodução com este nome</string>
+    <string name="remove_playlist">Remover lista de reprodução</string>
+    <string name="remove_playlist_description">Esta ação remove as listas de reprodução selecionadas mas não apaga os ficheiros.</string>
+    <string name="remove_playlist_description_placeholder">Esta ação remove a lista de reprodução \"%1$s\" mas não apaga os ficheiros.</string>
+    <string name="remove_from_playlist">Remover da lista de reprodução</string>
+    <string name="remove_from_playlist_description">Esta ação remove os elementos da lista de reprodução \"%1$s\" mas não apaga os ficheiros.</string>
+    <string name="delete_the_files_too">Apagar também os ficheiros</string>
+    <string name="open_playlist">Abrir lista de reprodução</string>
+    <string name="initial_playlist">Lista de reprodução inicial</string>
+    <string name="initial_playlist_cannot_be_deleted">Não pode apagar a lista de reprodução inicial</string>
+    <string name="empty_playlist">A lista de reprodução está vazia</string>
 
     <!-- Settings -->
     <string name="equalizer">Equalizador</string>
