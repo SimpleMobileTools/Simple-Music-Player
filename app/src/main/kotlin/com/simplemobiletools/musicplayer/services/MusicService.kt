@@ -376,7 +376,8 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     }
 
     private fun restartSong() {
-        setSong(mPlayedSongIndexes!![mPlayedSongIndexes!!.size - 1], false)
+        if (mPlayedSongIndexes!!.isNotEmpty())
+            setSong(mPlayedSongIndexes!![mPlayedSongIndexes!!.size - 1], false)
     }
 
     private fun playSong(intent: Intent) {
@@ -401,7 +402,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             }
         }
 
-        mCurrSong = mSongs!![songIndex]
+        mCurrSong = mSongs!![Math.min(songIndex, mSongs!!.size - 1)]
 
         try {
             val trackUri = ContentUris.withAppendedId(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, mCurrSong!!.id)
@@ -419,6 +420,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     }
 
     private fun handleEmptyPlaylist() {
+        mPlayer!!.pause()
         mCurrSong = null
         mBus!!.post(Events.SongChanged(null))
         songStateChanged(false)

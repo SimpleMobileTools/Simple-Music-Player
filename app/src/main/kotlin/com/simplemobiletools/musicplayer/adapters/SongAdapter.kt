@@ -21,6 +21,7 @@ import com.simplemobiletools.musicplayer.extensions.dbHelper
 import com.simplemobiletools.musicplayer.extensions.sendIntent
 import com.simplemobiletools.musicplayer.helpers.EDIT
 import com.simplemobiletools.musicplayer.helpers.EDITED_SONG
+import com.simplemobiletools.musicplayer.helpers.NEXT
 import com.simplemobiletools.musicplayer.helpers.REFRESH_LIST
 import com.simplemobiletools.musicplayer.models.Song
 import com.simplemobiletools.musicplayer.services.MusicService
@@ -154,6 +155,9 @@ class SongAdapter(val activity: SimpleActivity, var songs: ArrayList<Song>, val 
                 files.add(File(song.path))
                 removeSongs.add(song)
                 notifyItemRemoved(it)
+                if (song == MusicService.mCurrSong) {
+                    activity.sendIntent(NEXT)
+                }
             }
 
             songs.removeAll(removeSongs)
@@ -175,6 +179,9 @@ class SongAdapter(val activity: SimpleActivity, var songs: ArrayList<Song>, val 
             paths.add(song.path)
             removeSongs.add(song)
             notifyItemRemoved(it)
+            if (song == MusicService.mCurrSong) {
+                activity.sendIntent(NEXT)
+            }
         }
 
         songs.removeAll(removeSongs)
