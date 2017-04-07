@@ -32,6 +32,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:background="?attr/selectableItemBackgroundBorderless"
             android:paddingBottom="@dimen/small_margin"
             android:paddingTop="@dimen/small_margin"
             android:src="@drawable/ic_play"/>
@@ -42,6 +43,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:background="?attr/selectableItemBackgroundBorderless"
             android:paddingBottom="@dimen/small_margin"
             android:paddingTop="@dimen/small_margin"
             android:src="@drawable/ic_next"/>
