@@ -65,6 +65,7 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
         previous_btn.setOnClickListener { sendIntent(PREVIOUS) }
         play_pause_btn.setOnClickListener { sendIntent(PLAYPAUSE) }
         next_btn.setOnClickListener { sendIntent(NEXT) }
+        songs_playlist_empty_add_folder.setOnClickListener { addFolderToPlaylist() }
         checkWhatsNewDialog()
         storeStoragePaths()
     }
@@ -249,6 +250,8 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
             }
         }
         markCurrentSong()
+        songs_playlist_empty.beVisibleIf(songs.isEmpty())
+        songs_playlist_empty_add_folder.beVisibleIf(songs.isEmpty())
     }
 
     override fun onDestroy() {

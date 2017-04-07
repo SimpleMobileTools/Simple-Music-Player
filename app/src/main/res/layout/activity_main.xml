@@ -120,5 +120,28 @@
             android:paddingLeft="@dimen/normal_margin"
             android:paddingStart="@dimen/normal_margin"/>
 
+        <com.simplemobiletools.commons.views.MyTextView
+            android:id="@+id/songs_playlist_empty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:alpha="0.7"
+            android:gravity="center"
+            android:text="@string/playlist_empty"
+            android:textSize="@dimen/bigger_text_size"/>
+
+        <com.simplemobiletools.commons.views.MyTextView
+            android:id="@+id/songs_playlist_empty_add_folder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/songs_playlist_empty"
+            android:layout_centerHorizontal="true"
+            android:alpha="0.7"
+            android:background="?attr/selectableItemBackground"
+            android:gravity="center"
+            android:padding="@dimen/normal_margin"
+            android:text="@string/add_folder_to_playlist"
+            android:textAllCaps="true"
+            android:textSize="@dimen/normal_text_size"/>
+
     </RelativeLayout>
 </RelativeLayout>

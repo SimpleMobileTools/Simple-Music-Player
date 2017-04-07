@@ -165,6 +165,7 @@ class SongAdapter(val activity: SimpleActivity, var songs: ArrayList<Song>, val 
             itemCnt = songs.size
             activity.dbHelper.removeSongsFromPlaylist(paths, -1)
             activity.deleteFiles(files) { }
+            activity.sendIntent(REFRESH_LIST)
         }
     }
 
@@ -189,6 +190,7 @@ class SongAdapter(val activity: SimpleActivity, var songs: ArrayList<Song>, val 
         itemCnt = songs.size
         activity.dbHelper.removeSongsFromPlaylist(paths)
         actMode?.finish()
+        activity.sendIntent(REFRESH_LIST)
     }
 
     fun updateSongs(newSongs: ArrayList<Song>) {
