@@ -165,14 +165,18 @@ class DBHelper private constructor(val context: Context) : SQLiteOpenHelper(cont
     }
 
     fun removeSongsFromPlaylist(paths: ArrayList<String>, playlistId: Int = context.config.currentPlaylist) {
-        val questionMarks = getQuestionMarks(paths.size)
-        var selection = "$COL_PATH IN ($questionMarks)"
-        if (playlistId != -1) {
-            selection += " AND $COL_PLAYLIST_ID = $playlistId"
-        }
-        val selectionArgs = paths.toTypedArray()
+        val SPLICE_SIZE = 200
+        for (i in 0..paths.size - 1 step SPLICE_SIZE) {
+            val curPaths = paths.subList(i, Math.min(i + SPLICE_SIZE, paths.size))
+            val questionMarks = getQuestionMarks(curPaths.size)
+            var selection = "$COL_PATH IN ($questionMarks)"
+            if (playlistId != -1) {
+                selection += " AND $COL_PLAYLIST_ID = $playlistId"
+            }
+            val selectionArgs = curPaths.toTypedArray()
 
-        mDb.delete(TABLE_NAME_SONGS, selection, selectionArgs)
+            mDb.delete(TABLE_NAME_SONGS, selection, selectionArgs)
+        }
     }
 
     fun getPlaylistSongPaths(playlistId: Int): ArrayList<String> {
@@ -200,30 +204,37 @@ class DBHelper private constructor(val context: Context) : SQLiteOpenHelper(cont
     }
 
     fun getSongs(): ArrayList<Song> {
+        val SPLICE_SIZE = 200
         val paths = getPlaylistSongPaths(context.config.currentPlaylist)
         val songs = ArrayList<Song>(paths.size)
-        val uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
-        val columns = arrayOf(MediaStore.Audio.Media._ID, MediaStore.Audio.Media.TITLE, MediaStore.Audio.Media.ARTIST, MediaStore.Audio.Media.DURATION, MediaStore.Audio.Media.DATA)
-        val questionMarks = getQuestionMarks(paths.size)
-        val selection = "${MediaStore.Audio.Media.DATA} IN ($questionMarks)"
-        val selectionArgs = paths.toTypedArray()
+        if (paths.isEmpty())
+            return songs
 
-        var cursor: Cursor? = null
-        try {
-            cursor = context.contentResolver.query(uri, columns, selection, selectionArgs, null)
-            if (cursor != null && cursor.moveToFirst()) {
-                do {
-                    val id = cursor.getLongValue(MediaStore.Audio.Media._ID)
-                    val title = cursor.getStringValue(MediaStore.Audio.Media.TITLE)
-                    val artist = cursor.getStringValue(MediaStore.Audio.Media.ARTIST)
-                    val path = cursor.getStringValue(MediaStore.Audio.Media.DATA)
-                    val duration = cursor.getIntValue(MediaStore.Audio.Media.DURATION) / 1000
-                    val song = Song(id, title, artist, path, duration)
-                    songs.add(song)
-                } while (cursor.moveToNext())
+        for (i in 0..paths.size - 1 step SPLICE_SIZE) {
+            val curPaths = paths.subList(i, Math.min(i + SPLICE_SIZE, paths.size))
+            val uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
+            val columns = arrayOf(MediaStore.Audio.Media._ID, MediaStore.Audio.Media.TITLE, MediaStore.Audio.Media.ARTIST, MediaStore.Audio.Media.DURATION, MediaStore.Audio.Media.DATA)
+            val questionMarks = getQuestionMarks(curPaths.size)
+            val selection = "${MediaStore.Audio.Media.DATA} IN ($questionMarks)"
+            val selectionArgs = curPaths.toTypedArray()
+
+            var cursor: Cursor? = null
+            try {
+                cursor = context.contentResolver.query(uri, columns, selection, selectionArgs, null)
+                if (cursor != null && cursor.moveToFirst()) {
+                    do {
+                        val id = cursor.getLongValue(MediaStore.Audio.Media._ID)
+                        val title = cursor.getStringValue(MediaStore.Audio.Media.TITLE)
+                        val artist = cursor.getStringValue(MediaStore.Audio.Media.ARTIST)
+                        val path = cursor.getStringValue(MediaStore.Audio.Media.DATA)
+                        val duration = cursor.getIntValue(MediaStore.Audio.Media.DURATION) / 1000
+                        val song = Song(id, title, artist, path, duration)
+                        songs.add(song)
+                    } while (cursor.moveToNext())
+                }
+            } finally {
+                cursor?.close()
             }
-        } finally {
-            cursor?.close()
         }
         return songs
     }
