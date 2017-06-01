@@ -35,7 +35,7 @@
     <string name="delete_the_files_too">Удалить файлы тоже</string>
     <string name="open_playlist">Open playlist</string>
     <string name="initial_playlist">Начальный плейлист</string>
-    <string name="initial_playlist_cannot_be_deleted">Начальный плейлист не может быть удален</string>
+    <string name="initial_playlist_cannot_be_deleted">Начальный плейлист не может быть удалён</string>
     <string name="empty_playlist">Текущий плейлист пуст</string>
 
     <!-- Settings -->
