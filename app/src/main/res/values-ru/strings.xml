@@ -8,35 +8,35 @@
     <string name="rename_song_empty">Пожалуйста, заполните все поля</string>
     <string name="enable_song_repetition">Повторять текущую композицию</string>
     <string name="disable_song_repetition">Больше не повторять</string>
-    <string name="song_repetition_enabled">Включен повтор текущей композиции</string>
-    <string name="song_repetition_disabled">Повтор текущей композиции отключен</string>
+    <string name="song_repetition_enabled">Повтор текущей композиции включён</string>
+    <string name="song_repetition_disabled">Повтор текущей композиции выключен</string>
     <string name="enable_shuffle">Играть в случайном порядке</string>
     <string name="disable_shuffle">Играть подряд</string>
-    <string name="shuffle_enabled">Включено воспроизведение в случайном порядке</string>
-    <string name="shuffle_disabled">Воспроизведение в случайном порядке отключено</string>
+    <string name="shuffle_enabled">Воспроизведение в случайном порядке включено</string>
+    <string name="shuffle_disabled">Воспроизведение в случайном порядке выключено</string>
 
     <string name="previous">Предыдущая</string>
     <string name="playpause">Воспроизведение Пауза</string>
     <string name="next">Следующая</string>
 
     <!-- Playlists -->
-    <string name="add_file_to_playlist">Add file to playlist</string>
-    <string name="add_folder_to_playlist">Add folder to playlist</string>
-    <string name="manage_playlists">Manage playlists</string>
-    <string name="playlists">Playlists</string>
-    <string name="create_playlist">Create playlist</string>
-    <string name="rename_playlist">Rename playlist</string>
-    <string name="playlist_name_exists">A playlist with that name already exists</string>
-    <string name="remove_playlist">Remove playlist</string>
-    <string name="remove_playlist_description">This will only remove the selected playlists, not the actual files.</string>
-    <string name="remove_playlist_description_placeholder">This will only remove playlist \"%1$s\", not the actual files.</string>
-    <string name="remove_from_playlist">Remove from playlist</string>
-    <string name="remove_from_playlist_description">This will only remove the items from playlist \"%1$s\", the actual files will not be deleted.</string>
-    <string name="delete_the_files_too">Delete the files too</string>
+    <string name="add_file_to_playlist">Добавить файл в плейлист</string>
+    <string name="add_folder_to_playlist">Добавить папку в плейлист</string>
+    <string name="manage_playlists">Управление плейлистами</string>
+    <string name="playlists">Плейлисты</string>
+    <string name="create_playlist">Создать плейлист</string>
+    <string name="rename_playlist">Переименовать плейлист</string>
+    <string name="playlist_name_exists">Плейлист с таким названием уже существует</string>
+    <string name="remove_playlist">Удалить плейлист</string>
+    <string name="remove_playlist_description">Будут удалены только выбранные плейлисты, а не сами файлы.</string>
+    <string name="remove_playlist_description_placeholder">Будет удалён только плейлист «%1$s», а не сами файлы.</string>
+    <string name="remove_from_playlist">Удалить из плейлиста</string>
+    <string name="remove_from_playlist_description">Композиции будут удалены только из плейлиста «%1$s», сами файлы удалены не будут.</string>
+    <string name="delete_the_files_too">Удалить файлы тоже</string>
     <string name="open_playlist">Open playlist</string>
-    <string name="initial_playlist">Initial playlist</string>
-    <string name="initial_playlist_cannot_be_deleted">The initial playlist cannot be deleted</string>
-    <string name="empty_playlist">Current playlist is empty</string>
+    <string name="initial_playlist">Начальный плейлист</string>
+    <string name="initial_playlist_cannot_be_deleted">Начальный плейлист не может быть удалён</string>
+    <string name="empty_playlist">Текущий плейлист пуст</string>
 
     <!-- Settings -->
     <string name="equalizer">Эквалайзер</string>
@@ -44,15 +44,15 @@
     <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
     <!-- Short description has to have less than 80 chars -->
     <string name="app_short_description">Чистый музыкальный проигрыватель с настраиваемым виджетом.</string>
-    <string name="app_long_description">
-        Музыкальный проигрыватель, который легко управляется из статус-бара, с помощью виджета на домашнем экране или с помощью кнопок на гарникуре. Можно сортировать композиции по названию или исполнителю, а также настраивать эквалайзер. Пока что фильтрация по исполнителю или альбому не поддерживается, следите за обновлениями! Разрешение "Статус телефона" необходимо для того, чтобы приостановить воспроизведение при входящем звонке.
+    <string name="app_long_description">"
+ Музыкальный проигрыватель, который легко управляется из статус-бара, с помощью виджета на домашнем экране или с помощью кнопок на гарнитуре. Можно сортировать композиции по названию или исполнителю, а также настраивать эквалайзер. Пока что фильтрация по исполнителю или альбому не поддерживается, следите за обновлениями! Разрешение Статус телефона необходимо для того, чтобы приостановить воспроизведение при входящем звонке.
 
-        У приложения есть виджет, у которого можно изменить цвет текста, цвет и прозрачность фона.
+ У приложения есть виджет, у которого можно изменить цвет текста, цвет и прозрачность фона.
 
-        Это приложение не будет показывать рекламу или запрашивать ненужные разрешения. У него полностью открытый исходный код и настраиваемые цвета оформления.
+ Это приложение не показывает рекламу или не запрашивает лишние разрешения. У него полностью открытый исходный код и настраиваемые цвета оформления.
 
-        Simple Calendar - это приложение из серии Simple Mobile Tools. Остальные приложения из этой серии можно найти здесь: http://www.simplemobiletools.com
-    </string>
+ Это приложение является лишь частью более крупной серии приложений. Вы можете найти остальные на http://www.simplemobiletools.com
+ "</string>
 
     <!--
         Haven't found some strings? There's more at
