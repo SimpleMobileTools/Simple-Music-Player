@@ -71,6 +71,6 @@ class ChangeSortingDialog(val activity: Activity, val callback: () -> Unit) : Di
         }
 
         config.sorting = sorting
-        callback.invoke()
+        callback()
     }
 }

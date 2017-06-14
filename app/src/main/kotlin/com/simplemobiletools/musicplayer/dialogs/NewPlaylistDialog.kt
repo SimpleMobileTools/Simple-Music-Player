@@ -54,7 +54,7 @@ class NewPlaylistDialog(val activity: Activity, var playlist: Playlist? = null, 
 
                 if (eventTypeId != -1) {
                     dismiss()
-                    callback.invoke(eventTypeId)
+                    callback(eventTypeId)
                 } else {
                     activity.toast(R.string.unknown_error_occurred)
                 }

@@ -124,7 +124,7 @@ class DBHelper private constructor(val context: Context) : SQLiteOpenHelper(cont
         } finally {
             cursor?.close()
         }
-        callback.invoke(playlists)
+        callback(playlists)
     }
 
     fun getPlaylistIdWithTitle(title: String): Int {
