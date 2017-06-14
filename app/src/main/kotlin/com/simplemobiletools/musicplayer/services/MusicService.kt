@@ -21,7 +21,6 @@ import android.util.Log
 import com.simplemobiletools.commons.extensions.getIntValue
 import com.simplemobiletools.commons.extensions.getStringValue
 import com.simplemobiletools.commons.extensions.hasWriteStoragePermission
-import com.simplemobiletools.commons.extensions.toast
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.MainActivity
 import com.simplemobiletools.musicplayer.extensions.config
@@ -79,7 +78,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         if (hasWriteStoragePermission()) {
             initService()
         } else {
-            toast(R.string.no_permissions)
+            mBus!!.post(Events.NoStoragePermission())
         }
     }
 

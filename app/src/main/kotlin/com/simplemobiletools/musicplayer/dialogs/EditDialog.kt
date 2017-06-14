@@ -38,7 +38,7 @@ class EditDialog(val activity: SimpleActivity, val song: Song, val callback: (So
                 val newFileExtension = view.extension.value
 
                 if (newTitle.isEmpty() || newArtist.isEmpty() || newFilename.isEmpty() || newFileExtension.isEmpty()) {
-                    context.toast(R.string.rename_song_empty)
+                    activity.toast(R.string.rename_song_empty)
                     return@setOnClickListener
                 }
 
@@ -66,7 +66,7 @@ class EditDialog(val activity: SimpleActivity, val song: Song, val callback: (So
                         return@setOnClickListener
                     }
 
-                    context.toast(R.string.rename_song_error)
+                    activity.toast(R.string.rename_song_error)
                 }
             })
         }

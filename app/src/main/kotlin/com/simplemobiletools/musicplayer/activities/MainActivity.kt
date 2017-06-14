@@ -256,7 +256,6 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
 
     override fun onDestroy() {
         super.onDestroy()
-        config.isFirstRun = false
         mBus.unregister(this)
     }
 
@@ -279,6 +278,11 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
     @Subscribe
     fun progressUpdated(event: Events.ProgressUpdated) {
         progressbar.progress = event.progress
+    }
+
+    @Subscribe
+    fun noStoragePermission(event: Events.NoStoragePermission) {
+        toast(R.string.no_permissions)
     }
 
     private fun markCurrentSong() {
