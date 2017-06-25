@@ -47,6 +47,7 @@ class PlaylistsAdapter(val activity: SimpleActivity, val mItems: List<Playlist>,
 
         fun updateTitle(cnt: Int) {
             actMode?.title = "$cnt / $itemCnt"
+            actMode?.invalidate()
         }
     }
 
@@ -129,47 +130,39 @@ class PlaylistsAdapter(val activity: SimpleActivity, val mItems: List<Playlist>,
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent?.context).inflate(R.layout.item_playlist, parent, false)
-        return ViewHolder(activity, view, itemClick)
+        return ViewHolder(view, activity, multiSelectorMode, multiSelector, itemClick)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        views.add(holder.bindView(multiSelectorMode, multiSelector, mItems[position], position))
+        views.add(holder.bindView(mItems[position]))
     }
 
     override fun getItemCount() = mItems.size
 
-    class ViewHolder(val activity: SimpleActivity, view: View, val itemClick: (Playlist) -> (Unit)) : SwappingHolder(view, MultiSelector()) {
-        fun bindView(multiSelectorCallback: ModalMultiSelectorCallback, multiSelector: MultiSelector, playlist: Playlist, pos: Int): View {
+    class ViewHolder(view: View, val activity: SimpleActivity, val multiSelectorCallback: ModalMultiSelectorCallback, val multiSelector: MultiSelector,
+                     val itemClick: (Playlist) -> (Unit)) : SwappingHolder(view, MultiSelector()) {
+        fun bindView(playlist: Playlist): View {
 
             itemView.apply {
                 playlist_title.text = playlist.title
-                toggleItemSelection(this, markedItems.contains(pos), pos)
+                toggleItemSelection(this, markedItems.contains(layoutPosition), layoutPosition)
 
                 playlist_title.setTextColor(textColor)
                 playlist_icon.setColorFilter(textColor, PorterDuff.Mode.SRC_IN)
                 playlist_icon.beInvisibleIf(playlist.id != context.config.currentPlaylist)
 
-                setOnClickListener { viewClicked(multiSelector, playlist, pos) }
-                setOnLongClickListener {
-                    if (!multiSelector.isSelectable) {
-                        activity.startSupportActionMode(multiSelectorCallback)
-                        multiSelector.setSelected(this@ViewHolder, true)
-                        updateTitle(multiSelector.selectedPositions.size)
-                        toggleItemSelection(itemView, true, pos)
-                        actMode?.invalidate()
-                    }
-                    true
-                }
+                setOnClickListener { viewClicked(playlist) }
+                setOnLongClickListener { viewLongClicked(); true }
             }
 
             return itemView
         }
 
-        fun viewClicked(multiSelector: MultiSelector, playlist: Playlist, pos: Int) {
+        fun viewClicked(playlist: Playlist) {
             if (multiSelector.isSelectable) {
                 val isSelected = multiSelector.selectedPositions.contains(layoutPosition)
                 multiSelector.setSelected(this, !isSelected)
-                toggleItemSelection(itemView, !isSelected, pos)
+                toggleItemSelection(itemView, !isSelected, layoutPosition)
 
                 val selectedCnt = multiSelector.selectedPositions.size
                 if (selectedCnt == 0) {
@@ -180,6 +173,15 @@ class PlaylistsAdapter(val activity: SimpleActivity, val mItems: List<Playlist>,
                 actMode?.invalidate()
             } else {
                 itemClick(playlist)
+            }
+        }
+
+        private fun viewLongClicked() {
+            if (!multiSelector.isSelectable) {
+                activity.startSupportActionMode(multiSelectorCallback)
+                multiSelector.setSelected(this@ViewHolder, true)
+                updateTitle(multiSelector.selectedPositions.size)
+                toggleItemSelection(itemView, true, layoutPosition)
             }
         }
     }

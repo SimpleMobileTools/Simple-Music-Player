@@ -16,7 +16,6 @@
         android:paddingBottom="@dimen/activity_margin"
         android:paddingLeft="@dimen/small_margin"
         android:paddingRight="@dimen/activity_margin"
-        android:paddingTop="@dimen/activity_margin"
         android:text="@string/remove_playlist_description"
         android:textSize="@dimen/bigger_text_size"/>
 

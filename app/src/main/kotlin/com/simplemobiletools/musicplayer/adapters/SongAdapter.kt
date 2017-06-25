@@ -263,7 +263,7 @@ class SongAdapter(val activity: SimpleActivity, var songs: ArrayList<Song>, val 
         }
     }
 
-    class ViewHolder(val view: View, val adapterListener: MyAdapterListener, val activity: SimpleActivity, val multiSelectorCallback: ModalMultiSelectorCallback,
+    class ViewHolder(view: View, val adapterListener: MyAdapterListener, val activity: SimpleActivity, val multiSelectorCallback: ModalMultiSelectorCallback,
                      val multiSelector: MultiSelector, val listener: ItemOperationsListener?, val itemClick: (Int) -> (Unit)) : SwappingHolder(view, MultiSelector()) {
         fun bindView(song: Song, currentSongIndex: Int, textColor: Int): View {
             itemView.apply {
