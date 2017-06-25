@@ -211,7 +211,9 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
         play_pause_btn.setColorFilter(color, PorterDuff.Mode.SRC_IN)
         next_btn.setColorFilter(color, PorterDuff.Mode.SRC_IN)
 
-        SongAdapter.textColor = color
+        val currAdapter = songs_list.adapter
+        if (currAdapter != null)
+            (currAdapter as SongAdapter).textColor = color
         songs_fastscroller.updateHandleColor()
     }
 

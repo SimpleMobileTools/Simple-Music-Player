@@ -4,6 +4,7 @@ import android.content.Intent
 import android.graphics.PorterDuff
 import android.support.v7.view.ActionMode
 import android.support.v7.widget.RecyclerView
+import android.util.SparseArray
 import android.view.*
 import com.bignerdranch.android.multiselector.ModalMultiSelectorCallback
 import com.bignerdranch.android.multiselector.MultiSelector
@@ -30,35 +31,41 @@ import java.util.*
 
 class SongAdapter(val activity: SimpleActivity, var songs: ArrayList<Song>, val itemClick: (Int) -> Unit) : RecyclerView.Adapter<SongAdapter.ViewHolder>() {
     val multiSelector = MultiSelector()
-    val views = ArrayList<View>()
 
-    companion object {
-        var actMode: ActionMode? = null
-        val markedItems = HashSet<Int>()
-        var currentSongIndex = 0
-        var textColor = 0
-        var itemCnt = 0
+    var actMode: ActionMode? = null
+    var itemViews = SparseArray<View>()
+    val selectedPositions = HashSet<Int>()
 
-        fun toggleItemSelection(itemView: View, select: Boolean, pos: Int = -1) {
-            itemView.song_frame.isSelected = select
-            if (pos == -1)
-                return
+    var currentSongIndex = 0
+    var textColor = activity.config.textColor
 
-            if (select)
-                markedItems.add(pos)
-            else
-                markedItems.remove(pos)
+    fun toggleItemSelection(select: Boolean, pos: Int) {
+        itemViews[pos]?.song_frame?.isSelected = select
+
+        if (select)
+            selectedPositions.add(pos)
+        else
+            selectedPositions.remove(pos)
+
+        if (selectedPositions.isEmpty()) {
+            actMode?.finish()
+            return
         }
 
-        fun updateTitle(cnt: Int) {
-            actMode?.title = "$cnt / $itemCnt"
-            actMode?.invalidate()
-        }
+        updateTitle(selectedPositions.size)
     }
 
-    init {
-        textColor = activity.config.textColor
-        itemCnt = songs.size
+    fun updateTitle(cnt: Int) {
+        actMode?.title = "$cnt / ${songs.size}"
+        actMode?.invalidate()
+    }
+
+    val adapterListener = object : MyAdapterListener {
+        override fun toggleItemSelectionAdapter(select: Boolean, position: Int) {
+            toggleItemSelection(select, position)
+        }
+
+        override fun getSelectedPositions(): HashSet<Int> = selectedPositions
     }
 
     val multiSelectorMode = object : ModalMultiSelectorCallback(multiSelector) {
@@ -83,32 +90,33 @@ class SongAdapter(val activity: SimpleActivity, var songs: ArrayList<Song>, val 
 
         override fun onPrepareActionMode(actionMode: ActionMode?, menu: Menu): Boolean {
             val menuItem = menu.findItem(R.id.cab_rename)
-            menuItem.isVisible = multiSelector.selectedPositions.size <= 1
+            menuItem.isVisible = selectedPositions.size <= 1
             return true
         }
 
         override fun onDestroyActionMode(actionMode: ActionMode?) {
             super.onDestroyActionMode(actionMode)
-            views.forEach { toggleItemSelection(it, false) }
-            markedItems.clear()
+            selectedPositions.forEach {
+                itemViews[it]?.isSelected = false
+            }
+            selectedPositions.clear()
+            actMode = null
         }
     }
 
     private fun showProperties() {
-        val selections = multiSelector.selectedPositions
-        if (selections.size <= 1) {
-            PropertiesDialog(activity, songs[selections[0]].path)
+        if (selectedPositions.size <= 1) {
+            PropertiesDialog(activity, songs[selectedPositions.first()].path)
         } else {
             val paths = ArrayList<String>()
-            selections.forEach { paths.add(songs[it].path) }
+            selectedPositions.forEach { paths.add(songs[it].path) }
             PropertiesDialog(activity, paths)
         }
     }
 
     private fun displayEditDialog() {
-        val selections = multiSelector.selectedPositions
-        if (selections.size == 1) {
-            EditDialog(activity, songs[selections[0]]) {
+        if (selectedPositions.size == 1) {
+            EditDialog(activity, songs[selectedPositions.first()]) {
                 if (it == MusicService.mCurrSong) {
                     Intent(activity, MusicService::class.java).apply {
                         putExtra(EDITED_SONG, it)
@@ -126,30 +134,29 @@ class SongAdapter(val activity: SimpleActivity, var songs: ArrayList<Song>, val 
     private fun selectAll() {
         val cnt = songs.size
         for (i in 0..cnt - 1) {
-            markedItems.add(i)
-            multiSelector.setSelected(i, 0, true)
+            selectedPositions.add(i)
             notifyItemChanged(i)
         }
         updateTitle(cnt)
-        actMode?.invalidate()
     }
 
     private fun askConfirmDelete() {
         ConfirmationDialog(activity) {
-            actMode?.finish()
             deleteSongs()
+            actMode?.finish()
         }
     }
 
     private fun deleteSongs() {
-        val selections = multiSelector.selectedPositions
-        val paths = ArrayList<String>(selections.size)
-        val files = ArrayList<File>(selections.size)
-        val removeSongs = ArrayList<Song>(selections.size)
+        if (selectedPositions.isEmpty())
+            return
 
-        activity.handleSAFDialog(File(songs[selections[0]].path)) {
-            selections.reverse()
-            selections.forEach {
+        val paths = ArrayList<String>(selectedPositions.size)
+        val files = ArrayList<File>(selectedPositions.size)
+        val removeSongs = ArrayList<Song>(selectedPositions.size)
+
+        activity.handleSAFDialog(File(songs[selectedPositions.first()].path)) {
+            selectedPositions.sortedDescending().forEach {
                 val song = songs[it]
                 paths.add(song.path)
                 files.add(File(song.path))
@@ -161,8 +168,7 @@ class SongAdapter(val activity: SimpleActivity, var songs: ArrayList<Song>, val 
             }
 
             songs.removeAll(removeSongs)
-            markedItems.clear()
-            itemCnt = songs.size
+            selectedPositions.clear()
             activity.dbHelper.removeSongsFromPlaylist(paths, -1)
             activity.deleteFiles(files) { }
             activity.sendIntent(REFRESH_LIST)
@@ -170,12 +176,10 @@ class SongAdapter(val activity: SimpleActivity, var songs: ArrayList<Song>, val 
     }
 
     private fun removeFromPlaylist() {
-        val selections = multiSelector.selectedPositions
-        val paths = ArrayList<String>(selections.size)
-        val removeSongs = ArrayList<Song>(selections.size)
+        val paths = ArrayList<String>(selectedPositions.size)
+        val removeSongs = ArrayList<Song>(selectedPositions.size)
 
-        selections.reverse()
-        selections.forEach {
+        selectedPositions.sortedDescending().forEach {
             val song = songs[it]
             paths.add(song.path)
             removeSongs.add(song)
@@ -186,8 +190,6 @@ class SongAdapter(val activity: SimpleActivity, var songs: ArrayList<Song>, val 
         }
 
         songs.removeAll(removeSongs)
-        markedItems.clear()
-        itemCnt = songs.size
         activity.dbHelper.removeSongsFromPlaylist(paths)
         actMode?.finish()
         activity.sendIntent(REFRESH_LIST)
@@ -211,18 +213,20 @@ class SongAdapter(val activity: SimpleActivity, var songs: ArrayList<Song>, val 
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent?.context).inflate(R.layout.item_song, parent, false)
-        return ViewHolder(view, activity, multiSelectorMode, multiSelector, itemClick)
+        return ViewHolder(view, adapterListener, activity, multiSelectorMode, multiSelector, itemClick)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        views.add(holder.bindView(songs[position]))
+        itemViews.put(position, holder.bindView(songs[position], currentSongIndex, textColor))
+        toggleItemSelection(selectedPositions.contains(position), position)
+        holder.itemView.tag = holder
     }
 
     override fun getItemCount() = songs.size
 
-    class ViewHolder(val view: View, val activity: SimpleActivity, val multiSelectorCallback: ModalMultiSelectorCallback, val multiSelector: MultiSelector,
-                     val itemClick: (Int) -> (Unit)) : SwappingHolder(view, MultiSelector()) {
-        fun bindView(song: Song): View {
+    class ViewHolder(val view: View, val adapterListener: MyAdapterListener, val activity: SimpleActivity, val multiSelectorCallback: ModalMultiSelectorCallback,
+                     val multiSelector: MultiSelector, val itemClick: (Int) -> (Unit)) : SwappingHolder(view, MultiSelector()) {
+        fun bindView(song: Song, currentSongIndex: Int, textColor: Int): View {
             itemView.apply {
                 song_title.text = song.title
                 song_title.setTextColor(textColor)
@@ -234,7 +238,6 @@ class SongAdapter(val activity: SimpleActivity, var songs: ArrayList<Song>, val 
                 if (currentSongIndex == layoutPosition) {
                     song_note_image.setColorFilter(textColor, PorterDuff.Mode.SRC_IN)
                 }
-                toggleItemSelection(itemView, markedItems.contains(layoutPosition), layoutPosition)
 
                 setOnClickListener { viewClicked() }
                 setOnLongClickListener { viewLongClicked(); true }
@@ -245,17 +248,8 @@ class SongAdapter(val activity: SimpleActivity, var songs: ArrayList<Song>, val 
 
         private fun viewClicked() {
             if (multiSelector.isSelectable) {
-                val isSelected = multiSelector.selectedPositions.contains(layoutPosition)
-                multiSelector.setSelected(this, !isSelected)
-                toggleItemSelection(itemView, !isSelected, layoutPosition)
-
-                val selectedCnt = multiSelector.selectedPositions.size
-                if (selectedCnt == 0) {
-                    actMode?.finish()
-                } else {
-                    updateTitle(selectedCnt)
-                }
-                actMode?.invalidate()
+                val isSelected = adapterListener.getSelectedPositions().contains(layoutPosition)
+                adapterListener.toggleItemSelectionAdapter(!isSelected, layoutPosition)
             } else {
                 itemClick(layoutPosition)
             }
@@ -264,10 +258,14 @@ class SongAdapter(val activity: SimpleActivity, var songs: ArrayList<Song>, val 
         private fun viewLongClicked() {
             if (!multiSelector.isSelectable) {
                 activity.startSupportActionMode(multiSelectorCallback)
-                multiSelector.setSelected(this@ViewHolder, true)
-                updateTitle(multiSelector.selectedPositions.size)
-                toggleItemSelection(itemView, true, layoutPosition)
+                adapterListener.toggleItemSelectionAdapter(true, layoutPosition)
             }
         }
+    }
+
+    interface MyAdapterListener {
+        fun toggleItemSelectionAdapter(select: Boolean, position: Int)
+
+        fun getSelectedPositions(): HashSet<Int>
     }
 }
