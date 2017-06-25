@@ -10,8 +10,7 @@ import com.bignerdranch.android.multiselector.MultiSelector
 import com.bignerdranch.android.multiselector.SwappingHolder
 import com.simplemobiletools.commons.dialogs.ConfirmationDialog
 import com.simplemobiletools.commons.dialogs.PropertiesDialog
-import com.simplemobiletools.commons.extensions.beInvisible
-import com.simplemobiletools.commons.extensions.beVisible
+import com.simplemobiletools.commons.extensions.beInvisibleIf
 import com.simplemobiletools.commons.extensions.deleteFiles
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
@@ -53,6 +52,7 @@ class SongAdapter(val activity: SimpleActivity, var songs: ArrayList<Song>, val 
 
         fun updateTitle(cnt: Int) {
             actMode?.title = "$cnt / $itemCnt"
+            actMode?.invalidate()
         }
     }
 
@@ -211,17 +211,18 @@ class SongAdapter(val activity: SimpleActivity, var songs: ArrayList<Song>, val 
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent?.context).inflate(R.layout.item_song, parent, false)
-        return ViewHolder(activity, view, itemClick)
+        return ViewHolder(view, activity, multiSelectorMode, multiSelector, itemClick)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        views.add(holder.bindView(multiSelectorMode, multiSelector, songs[position], position))
+        views.add(holder.bindView(songs[position]))
     }
 
     override fun getItemCount() = songs.size
 
-    class ViewHolder(val activity: SimpleActivity, view: View, val itemClick: (Int) -> (Unit)) : SwappingHolder(view, MultiSelector()) {
-        fun bindView(multiSelectorCallback: ModalMultiSelectorCallback, multiSelector: MultiSelector, song: Song, pos: Int): View {
+    class ViewHolder(val view: View, val activity: SimpleActivity, val multiSelectorCallback: ModalMultiSelectorCallback, val multiSelector: MultiSelector,
+                     val itemClick: (Int) -> (Unit)) : SwappingHolder(view, MultiSelector()) {
+        fun bindView(song: Song): View {
             itemView.apply {
                 song_title.text = song.title
                 song_title.setTextColor(textColor)
@@ -229,35 +230,24 @@ class SongAdapter(val activity: SimpleActivity, var songs: ArrayList<Song>, val 
                 song_artist.text = song.artist
                 song_artist.setTextColor(textColor)
 
-                if (currentSongIndex == pos) {
+                song_note_image.beInvisibleIf(currentSongIndex != layoutPosition)
+                if (currentSongIndex == layoutPosition) {
                     song_note_image.setColorFilter(textColor, PorterDuff.Mode.SRC_IN)
-                    song_note_image.beVisible()
-                } else {
-                    song_note_image.beInvisible()
                 }
-                toggleItemSelection(itemView, markedItems.contains(pos), pos)
+                toggleItemSelection(itemView, markedItems.contains(layoutPosition), layoutPosition)
 
-                setOnClickListener { viewClicked(multiSelector, pos) }
-                setOnLongClickListener {
-                    if (!multiSelector.isSelectable) {
-                        activity.startSupportActionMode(multiSelectorCallback)
-                        multiSelector.setSelected(this@ViewHolder, true)
-                        updateTitle(multiSelector.selectedPositions.size)
-                        toggleItemSelection(itemView, true, pos)
-                        actMode?.invalidate()
-                    }
-                    true
-                }
+                setOnClickListener { viewClicked() }
+                setOnLongClickListener { viewLongClicked(); true }
             }
 
             return itemView
         }
 
-        fun viewClicked(multiSelector: MultiSelector, pos: Int) {
+        private fun viewClicked() {
             if (multiSelector.isSelectable) {
                 val isSelected = multiSelector.selectedPositions.contains(layoutPosition)
                 multiSelector.setSelected(this, !isSelected)
-                toggleItemSelection(itemView, !isSelected, pos)
+                toggleItemSelection(itemView, !isSelected, layoutPosition)
 
                 val selectedCnt = multiSelector.selectedPositions.size
                 if (selectedCnt == 0) {
@@ -267,7 +257,16 @@ class SongAdapter(val activity: SimpleActivity, var songs: ArrayList<Song>, val 
                 }
                 actMode?.invalidate()
             } else {
-                itemClick(pos)
+                itemClick(layoutPosition)
+            }
+        }
+
+        private fun viewLongClicked() {
+            if (!multiSelector.isSelectable) {
+                activity.startSupportActionMode(multiSelectorCallback)
+                multiSelector.setSelected(this@ViewHolder, true)
+                updateTitle(multiSelector.selectedPositions.size)
+                toggleItemSelection(itemView, true, layoutPosition)
             }
         }
     }
