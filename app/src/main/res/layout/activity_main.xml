@@ -102,7 +102,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/song_progress">
 
-        <android.support.v7.widget.RecyclerView
+        <com.simplemobiletools.commons.views.MyScalableRecyclerView
             android:id="@+id/songs_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

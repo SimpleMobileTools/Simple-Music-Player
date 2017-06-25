@@ -8,6 +8,7 @@ import android.media.AudioManager
 import android.os.Bundle
 import android.os.Environment
 import android.support.v4.app.ActivityCompat
+import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.SeekBar
@@ -19,6 +20,7 @@ import com.simplemobiletools.commons.helpers.LICENSE_MULTISELECT
 import com.simplemobiletools.commons.helpers.LICENSE_OTTO
 import com.simplemobiletools.commons.models.RadioItem
 import com.simplemobiletools.commons.models.Release
+import com.simplemobiletools.commons.views.MyScalableRecyclerView
 import com.simplemobiletools.commons.views.RecyclerViewDivider
 import com.simplemobiletools.musicplayer.BuildConfig
 import com.simplemobiletools.musicplayer.R
@@ -239,19 +241,22 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
 
     private fun fillSongsListView(songs: ArrayList<Song>) {
         mSongs = songs
-        val adapter = SongAdapter(this, songs) {
-            songPicked(it)
-        }
 
         val currAdapter = songs_list.adapter
         songs_fastscroller.setViews(songs_list)
-        if (currAdapter != null) {
-            (currAdapter as SongAdapter).updateSongs(songs)
-        } else {
+        if (currAdapter == null) {
             songs_list.apply {
-                this@apply.adapter = adapter
+                this@apply.adapter = SongAdapter(this@MainActivity, songs, itemOperationsListener) {
+                    songPicked(it)
+                }
                 addItemDecoration(RecyclerViewDivider(context))
+                isDragSelectionEnabled = true
             }
+            setupRecyclerViewListener()
+        } else {
+            val state = (songs_list.layoutManager as LinearLayoutManager).onSaveInstanceState()
+            (currAdapter as SongAdapter).updateSongs(songs)
+            (songs_list.layoutManager as LinearLayoutManager).onRestoreInstanceState(state)
         }
         markCurrentSong()
         songs_playlist_empty.beVisibleIf(songs.isEmpty())
@@ -287,6 +292,34 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
     @Subscribe
     fun noStoragePermission(event: Events.NoStoragePermission) {
         toast(R.string.no_permissions)
+    }
+
+    private fun setupRecyclerViewListener() {
+        songs_list.listener = object : MyScalableRecyclerView.MyScalableRecyclerViewListener {
+            override fun zoomIn() {
+
+            }
+
+            override fun zoomOut() {
+
+            }
+
+            override fun selectItem(position: Int) {
+                getRecyclerAdapter().selectItem(position)
+            }
+
+            override fun selectRange(initialSelection: Int, lastDraggedIndex: Int, minReached: Int, maxReached: Int) {
+                getRecyclerAdapter().selectRange(initialSelection, lastDraggedIndex, minReached, maxReached)
+            }
+        }
+    }
+
+    private fun getRecyclerAdapter() = (songs_list.adapter as SongAdapter)
+
+    val itemOperationsListener = object : SongAdapter.ItemOperationsListener {
+        override fun itemLongClicked(position: Int) {
+            songs_list.setDragSelectActive(position)
+        }
     }
 
     private fun markCurrentSong() {
