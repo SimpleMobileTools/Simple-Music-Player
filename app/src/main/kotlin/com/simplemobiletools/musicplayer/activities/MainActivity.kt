@@ -82,9 +82,11 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
 
         val songRepetition = menu.findItem(R.id.toggle_song_repetition)
         songRepetition.title = getString(if (config.repeatSong) R.string.disable_song_repetition else R.string.enable_song_repetition)
+        songRepetition.icon = resources.getDrawable(if (config.repeatSong) R.drawable.ic_repeat else R.drawable.ic_repeat_off)
 
         val shuffle = menu.findItem(R.id.toggle_shuffle)
         shuffle.title = getString(if (config.isShuffleEnabled) R.string.disable_shuffle else R.string.enable_shuffle)
+        shuffle.icon = resources.getDrawable(if (config.isShuffleEnabled) R.drawable.ic_shuffle else R.drawable.ic_shuffle_off)
 
         return true
     }
