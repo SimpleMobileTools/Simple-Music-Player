@@ -1,6 +1,13 @@
 Changelog
 ==========
 
+Version 2.2.1 *(2017-06-25)*
+----------------------------
+
+ * Added round launcher icons for Android Nougat
+ * Added drag selection for easily selecting multiple items
+ * Added disabled icon states for Repeat and Shuffle
+
 Version 2.2.0 *(2017-04-07)*
 ----------------------------
 
