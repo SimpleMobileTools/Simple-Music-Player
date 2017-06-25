@@ -22,25 +22,25 @@ import com.squareup.otto.Subscribe
 
 class MyWidgetProvider : AppWidgetProvider() {
     companion object {
-        private var mBus: Bus? = null
-        private var mCurrSong: Song? = null
-        private var mPlayBitmap: Bitmap? = null
-        private var mPauseBitmap: Bitmap? = null
-        private var mIsPlaying = false
-        private var mWidgetIds: IntArray? = null
+        private var mRemoteViews: RemoteViews? = null
+    }
 
-        lateinit var mRemoteViews: RemoteViews
-        lateinit var mWidgetManager: AppWidgetManager
-        lateinit var mContext: Context
-        lateinit var mIntent: Intent
+    private var mBus: Bus? = null
+    private var mCurrSong: Song? = null
+    private var mPlayBitmap: Bitmap? = null
+    private var mPauseBitmap: Bitmap? = null
+    private var mIsPlaying = false
+    private var mWidgetIds: IntArray? = null
 
-        private fun getCellsForSize(size: Int): Int {
-            var n = 2
-            while (70 * n - 30 < size) {
-                ++n
-            }
-            return n - 1
+    lateinit var mWidgetManager: AppWidgetManager
+    lateinit var mContext: Context
+
+    private fun getCellsForSize(size: Int): Int {
+        var n = 2
+        while (70 * n - 30 < size) {
+            ++n
         }
+        return n - 1
     }
 
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
@@ -50,7 +50,6 @@ class MyWidgetProvider : AppWidgetProvider() {
 
     private fun initVariables(context: Context) {
         mContext = context
-        mIntent = Intent(mContext, MyWidgetProvider::class.java)
         mWidgetManager = AppWidgetManager.getInstance(mContext)
         updateWidgetIds()
         for (widgetId in mWidgetIds!!) {
@@ -68,15 +67,16 @@ class MyWidgetProvider : AppWidgetProvider() {
     }
 
     private fun setupIntent(action: String, id: Int) {
-        mIntent.action = action
-        val pendingIntent = PendingIntent.getBroadcast(mContext, 0, mIntent, 0)
-        mRemoteViews.setOnClickPendingIntent(id, pendingIntent)
+        val intent = Intent(mContext, MyWidgetProvider::class.java)
+        intent.action = action
+        val pendingIntent = PendingIntent.getBroadcast(mContext, 0, intent, 0)
+        mRemoteViews!!.setOnClickPendingIntent(id, pendingIntent)
     }
 
     private fun setupAppOpenIntent(id: Int) {
         val intent = Intent(mContext, SplashActivity::class.java)
         val pendingIntent = PendingIntent.getActivity(mContext, 0, intent, 0)
-        mRemoteViews.setOnClickPendingIntent(id, pendingIntent)
+        mRemoteViews!!.setOnClickPendingIntent(id, pendingIntent)
     }
 
     private fun updateWidgetIds() {
@@ -104,8 +104,8 @@ class MyWidgetProvider : AppWidgetProvider() {
             artist = mCurrSong!!.artist
         }
 
-        mRemoteViews.setTextViewText(R.id.song_title, title)
-        mRemoteViews.setTextViewText(R.id.song_artist, artist)
+        mRemoteViews!!.setTextViewText(R.id.song_title, title)
+        mRemoteViews!!.setTextViewText(R.id.song_artist, artist)
     }
 
     @Subscribe
@@ -124,7 +124,7 @@ class MyWidgetProvider : AppWidgetProvider() {
 
     private fun updatePlayPauseButton() {
         val bmp = if (mIsPlaying) mPauseBitmap else mPlayBitmap
-        mRemoteViews.setImageViewBitmap(R.id.play_pause_btn, bmp)
+        mRemoteViews!!.setImageViewBitmap(R.id.play_pause_btn, bmp)
     }
 
     private fun updateWidgets() {
@@ -140,7 +140,7 @@ class MyWidgetProvider : AppWidgetProvider() {
         val widgetTextColor = config.widgetTextColor
         var bmp = res.getColoredIcon(widgetTextColor, R.drawable.ic_previous)
 
-        mRemoteViews.apply {
+        mRemoteViews!!.apply {
             setInt(R.id.widget_holder, "setBackgroundColor", widgetBgColor)
             setInt(R.id.song_title, "setTextColor", widgetTextColor)
             setInt(R.id.song_artist, "setTextColor", widgetTextColor)
@@ -190,6 +190,9 @@ class MyWidgetProvider : AppWidgetProvider() {
     }
 
     override fun onAppWidgetOptionsChanged(context: Context, appWidgetManager: AppWidgetManager, widgetId: Int, newOptions: Bundle) {
+        if (mRemoteViews == null)
+            initVariables(context)
+
         mRemoteViews = getRemoteViews(appWidgetManager, context, widgetId)
         mWidgetManager = appWidgetManager
         setupViews(context)
