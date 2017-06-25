@@ -8,6 +8,7 @@ import android.media.AudioManager
 import android.os.Bundle
 import android.os.Environment
 import android.support.v4.app.ActivityCompat
+import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
 import android.view.MenuItem
@@ -21,7 +22,6 @@ import com.simplemobiletools.commons.helpers.LICENSE_OTTO
 import com.simplemobiletools.commons.models.RadioItem
 import com.simplemobiletools.commons.models.Release
 import com.simplemobiletools.commons.views.MyScalableRecyclerView
-import com.simplemobiletools.commons.views.RecyclerViewDivider
 import com.simplemobiletools.musicplayer.BuildConfig
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.adapters.SongAdapter
@@ -249,7 +249,10 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
                 this@apply.adapter = SongAdapter(this@MainActivity, songs, itemOperationsListener) {
                     songPicked(it)
                 }
-                addItemDecoration(RecyclerViewDivider(context))
+                DividerItemDecoration(context, DividerItemDecoration.VERTICAL).apply {
+                    setDrawable(context.resources.getDrawable(R.drawable.divider))
+                    addItemDecoration(this)
+                }
                 isDragSelectionEnabled = true
             }
             setupRecyclerViewListener()

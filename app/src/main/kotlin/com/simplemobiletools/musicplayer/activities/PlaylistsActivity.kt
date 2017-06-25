@@ -1,6 +1,7 @@
 package com.simplemobiletools.musicplayer.activities
 
 import android.os.Bundle
+import android.support.v7.widget.DividerItemDecoration
 import android.view.Menu
 import android.view.MenuItem
 import com.simplemobiletools.musicplayer.R
@@ -21,9 +22,16 @@ class PlaylistsActivity : SimpleActivity(), RefreshItemsListener {
     private fun getPlaylists() {
         dbHelper.getPlaylists {
             runOnUiThread {
-                playlists_list.adapter = PlaylistsAdapter(this, it, this) {
-                    getPlaylists()
-                    playlistChanged(it.id)
+                playlists_list.apply {
+                    adapter = PlaylistsAdapter(this@PlaylistsActivity, it, this@PlaylistsActivity) {
+                        getPlaylists()
+                        playlistChanged(it.id)
+                    }
+
+                    DividerItemDecoration(context, DividerItemDecoration.VERTICAL).apply {
+                        setDrawable(context.resources.getDrawable(R.drawable.divider))
+                        addItemDecoration(this)
+                    }
                 }
             }
         }
