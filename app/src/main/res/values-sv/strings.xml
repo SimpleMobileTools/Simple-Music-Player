@@ -20,23 +20,23 @@
     <string name="next">Nästa</string>
 
     <!-- Playlists -->
-    <string name="add_file_to_playlist">Add file to playlist</string>
-    <string name="add_folder_to_playlist">Add folder to playlist</string>
-    <string name="manage_playlists">Manage playlists</string>
-    <string name="playlists">Playlists</string>
-    <string name="create_playlist">Create playlist</string>
-    <string name="rename_playlist">Rename playlist</string>
-    <string name="playlist_name_exists">A playlist with that name already exists</string>
-    <string name="remove_playlist">Remove playlist</string>
-    <string name="remove_playlist_description">This will only remove the selected playlists, not the actual files.</string>
-    <string name="remove_playlist_description_placeholder">This will only remove playlist \"%1$s\", not the actual files.</string>
-    <string name="remove_from_playlist">Remove from playlist</string>
-    <string name="remove_from_playlist_description">This will only remove the items from playlist \"%1$s\", the actual files will not be deleted.</string>
-    <string name="delete_the_files_too">Delete the files too</string>
-    <string name="open_playlist">Open playlist</string>
-    <string name="initial_playlist">Initial playlist</string>
-    <string name="initial_playlist_cannot_be_deleted">The initial playlist cannot be deleted</string>
-    <string name="empty_playlist">Current playlist is empty</string>
+    <string name="add_file_to_playlist">Lägg till fil i spellista</string>
+    <string name="add_folder_to_playlist">Lägg till mapp i spellista</string>
+    <string name="manage_playlists">Hantera spellistor</string>
+    <string name="playlists">Spellistor</string>
+    <string name="create_playlist">Skapa spellista</string>
+    <string name="rename_playlist">Byt namn på spellista</string>
+    <string name="playlist_name_exists">En spellista med det namnet finns redan</string>
+    <string name="remove_playlist">Ta bort spellista</string>
+    <string name="remove_playlist_description">Detta tar bara bort de markerade spellistorna, inte själva filerna.</string>
+    <string name="remove_playlist_description_placeholder">Detta tar bara bort spellistan \"%1$s\", inte själva filerna.</string>
+    <string name="remove_from_playlist">Ta bort från spellista</string>
+    <string name="remove_from_playlist_description">Detta tar bara bort objekten från spellistan \"%1$s\", själva filerna tas inte bort.</string>
+    <string name="delete_the_files_too">Ta även bort filerna</string>
+    <string name="open_playlist">Öppna spellista</string>
+    <string name="initial_playlist">Förinställd spellista</string>
+    <string name="initial_playlist_cannot_be_deleted">Den förinställda spellistan kan inte tas bort</string>
+    <string name="empty_playlist">Den aktuella spellistan är tom</string>
 
     <!-- Settings -->
     <string name="equalizer">Equalizer</string>
@@ -45,7 +45,7 @@
     <!-- Short description has to have less than 80 chars -->
     <string name="app_short_description">En enkel och ren musikspelare med en anpassningsbar widget.</string>
     <string name="app_long_description">
-        En musikspelare som du enkelt styr från statusbaren, widget på hemskärmen eller via dina knappar på headsettet. Du kan sortera dina låtar efter Titel eller Artisten, och även ändra Equalizern. Stöder ännu inte filtrering efter artist eller album, men håll ögonen öppna! The Phone Status permission is required for pausing the song once there is an incoming call.
+        En musikspelare som du enkelt styr från statusbaren, widget på hemskärmen eller via dina knappar på headsettet. Du kan sortera dina låtar efter Titel eller Artisten, och även ändra Equalizern. Stöder ännu inte filtrering efter artist eller album, men håll ögonen öppna! Telefonstatusbehörigheten behövs för att pausa musiken vid inkommande samtal.
 
         Den innehåller en widget där du kan ändra textfärgen och färgen på bakgrunden.
 
