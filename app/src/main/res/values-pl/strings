@@ -1,0 +1,61 @@
+<resources>
+    <string name="app_name">Simple Music Player</string>
+    <string name="app_launcher_name">Simple Music Player</string>
+    <string name="playlist_empty">Twoja playlista jest pusta</string>
+    <string name="no_permissions">Uprawnienie niezbędne do uzyskania dostępu do plików nie zostało udzielone</string>
+    <string name="rename_song">Zmień nazwę</string>
+    <string name="rename_song_error">Wystąpił błąd podczas zmiany nazwy</string>
+    <string name="rename_song_empty">Wypełnij wszystkie pola</string>
+    <string name="enable_song_repetition">Powtarzaj bieżący utwór</string>
+    <string name="disable_song_repetition">Przestań powtarzać bieżący utwór</string>
+    <string name="song_repetition_enabled">Powtarzanie obecnego utworu włączone</string>
+    <string name="song_repetition_disabled">Powtarzanie obecnego utworu wyłączone</string>
+    <string name="enable_shuffle">Włącz kolejność losową</string>
+    <string name="disable_shuffle">Wyłącz kolejność losową</string>
+    <string name="shuffle_enabled">Kolejność losowa włączona</string>
+    <string name="shuffle_disabled">Kolejność losowa wyłączona</string>
+
+    <string name="previous">Poprzedni</string>
+    <string name="playpause">Odtwórz / zapauzuj</string>
+    <string name="next">Następny</string>
+
+    <!-- Playlists -->
+    <string name="add_file_to_playlist">Dodaj plik do playlisty</string>
+    <string name="add_folder_to_playlist">Dodaj folder do playlisty</string>
+    <string name="manage_playlists">Zarządzaj playlistami</string>
+    <string name="playlists">Playlisty</string>
+    <string name="create_playlist">Utwórz playlistę</string>
+    <string name="rename_playlist">Zmień nazwę playlisty</string>
+    <string name="playlist_name_exists">Playlista z tą nazwą już istnieje</string>
+    <string name="remove_playlist">Usuń playlistę</string>
+    <string name="remove_playlist_description">To usunie tylko wybrane playlisty, nie pliki.</string>
+    <string name="remove_playlist_description_placeholder">To usunie tylko playlistę \"%1$s\", nie pliki.</string>
+    <string name="remove_from_playlist">Usuń z playlisty</string>
+    <string name="remove_from_playlist_description">To usunie tylko elementy z playlisty \"%1$s\", pliki zostaną nienaruszone.</string>
+    <string name="delete_the_files_too">Usuń też pliki</string>
+    <string name="open_playlist">Otwórz playlistę</string>
+    <string name="initial_playlist">Początkowa playlista</string>
+    <string name="initial_playlist_cannot_be_deleted">Początkowa playlista nie może zostać usunięta</string>
+    <string name="empty_playlist">Obecna playlista jest pusta</string>
+
+    <!-- Settings -->
+    <string name="equalizer">Korektor</string>
+
+    <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
+    <!-- Short description has to have less than 80 chars -->
+    <string name="app_short_description">Prosty odtwarzacz muzyki z konfigurowalnym widżetem..</string>
+    <string name="app_long_description">
+        Odtwarzacz muzyki łatwy do kontrolowania z poziomu paska stanu, widżetu na pulpicie, lub przycisków na słuchawkach. Możesz sortować utwory według tytułu i wykonawcy (według albumu jeszcze nie, ale kiedyś będzie to możliwe). Audiofile mogą bawić się suwakami w korektorze. Aby móc wstrzymać odtwarzanie na czas rozmowy telefonicznej, aplikacja potrzebuje uprawnienia \"Telefon\".
+
+        Zawiera widżet z konfigurowalnymi kolorami napisów i tła.
+
+        Nie zawiera natomiast żadnych reklam i nie potrzebuje całej masy uprawnień. Jest w pełni otwartoźródłowa i w pełni podatna na kolorowanie.
+
+        Niniejsza aplikacja jest tylko częścią naszej kolekcji prostych narzędzi. Ta, jak i pozostałe, dostępne są na stronie http://www.simplemobiletools.com
+    </string>
+
+    <!--
+        Haven't found some strings? There's more at
+        https://github.com/SimpleMobileTools/Simple-Commons/tree/master/library/src/main/res
+    -->
+</resources>
