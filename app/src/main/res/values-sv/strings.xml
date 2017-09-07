@@ -2,7 +2,6 @@
     <string name="app_name">Simple Music Player</string>
     <string name="app_launcher_name">Musikspelare</string>
     <string name="playlist_empty">Din spellista är tom</string>
-    <string name="no_permissions">Tillstånd att komma åt låtarna har inte beviljats</string>
     <string name="rename_song">Döp om låt</string>
     <string name="rename_song_error">Ett fel uppstod vid omdöpningen</string>
     <string name="rename_song_empty">Alla fält måste fyllas i</string>

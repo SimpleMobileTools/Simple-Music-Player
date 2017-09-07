@@ -2,7 +2,6 @@
     <string name="app_name">Simple Music Player</string>
     <string name="app_launcher_name">Music Player</string>
     <string name="playlist_empty">Your playlist is empty</string>
-    <string name="no_permissions">Permission for accessing the songs has not been granted</string>
     <string name="rename_song">Rename song</string>
     <string name="rename_song_error">An error occurred during the renaming</string>
     <string name="rename_song_empty">Please fill in all fields</string>

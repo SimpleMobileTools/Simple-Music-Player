@@ -2,7 +2,6 @@
     <string name="app_name">シンプル ミュージック プレイヤー</string>
     <string name="app_launcher_name">ミュージック プレイヤー</string>
     <string name="playlist_empty">プレイリストは空です</string>
-    <string name="no_permissions">曲のアクセス許可が付与されていません</string>
     <string name="rename_song">曲の名前を変更</string>
     <string name="rename_song_error">名前を変更中にエラーが発生しました</string>
     <string name="rename_song_empty">すべてのフィールドを入力してください</string>

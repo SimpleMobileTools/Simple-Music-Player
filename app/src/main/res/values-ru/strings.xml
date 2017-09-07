@@ -2,7 +2,6 @@
     <string name="app_name">Simple Music Player</string>
     <string name="app_launcher_name">Проигрыватель музыки</string>
     <string name="playlist_empty">Ваш плейлист пуст</string>
-    <string name="no_permissions">Не было предоставлено разрешения для доступа к музыке</string>
     <string name="rename_song">Переименовать композицию</string>
     <string name="rename_song_error">Во время переименования произошла ошибка</string>
     <string name="rename_song_empty">Пожалуйста, заполните все поля</string>

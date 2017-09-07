@@ -2,7 +2,6 @@
     <string name="app_name">Eenvoudige muziekspeler</string>
     <string name="app_launcher_name">Muziekspeler</string>
     <string name="playlist_empty">Je afspeellijst is leeg</string>
-    <string name="no_permissions">Toestemming voor toegang tot de nummers niet is toegekend</string>
     <string name="rename_song">Hernoem nummer</string>
     <string name="rename_song_error">Een hernoemen opgetreden</string>
     <string name="rename_song_empty">Gelieve alle velden in te vullen</string>

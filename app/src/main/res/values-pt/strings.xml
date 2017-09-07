@@ -2,7 +2,6 @@
     <string name="app_name">Simple Music Player</string>
     <string name="app_launcher_name">Reprodutor de músicas</string>
     <string name="playlist_empty">A lista de reprodução está vazia</string>
-    <string name="no_permissions">Não foi concedida a permissão para aceder às músicas</string>
     <string name="rename_song">Renomear música</string>
     <string name="rename_song_error">Ocorreu um erro ao renomear</string>
     <string name="rename_song_empty">Por favor preencha todos os campos</string>

@@ -2,7 +2,6 @@
     <string name="app_name">Simple Music Player</string>
     <string name="app_launcher_name">Simple Music Player</string>
     <string name="playlist_empty">Twoja playlista jest pusta</string>
-    <string name="no_permissions">Uprawnienie niezbędne do uzyskania dostępu do plików nie zostało udzielone</string>
     <string name="rename_song">Zmień nazwę</string>
     <string name="rename_song_error">Wystąpił błąd podczas zmiany nazwy</string>
     <string name="rename_song_empty">Wypełnij wszystkie pola</string>

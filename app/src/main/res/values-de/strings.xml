@@ -2,7 +2,6 @@
     <string name="app_name">Schlichter Musikspieler</string>
     <string name="app_launcher_name">Musikspieler</string>
     <string name="playlist_empty">Deine Playlist ist leer</string>
-    <string name="no_permissions">Die Berechtigung zum Zugriff auf deine Songs wurde nicht erteilt.</string>
     <string name="rename_song">Song umbenennen</string>
     <string name="rename_song_error">Während des Umbenennens ist ein Fehler aufgetreten</string>
     <string name="rename_song_empty">Fülle bitte alle Felder aus</string>
