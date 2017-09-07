@@ -35,12 +35,9 @@ data class Song(val id: Long, var title: String, var artist: String, var path: S
         return res
     }
 
-    override fun equals(o: Any?): Boolean {
-        return if (this === o)
-            true
-        else if (o == null)
-            false
-        else
-            id == (o as Song).id
+    override fun equals(other: Any?): Boolean = when {
+        this === other -> true
+        other == null -> false
+        else -> id == (other as Song).id
     }
 }

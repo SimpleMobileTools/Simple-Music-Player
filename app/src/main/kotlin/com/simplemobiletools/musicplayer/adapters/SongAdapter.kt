@@ -55,12 +55,12 @@ class SongAdapter(val activity: SimpleActivity, var songs: ArrayList<Song>, val 
         updateTitle(selectedPositions.size)
     }
 
-    fun updateTitle(cnt: Int) {
+    private fun updateTitle(cnt: Int) {
         actMode?.title = "$cnt / ${songs.size}"
         actMode?.invalidate()
     }
 
-    val adapterListener = object : MyAdapterListener {
+    private val adapterListener = object : MyAdapterListener {
         override fun toggleItemSelectionAdapter(select: Boolean, position: Int) {
             toggleItemSelection(select, position)
         }
@@ -68,7 +68,7 @@ class SongAdapter(val activity: SimpleActivity, var songs: ArrayList<Song>, val 
         override fun getSelectedPositions(): HashSet<Int> = selectedPositions
     }
 
-    val multiSelectorMode = object : ModalMultiSelectorCallback(multiSelector) {
+    private val multiSelectorMode = object : ModalMultiSelectorCallback(multiSelector) {
         override fun onActionItemClicked(mode: ActionMode, item: MenuItem): Boolean {
             when (item.itemId) {
                 R.id.cab_properties -> showProperties()
@@ -133,7 +133,7 @@ class SongAdapter(val activity: SimpleActivity, var songs: ArrayList<Song>, val 
 
     private fun selectAll() {
         val cnt = songs.size
-        for (i in 0..cnt - 1) {
+        for (i in 0 until cnt) {
             selectedPositions.add(i)
             notifyItemChanged(i)
         }
@@ -240,7 +240,7 @@ class SongAdapter(val activity: SimpleActivity, var songs: ArrayList<Song>, val 
                 toggleItemSelection(true, i)
 
             if (min > -1 && min < to) {
-                (min..to - 1).filter { it != from }
+                (min until to).filter { it != from }
                         .forEach { toggleItemSelection(false, it) }
             }
             if (max > -1) {
@@ -257,7 +257,7 @@ class SongAdapter(val activity: SimpleActivity, var songs: ArrayList<Song>, val 
             }
 
             if (min > -1) {
-                for (i in min..from - 1)
+                for (i in min until from)
                     toggleItemSelection(false, i)
             }
         }

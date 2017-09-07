@@ -86,14 +86,14 @@ class WidgetConfigureActivity : AppCompatActivity() {
         finish()
     }
 
-    fun pickBackgroundColor() {
+    private fun pickBackgroundColor() {
         ColorPickerDialog(this, mBgColorWithoutTransparency) {
             mBgColorWithoutTransparency = it
             updateBackgroundColor()
         }
     }
 
-    fun pickTextColor() {
+    private fun pickTextColor() {
         ColorPickerDialog(this, mTextColor) {
             mTextColor = it
             updateTextColor()

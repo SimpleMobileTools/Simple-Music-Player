@@ -1,7 +1,6 @@
 package com.simplemobiletools.musicplayer.dialogs
 
 import android.app.Activity
-import android.content.DialogInterface
 import android.support.v7.app.AlertDialog
 import android.view.LayoutInflater
 import android.view.View
@@ -15,14 +14,14 @@ import com.simplemobiletools.musicplayer.helpers.SORT_BY_FILE_NAME
 import com.simplemobiletools.musicplayer.helpers.SORT_BY_TITLE
 import kotlinx.android.synthetic.main.dialog_change_sorting.view.*
 
-class ChangeSortingDialog(val activity: Activity, val callback: () -> Unit) : DialogInterface.OnClickListener {
+class ChangeSortingDialog(val activity: Activity, val callback: () -> Unit) {
     private var currSorting = 0
     var config = activity.config
     var view: View = LayoutInflater.from(activity).inflate(R.layout.dialog_change_sorting, null)
 
     init {
         AlertDialog.Builder(activity)
-                .setPositiveButton(R.string.ok, this)
+                .setPositiveButton(R.string.ok, { dialog, which -> dialogConfirmed() })
                 .setNegativeButton(R.string.cancel, null)
                 .create().apply {
             activity.setupDialogStuff(view, this, R.string.sort_by)
@@ -57,7 +56,7 @@ class ChangeSortingDialog(val activity: Activity, val callback: () -> Unit) : Di
         orderBtn.isChecked = true
     }
 
-    override fun onClick(dialog: DialogInterface, which: Int) {
+    private fun dialogConfirmed() {
         val sortingRadio = view.sorting_dialog_radio_sorting
         var sorting = when (sortingRadio.checkedRadioButtonId) {
             R.id.sorting_dialog_radio_title -> SORT_BY_TITLE

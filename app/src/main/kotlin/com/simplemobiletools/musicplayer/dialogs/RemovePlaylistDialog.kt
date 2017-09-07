@@ -8,7 +8,7 @@ import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.models.Playlist
 import kotlinx.android.synthetic.main.dialog_remove_playlist.view.*
 
-class RemovePlaylistDialog(val activity: Activity, val playlist: Playlist? = null, val callback: (deleteFiles: Boolean) -> Unit) : AlertDialog.Builder(activity) {
+class RemovePlaylistDialog(val activity: Activity, val playlist: Playlist? = null, val callback: (deleteFiles: Boolean) -> Unit) {
     init {
         val view = activity.layoutInflater.inflate(R.layout.dialog_remove_playlist, null).apply {
             remove_playlist_description.text = getDescriptionText()

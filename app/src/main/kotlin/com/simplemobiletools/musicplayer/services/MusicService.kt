@@ -84,8 +84,8 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
     private fun initService() {
         mConfig = applicationContext.config
-        mSongs = ArrayList<Song>()
-        mPlayedSongIndexes = ArrayList<Int>()
+        mSongs = ArrayList()
+        mPlayedSongIndexes = ArrayList()
         mCurrSong = null
         setupIntents()
         getSortedSongs()
@@ -163,7 +163,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         return START_NOT_STICKY
     }
 
-    fun initMediaPlayerIfNeeded() {
+    private fun initMediaPlayerIfNeeded() {
         if (mPlayer != null)
             return
 
@@ -248,7 +248,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         }
 
         val notification = NotificationCompat.Builder(this)
-                .setStyle(NotificationCompat.MediaStyle().setShowActionsInCompactView(*intArrayOf(playPauseButtonPosition, nextButtonPosition)))
+                .setStyle(NotificationCompat.MediaStyle().setShowActionsInCompactView(playPauseButtonPosition, nextButtonPosition))
                 .setContentTitle(title)
                 .setContentText(artist)
                 .setSmallIcon(R.drawable.ic_headset_small)
@@ -303,17 +303,17 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     private fun getNewSongId(): Int {
         return if (mConfig!!.isShuffleEnabled) {
             val cnt = mSongs!!.size
-            if (cnt == 0) {
-                -1
-            } else if (cnt == 1) {
-                0
-            } else {
-                val random = Random()
-                var newSongIndex = random.nextInt(cnt)
-                while (mPlayedSongIndexes!!.contains(newSongIndex)) {
-                    newSongIndex = random.nextInt(cnt)
+            when (cnt) {
+                0 -> -1
+                1 -> 0
+                else -> {
+                    val random = Random()
+                    var newSongIndex = random.nextInt(cnt)
+                    while (mPlayedSongIndexes!!.contains(newSongIndex)) {
+                        newSongIndex = random.nextInt(cnt)
+                    }
+                    newSongIndex
                 }
-                newSongIndex
             }
         } else {
             if (mPlayedSongIndexes!!.isEmpty()) {
@@ -325,7 +325,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         }
     }
 
-    fun playPreviousSong() {
+    private fun playPreviousSong() {
         if (mSongs!!.isEmpty()) {
             handleEmptyPlaylist()
             return
@@ -343,7 +343,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         }
     }
 
-    fun pauseSong() {
+    private fun pauseSong() {
         if (mSongs!!.isEmpty())
             return
 
@@ -353,7 +353,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         songStateChanged(false)
     }
 
-    fun resumeSong() {
+    private fun resumeSong() {
         if (mSongs!!.isEmpty()) {
             handleEmptyPlaylist()
             return
@@ -370,7 +370,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         songStateChanged(true)
     }
 
-    fun playNextSong() {
+    private fun playNextSong() {
         setSong(getNewSongId(), true)
     }
 
@@ -384,7 +384,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         setSong(pos, true)
     }
 
-    fun setSong(songIndex: Int, addNewSong: Boolean) {
+    private fun setSong(songIndex: Int, addNewSong: Boolean) {
         if (mSongs!!.isEmpty()) {
             handleEmptyPlaylist()
             return
@@ -471,7 +471,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         stopSelf()
     }
 
-    fun incomingCallStart() {
+    private fun incomingCallStart() {
         if (getIsPlaying()) {
             mWasPlayingAtCall = true
             pauseSong()
@@ -480,7 +480,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         }
     }
 
-    fun incomingCallStop() {
+    private fun incomingCallStop() {
         if (mWasPlayingAtCall)
             resumeSong()
 

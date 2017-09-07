@@ -33,9 +33,7 @@ class DBHelper private constructor(val context: Context) : SQLiteOpenHelper(cont
         val DB_NAME = "playlists.db"
         val INITIAL_PLAYLIST_ID = 1
 
-        fun newInstance(context: Context): DBHelper {
-            return DBHelper(context)
-        }
+        fun newInstance(context: Context) = DBHelper(context)
     }
 
     override fun onCreate(db: SQLiteDatabase) {
@@ -160,13 +158,13 @@ class DBHelper private constructor(val context: Context) : SQLiteOpenHelper(cont
         return null
     }
 
-    fun removeSongFromPlaylist(path: String, playlistId: Int) {
+    private fun removeSongFromPlaylist(path: String, playlistId: Int) {
         removeSongsFromPlaylist(ArrayList<String>().apply { add(path) }, playlistId)
     }
 
     fun removeSongsFromPlaylist(paths: ArrayList<String>, playlistId: Int = context.config.currentPlaylist) {
         val SPLICE_SIZE = 200
-        for (i in 0..paths.size - 1 step SPLICE_SIZE) {
+        for (i in 0 until paths.size step SPLICE_SIZE) {
             val curPaths = paths.subList(i, Math.min(i + SPLICE_SIZE, paths.size))
             val questionMarks = getQuestionMarks(curPaths.size)
             var selection = "$COL_PATH IN ($questionMarks)"
@@ -210,10 +208,10 @@ class DBHelper private constructor(val context: Context) : SQLiteOpenHelper(cont
         if (paths.isEmpty())
             return songs
 
-        for (i in 0..paths.size - 1 step SPLICE_SIZE) {
+        for (i in 0 until paths.size step SPLICE_SIZE) {
             val curPaths = paths.subList(i, Math.min(i + SPLICE_SIZE, paths.size))
             val uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
-            val columns = arrayOf(MediaStore.Audio.Media._ID, MediaStore.Audio.Media.TITLE, MediaStore.Audio.Media.ARTIST, MediaStore.Audio.Media.DURATION, MediaStore.Audio.Media.DATA)
+            val columns = arrayOf(MediaStore.Audio.Media._ID, MediaStore.Audio.Media.TITLE, MediaStore.Audio.Media.ARTIST, MediaStore.Audio.Media.DATA, MediaStore.Audio.Media.DURATION)
             val questionMarks = getQuestionMarks(curPaths.size)
             val selection = "${MediaStore.Audio.Media.DATA} IN ($questionMarks)"
             val selectionArgs = curPaths.toTypedArray()

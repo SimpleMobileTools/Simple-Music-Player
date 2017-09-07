@@ -56,7 +56,7 @@ class PlaylistsAdapter(val activity: SimpleActivity, val mItems: List<Playlist>,
         itemCnt = mItems.size
     }
 
-    val multiSelectorMode = object : ModalMultiSelectorCallback(multiSelector) {
+    private val multiSelectorMode = object : ModalMultiSelectorCallback(multiSelector) {
         override fun onActionItemClicked(mode: ActionMode, item: MenuItem): Boolean {
             when (item.itemId) {
                 R.id.cab_delete -> askConfirmDelete()
@@ -158,7 +158,7 @@ class PlaylistsAdapter(val activity: SimpleActivity, val mItems: List<Playlist>,
             return itemView
         }
 
-        fun viewClicked(playlist: Playlist) {
+        private fun viewClicked(playlist: Playlist) {
             if (multiSelector.isSelectable) {
                 val isSelected = multiSelector.selectedPositions.contains(layoutPosition)
                 multiSelector.setSelected(this, !isSelected)
