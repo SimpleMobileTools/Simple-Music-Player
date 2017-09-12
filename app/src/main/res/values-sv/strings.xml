@@ -28,9 +28,9 @@
     <string name="playlist_name_exists">En spellista med det namnet finns redan</string>
     <string name="remove_playlist">Ta bort spellista</string>
     <string name="remove_playlist_description">Detta tar bara bort de markerade spellistorna, inte själva filerna.</string>
-    <string name="remove_playlist_description_placeholder">Detta tar bara bort spellistan \"%1$s\", inte själva filerna.</string>
+    <string name="remove_playlist_description_placeholder">Detta tar bara bort spellistan \"%s\", inte själva filerna.</string>
     <string name="remove_from_playlist">Ta bort från spellista</string>
-    <string name="remove_from_playlist_description">Detta tar bara bort objekten från spellistan \"%1$s\", själva filerna tas inte bort.</string>
+    <string name="remove_from_playlist_description">Detta tar bara bort objekten från spellistan \"%s\", själva filerna tas inte bort.</string>
     <string name="delete_the_files_too">Ta även bort filerna</string>
     <string name="open_playlist">Öppna spellista</string>
     <string name="initial_playlist">Förinställd spellista</string>

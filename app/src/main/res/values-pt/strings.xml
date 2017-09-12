@@ -28,9 +28,9 @@
     <string name="playlist_name_exists">Já existe uma lista de reprodução com este nome</string>
     <string name="remove_playlist">Remover lista de reprodução</string>
     <string name="remove_playlist_description">Esta ação remove as listas de reprodução selecionadas mas não apaga os ficheiros.</string>
-    <string name="remove_playlist_description_placeholder">Esta ação remove a lista de reprodução \"%1$s\" mas não apaga os ficheiros.</string>
+    <string name="remove_playlist_description_placeholder">Esta ação remove a lista de reprodução \"%s\" mas não apaga os ficheiros.</string>
     <string name="remove_from_playlist">Remover da lista de reprodução</string>
-    <string name="remove_from_playlist_description">Esta ação remove os elementos da lista de reprodução \"%1$s\" mas não apaga os ficheiros.</string>
+    <string name="remove_from_playlist_description">Esta ação remove os elementos da lista de reprodução \"%s\" mas não apaga os ficheiros.</string>
     <string name="delete_the_files_too">Apagar também os ficheiros</string>
     <string name="open_playlist">Abrir lista de reprodução</string>
     <string name="initial_playlist">Lista de reprodução inicial</string>

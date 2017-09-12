@@ -28,9 +28,9 @@
     <string name="playlist_name_exists">Плейлист с таким названием уже существует</string>
     <string name="remove_playlist">Удалить плейлист</string>
     <string name="remove_playlist_description">Будут удалены только выбранные плейлисты, а не сами файлы.</string>
-    <string name="remove_playlist_description_placeholder">Будет удалён только плейлист «%1$s», а не сами файлы.</string>
+    <string name="remove_playlist_description_placeholder">Будет удалён только плейлист «%s», а не сами файлы.</string>
     <string name="remove_from_playlist">Удалить из плейлиста</string>
-    <string name="remove_from_playlist_description">Композиции будут удалены только из плейлиста «%1$s», сами файлы удалены не будут.</string>
+    <string name="remove_from_playlist_description">Композиции будут удалены только из плейлиста «%s», сами файлы удалены не будут.</string>
     <string name="delete_the_files_too">Удалить файлы тоже</string>
     <string name="open_playlist">Открыть плейлист</string>
     <string name="initial_playlist">Начальный плейлист</string>

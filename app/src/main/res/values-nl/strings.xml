@@ -28,9 +28,9 @@
     <string name="playlist_name_exists">Een afspeellijst met die naam bestaat al</string>
     <string name="remove_playlist">Verwijderen afspeellijst</string>
     <string name="remove_playlist_description">Dit zal alleen de geselecteerde afspeellijsten te verwijderen. Bestanden worden niet verwijderd.</string>
-    <string name="remove_playlist_description_placeholder">Dit zal \"%1$s\" te verwijderen. Bestanden worden niet verwijderd.</string>
+    <string name="remove_playlist_description_placeholder">Dit zal \"%s\" te verwijderen. Bestanden worden niet verwijderd.</string>
     <string name="remove_from_playlist">Verwijderen uit afspeellijst</string>
-    <string name="remove_from_playlist_description">dit zal alleen items uit \"%1$s\" te verwijderen. Bestanden worden niet verwijderd.</string>
+    <string name="remove_from_playlist_description">dit zal alleen items uit \"%s\" te verwijderen. Bestanden worden niet verwijderd.</string>
     <string name="delete_the_files_too">Verwijder de bestanden</string>
     <string name="open_playlist">Geopend afspeellijst</string>
     <string name="initial_playlist">Aanvankelijke afspeellijst</string>
