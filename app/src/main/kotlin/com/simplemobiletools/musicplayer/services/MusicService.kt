@@ -59,6 +59,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         private var mPlayPauseIntent: PendingIntent? = null
 
         private var mWasPlayingAtCall = false
+        private var mPauseOnPrepared = false
 
         fun getIsPlaying() = mPlayer?.isPlaying == true
     }
@@ -114,8 +115,13 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
                     if (mSongs == null)
                         initService()
                     mBus!!.post(Events.PlaylistUpdated(mSongs!!))
+
                     mBus!!.post(Events.SongChanged(mCurrSong))
                     songStateChanged(getIsPlaying())
+                    if (mCurrSong == null) {
+                        mPauseOnPrepared = true
+                        resumeSong()
+                    }
                 }
                 PREVIOUS -> playPreviousSong()
                 PAUSE -> pauseSong()
@@ -384,7 +390,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         setSong(pos, true)
     }
 
-    private fun setSong(songIndex: Int, addNewSong: Boolean) {
+    private fun setSong(songIndex: Int, addNewSongToHistory: Boolean) {
         if (mSongs!!.isEmpty()) {
             handleEmptyPlaylist()
             return
@@ -394,7 +400,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         initMediaPlayerIfNeeded()
 
         mPlayer!!.reset()
-        if (addNewSong) {
+        if (addNewSongToHistory) {
             mPlayedSongIndexes!!.add(songIndex)
             if (mPlayedSongIndexes!!.size >= mSongs!!.size) {
                 mPlayedSongIndexes!!.clear()
@@ -444,6 +450,10 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     override fun onPrepared(mp: MediaPlayer) {
         mp.start()
         setupNotification()
+        if (mPauseOnPrepared) {
+            pauseSong()
+        }
+        mPauseOnPrepared = false
     }
 
     override fun onDestroy() {
@@ -509,7 +519,6 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             } catch (e: IllegalArgumentException) {
                 Log.e(TAG, "IllegalArgumentException $e")
             }
-
         }
     }
 
