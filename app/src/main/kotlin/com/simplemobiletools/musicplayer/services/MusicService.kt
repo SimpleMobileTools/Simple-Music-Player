@@ -435,6 +435,9 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     override fun onBind(intent: Intent) = null
 
     override fun onCompletion(mp: MediaPlayer) {
+        if (!config.autoplay)
+            return
+
         if (mConfig!!.repeatSong) {
             restartSong()
         } else if (mPlayer!!.currentPosition > 0) {

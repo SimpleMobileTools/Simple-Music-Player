@@ -28,6 +28,10 @@ class Config(context: Context) : BaseConfig(context) {
         get() = prefs.getBoolean(REPEAT_SONG, false)
         set(repeat) = prefs.edit().putBoolean(REPEAT_SONG, repeat).apply()
 
+    var autoplay: Boolean
+        get() = prefs.getBoolean(AUTOPLAY, true)
+        set(autoplay) = prefs.edit().putBoolean(AUTOPLAY, autoplay).apply()
+
     // initial playlist tries to load all songs from the device, store unwanted song paths here
     var ignoredPaths: Set<String>
         get() = prefs.getStringSet(IGNORED_PATHS, HashSet<String>())

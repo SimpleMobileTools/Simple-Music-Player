@@ -17,6 +17,10 @@
         android:title="@string/disable_shuffle"
         app:showAsAction="ifRoom"/>
     <item
+        android:id="@+id/toggle_autoplay"
+        android:title="@string/disable_autoplay"
+        app:showAsAction="never"/>
+    <item
         android:id="@+id/open_playlist"
         android:icon="@drawable/ic_open_playlist"
         android:title="@string/open_playlist"

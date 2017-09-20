@@ -92,6 +92,9 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
         shuffle.title = getString(if (config.isShuffleEnabled) R.string.disable_shuffle else R.string.enable_shuffle)
         shuffle.icon = resources.getDrawable(if (config.isShuffleEnabled) R.drawable.ic_shuffle else R.drawable.ic_shuffle_off)
 
+        val autoplay = menu.findItem(R.id.toggle_autoplay)
+        autoplay.title = getString(if (config.autoplay) R.string.disable_autoplay else R.string.enable_autoplay)
+
         return true
     }
 
@@ -101,6 +104,7 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
             R.id.toggle_song_repetition -> toggleSongRepetition()
             R.id.open_playlist -> openPlaylist()
             R.id.toggle_shuffle -> toggleShuffle()
+            R.id.toggle_autoplay -> toggleAutoplay()
             R.id.add_folder_to_playlist -> addFolderToPlaylist()
             R.id.add_file_to_playlist -> addFileToPlaylist()
             R.id.remove_playlist -> removePlaylist()
@@ -147,6 +151,12 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
         config.repeatSong = !config.repeatSong
         invalidateOptionsMenu()
         toast(if (config.repeatSong) R.string.song_repetition_enabled else R.string.song_repetition_disabled)
+    }
+
+    private fun toggleAutoplay() {
+        config.autoplay = !config.autoplay
+        invalidateOptionsMenu()
+        toast(if (config.autoplay) R.string.autoplay_enabled else R.string.autoplay_disabled)
     }
 
     private fun removePlaylist() {
