@@ -173,8 +173,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         if (mPlayer != null)
             return
 
-        mPlayer = MediaPlayer()
-        mPlayer!!.apply {
+        mPlayer = MediaPlayer().apply {
             setWakeMode(applicationContext, PowerManager.PARTIAL_WAKE_LOCK)
             setAudioStreamType(AudioManager.STREAM_MUSIC)
             setOnPreparedListener(this@MusicService)
@@ -184,7 +183,8 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         setupEqualizer()
     }
 
-    private fun fillInitialPlaylist() {
+    private fun getAllDeviceSongs() {
+        val ignoredPaths = config.ignoredPaths
         val uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
         val columns = arrayOf(MediaStore.Audio.Media.DURATION, MediaStore.Audio.Media.DATA)
 
@@ -198,7 +198,9 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
                     val duration = cursor.getIntValue(MediaStore.Audio.Media.DURATION) / 1000
                     if (duration > MIN_INITIAL_DURATION) {
                         val path = cursor.getStringValue(MediaStore.Audio.Media.DATA)
-                        paths.add(path)
+                        if (!ignoredPaths.contains(path)) {
+                            paths.add(path)
+                        }
                     }
                 } while (cursor.moveToNext())
             }
@@ -210,9 +212,8 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     }
 
     private fun getSortedSongs() {
-        if (!config.wasInitialPlaylistFilled) {
-            fillInitialPlaylist()
-            config.wasInitialPlaylistFilled = true
+        if (config.currentPlaylist == DBHelper.INITIAL_PLAYLIST_ID) {
+            getAllDeviceSongs()
         }
 
         mSongs = dbHelper.getSongs()

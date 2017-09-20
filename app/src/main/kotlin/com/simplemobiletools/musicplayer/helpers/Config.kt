@@ -20,10 +20,6 @@ class Config(context: Context) : BaseConfig(context) {
         get() = prefs.getInt(EQUALIZER, 0)
         set(equalizer) = prefs.edit().putInt(EQUALIZER, equalizer).apply()
 
-    var wasInitialPlaylistFilled: Boolean
-        get() = prefs.getBoolean(WAS_INITIAL_PLAYLIST_FILLED, false)
-        set(wasInitialPlaylistFilled) = prefs.edit().putBoolean(WAS_INITIAL_PLAYLIST_FILLED, wasInitialPlaylistFilled).apply()
-
     var currentPlaylist: Int
         get() = prefs.getInt(CURRENT_PLAYLIST, DBHelper.INITIAL_PLAYLIST_ID)
         set(currentPlaylist) = prefs.edit().putInt(CURRENT_PLAYLIST, currentPlaylist).apply()
@@ -31,4 +27,15 @@ class Config(context: Context) : BaseConfig(context) {
     var repeatSong: Boolean
         get() = prefs.getBoolean(REPEAT_SONG, false)
         set(repeat) = prefs.edit().putBoolean(REPEAT_SONG, repeat).apply()
+
+    // initial playlist tries to load all songs from the device, store unwanted song paths here
+    var ignoredPaths: Set<String>
+        get() = prefs.getStringSet(IGNORED_PATHS, HashSet<String>())
+        set(ignoredPaths) = prefs.edit().putStringSet(IGNORED_PATHS, ignoredPaths).apply()
+
+    fun addIgnoredPaths(paths: ArrayList<String>) {
+        val currIgnoredPaths = HashSet<String>(ignoredPaths)
+        currIgnoredPaths.addAll(paths)
+        ignoredPaths = currIgnoredPaths
+    }
 }

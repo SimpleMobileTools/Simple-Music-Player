@@ -189,6 +189,7 @@ class SongAdapter(val activity: SimpleActivity, var songs: ArrayList<Song>, val 
             }
         }
 
+        activity.config.addIgnoredPaths(paths)
         songs.removeAll(removeSongs)
         activity.dbHelper.removeSongsFromPlaylist(paths)
         actMode?.finish()
