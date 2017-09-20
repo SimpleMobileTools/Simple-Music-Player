@@ -50,9 +50,8 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         private var mIncomingCallReceiver: IncomingCallReceiver? = null
         private var mSongs: ArrayList<Song>? = null
         private var mPlayer: MediaPlayer? = null
-        private var mPlayedSongIndexes: ArrayList<Int>? = null
+        private var mPlayedSongIndexes = ArrayList<Int>()
         private var mBus: Bus? = null
-        private var mConfig: Config? = null
         private var mProgressHandler: Handler? = null
         private var mPreviousIntent: PendingIntent? = null
         private var mNextIntent: PendingIntent? = null
@@ -84,7 +83,6 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     }
 
     private fun initService() {
-        mConfig = applicationContext.config
         mSongs = ArrayList()
         mPlayedSongIndexes = ArrayList()
         mCurrSong = null
@@ -218,14 +216,14 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
         mSongs = dbHelper.getSongs()
 
-        Song.sorting = mConfig!!.sorting
+        Song.sorting = config.sorting
         mSongs?.sort()
     }
 
     private fun setupEqualizer() {
         mEqualizer = Equalizer(0, mPlayer!!.audioSessionId)
         mEqualizer!!.enabled = true
-        setPreset(mConfig!!.equalizer)
+        setPreset(config.equalizer)
     }
 
     private fun setPreset(id: Int) {
@@ -308,7 +306,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     }
 
     private fun getNewSongId(): Int {
-        return if (mConfig!!.isShuffleEnabled) {
+        return if (config.isShuffleEnabled) {
             val cnt = mSongs!!.size
             when (cnt) {
                 0 -> -1
@@ -438,7 +436,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         if (!config.autoplay)
             return
 
-        if (mConfig!!.repeatSong) {
+        if (config.repeatSong) {
             restartSong()
         } else if (mPlayer!!.currentPosition > 0) {
             mPlayer!!.reset()
