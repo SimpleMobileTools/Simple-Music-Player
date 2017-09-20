@@ -19,7 +19,7 @@
     <string name="autoplay_disabled">Autoplay disabled</string>
 
     <string name="previous">Voriger Titel</string>
-    <string name="playpause">Play Pause</string>
+    <string name="playpause">Play / Pause</string>
     <string name="next">Nächter Titel</string>
 
     <!-- Playlists -->
@@ -59,6 +59,6 @@
 
     <!--
         Haven't found some strings? There's more at
-        https://github.com/SimpleMobileTools/Simple-Commons/tree/master/library/src/main/res
+        https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
     -->
 </resources>

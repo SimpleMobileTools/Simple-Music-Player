@@ -1,0 +1,64 @@
+<resources>
+    <string name="app_name">Jednoduchý hudobný prehrávač</string>
+    <string name="app_launcher_name">Hudobný prehrávač</string>
+    <string name="playlist_empty">Vás zoznam skladieb je prázdny</string>
+    <string name="rename_song">Premenovať pesničku</string>
+    <string name="rename_song_error">Počas premenúvania došlo k chybe</string>
+    <string name="rename_song_empty">Prosím vyplňte všetky polia</string>
+    <string name="enable_song_repetition">Opakovať súčasnú pesničku</string>
+    <string name="disable_song_repetition">Prestať s opakovaním súčasnej pesničky</string>
+    <string name="song_repetition_enabled">Opakovanie súčasnej pesničky zapnuté</string>
+    <string name="song_repetition_disabled">Opakovanie súčasnej pesničky vypnuté</string>
+    <string name="enable_shuffle">Zapnúť miešanie pesničiek</string>
+    <string name="disable_shuffle">Vypnúť miešanie pesničiek</string>
+    <string name="shuffle_enabled">Miešanie zapnuté</string>
+    <string name="shuffle_disabled">Miešanie vypnuté</string>
+    <string name="enable_autoplay">Zapnúť automatické prehrávanie</string>
+    <string name="disable_autoplay">Vypnúť automatické prehrávanie</string>
+    <string name="autoplay_enabled">Automatické prehrávanie zapnuté</string>
+    <string name="autoplay_disabled">Automatické prehrávanie vypnuté</string>
+
+    <string name="previous">Predošlá</string>
+    <string name="playpause">Hrať / Pauznúť</string>
+    <string name="next">Nasledujúca</string>
+
+    <!-- Playlists -->
+    <string name="add_file_to_playlist">Pridať súbor do zoznamu skladieb</string>
+    <string name="add_folder_to_playlist">Pridať priečinok do zoznamu skladieb</string>
+    <string name="manage_playlists">Spravovať zoznamy skladieb</string>
+    <string name="playlists">Zoznamy skladieb</string>
+    <string name="create_playlist">Vytvoriť zoznam skladieb</string>
+    <string name="rename_playlist">Premenovať zoznam skladieb</string>
+    <string name="playlist_name_exists">Zoznam skladieb s týmto názvom už existuje</string>
+    <string name="remove_playlist">Odstrániť zoznam skladieb</string>
+    <string name="remove_playlist_description">Toto iba odstráni vybrané zoznamy skladieb, nie samotné súbory.</string>
+    <string name="remove_playlist_description_placeholder">Toto iba odstráni zoznam skladieb \"%s\", nie samotné súbory..</string>
+    <string name="remove_from_playlist">Odstrániť zo zoznamu skladieb</string>
+    <string name="remove_from_playlist_description">Toto iba odstráni pesničky zo zoznamu skladieb \"%s\", samotné súbory nebudú vymazané.</string>
+    <string name="delete_the_files_too">Odstrániť aj súbory</string>
+    <string name="open_playlist">Otvoriť zoznam skladieb</string>
+    <string name="initial_playlist">Východzí zoznam skladieb</string>
+    <string name="initial_playlist_cannot_be_deleted">Východzí zoznam skladieb nemôže byť vymazaný</string>
+    <string name="empty_playlist">Súčasný zoznam skladieb je prázdny</string>
+
+    <!-- Settings -->
+    <string name="equalizer">Ekvalizér</string>
+
+    <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
+    <!-- Short description has to have less than 80 chars -->
+    <string name="app_short_description">Jednoduchý hudobný prehrávač s meniteľným widgetom na plochu.</string>
+    <string name="app_long_description">
+        Hudobný prehrávač jednoducho ovládateľný zo statovej lišty, widgetu na ploche, alebo hardvérovými tlačidlami na slúchadlách. Poskytuje rôzne možnosti zoradenia pesničiek, ako aj rôzne ekvalizéry.
+
+        Prístup ku Stavu Zariadenia je potrebný na pozastavenie prehrávania počas prichádzajúceho hovoru.
+
+        Neobsahuje žiadne reklamy a nepotrebné oprávnenia. Je opensource, poskytuje možnosť zmeny farieb.
+
+        Táto aplikácia je iba jednou zo skupiny aplikácií. Ostatné viete nájsť na http://www.simplemobiletools.com
+    </string>
+
+    <!--
+        Haven't found some strings? There's more at
+        https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
+    -->
+</resources>

@@ -19,7 +19,7 @@
     <string name="autoplay_disabled">Autoplay disabled</string>
 
     <string name="previous">Anterior</string>
-    <string name="playpause">Reproduzir/Pausa</string>
+    <string name="playpause">Reproduzir / Pausa</string>
     <string name="next">Seguinte</string>
 
     <!-- Playlists -->
@@ -59,6 +59,6 @@
 
     <!--
         Não encontrou todas as cadeias a traduzir? Existem mais algumas em:
-        https://github.com/SimpleMobileTools/Simple-Commons/tree/master/library/src/main/res
+        https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
     -->
 </resources>
