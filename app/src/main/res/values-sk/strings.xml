@@ -40,6 +40,7 @@
     <string name="initial_playlist">Východzí zoznam skladieb</string>
     <string name="initial_playlist_cannot_be_deleted">Východzí zoznam skladieb nemôže byť vymazaný</string>
     <string name="empty_playlist">Súčasný zoznam skladieb je prázdny</string>
+    <string name="fetching_songs">Pridávajú sa pesničky…</string>
 
     <!-- Settings -->
     <string name="equalizer">Ekvalizér</string>

@@ -40,6 +40,7 @@
     <string name="initial_playlist">Początkowa playlista</string>
     <string name="initial_playlist_cannot_be_deleted">Początkowa playlista nie może zostać usunięta</string>
     <string name="empty_playlist">Obecna playlista jest pusta</string>
+    <string name="fetching_songs">Fetching songs…</string>
 
     <!-- Settings -->
     <string name="equalizer">Korektor</string>

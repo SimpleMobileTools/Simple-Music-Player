@@ -40,6 +40,7 @@
     <string name="initial_playlist">Lista de reprodução inicial</string>
     <string name="initial_playlist_cannot_be_deleted">Não pode apagar a lista de reprodução inicial</string>
     <string name="empty_playlist">A lista de reprodução está vazia</string>
+    <string name="fetching_songs">Fetching songs…</string>
 
     <!-- Settings -->
     <string name="equalizer">Equalizador</string>

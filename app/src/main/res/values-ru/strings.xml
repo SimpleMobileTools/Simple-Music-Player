@@ -40,6 +40,7 @@
     <string name="initial_playlist">Начальный плейлист</string>
     <string name="initial_playlist_cannot_be_deleted">Начальный плейлист не может быть удалён</string>
     <string name="empty_playlist">Текущий плейлист пуст</string>
+    <string name="fetching_songs">Fetching songs…</string>
 
     <!-- Settings -->
     <string name="equalizer">Эквалайзер</string>

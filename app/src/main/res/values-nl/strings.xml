@@ -40,6 +40,7 @@
     <string name="initial_playlist">Aanvankelijke afspeellijst</string>
     <string name="initial_playlist_cannot_be_deleted">De aanvankelijke afspeellijst kan niet worden verwijderd</string>
     <string name="empty_playlist">Huidige afspeellijst is leeg</string>
+    <string name="fetching_songs">Fetching songs…</string>
 
     <!-- Settings -->
     <string name="equalizer">Equalizer</string>

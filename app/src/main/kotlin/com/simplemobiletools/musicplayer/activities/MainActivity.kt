@@ -199,11 +199,26 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
     private fun addFolderToPlaylist() {
         val initialPath = if (mSongs.isEmpty()) Environment.getExternalStorageDirectory().toString() else mSongs[0].path
         FilePickerDialog(this, initialPath, pickFile = false) {
-            val files = File(it).listFiles() ?: return@FilePickerDialog
-            val paths = files.mapTo(ArrayList<String>()) { it.absolutePath }
-            dbHelper.addSongsToPlaylist(paths)
-            sendIntent(REFRESH_LIST)
+            toast(R.string.fetching_songs)
+            Thread({
+                val songs = getFolderSongs(File(it))
+                dbHelper.addSongsToPlaylist(songs)
+                sendIntent(REFRESH_LIST)
+            }).start()
         }
+    }
+
+    private fun getFolderSongs(folder: File): ArrayList<String> {
+        val songFiles = ArrayList<String>()
+        val files = folder.listFiles() ?: return songFiles
+        files.forEach {
+            if (it.isDirectory) {
+                songFiles.addAll(getFolderSongs(it))
+            } else if (it.isAudioFast()) {
+                songFiles.add(it.absolutePath)
+            }
+        }
+        return songFiles
     }
 
     private fun addFileToPlaylist() {

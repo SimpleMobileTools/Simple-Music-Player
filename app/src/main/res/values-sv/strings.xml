@@ -40,6 +40,7 @@
     <string name="initial_playlist">Förinställd spellista</string>
     <string name="initial_playlist_cannot_be_deleted">Den förinställda spellistan kan inte tas bort</string>
     <string name="empty_playlist">Den aktuella spellistan är tom</string>
+    <string name="fetching_songs">Fetching songs…</string>
 
     <!-- Settings -->
     <string name="equalizer">Equalizer</string>
