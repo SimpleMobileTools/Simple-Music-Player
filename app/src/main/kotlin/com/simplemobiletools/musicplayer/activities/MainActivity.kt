@@ -224,8 +224,12 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
     private fun addFileToPlaylist() {
         val initialPath = if (mSongs.isEmpty()) Environment.getExternalStorageDirectory().toString() else mSongs[0].path
         FilePickerDialog(this, initialPath) {
-            dbHelper.addSongToPlaylist(it)
-            sendIntent(REFRESH_LIST)
+            if (it.isAudioFast()) {
+                dbHelper.addSongToPlaylist(it)
+                sendIntent(REFRESH_LIST)
+            } else {
+                toast(R.string.invalid_file_format)
+            }
         }
     }
 
