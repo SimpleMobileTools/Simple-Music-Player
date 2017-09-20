@@ -69,6 +69,7 @@
             android:exported="false">
             <intent-filter>
                 <action android:name="com.simplemobiletools.musicplayer.action.INIT"/>
+                <action android:name="com.simplemobiletools.musicplayer.action.SETUP"/>
                 <action android:name="com.simplemobiletools.musicplayer.action.FINISH"/>
                 <action android:name="com.simplemobiletools.musicplayer.action.PREVIOUS"/>
                 <action android:name="com.simplemobiletools.musicplayer.action.PAUSE"/>

@@ -20,5 +20,5 @@ fun Context.playlistChanged(newID: Int) {
     config.currentPlaylist = newID
     sendIntent(PAUSE)
     sendIntent(REFRESH_LIST)
-    sendIntent(NEXT)
+    sendIntent(SETUP)
 }

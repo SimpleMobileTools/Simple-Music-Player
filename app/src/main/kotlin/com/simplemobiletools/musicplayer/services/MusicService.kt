@@ -58,7 +58,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         private var mPlayPauseIntent: PendingIntent? = null
 
         private var mWasPlayingAtCall = false
-        private var mPauseOnPrepared = false
+        private var mPlayOnPrepare = true
 
         fun getIsPlaying() = mPlayer?.isPlaying == true
     }
@@ -117,20 +117,30 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
                     mBus!!.post(Events.SongChanged(mCurrSong))
                     songStateChanged(getIsPlaying())
                     if (mCurrSong == null) {
-                        mPauseOnPrepared = true
-                        resumeSong()
+                        setupSong()
+                    } else {
+                        val secs = mPlayer!!.currentPosition / 1000
+                        mBus!!.post(Events.ProgressUpdated(secs))
                     }
                 }
-                PREVIOUS -> playPreviousSong()
+                SETUP -> setupSong()
+                PREVIOUS -> {
+                    mPlayOnPrepare = true
+                    playPreviousSong()
+                }
                 PAUSE -> pauseSong()
                 PLAYPAUSE -> {
+                    mPlayOnPrepare = true
                     if (getIsPlaying()) {
                         pauseSong()
                     } else {
                         resumeSong()
                     }
                 }
-                NEXT -> playNextSong()
+                NEXT -> {
+                    mPlayOnPrepare = true
+                    setupNextSong()
+                }
                 PLAYPOS -> playSong(intent)
                 CALL_START -> incomingCallStart()
                 CALL_STOP -> incomingCallStop()
@@ -165,6 +175,11 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         }
 
         return START_NOT_STICKY
+    }
+
+    private fun setupSong() {
+        mPlayOnPrepare = false
+        setupNextSong()
     }
 
     private fun initMediaPlayerIfNeeded() {
@@ -314,18 +329,18 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
                 else -> {
                     val random = Random()
                     var newSongIndex = random.nextInt(cnt)
-                    while (mPlayedSongIndexes!!.contains(newSongIndex)) {
+                    while (mPlayedSongIndexes.contains(newSongIndex)) {
                         newSongIndex = random.nextInt(cnt)
                     }
                     newSongIndex
                 }
             }
         } else {
-            if (mPlayedSongIndexes!!.isEmpty()) {
+            if (mPlayedSongIndexes.isEmpty()) {
                 return 0
             }
 
-            val lastIndex = mPlayedSongIndexes!![mPlayedSongIndexes!!.size - 1]
+            val lastIndex = mPlayedSongIndexes[mPlayedSongIndexes.size - 1]
             (lastIndex + 1) % Math.max(mSongs!!.size, 1)
         }
     }
@@ -340,9 +355,9 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
         // play the previous song if we are less than 5 secs into the song, else restart
         // remove the latest song from the list
-        if (mPlayedSongIndexes!!.size > 1 && mPlayer!!.currentPosition < 5000) {
-            mPlayedSongIndexes!!.removeAt(mPlayedSongIndexes!!.size - 1)
-            setSong(mPlayedSongIndexes!![mPlayedSongIndexes!!.size - 1], false)
+        if (mPlayedSongIndexes.size > 1 && mPlayer!!.currentPosition < 5000) {
+            mPlayedSongIndexes.removeAt(mPlayedSongIndexes.size - 1)
+            setSong(mPlayedSongIndexes[mPlayedSongIndexes.size - 1], false)
         } else {
             restartSong()
         }
@@ -367,7 +382,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         initMediaPlayerIfNeeded()
 
         if (mCurrSong == null) {
-            playNextSong()
+            setupNextSong()
         } else {
             mPlayer!!.start()
         }
@@ -375,13 +390,13 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         songStateChanged(true)
     }
 
-    private fun playNextSong() {
+    private fun setupNextSong() {
         setSong(getNewSongId(), true)
     }
 
     private fun restartSong() {
-        if (mPlayedSongIndexes!!.isNotEmpty())
-            setSong(mPlayedSongIndexes!![mPlayedSongIndexes!!.size - 1], false)
+        if (mPlayedSongIndexes.isNotEmpty())
+            setSong(mPlayedSongIndexes[mPlayedSongIndexes.size - 1], false)
     }
 
     private fun playSong(intent: Intent) {
@@ -395,14 +410,13 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             return
         }
 
-        val wasPlaying = getIsPlaying()
         initMediaPlayerIfNeeded()
 
         mPlayer!!.reset()
         if (addNewSongToHistory) {
-            mPlayedSongIndexes!!.add(songIndex)
-            if (mPlayedSongIndexes!!.size >= mSongs!!.size) {
-                mPlayedSongIndexes!!.clear()
+            mPlayedSongIndexes.add(songIndex)
+            if (mPlayedSongIndexes.size >= mSongs!!.size) {
+                mPlayedSongIndexes.clear()
             }
         }
 
@@ -414,10 +428,6 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             mPlayer!!.prepareAsync()
 
             mBus!!.post(Events.SongChanged(mCurrSong))
-
-            if (!wasPlaying) {
-                songStateChanged(true)
-            }
         } catch (e: IOException) {
             Log.e(TAG, "setSong IOException $e")
         }
@@ -440,7 +450,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             restartSong()
         } else if (mPlayer!!.currentPosition > 0) {
             mPlayer!!.reset()
-            playNextSong()
+            setupNextSong()
         }
     }
 
@@ -450,12 +460,11 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     }
 
     override fun onPrepared(mp: MediaPlayer) {
-        mp.start()
-        setupNotification()
-        if (mPauseOnPrepared) {
-            pauseSong()
+        if (mPlayOnPrepare) {
+            mp.start()
         }
-        mPauseOnPrepared = false
+        songStateChanged(getIsPlaying())
+        setupNotification()
     }
 
     override fun onDestroy() {
