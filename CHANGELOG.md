@@ -1,6 +1,13 @@
 Changelog
 ==========
 
+Version 2.2.2 *(2017-09-20)*
+----------------------------
+
+ * Added an Autoplay toggle
+ * Made "Add folder to playlist" recursive
+ * Some UI changes and misc improvements
+
 Version 2.2.1 *(2017-06-25)*
 ----------------------------
 
