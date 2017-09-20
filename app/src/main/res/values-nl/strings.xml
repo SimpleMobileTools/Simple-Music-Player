@@ -13,6 +13,10 @@
     <string name="disable_shuffle">Shuffle uitschakelen</string>
     <string name="shuffle_enabled">Shuffle ingeschakeld</string>
     <string name="shuffle_disabled">Shuffle uitgeschakeld</string>
+    <string name="enable_autoplay">Enable autoplay</string>
+    <string name="disable_autoplay">Disable autoplay</string>
+    <string name="autoplay_enabled">Autoplay enabled</string>
+    <string name="autoplay_disabled">Autoplay disabled</string>
 
     <string name="previous">Voorgaand</string>
     <string name="playpause">Speel muziek</string>

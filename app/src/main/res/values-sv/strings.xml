@@ -13,6 +13,10 @@
     <string name="disable_shuffle">Inaktivera blanda</string>
     <string name="shuffle_enabled">Blanda är nu aktiverad</string>
     <string name="shuffle_disabled">Blanda är nu inaktiverad</string>
+    <string name="enable_autoplay">Enable autoplay</string>
+    <string name="disable_autoplay">Disable autoplay</string>
+    <string name="autoplay_enabled">Autoplay enabled</string>
+    <string name="autoplay_disabled">Autoplay disabled</string>
 
     <string name="previous">Föregående</string>
     <string name="playpause">Spela Pausa</string>

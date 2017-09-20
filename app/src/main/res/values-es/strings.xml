@@ -13,6 +13,10 @@
     <string name="disable_shuffle">Desactivar aleatorio</string>
     <string name="shuffle_enabled">Reproducción aleatoria activada</string>
     <string name="shuffle_disabled">Reproducción aleatoria desactivada</string>
+    <string name="enable_autoplay">Enable autoplay</string>
+    <string name="disable_autoplay">Disable autoplay</string>
+    <string name="autoplay_enabled">Autoplay enabled</string>
+    <string name="autoplay_disabled">Autoplay disabled</string>
 
     <string name="previous">Anterior</string>
     <string name="playpause">Reproducir Pausar</string>
