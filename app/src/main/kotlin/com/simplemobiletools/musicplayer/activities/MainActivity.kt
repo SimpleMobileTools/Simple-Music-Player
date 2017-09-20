@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.PorterDuff
+import android.graphics.PorterDuffColorFilter
 import android.media.AudioManager
 import android.os.Bundle
 import android.os.Environment
@@ -77,6 +78,7 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
         setupIconColors()
         markCurrentSong()
         updateTextColors(main_holder)
+        songs_playlist_empty_add_folder.background.colorFilter = PorterDuffColorFilter(config.textColor, PorterDuff.Mode.SRC_IN)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
