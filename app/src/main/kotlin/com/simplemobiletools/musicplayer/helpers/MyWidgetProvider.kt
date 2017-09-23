@@ -10,6 +10,7 @@ import android.graphics.Bitmap
 import android.os.Bundle
 import android.widget.RemoteViews
 import com.simplemobiletools.commons.extensions.getColoredIcon
+import com.simplemobiletools.commons.extensions.setBackgroundColor
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.SplashActivity
 import com.simplemobiletools.musicplayer.extensions.config
@@ -141,9 +142,9 @@ class MyWidgetProvider : AppWidgetProvider() {
         var bmp = res.getColoredIcon(widgetTextColor, R.drawable.ic_previous)
 
         mRemoteViews!!.apply {
-            setInt(R.id.widget_holder, "setBackgroundColor", widgetBgColor)
-            setInt(R.id.song_title, "setTextColor", widgetTextColor)
-            setInt(R.id.song_artist, "setTextColor", widgetTextColor)
+            setBackgroundColor(R.id.widget_holder, widgetBgColor)
+            setTextColor(R.id.song_title, widgetTextColor)
+            setTextColor(R.id.song_artist, widgetTextColor)
 
             setImageViewBitmap(R.id.previous_btn, bmp)
 
