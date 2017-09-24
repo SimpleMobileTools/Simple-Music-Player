@@ -1,0 +1,11 @@
+<resources>
+
+    <!-- Release notes -->
+    <string name="release_28">Added playlists and the ability to include files/folders</string>
+    <string name="release_27">Allow picking colors by hex codes</string>
+    <string name="release_25">
+        Added more color customization options\n
+        Your settings have been cleared, please reset them
+    </string>
+
+</resources>
