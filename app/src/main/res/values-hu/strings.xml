@@ -1,0 +1,65 @@
+<resources>
+    <string name="app_name">Simple Music Player</string>
+    <string name="app_launcher_name">Zenelejátszó</string>
+    <string name="playlist_empty">A lejátszólista üres</string>
+    <string name="rename_song">Szám átnevezése</string>
+    <string name="rename_song_error">Hiba történt az átnevezés során</string>
+    <string name="rename_song_empty">Töltse ki az összes mezőt</string>
+    <string name="enable_song_repetition">Jelenlegi szám ismétlése</string>
+    <string name="disable_song_repetition">Jelenlegi szám ismétlésének befejezése</string>
+    <string name="song_repetition_enabled">Jelenlegi szám ismétlése engedélyezve</string>
+    <string name="song_repetition_disabled">Jelenlegi szám ismétlése letiltva</string>
+    <string name="enable_shuffle">Véletlenszerű lejátszás engedélyezése</string>
+    <string name="disable_shuffle">Véletlenszerű lejátszás letitása</string>
+    <string name="shuffle_enabled">Véletlenszerű lejátszás engedélyezve</string>
+    <string name="shuffle_disabled">Véletlenszerű lejátszás letiltva</string>
+    <string name="enable_autoplay">Automatikus lejátszás engedélyezése</string>
+    <string name="disable_autoplay">Automatikus lejátszás letiltása</string>
+    <string name="autoplay_enabled">Automatikus lejátszás engedélyezve</string>
+    <string name="autoplay_disabled">Automatikus lejátszás letiltva</string>
+
+    <string name="previous">Előzp</string>
+    <string name="playpause">Lejátszás/szüneteltetés</string>
+    <string name="next">Következ</string>
+
+    <!-- Playlists -->
+    <string name="add_file_to_playlist">Fájl hozzáadása a lejátszólistához</string>
+    <string name="add_folder_to_playlist">Mappa hozzáadása a lejátszólistához</string>
+    <string name="manage_playlists">Lejátszólisták kezelése</string>
+    <string name="playlists">Lejátszólisták</string>
+    <string name="create_playlist">Lejátszólista létrehozása</string>
+    <string name="rename_playlist">Lejátszólista átnevezése</string>
+    <string name="playlist_name_exists">Már létezik lejátszólista ezzel a névvel</string>
+    <string name="remove_playlist">Lejátszólista eltávolítása</string>
+    <string name="remove_playlist_description">Ez csak a kiválasztott lejátszólistát távolítja el, nem magukat a fájlokat.</string>
+    <string name="remove_playlist_description_placeholder">Ez csak a(z) „%s” lejátszólistát törli, nem magukat a fájlokat.</string>
+    <string name="remove_from_playlist">Eltávolítás a lejátszólistából</string>
+    <string name="remove_from_playlist_description">Ez csak az elemeket törli ki a(z) „%s” lejátszólistából, nem magukat a fájlokat.</string>
+    <string name="delete_the_files_too">A fájlok is kerüljenek törlésre</string>
+    <string name="open_playlist">Lejátszólista megnyitása</string>
+    <string name="initial_playlist">Kezdeti lejátszólista</string>
+    <string name="initial_playlist_cannot_be_deleted">A kezdeti lejátszólista nem törölhet</string>
+    <string name="empty_playlist">A jelenlegi lejátszólista üres</string>
+    <string name="fetching_songs">Számok lekérése…</string>
+
+    <!-- Settings -->
+    <string name="equalizer">Hangszínszabályzó</string>
+
+    <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
+    <!-- Short description has to have less than 80 chars -->
+    <string name="app_short_description">Egy letisztult zenelejátszó, testreszabható widgettel.</string>
+    <string name="app_long_description">
+        Az állapotsorról, kezdőképernyő widgetről vagy a fejhallgató hardveres gombjaival könnyen vezérelhető zenelejátszó. Rendezheti a számait cím vagy előadó szerint, és módosíthatja a hangszínszabályzót. Egyelőre még nem támogatja az előadó vagy album szerinti szűrést. A telefonállapot engedély azért szükséges, hogy szüneteltetni lehessen a lejátszást, ha hívás érkezik.
+
+        Egy testreszabható widgetet tartalmaz, amelynek a szövegszínét, átlátszóságát, és háttérszínét lehet állítani.
+
+        Nem tartalmaz reklámokat, és nem kér szükségtelen engedélyeket. Teljesen nyílt forráskódú, és testreszabhatóak a színei.
+
+        Ez az app egy nagyobb appsorozat része. A többit itt megtalálja: http://www.simplemobiletools.com
+    </string>
+
+    <!--
+        Haven't found some strings? There's more at
+        https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
+    -->
+</resources>
