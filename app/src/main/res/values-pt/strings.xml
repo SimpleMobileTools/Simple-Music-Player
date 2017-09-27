@@ -13,10 +13,10 @@
     <string name="disable_shuffle">Desativar modo aleatório</string>
     <string name="shuffle_enabled">Modo aleatório ativado</string>
     <string name="shuffle_disabled">Modo aleatório desativado</string>
-    <string name="enable_autoplay">Enable autoplay</string>
-    <string name="disable_autoplay">Disable autoplay</string>
-    <string name="autoplay_enabled">Autoplay enabled</string>
-    <string name="autoplay_disabled">Autoplay disabled</string>
+    <string name="enable_autoplay">Ativar reprodução automática</string>
+    <string name="disable_autoplay">Desativar reprodução automática</string>
+    <string name="autoplay_enabled">Reprodução automática ativada</string>
+    <string name="autoplay_disabled">Reprodução automática desativada</string>
 
     <string name="previous">Anterior</string>
     <string name="playpause">Reproduzir / Pausa</string>
@@ -40,7 +40,7 @@
     <string name="initial_playlist">Lista de reprodução inicial</string>
     <string name="initial_playlist_cannot_be_deleted">Não pode apagar a lista de reprodução inicial</string>
     <string name="empty_playlist">A lista de reprodução está vazia</string>
-    <string name="fetching_songs">Fetching songs…</string>
+    <string name="fetching_songs">A obter músicas…</string>
 
     <!-- Settings -->
     <string name="equalizer">Equalizador</string>
