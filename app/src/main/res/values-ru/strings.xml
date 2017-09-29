@@ -13,10 +13,10 @@
     <string name="disable_shuffle">Играть подряд</string>
     <string name="shuffle_enabled">Воспроизведение в случайном порядке включено</string>
     <string name="shuffle_disabled">Воспроизведение в случайном порядке выключено</string>
-    <string name="enable_autoplay">Enable autoplay</string>
-    <string name="disable_autoplay">Disable autoplay</string>
-    <string name="autoplay_enabled">Autoplay enabled</string>
-    <string name="autoplay_disabled">Autoplay disabled</string>
+    <string name="enable_autoplay">Играть автоматически</string>
+    <string name="disable_autoplay">Играть вручную</string>
+    <string name="autoplay_enabled">Автоматическое воспроизведение включено</string>
+    <string name="autoplay_disabled">Автоматическое воспроизведение выключено</string>
 
     <string name="previous">Предыдущая</string>
     <string name="playpause">Воспроизведение / Пауза</string>
@@ -40,7 +40,7 @@
     <string name="initial_playlist">Начальный плейлист</string>
     <string name="initial_playlist_cannot_be_deleted">Начальный плейлист не может быть удалён</string>
     <string name="empty_playlist">Текущий плейлист пуст</string>
-    <string name="fetching_songs">Fetching songs…</string>
+    <string name="fetching_songs">Загрузка композиций…</string>
 
     <!-- Settings -->
     <string name="equalizer">Эквалайзер</string>
