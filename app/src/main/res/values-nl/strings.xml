@@ -1,61 +1,61 @@
 <resources>
     <string name="app_name">Eenvoudige muziekspeler</string>
-    <string name="app_launcher_name">Muziekspeler</string>
-    <string name="playlist_empty">Je afspeellijst is leeg</string>
-    <string name="rename_song">Hernoem nummer</string>
-    <string name="rename_song_error">Een hernoemen opgetreden</string>
-    <string name="rename_song_empty">Gelieve alle velden in te vullen</string>
-    <string name="enable_song_repetition">Herhaal de huidige nummers</string>
-    <string name="disable_song_repetition">Stop herhaling</string>
-    <string name="song_repetition_enabled">Inschakelen huidige nummer herhaling</string>
-    <string name="song_repetition_disabled">Schakel huidige nummer herhaling</string>
+    <string name="app_launcher_name">Muziek</string>
+    <string name="playlist_empty">Afspeellijst is leeg</string>
+    <string name="rename_song">Nummer hernoemen</string>
+    <string name="rename_song_error">Naam kon niet worden gewijzigd</string>
+    <string name="rename_song_empty">Vul alle velden in</string>
+    <string name="enable_song_repetition">Nummer herhalen</string>
+    <string name="disable_song_repetition">Geen herhaling</string>
+    <string name="song_repetition_enabled">Nummer wordt herhaald</string>
+    <string name="song_repetition_disabled">Geen herhaling</string>
     <string name="enable_shuffle">Shuffle inschakelen</string>
     <string name="disable_shuffle">Shuffle uitschakelen</string>
     <string name="shuffle_enabled">Shuffle ingeschakeld</string>
     <string name="shuffle_disabled">Shuffle uitgeschakeld</string>
-    <string name="enable_autoplay">Enable autoplay</string>
-    <string name="disable_autoplay">Disable autoplay</string>
-    <string name="autoplay_enabled">Autoplay enabled</string>
-    <string name="autoplay_disabled">Autoplay disabled</string>
+    <string name="enable_autoplay">Autoplay inschakelen</string>
+    <string name="disable_autoplay">Autoplay uitschakelen</string>
+    <string name="autoplay_enabled">Autoplay ingeschakeld</string>
+    <string name="autoplay_disabled">Autoplay uitgeschakeld</string>
 
-    <string name="previous">Voorgaand</string>
-    <string name="playpause">Speel / Pauze</string>
+    <string name="previous">Vorige</string>
+    <string name="playpause">Afspelen / Pauzeren</string>
     <string name="next">Volgende</string>
 
     <!-- Playlists -->
-    <string name="add_file_to_playlist">Een bestand toevoegen aan afspeellijst</string>
-    <string name="add_folder_to_playlist">Een map toevoegen aan afspeellijst</string>
-    <string name="manage_playlists">Bewerk afspeellijsten</string>
+    <string name="add_file_to_playlist">Bestand toevoegen aan afspeellijst</string>
+    <string name="add_folder_to_playlist">Map toevoegen aan afspeellijst</string>
+    <string name="manage_playlists">Afspeellijsten beheren</string>
     <string name="playlists">Afspeellijsten</string>
     <string name="create_playlist">Afspeellijst maken</string>
-    <string name="rename_playlist">Hernoemen afspeellijst</string>
-    <string name="playlist_name_exists">Een afspeellijst met die naam bestaat al</string>
-    <string name="remove_playlist">Verwijderen afspeellijst</string>
-    <string name="remove_playlist_description">Dit zal alleen de geselecteerde afspeellijsten te verwijderen. Bestanden worden niet verwijderd.</string>
-    <string name="remove_playlist_description_placeholder">Dit zal \"%s\" te verwijderen. Bestanden worden niet verwijderd.</string>
-    <string name="remove_from_playlist">Verwijderen uit afspeellijst</string>
-    <string name="remove_from_playlist_description">dit zal alleen items uit \"%s\" te verwijderen. Bestanden worden niet verwijderd.</string>
-    <string name="delete_the_files_too">Verwijder de bestanden</string>
-    <string name="open_playlist">Geopend afspeellijst</string>
-    <string name="initial_playlist">Aanvankelijke afspeellijst</string>
-    <string name="initial_playlist_cannot_be_deleted">De aanvankelijke afspeellijst kan niet worden verwijderd</string>
+    <string name="rename_playlist">Afspeellijst hernoemen</string>
+    <string name="playlist_name_exists">Afspeellijst met deze naam bestaat reeds</string>
+    <string name="remove_playlist">Afspeellijst verwijderen</string>
+    <string name="remove_playlist_description">Dit zal alleen de geselecteerde afspeellijsten verwijderen, niet de bestanden.</string>
+    <string name="remove_playlist_description_placeholder">Dit zal afspeellijst \"%s\" verwijderen. Bestanden worden niet verwijderd.</string>
+    <string name="remove_from_playlist">Uit afspeellijst verwijderen</string>
+    <string name="remove_from_playlist_description">Dit zal alleen items uit afspeellijst \"%s\" verwijderen. Bestanden worden niet verwijderd.</string>
+    <string name="delete_the_files_too">Bestanden ook verwijderen</string>
+    <string name="open_playlist">Afspeellijst openen</string>
+    <string name="initial_playlist">Standaardlijst</string>
+    <string name="initial_playlist_cannot_be_deleted">De standaardlijst kan niet worden verwijderd</string>
     <string name="empty_playlist">Huidige afspeellijst is leeg</string>
-    <string name="fetching_songs">Fetching songs…</string>
+    <string name="fetching_songs">Nummers ophalen…</string>
 
     <!-- Settings -->
     <string name="equalizer">Equalizer</string>
 
     <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
     <!-- Short description has to have less than 80 chars -->
-    <string name="app_short_description">Een schone muziekspeler met een aanpasbare widget.</string>
+    <string name="app_short_description">Een eenvoudige muziekspeler met aan te passen widget.</string>
     <string name="app_long_description">
-        Een muziekspeler gemakkelijk te bedienen via de statusbalk, startscherm widget of door de hardware knoppen op de headset. Je kunt contact opnemen met de tracks van de titel of artiest, evenals verander de Equalizer. Heeft nog geen ondersteuning voor het filteren op artiest of album, stay tuned! The Phone Status toestemming nodig is voor het pauzeren van het nummer zodra er een oproep binnenkomt.
+        Een muziekspeler die gemakkelijk te bedienen is via statusbalk, widget of met de fysieke knoppen op de headset. Je kunt de nummers sorteren op titel of artiest en de Equalizer aanpassen. De permissie Telefoon is nodig om de muziek te pauzeren zodra er een oproep binnenkomt.
 
-        De widget is aan te passen. De tekst en de achtergrond kan worden bewerkt, met inbegrip van de alfa-waarde.
+        De achtergrond en kleuren van de widget zijn aan te passen.
 
-        De app bevat geen advertenties of onnodige machtigingen. Het is volledig open source, biedt aanpasbare kleuren.
+        Bevat geen advertenties of onnodige permissies. Volledig open-source. Kleuren van de app kunnen worden aangepast.
 
-       Je kunt meer Simple apps bij http://www.simplemobiletools.com vinden.
+        Deze app is onderdeel van een grotere verzameling. Vind de andere apps op http://www.simplemobiletools.com
     </string>
 
     <!--
