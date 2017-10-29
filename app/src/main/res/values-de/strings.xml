@@ -9,10 +9,10 @@
     <string name="disable_song_repetition">Aktuelles Lied nicht mehr wiederholen</string>
     <string name="song_repetition_enabled">Wiederholung des aktuellen Lieds aktiviert</string>
     <string name="song_repetition_disabled">Wiederholung des aktuellen Lieds deaktiviert</string>
-    <string name="enable_shuffle">Zufällige Widergabe aktivieren</string>
-    <string name="disable_shuffle">Zufällige Widergabe deaktivieren</string>
-    <string name="shuffle_enabled">Zufällige Widergabe aktiviert</string>
-    <string name="shuffle_disabled">Zufällige Widergabe deaktiviert</string>
+    <string name="enable_shuffle">Zufällige Wiedergabe aktivieren</string>
+    <string name="disable_shuffle">Zufällige Wiedergabe deaktivieren</string>
+    <string name="shuffle_enabled">Zufällige Wiedergabe aktiviert</string>
+    <string name="shuffle_disabled">Zufällige Wiedergabe deaktiviert</string>
     <string name="enable_autoplay">Automatisches Abspielen aktivieren</string>
     <string name="disable_autoplay">Automatisches Abspielen deaktivieren</string>
     <string name="autoplay_enabled">Automatisches Abspielen aktiviert</string>
