@@ -1,61 +1,61 @@
 <resources>
-    <string name="app_name">Schlichter Musikspieler</string>
-    <string name="app_launcher_name">Musikspieler</string>
+    <string name="app_name">Schlichter Musikplayer</string>
+    <string name="app_launcher_name">Musikplayer</string>
     <string name="playlist_empty">Deine Playlist ist leer</string>
     <string name="rename_song">Song umbenennen</string>
     <string name="rename_song_error">Während des Umbenennens ist ein Fehler aufgetreten</string>
     <string name="rename_song_empty">Fülle bitte alle Felder aus</string>
     <string name="enable_song_repetition">Aktuelles Lied wiederholen</string>
     <string name="disable_song_repetition">Aktuelles Lied nicht mehr wiederholen</string>
-    <string name="song_repetition_enabled">Current song repetition enabled</string>
-    <string name="song_repetition_disabled">Current song repetition disabled</string>
-    <string name="enable_shuffle">Enable shuffle</string>
-    <string name="disable_shuffle">Disable shuffle</string>
-    <string name="shuffle_enabled">Shuffle enabled</string>
-    <string name="shuffle_disabled">Shuffle disabled</string>
-    <string name="enable_autoplay">Enable autoplay</string>
-    <string name="disable_autoplay">Disable autoplay</string>
-    <string name="autoplay_enabled">Autoplay enabled</string>
-    <string name="autoplay_disabled">Autoplay disabled</string>
+    <string name="song_repetition_enabled">Wiederholung des aktuellen Lieds aktiviert</string>
+    <string name="song_repetition_disabled">Wiederholung des aktuellen Lieds deaktiviert</string>
+    <string name="enable_shuffle">Zufällige Wiedergabe aktivieren</string>
+    <string name="disable_shuffle">Zufällige Wiedergabe deaktivieren</string>
+    <string name="shuffle_enabled">Zufällige Wiedergabe aktiviert</string>
+    <string name="shuffle_disabled">Zufällige Wiedergabe deaktiviert</string>
+    <string name="enable_autoplay">Automatisches Abspielen aktivieren</string>
+    <string name="disable_autoplay">Automatisches Abspielen deaktivieren</string>
+    <string name="autoplay_enabled">Automatisches Abspielen aktiviert</string>
+    <string name="autoplay_disabled">Automatisches Abspielen deaktiviert</string>
 
     <string name="previous">Voriger Titel</string>
     <string name="playpause">Play / Pause</string>
-    <string name="next">Nächter Titel</string>
+    <string name="next">Nächster Titel</string>
 
     <!-- Playlists -->
-    <string name="add_file_to_playlist">Add file to playlist</string>
-    <string name="add_folder_to_playlist">Add folder to playlist</string>
-    <string name="manage_playlists">Manage playlists</string>
-    <string name="playlists">Playlists</string>
-    <string name="create_playlist">Create playlist</string>
-    <string name="rename_playlist">Rename playlist</string>
-    <string name="playlist_name_exists">A playlist with that name already exists</string>
-    <string name="remove_playlist">Remove playlist</string>
-    <string name="remove_playlist_description">This will only remove the selected playlists, not the actual files.</string>
-    <string name="remove_playlist_description_placeholder">This will only remove playlist \"%s\", not the actual files.</string>
-    <string name="remove_from_playlist">Remove from playlist</string>
-    <string name="remove_from_playlist_description">This will only remove the items from playlist \"%s\", the actual files will not be deleted.</string>
-    <string name="delete_the_files_too">Delete the files too</string>
-    <string name="open_playlist">Open playlist</string>
-    <string name="initial_playlist">Initial playlist</string>
-    <string name="initial_playlist_cannot_be_deleted">The initial playlist cannot be deleted</string>
-    <string name="empty_playlist">Current playlist is empty</string>
-    <string name="fetching_songs">Fetching songs…</string>
+    <string name="add_file_to_playlist">Datei zu Playlist hinzufügen</string>
+    <string name="add_folder_to_playlist">Ordner zu Playlist hinzufügen</string>
+    <string name="manage_playlists">Playlisten verwalten</string>
+    <string name="playlists">Playlisten</string>
+    <string name="create_playlist">Playlist erstellen</string>
+    <string name="rename_playlist">Playlist umbenennen</string>
+    <string name="playlist_name_exists">Es gibt bereits eine Playlist mit diesem Namen</string>
+    <string name="remove_playlist">Playlist löschen</string>
+    <string name="remove_playlist_description">Diese Aktion wird nur die Playlist löschen, nicht die eigentlichen Dateien.</string>
+    <string name="remove_playlist_description_placeholder">Diese Aktion wird nur die Playlist \"%s\" löschen, nicht die eigentlichen Dateien.</string>
+    <string name="remove_from_playlist">Playlist löschen</string>
+    <string name="remove_from_playlist_description">Diese Aktion wird nur alle Dateien der Playlist \"%s\" löschen, nicht die eigentlichen Dateien.</string>
+    <string name="delete_the_files_too">Dateien auch löschen</string>
+    <string name="open_playlist">Playlist öffnen</string>
+    <string name="initial_playlist">Ausgangsplaylist</string>
+    <string name="initial_playlist_cannot_be_deleted">Die Ausgangsplaylist kann nicht gelöscht werden</string>
+    <string name="empty_playlist">Die derzeitige Playlist ist leer</string>
+    <string name="fetching_songs">Rufe Lieder ab…</string>
 
     <!-- Settings -->
     <string name="equalizer">Equalizer</string>
 
     <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
     <!-- Short description has to have less than 80 chars -->
-    <string name="app_short_description">A clean music player with a customizable widget.</string>
+    <string name="app_short_description">Ein schlichter Musikplayer mit anpassbarem Widget.</string>
     <string name="app_long_description">
-        A music player easily controllable from the status bar, home screen widget or by hardware buttons on your headset. You can sort the tracks by the Title or Artist, as well as change the Equalizer. Does not yet support filtering by artist or album, stay tuned! The Phone Status permission is required for pausing the song once there is an incoming call.
+        Ein Musikplayer, der einfach über die Benachrichtigungsleiste, das Homescreen Widget oder Buttons an deinem Headset gesteuert werden kann. Du kannst alle Lieder nach Titel oder Künstler sortieren und den Equalizer anpassen. Das Filtern nach Künstler oder Album wird noch nicht unterstützt, bleib dran! Die Telefon-Berechtigung wird gebraucht, um die Wiedergabe bei eingehendem Anruf zu pausieren.
 
-        It contains a widget with customizable text color, alpha and the color of the background.
+        Die App beinhaltet ein Widget mit anpassbaren Textfarben, Transparenz und Hintergrundfarbe.
+        
+        Beinhaltet keine Werbung und benötigt keine unnötigen Berechtigungen. Die App ist komplett Open Source und bietet nach Wunsch anpassbare Farben.
 
-        Contains no ads or unnecessary permissions. It is fully opensource, provides customizable colors.
-
-        This app is just one piece of a bigger series of apps. You can find the rest of them at http://www.simplemobiletools.com
+        Diese App ist nur eine von vielen unserer Apps. Du kannst alle anderen hier finden: http://www.simplemobiletools.com
     </string>
 
     <!--
