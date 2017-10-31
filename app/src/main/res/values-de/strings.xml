@@ -2,7 +2,7 @@
     <string name="app_name">Schlichter Musikplayer</string>
     <string name="app_launcher_name">Musikplayer</string>
     <string name="playlist_empty">Deine Playlist ist leer</string>
-    <string name="rename_song">Song umbenennen</string>
+    <string name="rename_song">Lied umbenennen</string>
     <string name="rename_song_error">Während des Umbenennens ist ein Fehler aufgetreten</string>
     <string name="rename_song_empty">Fülle bitte alle Felder aus</string>
     <string name="enable_song_repetition">Aktuelles Lied wiederholen</string>
