@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Eenvoudige muziekspeler</string>
+    <string name="app_name">Eenvoudige Muziekspeler</string>
     <string name="app_launcher_name">Muziek</string>
     <string name="playlist_empty">Afspeellijst is leeg</string>
     <string name="rename_song">Nummer hernoemen</string>
