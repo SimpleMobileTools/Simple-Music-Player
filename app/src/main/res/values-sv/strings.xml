@@ -17,6 +17,7 @@
     <string name="disable_autoplay">Disable autoplay</string>
     <string name="autoplay_enabled">Autoplay enabled</string>
     <string name="autoplay_disabled">Autoplay disabled</string>
+    <string name="unknown">Unknown</string>
 
     <string name="previous">Föregående</string>
     <string name="playpause">Spela / Pausa</string>

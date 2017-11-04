@@ -17,6 +17,7 @@
     <string name="disable_autoplay">Automatikus lejátszás letiltása</string>
     <string name="autoplay_enabled">Automatikus lejátszás engedélyezve</string>
     <string name="autoplay_disabled">Automatikus lejátszás letiltva</string>
+    <string name="unknown">Unknown</string>
 
     <string name="previous">Előzp</string>
     <string name="playpause">Lejátszás/szüneteltetés</string>

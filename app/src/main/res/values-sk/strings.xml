@@ -17,6 +17,7 @@
     <string name="disable_autoplay">Vypnúť automatické prehrávanie</string>
     <string name="autoplay_enabled">Automatické prehrávanie zapnuté</string>
     <string name="autoplay_disabled">Automatické prehrávanie vypnuté</string>
+    <string name="unknown">Neznámy</string>
 
     <string name="previous">Predošlá</string>
     <string name="playpause">Hrať / Pauznúť</string>

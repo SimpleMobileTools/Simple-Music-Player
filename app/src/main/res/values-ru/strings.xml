@@ -17,6 +17,7 @@
     <string name="disable_autoplay">Играть вручную</string>
     <string name="autoplay_enabled">Автоматическое воспроизведение включено</string>
     <string name="autoplay_disabled">Автоматическое воспроизведение выключено</string>
+    <string name="unknown">Unknown</string>
 
     <string name="previous">Предыдущая</string>
     <string name="playpause">Воспроизведение / Пауза</string>

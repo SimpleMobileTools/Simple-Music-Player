@@ -17,6 +17,7 @@
     <string name="disable_autoplay">Automatisches Abspielen deaktivieren</string>
     <string name="autoplay_enabled">Automatisches Abspielen aktiviert</string>
     <string name="autoplay_disabled">Automatisches Abspielen deaktiviert</string>
+    <string name="unknown">Unknown</string>
 
     <string name="previous">Voriger Titel</string>
     <string name="playpause">Play / Pause</string>

@@ -17,6 +17,7 @@
     <string name="disable_autoplay">Autoplay uitschakelen</string>
     <string name="autoplay_enabled">Autoplay ingeschakeld</string>
     <string name="autoplay_disabled">Autoplay uitgeschakeld</string>
+    <string name="unknown">Unknown</string>
 
     <string name="previous">Vorige</string>
     <string name="playpause">Afspelen / Pauzeren</string>

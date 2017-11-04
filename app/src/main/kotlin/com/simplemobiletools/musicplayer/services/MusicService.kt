@@ -19,7 +19,10 @@ import android.support.v7.app.NotificationCompat
 import android.telephony.PhoneStateListener
 import android.telephony.TelephonyManager
 import android.util.Log
-import com.simplemobiletools.commons.extensions.*
+import com.simplemobiletools.commons.extensions.getIntValue
+import com.simplemobiletools.commons.extensions.getRealPathFromURI
+import com.simplemobiletools.commons.extensions.getStringValue
+import com.simplemobiletools.commons.extensions.hasPermission
 import com.simplemobiletools.commons.helpers.PERMISSION_WRITE_STORAGE
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.MainActivity
@@ -48,15 +51,17 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         var mEqualizer: Equalizer? = null
         private var mHeadsetPlugReceiver: HeadsetPlugReceiver? = null
         private var mIncomingCallReceiver: IncomingCallReceiver? = null
-        private var mSongs: ArrayList<Song>? = null
         private var mPlayer: MediaPlayer? = null
         private var mPlayedSongIndexes = ArrayList<Int>()
         private var mBus: Bus? = null
         private var mProgressHandler: Handler? = null
+        private var mSongs = ArrayList<Song>()
 
         private var mWasPlayingAtCall = false
         private var mPlayOnPrepare = true
         private var mIsThirdPartyIntent = false
+        private var intentUri: Uri? = null
+        private var isServiceInitialized = false
 
         fun getIsPlaying() = mPlayer?.isPlaying == true
     }
@@ -80,17 +85,15 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         }
     }
 
-    private fun initService(uri: Uri? = null) {
-        mSongs = ArrayList()
+    private fun initService() {
+        mSongs.clear()
         mPlayedSongIndexes = ArrayList()
         mCurrSong = null
-        if (mIsThirdPartyIntent && uri != null) {
-            val path = getRealPathFromURI(uri) ?: ""
+        if (mIsThirdPartyIntent && intentUri != null) {
+            val path = getRealPathFromURI(intentUri!!) ?: ""
             val song = dbHelper.getSongFromPath(path)
             if (song != null) {
-                mSongs!!.add(song)
-            } else {
-                toast(R.string.unknown_error_occurred)
+                mSongs.add(song)
             }
         } else {
             getSortedSongs()
@@ -100,6 +103,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         mWasPlayingAtCall = false
         initMediaPlayerIfNeeded()
         setupNotification()
+        isServiceInitialized = true
     }
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
@@ -110,15 +114,15 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         when (intent.action) {
             INIT -> {
                 mIsThirdPartyIntent = false
-                if (mSongs == null) {
+                if (!isServiceInitialized) {
                     initService()
                 }
                 initSongs()
             }
             INIT_PATH -> {
                 mIsThirdPartyIntent = true
-                initService(intent.data)
-                setupSong()
+                intentUri = intent.data
+                initService()
                 initSongs()
             }
             SETUP -> setupSong()
@@ -153,7 +157,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             }
             REFRESH_LIST -> {
                 getSortedSongs()
-                mBus!!.post(Events.PlaylistUpdated(mSongs!!))
+                mBus!!.post(Events.PlaylistUpdated(mSongs))
             }
             SET_PROGRESS -> {
                 if (mPlayer != null) {
@@ -175,20 +179,47 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     }
 
     private fun setupSong() {
-        mPlayOnPrepare = false
-        setupNextSong()
+        if (mIsThirdPartyIntent) {
+            initMediaPlayerIfNeeded()
+
+            try {
+                mPlayer!!.apply {
+                    reset()
+                    setDataSource(applicationContext, intentUri)
+                    setOnPreparedListener(null)
+                    prepare()
+                    start()
+                }
+
+                val unknown = getString(R.string.unknown)
+                val song = Song(1, unknown, unknown, unknown, mPlayer!!.duration / 1000)
+                mSongs.clear()
+                mSongs.add(song)
+                mCurrSong = song
+                updateUI()
+            } catch (e: IOException) {
+                Log.e(TAG, "setupSong IOException $e")
+            }
+        } else {
+            mPlayOnPrepare = false
+            setupNextSong()
+        }
     }
 
     private fun initSongs() {
-        mBus!!.post(Events.PlaylistUpdated(mSongs!!))
-        mBus!!.post(Events.SongChanged(mCurrSong))
-        songStateChanged(getIsPlaying())
+        updateUI()
         if (mCurrSong == null) {
             setupSong()
         } else {
             val secs = mPlayer!!.currentPosition / 1000
             mBus!!.post(Events.ProgressUpdated(secs))
         }
+    }
+
+    private fun updateUI() {
+        mBus!!.post(Events.PlaylistUpdated(mSongs))
+        mBus!!.post(Events.SongChanged(mCurrSong))
+        songStateChanged(getIsPlaying())
     }
 
     private fun initMediaPlayerIfNeeded() {
@@ -239,9 +270,8 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         }
 
         mSongs = dbHelper.getSongs()
-
         Song.sorting = config.sorting
-        mSongs?.sort()
+        mSongs.sort()
     }
 
     private fun setupEqualizer() {
@@ -331,7 +361,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
     private fun getNewSongId(): Int {
         return if (config.isShuffleEnabled) {
-            val cnt = mSongs!!.size
+            val cnt = mSongs.size
             when (cnt) {
                 0 -> -1
                 1 -> 0
@@ -350,12 +380,12 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             }
 
             val lastIndex = mPlayedSongIndexes[mPlayedSongIndexes.size - 1]
-            (lastIndex + 1) % Math.max(mSongs!!.size, 1)
+            (lastIndex + 1) % Math.max(mSongs.size, 1)
         }
     }
 
     private fun playPreviousSong() {
-        if (mSongs!!.isEmpty()) {
+        if (mSongs.isEmpty()) {
             handleEmptyPlaylist()
             return
         }
@@ -373,7 +403,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     }
 
     private fun pauseSong() {
-        if (mSongs!!.isEmpty())
+        if (mSongs.isEmpty())
             return
 
         initMediaPlayerIfNeeded()
@@ -383,7 +413,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     }
 
     private fun resumeSong() {
-        if (mSongs!!.isEmpty()) {
+        if (mSongs.isEmpty()) {
             handleEmptyPlaylist()
             return
         }
@@ -400,7 +430,11 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     }
 
     private fun setupNextSong() {
-        setSong(getNewSongId(), true)
+        if (mIsThirdPartyIntent) {
+            setupSong()
+        } else {
+            setSong(getNewSongId(), true)
+        }
     }
 
     private fun restartSong() {
@@ -409,13 +443,17 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     }
 
     private fun playSong(intent: Intent) {
-        mPlayOnPrepare = true
-        val pos = intent.getIntExtra(SONG_POS, 0)
-        setSong(pos, true)
+        if (mIsThirdPartyIntent) {
+            setupSong()
+        } else {
+            mPlayOnPrepare = true
+            val pos = intent.getIntExtra(SONG_POS, 0)
+            setSong(pos, true)
+        }
     }
 
     private fun setSong(songIndex: Int, addNewSongToHistory: Boolean) {
-        if (mSongs!!.isEmpty()) {
+        if (mSongs.isEmpty()) {
             handleEmptyPlaylist()
             return
         }
@@ -425,12 +463,12 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         mPlayer!!.reset()
         if (addNewSongToHistory) {
             mPlayedSongIndexes.add(songIndex)
-            if (mPlayedSongIndexes.size >= mSongs!!.size) {
+            if (mPlayedSongIndexes.size >= mSongs.size) {
                 mPlayedSongIndexes.clear()
             }
         }
 
-        mCurrSong = mSongs!![Math.min(songIndex, mSongs!!.size - 1)]
+        mCurrSong = mSongs[Math.min(songIndex, mSongs.size - 1)]
 
         try {
             val trackUri = ContentUris.withAppendedId(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, mCurrSong!!.id)
