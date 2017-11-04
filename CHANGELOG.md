@@ -1,6 +1,13 @@
 Changelog
 ==========
 
+Version 2.3.0 *(2017-11-04)*
+----------------------------
+
+ * Allow sharing files
+ * Try handling third party audio intents
+ * Many other smaller improvements
+
 Version 2.2.2 *(2017-09-20)*
 ----------------------------
 
