@@ -43,7 +43,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         private val TAG = MusicService::class.java.simpleName
         private val MIN_INITIAL_DURATION = 20
         private val PROGRESS_UPDATE_INTERVAL = 1000
-        private val NOTIFICATION_ID = 78
+        private val NOTIFICATION_ID = 78    // just a random number
 
         var mCurrSong: Song? = null
         var mEqualizer: Equalizer? = null
