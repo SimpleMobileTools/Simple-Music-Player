@@ -2,6 +2,7 @@ package com.simplemobiletools.musicplayer.adapters
 
 import android.content.Intent
 import android.graphics.PorterDuff
+import android.net.Uri
 import android.support.v7.view.ActionMode
 import android.support.v7.widget.RecyclerView
 import android.util.SparseArray
@@ -13,6 +14,8 @@ import com.simplemobiletools.commons.dialogs.ConfirmationDialog
 import com.simplemobiletools.commons.dialogs.PropertiesDialog
 import com.simplemobiletools.commons.extensions.beInvisibleIf
 import com.simplemobiletools.commons.extensions.deleteFiles
+import com.simplemobiletools.commons.extensions.shareUris
+import com.simplemobiletools.musicplayer.BuildConfig
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
 import com.simplemobiletools.musicplayer.dialogs.EditDialog
@@ -73,6 +76,7 @@ class SongAdapter(val activity: SimpleActivity, var songs: ArrayList<Song>, val 
             when (item.itemId) {
                 R.id.cab_properties -> showProperties()
                 R.id.cab_rename -> displayEditDialog()
+                R.id.cab_share -> shareItems()
                 R.id.cab_select_all -> selectAll()
                 R.id.cab_remove_from_playlist -> removeFromPlaylist()
                 R.id.cab_delete -> askConfirmDelete()
@@ -129,6 +133,15 @@ class SongAdapter(val activity: SimpleActivity, var songs: ArrayList<Song>, val 
                 activity.runOnUiThread { actMode?.finish() }
             }
         }
+    }
+
+    private fun shareItems() {
+        val uris = ArrayList<Uri>()
+        selectedPositions.forEach {
+            val file = File(songs[it].path)
+            uris.add(Uri.fromFile(file))
+        }
+        activity.shareUris(uris, BuildConfig.APPLICATION_ID)
     }
 
     private fun selectAll() {
