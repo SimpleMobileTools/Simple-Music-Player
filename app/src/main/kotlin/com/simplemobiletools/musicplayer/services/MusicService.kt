@@ -57,6 +57,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
         private var mWasPlayingAtCall = false
         private var mPlayOnPrepare = true
+        private var mIsThirdPartyIntent = false
 
         fun getIsPlaying() = mPlayer?.isPlaying == true
     }
@@ -97,69 +98,68 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             return START_NOT_STICKY
         }
 
-        val action = intent.action
-        if (action != null) {
-            when (action) {
-                INIT -> {
-                    if (mSongs == null)
-                        initService()
-                    mBus!!.post(Events.PlaylistUpdated(mSongs!!))
+        when (intent.action) {
+            INIT -> {
+                mIsThirdPartyIntent = false
+                if (mSongs == null) {
+                    initService()
+                }
+                mBus!!.post(Events.PlaylistUpdated(mSongs!!))
 
-                    mBus!!.post(Events.SongChanged(mCurrSong))
-                    songStateChanged(getIsPlaying())
-                    if (mCurrSong == null) {
-                        setupSong()
-                    } else {
-                        val secs = mPlayer!!.currentPosition / 1000
-                        mBus!!.post(Events.ProgressUpdated(secs))
-                    }
+                mBus!!.post(Events.SongChanged(mCurrSong))
+                songStateChanged(getIsPlaying())
+                if (mCurrSong == null) {
+                    setupSong()
+                } else {
+                    val secs = mPlayer!!.currentPosition / 1000
+                    mBus!!.post(Events.ProgressUpdated(secs))
                 }
-                SETUP -> setupSong()
-                PREVIOUS -> {
-                    mPlayOnPrepare = true
-                    playPreviousSong()
+            }
+            SETUP -> setupSong()
+            PREVIOUS -> {
+                mPlayOnPrepare = true
+                playPreviousSong()
+            }
+            PAUSE -> pauseSong()
+            PLAYPAUSE -> {
+                mPlayOnPrepare = true
+                if (getIsPlaying()) {
+                    pauseSong()
+                } else {
+                    resumeSong()
                 }
-                PAUSE -> pauseSong()
-                PLAYPAUSE -> {
-                    mPlayOnPrepare = true
-                    if (getIsPlaying()) {
-                        pauseSong()
-                    } else {
-                        resumeSong()
-                    }
+            }
+            NEXT -> {
+                mPlayOnPrepare = true
+                setupNextSong()
+            }
+            PLAYPOS -> playSong(intent)
+            CALL_START -> incomingCallStart()
+            CALL_STOP -> incomingCallStop()
+            EDIT -> {
+                mCurrSong = intent.getSerializableExtra(EDITED_SONG) as Song
+                mBus!!.post(Events.SongChanged(mCurrSong))
+                setupNotification()
+            }
+            FINISH -> {
+                mBus!!.post(Events.ProgressUpdated(0))
+                destroyPlayer()
+            }
+            REFRESH_LIST -> {
+                getSortedSongs()
+                mBus!!.post(Events.PlaylistUpdated(mSongs!!))
+            }
+            SET_PROGRESS -> {
+                if (mPlayer != null) {
+                    val progress = intent.getIntExtra(PROGRESS, mPlayer!!.currentPosition / 1000)
+                    updateProgress(progress)
                 }
-                NEXT -> {
-                    mPlayOnPrepare = true
-                    setupNextSong()
-                }
-                PLAYPOS -> playSong(intent)
-                CALL_START -> incomingCallStart()
-                CALL_STOP -> incomingCallStop()
-                EDIT -> {
-                    mCurrSong = intent.getSerializableExtra(EDITED_SONG) as Song
-                    mBus!!.post(Events.SongChanged(mCurrSong))
-                    setupNotification()
-                }
-                FINISH -> {
-                    mBus!!.post(Events.ProgressUpdated(0))
-                    destroyPlayer()
-                }
-                REFRESH_LIST -> {
-                    getSortedSongs()
-                    mBus!!.post(Events.PlaylistUpdated(mSongs!!))
-                }
-                SET_PROGRESS -> {
-                    if (mPlayer != null) {
-                        val progress = intent.getIntExtra(PROGRESS, mPlayer!!.currentPosition / 1000)
-                        updateProgress(progress)
-                    }
-                }
-                SET_EQUALIZER -> {
-                    if (intent.extras?.containsKey(EQUALIZER) == true) {
-                        val presetID = intent.extras.getInt(EQUALIZER)
-                        if (mEqualizer != null) {
-                            setPreset(presetID)
-                        }
+            }
+            SET_EQUALIZER -> {
+                if (intent.extras?.containsKey(EQUALIZER) == true) {
+                    val presetID = intent.extras.getInt(EQUALIZER)
+                    if (mEqualizer != null) {
+                        setPreset(presetID)
                     }
                 }
             }
