@@ -7,6 +7,7 @@ val EDITED_SONG = "edited_song"
 private val PATH = "com.simplemobiletools.musicplayer.action."
 
 val INIT = PATH + "INIT"
+val INIT_PATH = PATH + "INIT_PATH"
 val SETUP = PATH + "SETUP"
 val FINISH = PATH + "FINISH"
 val PREVIOUS = PATH + "PREVIOUS"

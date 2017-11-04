@@ -11,6 +11,7 @@ import android.media.AudioManager
 import android.media.MediaMetadataRetriever
 import android.media.MediaPlayer
 import android.media.audiofx.Equalizer
+import android.net.Uri
 import android.os.Handler
 import android.os.PowerManager
 import android.provider.MediaStore
@@ -18,9 +19,7 @@ import android.support.v7.app.NotificationCompat
 import android.telephony.PhoneStateListener
 import android.telephony.TelephonyManager
 import android.util.Log
-import com.simplemobiletools.commons.extensions.getIntValue
-import com.simplemobiletools.commons.extensions.getStringValue
-import com.simplemobiletools.commons.extensions.hasPermission
+import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.PERMISSION_WRITE_STORAGE
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.MainActivity
@@ -81,11 +80,21 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         }
     }
 
-    private fun initService() {
+    private fun initService(uri: Uri? = null) {
         mSongs = ArrayList()
         mPlayedSongIndexes = ArrayList()
         mCurrSong = null
-        getSortedSongs()
+        if (mIsThirdPartyIntent && uri != null) {
+            val path = getRealPathFromURI(uri) ?: ""
+            val song = dbHelper.getSongFromPath(path)
+            if (song != null) {
+                mSongs!!.add(song)
+            } else {
+                toast(R.string.unknown_error_occurred)
+            }
+        } else {
+            getSortedSongs()
+        }
         mHeadsetPlugReceiver = HeadsetPlugReceiver()
         mIncomingCallReceiver = IncomingCallReceiver(this)
         mWasPlayingAtCall = false
@@ -104,16 +113,13 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
                 if (mSongs == null) {
                     initService()
                 }
-                mBus!!.post(Events.PlaylistUpdated(mSongs!!))
-
-                mBus!!.post(Events.SongChanged(mCurrSong))
-                songStateChanged(getIsPlaying())
-                if (mCurrSong == null) {
-                    setupSong()
-                } else {
-                    val secs = mPlayer!!.currentPosition / 1000
-                    mBus!!.post(Events.ProgressUpdated(secs))
-                }
+                initSongs()
+            }
+            INIT_PATH -> {
+                mIsThirdPartyIntent = true
+                initService(intent.data)
+                setupSong()
+                initSongs()
             }
             SETUP -> setupSong()
             PREVIOUS -> {
@@ -171,6 +177,18 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     private fun setupSong() {
         mPlayOnPrepare = false
         setupNextSong()
+    }
+
+    private fun initSongs() {
+        mBus!!.post(Events.PlaylistUpdated(mSongs!!))
+        mBus!!.post(Events.SongChanged(mCurrSong))
+        songStateChanged(getIsPlaying())
+        if (mCurrSong == null) {
+            setupSong()
+        } else {
+            val secs = mPlayer!!.currentPosition / 1000
+            mBus!!.post(Events.ProgressUpdated(secs))
+        }
     }
 
     private fun initMediaPlayerIfNeeded() {

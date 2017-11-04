@@ -42,17 +42,18 @@ import java.io.File
 import java.util.*
 
 class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
-    companion object {
-        lateinit var mBus: Bus
-        private var mSongs: ArrayList<Song> = ArrayList()
-    }
+    private var isThirdPartyIntent = false
+    lateinit var bus: Bus
+    private var songs: ArrayList<Song> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        storeStoragePaths()
+        isThirdPartyIntent = intent.action == Intent.ACTION_VIEW
 
-        mBus = BusProvider.instance
-        mBus.register(this)
+        bus = BusProvider.instance
+        bus.register(this)
         progressbar.setOnSeekBarChangeListener(this)
 
         handlePermission(PERMISSION_WRITE_STORAGE) {
@@ -67,8 +68,8 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
         play_pause_btn.setOnClickListener { sendIntent(PLAYPAUSE) }
         next_btn.setOnClickListener { sendIntent(NEXT) }
         songs_playlist_empty_add_folder.setOnClickListener { addFolderToPlaylist() }
+        volumeControlStream = AudioManager.STREAM_MUSIC
         checkWhatsNewDialog()
-        storeStoragePaths()
     }
 
     override fun onResume() {
@@ -92,6 +93,18 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
 
         val autoplay = menu.findItem(R.id.toggle_autoplay)
         autoplay.title = getString(if (config.autoplay) R.string.disable_autoplay else R.string.enable_autoplay)
+
+        menu.apply {
+            findItem(R.id.sort).isVisible = !isThirdPartyIntent
+            findItem(R.id.toggle_song_repetition).isVisible = !isThirdPartyIntent
+            findItem(R.id.toggle_shuffle).isVisible = !isThirdPartyIntent
+            findItem(R.id.toggle_autoplay).isVisible = !isThirdPartyIntent
+            findItem(R.id.sort).isVisible = !isThirdPartyIntent
+            findItem(R.id.open_playlist).isVisible = !isThirdPartyIntent
+            findItem(R.id.add_folder_to_playlist).isVisible = !isThirdPartyIntent
+            findItem(R.id.add_file_to_playlist).isVisible = !isThirdPartyIntent
+            findItem(R.id.remove_playlist).isVisible = !isThirdPartyIntent
+        }
 
         return true
     }
@@ -155,11 +168,9 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
                     val paths = dbHelper.getPlaylistSongPaths(config.currentPlaylist)
                     val files = paths.map(::File) as ArrayList<File>
                     dbHelper.removeSongsFromPlaylist(paths, -1)
-                    dbHelper.removePlaylist(config.currentPlaylist)
                     deleteFiles(files) { }
-                } else {
-                    dbHelper.removePlaylist(config.currentPlaylist)
                 }
+                dbHelper.removePlaylist(config.currentPlaylist)
             }
         }
     }
@@ -183,7 +194,7 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
     }
 
     private fun addFolderToPlaylist() {
-        val initialPath = if (mSongs.isEmpty()) Environment.getExternalStorageDirectory().toString() else mSongs[0].path
+        val initialPath = if (songs.isEmpty()) Environment.getExternalStorageDirectory().toString() else songs[0].path
         FilePickerDialog(this, initialPath, pickFile = false) {
             toast(R.string.fetching_songs)
             Thread({
@@ -208,7 +219,7 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
     }
 
     private fun addFileToPlaylist() {
-        val initialPath = if (mSongs.isEmpty()) Environment.getExternalStorageDirectory().toString() else mSongs[0].path
+        val initialPath = if (songs.isEmpty()) Environment.getExternalStorageDirectory().toString() else songs[0].path
         FilePickerDialog(this, initialPath) {
             if (it.isAudioFast()) {
                 dbHelper.addSongToPlaylist(it)
@@ -220,8 +231,15 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
     }
 
     private fun initializePlayer() {
-        sendIntent(INIT)
-        volumeControlStream = AudioManager.STREAM_MUSIC
+        if (isThirdPartyIntent) {
+            Intent(this, MusicService::class.java).apply {
+                data = intent.data
+                action = INIT_PATH
+                startService(this)
+            }
+        } else {
+            sendIntent(INIT)
+        }
     }
 
     private fun setupIconColors() {
@@ -251,13 +269,13 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
         progressbar.max = song?.duration ?: 0
         progressbar.progress = 0
 
-        if (mSongs.isEmpty()) {
+        if (songs.isEmpty() && !isThirdPartyIntent) {
             toast(R.string.empty_playlist)
         }
     }
 
     private fun fillSongsListView(songs: ArrayList<Song>) {
-        mSongs = songs
+        this.songs = songs
 
         val currAdapter = songs_list.adapter
         songs_fastscroller.setViews(songs_list)
@@ -285,7 +303,7 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
 
     override fun onDestroy() {
         super.onDestroy()
-        mBus.unregister(this)
+        bus.unregister(this)
     }
 
     @Subscribe
@@ -344,8 +362,8 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
 
     private fun markCurrentSong() {
         val newSongId = MusicService.mCurrSong?.id ?: -1L
-        val cnt = mSongs.size - 1
-        val songIndex = (0..cnt).firstOrNull { mSongs[it].id == newSongId } ?: -1
+        val cnt = songs.size - 1
+        val songIndex = (0..cnt).firstOrNull { songs[it].id == newSongId } ?: -1
         if (songs_list.adapter != null)
             (songs_list.adapter as SongAdapter).updateCurrentSongIndex(songIndex)
     }
@@ -353,9 +371,7 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
     override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
         val duration = progressbar.max.getFormattedDuration()
         val formattedProgress = progress.getFormattedDuration()
-
-        val progressText = String.format(resources.getString(R.string.progress), formattedProgress, duration)
-        song_progress.text = progressText
+        song_progress.text = String.format(resources.getString(R.string.progress), formattedProgress, duration)
     }
 
     override fun onStartTrackingTouch(seekBar: SeekBar) {
