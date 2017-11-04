@@ -294,17 +294,17 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
     private fun getAlbumImage(): Bitmap {
         if (File(mCurrSong?.path ?: "").exists()) {
-            val mediaMetadataRetriever = MediaMetadataRetriever()
-            mediaMetadataRetriever.setDataSource(mCurrSong!!.path)
-            val rawArt = mediaMetadataRetriever.embeddedPicture
-            if (rawArt != null) {
-                val options = BitmapFactory.Options()
-                try {
+            try {
+                val mediaMetadataRetriever = MediaMetadataRetriever()
+                mediaMetadataRetriever.setDataSource(mCurrSong!!.path)
+                val rawArt = mediaMetadataRetriever.embeddedPicture
+                if (rawArt != null) {
+                    val options = BitmapFactory.Options()
                     val bitmap = BitmapFactory.decodeByteArray(rawArt, 0, rawArt.size, options)
                     if (bitmap != null)
                         return bitmap
-                } catch (e: Exception) {
                 }
+            } catch (e: Exception) {
             }
         }
         return BitmapFactory.decodeResource(resources, R.drawable.ic_headset)

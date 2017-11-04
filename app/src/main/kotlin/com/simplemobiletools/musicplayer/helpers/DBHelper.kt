@@ -187,7 +187,7 @@ class DBHelper private constructor(val context: Context) : SQLiteOpenHelper(cont
             cursor = mDb.query(TABLE_NAME_SONGS, cols, selection, selectionArgs, null, null, null)
             if (cursor?.moveToFirst() == true) {
                 do {
-                    val path = cursor.getStringValue(COL_PATH)
+                    val path = cursor.getStringValue(COL_PATH) ?: continue
                     if (File(path).exists()) {
                         paths.add(path)
                     } else {
