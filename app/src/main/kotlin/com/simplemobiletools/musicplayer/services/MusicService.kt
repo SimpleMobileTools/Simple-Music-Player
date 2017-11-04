@@ -401,6 +401,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     }
 
     private fun playSong(intent: Intent) {
+        mPlayOnPrepare = true
         val pos = intent.getIntExtra(SONG_POS, 0)
         setSong(pos, true)
     }

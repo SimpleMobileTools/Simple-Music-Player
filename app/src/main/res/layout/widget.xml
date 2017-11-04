@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/widget_holder"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -18,9 +17,9 @@
         android:ellipsize="end"
         android:gravity="center"
         android:lines="1"
+        android:text="@string/title"
         android:textColor="@android:color/white"
-        android:textSize="@dimen/big_text_size"
-        tools:text="@string/title"/>
+        android:textSize="@dimen/big_text_size"/>
 
     <TextView
         android:id="@+id/song_artist"
@@ -33,9 +32,9 @@
         android:ellipsize="end"
         android:gravity="center"
         android:lines="1"
+        android:text="@string/artist"
         android:textColor="@android:color/white"
-        android:textSize="@dimen/bigger_text_size"
-        tools:text="@string/artist"/>
+        android:textSize="@dimen/bigger_text_size"/>
 
     <include
         layout="@layout/widget_controls"
