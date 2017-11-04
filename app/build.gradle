@@ -10,8 +10,8 @@ android {
         applicationId "com.simplemobiletools.musicplayer"
         minSdkVersion 16
         targetSdkVersion 26
-        versionCode 31
-        versionName "2.2.2"
+        versionCode 32
+        versionName "2.3.0"
     }
 
     signingConfigs {
