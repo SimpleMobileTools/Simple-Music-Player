@@ -54,9 +54,6 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         private var mPlayedSongIndexes = ArrayList<Int>()
         private var mBus: Bus? = null
         private var mProgressHandler: Handler? = null
-        private var mPreviousIntent: PendingIntent? = null
-        private var mNextIntent: PendingIntent? = null
-        private var mPlayPauseIntent: PendingIntent? = null
 
         private var mWasPlayingAtCall = false
         private var mPlayOnPrepare = true
@@ -87,19 +84,12 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         mSongs = ArrayList()
         mPlayedSongIndexes = ArrayList()
         mCurrSong = null
-        setupIntents()
         getSortedSongs()
         mHeadsetPlugReceiver = HeadsetPlugReceiver()
         mIncomingCallReceiver = IncomingCallReceiver(this)
         mWasPlayingAtCall = false
         initMediaPlayerIfNeeded()
         setupNotification()
-    }
-
-    private fun setupIntents() {
-        mPreviousIntent = getIntent(PREVIOUS)
-        mNextIntent = getIntent(NEXT)
-        mPlayPauseIntent = getIntent(PLAYPAUSE)
     }
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
@@ -246,7 +236,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         try {
             mEqualizer!!.usePreset(id.toShort())
         } catch (e: IllegalArgumentException) {
-            Log.e(TAG, "setupEqualizer $e")
+            Log.e(TAG, "setPreset $e")
         }
     }
 
@@ -257,7 +247,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         val nextButtonPosition = 2
         val playPauseIcon = if (getIsPlaying()) R.drawable.ic_pause else R.drawable.ic_play
 
-        var notifWhen: Long = 0
+        var notifWhen = 0L
         var showWhen = false
         var usesChronometer = false
         var ongoing = false
@@ -281,9 +271,9 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
                 .setUsesChronometer(usesChronometer)
                 .setContentIntent(getContentIntent())
                 .setOngoing(ongoing)
-                .addAction(R.drawable.ic_previous, getString(R.string.previous), mPreviousIntent)
-                .addAction(playPauseIcon, getString(R.string.playpause), mPlayPauseIntent)
-                .addAction(R.drawable.ic_next, getString(R.string.next), mNextIntent)
+                .addAction(R.drawable.ic_previous, getString(R.string.previous), getIntent(PREVIOUS))
+                .addAction(playPauseIcon, getString(R.string.playpause), getIntent(PLAYPAUSE))
+                .addAction(R.drawable.ic_next, getString(R.string.next), getIntent(NEXT))
 
         startForeground(NOTIFICATION_ID, notification.build())
 
@@ -504,8 +494,9 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     }
 
     private fun incomingCallStop() {
-        if (mWasPlayingAtCall)
+        if (mWasPlayingAtCall) {
             resumeSong()
+        }
 
         mWasPlayingAtCall = false
     }
