@@ -6,7 +6,6 @@ import android.appwidget.AppWidgetProvider
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
 import android.os.Bundle
 import android.widget.RemoteViews
 import com.simplemobiletools.commons.extensions.getColoredIcon
@@ -18,145 +17,107 @@ import com.simplemobiletools.musicplayer.extensions.sendIntent
 import com.simplemobiletools.musicplayer.models.Events
 import com.simplemobiletools.musicplayer.models.Song
 import com.simplemobiletools.musicplayer.services.MusicService
+import com.simplemobiletools.musicplayer.services.MusicService.Companion.mCurrSong
 import com.squareup.otto.Bus
 import com.squareup.otto.Subscribe
 
 class MyWidgetProvider : AppWidgetProvider() {
-    companion object {
-        private var mRemoteViews: RemoteViews? = null
-    }
-
     private var mBus: Bus? = null
-    private var mCurrSong: Song? = null
-    private var mPlayBitmap: Bitmap? = null
-    private var mPauseBitmap: Bitmap? = null
-    private var mIsPlaying = false
-    private var mWidgetIds: IntArray? = null
-
-    lateinit var mWidgetManager: AppWidgetManager
-    lateinit var mContext: Context
-
-    private fun getCellsForSize(size: Int): Int {
-        var n = 2
-        while (70 * n - 30 < size) {
-            ++n
-        }
-        return n - 1
-    }
+    private var mContext: Context? = null
 
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
-        initVariables(context)
-        super.onUpdate(context, appWidgetManager, appWidgetIds)
+        performUpdate(context)
     }
 
-    private fun initVariables(context: Context) {
+    private fun performUpdate(context: Context) {
         mContext = context
-        mWidgetManager = AppWidgetManager.getInstance(mContext)
-        updateWidgetIds()
-        for (widgetId in mWidgetIds!!) {
-            mRemoteViews = getRemoteViews(mWidgetManager, mContext, widgetId)
+        val appWidgetManager = AppWidgetManager.getInstance(context)
+        appWidgetManager.getAppWidgetIds(getComponentName()).forEach {
+            val views = getRemoteViews(appWidgetManager, context, it)
+            updateColors(views)
+            setupButtons(views)
+            updateSongInfo(views, MusicService.mCurrSong)
+            updatePlayPauseButton(views, MusicService.getIsPlaying())
+            appWidgetManager.updateAppWidget(it, views)
         }
-
-        setupViews(mContext)
 
         if (mBus == null) {
             mBus = BusProvider.instance
         }
         registerBus()
-        updateSong(MusicService.mCurrSong)
-        updateSongState(MusicService.getIsPlaying())
     }
 
-    private fun setupIntent(action: String, id: Int) {
+    private fun getComponentName() = ComponentName(mContext, MyWidgetProvider::class.java)
+
+    private fun setupIntent(views: RemoteViews, action: String, id: Int) {
         val intent = Intent(mContext, MyWidgetProvider::class.java)
         intent.action = action
         val pendingIntent = PendingIntent.getBroadcast(mContext, 0, intent, 0)
-        mRemoteViews!!.setOnClickPendingIntent(id, pendingIntent)
+        views.setOnClickPendingIntent(id, pendingIntent)
     }
 
-    private fun setupAppOpenIntent(id: Int) {
+    private fun setupAppOpenIntent(views: RemoteViews, id: Int) {
         val intent = Intent(mContext, SplashActivity::class.java)
         val pendingIntent = PendingIntent.getActivity(mContext, 0, intent, 0)
-        mRemoteViews!!.setOnClickPendingIntent(id, pendingIntent)
-    }
-
-    private fun updateWidgetIds() {
-        val component = ComponentName(mContext, MyWidgetProvider::class.java)
-        mWidgetManager = AppWidgetManager.getInstance(mContext)
-        mWidgetIds = mWidgetManager.getAppWidgetIds(component)
+        views.setOnClickPendingIntent(id, pendingIntent)
     }
 
     @Subscribe
     fun songChangedEvent(event: Events.SongChanged) {
-        updateSong(event.song)
+        val appWidgetManager = AppWidgetManager.getInstance(mContext)
+        appWidgetManager.getAppWidgetIds(getComponentName()).forEach {
+            val views = getRemoteViews(appWidgetManager, mContext!!, it)
+            updateSongInfo(views, event.song)
+            appWidgetManager.updateAppWidget(it, views)
+        }
     }
 
-    private fun updateSong(song: Song?) {
-        mCurrSong = song
-        updateSongInfo()
-        updateWidgets()
-    }
-
-    private fun updateSongInfo() {
+    private fun updateSongInfo(views: RemoteViews, currSong: Song?) {
         var title = ""
         var artist = ""
-        if (mCurrSong != null) {
+        if (currSong != null) {
             title = mCurrSong!!.title
             artist = mCurrSong!!.artist
         }
 
-        mRemoteViews!!.setTextViewText(R.id.song_title, title)
-        mRemoteViews!!.setTextViewText(R.id.song_artist, artist)
+        views.setTextViewText(R.id.song_title, title)
+        views.setTextViewText(R.id.song_artist, artist)
     }
 
     @Subscribe
     fun songStateChanged(event: Events.SongStateChanged) {
-        updateSongState(event.isPlaying)
-    }
-
-    private fun updateSongState(isPlaying: Boolean) {
-        if (mIsPlaying == isPlaying)
-            return
-
-        mIsPlaying = isPlaying
-        updatePlayPauseButton()
-        updateWidgets()
-    }
-
-    private fun updatePlayPauseButton() {
-        val bmp = if (mIsPlaying) mPauseBitmap else mPlayBitmap
-        mRemoteViews!!.setImageViewBitmap(R.id.play_pause_btn, bmp)
-    }
-
-    private fun updateWidgets() {
-        for (widgetId in mWidgetIds!!) {
-            mWidgetManager.updateAppWidget(widgetId, mRemoteViews)
+        val appWidgetManager = AppWidgetManager.getInstance(mContext)
+        appWidgetManager.getAppWidgetIds(getComponentName()).forEach {
+            val views = getRemoteViews(appWidgetManager, mContext!!, it)
+            updatePlayPauseButton(views, event.isPlaying)
+            appWidgetManager.updateAppWidget(it, views)
         }
     }
 
-    private fun updateColors() {
-        val config = mContext.config
-        val res = mContext.resources
+    private fun updatePlayPauseButton(views: RemoteViews, isPlaying: Boolean) {
+        val drawableId = if (isPlaying) R.drawable.ic_pause else R.drawable.ic_play
+        val widgetTextColor = mContext!!.config.widgetTextColor
+        val icon = mContext!!.resources.getColoredIcon(widgetTextColor, drawableId)
+        views.setImageViewBitmap(R.id.play_pause_btn, icon)
+    }
+
+    private fun updateColors(views: RemoteViews) {
+        val config = mContext!!.config
+        val res = mContext!!.resources
         val widgetBgColor = config.widgetBgColor
         val widgetTextColor = config.widgetTextColor
-        var bmp = res.getColoredIcon(widgetTextColor, R.drawable.ic_previous)
 
-        mRemoteViews!!.apply {
+        views.apply {
             setBackgroundColor(R.id.widget_holder, widgetBgColor)
             setTextColor(R.id.song_title, widgetTextColor)
             setTextColor(R.id.song_artist, widgetTextColor)
-
-            setImageViewBitmap(R.id.previous_btn, bmp)
-
-            mPlayBitmap = res.getColoredIcon(widgetTextColor, R.drawable.ic_play)
-            mPauseBitmap = res.getColoredIcon(widgetTextColor, R.drawable.ic_pause)
-
-            bmp = res.getColoredIcon(widgetTextColor, R.drawable.ic_next)
-            setImageViewBitmap(R.id.next_btn, bmp)
+            setImageViewBitmap(R.id.previous_btn, res.getColoredIcon(widgetTextColor, R.drawable.ic_previous))
+            setImageViewBitmap(R.id.next_btn, res.getColoredIcon(widgetTextColor, R.drawable.ic_next))
         }
     }
 
     override fun onReceive(context: Context, intent: Intent) {
+        mContext = context
         val action = intent.action
         when (action) {
             PREVIOUS, PLAYPAUSE, NEXT -> context.sendIntent(action)
@@ -167,36 +128,19 @@ class MyWidgetProvider : AppWidgetProvider() {
     override fun onDeleted(context: Context, appWidgetIds: IntArray) {
         super.onDeleted(context, appWidgetIds)
         unregisterBus()
-        mContext = context
-        updateWidgetIds()
     }
 
-    private fun setupButtons() {
-        setupIntent(PREVIOUS, R.id.previous_btn)
-        setupIntent(PLAYPAUSE, R.id.play_pause_btn)
-        setupIntent(NEXT, R.id.next_btn)
+    private fun setupButtons(views: RemoteViews) {
+        setupIntent(views, PREVIOUS, R.id.previous_btn)
+        setupIntent(views, PLAYPAUSE, R.id.play_pause_btn)
+        setupIntent(views, NEXT, R.id.next_btn)
 
-        setupAppOpenIntent(R.id.song_title)
-        setupAppOpenIntent(R.id.song_artist)
-    }
-
-    private fun setupViews(context: Context) {
-        mContext = context
-        updateWidgetIds()
-        updateColors()
-        setupButtons()
-        updateSongInfo()
-        updatePlayPauseButton()
-        updateWidgets()
+        setupAppOpenIntent(views, R.id.song_title)
+        setupAppOpenIntent(views, R.id.song_artist)
     }
 
     override fun onAppWidgetOptionsChanged(context: Context, appWidgetManager: AppWidgetManager, widgetId: Int, newOptions: Bundle) {
-        if (mRemoteViews == null)
-            initVariables(context)
-
-        mRemoteViews = getRemoteViews(appWidgetManager, context, widgetId)
-        mWidgetManager = appWidgetManager
-        setupViews(context)
+        performUpdate(context)
         super.onAppWidgetOptionsChanged(context, appWidgetManager, widgetId, newOptions)
     }
 
@@ -224,5 +168,13 @@ class MyWidgetProvider : AppWidgetProvider() {
             mBus!!.unregister(this)
         } catch (e: Exception) {
         }
+    }
+
+    private fun getCellsForSize(size: Int): Int {
+        var n = 2
+        while (70 * n - 30 < size) {
+            ++n
+        }
+        return n - 1
     }
 }

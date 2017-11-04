@@ -336,7 +336,7 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
 
     private fun getRecyclerAdapter() = (songs_list.adapter as SongAdapter)
 
-    val itemOperationsListener = object : SongAdapter.ItemOperationsListener {
+    private val itemOperationsListener = object : SongAdapter.ItemOperationsListener {
         override fun itemLongClicked(position: Int) {
             songs_list.setDragSelectActive(position)
         }
