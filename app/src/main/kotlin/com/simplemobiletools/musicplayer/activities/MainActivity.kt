@@ -305,6 +305,10 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
     override fun onDestroy() {
         super.onDestroy()
         bus.unregister(this)
+
+        if (isThirdPartyIntent) {
+            sendIntent(FINISH)
+        }
     }
 
     @Subscribe

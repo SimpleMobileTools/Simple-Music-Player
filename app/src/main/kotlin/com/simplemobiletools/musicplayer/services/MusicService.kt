@@ -197,8 +197,8 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
                 mSongs.add(song)
                 mCurrSong = song
                 updateUI()
-            } catch (e: IOException) {
-                Log.e(TAG, "setupSong IOException $e")
+            } catch (e: Exception) {
+                Log.e(TAG, "setupSong Exception $e")
             }
         } else {
             mPlayOnPrepare = false
@@ -538,6 +538,8 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
         stopForeground(true)
         stopSelf()
+        mIsThirdPartyIntent = false
+        isServiceInitialized = false
     }
 
     private fun incomingCallStart() {
