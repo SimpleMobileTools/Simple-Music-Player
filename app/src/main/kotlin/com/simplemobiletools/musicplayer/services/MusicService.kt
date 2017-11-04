@@ -20,7 +20,8 @@ import android.telephony.TelephonyManager
 import android.util.Log
 import com.simplemobiletools.commons.extensions.getIntValue
 import com.simplemobiletools.commons.extensions.getStringValue
-import com.simplemobiletools.commons.extensions.hasWriteStoragePermission
+import com.simplemobiletools.commons.extensions.hasPermission
+import com.simplemobiletools.commons.helpers.PERMISSION_WRITE_STORAGE
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.MainActivity
 import com.simplemobiletools.musicplayer.extensions.config
@@ -75,7 +76,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         val remoteControlComponent = ComponentName(packageName, RemoteControlReceiver::class.java.name)
         val audioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager
         audioManager.registerMediaButtonEventReceiver(remoteControlComponent)
-        if (hasWriteStoragePermission()) {
+        if (hasPermission(PERMISSION_WRITE_STORAGE)) {
             initService()
         } else {
             mBus!!.post(Events.NoStoragePermission())
@@ -102,7 +103,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     }
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
-        if (!hasWriteStoragePermission()) {
+        if (!hasPermission(PERMISSION_WRITE_STORAGE)) {
             return START_NOT_STICKY
         }
 

@@ -1,14 +1,11 @@
 package com.simplemobiletools.musicplayer.activities
 
-import android.Manifest
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import android.media.AudioManager
 import android.os.Bundle
 import android.os.Environment
-import android.support.v4.app.ActivityCompat
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
@@ -20,6 +17,7 @@ import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.LICENSE_KOTLIN
 import com.simplemobiletools.commons.helpers.LICENSE_MULTISELECT
 import com.simplemobiletools.commons.helpers.LICENSE_OTTO
+import com.simplemobiletools.commons.helpers.PERMISSION_WRITE_STORAGE
 import com.simplemobiletools.commons.models.RadioItem
 import com.simplemobiletools.commons.models.Release
 import com.simplemobiletools.commons.views.MyScalableRecyclerView
@@ -45,8 +43,6 @@ import java.util.*
 
 class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
     companion object {
-        private val STORAGE_PERMISSION = 1
-
         lateinit var mBus: Bus
         private var mSongs: ArrayList<Song> = ArrayList()
     }
@@ -59,10 +55,12 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
         mBus.register(this)
         progressbar.setOnSeekBarChangeListener(this)
 
-        if (hasWriteStoragePermission()) {
-            initializePlayer()
-        } else {
-            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), STORAGE_PERMISSION)
+        handlePermission(PERMISSION_WRITE_STORAGE) {
+            if (it) {
+                initializePlayer()
+            } else {
+                toast(R.string.no_storage_permissions)
+            }
         }
 
         previous_btn.setOnClickListener { sendIntent(PREVIOUS) }
@@ -113,18 +111,6 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
             else -> return super.onOptionsItemSelected(item)
         }
         return true
-    }
-
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-
-        if (requestCode == STORAGE_PERMISSION) {
-            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                initializePlayer()
-            } else {
-                toast(R.string.no_storage_permissions)
-            }
-        }
     }
 
     private fun launchSettings() {
