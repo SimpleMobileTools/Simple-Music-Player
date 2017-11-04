@@ -33,22 +33,24 @@ import java.io.File
 import java.util.*
 
 class SongAdapter(val activity: SimpleActivity, var songs: ArrayList<Song>, val listener: ItemOperationsListener?, val itemClick: (Int) -> Unit) : RecyclerView.Adapter<SongAdapter.ViewHolder>() {
-    val multiSelector = MultiSelector()
+    private val multiSelector = MultiSelector()
 
-    var actMode: ActionMode? = null
-    var itemViews = SparseArray<View>()
-    val selectedPositions = HashSet<Int>()
+    private var actMode: ActionMode? = null
+    private var itemViews = SparseArray<View>()
+    private val selectedPositions = HashSet<Int>()
 
-    var currentSongIndex = 0
+    private var currentSongIndex = 0
     var textColor = activity.config.textColor
+    var isThirdPartyIntent = false
 
     fun toggleItemSelection(select: Boolean, pos: Int) {
         itemViews[pos]?.song_frame?.isSelected = select
 
-        if (select)
+        if (select) {
             selectedPositions.add(pos)
-        else
+        } else {
             selectedPositions.remove(pos)
+        }
 
         if (selectedPositions.isEmpty()) {
             actMode?.finish()
@@ -231,7 +233,7 @@ class SongAdapter(val activity: SimpleActivity, var songs: ArrayList<Song>, val 
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        itemViews.put(position, holder.bindView(songs[position], currentSongIndex, textColor))
+        itemViews.put(position, holder.bindView(songs[position], currentSongIndex, textColor, isThirdPartyIntent))
         toggleItemSelection(selectedPositions.contains(position), position)
         holder.itemView.tag = holder
     }
@@ -279,7 +281,7 @@ class SongAdapter(val activity: SimpleActivity, var songs: ArrayList<Song>, val 
 
     class ViewHolder(view: View, val adapterListener: MyAdapterListener, val activity: SimpleActivity, val multiSelectorCallback: ModalMultiSelectorCallback,
                      val multiSelector: MultiSelector, val listener: ItemOperationsListener?, val itemClick: (Int) -> (Unit)) : SwappingHolder(view, MultiSelector()) {
-        fun bindView(song: Song, currentSongIndex: Int, textColor: Int): View {
+        fun bindView(song: Song, currentSongIndex: Int, textColor: Int, isThirdPartyIntent: Boolean): View {
             itemView.apply {
                 song_title.text = song.title
                 song_title.setTextColor(textColor)
@@ -293,7 +295,10 @@ class SongAdapter(val activity: SimpleActivity, var songs: ArrayList<Song>, val 
                 }
 
                 setOnClickListener { viewClicked() }
-                setOnLongClickListener { viewLongClicked(); true }
+
+                if (!isThirdPartyIntent) {
+                    setOnLongClickListener { viewLongClicked(); true }
+                }
             }
 
             return itemView

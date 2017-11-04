@@ -248,9 +248,7 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
         play_pause_btn.setColorFilter(color, PorterDuff.Mode.SRC_IN)
         next_btn.setColorFilter(color, PorterDuff.Mode.SRC_IN)
 
-        val currAdapter = songs_list.adapter
-        if (currAdapter != null)
-            (currAdapter as SongAdapter).textColor = color
+        (songs_list.adapter as? SongAdapter)?.textColor = color
         songs_fastscroller.updateHandleColor()
     }
 
@@ -276,14 +274,14 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
 
     private fun fillSongsListView(songs: ArrayList<Song>) {
         this.songs = songs
-
         val currAdapter = songs_list.adapter
         songs_fastscroller.setViews(songs_list)
         if (currAdapter == null) {
             songs_list.apply {
-                this@apply.adapter = SongAdapter(this@MainActivity, songs, itemOperationsListener) {
+                this.adapter = SongAdapter(this@MainActivity, songs, itemOperationsListener) {
                     songPicked(it)
                 }
+                (adapter as SongAdapter).isThirdPartyIntent = isThirdPartyIntent
                 DividerItemDecoration(context, DividerItemDecoration.VERTICAL).apply {
                     setDrawable(context.resources.getDrawable(R.drawable.divider))
                     addItemDecoration(this)
@@ -293,7 +291,10 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
             setupRecyclerViewListener()
         } else {
             val state = (songs_list.layoutManager as LinearLayoutManager).onSaveInstanceState()
-            (currAdapter as SongAdapter).updateSongs(songs)
+            (currAdapter as SongAdapter).apply {
+                isThirdPartyIntent = this@MainActivity.isThirdPartyIntent
+                updateSongs(songs)
+            }
             (songs_list.layoutManager as LinearLayoutManager).onRestoreInstanceState(state)
         }
         markCurrentSong()
