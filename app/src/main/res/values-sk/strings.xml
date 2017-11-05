@@ -35,13 +35,13 @@
     <string name="remove_playlist_description">Toto iba odstráni vybrané zoznamy skladieb, nie samotné súbory.</string>
     <string name="remove_playlist_description_placeholder">Toto iba odstráni zoznam skladieb \"%s\", nie samotné súbory..</string>
     <string name="remove_from_playlist">Odstrániť zo zoznamu skladieb</string>
-    <string name="remove_from_playlist_description">Toto iba odstráni pesničky zo zoznamu skladieb \"%s\", samotné súbory nebudú vymazané.</string>
+    <string name="remove_from_playlist_description">Toto iba odstráni skladby zo zoznamu skladieb \"%s\", samotné súbory nebudú vymazané.</string>
     <string name="delete_the_files_too">Odstrániť aj súbory</string>
     <string name="open_playlist">Otvoriť zoznam skladieb</string>
-    <string name="initial_playlist">Východzí zoznam skladieb</string>
-    <string name="initial_playlist_cannot_be_deleted">Východzí zoznam skladieb nemôže byť vymazaný</string>
+    <string name="this_playlist_cannot_be_deleted">Východzí zoznam skladieb nemôže byť vymazaný</string>
     <string name="empty_playlist">Súčasný zoznam skladieb je prázdny</string>
-    <string name="fetching_songs">Pridávajú sa pesničky…</string>
+    <string name="fetching_songs">Pridávajú sa skladby…</string>
+    <string name="all_songs">Všetky skladby</string>
 
     <!-- Settings -->
     <string name="equalizer">Ekvalizér</string>

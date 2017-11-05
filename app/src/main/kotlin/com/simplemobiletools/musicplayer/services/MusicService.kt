@@ -265,7 +265,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     }
 
     private fun getSortedSongs() {
-        if (config.currentPlaylist == DBHelper.INITIAL_PLAYLIST_ID) {
+        if (config.currentPlaylist == DBHelper.ALL_SONGS_ID) {
             getAllDeviceSongs()
         }
 

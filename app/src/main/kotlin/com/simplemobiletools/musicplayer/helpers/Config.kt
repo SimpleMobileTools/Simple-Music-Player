@@ -21,7 +21,7 @@ class Config(context: Context) : BaseConfig(context) {
         set(equalizer) = prefs.edit().putInt(EQUALIZER, equalizer).apply()
 
     var currentPlaylist: Int
-        get() = prefs.getInt(CURRENT_PLAYLIST, DBHelper.INITIAL_PLAYLIST_ID)
+        get() = prefs.getInt(CURRENT_PLAYLIST, DBHelper.ALL_SONGS_ID)
         set(currentPlaylist) = prefs.edit().putInt(CURRENT_PLAYLIST, currentPlaylist).apply()
 
     var repeatSong: Boolean

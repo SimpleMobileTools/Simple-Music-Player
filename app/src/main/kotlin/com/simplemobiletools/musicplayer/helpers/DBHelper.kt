@@ -31,7 +31,7 @@ class DBHelper private constructor(val context: Context) : SQLiteOpenHelper(cont
     companion object {
         private val DB_VERSION = 1
         val DB_NAME = "playlists.db"
-        val INITIAL_PLAYLIST_ID = 1
+        val ALL_SONGS_ID = 1
 
         fun newInstance(context: Context) = DBHelper(context)
     }
@@ -39,7 +39,7 @@ class DBHelper private constructor(val context: Context) : SQLiteOpenHelper(cont
     override fun onCreate(db: SQLiteDatabase) {
         db.execSQL("CREATE TABLE $TABLE_NAME_PLAYLISTS ($COL_ID INTEGER PRIMARY KEY, $COL_TITLE TEXT)")
         createSongsTable(db)
-        addInitialPlaylist(db)
+        addAllSongsPlaylist(db)
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
@@ -50,9 +50,9 @@ class DBHelper private constructor(val context: Context) : SQLiteOpenHelper(cont
                 "UNIQUE($COL_PATH, $COL_PLAYLIST_ID) ON CONFLICT IGNORE)")
     }
 
-    private fun addInitialPlaylist(db: SQLiteDatabase) {
-        val initialPlaylist = context.resources.getString(R.string.initial_playlist)
-        val playlist = Playlist(INITIAL_PLAYLIST_ID, initialPlaylist)
+    private fun addAllSongsPlaylist(db: SQLiteDatabase) {
+        val allSongs = context.resources.getString(R.string.all_songs)
+        val playlist = Playlist(ALL_SONGS_ID, allSongs)
         addPlaylist(playlist, db)
     }
 
@@ -71,7 +71,7 @@ class DBHelper private constructor(val context: Context) : SQLiteOpenHelper(cont
     }
 
     fun removePlaylists(ids: ArrayList<Int>) {
-        val args = TextUtils.join(", ", ids.filter { it != INITIAL_PLAYLIST_ID })
+        val args = TextUtils.join(", ", ids.filter { it != ALL_SONGS_ID })
         val selection = "$COL_ID IN ($args)"
         mDb.delete(TABLE_NAME_PLAYLISTS, selection, null)
 
@@ -79,7 +79,7 @@ class DBHelper private constructor(val context: Context) : SQLiteOpenHelper(cont
         mDb.delete(TABLE_NAME_SONGS, songSelection, null)
 
         if (ids.contains(context.config.currentPlaylist)) {
-            context.playlistChanged(DBHelper.INITIAL_PLAYLIST_ID)
+            context.playlistChanged(DBHelper.ALL_SONGS_ID)
         }
     }
 

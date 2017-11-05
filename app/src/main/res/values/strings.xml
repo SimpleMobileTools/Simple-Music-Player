@@ -38,10 +38,10 @@
     <string name="remove_from_playlist_description">This will only remove the items from playlist \"%s\", the actual files will not be deleted.</string>
     <string name="delete_the_files_too">Delete the files too</string>
     <string name="open_playlist">Open playlist</string>
-    <string name="initial_playlist">Initial playlist</string>
-    <string name="initial_playlist_cannot_be_deleted">The initial playlist cannot be deleted</string>
+    <string name="this_playlist_cannot_be_deleted">This playlist cannot be deleted</string>
     <string name="empty_playlist">Current playlist is empty</string>
     <string name="fetching_songs">Fetching songs…</string>
+    <string name="all_songs">All songs</string>
 
     <!-- Settings -->
     <string name="equalizer">Equalizer</string>

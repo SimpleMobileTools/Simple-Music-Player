@@ -114,8 +114,8 @@ class PlaylistsAdapter(val activity: SimpleActivity, val mItems: List<Playlist>,
 
     private fun removePlaylists(ids: ArrayList<Int>) {
         activity.dbHelper.removePlaylists(ids)
-        if (ids.contains(DBHelper.INITIAL_PLAYLIST_ID)) {
-            activity.toast(R.string.initial_playlist_cannot_be_deleted)
+        if (ids.contains(DBHelper.ALL_SONGS_ID)) {
+            activity.toast(R.string.this_playlist_cannot_be_deleted)
         }
         listener?.refreshItems()
     }

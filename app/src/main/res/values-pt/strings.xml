@@ -38,10 +38,10 @@
     <string name="remove_from_playlist_description">Esta ação remove os elementos da lista de reprodução \"%s\" mas não apaga os ficheiros.</string>
     <string name="delete_the_files_too">Apagar também os ficheiros</string>
     <string name="open_playlist">Abrir lista de reprodução</string>
-    <string name="initial_playlist">Lista de reprodução inicial</string>
-    <string name="initial_playlist_cannot_be_deleted">Não pode apagar a lista de reprodução inicial</string>
+    <string name="this_playlist_cannot_be_deleted">Não pode apagar a lista de reprodução inicial</string>
     <string name="empty_playlist">A lista de reprodução está vazia</string>
     <string name="fetching_songs">A obter músicas…</string>
+    <string name="all_songs">All songs</string>
 
     <!-- Settings -->
     <string name="equalizer">Equalizador</string>
