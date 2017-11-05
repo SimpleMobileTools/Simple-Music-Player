@@ -10,6 +10,8 @@ import android.support.v7.app.AppCompatActivity
 import android.widget.RemoteViews
 import android.widget.SeekBar
 import com.simplemobiletools.commons.dialogs.ColorPickerDialog
+import com.simplemobiletools.commons.extensions.adjustAlpha
+import com.simplemobiletools.commons.extensions.setBackgroundColor
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.helpers.MyWidgetProvider
@@ -19,13 +21,11 @@ import kotlinx.android.synthetic.main.widget_config.*
 import kotlinx.android.synthetic.main.widget_controls.*
 
 class WidgetConfigureActivity : AppCompatActivity() {
-    companion object {
-        private var mBgAlpha = 0.0f
-        private var mWidgetId = 0
-        private var mBgColor = 0
-        private var mBgColorWithoutTransparency = 0
-        private var mTextColor = 0
-    }
+    private var mBgAlpha = 0.0f
+    private var mWidgetId = 0
+    private var mBgColor = 0
+    private var mBgColorWithoutTransparency = 0
+    private var mTextColor = 0
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,7 +33,6 @@ class WidgetConfigureActivity : AppCompatActivity() {
         setContentView(R.layout.widget_config)
         initVariables()
 
-        val intent = intent
         val extras = intent.extras
         if (extras != null)
             mWidgetId = extras.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID)
@@ -70,10 +69,10 @@ class WidgetConfigureActivity : AppCompatActivity() {
         updateTextColor()
     }
 
-    fun saveConfig() {
+    private fun saveConfig() {
         val appWidgetManager = AppWidgetManager.getInstance(this)
         val views = RemoteViews(packageName, R.layout.widget)
-        views.setInt(R.id.widget_holder, "setBackgroundColor", mBgColor)
+        views.setBackgroundColor(R.id.widget_holder, mBgColor)
         appWidgetManager.updateAppWidget(mWidgetId, views)
 
         storeWidgetColors()
@@ -84,20 +83,6 @@ class WidgetConfigureActivity : AppCompatActivity() {
             setResult(Activity.RESULT_OK, this)
         }
         finish()
-    }
-
-    private fun pickBackgroundColor() {
-        ColorPickerDialog(this, mBgColorWithoutTransparency) {
-            mBgColorWithoutTransparency = it
-            updateBackgroundColor()
-        }
-    }
-
-    private fun pickTextColor() {
-        ColorPickerDialog(this, mTextColor) {
-            mTextColor = it
-            updateTextColor()
-        }
     }
 
     private fun storeWidgetColors() {
@@ -115,7 +100,7 @@ class WidgetConfigureActivity : AppCompatActivity() {
     }
 
     private fun updateBackgroundColor() {
-        mBgColor = adjustAlpha(mBgColorWithoutTransparency, mBgAlpha)
+        mBgColor = mBgColorWithoutTransparency.adjustAlpha(mBgAlpha)
         config_player.setBackgroundColor(mBgColor)
         config_bg_color.setBackgroundColor(mBgColor)
         config_save.setBackgroundColor(mBgColor)
@@ -133,6 +118,20 @@ class WidgetConfigureActivity : AppCompatActivity() {
         next_btn.drawable.mutate().setColorFilter(mTextColor, PorterDuff.Mode.SRC_IN)
     }
 
+    private fun pickBackgroundColor() {
+        ColorPickerDialog(this, mBgColorWithoutTransparency) {
+            mBgColorWithoutTransparency = it
+            updateBackgroundColor()
+        }
+    }
+
+    private fun pickTextColor() {
+        ColorPickerDialog(this, mTextColor) {
+            mTextColor = it
+            updateTextColor()
+        }
+    }
+
     private val seekbarChangeListener = object : SeekBar.OnSeekBarChangeListener {
         override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
             mBgAlpha = progress.toFloat() / 100.toFloat()
@@ -146,13 +145,5 @@ class WidgetConfigureActivity : AppCompatActivity() {
         override fun onStopTrackingTouch(seekBar: SeekBar) {
 
         }
-    }
-
-    private fun adjustAlpha(color: Int, factor: Float): Int {
-        val alpha = Math.round(Color.alpha(color) * factor)
-        val red = Color.red(color)
-        val green = Color.green(color)
-        val blue = Color.blue(color)
-        return Color.argb(alpha, red, green, blue)
     }
 }
