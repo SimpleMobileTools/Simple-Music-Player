@@ -13,20 +13,15 @@ data class Song(val id: Long, var title: String, var artist: String, var path: S
     }
 
     override fun compareTo(other: Song): Int {
-        var res: Int
-        if (sorting and SORT_BY_TITLE != 0) {
-            res = title.toLowerCase().compareTo(other.title.toLowerCase())
-        } else if (sorting and SORT_BY_ARTIST != 0) {
-            res = artist.toLowerCase().compareTo(other.artist.toLowerCase())
-        } else if (sorting and SORT_BY_FILE_NAME != 0) {
-            res = path.toLowerCase().compareTo(other.path.toLowerCase())
-        } else {
-            res = if (duration == other.duration)
-                0
-            else if (duration > other.duration)
-                1
-            else
-                -1
+        var res = when {
+            sorting and SORT_BY_TITLE != 0 -> title.toLowerCase().compareTo(other.title.toLowerCase())
+            sorting and SORT_BY_ARTIST != 0 -> artist.toLowerCase().compareTo(other.artist.toLowerCase())
+            sorting and SORT_BY_FILE_NAME != 0 -> path.toLowerCase().compareTo(other.path.toLowerCase())
+            else -> when {
+                duration == other.duration -> 0
+                duration > other.duration -> 1
+                else -> -1
+            }
         }
 
         if (sorting and SORT_DESCENDING != 0) {
