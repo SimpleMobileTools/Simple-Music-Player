@@ -38,10 +38,10 @@
     <string name="remove_from_playlist_description">Dit zal alleen items uit afspeellijst \"%s\" verwijderen. Bestanden worden niet verwijderd.</string>
     <string name="delete_the_files_too">Bestanden ook verwijderen</string>
     <string name="open_playlist">Afspeellijst openen</string>
-    <string name="this_playlist_cannot_be_deleted">De standaardlijst kan niet worden verwijderd</string>
+    <string name="this_playlist_cannot_be_deleted">Deze lijst kan niet worden verwijderd</string>
     <string name="empty_playlist">Huidige afspeellijst is leeg</string>
     <string name="fetching_songs">Nummers laden…</string>
-    <string name="all_songs">All songs</string>
+    <string name="all_songs">Alle nummers</string>
 
     <!-- Settings -->
     <string name="equalizer">Equalizer</string>
