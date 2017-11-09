@@ -17,7 +17,7 @@
     <string name="disable_autoplay">Automatisches Abspielen deaktivieren</string>
     <string name="autoplay_enabled">Automatisches Abspielen aktiviert</string>
     <string name="autoplay_disabled">Automatisches Abspielen deaktiviert</string>
-    <string name="unknown">Unknown</string>
+    <string name="unknown">Unbekannt</string>
 
     <string name="previous">Voriger Titel</string>
     <string name="playpause">Play / Pause</string>
@@ -41,7 +41,7 @@
     <string name="this_playlist_cannot_be_deleted">Die Ausgangsplaylist kann nicht gelöscht werden</string>
     <string name="empty_playlist">Die derzeitige Playlist ist leer</string>
     <string name="fetching_songs">Rufe Lieder ab…</string>
-    <string name="all_songs">All songs</string>
+    <string name="all_songs">Alle Lieder</string>
 
     <!-- Settings -->
     <string name="equalizer">Equalizer</string>
