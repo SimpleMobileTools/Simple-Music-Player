@@ -13,14 +13,14 @@
     <string name="disable_shuffle">Wyłącz kolejność losową</string>
     <string name="shuffle_enabled">Kolejność losowa włączona</string>
     <string name="shuffle_disabled">Kolejność losowa wyłączona</string>
-    <string name="enable_autoplay">Enable autoplay</string>
-    <string name="disable_autoplay">Disable autoplay</string>
-    <string name="autoplay_enabled">Autoplay enabled</string>
-    <string name="autoplay_disabled">Autoplay disabled</string>
-    <string name="unknown">Unknown</string>
+    <string name="enable_autoplay">Włącz autoodtwarzanie</string>
+    <string name="disable_autoplay">Wyłącz autoodtwarzanie</string>
+    <string name="autoplay_enabled">Autoodtwarzanie włączone</string>
+    <string name="autoplay_disabled">Autoodtwarzanie wyłączone</string>
+    <string name="unknown">Nieznany</string>
 
     <string name="previous">Poprzedni</string>
-    <string name="playpause">Odtwórz / zapauzuj</string>
+    <string name="playpause">Odtwórz / zatrzymaj</string>
     <string name="next">Następny</string>
 
     <!-- Playlists -->
@@ -40,8 +40,8 @@
     <string name="open_playlist">Otwórz playlistę</string>
     <string name="this_playlist_cannot_be_deleted">Początkowa playlista nie może zostać usunięta</string>
     <string name="empty_playlist">Obecna playlista jest pusta</string>
-    <string name="fetching_songs">Fetching songs…</string>
-    <string name="all_songs">All songs</string>
+    <string name="fetching_songs">Otrzymywanie utworów…</string>
+    <string name="all_songs">Wszystkie utwory</string>
 
     <!-- Settings -->
     <string name="equalizer">Korektor</string>
@@ -50,7 +50,7 @@
     <!-- Short description has to have less than 80 chars -->
     <string name="app_short_description">Prosty odtwarzacz muzyki z konfigurowalnym widżetem..</string>
     <string name="app_long_description">
-        Odtwarzacz muzyki łatwy do kontrolowania z poziomu paska stanu, widżetu na pulpicie, lub przycisków na słuchawkach. Możesz sortować utwory według tytułu i wykonawcy (według albumu jeszcze nie, ale kiedyś będzie to możliwe). Audiofile mogą bawić się suwakami w korektorze. Aby móc wstrzymać odtwarzanie na czas rozmowy telefonicznej, aplikacja potrzebuje uprawnienia \"Telefon\".
+        Odtwarzacz muzyki łatwy do kontrolowania z poziomu paska stanu, widżetu na pulpicie lub przycisków na słuchawkach. Możesz sortować utwory według tytułu i wykonawcy (według albumu jeszcze nie, ale kiedyś będzie to możliwe). Audiofile posiadają zaś możliwość zabawy suwakami w korektorze. Aby móc wstrzymać odtwarzanie na czas rozmowy telefonicznej, aplikacja potrzebuje uprawnienia \"Telefon\".
 
         Zawiera widżet z konfigurowalnymi kolorami napisów i tła.
 
