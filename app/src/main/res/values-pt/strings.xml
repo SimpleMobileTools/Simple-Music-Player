@@ -17,7 +17,7 @@
     <string name="disable_autoplay">Desativar reprodução automática</string>
     <string name="autoplay_enabled">Reprodução automática ativada</string>
     <string name="autoplay_disabled">Reprodução automática desativada</string>
-    <string name="unknown">Unknown</string>
+    <string name="unknown">Desconhecido</string>
 
     <string name="previous">Anterior</string>
     <string name="playpause">Reproduzir / Pausa</string>
@@ -41,7 +41,7 @@
     <string name="this_playlist_cannot_be_deleted">Não pode apagar a lista de reprodução inicial</string>
     <string name="empty_playlist">A lista de reprodução está vazia</string>
     <string name="fetching_songs">A obter músicas…</string>
-    <string name="all_songs">All songs</string>
+    <string name="all_songs">Todas as faixas</string>
 
     <!-- Settings -->
     <string name="equalizer">Equalizador</string>
@@ -50,7 +50,7 @@
     <!-- Short description has to have less than 80 chars -->
     <string name="app_short_description">Um reprodutor de músicas com um widget personalizável.</string>
     <string name="app_long_description">
-        Um reprodutor de músicas que pode ser controlado através da barra de estado, do widget ou através dos botões do seu dispositivo ou auricular. Pode ordenar as faixas por Título ou Artista, bem como ajustar o seu equalizador. Ainda não possui suporte a filtrar por artista ou álbum, mas está planeado. Fique atento! A permissão Estado do telefone é necessária para parar o reprodutor ao receber uma chamada.
+        Um reprodutor de músicas que pode ser controlado através da barra de estado, do widget ou dos botões do seu dispositivo ou auricular. Pode ordenar as faixas por Título ou Artista, bem como ajustar o seu equalizador. Ainda não possui suporte a filtrar por artista ou álbum, mas está planeado. Fique atento! A permissão Estado do telefone é necessária para parar o reprodutor ao receber uma chamada.
 
         Pode personalizar a cor do texto do widget, bem como a cor e o valor alfa do fundo.
 
