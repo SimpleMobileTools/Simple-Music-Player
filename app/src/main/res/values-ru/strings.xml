@@ -41,7 +41,7 @@
     <string name="this_playlist_cannot_be_deleted">Начальный плейлист не может быть удалён</string>
     <string name="empty_playlist">Текущий плейлист пуст</string>
     <string name="fetching_songs">Загрузка композиций…</string>
-    <string name="all_songs">All songs</string>
+    <string name="all_songs">Все композиции</string>
 
     <!-- Settings -->
     <string name="equalizer">Эквалайзер</string>
