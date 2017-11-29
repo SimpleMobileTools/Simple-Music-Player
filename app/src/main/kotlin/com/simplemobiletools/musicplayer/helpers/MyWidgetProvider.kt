@@ -8,7 +8,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.RemoteViews
-import com.simplemobiletools.commons.extensions.getColoredIcon
+import com.simplemobiletools.commons.extensions.getColoredBitmap
 import com.simplemobiletools.commons.extensions.setBackgroundColor
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.SplashActivity
@@ -97,7 +97,7 @@ class MyWidgetProvider : AppWidgetProvider() {
     private fun updatePlayPauseButton(views: RemoteViews, isPlaying: Boolean) {
         val drawableId = if (isPlaying) R.drawable.ic_pause else R.drawable.ic_play
         val widgetTextColor = mContext!!.config.widgetTextColor
-        val icon = mContext!!.resources.getColoredIcon(widgetTextColor, drawableId)
+        val icon = mContext!!.resources.getColoredBitmap(drawableId, widgetTextColor)
         views.setImageViewBitmap(R.id.play_pause_btn, icon)
     }
 
@@ -111,8 +111,8 @@ class MyWidgetProvider : AppWidgetProvider() {
             setBackgroundColor(R.id.widget_holder, widgetBgColor)
             setTextColor(R.id.song_title, widgetTextColor)
             setTextColor(R.id.song_artist, widgetTextColor)
-            setImageViewBitmap(R.id.previous_btn, res.getColoredIcon(widgetTextColor, R.drawable.ic_previous))
-            setImageViewBitmap(R.id.next_btn, res.getColoredIcon(widgetTextColor, R.drawable.ic_next))
+            setImageViewBitmap(R.id.previous_btn, res.getColoredBitmap(R.drawable.ic_previous, widgetTextColor))
+            setImageViewBitmap(R.id.next_btn, res.getColoredBitmap(R.drawable.ic_next, widgetTextColor))
         }
     }
 

@@ -20,7 +20,7 @@ import kotlinx.android.synthetic.main.widget.*
 import kotlinx.android.synthetic.main.widget_config.*
 import kotlinx.android.synthetic.main.widget_controls.*
 
-class WidgetConfigureActivity : AppCompatActivity() {
+class WidgetConfigureActivity : SimpleActivity() {
     private var mBgAlpha = 0.0f
     private var mWidgetId = 0
     private var mBgColor = 0
@@ -28,6 +28,7 @@ class WidgetConfigureActivity : AppCompatActivity() {
     private var mTextColor = 0
 
     public override fun onCreate(savedInstanceState: Bundle?) {
+        useDynamicTheme = false
         super.onCreate(savedInstanceState)
         setResult(Activity.RESULT_CANCELED)
         setContentView(R.layout.widget_config)

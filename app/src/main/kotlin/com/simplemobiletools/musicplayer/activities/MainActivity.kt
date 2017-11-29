@@ -17,7 +17,6 @@ import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.*
 import com.simplemobiletools.commons.models.RadioItem
 import com.simplemobiletools.commons.models.Release
-import com.simplemobiletools.commons.views.MyScalableRecyclerView
 import com.simplemobiletools.musicplayer.BuildConfig
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.adapters.SongAdapter
@@ -283,9 +282,8 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
                     setDrawable(context.resources.getDrawable(R.drawable.divider))
                     addItemDecoration(this)
                 }
-                isDragSelectionEnabled = true
+                //isDragSelectionEnabled = true
             }
-            setupRecyclerViewListener()
         } else {
             val state = (songs_list.layoutManager as LinearLayoutManager).onSaveInstanceState()
             (currAdapter as SongAdapter).apply {
@@ -333,28 +331,6 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
     fun noStoragePermission(event: Events.NoStoragePermission) {
         toast(R.string.no_storage_permissions)
     }
-
-    private fun setupRecyclerViewListener() {
-        songs_list.listener = object : MyScalableRecyclerView.MyScalableRecyclerViewListener {
-            override fun zoomIn() {
-
-            }
-
-            override fun zoomOut() {
-
-            }
-
-            override fun selectItem(position: Int) {
-                getRecyclerAdapter().selectItem(position)
-            }
-
-            override fun selectRange(initialSelection: Int, lastDraggedIndex: Int, minReached: Int, maxReached: Int) {
-                getRecyclerAdapter().selectRange(initialSelection, lastDraggedIndex, minReached, maxReached)
-            }
-        }
-    }
-
-    private fun getRecyclerAdapter() = (songs_list.adapter as SongAdapter)
 
     private val itemOperationsListener = object : SongAdapter.ItemOperationsListener {
         override fun itemLongClicked(position: Int) {

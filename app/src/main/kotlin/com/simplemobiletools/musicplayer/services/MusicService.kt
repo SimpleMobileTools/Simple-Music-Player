@@ -15,7 +15,7 @@ import android.net.Uri
 import android.os.Handler
 import android.os.PowerManager
 import android.provider.MediaStore
-import android.support.v7.app.NotificationCompat
+import android.support.v4.app.NotificationCompat
 import android.telephony.PhoneStateListener
 import android.telephony.TelephonyManager
 import android.util.Log
@@ -307,7 +307,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         }
 
         val notification = NotificationCompat.Builder(this)
-                .setStyle(NotificationCompat.MediaStyle().setShowActionsInCompactView(playPauseButtonPosition, nextButtonPosition))
+                .setStyle(android.support.v4.media.app.NotificationCompat.MediaStyle().setShowActionsInCompactView(playPauseButtonPosition, nextButtonPosition))
                 .setContentTitle(title)
                 .setContentText(artist)
                 .setSmallIcon(R.drawable.ic_headset_small)
