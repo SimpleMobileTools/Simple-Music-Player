@@ -20,10 +20,14 @@ android {
     }
 
     buildTypes {
+        debug {
+            buildConfigField "boolean", "USE_LEAK_CANARY", "true"
+        }
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
+            buildConfigField "boolean", "USE_LEAK_CANARY", "false"
         }
     }
 
@@ -37,10 +41,17 @@ android {
     }
 }
 
+ext {
+    leakCanaryVersion = '1.5.4'
+}
+
 dependencies {
     implementation 'com.simplemobiletools:commons:3.0.3'
     implementation 'com.squareup:otto:1.3.8'
     implementation 'com.facebook.stetho:stetho:1.5.0'
+
+    debugImplementation "com.squareup.leakcanary:leakcanary-android:$leakCanaryVersion"
+    releaseImplementation "com.squareup.leakcanary:leakcanary-android-no-op:$leakCanaryVersion"
 }
 
 Properties props = new Properties()
