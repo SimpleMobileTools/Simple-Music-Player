@@ -6,7 +6,6 @@ import android.graphics.PorterDuffColorFilter
 import android.media.AudioManager
 import android.os.Bundle
 import android.os.Environment
-import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
 import android.view.MenuItem
@@ -274,16 +273,14 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
         val currAdapter = songs_list.adapter
         songs_fastscroller.setViews(songs_list)
         if (currAdapter == null) {
-            val adapter = SongAdapter(this@MainActivity, songs, songs_list) {
+            SongAdapter(this@MainActivity, songs, songs_list) {
                 songPicked(getSongIndex(it as Song))
+            }.apply {
+                setupDragListener(true)
+                this.isThirdPartyIntent = isThirdPartyIntent
+                addVerticalDividers(true)
+                songs_list.adapter = this
             }
-            adapter.setupDragListener(true)
-            adapter.isThirdPartyIntent = isThirdPartyIntent
-            DividerItemDecoration(this, DividerItemDecoration.VERTICAL).apply {
-                setDrawable(resources.getDrawable(R.drawable.divider))
-                songs_list.addItemDecoration(this)
-            }
-            songs_list.adapter = adapter
         } else {
             val state = (songs_list.layoutManager as LinearLayoutManager).onSaveInstanceState()
             (currAdapter as SongAdapter).apply {
