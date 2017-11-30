@@ -36,10 +36,6 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, recycler
     private var currentSongIndex = 0
     var isThirdPartyIntent = false
 
-    init {
-        selectableItemCount = songs.count()
-    }
-
     override fun getActionMenuId() = R.menu.cab
 
     override fun prepareItemSelection(view: View) {}
@@ -76,6 +72,8 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, recycler
             R.id.cab_delete -> askConfirmDelete()
         }
     }
+
+    override fun getSelectableItemCount() = songs.size
 
     private fun showProperties() {
         if (selectedPositions.size <= 1) {

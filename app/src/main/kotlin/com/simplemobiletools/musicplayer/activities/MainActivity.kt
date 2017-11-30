@@ -39,13 +39,14 @@ import java.util.*
 
 class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
     private var isThirdPartyIntent = false
+    private var storedUseEnglish = false
     lateinit var bus: Bus
     private var songs: ArrayList<Song> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        storeStoragePaths()
+        appLaunched()
         isThirdPartyIntent = intent.action == Intent.ACTION_VIEW
 
         bus = BusProvider.instance
@@ -66,14 +67,25 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
         songs_playlist_empty_add_folder.setOnClickListener { addFolderToPlaylist() }
         volumeControlStream = AudioManager.STREAM_MUSIC
         checkWhatsNewDialog()
+        storeStateVariables()
     }
 
     override fun onResume() {
         super.onResume()
+        if (storedUseEnglish != config.useEnglish) {
+            restartActivity()
+            return
+        }
+
         setupIconColors()
         markCurrentSong()
         updateTextColors(main_holder)
         songs_playlist_empty_add_folder.background.colorFilter = PorterDuffColorFilter(config.textColor, PorterDuff.Mode.SRC_IN)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        storeStateVariables()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -120,6 +132,12 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
             else -> return super.onOptionsItemSelected(item)
         }
         return true
+    }
+
+    private fun storeStateVariables() {
+        config.apply {
+            storedUseEnglish = useEnglish
+        }
     }
 
     private fun launchSettings() {
