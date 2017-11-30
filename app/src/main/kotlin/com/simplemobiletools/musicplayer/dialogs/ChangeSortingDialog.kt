@@ -34,14 +34,12 @@ class ChangeSortingDialog(val activity: Activity, val callback: () -> Unit) {
 
     private fun setupSortRadio() {
         val sortingRadio = view.sorting_dialog_radio_sorting
-        var sortBtn = sortingRadio.sorting_dialog_radio_duration
 
-        if (currSorting and SORT_BY_TITLE != 0) {
-            sortBtn = sortingRadio.sorting_dialog_radio_title
-        } else if (currSorting and SORT_BY_ARTIST != 0) {
-            sortBtn = sortingRadio.sorting_dialog_radio_artist
-        } else if (currSorting and SORT_BY_FILE_NAME != 0) {
-            sortBtn = sortingRadio.sorting_dialog_radio_file_name
+        val sortBtn = when {
+            currSorting and SORT_BY_TITLE != 0 -> sortingRadio.sorting_dialog_radio_title
+            currSorting and SORT_BY_ARTIST != 0 -> sortingRadio.sorting_dialog_radio_artist
+            currSorting and SORT_BY_FILE_NAME != 0 -> sortingRadio.sorting_dialog_radio_file_name
+            else -> sortingRadio.sorting_dialog_radio_duration
         }
         sortBtn.isChecked = true
     }

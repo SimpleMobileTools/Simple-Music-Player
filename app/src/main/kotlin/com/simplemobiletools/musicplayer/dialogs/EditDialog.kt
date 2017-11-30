@@ -7,14 +7,14 @@ import android.provider.MediaStore
 import android.support.v7.app.AlertDialog
 import android.view.LayoutInflater
 import android.view.WindowManager
+import com.simplemobiletools.commons.activities.BaseSimpleActivity
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.musicplayer.R
-import com.simplemobiletools.musicplayer.activities.SimpleActivity
 import com.simplemobiletools.musicplayer.models.Song
 import kotlinx.android.synthetic.main.dialog_rename_song.view.*
 import java.io.File
 
-class EditDialog(val activity: SimpleActivity, val song: Song, val callback: (Song) -> Unit) {
+class EditDialog(val activity: BaseSimpleActivity, val song: Song, val callback: (Song) -> Unit) {
     init {
         val view = LayoutInflater.from(activity).inflate(R.layout.dialog_rename_song, null).apply {
             title.setText(song.title)

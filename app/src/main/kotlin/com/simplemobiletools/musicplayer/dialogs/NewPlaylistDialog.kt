@@ -45,11 +45,10 @@ class NewPlaylistDialog(val activity: Activity, var playlist: Playlist? = null, 
 
                 playlist!!.title = title
 
-                val eventTypeId: Int
-                if (isNewPlaylist) {
-                    eventTypeId = activity.dbHelper.insertPlaylist(playlist!!)
+                val eventTypeId = if (isNewPlaylist) {
+                    activity.dbHelper.insertPlaylist(playlist!!)
                 } else {
-                    eventTypeId = activity.dbHelper.updatePlaylist(playlist!!)
+                    activity.dbHelper.updatePlaylist(playlist!!)
                 }
 
                 if (eventTypeId != -1) {

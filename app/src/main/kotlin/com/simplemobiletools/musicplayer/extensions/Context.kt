@@ -12,9 +12,9 @@ fun Context.sendIntent(action: String) {
     }
 }
 
-val Context.config: Config get() = Config.newInstance(this)
+val Context.config: Config get() = Config.newInstance(applicationContext)
 
-val Context.dbHelper: DBHelper get() = DBHelper.newInstance(this)
+val Context.dbHelper: DBHelper get() = DBHelper.newInstance(applicationContext)
 
 fun Context.playlistChanged(newID: Int) {
     config.currentPlaylist = newID

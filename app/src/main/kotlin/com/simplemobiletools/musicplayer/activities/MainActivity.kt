@@ -28,6 +28,7 @@ import com.simplemobiletools.musicplayer.extensions.dbHelper
 import com.simplemobiletools.musicplayer.extensions.playlistChanged
 import com.simplemobiletools.musicplayer.extensions.sendIntent
 import com.simplemobiletools.musicplayer.helpers.*
+import com.simplemobiletools.musicplayer.inlines.indexOfFirstOrNull
 import com.simplemobiletools.musicplayer.models.Events
 import com.simplemobiletools.musicplayer.models.Song
 import com.simplemobiletools.musicplayer.services.MusicService
@@ -273,17 +274,16 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
         val currAdapter = songs_list.adapter
         songs_fastscroller.setViews(songs_list)
         if (currAdapter == null) {
-            songs_list.apply {
-                this.adapter = SongAdapter(this@MainActivity, songs, itemOperationsListener) {
-                    songPicked(it)
-                }
-                (adapter as SongAdapter).isThirdPartyIntent = isThirdPartyIntent
-                DividerItemDecoration(context, DividerItemDecoration.VERTICAL).apply {
-                    setDrawable(context.resources.getDrawable(R.drawable.divider))
-                    addItemDecoration(this)
-                }
-                //isDragSelectionEnabled = true
+            val adapter = SongAdapter(this@MainActivity, songs, songs_list) {
+                songPicked(getSongIndex(it as Song))
             }
+            adapter.setupDragListener(true)
+            adapter.isThirdPartyIntent = isThirdPartyIntent
+            DividerItemDecoration(this, DividerItemDecoration.VERTICAL).apply {
+                setDrawable(resources.getDrawable(R.drawable.divider))
+                songs_list.addItemDecoration(this)
+            }
+            songs_list.adapter = adapter
         } else {
             val state = (songs_list.layoutManager as LinearLayoutManager).onSaveInstanceState()
             (currAdapter as SongAdapter).apply {
@@ -296,6 +296,8 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
         songs_playlist_empty.beVisibleIf(songs.isEmpty())
         songs_playlist_empty_add_folder.beVisibleIf(songs.isEmpty())
     }
+
+    private fun getSongIndex(song: Song): Int = songs.indexOfFirstOrNull { it == song } ?: 0
 
     override fun onDestroy() {
         super.onDestroy()
@@ -330,12 +332,6 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
     @Subscribe
     fun noStoragePermission(event: Events.NoStoragePermission) {
         toast(R.string.no_storage_permissions)
-    }
-
-    private val itemOperationsListener = object : SongAdapter.ItemOperationsListener {
-        override fun itemLongClicked(position: Int) {
-            songs_list.setDragSelectActive(position)
-        }
     }
 
     private fun markCurrentSong() {
