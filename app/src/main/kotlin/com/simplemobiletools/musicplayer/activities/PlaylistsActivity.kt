@@ -27,7 +27,6 @@ class PlaylistsActivity : SimpleActivity(), RefreshItemsListener {
                     playlistChanged((it as Playlist).id)
                 }.apply {
                     setupDragListener(true)
-                    addVerticalDividers(true)
                     playlists_list.adapter = this
                 }
             }
