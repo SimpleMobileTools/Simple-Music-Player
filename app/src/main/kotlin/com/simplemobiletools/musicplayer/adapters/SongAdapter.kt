@@ -119,34 +119,38 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, recycler
     }
 
     private fun deleteSongs() {
-        if (selectedPositions.isEmpty())
+        if (selectedPositions.isEmpty()) {
             return
+        }
 
         val paths = ArrayList<String>(selectedPositions.size)
         val files = ArrayList<File>(selectedPositions.size)
         val removeSongs = ArrayList<Song>(selectedPositions.size)
 
-        activity.handleSAFDialog(File(songs[selectedPositions.first()].path)) {
+        val SAFPath = songs[selectedPositions.first()].path
+        activity.handleSAFDialog(File(SAFPath)) {
             selectedPositions.sortedDescending().forEach {
                 val song = songs[it]
                 paths.add(song.path)
                 files.add(File(song.path))
                 removeSongs.add(song)
-                notifyItemRemoved(it)
                 if (song == MusicService.mCurrSong) {
                     activity.sendIntent(NEXT)
                 }
             }
 
             songs.removeAll(removeSongs)
-            selectedPositions.clear()
             activity.dbHelper.removeSongsFromPlaylist(paths, -1)
             activity.deleteFiles(files) { }
-            activity.sendIntent(REFRESH_LIST)
+            removeSelectedItems()
         }
     }
 
     private fun removeFromPlaylist() {
+        if (selectedPositions.isEmpty()) {
+            return
+        }
+
         val paths = ArrayList<String>(selectedPositions.size)
         val removeSongs = ArrayList<Song>(selectedPositions.size)
 
@@ -154,7 +158,6 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, recycler
             val song = songs[it]
             paths.add(song.path)
             removeSongs.add(song)
-            notifyItemRemoved(it)
             if (song == MusicService.mCurrSong) {
                 activity.sendIntent(NEXT)
             }
@@ -163,8 +166,7 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, recycler
         activity.config.addIgnoredPaths(paths)
         songs.removeAll(removeSongs)
         activity.dbHelper.removeSongsFromPlaylist(paths)
-        finishActMode()
-        activity.sendIntent(REFRESH_LIST)
+        removeSelectedItems()
     }
 
     fun updateSongs(newSongs: ArrayList<Song>) {
