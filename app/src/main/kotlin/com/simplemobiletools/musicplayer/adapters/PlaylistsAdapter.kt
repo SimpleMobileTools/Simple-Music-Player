@@ -87,11 +87,24 @@ class PlaylistsAdapter(activity: SimpleActivity, val playlists: ArrayList<Playli
     }
 
     private fun removePlaylists(ids: ArrayList<Int>) {
-        activity.dbHelper.removePlaylists(ids)
-        if (ids.contains(DBHelper.ALL_SONGS_ID)) {
-            activity.toast(R.string.this_playlist_cannot_be_deleted)
+        val playlistsToDelete = ArrayList<Playlist>(selectedPositions.size)
+
+        for (pos in selectedPositions) {
+            if (playlists[pos].id == DBHelper.ALL_SONGS_ID) {
+                activity.toast(R.string.all_songs_cannot_be_deleted)
+                selectedPositions.remove(pos)
+                toggleItemSelection(false, pos)
+                break
+            }
         }
-        listener?.refreshItems()
+
+        selectedPositions.sortedDescending().forEach {
+            val playlist = playlists[it]
+            playlistsToDelete.add(playlist)
+        }
+        playlists.removeAll(playlistsToDelete)
+        activity.dbHelper.removePlaylists(ids)
+        removeSelectedItems()
     }
 
     private fun showRenameDialog() {

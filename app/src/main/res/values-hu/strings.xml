@@ -38,10 +38,10 @@
     <string name="remove_from_playlist_description">Ez csak az elemeket törli ki a(z) „%s” lejátszólistából, nem magukat a fájlokat.</string>
     <string name="delete_the_files_too">A fájlok is kerüljenek törlésre</string>
     <string name="open_playlist">Lejátszólista megnyitása</string>
-    <string name="this_playlist_cannot_be_deleted">A kezdeti lejátszólista nem törölhet</string>
+    <string name="all_songs_cannot_be_deleted">Az \'Összes szám\' lejátszólista nem törölhet</string>
     <string name="empty_playlist">A jelenlegi lejátszólista üres</string>
     <string name="fetching_songs">Számok lekérése…</string>
-    <string name="all_songs">All songs</string>
+    <string name="all_songs">Összes szám</string>
 
     <!-- Settings -->
     <string name="equalizer">Hangszínszabályzó</string>

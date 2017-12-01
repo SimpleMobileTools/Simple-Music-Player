@@ -38,7 +38,7 @@
     <string name="remove_from_playlist_description">Detta tar bara bort objekten från spellistan \"%s\", själva filerna tas inte bort.</string>
     <string name="delete_the_files_too">Ta även bort filerna</string>
     <string name="open_playlist">Öppna spellista</string>
-    <string name="this_playlist_cannot_be_deleted">Den förinställda spellistan kan inte tas bort</string>
+    <string name="all_songs_cannot_be_deleted">\'All songs\' playlist cannot be deleted</string>
     <string name="empty_playlist">Den aktuella spellistan är tom</string>
     <string name="fetching_songs">Fetching songs…</string>
     <string name="all_songs">All songs</string>

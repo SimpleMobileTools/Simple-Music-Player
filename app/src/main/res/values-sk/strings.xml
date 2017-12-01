@@ -38,7 +38,7 @@
     <string name="remove_from_playlist_description">Toto iba odstráni skladby zo zoznamu skladieb \"%s\", samotné súbory nebudú vymazané.</string>
     <string name="delete_the_files_too">Odstrániť aj súbory</string>
     <string name="open_playlist">Otvoriť zoznam skladieb</string>
-    <string name="this_playlist_cannot_be_deleted">Východzí zoznam skladieb nemôže byť vymazaný</string>
+    <string name="all_songs_cannot_be_deleted">Zoznam skladieb \'Všetky skladby\' nemôže byť vymazaný</string>
     <string name="empty_playlist">Súčasný zoznam skladieb je prázdny</string>
     <string name="fetching_songs">Pridávajú sa skladby…</string>
     <string name="all_songs">Všetky skladby</string>

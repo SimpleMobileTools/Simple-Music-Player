@@ -38,7 +38,7 @@
     <string name="remove_from_playlist_description">Diese Aktion wird nur alle Dateien der Playlist \"%s\" löschen, nicht die eigentlichen Dateien.</string>
     <string name="delete_the_files_too">Dateien auch löschen</string>
     <string name="open_playlist">Playlist öffnen</string>
-    <string name="this_playlist_cannot_be_deleted">Die Ausgangsplaylist kann nicht gelöscht werden</string>
+    <string name="all_songs_cannot_be_deleted">\'Alle Lieder\' Playlist kann nicht gelöscht werden</string>
     <string name="empty_playlist">Die derzeitige Playlist ist leer</string>
     <string name="fetching_songs">Rufe Lieder ab…</string>
     <string name="all_songs">Alle Lieder</string>

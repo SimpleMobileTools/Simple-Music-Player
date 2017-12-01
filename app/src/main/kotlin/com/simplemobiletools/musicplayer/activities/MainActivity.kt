@@ -174,7 +174,7 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
 
     private fun removePlaylist() {
         if (config.currentPlaylist == DBHelper.ALL_SONGS_ID) {
-            toast(R.string.this_playlist_cannot_be_deleted)
+            toast(R.string.all_songs_cannot_be_deleted)
         } else {
             val playlist = dbHelper.getPlaylistWithId(config.currentPlaylist)
             RemovePlaylistDialog(this, playlist) {

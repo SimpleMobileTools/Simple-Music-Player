@@ -38,7 +38,7 @@
     <string name="remove_from_playlist_description">Композиции будут удалены только из плейлиста «%s», сами файлы удалены не будут.</string>
     <string name="delete_the_files_too">Удалить файлы тоже</string>
     <string name="open_playlist">Открыть плейлист</string>
-    <string name="this_playlist_cannot_be_deleted">Начальный плейлист не может быть удалён</string>
+    <string name="all_songs_cannot_be_deleted">\'All songs\' playlist cannot be deleted</string>
     <string name="empty_playlist">Текущий плейлист пуст</string>
     <string name="fetching_songs">Загрузка композиций…</string>
     <string name="all_songs">Все композиции</string>
