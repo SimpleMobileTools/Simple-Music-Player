@@ -40,8 +40,8 @@ import java.util.*
 class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
     private var isThirdPartyIntent = false
     private var storedUseEnglish = false
+    private var songs = ArrayList<Song>()
     lateinit var bus: Bus
-    private var songs: ArrayList<Song> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -211,11 +211,11 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
         val initialPath = if (songs.isEmpty()) Environment.getExternalStorageDirectory().toString() else songs[0].path
         FilePickerDialog(this, initialPath, pickFile = false) {
             toast(R.string.fetching_songs)
-            Thread({
+            Thread {
                 val songs = getFolderSongs(File(it))
                 dbHelper.addSongsToPlaylist(songs)
                 sendIntent(REFRESH_LIST)
-            }).start()
+            }.start()
         }
     }
 

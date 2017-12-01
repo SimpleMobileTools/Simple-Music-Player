@@ -2,7 +2,6 @@ package com.simplemobiletools.musicplayer.dialogs
 
 import android.app.Activity
 import android.support.v7.app.AlertDialog
-import android.view.LayoutInflater
 import android.view.View
 import com.simplemobiletools.commons.extensions.setupDialogStuff
 import com.simplemobiletools.commons.helpers.SORT_DESCENDING
@@ -17,7 +16,7 @@ import kotlinx.android.synthetic.main.dialog_change_sorting.view.*
 class ChangeSortingDialog(val activity: Activity, val callback: () -> Unit) {
     private var currSorting = 0
     var config = activity.config
-    var view: View = LayoutInflater.from(activity).inflate(R.layout.dialog_change_sorting, null)
+    var view: View = activity.layoutInflater.inflate(R.layout.dialog_change_sorting, null)
 
     init {
         AlertDialog.Builder(activity)
