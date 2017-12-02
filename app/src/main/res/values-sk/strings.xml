@@ -42,6 +42,7 @@
     <string name="empty_playlist">Súčasný zoznam skladieb je prázdny</string>
     <string name="fetching_songs">Pridávajú sa skladby…</string>
     <string name="all_songs">Všetky skladby</string>
+    <string name="create_playlist_from_folder">Vytvoriť nový zoznam skladieb z priečinka</string>
 
     <!-- Settings -->
     <string name="equalizer">Ekvalizér</string>

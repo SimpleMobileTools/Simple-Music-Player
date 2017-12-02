@@ -42,6 +42,7 @@
     <string name="empty_playlist">Die derzeitige Playlist ist leer</string>
     <string name="fetching_songs">Rufe Lieder ab…</string>
     <string name="all_songs">Alle Lieder</string>
+    <string name="create_playlist_from_folder">Create new playlist from folder</string>
 
     <!-- Settings -->
     <string name="equalizer">Equalizer</string>

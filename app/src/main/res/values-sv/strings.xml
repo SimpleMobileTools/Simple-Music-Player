@@ -42,6 +42,7 @@
     <string name="empty_playlist">Den aktuella spellistan är tom</string>
     <string name="fetching_songs">Fetching songs…</string>
     <string name="all_songs">All songs</string>
+    <string name="create_playlist_from_folder">Create new playlist from folder</string>
 
     <!-- Settings -->
     <string name="equalizer">Equalizer</string>

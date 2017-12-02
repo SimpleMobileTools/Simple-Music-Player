@@ -42,6 +42,7 @@
     <string name="empty_playlist">A jelenlegi lejátszólista üres</string>
     <string name="fetching_songs">Számok lekérése…</string>
     <string name="all_songs">Összes szám</string>
+    <string name="create_playlist_from_folder">Create new playlist from folder</string>
 
     <!-- Settings -->
     <string name="equalizer">Hangszínszabályzó</string>

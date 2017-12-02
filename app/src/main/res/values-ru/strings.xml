@@ -42,6 +42,7 @@
     <string name="empty_playlist">Текущий плейлист пуст</string>
     <string name="fetching_songs">Загрузка композиций…</string>
     <string name="all_songs">Все композиции</string>
+    <string name="create_playlist_from_folder">Create new playlist from folder</string>
 
     <!-- Settings -->
     <string name="equalizer">Эквалайзер</string>

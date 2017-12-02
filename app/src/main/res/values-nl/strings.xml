@@ -42,6 +42,7 @@
     <string name="empty_playlist">Huidige afspeellijst is leeg</string>
     <string name="fetching_songs">Nummers laden…</string>
     <string name="all_songs">Alle nummers</string>
+    <string name="create_playlist_from_folder">Create new playlist from folder</string>
 
     <!-- Settings -->
     <string name="equalizer">Equalizer</string>
