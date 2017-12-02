@@ -38,7 +38,7 @@ class PlaylistsAdapter(activity: SimpleActivity, val playlists: ArrayList<Playli
     override fun onBindViewHolder(holder: MyRecyclerViewAdapter.ViewHolder, position: Int) {
         val playlist = playlists[position]
         val view = holder.bindView(playlist) { itemView, layoutPosition ->
-            setupView(itemView, playlist, layoutPosition)
+            setupView(itemView, playlist)
         }
         bindViewHolder(holder, position, view)
     }
@@ -87,6 +87,7 @@ class PlaylistsAdapter(activity: SimpleActivity, val playlists: ArrayList<Playli
     }
 
     private fun removePlaylists(ids: ArrayList<Int>) {
+        val isDeletingCurrentPlaylist = ids.contains(activity.config.currentPlaylist)
         val playlistsToDelete = ArrayList<Playlist>(selectedPositions.size)
 
         for (pos in selectedPositions) {
@@ -104,17 +105,26 @@ class PlaylistsAdapter(activity: SimpleActivity, val playlists: ArrayList<Playli
         }
         playlists.removeAll(playlistsToDelete)
         activity.dbHelper.removePlaylists(ids)
-        removeSelectedItems()
+
+        if (isDeletingCurrentPlaylist) {
+            reloadList()
+        } else {
+            removeSelectedItems()
+        }
     }
 
     private fun showRenameDialog() {
         NewPlaylistDialog(activity, playlists[selectedPositions.first()]) {
-            finishActMode()
-            listener?.refreshItems()
+            reloadList()
         }
     }
 
-    private fun setupView(view: View, playlist: Playlist, layoutPosition: Int) {
+    private fun reloadList() {
+        finishActMode()
+        listener?.refreshItems()
+    }
+
+    private fun setupView(view: View, playlist: Playlist) {
         view.apply {
             playlist_title.text = playlist.title
             playlist_title.setTextColor(textColor)
