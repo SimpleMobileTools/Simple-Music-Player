@@ -125,7 +125,10 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
                 initService()
                 initSongs()
             }
-            SETUP -> setupSong()
+            SETUP -> {
+                mPlayOnPrepare = true
+                setupNextSong()
+            }
             PREVIOUS -> {
                 mPlayOnPrepare = true
                 playPreviousSong()
