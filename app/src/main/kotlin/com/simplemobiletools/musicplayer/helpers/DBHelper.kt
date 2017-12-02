@@ -62,8 +62,7 @@ class DBHelper private constructor(val context: Context) : SQLiteOpenHelper(cont
 
     fun insertPlaylist(playlist: Playlist, db: SQLiteDatabase = mDb): Int {
         val values = ContentValues().apply { put(COL_TITLE, playlist.title) }
-        val insertedId = db.insert(TABLE_NAME_PLAYLISTS, null, values).toInt()
-        return insertedId
+        return db.insert(TABLE_NAME_PLAYLISTS, null, values).toInt()
     }
 
     fun removePlaylist(id: Int) {
@@ -94,8 +93,7 @@ class DBHelper private constructor(val context: Context) : SQLiteOpenHelper(cont
         addSongsToPlaylist(ArrayList<String>().apply { add(path) })
     }
 
-    fun addSongsToPlaylist(paths: ArrayList<String>) {
-        val playlistId = context.config.currentPlaylist
+    fun addSongsToPlaylist(paths: ArrayList<String>, playlistId: Int = context.config.currentPlaylist) {
         for (path in paths) {
             ContentValues().apply {
                 put(COL_PATH, path)

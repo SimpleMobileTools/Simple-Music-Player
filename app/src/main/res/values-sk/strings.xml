@@ -43,6 +43,7 @@
     <string name="fetching_songs">Pridávajú sa skladby…</string>
     <string name="all_songs">Všetky skladby</string>
     <string name="create_playlist_from_folder">Vytvoriť nový zoznam skladieb z priečinka</string>
+    <string name="folder_contains_no_audio">Zvolený priečinok neobsahuje žiadne audio súbory</string>
 
     <!-- Settings -->
     <string name="equalizer">Ekvalizér</string>

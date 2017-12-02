@@ -43,6 +43,7 @@
     <string name="fetching_songs">Fetching songs…</string>
     <string name="all_songs">All songs</string>
     <string name="create_playlist_from_folder">Create new playlist from folder</string>
+    <string name="folder_contains_no_audio">The selected folder contains no audio files</string>
 
     <!-- Settings -->
     <string name="equalizer">Equalizer</string>

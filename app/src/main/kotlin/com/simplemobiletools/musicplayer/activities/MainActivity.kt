@@ -29,6 +29,7 @@ import com.simplemobiletools.musicplayer.extensions.sendIntent
 import com.simplemobiletools.musicplayer.helpers.*
 import com.simplemobiletools.musicplayer.inlines.indexOfFirstOrNull
 import com.simplemobiletools.musicplayer.models.Events
+import com.simplemobiletools.musicplayer.models.Playlist
 import com.simplemobiletools.musicplayer.models.Song
 import com.simplemobiletools.musicplayer.services.MusicService
 import com.squareup.otto.Bus
@@ -126,6 +127,7 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
             R.id.toggle_autoplay -> toggleAutoplay()
             R.id.add_folder_to_playlist -> addFolderToPlaylist()
             R.id.add_file_to_playlist -> addFileToPlaylist()
+            R.id.create_playlist_from_folder -> createPlaylistFromFolder()
             R.id.remove_playlist -> removePlaylist()
             R.id.settings -> launchSettings()
             R.id.about -> launchAbout()
@@ -208,8 +210,7 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
     }
 
     private fun addFolderToPlaylist() {
-        val initialPath = if (songs.isEmpty()) Environment.getExternalStorageDirectory().toString() else songs[0].path
-        FilePickerDialog(this, initialPath, pickFile = false) {
+        FilePickerDialog(this, getFilePickerInitialPath(), pickFile = false) {
             toast(R.string.fetching_songs)
             Thread {
                 val songs = getFolderSongs(File(it))
@@ -233,8 +234,7 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
     }
 
     private fun addFileToPlaylist() {
-        val initialPath = if (songs.isEmpty()) Environment.getExternalStorageDirectory().toString() else songs[0].path
-        FilePickerDialog(this, initialPath) {
+        FilePickerDialog(this, getFilePickerInitialPath()) {
             if (it.isAudioFast()) {
                 dbHelper.addSongToPlaylist(it)
                 sendIntent(REFRESH_LIST)
@@ -243,6 +243,44 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
             }
         }
     }
+
+    private fun createPlaylistFromFolder() {
+        FilePickerDialog(this, getFilePickerInitialPath(), pickFile = false) {
+            Thread {
+                createPlaylistFrom(it)
+            }.start()
+        }
+    }
+
+    private fun createPlaylistFrom(path: String) {
+        val songs = getFolderSongs(File(path))
+        if (songs.isEmpty()) {
+            toast(R.string.folder_contains_no_audio)
+            return
+        }
+
+        val folderName = path.getFilenameFromPath()
+        var playlistName = folderName
+        var curIndex = 1
+        val playlistIdWithTitle = dbHelper.getPlaylistIdWithTitle(folderName)
+        if (playlistIdWithTitle != -1) {
+            while (true) {
+                playlistName = "${folderName}_$curIndex"
+                if (dbHelper.getPlaylistIdWithTitle(playlistName) == -1) {
+                    break
+                }
+
+                curIndex++
+            }
+        }
+
+        val playlist = Playlist(0, playlistName)
+        val newPlaylistId = dbHelper.insertPlaylist(playlist)
+        dbHelper.addSongsToPlaylist(songs, newPlaylistId)
+        playlistChanged(newPlaylistId)
+    }
+
+    private fun getFilePickerInitialPath() = if (songs.isEmpty()) Environment.getExternalStorageDirectory().toString() else songs[0].path
 
     private fun initializePlayer() {
         if (isThirdPartyIntent) {
