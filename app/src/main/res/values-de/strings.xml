@@ -38,12 +38,12 @@
     <string name="remove_from_playlist_description">Diese Aktion wird nur alle Dateien der Playlist \"%s\" löschen, nicht die eigentlichen Dateien.</string>
     <string name="delete_the_files_too">Dateien auch löschen</string>
     <string name="open_playlist">Playlist öffnen</string>
-    <string name="all_songs_cannot_be_deleted">\'Alle Lieder\' Playlist kann nicht gelöscht werden</string>
+    <string name="all_songs_cannot_be_deleted">Playlist \'Alle Songs\' kann nicht gelöscht werden</string>
     <string name="empty_playlist">Die derzeitige Playlist ist leer</string>
-    <string name="fetching_songs">Rufe Lieder ab…</string>
-    <string name="all_songs">Alle Lieder</string>
-    <string name="create_playlist_from_folder">Create new playlist from folder</string>
-    <string name="folder_contains_no_audio">The selected folder contains no audio files</string>
+    <string name="fetching_songs">Rufe Songs ab…</string>
+    <string name="all_songs">Alle Songs</string>
+    <string name="create_playlist_from_folder">Neue Playlist aus Ordner erstellen</string>
+    <string name="folder_contains_no_audio">Der ausgewählte Ordner enthält keine Audiodateien</string>
 
     <!-- Settings -->
     <string name="equalizer">Equalizer</string>
@@ -52,7 +52,7 @@
     <!-- Short description has to have less than 80 chars -->
     <string name="app_short_description">Ein schlichter Musikplayer mit anpassbarem Widget.</string>
     <string name="app_long_description">
-        Ein Musikplayer, der einfach über die Benachrichtigungsleiste, das Homescreen Widget oder Buttons an deinem Headset gesteuert werden kann. Du kannst alle Lieder nach Titel oder Künstler sortieren und den Equalizer anpassen. Das Filtern nach Künstler oder Album wird noch nicht unterstützt, bleib dran! Die Telefon-Berechtigung wird gebraucht, um die Wiedergabe bei eingehendem Anruf zu pausieren.
+        Ein Musikplayer, der einfach über die Benachrichtigungsleiste, das Homescreen Widget oder Buttons an deinem Headset gesteuert werden kann. Du kannst alle Songs nach Titel oder Künstler sortieren und den Equalizer anpassen. Das Filtern nach Künstler oder Album wird noch nicht unterstützt, bleib dran! Die Telefon-Berechtigung wird gebraucht, um die Wiedergabe bei eingehendem Anruf zu pausieren.
 
         Die App beinhaltet ein Widget mit anpassbaren Textfarben, Transparenz und Hintergrundfarbe.
         
