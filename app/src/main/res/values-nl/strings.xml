@@ -38,12 +38,12 @@
     <string name="remove_from_playlist_description">Dit zal alleen items uit afspeellijst \"%s\" verwijderen. Bestanden worden niet verwijderd.</string>
     <string name="delete_the_files_too">Bestanden ook verwijderen</string>
     <string name="open_playlist">Afspeellijst openen</string>
-    <string name="all_songs_cannot_be_deleted">\'All songs\' playlist cannot be deleted</string>
+    <string name="all_songs_cannot_be_deleted">Lijst \'Alle nummers\' kan niet worden verwijderd</string>
     <string name="empty_playlist">Huidige afspeellijst is leeg</string>
     <string name="fetching_songs">Nummers laden…</string>
     <string name="all_songs">Alle nummers</string>
-    <string name="create_playlist_from_folder">Create new playlist from folder</string>
-    <string name="folder_contains_no_audio">The selected folder contains no audio files</string>
+    <string name="create_playlist_from_folder">Van deze map nieuwe afspeellijst maken</string>
+    <string name="folder_contains_no_audio">De geselecteerde map bevat geen geluidsbestanden</string>
 
     <!-- Settings -->
     <string name="equalizer">Equalizer</string>
