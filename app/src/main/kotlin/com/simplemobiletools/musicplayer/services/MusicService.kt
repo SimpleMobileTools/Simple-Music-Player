@@ -1,8 +1,7 @@
 package com.simplemobiletools.musicplayer.services
 
-import android.app.Notification
-import android.app.PendingIntent
-import android.app.Service
+import android.annotation.SuppressLint
+import android.app.*
 import android.content.*
 import android.database.Cursor
 import android.graphics.Bitmap
@@ -19,10 +18,7 @@ import android.support.v4.app.NotificationCompat
 import android.telephony.PhoneStateListener
 import android.telephony.TelephonyManager
 import android.util.Log
-import com.simplemobiletools.commons.extensions.getIntValue
-import com.simplemobiletools.commons.extensions.getRealPathFromURI
-import com.simplemobiletools.commons.extensions.getStringValue
-import com.simplemobiletools.commons.extensions.hasPermission
+import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.PERMISSION_WRITE_STORAGE
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.MainActivity
@@ -291,6 +287,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         }
     }
 
+    @SuppressLint("NewApi")
     private fun setupNotification() {
         val title = mCurrSong?.title ?: ""
         val artist = mCurrSong?.artist ?: ""
@@ -309,6 +306,18 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             ongoing = true
         }
 
+        val channelId = "music_player_channel"
+        if (isOreoPlus()) {
+            val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            val name = resources.getString(R.string.app_name)
+            val importance = NotificationManager.IMPORTANCE_HIGH
+            NotificationChannel(channelId, name, importance).apply {
+                enableLights(false)
+                enableVibration(false)
+                notificationManager.createNotificationChannel(this)
+            }
+        }
+
         val notification = NotificationCompat.Builder(this)
                 .setStyle(android.support.v4.media.app.NotificationCompat.MediaStyle().setShowActionsInCompactView(playPauseButtonPosition, nextButtonPosition))
                 .setContentTitle(title)
@@ -322,6 +331,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
                 .setUsesChronometer(usesChronometer)
                 .setContentIntent(getContentIntent())
                 .setOngoing(ongoing)
+                .setChannelId(channelId)
                 .addAction(R.drawable.ic_previous, getString(R.string.previous), getIntent(PREVIOUS))
                 .addAction(playPauseIcon, getString(R.string.playpause), getIntent(PLAYPAUSE))
                 .addAction(R.drawable.ic_next, getString(R.string.next), getIntent(NEXT))
