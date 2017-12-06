@@ -2,7 +2,7 @@ package com.simplemobiletools.musicplayer.models
 
 import com.simplemobiletools.commons.helpers.SORT_DESCENDING
 import com.simplemobiletools.musicplayer.helpers.SORT_BY_ARTIST
-import com.simplemobiletools.musicplayer.helpers.SORT_BY_FILE_NAME
+import com.simplemobiletools.musicplayer.helpers.SORT_BY_PATH
 import com.simplemobiletools.musicplayer.helpers.SORT_BY_TITLE
 import java.io.Serializable
 
@@ -16,7 +16,7 @@ data class Song(val id: Long, var title: String, var artist: String, var path: S
         var res = when {
             sorting and SORT_BY_TITLE != 0 -> title.toLowerCase().compareTo(other.title.toLowerCase())
             sorting and SORT_BY_ARTIST != 0 -> artist.toLowerCase().compareTo(other.artist.toLowerCase())
-            sorting and SORT_BY_FILE_NAME != 0 -> path.toLowerCase().compareTo(other.path.toLowerCase())
+            sorting and SORT_BY_PATH != 0 -> path.toLowerCase().compareTo(other.path.toLowerCase())
             else -> when {
                 duration == other.duration -> 0
                 duration > other.duration -> 1

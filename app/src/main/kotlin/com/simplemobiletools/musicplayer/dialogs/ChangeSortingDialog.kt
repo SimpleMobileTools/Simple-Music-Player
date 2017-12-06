@@ -9,7 +9,7 @@ import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.helpers.SORT_BY_ARTIST
 import com.simplemobiletools.musicplayer.helpers.SORT_BY_DURATION
-import com.simplemobiletools.musicplayer.helpers.SORT_BY_FILE_NAME
+import com.simplemobiletools.musicplayer.helpers.SORT_BY_PATH
 import com.simplemobiletools.musicplayer.helpers.SORT_BY_TITLE
 import kotlinx.android.synthetic.main.dialog_change_sorting.view.*
 
@@ -37,7 +37,7 @@ class ChangeSortingDialog(val activity: Activity, val callback: () -> Unit) {
         val sortBtn = when {
             currSorting and SORT_BY_TITLE != 0 -> sortingRadio.sorting_dialog_radio_title
             currSorting and SORT_BY_ARTIST != 0 -> sortingRadio.sorting_dialog_radio_artist
-            currSorting and SORT_BY_FILE_NAME != 0 -> sortingRadio.sorting_dialog_radio_file_name
+            currSorting and SORT_BY_PATH != 0 -> sortingRadio.sorting_dialog_radio_path
             else -> sortingRadio.sorting_dialog_radio_duration
         }
         sortBtn.isChecked = true
@@ -58,7 +58,7 @@ class ChangeSortingDialog(val activity: Activity, val callback: () -> Unit) {
         var sorting = when (sortingRadio.checkedRadioButtonId) {
             R.id.sorting_dialog_radio_title -> SORT_BY_TITLE
             R.id.sorting_dialog_radio_artist -> SORT_BY_ARTIST
-            R.id.sorting_dialog_radio_file_name -> SORT_BY_FILE_NAME
+            R.id.sorting_dialog_radio_path -> SORT_BY_PATH
             else -> SORT_BY_DURATION
         }
 

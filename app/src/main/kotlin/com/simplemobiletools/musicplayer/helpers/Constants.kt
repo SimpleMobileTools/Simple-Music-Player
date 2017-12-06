@@ -34,5 +34,5 @@ val CURRENT_PLAYLIST = "current_playlist"
 // sorting
 val SORT_BY_TITLE = 1
 val SORT_BY_ARTIST = 2
-val SORT_BY_FILE_NAME = 4
+val SORT_BY_PATH = 4
 val SORT_BY_DURATION = 8
