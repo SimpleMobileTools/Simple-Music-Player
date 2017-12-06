@@ -1,8 +1,6 @@
 package com.simplemobiletools.musicplayer.activities
 
 import android.content.Intent
-import android.graphics.PorterDuff
-import android.graphics.PorterDuffColorFilter
 import android.media.AudioManager
 import android.os.Bundle
 import android.os.Environment
@@ -81,7 +79,8 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
         setupIconColors()
         markCurrentSong()
         updateTextColors(main_holder)
-        songs_playlist_empty_add_folder.background.colorFilter = PorterDuffColorFilter(config.textColor, PorterDuff.Mode.SRC_IN)
+        songs_playlist_empty_add_folder.background.applyColorFilter(config.textColor)
+        songs_fastscroller.updateBubbleColors()
     }
 
     override fun onPause() {
@@ -296,12 +295,12 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
 
     private fun setupIconColors() {
         val color = config.textColor
-        previous_btn.setColorFilter(color, PorterDuff.Mode.SRC_IN)
-        play_pause_btn.setColorFilter(color, PorterDuff.Mode.SRC_IN)
-        next_btn.setColorFilter(color, PorterDuff.Mode.SRC_IN)
+        previous_btn.applyColorFilter(color)
+        play_pause_btn.applyColorFilter(color)
+        next_btn.applyColorFilter(color)
 
         (songs_list.adapter as? SongAdapter)?.textColor = color
-        songs_fastscroller.updateHandleColor()
+        songs_fastscroller.updatePrimaryColor()
     }
 
     private fun songPicked(pos: Int) {

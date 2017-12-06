@@ -1,7 +1,6 @@
 package com.simplemobiletools.musicplayer.adapters
 
 import android.content.Intent
-import android.graphics.PorterDuff
 import android.net.Uri
 import android.view.Menu
 import android.view.View
@@ -9,6 +8,7 @@ import android.view.ViewGroup
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
 import com.simplemobiletools.commons.dialogs.ConfirmationDialog
 import com.simplemobiletools.commons.dialogs.PropertiesDialog
+import com.simplemobiletools.commons.extensions.applyColorFilter
 import com.simplemobiletools.commons.extensions.beInvisibleIf
 import com.simplemobiletools.commons.extensions.deleteFiles
 import com.simplemobiletools.commons.extensions.shareUris
@@ -195,7 +195,7 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, recycler
 
             song_note_image.beInvisibleIf(currentSongIndex != layoutPosition)
             if (currentSongIndex == layoutPosition) {
-                song_note_image.setColorFilter(textColor, PorterDuff.Mode.SRC_IN)
+                song_note_image.applyColorFilter(textColor)
             }
         }
     }

@@ -1,10 +1,10 @@
 package com.simplemobiletools.musicplayer.adapters
 
-import android.graphics.PorterDuff
 import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
+import com.simplemobiletools.commons.extensions.applyColorFilter
 import com.simplemobiletools.commons.extensions.beInvisibleIf
 import com.simplemobiletools.commons.extensions.deleteFiles
 import com.simplemobiletools.commons.extensions.toast
@@ -128,7 +128,7 @@ class PlaylistsAdapter(activity: SimpleActivity, val playlists: ArrayList<Playli
         view.apply {
             playlist_title.text = playlist.title
             playlist_title.setTextColor(textColor)
-            playlist_icon.setColorFilter(textColor, PorterDuff.Mode.SRC_IN)
+            playlist_icon.applyColorFilter(textColor)
             playlist_icon.beInvisibleIf(playlist.id != context.config.currentPlaylist)
         }
     }

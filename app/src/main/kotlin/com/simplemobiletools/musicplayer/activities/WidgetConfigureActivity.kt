@@ -4,13 +4,12 @@ import android.app.Activity
 import android.appwidget.AppWidgetManager
 import android.content.Intent
 import android.graphics.Color
-import android.graphics.PorterDuff
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.widget.RemoteViews
 import android.widget.SeekBar
 import com.simplemobiletools.commons.dialogs.ColorPickerDialog
 import com.simplemobiletools.commons.extensions.adjustAlpha
+import com.simplemobiletools.commons.extensions.applyColorFilter
 import com.simplemobiletools.commons.extensions.setBackgroundColor
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.extensions.config
@@ -114,9 +113,9 @@ class WidgetConfigureActivity : SimpleActivity() {
         song_title.setTextColor(mTextColor)
         song_artist.setTextColor(mTextColor)
 
-        previous_btn.drawable.mutate().setColorFilter(mTextColor, PorterDuff.Mode.SRC_IN)
-        play_pause_btn.drawable.mutate().setColorFilter(mTextColor, PorterDuff.Mode.SRC_IN)
-        next_btn.drawable.mutate().setColorFilter(mTextColor, PorterDuff.Mode.SRC_IN)
+        previous_btn.drawable.applyColorFilter(mTextColor)
+        play_pause_btn.drawable.applyColorFilter(mTextColor)
+        next_btn.drawable.applyColorFilter(mTextColor)
     }
 
     private fun pickBackgroundColor() {
