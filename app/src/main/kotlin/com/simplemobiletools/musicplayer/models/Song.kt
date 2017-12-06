@@ -1,5 +1,6 @@
 package com.simplemobiletools.musicplayer.models
 
+import com.simplemobiletools.commons.extensions.getFormattedDuration
 import com.simplemobiletools.commons.helpers.SORT_DESCENDING
 import com.simplemobiletools.musicplayer.helpers.SORT_BY_ARTIST
 import com.simplemobiletools.musicplayer.helpers.SORT_BY_PATH
@@ -34,5 +35,12 @@ data class Song(val id: Long, var title: String, var artist: String, var path: S
         this === other -> true
         other == null -> false
         else -> id == (other as Song).id
+    }
+
+    fun getBubbleText() = when {
+        sorting and SORT_BY_TITLE != 0 -> title
+        sorting and SORT_BY_ARTIST != 0 -> artist
+        sorting and SORT_BY_PATH != 0 -> path
+        else -> duration.getFormattedDuration()
     }
 }

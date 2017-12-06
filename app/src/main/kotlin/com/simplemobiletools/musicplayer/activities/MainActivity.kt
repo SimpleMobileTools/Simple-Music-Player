@@ -80,6 +80,8 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
         markCurrentSong()
         updateTextColors(main_holder)
         songs_playlist_empty_add_folder.background.applyColorFilter(config.textColor)
+
+        songs_fastscroller.allowBubbleDisplay = config.showInfoBubble
         songs_fastscroller.updateBubbleColors()
     }
 
@@ -326,7 +328,9 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
     private fun fillSongsListView(songs: ArrayList<Song>) {
         this.songs = songs
         val currAdapter = songs_list.adapter
-        songs_fastscroller.setViews(songs_list)
+        songs_fastscroller.setViews(songs_list) {
+            songs_fastscroller.updateBubbleText(songs[it].getBubbleText())
+        }
         if (currAdapter == null) {
             SongAdapter(this@MainActivity, songs, songs_list) {
                 songPicked(getSongIndex(it as Song))

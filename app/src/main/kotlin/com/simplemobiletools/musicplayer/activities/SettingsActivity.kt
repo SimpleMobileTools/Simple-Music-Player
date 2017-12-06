@@ -25,6 +25,7 @@ class SettingsActivity : SimpleActivity() {
         setupCustomizeColors()
         setupManagePlaylists()
         setupUseEnglish()
+        setupShowInfoBubble()
         setupEqualizer()
         updateTextColors(settings_scrollview)
     }
@@ -48,6 +49,14 @@ class SettingsActivity : SimpleActivity() {
     private fun setupManagePlaylists() {
         settings_manage_playlists_holder.setOnClickListener {
             startActivity(Intent(this, PlaylistsActivity::class.java))
+        }
+    }
+
+    private fun setupShowInfoBubble() {
+        settings_show_info_bubble.isChecked = config.showInfoBubble
+        settings_show_info_bubble_holder.setOnClickListener {
+            settings_show_info_bubble.toggle()
+            config.showInfoBubble = settings_show_info_bubble.isChecked
         }
     }
 
