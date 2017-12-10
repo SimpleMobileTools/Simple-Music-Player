@@ -38,12 +38,12 @@
     <string name="remove_from_playlist_description">Esta ação remove os elementos da lista de reprodução \"%s\" mas não apaga os ficheiros.</string>
     <string name="delete_the_files_too">Apagar também os ficheiros</string>
     <string name="open_playlist">Abrir lista de reprodução</string>
-    <string name="all_songs_cannot_be_deleted">\'All songs\' playlist cannot be deleted</string>
+    <string name="all_songs_cannot_be_deleted">Não é possível apagar a lista de reprodução \'Todas as faixas\'.</string>
     <string name="empty_playlist">A lista de reprodução está vazia</string>
     <string name="fetching_songs">A obter músicas…</string>
     <string name="all_songs">Todas as faixas</string>
-    <string name="create_playlist_from_folder">Create new playlist from folder</string>
-    <string name="folder_contains_no_audio">The selected folder contains no audio files</string>
+    <string name="create_playlist_from_folder">Criar nova lista de reprodução a partir da pasta</string>
+    <string name="folder_contains_no_audio">A pasta selecionada não contém ficheiros de áudio</string>
 
     <!-- Settings -->
     <string name="equalizer">Equalizador</string>
