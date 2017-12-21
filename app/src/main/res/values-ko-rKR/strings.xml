@@ -1,0 +1,68 @@
+<resources>
+    <string name="app_name">심플 뮤직 플레이어</string>
+    <string name="app_launcher_name">뮤직 플레이어</string>
+    <string name="playlist_empty">재생목록이 비어 있습니다.</string>
+    <string name="rename_song">음악파일명 변경</string>
+    <string name="rename_song_error">이름변경 중 오류발생</string>
+    <string name="rename_song_empty">모든 항목 정보를 입력하세요.</string>
+    <string name="enable_song_repetition">현재 노래 반복</string>
+    <string name="disable_song_repetition">현재 노래 반복 정지</string>
+    <string name="song_repetition_enabled">반복재생 활성화됨</string>
+    <string name="song_repetition_disabled">반복재생 비 활성화됨</string>
+    <string name="enable_shuffle">셔플 활성화</string>
+    <string name="disable_shuffle">셔플 비 활성화</string>
+    <string name="shuffle_enabled">셔플 활성화됨</string>
+    <string name="shuffle_disabled">셔플 비 활성화됨</string>
+    <string name="enable_autoplay">자동재생 활성화</string>
+    <string name="disable_autoplay">자동재생 비 활성화</string>
+    <string name="autoplay_enabled">자동재생 활성화됨</string>
+    <string name="autoplay_disabled">자동재생 비 활성화됨</string>
+    <string name="unknown">알 수 없음</string>
+
+    <string name="previous">이전</string>
+    <string name="playpause">재생 / 정지</string>
+    <string name="next">다음</string>
+
+    <!-- Playlists -->
+    <string name="add_file_to_playlist">재생목록에 파일 추가</string>
+    <string name="add_folder_to_playlist">재생목록에 폴더 추가</string>
+    <string name="manage_playlists">재생목록 관리</string>
+    <string name="playlists">재생 리스트</string>
+    <string name="create_playlist">재생목록 생성</string>
+    <string name="rename_playlist">재생목록 이름변경</string>
+    <string name="playlist_name_exists">재생목록 이름이 이미 존재합니다.</string>
+    <string name="remove_playlist">재생목록 삭제</string>
+    <string name="remove_playlist_description">선택된 재생목록만 삭제가 되며, 실제 파일은 삭제되지 않습니다.</string>
+    <string name="remove_playlist_description_placeholder">\"%s\" 재생목록만 삭제가 되며, 실제 파일은 삭제되지 않습니다.</string>
+    <string name="remove_from_playlist">재생목록에서 제거</string>
+    <string name="remove_from_playlist_description">This will only remove the items from playlist \"%s\", the actual files will not be deleted.</string>
+    <string name="delete_the_files_too">파일도 삭제하기</string>
+    <string name="open_playlist">재생목록 열기</string>
+    <string name="all_songs_cannot_be_deleted">\'전체 음악\' 목록은 삭제 할 수 없습니다.</string>
+    <string name="empty_playlist">현재 재생목록이 비어있습니다.</string>
+    <string name="fetching_songs">노래를 가져오는중…</string>
+    <string name="all_songs">전체 음악</string>
+    <string name="create_playlist_from_folder">폴더를 선택하여 새로운 재생목록 생성</string>
+    <string name="folder_contains_no_audio">선택된 폴더에는 오디오파일이 없습니다.</string>
+
+    <!-- Settings -->
+    <string name="equalizer">이퀄라이저</string>
+
+    <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
+    <!-- Short description has to have less than 80 chars -->
+    <string name="app_short_description">사용자정의 위젯을 포함하고 있는 깔끔한 뮤직 플레이어입니다.</string>
+    <string name="app_long_description">
+        상태 표시 줄, 홈 스크린 위젯 또는 헤드셋의 하드웨어 버튼으로 쉽게 제어 할 수있는 음악 플레이어입니다. 당신은 타이틀이나 아티스트별로 트랙을 정렬하고 이퀄라이저를 변경할 수 있습니다. 아직 아티스트 또는 앨범별 필터링을 지원하지 않으므로 계속 지켜봐 주시기 바랍니다. 전화가 오면 노래를 일시중지 해야 하기때문에 추가권한(핸드폰상태 확인)이 필요합니다.
+
+        위젯을 포함하고 있으며 사용자가 직접 위젯의 스타일을 설정 할 수 있습니다.
+
+        광고가 포함되어 있거나, 불필요한 권한을 요청하지 않습니다. 이 앱의 모든 소스는 오픈소스이며, 사용자가 직접 애플리케이션의 컬러를 설정 할 수 있습니다.
+
+        이 앱은 다양한 시리즈의 모바일앱 중 하나입니다. 나머지는 http://www.simplemobiletools.com 에서 찾아 보실 수 있습니다.
+    </string>
+
+    <!--
+        Haven't found some strings? There's more at
+        https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
+    -->
+</resources>
