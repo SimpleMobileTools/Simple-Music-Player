@@ -50,15 +50,17 @@
 
     <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
     <!-- Short description has to have less than 80 chars -->
-    <string name="app_short_description">Ein schlichter Musikplayer mit anpassbarem Widget.</string>
+    <string name="app_short_description">Ein schlichter Musikplayer mit anpassbarem Widget, ganz ohne Werbung.</string>
     <string name="app_long_description">
-        Ein Musikplayer, der einfach über die Benachrichtigungsleiste, das Homescreen Widget oder Buttons an deinem Headset gesteuert werden kann. Du kannst alle Songs nach Titel oder Künstler sortieren und den Equalizer anpassen. Das Filtern nach Künstler oder Album wird noch nicht unterstützt, bleib dran! Die Telefon-Berechtigung wird gebraucht, um die Wiedergabe bei eingehendem Anruf zu pausieren.
-
-        Die App beinhaltet ein Widget mit anpassbaren Textfarben, Transparenz und Hintergrundfarbe.
+        Ein schlichter Musikplayer, der ganz einfach über die Benachrichtigungsleiste, das Homescreen Widget oder die Tasten an deinem Headset gesteuert werden kann. Du kannst alle Songs nach Titel oder Künstler sortieren und den Equalizer anpassen. Das Filtern nach Künstler oder Album wird noch nicht unterstützt, bleib dran!
         
-        Beinhaltet keine Werbung und benötigt keine unnötigen Berechtigungen. Die App ist komplett Open Source und bietet nach Wunsch anpassbare Farben.
+        Die Telefon-Berechtigung wird gebraucht, um die Wiedergabe bei eingehendem Anruf zu pausieren.
 
-        Diese App ist nur eine von vielen unserer Apps. Du kannst alle anderen hier finden: http://www.simplemobiletools.com
+        Die App beinhaltet ein Widget mit anpassbarer Textfarbe, Transparenz und Hintergrundfarbe.
+        
+        Beinhaltet keine Werbung oder unnötige Berechtigungen. Sie ist komplett Open Source, alle verwendeten Farben sind anpassbar.
+
+        Diese App ist nur eine aus einer größeren Serie von schlichten Apps. Der Rest davon findet sich auf http://www.simplemobiletools.com
     </string>
 
     <!--
