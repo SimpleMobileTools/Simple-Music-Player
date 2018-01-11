@@ -23,7 +23,7 @@ import java.io.File
 import java.util.*
 
 class PlaylistsAdapter(activity: SimpleActivity, val playlists: ArrayList<Playlist>, val listener: RefreshItemsListener?, recyclerView: MyRecyclerView,
-                       itemClick: (Any) -> Unit) : MyRecyclerViewAdapter(activity, recyclerView, itemClick) {
+                       itemClick: (Any) -> Unit) : MyRecyclerViewAdapter(activity, recyclerView, null, itemClick) {
 
     override fun getActionMenuId() = R.menu.cab_playlists
 

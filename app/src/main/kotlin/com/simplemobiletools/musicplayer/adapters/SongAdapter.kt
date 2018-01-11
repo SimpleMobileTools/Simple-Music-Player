@@ -12,6 +12,7 @@ import com.simplemobiletools.commons.extensions.applyColorFilter
 import com.simplemobiletools.commons.extensions.beInvisibleIf
 import com.simplemobiletools.commons.extensions.deleteFiles
 import com.simplemobiletools.commons.extensions.shareUris
+import com.simplemobiletools.commons.views.FastScroller
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.musicplayer.BuildConfig
 import com.simplemobiletools.musicplayer.R
@@ -30,8 +31,8 @@ import kotlinx.android.synthetic.main.item_song.view.*
 import java.io.File
 import java.util.*
 
-class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, recyclerView: MyRecyclerView, itemClick: (Any) -> Unit)
-    : MyRecyclerViewAdapter(activity, recyclerView, itemClick) {
+class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, recyclerView: MyRecyclerView, fastScroller: FastScroller, itemClick: (Any) -> Unit)
+    : MyRecyclerViewAdapter(activity, recyclerView, fastScroller, itemClick) {
 
     private var currentSongIndex = 0
     var isThirdPartyIntent = false

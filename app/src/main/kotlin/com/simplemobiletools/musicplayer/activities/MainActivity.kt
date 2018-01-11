@@ -332,7 +332,7 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
             songs_fastscroller.updateBubbleText(songs.getOrNull(it)?.getBubbleText() ?: "")
         }
         if (currAdapter == null) {
-            SongAdapter(this@MainActivity, songs, songs_list) {
+            SongAdapter(this@MainActivity, songs, songs_list, songs_fastscroller) {
                 songPicked(getSongIndex(it as Song))
             }.apply {
                 setupDragListener(true)
