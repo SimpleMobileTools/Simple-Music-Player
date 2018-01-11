@@ -94,6 +94,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         } else {
             getSortedSongs()
         }
+
         mHeadsetPlugReceiver = HeadsetPlugReceiver()
         mIncomingCallReceiver = IncomingCallReceiver(this)
         mWasPlayingAtCall = false
@@ -190,8 +191,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
                     start()
                 }
 
-                val unknown = getString(R.string.unknown)
-                val song = Song(1, unknown, unknown, unknown, mPlayer!!.duration / 1000)
+                val song = mSongs.first()
                 mSongs.clear()
                 mSongs.add(song)
                 mCurrSong = song
