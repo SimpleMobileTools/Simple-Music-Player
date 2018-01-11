@@ -94,12 +94,19 @@ class DBHelper private constructor(val context: Context) : SQLiteOpenHelper(cont
     }
 
     fun addSongsToPlaylist(paths: ArrayList<String>, playlistId: Int = context.config.currentPlaylist) {
-        for (path in paths) {
-            ContentValues().apply {
-                put(COL_PATH, path)
-                put(COL_PLAYLIST_ID, playlistId)
-                mDb.insert(TABLE_NAME_SONGS, null, this)
+        try {
+            mDb.beginTransaction()
+            val values = ContentValues()
+            for (path in paths) {
+                values.apply {
+                    put(COL_PATH, path)
+                    put(COL_PLAYLIST_ID, playlistId)
+                    mDb.insert(TABLE_NAME_SONGS, null, this)
+                }
             }
+            mDb.setTransactionSuccessful()
+        } finally {
+            mDb.endTransaction()
         }
     }
 
