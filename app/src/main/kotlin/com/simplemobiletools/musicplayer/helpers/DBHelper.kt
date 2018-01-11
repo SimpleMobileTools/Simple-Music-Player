@@ -7,9 +7,7 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.provider.MediaStore
 import android.text.TextUtils
-import com.simplemobiletools.commons.extensions.getIntValue
-import com.simplemobiletools.commons.extensions.getLongValue
-import com.simplemobiletools.commons.extensions.getStringValue
+import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.extensions.playlistChanged
@@ -233,6 +231,9 @@ class DBHelper private constructor(val context: Context) : SQLiteOpenHelper(cont
     private fun getSongsFromPaths(paths: List<String>): ArrayList<Song> {
         val uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
         val columns = arrayOf(MediaStore.Audio.Media._ID, MediaStore.Audio.Media.TITLE, MediaStore.Audio.Media.ARTIST, MediaStore.Audio.Media.DATA, MediaStore.Audio.Media.DURATION)
+        val pathsMap = HashSet<String>()
+        paths.mapTo(pathsMap, { it })
+
         val questionMarks = getQuestionMarks(paths.size)
         val selection = "${MediaStore.Audio.Media.DATA} IN ($questionMarks)"
         val selectionArgs = paths.toTypedArray()
@@ -250,11 +251,20 @@ class DBHelper private constructor(val context: Context) : SQLiteOpenHelper(cont
                     val duration = cursor.getIntValue(MediaStore.Audio.Media.DURATION) / 1000
                     val song = Song(id, title, artist, path, duration)
                     songs.add(song)
+                    pathsMap.remove(path)
                 } while (cursor.moveToNext())
             }
         } finally {
             cursor?.close()
         }
+
+        pathsMap.forEach {
+            val file = File(it)
+            val unknown = context.getString(R.string.unknown)
+            val song = Song(0, file.getSongTitle() ?: unknown, file.getArtist() ?: unknown, it, file.getDurationSeconds())
+            songs.add(song)
+        }
+
         return songs
     }
 
