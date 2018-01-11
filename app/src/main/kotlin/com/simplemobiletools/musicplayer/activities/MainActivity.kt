@@ -329,7 +329,7 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
         this.songs = songs
         val currAdapter = songs_list.adapter
         songs_fastscroller.setViews(songs_list) {
-            songs_fastscroller.updateBubbleText(songs[it].getBubbleText())
+            songs_fastscroller.updateBubbleText(songs.getOrNull(it)?.getBubbleText() ?: "")
         }
         if (currAdapter == null) {
             SongAdapter(this@MainActivity, songs, songs_list) {

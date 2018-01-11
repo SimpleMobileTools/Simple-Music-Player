@@ -277,13 +277,13 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
     private fun setupEqualizer() {
         mEqualizer = Equalizer(0, mPlayer!!.audioSessionId)
-        mEqualizer!!.enabled = true
+        mEqualizer?.enabled = true
         setPreset(config.equalizer)
     }
 
     private fun setPreset(id: Int) {
         try {
-            mEqualizer!!.usePreset(id.toShort())
+            mEqualizer?.usePreset(id.toShort())
         } catch (e: IllegalArgumentException) {
             Log.e(TAG, "setPreset $e")
         }
