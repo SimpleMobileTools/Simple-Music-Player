@@ -1,6 +1,17 @@
 Changelog
 ==========
 
+Version 3.1.0 *(2018-01-12)*
+----------------------------
+
+ * Added initial search
+ * Removed the PHONE_STATE_PERMISSION
+ * Pause the music on any audio focus loss
+ * Removed some annoying Android system beeps on notification interactions
+ * Added OPUS support
+ * Properly handle files which arent present in the audio mediastore
+ * Make dark theme the default
+
 Version 3.0.1 *(2017-12-06)*
 ----------------------------
 
