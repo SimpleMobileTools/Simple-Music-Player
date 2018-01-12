@@ -52,7 +52,7 @@
     <!-- Short description has to have less than 80 chars -->
     <string name="app_short_description">Prosty odtwarzacz muzyki z konfigurowalnym widżetem..</string>
     <string name="app_long_description">
-        Odtwarzacz muzyki łatwy do kontrolowania z poziomu paska stanu, widżetu na pulpicie lub przycisków na słuchawkach. Możesz sortować utwory według tytułu i wykonawcy (według albumu jeszcze nie, ale kiedyś będzie to możliwe). Audiofile posiadają zaś możliwość zabawy suwakami w korektorze. Aby móc wstrzymać odtwarzanie na czas rozmowy telefonicznej, aplikacja potrzebuje uprawnienia \"Telefon\".
+        Odtwarzacz muzyki łatwy do kontrolowania z poziomu paska stanu, widżetu na pulpicie lub przycisków na słuchawkach. Możesz sortować utwory według tytułu i wykonawcy (według albumu jeszcze nie, ale kiedyś będzie to możliwe). Audiofile posiadają zaś możliwość zabawy suwakami w korektorze.
 
         Zawiera widżet z konfigurowalnymi kolorami napisów i tła.
 

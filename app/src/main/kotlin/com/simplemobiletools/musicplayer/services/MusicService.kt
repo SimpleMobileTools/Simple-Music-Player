@@ -15,8 +15,6 @@ import android.os.Handler
 import android.os.PowerManager
 import android.provider.MediaStore
 import android.support.v4.app.NotificationCompat
-import android.telephony.PhoneStateListener
-import android.telephony.TelephonyManager
 import android.util.Log
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.PERMISSION_WRITE_STORAGE
@@ -29,7 +27,6 @@ import com.simplemobiletools.musicplayer.models.Events
 import com.simplemobiletools.musicplayer.models.Song
 import com.simplemobiletools.musicplayer.receivers.ControlActionsListener
 import com.simplemobiletools.musicplayer.receivers.HeadsetPlugReceiver
-import com.simplemobiletools.musicplayer.receivers.IncomingCallReceiver
 import com.simplemobiletools.musicplayer.receivers.RemoteControlReceiver
 import com.squareup.otto.Bus
 import java.io.File
@@ -46,7 +43,6 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         var mCurrSong: Song? = null
         var mEqualizer: Equalizer? = null
         private var mHeadsetPlugReceiver: HeadsetPlugReceiver? = null
-        private var mIncomingCallReceiver: IncomingCallReceiver? = null
         private var mPlayer: MediaPlayer? = null
         private var mPlayedSongIndexes = ArrayList<Int>()
         private var mBus: Bus? = null
@@ -96,7 +92,6 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         }
 
         mHeadsetPlugReceiver = HeadsetPlugReceiver()
-        mIncomingCallReceiver = IncomingCallReceiver(this)
         mWasPlayingAtCall = false
         initMediaPlayerIfNeeded()
         setupNotification()
@@ -550,9 +545,6 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
         mEqualizer?.release()
 
-        val telephonyManager = getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
-        telephonyManager.listen(mIncomingCallReceiver, PhoneStateListener.LISTEN_NONE)
-
         stopForeground(true)
         stopSelf()
         mIsThirdPartyIntent = false
@@ -589,9 +581,6 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         if (isPlaying) {
             val filter = IntentFilter(Intent.ACTION_HEADSET_PLUG)
             registerReceiver(mHeadsetPlugReceiver, filter)
-
-            val telephonyManager = getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
-            telephonyManager.listen(mIncomingCallReceiver, PhoneStateListener.LISTEN_CALL_STATE)
         } else {
             try {
                 unregisterReceiver(mHeadsetPlugReceiver)

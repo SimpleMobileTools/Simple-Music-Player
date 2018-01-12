@@ -52,7 +52,7 @@
     <!-- Short description has to have less than 80 chars -->
     <string name="app_short_description">Een eenvoudige muziekspeler met aan te passen widget.</string>
     <string name="app_long_description">
-        Een muziekspeler die gemakkelijk te bedienen is via statusbalk, widget of met de fysieke knoppen op de headset. Je kunt de nummers sorteren op titel of artiest en de Equalizer aanpassen. De permissie Telefoon is nodig om de muziek te pauzeren zodra er een oproep binnenkomt.
+        Een muziekspeler die gemakkelijk te bedienen is via statusbalk, widget of met de fysieke knoppen op de headset. Je kunt de nummers sorteren op titel of artiest en de Equalizer aanpassen.
 
         De achtergrond en kleuren van de widget zijn aan te passen.
 

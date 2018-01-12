@@ -52,7 +52,7 @@
     <!-- Short description has to have less than 80 chars -->
     <string name="app_short_description">Egy letisztult zenelejátszó, testreszabható widgettel.</string>
     <string name="app_long_description">
-        Az állapotsorról, kezdőképernyő widgetről vagy a fejhallgató hardveres gombjaival könnyen vezérelhető zenelejátszó. Rendezheti a számait cím vagy előadó szerint, és módosíthatja a hangszínszabályzót. Egyelőre még nem támogatja az előadó vagy album szerinti szűrést. A telefonállapot engedély azért szükséges, hogy szüneteltetni lehessen a lejátszást, ha hívás érkezik.
+        Az állapotsorról, kezdőképernyő widgetről vagy a fejhallgató hardveres gombjaival könnyen vezérelhető zenelejátszó. Rendezheti a számait cím vagy előadó szerint, és módosíthatja a hangszínszabályzót. Egyelőre még nem támogatja az előadó vagy album szerinti szűrést.
 
         Egy testreszabható widgetet tartalmaz, amelynek a szövegszínét, átlátszóságát, és háttérszínét lehet állítani.
 

@@ -54,7 +54,7 @@
     <string name="app_long_description">
         Hudobný prehrávač jednoducho ovládateľný zo statovej lišty, widgetu na ploche, alebo hardvérovými tlačidlami na slúchadlách. Poskytuje rôzne možnosti zoradenia pesničiek, ako aj rôzne ekvalizéry.
 
-        Prístup ku Stavu Zariadenia je potrebný na pozastavenie prehrávania počas prichádzajúceho hovoru.
+        Obsahuje škálovateľný widget, kde viete upraviť farbu textu, ako aj priehľadnosť a farbu pozadia.
 
         Neobsahuje žiadne reklamy a nepotrebné oprávnenia. Je opensource, poskytuje možnosť zmeny farieb.
 
