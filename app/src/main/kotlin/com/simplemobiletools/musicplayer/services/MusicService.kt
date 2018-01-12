@@ -50,6 +50,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         private var mProgressHandler: Handler? = null
         private var mSongs = ArrayList<Song>()
         private var mAudioManager: AudioManager? = null
+        private var mOreoFocusHandler: OreoAudioFocusHandler? = null
 
         private var mWasPlayingAtFocusLost = false
         private var mPlayOnPrepare = true
@@ -72,6 +73,9 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         val remoteControlComponent = ComponentName(packageName, RemoteControlReceiver::class.java.name)
         mAudioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager
         mAudioManager!!.registerMediaButtonEventReceiver(remoteControlComponent)
+        if (isOreoPlus()) {
+            mOreoFocusHandler = OreoAudioFocusHandler(applicationContext)
+        }
 
         if (hasPermission(PERMISSION_WRITE_STORAGE)) {
             initService()
@@ -561,11 +565,19 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     }
 
     private fun requestAudioFocus() {
-        mAudioManager?.requestAudioFocus(this, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN)
+        if (isOreoPlus()) {
+            mOreoFocusHandler?.requestAudioFocus(this)
+        } else {
+            mAudioManager?.requestAudioFocus(this, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN)
+        }
     }
 
     private fun abandonAudioFocus() {
-        mAudioManager?.abandonAudioFocus(this)
+        if (isOreoPlus()) {
+            mOreoFocusHandler?.abandonAudioFocus()
+        } else {
+            mAudioManager?.abandonAudioFocus(this)
+        }
     }
 
     override fun onAudioFocusChange(focusChange: Int) {
