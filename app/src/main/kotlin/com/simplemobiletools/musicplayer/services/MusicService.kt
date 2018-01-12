@@ -312,7 +312,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         if (isOreoPlus()) {
             val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             val name = resources.getString(R.string.app_name)
-            val importance = NotificationManager.IMPORTANCE_HIGH
+            val importance = NotificationManager.IMPORTANCE_LOW
             NotificationChannel(channelId, name, importance).apply {
                 enableLights(false)
                 enableVibration(false)
