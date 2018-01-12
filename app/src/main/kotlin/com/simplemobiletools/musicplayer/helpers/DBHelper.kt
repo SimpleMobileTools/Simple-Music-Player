@@ -234,28 +234,34 @@ class DBHelper private constructor(val context: Context) : SQLiteOpenHelper(cont
         val pathsMap = HashSet<String>()
         paths.mapTo(pathsMap, { it })
 
-        val questionMarks = getQuestionMarks(paths.size)
-        val selection = "${MediaStore.Audio.Media.DATA} IN ($questionMarks)"
-        val selectionArgs = paths.toTypedArray()
+        val ITEMS_PER_GROUP = 50
         val songs = ArrayList<Song>(paths.size)
 
-        var cursor: Cursor? = null
-        try {
-            cursor = context.contentResolver.query(uri, columns, selection, selectionArgs, null)
-            if (cursor != null && cursor.moveToFirst()) {
-                do {
-                    val id = cursor.getLongValue(MediaStore.Audio.Media._ID)
-                    val title = cursor.getStringValue(MediaStore.Audio.Media.TITLE)
-                    val artist = cursor.getStringValue(MediaStore.Audio.Media.ARTIST)
-                    val path = cursor.getStringValue(MediaStore.Audio.Media.DATA)
-                    val duration = cursor.getIntValue(MediaStore.Audio.Media.DURATION) / 1000
-                    val song = Song(id, title, artist, path, duration)
-                    songs.add(song)
-                    pathsMap.remove(path)
-                } while (cursor.moveToNext())
+        val parts = paths.size / ITEMS_PER_GROUP
+        for (i in 0..parts) {
+            val sublist = paths.subList(i * ITEMS_PER_GROUP, Math.min((i + 1) * ITEMS_PER_GROUP, paths.size))
+            val questionMarks = getQuestionMarks(sublist.size)
+            val selection = "${MediaStore.Audio.Media.DATA} IN ($questionMarks)"
+            val selectionArgs = sublist.toTypedArray()
+
+            var cursor: Cursor? = null
+            try {
+                cursor = context.contentResolver.query(uri, columns, selection, selectionArgs, null)
+                if (cursor != null && cursor.moveToFirst()) {
+                    do {
+                        val id = cursor.getLongValue(MediaStore.Audio.Media._ID)
+                        val title = cursor.getStringValue(MediaStore.Audio.Media.TITLE)
+                        val artist = cursor.getStringValue(MediaStore.Audio.Media.ARTIST)
+                        val path = cursor.getStringValue(MediaStore.Audio.Media.DATA)
+                        val duration = cursor.getIntValue(MediaStore.Audio.Media.DURATION) / 1000
+                        val song = Song(id, title, artist, path, duration)
+                        songs.add(song)
+                        pathsMap.remove(path)
+                    } while (cursor.moveToNext())
+                }
+            } finally {
+                cursor?.close()
             }
-        } finally {
-            cursor?.close()
         }
 
         pathsMap.forEach {
