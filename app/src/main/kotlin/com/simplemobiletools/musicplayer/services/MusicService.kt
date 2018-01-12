@@ -7,6 +7,7 @@ import android.database.Cursor
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.media.AudioManager
+import android.media.AudioManager.*
 import android.media.MediaMetadataRetriever
 import android.media.MediaPlayer
 import android.media.audiofx.Equalizer
@@ -33,7 +34,7 @@ import java.io.File
 import java.io.IOException
 import java.util.*
 
-class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnErrorListener, MediaPlayer.OnCompletionListener {
+class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnErrorListener, MediaPlayer.OnCompletionListener, AudioManager.OnAudioFocusChangeListener {
     companion object {
         private val TAG = MusicService::class.java.simpleName
         private val MIN_INITIAL_DURATION = 30
@@ -48,8 +49,9 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         private var mBus: Bus? = null
         private var mProgressHandler: Handler? = null
         private var mSongs = ArrayList<Song>()
+        private var mAudioManager: AudioManager? = null
 
-        private var mWasPlayingAtCall = false
+        private var mWasPlayingAtFocusLost = false
         private var mPlayOnPrepare = true
         private var mIsThirdPartyIntent = false
         private var intentUri: Uri? = null
@@ -68,13 +70,19 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
         mProgressHandler = Handler()
         val remoteControlComponent = ComponentName(packageName, RemoteControlReceiver::class.java.name)
-        val audioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager
-        audioManager.registerMediaButtonEventReceiver(remoteControlComponent)
+        mAudioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager
+        mAudioManager!!.registerMediaButtonEventReceiver(remoteControlComponent)
+
         if (hasPermission(PERMISSION_WRITE_STORAGE)) {
             initService()
         } else {
             mBus!!.post(Events.NoStoragePermission())
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        destroyPlayer()
     }
 
     private fun initService() {
@@ -92,7 +100,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         }
 
         mHeadsetPlugReceiver = HeadsetPlugReceiver()
-        mWasPlayingAtCall = false
+        mWasPlayingAtFocusLost = false
         initMediaPlayerIfNeeded()
         setupNotification()
         isServiceInitialized = true
@@ -139,8 +147,6 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
                 setupNextSong()
             }
             PLAYPOS -> playSong(intent)
-            CALL_START -> incomingCallStart()
-            CALL_STOP -> incomingCallStop()
             EDIT -> {
                 mCurrSong = intent.getSerializableExtra(EDITED_SONG) as Song
                 mBus!!.post(Events.SongChanged(mCurrSong))
@@ -184,6 +190,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
                     setOnPreparedListener(null)
                     prepare()
                     start()
+                    requestAudioFocus()
                 }
 
                 val song = mSongs.first()
@@ -432,6 +439,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             setupNextSong()
         } else {
             mPlayer!!.start()
+            requestAudioFocus()
         }
 
         songStateChanged(true)
@@ -495,6 +503,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
     private fun handleEmptyPlaylist() {
         mPlayer!!.pause()
+        abandonAudioFocus()
         mCurrSong = null
         mBus!!.post(Events.SongChanged(null))
         songStateChanged(false)
@@ -522,14 +531,10 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     override fun onPrepared(mp: MediaPlayer) {
         if (mPlayOnPrepare) {
             mp.start()
+            requestAudioFocus()
         }
         songStateChanged(getIsPlaying())
         setupNotification()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        destroyPlayer()
     }
 
     private fun destroyPlayer() {
@@ -549,23 +554,42 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         stopSelf()
         mIsThirdPartyIntent = false
         isServiceInitialized = false
+
+        val remoteControlComponent = ComponentName(packageName, RemoteControlReceiver::class.java.name)
+        mAudioManager!!.unregisterMediaButtonEventReceiver(remoteControlComponent)
+        abandonAudioFocus()
     }
 
-    private fun incomingCallStart() {
-        if (getIsPlaying()) {
-            mWasPlayingAtCall = true
-            pauseSong()
-        } else {
-            mWasPlayingAtCall = false
+    private fun requestAudioFocus() {
+        mAudioManager?.requestAudioFocus(this, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN)
+    }
+
+    private fun abandonAudioFocus() {
+        mAudioManager?.abandonAudioFocus(this)
+    }
+
+    override fun onAudioFocusChange(focusChange: Int) {
+        when (focusChange) {
+            AUDIOFOCUS_GAIN -> audioFocusGained()
+            AUDIOFOCUS_LOSS, AUDIOFOCUS_LOSS_TRANSIENT, AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK -> audioFocusLost()
         }
     }
 
-    private fun incomingCallStop() {
-        if (mWasPlayingAtCall) {
+    private fun audioFocusLost() {
+        if (getIsPlaying()) {
+            mWasPlayingAtFocusLost = true
+            pauseSong()
+        } else {
+            mWasPlayingAtFocusLost = false
+        }
+    }
+
+    private fun audioFocusGained() {
+        if (mWasPlayingAtFocusLost) {
             resumeSong()
         }
 
-        mWasPlayingAtCall = false
+        mWasPlayingAtFocusLost = false
     }
 
     private fun updateProgress(progress: Int) {
