@@ -179,11 +179,13 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
 
         MenuItemCompat.setOnActionExpandListener(searchMenuItem, object : MenuItemCompat.OnActionExpandListener {
             override fun onMenuItemActionExpand(item: MenuItem?): Boolean {
+                main_header_holder.beGone()
                 isSearchOpen = true
                 return true
             }
 
             override fun onMenuItemActionCollapse(item: MenuItem?): Boolean {
+                main_header_holder.beVisible()
                 isSearchOpen = false
                 return true
             }
