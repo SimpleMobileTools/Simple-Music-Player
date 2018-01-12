@@ -264,15 +264,13 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     }
 
     private fun getSortedSongs() {
-        Thread {
-            if (config.currentPlaylist == DBHelper.ALL_SONGS_ID) {
-                getAllDeviceSongs()
-            }
+        if (config.currentPlaylist == DBHelper.ALL_SONGS_ID) {
+            getAllDeviceSongs()
+        }
 
-            mSongs = dbHelper.getSongs()
-            Song.sorting = config.sorting
-            mSongs.sort()
-        }.start()
+        mSongs = dbHelper.getSongs()
+        Song.sorting = config.sorting
+        mSongs.sort()
     }
 
     private fun setupEqualizer() {
