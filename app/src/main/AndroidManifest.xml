@@ -35,6 +35,13 @@
         <activity
             android:name=".activities.MainActivity"
             android:launchMode="singleTask">
+            <meta-data
+                android:name="android.app.default_searchable"
+                android:resource="@xml/searchable"/>
+
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH"/>
+            </intent-filter>
 
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>

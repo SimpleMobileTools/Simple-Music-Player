@@ -1,10 +1,14 @@
 package com.simplemobiletools.musicplayer.activities
 
+import android.app.SearchManager
+import android.content.Context
 import android.content.Intent
 import android.media.AudioManager
 import android.os.Bundle
 import android.os.Environment
+import android.support.v4.view.MenuItemCompat
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.SearchView
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.SeekBar
@@ -38,8 +42,12 @@ import java.util.*
 
 class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
     private var isThirdPartyIntent = false
-    private var storedUseEnglish = false
     private var songs = ArrayList<Song>()
+    private var searchMenuItem: MenuItem? = null
+    private var isSearchOpen = false
+
+    private var storedUseEnglish = false
+
     lateinit var bus: Bus
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -90,8 +98,16 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
         storeStateVariables()
     }
 
+    override fun onStop() {
+        super.onStop()
+        if (searchMenuItem != null) {
+            MenuItemCompat.collapseActionView(searchMenuItem)
+        }
+    }
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
+        setupSearch(menu)
 
         val songRepetition = menu.findItem(R.id.toggle_song_repetition)
         songRepetition.title = getString(if (config.repeatSong) R.string.disable_song_repetition else R.string.enable_song_repetition)
@@ -141,6 +157,37 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
         config.apply {
             storedUseEnglish = useEnglish
         }
+    }
+
+    private fun setupSearch(menu: Menu) {
+        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        searchMenuItem = menu.findItem(R.id.search)
+        (searchMenuItem!!.actionView as SearchView).apply {
+            setSearchableInfo(searchManager.getSearchableInfo(componentName))
+            isSubmitButtonEnabled = false
+            setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String) = false
+
+                override fun onQueryTextChange(newText: String): Boolean {
+                    if (isSearchOpen) {
+                        searchQueryChanged(newText)
+                    }
+                    return true
+                }
+            })
+        }
+
+        MenuItemCompat.setOnActionExpandListener(searchMenuItem, object : MenuItemCompat.OnActionExpandListener {
+            override fun onMenuItemActionExpand(item: MenuItem?): Boolean {
+                isSearchOpen = true
+                return true
+            }
+
+            override fun onMenuItemActionCollapse(item: MenuItem?): Boolean {
+                isSearchOpen = false
+                return true
+            }
+        })
     }
 
     private fun launchSettings() {
@@ -329,8 +376,10 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
         this.songs = songs
         val currAdapter = songs_list.adapter
         songs_fastscroller.setViews(songs_list) {
-            songs_fastscroller.updateBubbleText(songs.getOrNull(it)?.getBubbleText() ?: "")
+            val item = (songs_list.adapter as SongAdapter).songs.getOrNull(it)
+            songs_fastscroller.updateBubbleText(item?.getBubbleText() ?: "")
         }
+
         if (currAdapter == null) {
             SongAdapter(this@MainActivity, songs, songs_list, songs_fastscroller) {
                 songPicked(getSongIndex(it as Song))
@@ -396,6 +445,12 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
         val songIndex = (0..cnt).firstOrNull { songs[it].id == newSongId } ?: -1
         if (songs_list.adapter != null)
             (songs_list.adapter as SongAdapter).updateCurrentSongIndex(songIndex)
+    }
+
+    private fun searchQueryChanged(text: String) {
+        val filtered = songs.filter { it.artist.contains(text, true) || it.title.contains(text, true) } as ArrayList
+        filtered.sortBy { !(it.artist.startsWith(text, true) || it.title.startsWith(text, true)) }
+        (songs_list.adapter as SongAdapter).updateSongs(filtered)
     }
 
     override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
