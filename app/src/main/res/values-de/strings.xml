@@ -1,48 +1,48 @@
 <resources>
-    <string name="app_name">Schlichter Musikplayer</string>
-    <string name="app_launcher_name">Musikplayer</string>
+    <string name="app_name">Schlichter Musik-Player</string>
+    <string name="app_launcher_name">Musik-Player</string>
     <string name="playlist_empty">Deine Playlist ist leer</string>
     <string name="rename_song">Lied umbenennen</string>
     <string name="rename_song_error">Während des Umbenennens ist ein Fehler aufgetreten</string>
     <string name="rename_song_empty">Fülle bitte alle Felder aus</string>
-    <string name="enable_song_repetition">Aktuelles Lied wiederholen</string>
+    <string name="enable_song_repetition">Aktuelles Lied Wiederholen</string>
     <string name="disable_song_repetition">Aktuelles Lied nicht mehr wiederholen</string>
-    <string name="song_repetition_enabled">Wiederholung des aktuellen Lieds aktiviert</string>
-    <string name="song_repetition_disabled">Wiederholung des aktuellen Lieds deaktiviert</string>
+    <string name="song_repetition_enabled">Wiederholung des aktuellen Liedes aktiviert</string>
+    <string name="song_repetition_disabled">Wiederholung des aktuellen Liedes deaktiviert</string>
     <string name="enable_shuffle">Zufällige Wiedergabe aktivieren</string>
     <string name="disable_shuffle">Zufällige Wiedergabe deaktivieren</string>
     <string name="shuffle_enabled">Zufällige Wiedergabe aktiviert</string>
     <string name="shuffle_disabled">Zufällige Wiedergabe deaktiviert</string>
-    <string name="enable_autoplay">Automatisches Abspielen aktivieren</string>
-    <string name="disable_autoplay">Automatisches Abspielen deaktivieren</string>
+    <string name="enable_autoplay">Automatische Wiedergabe aktivieren</string>
+    <string name="disable_autoplay">Automatische Wiedergabe deaktivieren</string>
     <string name="autoplay_enabled">Automatisches Abspielen aktiviert</string>
     <string name="autoplay_disabled">Automatisches Abspielen deaktiviert</string>
     <string name="unknown">Unbekannt</string>
 
-    <string name="previous">Voriger Titel</string>
-    <string name="playpause">Play / Pause</string>
+    <string name="previous">Vorheriger Titel</string>
+    <string name="playpause">Wiedergabe / Pause</string>
     <string name="next">Nächster Titel</string>
 
     <!-- Playlists -->
-    <string name="add_file_to_playlist">Datei zu Playlist hinzufügen</string>
-    <string name="add_folder_to_playlist">Ordner zu Playlist hinzufügen</string>
-    <string name="manage_playlists">Playlisten verwalten</string>
+    <string name="add_file_to_playlist">Datei zur Wiedergabeliste hinzufügen</string>
+    <string name="add_folder_to_playlist">Ordner zur Wiedergabeliste hinzufügen</string>
+    <string name="manage_playlists">Wiedergabelisten verwalten</string>
     <string name="playlists">Playlisten</string>
     <string name="create_playlist">Playlist erstellen</string>
     <string name="rename_playlist">Playlist umbenennen</string>
     <string name="playlist_name_exists">Es gibt bereits eine Playlist mit diesem Namen</string>
-    <string name="remove_playlist">Playlist löschen</string>
-    <string name="remove_playlist_description">Diese Aktion wird nur die Playlist löschen, nicht die eigentlichen Dateien.</string>
-    <string name="remove_playlist_description_placeholder">Diese Aktion wird nur die Playlist \"%s\" löschen, nicht die eigentlichen Dateien.</string>
-    <string name="remove_from_playlist">Playlist löschen</string>
-    <string name="remove_from_playlist_description">Diese Aktion wird nur alle Dateien der Playlist \"%s\" löschen, nicht die eigentlichen Dateien.</string>
+    <string name="remove_playlist">Entferne Wiedergabeliste</string>
+    <string name="remove_playlist_description">Entfernt werden nur die ausgewählten Wiedergabelisten, nicht die eigentlichen Dateien.</string>
+    <string name="remove_playlist_description_placeholder">Entfernt wird nur die Wiedergabeliste \"%s\", nicht die tatsächlichen Dateien.</string>
+    <string name="remove_from_playlist">Von Wiedergabeliste entfernen</string>
+    <string name="remove_from_playlist_description">Es werden nur die Elemente aus der Wiedergabeliste \"%s\" entfernt, die eigentlichen Dateien werden nicht gelöscht.</string>
     <string name="delete_the_files_too">Dateien auch löschen</string>
     <string name="open_playlist">Playlist öffnen</string>
-    <string name="all_songs_cannot_be_deleted">Playlist \'Alle Songs\' kann nicht gelöscht werden</string>
-    <string name="empty_playlist">Die derzeitige Playlist ist leer</string>
+    <string name="all_songs_cannot_be_deleted">Wiedergabeliste \'Alle Lieder\' kann nicht gelöscht werden</string>
+    <string name="empty_playlist">Derzeitige Wiedergabeliste ist leer</string>
     <string name="fetching_songs">Rufe Songs ab…</string>
-    <string name="all_songs">Alle Songs</string>
-    <string name="create_playlist_from_folder">Neue Playlist aus Ordner erstellen</string>
+    <string name="all_songs">Alle Lieder</string>
+    <string name="create_playlist_from_folder">Erstelle neue Wiedergabeliste aus Ordner</string>
     <string name="folder_contains_no_audio">Der ausgewählte Ordner enthält keine Audiodateien</string>
 
     <!-- Settings -->
@@ -50,16 +50,8 @@
 
     <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
     <!-- Short description has to have less than 80 chars -->
-    <string name="app_short_description">Ein schlichter Musikplayer mit anpassbarem Widget, ganz ohne Werbung.</string>
-    <string name="app_long_description">
-        Ein schlichter Musikplayer, der ganz einfach über die Benachrichtigungsleiste, das Homescreen Widget oder die Tasten an deinem Headset gesteuert werden kann. Du kannst alle Songs nach Titel oder Künstler sortieren und den Equalizer anpassen. Das Filtern nach Künstler oder Album wird noch nicht unterstützt, bleib dran!
-        
-        Die App beinhaltet ein Widget mit anpassbarer Textfarbe, Transparenz und Hintergrundfarbe.
-        
-        Beinhaltet keine Werbung oder unnötige Berechtigungen. Sie ist komplett Open Source, alle verwendeten Farben sind anpassbar.
-
-        Diese App ist nur eine aus einer größeren Serie von schlichten Apps. Der Rest davon findet sich auf http://www.simplemobiletools.com
-    </string>
+    <string name="app_short_description">Ein sauberer Musik-Player mit anpassbarem Widget.</string>
+    <string name="app_long_description">Ein schlichter Musikplayer, der ganz einfach über die Benachrichtigungsleiste, das Homescreen Widget oder die Tasten an Deinem Headset gesteuert werden kann. Du kannst alle Songs nach Titel oder Künstler sortieren und den Equalizer anpassen. Das Filtern nach Künstler oder Album wird noch nicht unterstützt, bleib dran!                  Die App beinhaltet ein Widget mit anpassbarer Textfarbe, Transparenz und Hintergrundfarbe.                  Beinhaltet keine Werbung oder unnötige Berechtigungen. Sie ist komplett Open Source, alle verwendeten Farben sind anpassbar.          Diese App ist nur eine aus einer größeren Serie von schlichten Apps. Der Rest davon findet sich auf http://www.simplemobiletools.com</string>
 
     <!--
         Haven't found some strings? There's more at
