@@ -1,25 +1,25 @@
 <resources>
-    <string name="app_name">Schlichter Musikplayer</string>
-    <string name="app_launcher_name">Musikplayer</string>
+    <string name="app_name">Schlichter Musik-Player</string>
+    <string name="app_launcher_name">Musik-Player</string>
     <string name="playlist_empty">Deine Playlist ist leer</string>
-    <string name="rename_song">Lied umbenennen</string>
+    <string name="rename_song">Song umbenennen</string>
     <string name="rename_song_error">Während des Umbenennens ist ein Fehler aufgetreten</string>
     <string name="rename_song_empty">Fülle bitte alle Felder aus</string>
-    <string name="enable_song_repetition">Aktuelles Lied wiederholen</string>
-    <string name="disable_song_repetition">Aktuelles Lied nicht mehr wiederholen</string>
-    <string name="song_repetition_enabled">Wiederholung des aktuellen Lieds aktiviert</string>
-    <string name="song_repetition_disabled">Wiederholung des aktuellen Lieds deaktiviert</string>
+    <string name="enable_song_repetition">Aktuellen Song wiederholen</string>
+    <string name="disable_song_repetition">Aktuellen Song nicht mehr wiederholen</string>
+    <string name="song_repetition_enabled">Wiederholung des aktuellen Songs aktiviert</string>
+    <string name="song_repetition_disabled">Wiederholung des aktuellen Songs deaktiviert</string>
     <string name="enable_shuffle">Zufällige Wiedergabe aktivieren</string>
     <string name="disable_shuffle">Zufällige Wiedergabe deaktivieren</string>
     <string name="shuffle_enabled">Zufällige Wiedergabe aktiviert</string>
     <string name="shuffle_disabled">Zufällige Wiedergabe deaktiviert</string>
-    <string name="enable_autoplay">Automatisches Abspielen aktivieren</string>
-    <string name="disable_autoplay">Automatisches Abspielen deaktivieren</string>
-    <string name="autoplay_enabled">Automatisches Abspielen aktiviert</string>
-    <string name="autoplay_disabled">Automatisches Abspielen deaktiviert</string>
+    <string name="enable_autoplay">Automatische Wiedergabe aktivieren</string>
+    <string name="disable_autoplay">Automatische Wiedergabe deaktivieren</string>
+    <string name="autoplay_enabled">Automatische Wiedergabe aktiviert</string>
+    <string name="autoplay_disabled">Automatische Wiedergabe deaktiviert</string>
     <string name="unknown">Unbekannt</string>
 
-    <string name="previous">Voriger Titel</string>
+    <string name="previous">Vorheriger Titel</string>
     <string name="playpause">Play / Pause</string>
     <string name="next">Nächster Titel</string>
 
@@ -32,10 +32,10 @@
     <string name="rename_playlist">Playlist umbenennen</string>
     <string name="playlist_name_exists">Es gibt bereits eine Playlist mit diesem Namen</string>
     <string name="remove_playlist">Playlist löschen</string>
-    <string name="remove_playlist_description">Diese Aktion wird nur die Playlist löschen, nicht die eigentlichen Dateien.</string>
-    <string name="remove_playlist_description_placeholder">Diese Aktion wird nur die Playlist \"%s\" löschen, nicht die eigentlichen Dateien.</string>
-    <string name="remove_from_playlist">Playlist löschen</string>
-    <string name="remove_from_playlist_description">Diese Aktion wird nur alle Dateien der Playlist \"%s\" löschen, nicht die eigentlichen Dateien.</string>
+    <string name="remove_playlist_description">Gelöscht wird nur die ausgewählte Playlist, die eigentlichen Dateien werden nicht gelöscht.</string>
+    <string name="remove_playlist_description_placeholder">Gelöscht wird nur die Playlist \"%s\", die eigentlichen Dateien werden nicht gelöscht.</string>
+    <string name="remove_from_playlist">Aus Playlist entfernen</string>
+    <string name="remove_from_playlist_description">Es werden nur die Elemente aus der Playlist \"%s\" entfernt, die eigentlichen Dateien werden nicht gelöscht.</string>
     <string name="delete_the_files_too">Dateien auch löschen</string>
     <string name="open_playlist">Playlist öffnen</string>
     <string name="all_songs_cannot_be_deleted">Playlist \'Alle Songs\' kann nicht gelöscht werden</string>
