@@ -32,8 +32,8 @@
     <string name="rename_playlist">Playlist umbenennen</string>
     <string name="playlist_name_exists">Es gibt bereits eine Playlist mit diesem Namen</string>
     <string name="remove_playlist">Playlist löschen</string>
-    <string name="remove_playlist_description">Gelöscht werden nur die ausgewählten Wiedergabelisten, nicht die eigentlichen Dateien.</string>
-    <string name="remove_playlist_description_placeholder">Gelöscht wird nur die Wiedergabeliste \"%s\", nicht die eigentlichen Dateien.</string>
+    <string name="remove_playlist_description">Gelöscht werden nur die ausgewählten Playlists, nicht die eigentlichen Dateien.</string>
+    <string name="remove_playlist_description_placeholder">Gelöscht wird nur die Playlist \"%s\", nicht die eigentlichen Dateien.</string>
     <string name="remove_from_playlist">Aus Playlist entfernen</string>
     <string name="remove_from_playlist_description">Es werden nur die Elemente aus der Playlist \"%s\" entfernt, die eigentlichen Dateien werden nicht gelöscht.</string>
     <string name="delete_the_files_too">Dateien auch löschen</string>
