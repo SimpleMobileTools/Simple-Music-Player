@@ -12,6 +12,7 @@ import com.simplemobiletools.commons.extensions.applyColorFilter
 import com.simplemobiletools.commons.extensions.beInvisibleIf
 import com.simplemobiletools.commons.extensions.deleteFiles
 import com.simplemobiletools.commons.extensions.shareUris
+import com.simplemobiletools.commons.interfaces.RefreshRecyclerViewListener
 import com.simplemobiletools.commons.views.FastScroller
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.musicplayer.BuildConfig
@@ -31,8 +32,8 @@ import kotlinx.android.synthetic.main.item_song.view.*
 import java.io.File
 import java.util.*
 
-class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, recyclerView: MyRecyclerView, fastScroller: FastScroller, itemClick: (Any) -> Unit)
-    : MyRecyclerViewAdapter(activity, recyclerView, fastScroller, itemClick) {
+class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val listener: RefreshRecyclerViewListener, recyclerView: MyRecyclerView,
+                  fastScroller: FastScroller, itemClick: (Any) -> Unit) : MyRecyclerViewAdapter(activity, recyclerView, fastScroller, itemClick) {
 
     private var currentSongIndex = 0
     private var songsHashCode = songs.hashCode()
@@ -145,6 +146,10 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, recycler
             activity.dbHelper.removeSongsFromPlaylist(paths, -1)
             activity.deleteFiles(files) { }
             removeSelectedItems()
+
+            if (songs.isEmpty()) {
+                listener.refreshItems()
+            }
         }
     }
 
@@ -169,6 +174,10 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, recycler
         songs.removeAll(removeSongs)
         activity.dbHelper.removeSongsFromPlaylist(paths)
         removeSelectedItems()
+
+        if (songs.isEmpty()) {
+            listener.refreshItems()
+        }
     }
 
     fun updateSongs(newSongs: ArrayList<Song>) {

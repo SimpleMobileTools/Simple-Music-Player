@@ -3,6 +3,7 @@ package com.simplemobiletools.musicplayer.activities
 import android.app.SearchManager
 import android.content.Context
 import android.content.Intent
+import android.graphics.Paint
 import android.media.AudioManager
 import android.os.Bundle
 import android.os.Environment
@@ -16,6 +17,7 @@ import com.simplemobiletools.commons.dialogs.FilePickerDialog
 import com.simplemobiletools.commons.dialogs.RadioGroupDialog
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.*
+import com.simplemobiletools.commons.interfaces.RefreshRecyclerViewListener
 import com.simplemobiletools.commons.models.RadioItem
 import com.simplemobiletools.commons.models.Release
 import com.simplemobiletools.musicplayer.BuildConfig
@@ -40,7 +42,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import java.io.File
 import java.util.*
 
-class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
+class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener, RefreshRecyclerViewListener {
     private var isThirdPartyIntent = false
     private var songs = ArrayList<Song>()
     private var searchMenuItem: MenuItem? = null
@@ -87,7 +89,8 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
         setupIconColors()
         markCurrentSong()
         updateTextColors(main_holder)
-        songs_playlist_empty_add_folder.background.applyColorFilter(config.textColor)
+        songs_playlist_empty_add_folder.setTextColor(getAdjustedPrimaryColor())
+        songs_playlist_empty_add_folder.paintFlags = songs_playlist_empty_add_folder.paintFlags or Paint.UNDERLINE_TEXT_FLAG
 
         songs_fastscroller.allowBubbleDisplay = config.showInfoBubble
         songs_fastscroller.updateBubbleColors()
@@ -102,6 +105,15 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
         super.onStop()
         if (searchMenuItem != null) {
             MenuItemCompat.collapseActionView(searchMenuItem)
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        bus.unregister(this)
+
+        if (isThirdPartyIntent) {
+            sendIntent(FINISH)
         }
     }
 
@@ -179,13 +191,20 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
 
         MenuItemCompat.setOnActionExpandListener(searchMenuItem, object : MenuItemCompat.OnActionExpandListener {
             override fun onMenuItemActionExpand(item: MenuItem?): Boolean {
+                songs_playlist_empty.text = getString(R.string.no_items_found)
+                songs_playlist_empty_add_folder.beGone()
                 main_header_holder.beGone()
                 isSearchOpen = true
                 return true
             }
 
             override fun onMenuItemActionCollapse(item: MenuItem?): Boolean {
+                songs_playlist_empty.text = getString(R.string.playlist_empty)
+                songs_playlist_empty_add_folder.beVisibleIf(songs.isEmpty())
                 main_header_holder.beVisible()
+                if (isSearchOpen) {
+                    searchQueryChanged("")
+                }
                 isSearchOpen = false
                 return true
             }
@@ -383,7 +402,7 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
         }
 
         if (currAdapter == null) {
-            SongAdapter(this@MainActivity, songs, songs_list, songs_fastscroller) {
+            SongAdapter(this@MainActivity, songs, this, songs_list, songs_fastscroller) {
                 songPicked(getSongIndex(it as Song))
             }.apply {
                 setupDragListener(true)
@@ -405,15 +424,6 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
     }
 
     private fun getSongIndex(song: Song): Int = songs.indexOfFirstOrNull { it == song } ?: 0
-
-    override fun onDestroy() {
-        super.onDestroy()
-        bus.unregister(this)
-
-        if (isThirdPartyIntent) {
-            sendIntent(FINISH)
-        }
-    }
 
     @Subscribe
     fun songChangedEvent(event: Events.SongChanged) {
@@ -452,6 +462,7 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
     private fun searchQueryChanged(text: String) {
         val filtered = songs.filter { it.artist.contains(text, true) || it.title.contains(text, true) } as ArrayList
         filtered.sortBy { !(it.artist.startsWith(text, true) || it.title.startsWith(text, true)) }
+        songs_playlist_empty.beVisibleIf(filtered.isEmpty())
         (songs_list.adapter as? SongAdapter)?.updateSongs(filtered)
     }
 
@@ -470,6 +481,10 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
             action = SET_PROGRESS
             startService(this)
         }
+    }
+
+    override fun refreshItems() {
+        sendIntent(REFRESH_LIST)
     }
 
     private fun checkWhatsNewDialog() {

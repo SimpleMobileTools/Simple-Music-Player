@@ -150,8 +150,9 @@ class MyWidgetProvider : AppWidgetProvider() {
         val rows = getCellsForSize(minHeight)
 
         var layoutId = R.layout.widget
-        if (rows == 1)
+        if (rows == 1) {
             layoutId = R.layout.small_widget
+        }
 
         return RemoteViews(context.packageName, layoutId)
     }
