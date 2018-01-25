@@ -452,7 +452,7 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener {
     private fun searchQueryChanged(text: String) {
         val filtered = songs.filter { it.artist.contains(text, true) || it.title.contains(text, true) } as ArrayList
         filtered.sortBy { !(it.artist.startsWith(text, true) || it.title.startsWith(text, true)) }
-        (songs_list.adapter as SongAdapter).updateSongs(filtered)
+        (songs_list.adapter as? SongAdapter)?.updateSongs(filtered)
     }
 
     override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
