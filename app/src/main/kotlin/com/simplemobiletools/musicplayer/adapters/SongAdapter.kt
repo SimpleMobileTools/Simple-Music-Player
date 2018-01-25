@@ -35,6 +35,7 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, recycler
     : MyRecyclerViewAdapter(activity, recyclerView, fastScroller, itemClick) {
 
     private var currentSongIndex = 0
+    private var songsHashCode = songs.hashCode()
     var isThirdPartyIntent = false
 
     override fun getActionMenuId() = R.menu.cab
@@ -171,9 +172,13 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, recycler
     }
 
     fun updateSongs(newSongs: ArrayList<Song>) {
-        songs = newSongs
-        currentSongIndex = -1
-        notifyDataSetChanged()
+        val newHashCode = newSongs.hashCode()
+        if (newHashCode != songsHashCode) {
+            songsHashCode = newHashCode
+            songs = newSongs
+            currentSongIndex = -1
+            notifyDataSetChanged()
+        }
     }
 
     fun updateCurrentSongIndex(index: Int) {
