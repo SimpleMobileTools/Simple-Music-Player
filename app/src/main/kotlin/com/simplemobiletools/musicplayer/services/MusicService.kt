@@ -37,9 +37,9 @@ import java.util.*
 class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnErrorListener, MediaPlayer.OnCompletionListener, AudioManager.OnAudioFocusChangeListener {
     companion object {
         private val TAG = MusicService::class.java.simpleName
-        private val MIN_INITIAL_DURATION = 30
-        private val PROGRESS_UPDATE_INTERVAL = 1000
-        private val NOTIFICATION_ID = 78    // just a random number
+        private const val MIN_INITIAL_DURATION = 30
+        private const val PROGRESS_UPDATE_INTERVAL = 1000
+        private const val NOTIFICATION_ID = 78    // just a random number
 
         var mCurrSong: Song? = null
         var mEqualizer: Equalizer? = null
@@ -57,6 +57,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         private var mIsThirdPartyIntent = false
         private var intentUri: Uri? = null
         private var isServiceInitialized = false
+        private var prevAudioFocusState = 0
 
         fun getIsPlaying() = mPlayer?.isPlaying == true
     }
@@ -583,8 +584,10 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     override fun onAudioFocusChange(focusChange: Int) {
         when (focusChange) {
             AUDIOFOCUS_GAIN -> audioFocusGained()
-            AUDIOFOCUS_LOSS, AUDIOFOCUS_LOSS_TRANSIENT, AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK -> audioFocusLost()
+            AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK -> duckAudio()
+            AUDIOFOCUS_LOSS, AUDIOFOCUS_LOSS_TRANSIENT -> audioFocusLost()
         }
+        prevAudioFocusState = focusChange
     }
 
     private fun audioFocusLost() {
@@ -598,10 +601,23 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
     private fun audioFocusGained() {
         if (mWasPlayingAtFocusLost) {
-            resumeSong()
+            if (prevAudioFocusState == AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK) {
+                unduckAudio()
+            } else {
+                resumeSong()
+            }
         }
 
         mWasPlayingAtFocusLost = false
+    }
+
+    private fun duckAudio() {
+        mPlayer?.setVolume(0.3f, 0.3f)
+        mWasPlayingAtFocusLost = getIsPlaying()
+    }
+
+    private fun unduckAudio() {
+        mPlayer?.setVolume(1f, 1f)
     }
 
     private fun updateProgress(progress: Int) {
