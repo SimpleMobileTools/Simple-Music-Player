@@ -1,6 +1,12 @@
 Changelog
 ==========
 
+Version 3.1.1 *(2018-01-25)*
+----------------------------
+
+ * Recognize .flac files as audio files
+ * Do not pause the sound at an incoming notification, just decrease the volume
+
 Version 3.1.0 *(2018-01-12)*
 ----------------------------
 
