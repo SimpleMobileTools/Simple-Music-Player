@@ -8,7 +8,10 @@ import com.simplemobiletools.musicplayer.services.MusicService
 fun Context.sendIntent(action: String) {
     Intent(this, MusicService::class.java).apply {
         this.action = action
-        startService(this)
+        try {
+            startService(this)
+        } catch (ignored: Exception) {
+        }
     }
 }
 
