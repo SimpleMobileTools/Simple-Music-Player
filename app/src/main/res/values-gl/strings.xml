@@ -1,0 +1,68 @@
+<resources>
+    <string name="app_name">Simple Music Player</string>
+    <string name="app_launcher_name">Music Player</string>
+    <string name="playlist_empty">A lista de reprodución está baldeira</string>
+    <string name="rename_song">Renomear canción</string>
+    <string name="rename_song_error">Algo fallou ao renomear</string>
+    <string name="rename_song_empty">Por favor complete todos os campos</string>
+    <string name="enable_song_repetition">Repetir a canción actualRepeat current song</string>
+    <string name="disable_song_repetition">Non repetir a canción actualStop repeating current song</string>
+    <string name="song_repetition_enabled">Repetición canción actual activada song repetition enabled</string>
+    <string name="song_repetition_disabled">Repetición canción actual desactivadaCurrent song repetition disabled</string>
+    <string name="enable_shuffle">Enable shuffle</string>
+    <string name="disable_shuffle">Disable shuffle</string>
+    <string name="shuffle_enabled">Shuffle enabled</string>
+    <string name="shuffle_disabled">Shuffle disabled</string>
+    <string name="enable_autoplay">Enable autoplay</string>
+    <string name="disable_autoplay">Disable autoplay</string>
+    <string name="autoplay_enabled">Autoplay enabled</string>
+    <string name="autoplay_disabled">Autoplay disabled</string>
+    <string name="unknown">Unknown</string>
+
+    <string name="previous">Previous</string>
+    <string name="playpause">Play / Pause</string>
+    <string name="next">Next</string>
+
+    <!-- Playlists -->
+    <string name="add_file_to_playlist">Add file to playlist</string>
+    <string name="add_folder_to_playlist">Add folder to playlist</string>
+    <string name="manage_playlists">Manage playlists</string>
+    <string name="playlists">Playlists</string>
+    <string name="create_playlist">Create playlist</string>
+    <string name="rename_playlist">Rename playlist</string>
+    <string name="playlist_name_exists">A playlist with that name already exists</string>
+    <string name="remove_playlist">Remove playlist</string>
+    <string name="remove_playlist_description">This will only remove the selected playlists, not the actual files.</string>
+    <string name="remove_playlist_description_placeholder">This will only remove playlist \"%s\", not the actual files.</string>
+    <string name="remove_from_playlist">Remove from playlist</string>
+    <string name="remove_from_playlist_description">This will only remove the items from playlist \"%s\", the actual files will not be deleted.</string>
+    <string name="delete_the_files_too">Delete the files too</string>
+    <string name="open_playlist">Open playlist</string>
+    <string name="all_songs_cannot_be_deleted">\'All songs\' playlist cannot be deleted</string>
+    <string name="empty_playlist">Current playlist is empty</string>
+    <string name="fetching_songs">Fetching songs…</string>
+    <string name="all_songs">All songs</string>
+    <string name="create_playlist_from_folder">Create new playlist from folder</string>
+    <string name="folder_contains_no_audio">The selected folder contains no audio files</string>
+
+    <!-- Settings -->
+    <string name="equalizer">Equalizer</string>
+
+    <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
+    <!-- Short description has to have less than 80 chars -->
+    <string name="app_short_description">A clean music player with a customizable widget.</string>
+    <string name="app_long_description">
+        A music player easily controllable from the status bar, home screen widget or by hardware buttons on your headset. You can sort the tracks by the Title or Artist, as well as change the Equalizer. Does not yet support filtering by artist or album, stay tuned!
+
+        It contains a widget with customizable text color, alpha and the color of the background.
+
+        Contains no ads or unnecessary permissions. It is fully opensource, provides customizable colors.
+
+        This app is just one piece of a bigger series of apps. You can find the rest of them at http://www.simplemobiletools.com
+    </string>
+
+    <!--
+        Haven't found some strings? There's more at
+        https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
+    -->
+</resources>
