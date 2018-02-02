@@ -24,26 +24,26 @@
     <string name="next">Następny</string>
 
     <!-- Playlists -->
-    <string name="add_file_to_playlist">Dodaj plik do playlisty</string>
-    <string name="add_folder_to_playlist">Dodaj folder do playlisty</string>
-    <string name="manage_playlists">Zarządzaj playlistami</string>
-    <string name="playlists">Playlisty</string>
-    <string name="create_playlist">Utwórz playlistę</string>
-    <string name="rename_playlist">Zmień nazwę playlisty</string>
-    <string name="playlist_name_exists">Playlista z tą nazwą już istnieje</string>
-    <string name="remove_playlist">Usuń playlistę</string>
-    <string name="remove_playlist_description">To usunie tylko wybrane playlisty, nie pliki.</string>
-    <string name="remove_playlist_description_placeholder">To usunie tylko playlistę \"%s\", nie pliki.</string>
-    <string name="remove_from_playlist">Usuń z playlisty</string>
+    <string name="add_file_to_playlist">Dodaj plik do listy odtwarzania</string>
+    <string name="add_folder_to_playlist">Dodaj folder do listy odtwarzania</string>
+    <string name="manage_playlists">Zarządzaj listami odtwarzania</string>
+    <string name="playlists">Listy odtwarzania</string>
+    <string name="create_playlist">Utwórz listę odtwarzania</string>
+    <string name="rename_playlist">Zmień nazwę listy odtwarzania</string>
+    <string name="playlist_name_exists">Lista odtwarzania z tą nazwą już istnieje</string>
+    <string name="remove_playlist">Usuń listę odtwarzania</string>
+    <string name="remove_playlist_description">To usunie tylko wybrane listy odtwarzania, nie pliki.</string>
+    <string name="remove_playlist_description_placeholder">To usunie tylko listę odtwarzania \"%s\", nie pliki.</string>
+    <string name="remove_from_playlist">Usuń z listy odtwarzania</string>
     <string name="remove_from_playlist_description">To usunie tylko elementy z playlisty \"%s\", pliki zostaną nienaruszone.</string>
     <string name="delete_the_files_too">Usuń też pliki</string>
-    <string name="open_playlist">Otwórz playlistę</string>
-    <string name="all_songs_cannot_be_deleted">\'Wszystkie utwory\' playlista nie może zostać usunięta</string>
-    <string name="empty_playlist">Obecna playlista jest pusta</string>
-    <string name="fetching_songs">Otrzymywanie utworów…</string>
+    <string name="open_playlist">Otwórz listę odtwarzania</string>
+    <string name="all_songs_cannot_be_deleted">Lista odtwarzania \'Wszystkie utwory\' nie może zostać usunięta</string>
+    <string name="empty_playlist">Obecna lista odtwarzania jest pusta</string>
+    <string name="fetching_songs">Zbieranie utworów…</string>
     <string name="all_songs">Wszystkie utwory</string>
-    <string name="create_playlist_from_folder">Create new playlist from folder</string>
-    <string name="folder_contains_no_audio">The selected folder contains no audio files</string>
+    <string name="create_playlist_from_folder">Utwórz nową listę odtwarzania z folderu</string>
+    <string name="folder_contains_no_audio">Wybrany folder nie zawiera plików audio</string>
 
     <!-- Settings -->
     <string name="equalizer">Korektor</string>
