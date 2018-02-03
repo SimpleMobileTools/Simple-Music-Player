@@ -13,11 +13,11 @@
     <string name="disable_shuffle">Inaktivera blanda</string>
     <string name="shuffle_enabled">Blanda är nu aktiverad</string>
     <string name="shuffle_disabled">Blanda är nu inaktiverad</string>
-    <string name="enable_autoplay">Enable autoplay</string>
-    <string name="disable_autoplay">Disable autoplay</string>
-    <string name="autoplay_enabled">Autoplay enabled</string>
-    <string name="autoplay_disabled">Autoplay disabled</string>
-    <string name="unknown">Unknown</string>
+    <string name="enable_autoplay">Aktivera automatisk uppspelning</string>
+    <string name="disable_autoplay">Inaktivera automatisk uppspelning</string>
+    <string name="autoplay_enabled">Automatisk uppspelning har aktiverats</string>
+    <string name="autoplay_disabled">Automatisk uppspelning har inaktiverats</string>
+    <string name="unknown">Okänd</string>
 
     <string name="previous">Föregående</string>
     <string name="playpause">Spela / Pausa</string>
@@ -38,27 +38,27 @@
     <string name="remove_from_playlist_description">Detta tar bara bort objekten från spellistan \"%s\", själva filerna tas inte bort.</string>
     <string name="delete_the_files_too">Ta även bort filerna</string>
     <string name="open_playlist">Öppna spellista</string>
-    <string name="all_songs_cannot_be_deleted">\'All songs\' playlist cannot be deleted</string>
+    <string name="all_songs_cannot_be_deleted">Spellistan \'Alla låtar\' kan inte tas bort</string>
     <string name="empty_playlist">Den aktuella spellistan är tom</string>
-    <string name="fetching_songs">Fetching songs…</string>
-    <string name="all_songs">All songs</string>
-    <string name="create_playlist_from_folder">Create new playlist from folder</string>
-    <string name="folder_contains_no_audio">The selected folder contains no audio files</string>
+    <string name="fetching_songs">Hämtar låtar…</string>
+    <string name="all_songs">Alla låtar</string>
+    <string name="create_playlist_from_folder">Skapa ny spellista från mapp</string>
+    <string name="folder_contains_no_audio">Den valda mappen innehåller inga ljudfiler</string>
 
     <!-- Settings -->
     <string name="equalizer">Equalizer</string>
 
     <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
     <!-- Short description has to have less than 80 chars -->
-    <string name="app_short_description">En enkel och ren musikspelare med en anpassningsbar widget.</string>
+    <string name="app_short_description">En ren musikspelare med en anpassningsbar widget.</string>
     <string name="app_long_description">
-        En musikspelare som du enkelt styr från statusbaren, widget på hemskärmen eller via dina knappar på headsetet. Du kan sortera dina låtar efter Titel eller Artisten, och även ändra Equalizern. Stöder ännu inte filtrering efter artist eller album, men håll ögonen öppna!
+        En musikspelare som du enkelt styr från statusfältet, en widget på startskärmen eller knapparna på ditt headset. Du kan ändra Equalizern och sortera låtarna efter Titel eller Artist. Du kan inte filtrera efter artist eller album ännu, men håll ögonen öppna!
 
-        Den innehåller en widget där du kan ändra textfärgen och färgen på bakgrunden.
+        Den har en widget med anpassningsbar textfärg, bakgrundsfärg och bakgrundsgenomskinlighet.
 
-        Innehåller ingen reklam eller onödiga behörigheter. Det är helt och hållet opensource, innehåller anpassningsbara färger.
+        Innehåller ingen reklam eller onödiga behörigheter. Den har helt öppen källkod och anpassningsbara färger.
 
-        Detta är bara en app i en serie av appar. Du hittar resten av dem här http://www.simplemobiletools.com
+        Denna app är bara en del av en större serie appar. Du hittar resten av dem på http://www.simplemobiletools.com
     </string>
 
     <!--
