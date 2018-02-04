@@ -112,7 +112,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToPadding="false"
-            app:layoutManager="android.support.v7.widget.LinearLayoutManager"/>
+            app:layoutManager="com.simplemobiletools.commons.views.MyLinearLayoutManager"/>
 
         <com.simplemobiletools.commons.views.FastScroller
             android:id="@+id/songs_fastscroller"
