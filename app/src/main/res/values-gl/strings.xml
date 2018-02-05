@@ -44,6 +44,8 @@
     <string name="all_songs">Todas as cancións</string>
     <string name="create_playlist_from_folder">Crear nova lista de reprodución desde cartafol</string>
     <string name="folder_contains_no_audio">O cartafol seleccionado non contén ficheiros de audio</string>
+    <string name="delete_current_song">Delete current song</string>
+    <string name="remove_current_song">Remove current song from playlist</string>
 
     <!-- Settings -->
     <string name="equalizer">Ecualizador</string>

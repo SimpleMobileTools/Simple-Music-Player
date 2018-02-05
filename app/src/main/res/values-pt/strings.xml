@@ -44,6 +44,8 @@
     <string name="all_songs">Todas as faixas</string>
     <string name="create_playlist_from_folder">Criar nova lista de reprodução a partir da pasta</string>
     <string name="folder_contains_no_audio">A pasta selecionada não contém ficheiros de áudio</string>
+    <string name="delete_current_song">Delete current song</string>
+    <string name="remove_current_song">Remove current song from playlist</string>
 
     <!-- Settings -->
     <string name="equalizer">Equalizador</string>

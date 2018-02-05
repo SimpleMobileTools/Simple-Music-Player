@@ -44,6 +44,8 @@
     <string name="all_songs">Všetky skladby</string>
     <string name="create_playlist_from_folder">Vytvoriť nový zoznam skladieb z priečinka</string>
     <string name="folder_contains_no_audio">Zvolený priečinok neobsahuje žiadne audio súbory</string>
+    <string name="delete_current_song">Vymazať súčasnú skladbu</string>
+    <string name="remove_current_song">Odstrániť súčasnú skladbu zo zoznamu skladieb</string>
 
     <!-- Settings -->
     <string name="equalizer">Ekvalizér</string>
