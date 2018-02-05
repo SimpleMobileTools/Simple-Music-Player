@@ -230,7 +230,12 @@ class DBHelper private constructor(val context: Context) : SQLiteOpenHelper(cont
 
     private fun getSongsFromPaths(paths: List<String>): ArrayList<Song> {
         val uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
-        val columns = arrayOf(MediaStore.Audio.Media._ID, MediaStore.Audio.Media.TITLE, MediaStore.Audio.Media.ARTIST, MediaStore.Audio.Media.DATA, MediaStore.Audio.Media.DURATION)
+        val columns = arrayOf(MediaStore.Audio.Media._ID,
+                MediaStore.Audio.Media.TITLE,
+                MediaStore.Audio.Media.ARTIST,
+                MediaStore.Audio.Media.DATA,
+                MediaStore.Audio.Media.DURATION,
+                MediaStore.Audio.Media.ALBUM)
         val pathsMap = HashSet<String>()
         paths.mapTo(pathsMap, { it })
 
@@ -247,14 +252,15 @@ class DBHelper private constructor(val context: Context) : SQLiteOpenHelper(cont
             var cursor: Cursor? = null
             try {
                 cursor = context.contentResolver.query(uri, columns, selection, selectionArgs, null)
-                if (cursor != null && cursor.moveToFirst()) {
+                if (cursor?.moveToFirst() == true) {
                     do {
                         val id = cursor.getLongValue(MediaStore.Audio.Media._ID)
                         val title = cursor.getStringValue(MediaStore.Audio.Media.TITLE)
                         val artist = cursor.getStringValue(MediaStore.Audio.Media.ARTIST)
                         val path = cursor.getStringValue(MediaStore.Audio.Media.DATA)
                         val duration = cursor.getIntValue(MediaStore.Audio.Media.DURATION) / 1000
-                        val song = Song(id, title, artist, path, duration)
+                        val album = cursor.getStringValue(MediaStore.Audio.Media.ALBUM)
+                        val song = Song(id, title, artist, path, duration, album)
                         songs.add(song)
                         pathsMap.remove(path)
                     } while (cursor.moveToNext())
@@ -267,7 +273,7 @@ class DBHelper private constructor(val context: Context) : SQLiteOpenHelper(cont
         pathsMap.forEach {
             val file = File(it)
             val unknown = context.getString(R.string.unknown)
-            val song = Song(0, file.getSongTitle() ?: unknown, file.getArtist() ?: unknown, it, file.getDurationSeconds())
+            val song = Song(0, file.getSongTitle() ?: unknown, file.getArtist() ?: unknown, it, file.getDurationSeconds(), "")
             songs.add(song)
         }
 

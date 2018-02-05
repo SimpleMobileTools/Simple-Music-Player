@@ -359,8 +359,9 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
                 if (rawArt != null) {
                     val options = BitmapFactory.Options()
                     val bitmap = BitmapFactory.decodeByteArray(rawArt, 0, rawArt.size, options)
-                    if (bitmap != null)
+                    if (bitmap != null) {
                         return bitmap
+                    }
                 }
             } catch (e: Exception) {
             }
