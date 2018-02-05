@@ -406,7 +406,7 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener, RefreshR
                 songPicked(getSongIndex(it as Song))
             }.apply {
                 setupDragListener(true)
-                this.isThirdPartyIntent = isThirdPartyIntent
+                isThirdPartyIntent = this@MainActivity.isThirdPartyIntent
                 addVerticalDividers(true)
                 songs_list.adapter = this
             }
