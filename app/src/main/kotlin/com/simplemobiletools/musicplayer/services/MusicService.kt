@@ -4,11 +4,8 @@ import android.annotation.SuppressLint
 import android.app.*
 import android.content.*
 import android.database.Cursor
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.media.AudioManager
 import android.media.AudioManager.*
-import android.media.MediaMetadataRetriever
 import android.media.MediaPlayer
 import android.media.audiofx.Equalizer
 import android.net.Uri
@@ -23,6 +20,7 @@ import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.MainActivity
 import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.extensions.dbHelper
+import com.simplemobiletools.musicplayer.extensions.getAlbumImage
 import com.simplemobiletools.musicplayer.helpers.*
 import com.simplemobiletools.musicplayer.models.Events
 import com.simplemobiletools.musicplayer.models.Song
@@ -330,7 +328,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
                 .setContentTitle(title)
                 .setContentText(artist)
                 .setSmallIcon(R.drawable.ic_headset_small)
-                .setLargeIcon(getAlbumImage())
+                .setLargeIcon(getAlbumImage(mCurrSong))
                 .setVisibility(Notification.VISIBILITY_PUBLIC)
                 .setPriority(Notification.PRIORITY_MAX)
                 .setWhen(notifWhen)
@@ -348,25 +346,6 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         if (!getIsPlaying()) {
             Handler().postDelayed({ stopForeground(false) }, 500)
         }
-    }
-
-    private fun getAlbumImage(): Bitmap {
-        if (File(mCurrSong?.path ?: "").exists()) {
-            try {
-                val mediaMetadataRetriever = MediaMetadataRetriever()
-                mediaMetadataRetriever.setDataSource(mCurrSong!!.path)
-                val rawArt = mediaMetadataRetriever.embeddedPicture
-                if (rawArt != null) {
-                    val options = BitmapFactory.Options()
-                    val bitmap = BitmapFactory.decodeByteArray(rawArt, 0, rawArt.size, options)
-                    if (bitmap != null) {
-                        return bitmap
-                    }
-                }
-            } catch (e: Exception) {
-            }
-        }
-        return BitmapFactory.decodeResource(resources, R.drawable.ic_headset)
     }
 
     private fun getContentIntent(): PendingIntent {
