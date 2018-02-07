@@ -84,9 +84,12 @@ class MainActivity : SimpleActivity(), RefreshRecyclerViewListener {
             }
         }
 
+        shuffle_btn.setOnClickListener { }
         previous_btn.setOnClickListener { sendIntent(PREVIOUS) }
         play_pause_btn.setOnClickListener { sendIntent(PLAYPAUSE) }
         next_btn.setOnClickListener { sendIntent(NEXT) }
+        repeat_btn.setOnClickListener { }
+
         songs_playlist_empty_add_folder.setOnClickListener { addFolderToPlaylist() }
         volumeControlStream = AudioManager.STREAM_MUSIC
         checkWhatsNewDialog()
@@ -392,9 +395,11 @@ class MainActivity : SimpleActivity(), RefreshRecyclerViewListener {
 
     private fun setupIconColors() {
         val textColor = config.textColor
+        shuffle_btn.applyColorFilter(textColor)
         previous_btn.applyColorFilter(textColor)
         play_pause_btn.applyColorFilter(textColor)
         next_btn.applyColorFilter(textColor)
+        repeat_btn.applyColorFilter(textColor)
 
         getSongsAdapter()?.textColor = textColor
         songs_fastscroller.updatePrimaryColor()

@@ -284,9 +284,11 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val list
             play_pause_btn.setOnClickListener { activity.sendIntent(PLAYPAUSE) }
             next_btn.setOnClickListener { activity.sendIntent(NEXT) }
 
+            shuffle_btn.applyColorFilter(textColor)
             previous_btn.applyColorFilter(textColor)
             play_pause_btn.applyColorFilter(textColor)
             next_btn.applyColorFilter(textColor)
+            repeat_btn.applyColorFilter(textColor)
 
             song_info_title.setTextColor(textColor)
             song_info_artist.setTextColor(textColor)
