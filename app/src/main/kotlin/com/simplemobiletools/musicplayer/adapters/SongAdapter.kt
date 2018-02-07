@@ -38,6 +38,7 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val list
     private var currentSongIndex = 0
     private var songsHashCode = songs.hashCode()
     private var currentSong: Song? = null
+    private var initialProgress = 0
 
     private var transparentViewHolder: TransparentViewHolder? = null
     private var transparentViewHeight = 0
@@ -311,6 +312,7 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val list
             })
 
             updateSong(currentSong)
+            updateSongProgress(initialProgress)
         }
     }
 
@@ -319,6 +321,9 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val list
     }
 
     fun updateSongProgress(progress: Int) {
+        if (navigationView == null) {
+            initialProgress = progress
+        }
         navigationView?.song_progressbar?.progress = progress
     }
 
