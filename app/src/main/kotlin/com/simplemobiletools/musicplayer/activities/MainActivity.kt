@@ -227,7 +227,7 @@ class MainActivity : SimpleActivity(), RefreshRecyclerViewListener {
             override fun onMenuItemActionCollapse(item: MenuItem?): Boolean {
                 songs_playlist_empty.text = getString(R.string.playlist_empty)
                 songs_playlist_empty_add_folder.beVisibleIf(songs.isEmpty())
-                art_holder.beVisible()
+                art_holder.beVisibleIf(songs.isNotEmpty())
                 if (isSearchOpen) {
                     searchQueryChanged("")
                 }
@@ -446,6 +446,9 @@ class MainActivity : SimpleActivity(), RefreshRecyclerViewListener {
             (songs_list.layoutManager as MyLinearLayoutManager).onRestoreInstanceState(state)
         }
         markCurrentSong()
+
+        songs_list.beVisibleIf(songs.isNotEmpty())
+        art_holder.beVisibleIf(songs_list.isVisible())
         songs_playlist_empty.beVisibleIf(songs.isEmpty())
         songs_playlist_empty_add_folder.beVisibleIf(songs.isEmpty())
     }

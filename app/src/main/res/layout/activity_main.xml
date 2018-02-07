@@ -62,12 +62,11 @@
         android:id="@+id/songs_playlist_empty"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/art_holder"
         android:layout_centerHorizontal="true"
         android:gravity="center"
         android:paddingLeft="@dimen/big_margin"
         android:paddingRight="@dimen/big_margin"
-        android:paddingTop="@dimen/medium_margin"
+        android:paddingTop="@dimen/big_margin"
         android:text="@string/playlist_empty"
         android:textSize="@dimen/bigger_text_size"/>
 
