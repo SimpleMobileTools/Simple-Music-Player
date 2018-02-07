@@ -38,8 +38,14 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val list
     private var currentSongIndex = 0
     private var songsHashCode = songs.hashCode()
     private var currentSong: Song? = null
+
+    private var transparentViewHolder: TransparentViewHolder? = null
+    private var transparentViewHeight = 0
+
     private var navigationView: ViewGroup? = null
     private var navigationViewHolder: NavigationViewHolder? = null
+    private var navigationViewHeight = 0
+
     var isThirdPartyIntent = false
 
     init {
@@ -56,7 +62,7 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val list
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder {
         return when (viewType) {
-            VIEW_TYPE_TRANSPARENT -> TransparentViewHolder(transparentView)
+            VIEW_TYPE_TRANSPARENT -> getTransparentViewHolder()
             VIEW_TYPE_NAVIGATION -> getNavigationViewHolder()
             else -> createViewHolder(R.layout.item_song, parent)
         }
@@ -100,6 +106,28 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val list
     }
 
     override fun getSelectableItemCount() = songs.size
+
+    fun searchOpened() {
+        transparentViewHeight = transparentView.height
+        transparentView.layoutParams.height = 0
+
+        navigationViewHeight = navigationView?.height ?: 0
+        navigationView?.layoutParams?.height = 0
+    }
+
+    fun searchClosed() {
+        transparentView.layoutParams.height = transparentViewHeight
+        navigationView?.layoutParams?.height = navigationViewHeight
+        notifyDataSetChanged()
+    }
+
+    private fun getTransparentViewHolder(): TransparentViewHolder {
+        if (transparentViewHolder == null) {
+            transparentViewHolder = TransparentViewHolder(transparentView)
+        }
+
+        return transparentViewHolder!!
+    }
 
     private fun getNavigationViewHolder(): NavigationViewHolder {
         if (navigationView == null) {

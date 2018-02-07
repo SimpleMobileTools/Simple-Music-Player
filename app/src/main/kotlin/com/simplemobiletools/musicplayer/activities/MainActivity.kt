@@ -94,7 +94,7 @@ class MainActivity : SimpleActivity(), RefreshRecyclerViewListener {
 
         songs_list.recyclerScrollCallback = object : RecyclerScrollCallback {
             override fun onScrolled(scrollY: Int) {
-                top_navigation.beVisibleIf(scrollY > topArtHeight)
+                top_navigation.beVisibleIf(scrollY > topArtHeight && !isSearchOpen)
                 val minOverlayTransitionY = actionbarSize - topArtHeight
                 art_holder.translationY = Math.min(0, Math.max(minOverlayTransitionY, -scrollY / 2)).toFloat()
                 song_list_background.translationY = Math.max(0, -scrollY + topArtHeight).toFloat()
@@ -129,9 +129,7 @@ class MainActivity : SimpleActivity(), RefreshRecyclerViewListener {
 
     override fun onStop() {
         super.onStop()
-        if (searchMenuItem != null) {
-            MenuItemCompat.collapseActionView(searchMenuItem)
-        }
+        searchMenuItem?.collapseActionView()
     }
 
     override fun onDestroy() {
@@ -220,6 +218,8 @@ class MainActivity : SimpleActivity(), RefreshRecyclerViewListener {
                 songs_playlist_empty.text = getString(R.string.no_items_found)
                 songs_playlist_empty_add_folder.beGone()
                 art_holder.beGone()
+                getSongsAdapter()?.searchOpened()
+                top_navigation.beGone()
                 isSearchOpen = true
                 return true
             }
@@ -230,6 +230,7 @@ class MainActivity : SimpleActivity(), RefreshRecyclerViewListener {
                 art_holder.beVisibleIf(songs.isNotEmpty())
                 if (isSearchOpen) {
                     searchQueryChanged("")
+                    getSongsAdapter()?.searchClosed()
                 }
                 isSearchOpen = false
                 return true
