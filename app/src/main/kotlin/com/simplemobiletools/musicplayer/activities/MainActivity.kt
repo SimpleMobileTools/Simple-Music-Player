@@ -84,11 +84,11 @@ class MainActivity : SimpleActivity(), RefreshRecyclerViewListener {
             }
         }
 
-        shuffle_btn.setOnClickListener { }
+        shuffle_btn.setOnClickListener { toggleShuffle() }
         previous_btn.setOnClickListener { sendIntent(PREVIOUS) }
         play_pause_btn.setOnClickListener { sendIntent(PLAYPAUSE) }
         next_btn.setOnClickListener { sendIntent(NEXT) }
-        repeat_btn.setOnClickListener { }
+        repeat_btn.setOnClickListener { toggleSongRepetition() }
 
         songs_playlist_empty_add_folder.setOnClickListener { addFolderToPlaylist() }
         volumeControlStream = AudioManager.STREAM_MUSIC
@@ -148,21 +148,11 @@ class MainActivity : SimpleActivity(), RefreshRecyclerViewListener {
         menuInflater.inflate(R.menu.menu_main, menu)
         setupSearch(menu)
 
-        val songRepetition = menu.findItem(R.id.toggle_song_repetition)
-        songRepetition.title = getString(if (config.repeatSong) R.string.disable_song_repetition else R.string.enable_song_repetition)
-        songRepetition.icon = resources.getDrawable(if (config.repeatSong) R.drawable.ic_repeat else R.drawable.ic_repeat_off)
-
-        val shuffle = menu.findItem(R.id.toggle_shuffle)
-        shuffle.title = getString(if (config.isShuffleEnabled) R.string.disable_shuffle else R.string.enable_shuffle)
-        shuffle.icon = resources.getDrawable(if (config.isShuffleEnabled) R.drawable.ic_shuffle else R.drawable.ic_shuffle_off)
-
         val autoplay = menu.findItem(R.id.toggle_autoplay)
         autoplay.title = getString(if (config.autoplay) R.string.disable_autoplay else R.string.enable_autoplay)
 
         menu.apply {
             findItem(R.id.sort).isVisible = !isThirdPartyIntent
-            findItem(R.id.toggle_song_repetition).isVisible = !isThirdPartyIntent
-            findItem(R.id.toggle_shuffle).isVisible = !isThirdPartyIntent
             findItem(R.id.toggle_autoplay).isVisible = !isThirdPartyIntent
             findItem(R.id.sort).isVisible = !isThirdPartyIntent
             findItem(R.id.open_playlist).isVisible = !isThirdPartyIntent
@@ -177,9 +167,7 @@ class MainActivity : SimpleActivity(), RefreshRecyclerViewListener {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.sort -> showSortingDialog()
-            R.id.toggle_song_repetition -> toggleSongRepetition()
             R.id.open_playlist -> openPlaylist()
-            R.id.toggle_shuffle -> toggleShuffle()
             R.id.toggle_autoplay -> toggleAutoplay()
             R.id.add_folder_to_playlist -> addFolderToPlaylist()
             R.id.add_file_to_playlist -> addFileToPlaylist()
@@ -256,15 +244,21 @@ class MainActivity : SimpleActivity(), RefreshRecyclerViewListener {
     }
 
     private fun toggleShuffle() {
-        config.isShuffleEnabled = !config.isShuffleEnabled
-        invalidateOptionsMenu()
-        toast(if (config.isShuffleEnabled) R.string.shuffle_enabled else R.string.shuffle_disabled)
+        val isShuffleEnabled = !config.isShuffleEnabled
+        config.isShuffleEnabled = isShuffleEnabled
+        shuffle_btn.applyColorFilter(if (isShuffleEnabled) getAdjustedPrimaryColor() else config.textColor)
+        shuffle_btn.alpha = if (isShuffleEnabled) 1f else LOWER_ALPHA
+        getSongsAdapter()?.updateShuffle(isShuffleEnabled)
+        toast(if (isShuffleEnabled) R.string.shuffle_enabled else R.string.shuffle_disabled)
     }
 
     private fun toggleSongRepetition() {
-        config.repeatSong = !config.repeatSong
-        invalidateOptionsMenu()
-        toast(if (config.repeatSong) R.string.song_repetition_enabled else R.string.song_repetition_disabled)
+        val repeatSong = !config.repeatSong
+        config.repeatSong = repeatSong
+        repeat_btn.applyColorFilter(if (repeatSong) getAdjustedPrimaryColor() else config.textColor)
+        repeat_btn.alpha = if (repeatSong) 1f else LOWER_ALPHA
+        getSongsAdapter()?.updateRepeatSong(repeatSong)
+        toast(if (repeatSong) R.string.song_repetition_enabled else R.string.song_repetition_disabled)
     }
 
     private fun toggleAutoplay() {
@@ -395,11 +389,15 @@ class MainActivity : SimpleActivity(), RefreshRecyclerViewListener {
 
     private fun setupIconColors() {
         val textColor = config.textColor
-        shuffle_btn.applyColorFilter(textColor)
         previous_btn.applyColorFilter(textColor)
         play_pause_btn.applyColorFilter(textColor)
         next_btn.applyColorFilter(textColor)
-        repeat_btn.applyColorFilter(textColor)
+
+        shuffle_btn.applyColorFilter(if (config.isShuffleEnabled) getAdjustedPrimaryColor() else config.textColor)
+        shuffle_btn.alpha = if (config.isShuffleEnabled) 1f else LOWER_ALPHA
+
+        repeat_btn.applyColorFilter(if (config.repeatSong) getAdjustedPrimaryColor() else config.textColor)
+        repeat_btn.alpha = if (config.repeatSong) 1f else LOWER_ALPHA
 
         getSongsAdapter()?.textColor = textColor
         songs_fastscroller.updatePrimaryColor()

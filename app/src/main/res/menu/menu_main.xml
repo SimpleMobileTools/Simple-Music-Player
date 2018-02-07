@@ -13,16 +13,6 @@
         android:title="@string/sort_by"
         app:showAsAction="ifRoom"/>
     <item
-        android:id="@+id/toggle_song_repetition"
-        android:icon="@drawable/ic_repeat"
-        android:title="@string/disable_song_repetition"
-        app:showAsAction="ifRoom"/>
-    <item
-        android:id="@+id/toggle_shuffle"
-        android:icon="@drawable/ic_shuffle"
-        android:title="@string/disable_shuffle"
-        app:showAsAction="ifRoom"/>
-    <item
         android:id="@+id/toggle_autoplay"
         android:title="@string/disable_autoplay"
         app:showAsAction="never"/>

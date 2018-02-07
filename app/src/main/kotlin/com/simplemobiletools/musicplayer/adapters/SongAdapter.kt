@@ -280,15 +280,23 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val list
 
     private fun initNavigationView() {
         navigationView?.apply {
+            shuffle_btn.setOnClickListener { }
             previous_btn.setOnClickListener { activity.sendIntent(PREVIOUS) }
             play_pause_btn.setOnClickListener { activity.sendIntent(PLAYPAUSE) }
             next_btn.setOnClickListener { activity.sendIntent(NEXT) }
+            repeat_btn.setOnClickListener { }
 
-            shuffle_btn.applyColorFilter(textColor)
             previous_btn.applyColorFilter(textColor)
             play_pause_btn.applyColorFilter(textColor)
             next_btn.applyColorFilter(textColor)
             repeat_btn.applyColorFilter(textColor)
+
+            val config = activity.config
+            shuffle_btn.applyColorFilter(if (config.isShuffleEnabled) activity.getAdjustedPrimaryColor() else config.textColor)
+            shuffle_btn.alpha = if (config.isShuffleEnabled) 1f else LOWER_ALPHA
+
+            repeat_btn.applyColorFilter(if (config.repeatSong) activity.getAdjustedPrimaryColor() else config.textColor)
+            repeat_btn.alpha = if (config.repeatSong) 1f else LOWER_ALPHA
 
             song_info_title.setTextColor(textColor)
             song_info_artist.setTextColor(textColor)
@@ -332,6 +340,20 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val list
             initialProgress = progress
         }
         navigationView?.song_progressbar?.progress = progress
+    }
+
+    fun updateShuffle(enable: Boolean) {
+        navigationView?.apply {
+            shuffle_btn.applyColorFilter(if (enable) activity.getAdjustedPrimaryColor() else activity.config.textColor)
+            shuffle_btn.alpha = if (enable) 1f else LOWER_ALPHA
+        }
+    }
+
+    fun updateRepeatSong(repeat: Boolean) {
+        navigationView?.apply {
+            repeat_btn.applyColorFilter(if (repeat) activity.getAdjustedPrimaryColor() else activity.config.textColor)
+            repeat_btn.alpha = if (repeat) 1f else LOWER_ALPHA
+        }
     }
 
     class TransparentViewHolder(view: View) : ViewHolder(view, multiSelector = MultiSelector())

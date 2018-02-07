@@ -36,3 +36,4 @@ const val SORT_BY_PATH = 4
 const val SORT_BY_DURATION = 8
 
 const val LIST_HEADERS_COUNT = 2
+const val LOWER_ALPHA = 0.5f
