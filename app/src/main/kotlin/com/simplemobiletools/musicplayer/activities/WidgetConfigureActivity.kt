@@ -46,8 +46,8 @@ class WidgetConfigureActivity : SimpleActivity() {
 
         val currSong = MusicService.mCurrSong
         if (currSong != null) {
-            song_title.text = currSong.title
-            song_artist.text = currSong.artist
+            song_info_title.text = currSong.title
+            song_info_artist.text = currSong.artist
         }
     }
 
@@ -110,8 +110,8 @@ class WidgetConfigureActivity : SimpleActivity() {
         config_text_color.setBackgroundColor(mTextColor)
 
         config_save.setTextColor(mTextColor)
-        song_title.setTextColor(mTextColor)
-        song_artist.setTextColor(mTextColor)
+        song_info_title.setTextColor(mTextColor)
+        song_info_artist.setTextColor(mTextColor)
 
         previous_btn.drawable.applyColorFilter(mTextColor)
         play_pause_btn.drawable.applyColorFilter(mTextColor)

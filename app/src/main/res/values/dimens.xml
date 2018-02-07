@@ -1,4 +1,5 @@
 <resources>
     <dimen name="controls_row_height">60dp</dimen>
     <dimen name="button_size">48dp</dimen>
+    <dimen name="top_art_height">200dp</dimen>
 </resources>

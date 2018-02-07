@@ -34,3 +34,5 @@ const val SORT_BY_TITLE = 1
 const val SORT_BY_ARTIST = 2
 const val SORT_BY_PATH = 4
 const val SORT_BY_DURATION = 8
+
+const val LIST_HEADERS_COUNT = 2

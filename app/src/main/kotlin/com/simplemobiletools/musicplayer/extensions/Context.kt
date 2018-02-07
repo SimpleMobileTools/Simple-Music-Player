@@ -5,6 +5,8 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.media.MediaMetadataRetriever
+import android.util.TypedValue
+import com.simplemobiletools.commons.extensions.getColoredBitmap
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.helpers.*
 import com.simplemobiletools.musicplayer.models.Song
@@ -48,5 +50,14 @@ fun Context.getAlbumImage(song: Song?): Bitmap {
         } catch (e: Exception) {
         }
     }
-    return BitmapFactory.decodeResource(resources, R.drawable.ic_headset)
+
+    return resources.getColoredBitmap(R.drawable.ic_headset, config.textColor)
+}
+
+fun Context.getActionBarHeight(): Int {
+    val textSizeAttr = intArrayOf(R.attr.actionBarSize)
+    val attrs = obtainStyledAttributes(TypedValue().data, textSizeAttr)
+    val actionBarSize = attrs.getDimensionPixelSize(0, -1)
+    attrs.recycle()
+    return actionBarSize
 }

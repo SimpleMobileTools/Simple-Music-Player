@@ -80,8 +80,8 @@ class MyWidgetProvider : AppWidgetProvider() {
             artist = mCurrSong!!.artist
         }
 
-        views.setTextViewText(R.id.song_title, title)
-        views.setTextViewText(R.id.song_artist, artist)
+        views.setTextViewText(R.id.song_info_title, title)
+        views.setTextViewText(R.id.song_info_artist, artist)
     }
 
     @Subscribe
@@ -109,8 +109,8 @@ class MyWidgetProvider : AppWidgetProvider() {
 
         views.apply {
             setBackgroundColor(R.id.widget_holder, widgetBgColor)
-            setTextColor(R.id.song_title, widgetTextColor)
-            setTextColor(R.id.song_artist, widgetTextColor)
+            setTextColor(R.id.song_info_title, widgetTextColor)
+            setTextColor(R.id.song_info_artist, widgetTextColor)
             setImageViewBitmap(R.id.previous_btn, res.getColoredBitmap(R.drawable.ic_previous, widgetTextColor))
             setImageViewBitmap(R.id.next_btn, res.getColoredBitmap(R.drawable.ic_next, widgetTextColor))
         }
@@ -135,8 +135,8 @@ class MyWidgetProvider : AppWidgetProvider() {
         setupIntent(views, PLAYPAUSE, R.id.play_pause_btn)
         setupIntent(views, NEXT, R.id.next_btn)
 
-        setupAppOpenIntent(views, R.id.song_title)
-        setupAppOpenIntent(views, R.id.song_artist)
+        setupAppOpenIntent(views, R.id.song_info_title)
+        setupAppOpenIntent(views, R.id.song_info_artist)
     }
 
     override fun onAppWidgetOptionsChanged(context: Context, appWidgetManager: AppWidgetManager, widgetId: Int, newOptions: Bundle) {

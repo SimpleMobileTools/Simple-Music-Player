@@ -5,13 +5,12 @@ import android.net.Uri
 import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SeekBar
+import com.bignerdranch.android.multiselector.MultiSelector
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
 import com.simplemobiletools.commons.dialogs.ConfirmationDialog
 import com.simplemobiletools.commons.dialogs.PropertiesDialog
-import com.simplemobiletools.commons.extensions.applyColorFilter
-import com.simplemobiletools.commons.extensions.beInvisibleIf
-import com.simplemobiletools.commons.extensions.deleteFiles
-import com.simplemobiletools.commons.extensions.shareUris
+import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.interfaces.RefreshRecyclerViewListener
 import com.simplemobiletools.commons.views.FastScroller
 import com.simplemobiletools.commons.views.MyRecyclerView
@@ -22,21 +21,24 @@ import com.simplemobiletools.musicplayer.dialogs.EditDialog
 import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.extensions.dbHelper
 import com.simplemobiletools.musicplayer.extensions.sendIntent
-import com.simplemobiletools.musicplayer.helpers.EDIT
-import com.simplemobiletools.musicplayer.helpers.EDITED_SONG
-import com.simplemobiletools.musicplayer.helpers.NEXT
-import com.simplemobiletools.musicplayer.helpers.REFRESH_LIST
+import com.simplemobiletools.musicplayer.helpers.*
 import com.simplemobiletools.musicplayer.models.Song
 import com.simplemobiletools.musicplayer.services.MusicService
+import kotlinx.android.synthetic.main.item_navigation.view.*
 import kotlinx.android.synthetic.main.item_song.view.*
 import java.io.File
-import java.util.*
 
-class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val listener: RefreshRecyclerViewListener, recyclerView: MyRecyclerView,
-                  fastScroller: FastScroller, itemClick: (Any) -> Unit) : MyRecyclerViewAdapter(activity, recyclerView, fastScroller, itemClick) {
+class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val listener: RefreshRecyclerViewListener, val transparentView: View,
+                  recyclerView: MyRecyclerView, fastScroller: FastScroller, itemClick: (Any) -> Unit) : MyRecyclerViewAdapter(activity, recyclerView, fastScroller, itemClick) {
+
+    private val VIEW_TYPE_TRANSPARENT = 0
+    private val VIEW_TYPE_NAVIGATION = 1
+    private val VIEW_TYPE_ITEM = 2
 
     private var currentSongIndex = 0
     private var songsHashCode = songs.hashCode()
+    private var currentSong: Song? = null
+    private var navigationView: ViewGroup? = null
     var isThirdPartyIntent = false
 
     override fun getActionMenuId() = R.menu.cab
@@ -47,17 +49,35 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val list
         view?.song_frame?.isSelected = select
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int) = createViewHolder(R.layout.item_song, parent)
-
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val song = songs[position]
-        val view = holder.bindView(song, !isThirdPartyIntent) { itemView, layoutPosition ->
-            setupView(itemView, song, layoutPosition)
+    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder {
+        return when (viewType) {
+            VIEW_TYPE_TRANSPARENT -> TransparentViewHolder(transparentView)
+            VIEW_TYPE_NAVIGATION -> getNavigationViewHolder()
+            else -> createViewHolder(R.layout.item_song, parent)
         }
-        bindViewHolder(holder, position, view)
     }
 
-    override fun getItemCount() = songs.size
+    override fun getItemViewType(position: Int): Int {
+        return when (position) {
+            0 -> VIEW_TYPE_TRANSPARENT
+            1 -> VIEW_TYPE_NAVIGATION
+            else -> VIEW_TYPE_ITEM
+        }
+    }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        if (holder is NavigationViewHolder) {
+
+        } else if (holder !is TransparentViewHolder) {
+            val song = songs[position - LIST_HEADERS_COUNT]
+            val view = holder.bindView(song, !isThirdPartyIntent) { itemView, layoutPosition ->
+                setupView(itemView, song, layoutPosition)
+            }
+            bindViewHolder(holder, position - LIST_HEADERS_COUNT, view)
+        }
+    }
+
+    override fun getItemCount() = songs.size + LIST_HEADERS_COUNT
 
     override fun prepareActionMode(menu: Menu) {
         menu.apply {
@@ -77,6 +97,14 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val list
     }
 
     override fun getSelectableItemCount() = songs.size
+
+    private fun getNavigationViewHolder(): NavigationViewHolder {
+        if (navigationView == null) {
+            navigationView = activity.layoutInflater.inflate(R.layout.item_navigation, null) as ViewGroup
+            initNavigationView()
+        }
+        return NavigationViewHolder(navigationView!!)
+    }
 
     private fun showProperties() {
         if (selectedPositions.size <= 1) {
@@ -191,14 +219,76 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val list
     }
 
     fun updateCurrentSongIndex(index: Int) {
+        val correctIndex = index + LIST_HEADERS_COUNT
         val prevIndex = currentSongIndex
         currentSongIndex = -1
         notifyItemChanged(prevIndex)
 
-        currentSongIndex = index
-        if (index >= 0)
-            notifyItemChanged(index)
+        currentSongIndex = correctIndex
+        if (index >= 0) {
+            notifyItemChanged(correctIndex)
+        }
     }
+
+    fun updateSong(song: Song?) {
+        currentSong = song
+        navigationView?.apply {
+            song_info_title.text = song?.title ?: ""
+            song_info_artist.text = song?.artist ?: ""
+            song_progressbar.max = song?.duration ?: 0
+            song_progressbar.progress = 0
+        }
+    }
+
+    private fun initNavigationView() {
+        navigationView?.apply {
+            previous_btn.setOnClickListener { activity.sendIntent(PREVIOUS) }
+            play_pause_btn.setOnClickListener { activity.sendIntent(PLAYPAUSE) }
+            next_btn.setOnClickListener { activity.sendIntent(NEXT) }
+
+            previous_btn.applyColorFilter(textColor)
+            play_pause_btn.applyColorFilter(textColor)
+            next_btn.applyColorFilter(textColor)
+
+            song_info_title.setTextColor(textColor)
+            song_info_artist.setTextColor(textColor)
+            song_progress.setTextColor(textColor)
+            song_progressbar.setColors(textColor, baseConfig.primaryColor, baseConfig.backgroundColor)
+
+            song_progressbar?.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+                override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
+                    val duration = song_progressbar.max.getFormattedDuration()
+                    val formattedProgress = progress.getFormattedDuration()
+                    song_progress.text = String.format(resources.getString(R.string.progress), formattedProgress, duration)
+                }
+
+                override fun onStartTrackingTouch(seekBar: SeekBar) {
+                }
+
+                override fun onStopTrackingTouch(seekBar: SeekBar) {
+                    Intent(activity, MusicService::class.java).apply {
+                        putExtra(PROGRESS, seekBar.progress)
+                        action = SET_PROGRESS
+                        activity.startService(this)
+                    }
+                }
+            })
+
+            updateSong(currentSong)
+        }
+    }
+
+    fun updateSongState(isPlaying: Boolean) {
+        navigationView?.play_pause_btn?.setImageDrawable(resources.getDrawable(if (isPlaying) R.drawable.ic_pause else R.drawable.ic_play))
+    }
+
+    fun updateSongProgress(progress: Int) {
+        navigationView?.song_progressbar?.progress = progress
+    }
+
+    class TransparentViewHolder(view: View) : ViewHolder(view, multiSelector = MultiSelector())
+
+    class NavigationViewHolder(view: ViewGroup) : ViewHolder(view, multiSelector = MultiSelector())
 
     private fun setupView(view: View, song: Song, layoutPosition: Int) {
         view.apply {

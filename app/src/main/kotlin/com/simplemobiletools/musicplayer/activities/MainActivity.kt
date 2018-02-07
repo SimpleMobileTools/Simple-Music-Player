@@ -4,32 +4,35 @@ import android.app.SearchManager
 import android.content.Context
 import android.content.Intent
 import android.graphics.Paint
+import android.graphics.drawable.ColorDrawable
 import android.media.AudioManager
 import android.os.Bundle
 import android.os.Environment
 import android.support.v4.view.MenuItemCompat
-import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.SearchView
 import android.view.Menu
 import android.view.MenuItem
+import android.view.ViewGroup
 import android.widget.SeekBar
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
 import com.simplemobiletools.commons.dialogs.FilePickerDialog
 import com.simplemobiletools.commons.dialogs.RadioGroupDialog
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.*
+import com.simplemobiletools.commons.interfaces.RecyclerScrollCallback
 import com.simplemobiletools.commons.interfaces.RefreshRecyclerViewListener
 import com.simplemobiletools.commons.models.RadioItem
 import com.simplemobiletools.commons.models.Release
+import com.simplemobiletools.commons.views.MyLinearLayoutManager
 import com.simplemobiletools.musicplayer.BuildConfig
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.adapters.SongAdapter
 import com.simplemobiletools.musicplayer.dialogs.ChangeSortingDialog
 import com.simplemobiletools.musicplayer.dialogs.NewPlaylistDialog
 import com.simplemobiletools.musicplayer.dialogs.RemovePlaylistDialog
-import com.simplemobiletools.musicplayer.extensions.config
-import com.simplemobiletools.musicplayer.extensions.dbHelper
-import com.simplemobiletools.musicplayer.extensions.playlistChanged
-import com.simplemobiletools.musicplayer.extensions.sendIntent
+import com.simplemobiletools.musicplayer.extensions.*
 import com.simplemobiletools.musicplayer.helpers.*
 import com.simplemobiletools.musicplayer.inlines.indexOfFirstOrNull
 import com.simplemobiletools.musicplayer.models.Events
@@ -39,14 +42,19 @@ import com.simplemobiletools.musicplayer.services.MusicService
 import com.squareup.otto.Bus
 import com.squareup.otto.Subscribe
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.item_navigation.*
 import java.io.File
 import java.util.*
 
-class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener, RefreshRecyclerViewListener {
+class MainActivity : SimpleActivity(), RefreshRecyclerViewListener {
     private var isThirdPartyIntent = false
     private var songs = ArrayList<Song>()
     private var searchMenuItem: MenuItem? = null
     private var isSearchOpen = false
+    private var artView: ViewGroup? = null
+
+    private var actionbarSize = 0
+    private var topArtHeight = 0
 
     private var storedUseEnglish = false
 
@@ -60,7 +68,13 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener, RefreshR
 
         bus = BusProvider.instance
         bus.register(this)
-        progressbar.setOnSeekBarChangeListener(this)
+        initSeekbarChangeListener()
+
+        actionbarSize = getActionBarHeight()
+        topArtHeight = resources.getDimensionPixelSize(R.dimen.top_art_height)
+        artView = layoutInflater.inflate(R.layout.item_transparent, null) as ViewGroup
+
+        songs_fastscroller.measureItemIndex = LIST_HEADERS_COUNT
 
         handlePermission(PERMISSION_WRITE_STORAGE) {
             if (it) {
@@ -77,6 +91,15 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener, RefreshR
         volumeControlStream = AudioManager.STREAM_MUSIC
         checkWhatsNewDialog()
         storeStateVariables()
+
+        songs_list.recyclerScrollCallback = object : RecyclerScrollCallback {
+            override fun onScrolled(scrollY: Int) {
+                top_navigation.beVisibleIf(scrollY > topArtHeight)
+                val minOverlayTransitionY = actionbarSize - topArtHeight
+                art_holder.translationY = Math.min(0, Math.max(minOverlayTransitionY, -scrollY / 2)).toFloat()
+                song_list_background.translationY = Math.max(0, -scrollY + topArtHeight).toFloat()
+            }
+        }
     }
 
     override fun onResume() {
@@ -94,6 +117,9 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener, RefreshR
 
         songs_fastscroller.allowBubbleDisplay = config.showInfoBubble
         songs_fastscroller.updateBubbleColors()
+        art_holder.background = ColorDrawable(config.backgroundColor)
+        song_list_background.background = ColorDrawable(config.backgroundColor)
+        top_navigation.background = ColorDrawable(config.backgroundColor)
     }
 
     override fun onPause() {
@@ -193,7 +219,7 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener, RefreshR
             override fun onMenuItemActionExpand(item: MenuItem?): Boolean {
                 songs_playlist_empty.text = getString(R.string.no_items_found)
                 songs_playlist_empty_add_folder.beGone()
-                main_header_holder.beGone()
+                art_holder.beGone()
                 isSearchOpen = true
                 return true
             }
@@ -201,7 +227,7 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener, RefreshR
             override fun onMenuItemActionCollapse(item: MenuItem?): Boolean {
                 songs_playlist_empty.text = getString(R.string.playlist_empty)
                 songs_playlist_empty_add_folder.beVisibleIf(songs.isEmpty())
-                main_header_holder.beVisible()
+                art_holder.beVisible()
                 if (isSearchOpen) {
                     searchQueryChanged("")
                 }
@@ -364,12 +390,12 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener, RefreshR
     }
 
     private fun setupIconColors() {
-        val color = config.textColor
-        previous_btn.applyColorFilter(color)
-        play_pause_btn.applyColorFilter(color)
-        next_btn.applyColorFilter(color)
+        val textColor = config.textColor
+        previous_btn.applyColorFilter(textColor)
+        play_pause_btn.applyColorFilter(textColor)
+        next_btn.applyColorFilter(textColor)
 
-        (songs_list.adapter as? SongAdapter)?.textColor = color
+        getSongsAdapter()?.textColor = textColor
         songs_fastscroller.updatePrimaryColor()
     }
 
@@ -383,11 +409,12 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener, RefreshR
     }
 
     private fun updateSongInfo(song: Song?) {
-        song_title.text = song?.title ?: ""
-        song_artist.text = song?.artist ?: ""
-        progressbar.max = song?.duration ?: 0
-        progressbar.progress = 0
+        song_info_title.text = song?.title ?: ""
+        song_info_artist.text = song?.artist ?: ""
+        song_progressbar.max = song?.duration ?: 0
+        song_progressbar.progress = 0
 
+        getSongsAdapter()?.updateSong(song)
         if (songs.isEmpty() && !isThirdPartyIntent) {
             toast(R.string.empty_playlist)
         }
@@ -397,12 +424,12 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener, RefreshR
         this.songs = songs
         val currAdapter = songs_list.adapter
         songs_fastscroller.setViews(songs_list) {
-            val item = (songs_list.adapter as SongAdapter).songs.getOrNull(it)
+            val item = getSongsAdapter()?.songs?.getOrNull(it)
             songs_fastscroller.updateBubbleText(item?.getBubbleText() ?: "")
         }
 
         if (currAdapter == null) {
-            SongAdapter(this@MainActivity, songs, this, songs_list, songs_fastscroller) {
+            SongAdapter(this@MainActivity, songs, this, artView!!, songs_list, songs_fastscroller) {
                 songPicked(getSongIndex(it as Song))
             }.apply {
                 setupDragListener(true)
@@ -411,12 +438,12 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener, RefreshR
                 songs_list.adapter = this
             }
         } else {
-            val state = (songs_list.layoutManager as LinearLayoutManager).onSaveInstanceState()
+            val state = (songs_list.layoutManager as MyLinearLayoutManager).onSaveInstanceState()
             (currAdapter as SongAdapter).apply {
                 isThirdPartyIntent = this@MainActivity.isThirdPartyIntent
                 updateSongs(songs)
             }
-            (songs_list.layoutManager as LinearLayoutManager).onRestoreInstanceState(state)
+            (songs_list.layoutManager as MyLinearLayoutManager).onRestoreInstanceState(state)
         }
         markCurrentSong()
         songs_playlist_empty.beVisibleIf(songs.isEmpty())
@@ -425,15 +452,22 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener, RefreshR
 
     private fun getSongIndex(song: Song): Int = songs.indexOfFirstOrNull { it == song } ?: 0
 
+    private fun getSongsAdapter() = songs_list.adapter as? SongAdapter
+
     @Subscribe
     fun songChangedEvent(event: Events.SongChanged) {
         updateSongInfo(event.song)
         markCurrentSong()
+        val cover = getAlbumImage(event.song)
+        val options = RequestOptions().placeholder(art_image.drawable).diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+        Glide.with(this).load(cover).apply(options).into(art_image)
     }
 
     @Subscribe
     fun songStateChanged(event: Events.SongStateChanged) {
-        play_pause_btn.setImageDrawable(resources.getDrawable(if (event.isPlaying) R.drawable.ic_pause else R.drawable.ic_play))
+        val isPlaying = event.isPlaying
+        play_pause_btn.setImageDrawable(resources.getDrawable(if (isPlaying) R.drawable.ic_pause else R.drawable.ic_play))
+        getSongsAdapter()?.updateSongState(isPlaying)
     }
 
     @Subscribe
@@ -443,7 +477,9 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener, RefreshR
 
     @Subscribe
     fun progressUpdated(event: Events.ProgressUpdated) {
-        progressbar.progress = event.progress
+        val progress = event.progress
+        song_progressbar.progress = progress
+        getSongsAdapter()?.updateSongProgress(progress)
     }
 
     @Subscribe
@@ -454,33 +490,36 @@ class MainActivity : SimpleActivity(), SeekBar.OnSeekBarChangeListener, RefreshR
     private fun markCurrentSong() {
         val newSongId = MusicService.mCurrSong?.id ?: -1L
         val cnt = songs.size - 1
-        val songIndex = (0..cnt).firstOrNull { songs[it].id == newSongId } ?: -1
-        if (songs_list.adapter != null)
-            (songs_list.adapter as SongAdapter).updateCurrentSongIndex(songIndex)
+        val songIndex = (0..cnt).firstOrNull { songs[it].id == newSongId }?.plus(0) ?: -1
+        getSongsAdapter()?.updateCurrentSongIndex(songIndex)
     }
 
     private fun searchQueryChanged(text: String) {
         val filtered = songs.filter { it.artist.contains(text, true) || it.title.contains(text, true) } as ArrayList
         filtered.sortBy { !(it.artist.startsWith(text, true) || it.title.startsWith(text, true)) }
         songs_playlist_empty.beVisibleIf(filtered.isEmpty())
-        (songs_list.adapter as? SongAdapter)?.updateSongs(filtered)
+        getSongsAdapter()?.updateSongs(filtered)
     }
 
-    override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
-        val duration = progressbar.max.getFormattedDuration()
-        val formattedProgress = progress.getFormattedDuration()
-        song_progress.text = String.format(resources.getString(R.string.progress), formattedProgress, duration)
-    }
+    private fun initSeekbarChangeListener() {
+        song_progressbar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
+                val duration = song_progressbar.max.getFormattedDuration()
+                val formattedProgress = progress.getFormattedDuration()
+                song_progress.text = String.format(resources.getString(R.string.progress), formattedProgress, duration)
+            }
 
-    override fun onStartTrackingTouch(seekBar: SeekBar) {
-    }
+            override fun onStartTrackingTouch(seekBar: SeekBar) {
+            }
 
-    override fun onStopTrackingTouch(seekBar: SeekBar) {
-        Intent(this, MusicService::class.java).apply {
-            putExtra(PROGRESS, seekBar.progress)
-            action = SET_PROGRESS
-            startService(this)
-        }
+            override fun onStopTrackingTouch(seekBar: SeekBar) {
+                Intent(this@MainActivity, MusicService::class.java).apply {
+                    putExtra(PROGRESS, seekBar.progress)
+                    action = SET_PROGRESS
+                    startService(this)
+                }
+            }
+        })
     }
 
     override fun refreshItems() {
