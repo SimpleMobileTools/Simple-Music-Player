@@ -40,38 +40,54 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:id="@+id/previous_btn"
-            style="@style/MyTransparentButton"
+            android:id="@+id/shuffle_btn"
+            style="@style/MyBorderlessBackgroundStyle"
             android:layout_width="@dimen/button_size"
             android:layout_height="@dimen/button_size"
             android:layout_weight="1"
-            android:background="?attr/selectableItemBackgroundBorderless"
+            android:paddingBottom="@dimen/small_margin"
+            android:paddingTop="@dimen/small_margin"
+            android:src="@drawable/ic_shuffle"/>
+
+        <ImageView
+            android:id="@+id/previous_btn"
+            style="@style/MyBorderlessBackgroundStyle"
+            android:layout_width="@dimen/button_size"
+            android:layout_height="@dimen/button_size"
+            android:layout_weight="1"
             android:paddingBottom="@dimen/small_margin"
             android:paddingTop="@dimen/small_margin"
             android:src="@drawable/ic_previous"/>
 
-
         <ImageView
             android:id="@+id/play_pause_btn"
-            style="@style/MyTransparentButton"
+            style="@style/MyBorderlessBackgroundStyle"
             android:layout_width="@dimen/button_size"
             android:layout_height="@dimen/button_size"
             android:layout_weight="1"
-            android:background="?attr/selectableItemBackgroundBorderless"
             android:paddingBottom="@dimen/small_margin"
             android:paddingTop="@dimen/small_margin"
             android:src="@drawable/ic_play"/>
 
         <ImageView
             android:id="@+id/next_btn"
+            style="@style/MyBorderlessBackgroundStyle"
+            android:layout_width="@dimen/button_size"
+            android:layout_height="@dimen/button_size"
+            android:layout_weight="1"
+            android:paddingBottom="@dimen/small_margin"
+            android:paddingTop="@dimen/small_margin"
+            android:src="@drawable/ic_next"/>
+
+        <ImageView
+            android:id="@+id/repeat_btn"
             style="@style/MyTransparentButton"
             android:layout_width="@dimen/button_size"
             android:layout_height="@dimen/button_size"
             android:layout_weight="1"
-            android:background="?attr/selectableItemBackgroundBorderless"
             android:paddingBottom="@dimen/small_margin"
             android:paddingTop="@dimen/small_margin"
-            android:src="@drawable/ic_next"/>
+            android:src="@drawable/ic_repeat"/>
 
     </LinearLayout>
 
@@ -80,6 +96,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/song_info_controls"
+        android:clickable="true"
+        android:focusable="true"
         android:paddingBottom="@dimen/medium_margin"
         android:paddingLeft="@dimen/activity_margin"
         android:paddingRight="@dimen/activity_margin"
