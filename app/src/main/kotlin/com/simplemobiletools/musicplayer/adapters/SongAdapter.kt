@@ -39,7 +39,12 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val list
     private var songsHashCode = songs.hashCode()
     private var currentSong: Song? = null
     private var navigationView: ViewGroup? = null
+    private var navigationViewHolder: NavigationViewHolder? = null
     var isThirdPartyIntent = false
+
+    init {
+        positionOffset = LIST_HEADERS_COUNT
+    }
 
     override fun getActionMenuId() = R.menu.cab
 
@@ -66,9 +71,7 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val list
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        if (holder is NavigationViewHolder) {
-
-        } else if (holder !is TransparentViewHolder) {
+        if (holder !is TransparentViewHolder && holder !is NavigationViewHolder) {
             val song = songs[position - LIST_HEADERS_COUNT]
             val view = holder.bindView(song, !isThirdPartyIntent) { itemView, layoutPosition ->
                 setupView(itemView, song, layoutPosition)
@@ -103,7 +106,12 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val list
             navigationView = activity.layoutInflater.inflate(R.layout.item_navigation, null) as ViewGroup
             initNavigationView()
         }
-        return NavigationViewHolder(navigationView!!)
+
+        if (navigationViewHolder == null) {
+            navigationViewHolder = NavigationViewHolder(navigationView!!)
+        }
+
+        return navigationViewHolder!!
     }
 
     private fun showProperties() {
@@ -161,7 +169,7 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val list
         val SAFPath = songs[selectedPositions.first()].path
         activity.handleSAFDialog(File(SAFPath)) {
             selectedPositions.sortedDescending().forEach {
-                val song = songs[it]
+                val song = songs[it + positionOffset]
                 paths.add(song.path)
                 files.add(File(song.path))
                 removeSongs.add(song)
