@@ -39,6 +39,7 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val list
     private var songsHashCode = songs.hashCode()
     private var currentSong: Song? = null
     private var initialProgress = 0
+    private var initialIsPlaying = false
 
     private var transparentViewHolder: TransparentViewHolder? = null
     private var transparentViewHeight = 0
@@ -313,10 +314,14 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val list
 
             updateSong(currentSong)
             updateSongProgress(initialProgress)
+            updateSongState(initialIsPlaying)
         }
     }
 
     fun updateSongState(isPlaying: Boolean) {
+        if (navigationView == null) {
+            initialIsPlaying = isPlaying
+        }
         navigationView?.play_pause_btn?.setImageDrawable(resources.getDrawable(if (isPlaying) R.drawable.ic_pause else R.drawable.ic_play))
     }
 
