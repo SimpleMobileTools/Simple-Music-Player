@@ -46,6 +46,8 @@
     <string name="folder_contains_no_audio">선택된 폴더에는 오디오파일이 없습니다.</string>
     <string name="delete_current_song">Delete current song</string>
     <string name="remove_current_song">Remove current song from playlist</string>
+    <string name="show_filename">Show filename as song title if</string>
+    <string name="title_is_not_available">Title is not available</string>
 
     <!-- Settings -->
     <string name="equalizer">이퀄라이저</string>
