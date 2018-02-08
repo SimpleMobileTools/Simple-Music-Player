@@ -1,6 +1,16 @@
 Changelog
 ==========
 
+Version 3.2.0 *(2018-02-08)*
+----------------------------
+
+ * Reworked the UI
+ * Allow replacing song title with filename, if title isn't available
+ * Allow skipping backward/forward by pressing the current/max song progress
+ * Added new actionmenu button for deleting or removing current song from playlist
+ * Move <unknown> artist or title at the bottom at sorting
+ * Couple stability improvements
+
 Version 3.1.1 *(2018-01-25)*
 ----------------------------
 
