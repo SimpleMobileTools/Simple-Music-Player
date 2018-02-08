@@ -48,6 +48,7 @@
     <string name="remove_current_song">Remove current song from playlist</string>
     <string name="show_filename">Show filename as song title:</string>
     <string name="title_is_not_available">If title is not available</string>
+    <string name="show_album_cover">Show album cover on the main screen</string>
 
     <!-- Settings -->
     <string name="equalizer">Equalizador</string>
