@@ -46,7 +46,7 @@
     <string name="folder_contains_no_audio">Der ausgewählte Ordner enthält keine Audiodateien</string>
     <string name="delete_current_song">Aktuellen Song löschen</string>
     <string name="remove_current_song">Aktuellen Song aus Playlist entfernen</string>
-    <string name="show_filename">Verwende Dateinamen als Songtitel:</string>
+    <string name="show_filename">Verwende Dateinamen als Songtitel, wenn:</string>
     <string name="title_is_not_available">Titel nicht verfügbar</string>
 
     <!-- Settings -->
@@ -54,9 +54,9 @@
 
     <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
     <!-- Short description has to have less than 80 chars -->
-    <string name="app_short_description">Ein schlichter Musikplayer mit anpassbarem Widget, ganz ohne Werbung.</string>
+    <string name="app_short_description">Ein schlichter Musik-Player mit anpassbarem Widget, ganz ohne Werbung.</string>
     <string name="app_long_description">
-        Ein schlichter Musikplayer, der ganz einfach über die Benachrichtigungsleiste, das Homescreen Widget oder die Tasten an deinem Headset gesteuert werden kann. Du kannst alle Songs nach Titel oder Künstler sortieren und den Equalizer anpassen. Das Filtern nach Künstler oder Album wird noch nicht unterstützt, bleib dran!
+        Ein schlichter Musik-Player, der ganz einfach über die Benachrichtigungsleiste, das Homescreen Widget oder die Tasten an deinem Headset gesteuert werden kann. Du kannst alle Songs nach Titel oder Künstler sortieren und den Equalizer anpassen. Das Filtern nach Künstler oder Album wird noch nicht unterstützt, bleib dran!
         
         Die App beinhaltet ein Widget mit anpassbarer Textfarbe, Transparenz und Hintergrundfarbe.
         
