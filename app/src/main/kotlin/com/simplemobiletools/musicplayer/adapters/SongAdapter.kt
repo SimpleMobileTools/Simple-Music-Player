@@ -285,6 +285,8 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val list
             play_pause_btn.setOnClickListener { activity.sendIntent(PLAYPAUSE) }
             next_btn.setOnClickListener { activity.sendIntent(NEXT) }
             repeat_btn.setOnClickListener { listener.listToggleSongRepetition() }
+            song_progress_current.setOnClickListener { }
+            song_progress_max.setOnClickListener { }
 
             previous_btn.applyColorFilter(textColor)
             play_pause_btn.applyColorFilter(textColor)
@@ -300,14 +302,16 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val list
 
             song_info_title.setTextColor(textColor)
             song_info_artist.setTextColor(textColor)
-            song_progress.setTextColor(textColor)
+            song_progress_current.setTextColor(textColor)
+            song_progress_max.setTextColor(textColor)
             song_progressbar.setColors(textColor, baseConfig.primaryColor, baseConfig.backgroundColor)
 
             song_progressbar?.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
                 override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
                     val duration = song_progressbar.max.getFormattedDuration()
                     val formattedProgress = progress.getFormattedDuration()
-                    song_progress.text = String.format(resources.getString(R.string.progress), formattedProgress, duration)
+                    song_progress_current.text = formattedProgress
+                    song_progress_max.text = duration
                 }
 
                 override fun onStartTrackingTouch(seekBar: SeekBar) {

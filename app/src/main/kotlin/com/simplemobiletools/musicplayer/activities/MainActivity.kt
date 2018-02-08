@@ -89,6 +89,8 @@ class MainActivity : SimpleActivity(), SongListListener {
         play_pause_btn.setOnClickListener { sendIntent(PLAYPAUSE) }
         next_btn.setOnClickListener { sendIntent(NEXT) }
         repeat_btn.setOnClickListener { toggleSongRepetition() }
+        song_progress_current.setOnClickListener { }
+        song_progress_max.setOnClickListener { }
 
         songs_playlist_empty_add_folder.setOnClickListener { addFolderToPlaylist() }
         volumeControlStream = AudioManager.STREAM_MUSIC
@@ -513,7 +515,8 @@ class MainActivity : SimpleActivity(), SongListListener {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
                 val duration = song_progressbar.max.getFormattedDuration()
                 val formattedProgress = progress.getFormattedDuration()
-                song_progress.text = String.format(resources.getString(R.string.progress), formattedProgress, duration)
+                song_progress_current.text = formattedProgress
+                song_progress_max.text = duration
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar) {

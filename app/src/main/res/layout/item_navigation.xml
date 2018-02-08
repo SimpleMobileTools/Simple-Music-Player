@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_holder"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:paddingBottom="@dimen/medium_margin">
 
     <com.simplemobiletools.commons.views.MyTextView
         android:id="@+id/song_info_title"
@@ -91,27 +92,45 @@
 
     </LinearLayout>
 
+    <com.simplemobiletools.commons.views.MyTextView
+        android:id="@+id/song_progress_current"
+        style="@style/MyBorderlessBackgroundStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/song_progressbar"
+        android:layout_alignTop="@+id/song_progressbar"
+        android:layout_below="@+id/song_info_controls"
+        android:gravity="center_vertical"
+        android:maxLines="1"
+        android:paddingLeft="@dimen/normal_margin"
+        android:paddingRight="@dimen/medium_margin"
+        tools:text="00:00"/>
+
     <com.simplemobiletools.commons.views.MySeekBar
         android:id="@+id/song_progressbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/song_info_controls"
+        android:layout_toLeftOf="@+id/song_progress_max"
+        android:layout_toRightOf="@+id/song_progress_current"
         android:clickable="true"
         android:focusable="true"
         android:paddingBottom="@dimen/medium_margin"
-        android:paddingLeft="@dimen/activity_margin"
-        android:paddingRight="@dimen/activity_margin"
         android:paddingTop="@dimen/normal_margin"/>
 
     <com.simplemobiletools.commons.views.MyTextView
-        android:id="@+id/song_progress"
-        android:layout_width="match_parent"
+        android:id="@+id/song_progress_max"
+        style="@style/MyBorderlessBackgroundStyle"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/song_progressbar"
-        android:layout_marginBottom="@dimen/activity_margin"
-        android:layout_marginLeft="@dimen/activity_margin"
-        android:layout_marginRight="@dimen/activity_margin"
-        android:gravity="center_horizontal"
-        android:maxLines="1"/>
+        android:layout_alignBottom="@+id/song_progressbar"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/song_progressbar"
+        android:layout_below="@+id/song_info_controls"
+        android:gravity="center_vertical"
+        android:maxLines="1"
+        android:paddingLeft="@dimen/medium_margin"
+        android:paddingRight="@dimen/normal_margin"
+        tools:text="00:00"/>
 
 </RelativeLayout>
