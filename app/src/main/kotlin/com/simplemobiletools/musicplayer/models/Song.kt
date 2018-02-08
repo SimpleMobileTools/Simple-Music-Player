@@ -49,12 +49,6 @@ data class Song(val id: Long, var title: String, var artist: String, var path: S
         return res
     }
 
-    override fun equals(other: Any?): Boolean = when {
-        this === other -> true
-        other == null -> false
-        else -> id == (other as Song).id
-    }
-
     fun getBubbleText() = when {
         sorting and SORT_BY_TITLE != 0 -> title
         sorting and SORT_BY_ARTIST != 0 -> artist

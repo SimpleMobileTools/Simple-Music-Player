@@ -467,7 +467,7 @@ class MainActivity : SimpleActivity(), SongListListener {
         songs_playlist_empty_add_folder.beVisibleIf(songs.isEmpty())
     }
 
-    private fun getSongIndex(song: Song): Int = songs.indexOfFirstOrNull { it == song } ?: 0
+    private fun getSongIndex(song: Song) = songs.indexOfFirstOrNull { it == song } ?: 0
 
     private fun getSongsAdapter() = songs_list.adapter as? SongAdapter
 
@@ -507,9 +507,9 @@ class MainActivity : SimpleActivity(), SongListListener {
     }
 
     private fun markCurrentSong() {
-        val newSongId = MusicService.mCurrSong?.id ?: -1L
+        val newSong = MusicService.mCurrSong
         val cnt = songs.size - 1
-        val songIndex = (0..cnt).firstOrNull { songs[it].id == newSongId }?.plus(0) ?: -1
+        val songIndex = (0..cnt).firstOrNull { songs[it] == newSong } ?: -1
         getSongsAdapter()?.updateCurrentSongIndex(songIndex)
     }
 
