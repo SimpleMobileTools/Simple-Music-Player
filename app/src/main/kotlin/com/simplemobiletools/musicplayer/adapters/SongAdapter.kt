@@ -304,23 +304,7 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val list
             song_progress_current.setOnClickListener { activity.sendIntent(SKIP_BACKWARD) }
             song_progress_max.setOnClickListener { activity.sendIntent(SKIP_FORWARD) }
 
-            previous_btn.applyColorFilter(textColor)
-            play_pause_btn.applyColorFilter(textColor)
-            next_btn.applyColorFilter(textColor)
-            repeat_btn.applyColorFilter(textColor)
-
-            val config = activity.config
-            shuffle_btn.applyColorFilter(if (config.isShuffleEnabled) activity.getAdjustedPrimaryColor() else config.textColor)
-            shuffle_btn.alpha = if (config.isShuffleEnabled) 1f else LOWER_ALPHA
-
-            repeat_btn.applyColorFilter(if (config.repeatSong) activity.getAdjustedPrimaryColor() else config.textColor)
-            repeat_btn.alpha = if (config.repeatSong) 1f else LOWER_ALPHA
-
-            song_info_title.setTextColor(textColor)
-            song_info_artist.setTextColor(textColor)
-            song_progress_current.setTextColor(textColor)
-            song_progress_max.setTextColor(textColor)
-            song_progressbar.setColors(textColor, baseConfig.primaryColor, baseConfig.backgroundColor)
+            updateColors()
 
             song_progressbar?.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
                 override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
@@ -348,6 +332,31 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val list
         }
     }
 
+    fun updateColors() {
+        val config = activity.config
+        textColor = config.textColor
+        primaryColor = config.primaryColor
+        backgroundColor = config.backgroundColor
+        navigationView?.apply {
+            previous_btn.applyColorFilter(textColor)
+            play_pause_btn.applyColorFilter(textColor)
+            next_btn.applyColorFilter(textColor)
+            repeat_btn.applyColorFilter(textColor)
+
+            shuffle_btn.applyColorFilter(if (config.isShuffleEnabled) activity.getAdjustedPrimaryColor() else textColor)
+            shuffle_btn.alpha = if (config.isShuffleEnabled) 1f else LOWER_ALPHA
+
+            repeat_btn.applyColorFilter(if (config.repeatSong) activity.getAdjustedPrimaryColor() else textColor)
+            repeat_btn.alpha = if (config.repeatSong) 1f else LOWER_ALPHA
+
+            song_info_title.setTextColor(textColor)
+            song_info_artist.setTextColor(textColor)
+            song_progress_current.setTextColor(textColor)
+            song_progress_max.setTextColor(textColor)
+            song_progressbar.setColors(textColor, activity.getAdjustedPrimaryColor(), backgroundColor)
+        }
+    }
+
     fun updateSongState(isPlaying: Boolean) {
         if (navigationView == null) {
             initialIsPlaying = isPlaying
@@ -364,14 +373,14 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val list
 
     fun updateShuffle(enable: Boolean) {
         navigationView?.apply {
-            shuffle_btn.applyColorFilter(if (enable) activity.getAdjustedPrimaryColor() else activity.config.textColor)
+            shuffle_btn.applyColorFilter(if (enable) activity.getAdjustedPrimaryColor() else textColor)
             shuffle_btn.alpha = if (enable) 1f else LOWER_ALPHA
         }
     }
 
     fun updateRepeatSong(repeat: Boolean) {
         navigationView?.apply {
-            repeat_btn.applyColorFilter(if (repeat) activity.getAdjustedPrimaryColor() else activity.config.textColor)
+            repeat_btn.applyColorFilter(if (repeat) activity.getAdjustedPrimaryColor() else textColor)
             repeat_btn.alpha = if (repeat) 1f else LOWER_ALPHA
         }
     }

@@ -58,6 +58,7 @@ class MainActivity : SimpleActivity(), SongListListener {
     private var topArtHeight = 0
 
     private var storedUseEnglish = false
+    private var storedTextColor = 0
 
     lateinit var bus: Bus
 
@@ -115,9 +116,14 @@ class MainActivity : SimpleActivity(), SongListListener {
             return
         }
 
+        if (storedTextColor != config.textColor) {
+            updateAlbumCover(MusicService.mCurrSong)
+        }
+
         setupIconColors()
         markCurrentSong()
         updateTextColors(main_holder)
+        getSongsAdapter()?.updateColors()
         songs_playlist_empty_add_folder.setTextColor(getAdjustedPrimaryColor())
         songs_playlist_empty_add_folder.paintFlags = songs_playlist_empty_add_folder.paintFlags or Paint.UNDERLINE_TEXT_FLAG
 
@@ -191,6 +197,7 @@ class MainActivity : SimpleActivity(), SongListListener {
     private fun storeStateVariables() {
         config.apply {
             storedUseEnglish = useEnglish
+            storedTextColor = textColor
         }
     }
 
@@ -476,10 +483,7 @@ class MainActivity : SimpleActivity(), SongListListener {
         val song = event.song
         updateSongInfo(song)
         markCurrentSong()
-        val cover = getAlbumImage(song)
-        val options = RequestOptions().placeholder(art_image.drawable).signature(ObjectKey(song.toString())).diskCacheStrategy(DiskCacheStrategy.RESOURCE)
-        Glide.with(this).clear(art_image)
-        Glide.with(this).load(cover).apply(options).into(art_image)
+        updateAlbumCover(song)
     }
 
     @Subscribe
@@ -511,6 +515,13 @@ class MainActivity : SimpleActivity(), SongListListener {
         val cnt = songs.size - 1
         val songIndex = (0..cnt).firstOrNull { songs[it] == newSong } ?: -1
         getSongsAdapter()?.updateCurrentSongIndex(songIndex)
+    }
+
+    private fun updateAlbumCover(song: Song?) {
+        val cover = getAlbumImage(song)
+        val options = RequestOptions().placeholder(art_image.drawable).signature(ObjectKey(song.toString())).diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+        Glide.with(this).clear(art_image)
+        Glide.with(this).load(cover).apply(options).into(art_image)
     }
 
     private fun searchQueryChanged(text: String) {
