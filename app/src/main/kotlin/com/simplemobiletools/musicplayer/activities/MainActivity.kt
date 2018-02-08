@@ -22,7 +22,6 @@ import com.simplemobiletools.commons.dialogs.RadioGroupDialog
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.*
 import com.simplemobiletools.commons.interfaces.RecyclerScrollCallback
-import com.simplemobiletools.commons.interfaces.RefreshRecyclerViewListener
 import com.simplemobiletools.commons.models.RadioItem
 import com.simplemobiletools.commons.models.Release
 import com.simplemobiletools.commons.views.MyLinearLayoutManager
@@ -35,6 +34,7 @@ import com.simplemobiletools.musicplayer.dialogs.RemovePlaylistDialog
 import com.simplemobiletools.musicplayer.extensions.*
 import com.simplemobiletools.musicplayer.helpers.*
 import com.simplemobiletools.musicplayer.inlines.indexOfFirstOrNull
+import com.simplemobiletools.musicplayer.interfaces.SongListListener
 import com.simplemobiletools.musicplayer.models.Events
 import com.simplemobiletools.musicplayer.models.Playlist
 import com.simplemobiletools.musicplayer.models.Song
@@ -46,7 +46,7 @@ import kotlinx.android.synthetic.main.item_navigation.*
 import java.io.File
 import java.util.*
 
-class MainActivity : SimpleActivity(), RefreshRecyclerViewListener {
+class MainActivity : SimpleActivity(), SongListListener {
     private var isThirdPartyIntent = false
     private var songs = ArrayList<Song>()
     private var searchMenuItem: MenuItem? = null
@@ -531,6 +531,14 @@ class MainActivity : SimpleActivity(), RefreshRecyclerViewListener {
 
     override fun refreshItems() {
         sendIntent(REFRESH_LIST)
+    }
+
+    override fun listToggleShuffle() {
+        toggleShuffle()
+    }
+
+    override fun listToggleSongRepetition() {
+        toggleSongRepetition()
     }
 
     private fun checkWhatsNewDialog() {

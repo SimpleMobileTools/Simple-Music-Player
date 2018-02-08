@@ -11,7 +11,6 @@ import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
 import com.simplemobiletools.commons.dialogs.ConfirmationDialog
 import com.simplemobiletools.commons.dialogs.PropertiesDialog
 import com.simplemobiletools.commons.extensions.*
-import com.simplemobiletools.commons.interfaces.RefreshRecyclerViewListener
 import com.simplemobiletools.commons.views.FastScroller
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.musicplayer.BuildConfig
@@ -22,13 +21,14 @@ import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.extensions.dbHelper
 import com.simplemobiletools.musicplayer.extensions.sendIntent
 import com.simplemobiletools.musicplayer.helpers.*
+import com.simplemobiletools.musicplayer.interfaces.SongListListener
 import com.simplemobiletools.musicplayer.models.Song
 import com.simplemobiletools.musicplayer.services.MusicService
 import kotlinx.android.synthetic.main.item_navigation.view.*
 import kotlinx.android.synthetic.main.item_song.view.*
 import java.io.File
 
-class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val listener: RefreshRecyclerViewListener, val transparentView: View,
+class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val listener: SongListListener, val transparentView: View,
                   recyclerView: MyRecyclerView, fastScroller: FastScroller, itemClick: (Any) -> Unit) : MyRecyclerViewAdapter(activity, recyclerView, fastScroller, itemClick) {
 
     private val VIEW_TYPE_TRANSPARENT = 0
@@ -280,11 +280,11 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val list
 
     private fun initNavigationView() {
         navigationView?.apply {
-            shuffle_btn.setOnClickListener { }
+            shuffle_btn.setOnClickListener { listener.listToggleShuffle() }
             previous_btn.setOnClickListener { activity.sendIntent(PREVIOUS) }
             play_pause_btn.setOnClickListener { activity.sendIntent(PLAYPAUSE) }
             next_btn.setOnClickListener { activity.sendIntent(NEXT) }
-            repeat_btn.setOnClickListener { }
+            repeat_btn.setOnClickListener { listener.listToggleSongRepetition() }
 
             previous_btn.applyColorFilter(textColor)
             play_pause_btn.applyColorFilter(textColor)
