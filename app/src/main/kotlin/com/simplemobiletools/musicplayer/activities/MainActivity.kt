@@ -570,6 +570,7 @@ class MainActivity : SimpleActivity(), SongListListener {
             add(Release(25, R.string.release_25))
             add(Release(27, R.string.release_27))
             add(Release(28, R.string.release_28))
+            add(Release(37, R.string.release_37))
             checkWhatsNew(this, BuildConfig.VERSION_CODE)
         }
     }
