@@ -199,7 +199,7 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val list
         val SAFPath = songs[selectedPositions.first()].path
         activity.handleSAFDialog(File(SAFPath)) {
             selectedPositions.sortedDescending().forEach {
-                val song = songs[it + positionOffset]
+                val song = songs[it]
                 paths.add(song.path)
                 files.add(File(song.path))
                 removeSongs.add(song)
@@ -275,6 +275,22 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val list
             song_info_artist.text = song?.artist ?: ""
             song_progressbar.max = song?.duration ?: 0
             song_progressbar.progress = 0
+        }
+    }
+
+    fun removeCurrentSongFromPlaylist() {
+        selectedPositions.clear()
+        selectedPositions.add(currentSongIndex - positionOffset)
+        removeFromPlaylist()
+        selectedPositions.clear()
+    }
+
+    fun deleteCurrentSong() {
+        ConfirmationDialog(activity) {
+            selectedPositions.clear()
+            selectedPositions.add(currentSongIndex - positionOffset)
+            deleteSongs()
+            selectedPositions.clear()
         }
     }
 

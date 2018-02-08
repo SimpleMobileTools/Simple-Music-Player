@@ -17,6 +17,7 @@ import android.widget.SeekBar
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.signature.ObjectKey
 import com.simplemobiletools.commons.dialogs.FilePickerDialog
 import com.simplemobiletools.commons.dialogs.RadioGroupDialog
 import com.simplemobiletools.commons.extensions.*
@@ -153,11 +154,14 @@ class MainActivity : SimpleActivity(), SongListListener {
         val autoplay = menu.findItem(R.id.toggle_autoplay)
         autoplay.title = getString(if (config.autoplay) R.string.disable_autoplay else R.string.enable_autoplay)
 
+        val isSongSelected = MusicService.mCurrSong != null
         menu.apply {
             findItem(R.id.sort).isVisible = !isThirdPartyIntent
             findItem(R.id.toggle_autoplay).isVisible = !isThirdPartyIntent
             findItem(R.id.sort).isVisible = !isThirdPartyIntent
             findItem(R.id.open_playlist).isVisible = !isThirdPartyIntent
+            findItem(R.id.remove_current).isVisible = !isThirdPartyIntent && isSongSelected
+            findItem(R.id.delete_current).isVisible = !isThirdPartyIntent && isSongSelected
             findItem(R.id.add_folder_to_playlist).isVisible = !isThirdPartyIntent
             findItem(R.id.add_file_to_playlist).isVisible = !isThirdPartyIntent
             findItem(R.id.remove_playlist).isVisible = !isThirdPartyIntent
@@ -169,6 +173,8 @@ class MainActivity : SimpleActivity(), SongListListener {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.sort -> showSortingDialog()
+            R.id.remove_current -> getSongsAdapter()?.removeCurrentSongFromPlaylist()
+            R.id.delete_current -> getSongsAdapter()?.deleteCurrentSong()
             R.id.open_playlist -> openPlaylist()
             R.id.toggle_autoplay -> toggleAutoplay()
             R.id.add_folder_to_playlist -> addFolderToPlaylist()
@@ -296,9 +302,11 @@ class MainActivity : SimpleActivity(), SongListListener {
                 if (it == -1) {
                     NewPlaylistDialog(this) {
                         playlistChanged(it)
+                        invalidateOptionsMenu()
                     }
                 } else {
                     playlistChanged(it as Int)
+                    invalidateOptionsMenu()
                 }
             }
         }
@@ -465,10 +473,12 @@ class MainActivity : SimpleActivity(), SongListListener {
 
     @Subscribe
     fun songChangedEvent(event: Events.SongChanged) {
-        updateSongInfo(event.song)
+        val song = event.song
+        updateSongInfo(song)
         markCurrentSong()
-        val cover = getAlbumImage(event.song)
-        val options = RequestOptions().placeholder(art_image.drawable).diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+        val cover = getAlbumImage(song)
+        val options = RequestOptions().placeholder(art_image.drawable).signature(ObjectKey(song.toString())).diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+        Glide.with(this).clear(art_image)
         Glide.with(this).load(cover).apply(options).into(art_image)
     }
 

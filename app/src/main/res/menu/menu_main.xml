@@ -22,6 +22,14 @@
         android:title="@string/open_playlist"
         app:showAsAction="ifRoom"/>
     <item
+        android:id="@+id/remove_current"
+        android:title="@string/remove_current_song"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/delete_current"
+        android:title="@string/delete_current_song"
+        app:showAsAction="never"/>
+    <item
         android:id="@+id/add_folder_to_playlist"
         android:icon="@drawable/ic_plus"
         android:title="@string/add_folder_to_playlist"
