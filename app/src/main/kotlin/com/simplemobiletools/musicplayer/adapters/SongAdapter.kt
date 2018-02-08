@@ -111,14 +111,14 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val list
 
     fun searchOpened() {
         transparentViewHeight = transparentView.height
-        transparentView.layoutParams.height = 0
+        transparentView.layoutParams?.height = 0
 
         navigationViewHeight = navigationView?.height ?: 0
         navigationView?.layoutParams?.height = 0
     }
 
     fun searchClosed() {
-        transparentView.layoutParams.height = transparentViewHeight
+        transparentView.layoutParams?.height = transparentViewHeight
         navigationView?.layoutParams?.height = navigationViewHeight
         notifyDataSetChanged()
     }
