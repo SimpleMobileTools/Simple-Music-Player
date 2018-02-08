@@ -46,8 +46,8 @@
     <string name="folder_contains_no_audio">Der ausgewählte Ordner enthält keine Audiodateien</string>
     <string name="delete_current_song">Aktuellen Song löschen</string>
     <string name="remove_current_song">Aktuellen Song aus Playlist entfernen</string>
-    <string name="show_filename">Show filename as song title if</string>
-    <string name="title_is_not_available">Title is not available</string>
+    <string name="show_filename">Verwende Dateinamen als Songtitel</string>
+    <string name="title_is_not_available">Titel nicht verfügbar</string>
 
     <!-- Settings -->
     <string name="equalizer">Equalizer</string>
