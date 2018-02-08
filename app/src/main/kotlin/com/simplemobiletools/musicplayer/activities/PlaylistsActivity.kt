@@ -8,11 +8,11 @@ import com.simplemobiletools.musicplayer.adapters.PlaylistsAdapter
 import com.simplemobiletools.musicplayer.dialogs.NewPlaylistDialog
 import com.simplemobiletools.musicplayer.extensions.dbHelper
 import com.simplemobiletools.musicplayer.extensions.playlistChanged
-import com.simplemobiletools.musicplayer.interfaces.RefreshItemsListener
+import com.simplemobiletools.musicplayer.interfaces.RefreshPlaylistsListener
 import com.simplemobiletools.musicplayer.models.Playlist
 import kotlinx.android.synthetic.main.activity_playlists.*
 
-class PlaylistsActivity : SimpleActivity(), RefreshItemsListener {
+class PlaylistsActivity : SimpleActivity(), RefreshPlaylistsListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_playlists)

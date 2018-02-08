@@ -1,5 +1,5 @@
 package com.simplemobiletools.musicplayer.interfaces
 
-interface RefreshItemsListener {
+interface RefreshPlaylistsListener {
     fun refreshItems()
 }

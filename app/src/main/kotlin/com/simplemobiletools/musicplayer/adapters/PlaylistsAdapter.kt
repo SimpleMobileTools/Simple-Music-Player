@@ -16,13 +16,13 @@ import com.simplemobiletools.musicplayer.dialogs.RemovePlaylistDialog
 import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.extensions.dbHelper
 import com.simplemobiletools.musicplayer.helpers.DBHelper
-import com.simplemobiletools.musicplayer.interfaces.RefreshItemsListener
+import com.simplemobiletools.musicplayer.interfaces.RefreshPlaylistsListener
 import com.simplemobiletools.musicplayer.models.Playlist
 import kotlinx.android.synthetic.main.item_playlist.view.*
 import java.io.File
 import java.util.*
 
-class PlaylistsAdapter(activity: SimpleActivity, val playlists: ArrayList<Playlist>, val listener: RefreshItemsListener?, recyclerView: MyRecyclerView,
+class PlaylistsAdapter(activity: SimpleActivity, val playlists: ArrayList<Playlist>, val listener: RefreshPlaylistsListener?, recyclerView: MyRecyclerView,
                        itemClick: (Any) -> Unit) : MyRecyclerViewAdapter(activity, recyclerView, null, itemClick) {
 
     override fun getActionMenuId() = R.menu.cab_playlists
