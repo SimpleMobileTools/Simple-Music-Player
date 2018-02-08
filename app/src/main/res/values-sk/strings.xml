@@ -46,7 +46,7 @@
     <string name="folder_contains_no_audio">Zvolený priečinok neobsahuje žiadne audio súbory</string>
     <string name="delete_current_song">Vymazať súčasnú skladbu</string>
     <string name="remove_current_song">Odstrániť súčasnú skladbu zo zoznamu skladieb</string>
-    <string name="show_filename">Zobraziť názov súboru namiesto názvu skladby ak</string>
+    <string name="show_filename">Zobraziť názov súboru namiesto názvu skladby ak:</string>
     <string name="title_is_not_available">Názov skladby nie je dostupý</string>
 
     <!-- Settings -->

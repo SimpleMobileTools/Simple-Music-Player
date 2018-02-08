@@ -241,6 +241,7 @@ class DBHelper private constructor(val context: Context) : SQLiteOpenHelper(cont
 
         val ITEMS_PER_GROUP = 50
         val songs = ArrayList<Song>(paths.size)
+        val showFilename = context.config.showFilename
 
         val parts = paths.size / ITEMS_PER_GROUP
         for (i in 0..parts) {
@@ -260,7 +261,8 @@ class DBHelper private constructor(val context: Context) : SQLiteOpenHelper(cont
                         val path = cursor.getStringValue(MediaStore.Audio.Media.DATA)
                         val duration = cursor.getIntValue(MediaStore.Audio.Media.DURATION) / 1000
                         val album = cursor.getStringValue(MediaStore.Audio.Media.ALBUM)
-                        val song = Song(id, title, artist, path, duration, album)
+                        val newTitle = getSongTitle(title, showFilename, path)
+                        val song = Song(id, newTitle, artist, path, duration, album)
                         songs.add(song)
                         pathsMap.remove(path)
                     } while (cursor.moveToNext())
@@ -272,8 +274,9 @@ class DBHelper private constructor(val context: Context) : SQLiteOpenHelper(cont
 
         pathsMap.forEach {
             val file = File(it)
-            val unknown = context.getString(R.string.unknown)
-            val song = Song(0, file.getSongTitle() ?: unknown, file.getArtist() ?: unknown, it, file.getDurationSeconds(), "")
+            val unknown = MediaStore.UNKNOWN_STRING
+            val title = file.getSongTitle() ?: unknown
+            val song = Song(0, getSongTitle(title, showFilename, it), file.getArtist() ?: unknown, it, file.getDurationSeconds(), "")
             songs.add(song)
         }
 
@@ -281,4 +284,12 @@ class DBHelper private constructor(val context: Context) : SQLiteOpenHelper(cont
     }
 
     private fun getQuestionMarks(cnt: Int) = "?" + ",?".repeat(Math.max(cnt - 1, 0))
+
+    private fun getSongTitle(title: String, showFilename: Int, path: String): String {
+        return when (showFilename) {
+            SHOW_FILENAME_NEVER -> title
+            SHOW_FILENAME_IF_UNAVAILABLE -> if (title == MediaStore.UNKNOWN_STRING) path.getFilenameFromPath() else title
+            else -> path.getFilenameFromPath()
+        }
+    }
 }

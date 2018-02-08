@@ -42,4 +42,8 @@ class Config(context: Context) : BaseConfig(context) {
         currIgnoredPaths.addAll(paths)
         ignoredPaths = currIgnoredPaths
     }
+
+    var showFilename: Int
+        get() = prefs.getInt(SHOW_FILENAME, SHOW_FILENAME_IF_UNAVAILABLE)
+        set(showFilename) = prefs.edit().putInt(SHOW_FILENAME, showFilename).apply()
 }

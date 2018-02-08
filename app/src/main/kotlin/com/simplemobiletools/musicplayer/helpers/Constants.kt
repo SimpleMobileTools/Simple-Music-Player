@@ -30,6 +30,7 @@ const val REPEAT_SONG = "repeat_song"
 const val AUTOPLAY = "autoplay"
 const val IGNORED_PATHS = "ignored_paths"
 const val CURRENT_PLAYLIST = "current_playlist"
+const val SHOW_FILENAME = "show_filename"
 
 // sorting
 const val SORT_BY_TITLE = 1
@@ -39,3 +40,7 @@ const val SORT_BY_DURATION = 8
 
 const val LIST_HEADERS_COUNT = 2
 const val LOWER_ALPHA = 0.5f
+
+const val SHOW_FILENAME_NEVER = 1
+const val SHOW_FILENAME_IF_UNAVAILABLE = 2
+const val SHOW_FILENAME_ALWAYS = 3

@@ -9,6 +9,9 @@ import com.simplemobiletools.commons.extensions.useEnglishToggled
 import com.simplemobiletools.commons.models.RadioItem
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.extensions.config
+import com.simplemobiletools.musicplayer.helpers.SHOW_FILENAME_ALWAYS
+import com.simplemobiletools.musicplayer.helpers.SHOW_FILENAME_IF_UNAVAILABLE
+import com.simplemobiletools.musicplayer.helpers.SHOW_FILENAME_NEVER
 import com.simplemobiletools.musicplayer.services.MusicService
 import kotlinx.android.synthetic.main.activity_settings.*
 import java.util.*
@@ -28,6 +31,7 @@ class SettingsActivity : SimpleActivity() {
         setupAvoidWhatsNew()
         setupShowInfoBubble()
         setupEqualizer()
+        setupReplaceTitle()
         updateTextColors(settings_scrollview)
     }
 
@@ -82,4 +86,25 @@ class SettingsActivity : SimpleActivity() {
             }
         }
     }
+
+    private fun setupReplaceTitle() {
+        settings_show_filename.text = getShowFilenameText()
+        settings_show_filename_holder.setOnClickListener {
+            val items = arrayListOf(
+                    RadioItem(SHOW_FILENAME_NEVER, getString(R.string.never)),
+                    RadioItem(SHOW_FILENAME_IF_UNAVAILABLE, getString(R.string.title_is_not_available)),
+                    RadioItem(SHOW_FILENAME_ALWAYS, getString(R.string.always)))
+
+            RadioGroupDialog(this@SettingsActivity, items, config.showFilename) {
+                config.showFilename = it as Int
+                settings_show_filename.text = getShowFilenameText()
+            }
+        }
+    }
+
+    private fun getShowFilenameText() = getString(when (config.showFilename) {
+        SHOW_FILENAME_NEVER -> R.string.never
+        SHOW_FILENAME_IF_UNAVAILABLE -> R.string.title_is_not_available
+        else -> R.string.always
+    })
 }
