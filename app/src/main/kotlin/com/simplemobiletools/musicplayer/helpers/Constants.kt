@@ -19,6 +19,8 @@ const val PLAYPOS = PATH + "PLAYPOS"
 const val REFRESH_LIST = PATH + "REFRESH_LIST"
 const val SET_PROGRESS = PATH + "SET_PROGRESS"
 const val SET_EQUALIZER = PATH + "SET_EQUALIZER"
+const val SKIP_BACKWARD = PATH + "SKIP_BACKWARD"
+const val SKIP_FORWARD = PATH + "SKIP_FORWARD"
 
 // shared preferences
 const val SHUFFLE = "shuffle"

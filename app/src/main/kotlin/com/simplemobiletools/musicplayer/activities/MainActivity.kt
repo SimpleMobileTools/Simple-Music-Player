@@ -89,8 +89,8 @@ class MainActivity : SimpleActivity(), SongListListener {
         play_pause_btn.setOnClickListener { sendIntent(PLAYPAUSE) }
         next_btn.setOnClickListener { sendIntent(NEXT) }
         repeat_btn.setOnClickListener { toggleSongRepetition() }
-        song_progress_current.setOnClickListener { }
-        song_progress_max.setOnClickListener { }
+        song_progress_current.setOnClickListener { sendIntent(SKIP_BACKWARD) }
+        song_progress_max.setOnClickListener { sendIntent(SKIP_FORWARD) }
 
         songs_playlist_empty_add_folder.setOnClickListener { addFolderToPlaylist() }
         volumeControlStream = AudioManager.STREAM_MUSIC

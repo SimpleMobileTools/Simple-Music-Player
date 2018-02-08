@@ -115,6 +115,8 @@
                 <action android:name="com.simplemobiletools.musicplayer.action.PLAYPOS"/>
                 <action android:name="com.simplemobiletools.musicplayer.action.REFRESH_LIST"/>
                 <action android:name="com.simplemobiletools.musicplayer.action.SET_PROGRESS"/>
+                <action android:name="com.simplemobiletools.musicplayer.action.SKIP_BACKWARD"/>
+                <action android:name="com.simplemobiletools.musicplayer.action.SKIP_FORWARD"/>
             </intent-filter>
         </service>
 

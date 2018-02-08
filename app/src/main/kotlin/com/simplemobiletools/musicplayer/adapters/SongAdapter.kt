@@ -285,8 +285,8 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val list
             play_pause_btn.setOnClickListener { activity.sendIntent(PLAYPAUSE) }
             next_btn.setOnClickListener { activity.sendIntent(NEXT) }
             repeat_btn.setOnClickListener { listener.listToggleSongRepetition() }
-            song_progress_current.setOnClickListener { }
-            song_progress_max.setOnClickListener { }
+            song_progress_current.setOnClickListener { activity.sendIntent(SKIP_BACKWARD) }
+            song_progress_max.setOnClickListener { activity.sendIntent(SKIP_FORWARD) }
 
             previous_btn.applyColorFilter(textColor)
             play_pause_btn.applyColorFilter(textColor)

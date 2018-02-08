@@ -177,6 +177,8 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
                     }
                 }
             }
+            SKIP_BACKWARD -> skipBackward()
+            SKIP_FORWARD -> skipForward()
         }
 
         return START_NOT_STICKY
@@ -635,5 +637,21 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         } else {
             mProgressHandler!!.removeCallbacksAndMessages(null)
         }
+    }
+
+    private fun skipBackward() {
+        skip(false)
+    }
+
+    private fun skipForward() {
+        skip(true)
+    }
+
+    private fun skip(forward: Boolean) {
+        val curr = mPlayer!!.currentPosition
+        val twoPercents = mPlayer!!.duration / 50
+        val newProgress = if (forward) curr + twoPercents else curr - twoPercents
+        mPlayer!!.seekTo(newProgress)
+        resumeSong()
     }
 }
