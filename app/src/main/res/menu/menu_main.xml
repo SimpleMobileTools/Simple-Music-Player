@@ -22,31 +22,38 @@
         android:title="@string/open_playlist"
         app:showAsAction="ifRoom"/>
     <item
-        android:id="@+id/remove_current"
-        android:title="@string/remove_current_song"
-        app:showAsAction="never"/>
-    <item
         android:id="@+id/delete_current"
         android:title="@string/delete_current_song"
         app:showAsAction="never"/>
     <item
-        android:id="@+id/add_folder_to_playlist"
-        android:icon="@drawable/ic_plus"
-        android:title="@string/add_folder_to_playlist"
-        app:showAsAction="ifRoom"/>
-    <item
-        android:id="@+id/add_file_to_playlist"
-        android:title="@string/add_file_to_playlist"
-        app:showAsAction="never"/>
-    <item
-        android:id="@+id/create_playlist_from_folder"
-        android:title="@string/create_playlist_from_folder"
-        app:showAsAction="never"/>
-    <item
-        android:id="@+id/remove_playlist"
-        android:icon="@drawable/ic_delete"
-        android:title="@string/remove_playlist"
-        app:showAsAction="ifRoom"/>
+        android:id="@+id/menu_rotate"
+        android:title="@string/playlists"
+        app:showAsAction="never">
+        <menu>
+            <item
+                android:id="@+id/remove_current"
+                android:title="@string/remove_current_song"
+                app:showAsAction="never"/>
+            <item
+                android:id="@+id/add_folder_to_playlist"
+                android:icon="@drawable/ic_plus"
+                android:title="@string/add_folder_to_playlist"
+                app:showAsAction="ifRoom"/>
+            <item
+                android:id="@+id/add_file_to_playlist"
+                android:title="@string/add_file_to_playlist"
+                app:showAsAction="never"/>
+            <item
+                android:id="@+id/create_playlist_from_folder"
+                android:title="@string/create_playlist_from_folder"
+                app:showAsAction="never"/>
+            <item
+                android:id="@+id/remove_playlist"
+                android:icon="@drawable/ic_delete"
+                android:title="@string/remove_playlist"
+                app:showAsAction="ifRoom"/>
+        </menu>
+    </item>
     <item
         android:id="@+id/settings"
         android:title="@string/settings"
