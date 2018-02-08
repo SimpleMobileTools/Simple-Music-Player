@@ -9,6 +9,8 @@ import com.simplemobiletools.commons.extensions.useEnglishToggled
 import com.simplemobiletools.commons.models.RadioItem
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.extensions.config
+import com.simplemobiletools.musicplayer.extensions.sendIntent
+import com.simplemobiletools.musicplayer.helpers.REFRESH_LIST
 import com.simplemobiletools.musicplayer.helpers.SHOW_FILENAME_ALWAYS
 import com.simplemobiletools.musicplayer.helpers.SHOW_FILENAME_IF_UNAVAILABLE
 import com.simplemobiletools.musicplayer.helpers.SHOW_FILENAME_NEVER
@@ -98,6 +100,7 @@ class SettingsActivity : SimpleActivity() {
             RadioGroupDialog(this@SettingsActivity, items, config.showFilename) {
                 config.showFilename = it as Int
                 settings_show_filename.text = getShowFilenameText()
+                sendIntent(REFRESH_LIST)
             }
         }
     }
