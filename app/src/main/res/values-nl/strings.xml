@@ -46,9 +46,9 @@
     <string name="folder_contains_no_audio">De geselecteerde map bevat geen geluidsbestanden</string>
     <string name="delete_current_song">Huidige nummer verwijderen</string>
     <string name="remove_current_song">Huidige nummer uit afspeellijst verwijderen</string>
-    <string name="show_filename">Show filename as song title:</string>
-    <string name="title_is_not_available">If title is not available</string>
-    <string name="show_album_cover">Show album cover on the main screen</string>
+    <string name="show_filename">Bestandsnaam als titel gebruiken:</string>
+    <string name="title_is_not_available">Als titel niet beschikbaar is</string>
+    <string name="show_album_cover">Albumhoes in hoofdscherm weergeven</string>
 
     <!-- Settings -->
     <string name="equalizer">Equalizer</string>
