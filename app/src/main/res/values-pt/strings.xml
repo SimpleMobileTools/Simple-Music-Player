@@ -44,11 +44,11 @@
     <string name="all_songs">Todas as faixas</string>
     <string name="create_playlist_from_folder">Criar nova lista de reprodução a partir da pasta</string>
     <string name="folder_contains_no_audio">A pasta selecionada não contém ficheiros de áudio</string>
-    <string name="delete_current_song">Delete current song</string>
-    <string name="remove_current_song">Remove current song from playlist</string>
-    <string name="show_filename">Show filename as song title:</string>
-    <string name="title_is_not_available">If title is not available</string>
-    <string name="show_album_cover">Show album cover on the main screen</string>
+    <string name="delete_current_song">Apagar faixa atual</string>
+    <string name="remove_current_song">Remover faixa atual da lista de reprodução</string>
+    <string name="show_filename">Mostrar nome do ficheiro como título da faixa:</string>
+    <string name="title_is_not_available">Se não existir título</string>
+    <string name="show_album_cover">Mostrar imagem do álbum no ecrã principal</string>
 
     <!-- Settings -->
     <string name="equalizer">Equalizador</string>
