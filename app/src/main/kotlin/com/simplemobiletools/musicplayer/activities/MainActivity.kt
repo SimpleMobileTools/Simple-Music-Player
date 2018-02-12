@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Paint
 import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.Drawable
 import android.media.AudioManager
 import android.os.Bundle
 import android.os.Environment
@@ -15,9 +16,12 @@ import android.view.MenuItem
 import android.view.ViewGroup
 import android.widget.SeekBar
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
-import com.bumptech.glide.signature.ObjectKey
+import com.bumptech.glide.request.target.Target
 import com.simplemobiletools.commons.dialogs.FilePickerDialog
 import com.simplemobiletools.commons.dialogs.RadioGroupDialog
 import com.simplemobiletools.commons.extensions.*
@@ -53,6 +57,7 @@ class MainActivity : SimpleActivity(), SongListListener {
     private var searchMenuItem: MenuItem? = null
     private var isSearchOpen = false
     private var artView: ViewGroup? = null
+    private var oldCover: Drawable? = null
 
     private var actionbarSize = 0
     private var topArtHeight = 0
@@ -117,7 +122,7 @@ class MainActivity : SimpleActivity(), SongListListener {
         }
 
         if (storedTextColor != config.textColor) {
-            updateAlbumCover(MusicService.mCurrSong)
+            updateAlbumCover()
         }
 
         setupIconColors()
@@ -483,7 +488,7 @@ class MainActivity : SimpleActivity(), SongListListener {
         val song = event.song
         updateSongInfo(song)
         markCurrentSong()
-        updateAlbumCover(song)
+        updateAlbumCover()
     }
 
     @Subscribe
@@ -517,10 +522,21 @@ class MainActivity : SimpleActivity(), SongListListener {
         getSongsAdapter()?.updateCurrentSongIndex(songIndex)
     }
 
-    private fun updateAlbumCover(song: Song?) {
-        val options = RequestOptions().placeholder(art_image.drawable).signature(ObjectKey(song.toString())).diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+    private fun updateAlbumCover() {
+        val options = RequestOptions().placeholder(oldCover).diskCacheStrategy(DiskCacheStrategy.RESOURCE)
         Glide.with(this).clear(art_image)
-        Glide.with(this).load(MusicService.mCurrSongCover).apply(options).into(art_image)
+        Glide.with(this)
+                .load(MusicService.mCurrSongCover)
+                .apply(options)
+                .listener(object : RequestListener<Drawable> {
+                    override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean) = false
+
+                    override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
+                        oldCover = resource
+                        return false
+                    }
+                })
+                .into(art_image)
     }
 
     private fun searchQueryChanged(text: String) {
