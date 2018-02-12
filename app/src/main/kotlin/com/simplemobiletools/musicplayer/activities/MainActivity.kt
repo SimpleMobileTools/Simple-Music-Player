@@ -518,10 +518,9 @@ class MainActivity : SimpleActivity(), SongListListener {
     }
 
     private fun updateAlbumCover(song: Song?) {
-        val cover = getAlbumImage(song)
         val options = RequestOptions().placeholder(art_image.drawable).signature(ObjectKey(song.toString())).diskCacheStrategy(DiskCacheStrategy.RESOURCE)
         Glide.with(this).clear(art_image)
-        Glide.with(this).load(cover).apply(options).into(art_image)
+        Glide.with(this).load(MusicService.mCurrSongCover).apply(options).into(art_image)
     }
 
     private fun searchQueryChanged(text: String) {
