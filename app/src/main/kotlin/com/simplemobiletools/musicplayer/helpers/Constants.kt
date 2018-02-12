@@ -31,6 +31,7 @@ const val AUTOPLAY = "autoplay"
 const val IGNORED_PATHS = "ignored_paths"
 const val CURRENT_PLAYLIST = "current_playlist"
 const val SHOW_FILENAME = "show_filename"
+const val SHOW_ALBUM_COVER = "show_album_cover"
 
 // sorting
 const val SORT_BY_TITLE = 1

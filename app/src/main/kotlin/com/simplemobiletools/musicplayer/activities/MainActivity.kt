@@ -63,6 +63,7 @@ class MainActivity : SimpleActivity(), SongListListener {
 
     private var storedUseEnglish = false
     private var storedTextColor = 0
+    private var storedShowAlbumCover = true
 
     lateinit var bus: Bus
 
@@ -77,9 +78,8 @@ class MainActivity : SimpleActivity(), SongListListener {
         initSeekbarChangeListener()
 
         actionbarSize = getActionBarHeight()
-        topArtHeight = resources.getDimensionPixelSize(R.dimen.top_art_height)
         artView = layoutInflater.inflate(R.layout.item_transparent, null) as ViewGroup
-
+        setTopArtHeight()
         songs_fastscroller.measureItemIndex = LIST_HEADERS_COUNT
 
         handlePermission(PERMISSION_WRITE_STORAGE) {
@@ -122,6 +122,16 @@ class MainActivity : SimpleActivity(), SongListListener {
 
         if (storedTextColor != config.textColor) {
             updateAlbumCover()
+        }
+
+        if (storedShowAlbumCover != config.showAlbumCover) {
+            setTopArtHeight()
+            songs_list.adapter?.notifyDataSetChanged()
+            if (config.showAlbumCover) {
+                updateAlbumCover()
+            } else {
+                art_image.setImageDrawable(null)
+            }
         }
 
         setupIconColors()
@@ -202,7 +212,13 @@ class MainActivity : SimpleActivity(), SongListListener {
         config.apply {
             storedUseEnglish = useEnglish
             storedTextColor = textColor
+            storedShowAlbumCover = showAlbumCover
         }
+    }
+
+    private fun setTopArtHeight() {
+        topArtHeight = if (config.showAlbumCover) resources.getDimensionPixelSize(R.dimen.top_art_height) else 0
+        artView!!.setPadding(0, topArtHeight, 0, 0)
     }
 
     private fun setupSearch(menu: Menu) {
@@ -522,6 +538,10 @@ class MainActivity : SimpleActivity(), SongListListener {
     }
 
     private fun updateAlbumCover() {
+        if (!config.showAlbumCover) {
+            return
+        }
+
         val options = RequestOptions().placeholder(oldCover)
         Glide.with(this).clear(art_image)
         Glide.with(this)

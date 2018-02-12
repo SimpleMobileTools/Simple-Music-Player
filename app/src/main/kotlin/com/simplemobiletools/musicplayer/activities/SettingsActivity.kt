@@ -32,6 +32,7 @@ class SettingsActivity : SimpleActivity() {
         setupUseEnglish()
         setupAvoidWhatsNew()
         setupShowInfoBubble()
+        setupShowAlbumCover()
         setupEqualizer()
         setupReplaceTitle()
         updateTextColors(settings_scrollview)
@@ -72,6 +73,14 @@ class SettingsActivity : SimpleActivity() {
         settings_show_info_bubble_holder.setOnClickListener {
             settings_show_info_bubble.toggle()
             config.showInfoBubble = settings_show_info_bubble.isChecked
+        }
+    }
+
+    private fun setupShowAlbumCover() {
+        settings_show_album_cover.isChecked = config.showAlbumCover
+        settings_show_album_cover_holder.setOnClickListener {
+            settings_show_album_cover.toggle()
+            config.showAlbumCover = settings_show_album_cover.isChecked
         }
     }
 
