@@ -51,6 +51,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         private var mProgressHandler: Handler? = null
         private var mSongs = ArrayList<Song>()
         private var mAudioManager: AudioManager? = null
+        private var mCoverArtHeight = 0
         private var mOreoFocusHandler: OreoAudioFocusHandler? = null
 
         private var mWasPlayingAtFocusLost = false
@@ -71,6 +72,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             mBus!!.register(this)
         }
 
+        mCoverArtHeight = resources.getDimension(R.dimen.top_art_height).toInt()
         mProgressHandler = Handler()
         val remoteControlComponent = ComponentName(packageName, RemoteControlReceiver::class.java.name)
         mAudioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager
@@ -541,7 +543,12 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
                     val options = BitmapFactory.Options()
                     val bitmap = BitmapFactory.decodeByteArray(rawArt, 0, rawArt.size, options)
                     if (bitmap != null) {
-                        return bitmap
+                        return if (bitmap.height > mCoverArtHeight * 2) {
+                            val ratio = bitmap.width / bitmap.height.toFloat()
+                            Bitmap.createScaledBitmap(bitmap, (mCoverArtHeight * ratio).toInt(), mCoverArtHeight * 2, false)
+                        } else {
+                            bitmap
+                        }
                     }
                 }
             } catch (e: Exception) {
