@@ -17,7 +17,6 @@ import android.view.ViewGroup
 import android.widget.SeekBar
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
-import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
@@ -523,7 +522,7 @@ class MainActivity : SimpleActivity(), SongListListener {
     }
 
     private fun updateAlbumCover() {
-        val options = RequestOptions().placeholder(oldCover).diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+        val options = RequestOptions().placeholder(oldCover)
         Glide.with(this).clear(art_image)
         Glide.with(this)
                 .load(MusicService.mCurrSongCover)
