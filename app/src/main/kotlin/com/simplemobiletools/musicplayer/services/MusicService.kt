@@ -152,7 +152,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             PLAYPOS -> playSong(intent)
             EDIT -> {
                 mCurrSong = intent.getSerializableExtra(EDITED_SONG) as Song
-                mBus!!.post(Events.SongChanged(mCurrSong))
+                songChanged(mCurrSong)
                 setupNotification()
             }
             FINISH -> {
@@ -224,7 +224,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
     private fun updateUI() {
         mBus!!.post(Events.PlaylistUpdated(mSongs))
-        mBus!!.post(Events.SongChanged(mCurrSong))
+        songChanged(mCurrSong)
         songStateChanged(getIsPlaying())
     }
 
@@ -481,8 +481,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             }
             mPlayer!!.setDataSource(applicationContext, trackUri)
             mPlayer!!.prepareAsync()
-
-            mBus!!.post(Events.SongChanged(mCurrSong))
+            songChanged(mCurrSong)
         } catch (e: IOException) {
             Log.e(TAG, "setSong IOException $e")
         }
@@ -492,7 +491,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         mPlayer!!.pause()
         abandonAudioFocus()
         mCurrSong = null
-        mBus!!.post(Events.SongChanged(null))
+        songChanged(null)
         songStateChanged(false)
     }
 
@@ -524,6 +523,10 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         setupNotification()
     }
 
+    private fun songChanged(song: Song?) {
+        mBus!!.post(Events.SongChanged(song))
+    }
+
     private fun destroyPlayer() {
         mPlayer?.stop()
         mPlayer?.release()
@@ -531,7 +534,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
         if (mBus != null) {
             songStateChanged(false)
-            mBus!!.post(Events.SongChanged(null))
+            songChanged(null)
             mBus!!.unregister(this)
         }
 
