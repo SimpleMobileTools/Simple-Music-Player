@@ -1,6 +1,12 @@
 Changelog
 ==========
 
+Version 3.2.1 *(2018-02-12)*
+----------------------------
+
+ * Allow hiding the album cover images
+ * Couple stability improvements
+
 Version 3.2.0 *(2018-02-08)*
 ----------------------------
 
