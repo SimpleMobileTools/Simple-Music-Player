@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Prosty Odtwarzacz Muzyki</string>
-    <string name="app_launcher_name">Odtwarzacz Muzyki</string>
+    <string name="app_launcher_name">Prosty Odtwarzacz Muzyki</string>
     <string name="playlist_empty">Twoja playlista jest pusta</string>
     <string name="rename_song">Zmień nazwę</string>
     <string name="rename_song_error">Wystąpił błąd podczas zmiany nazwy</string>
@@ -35,7 +35,7 @@
     <string name="remove_playlist_description">To usunie tylko wybrane listy odtwarzania, nie pliki.</string>
     <string name="remove_playlist_description_placeholder">To usunie tylko listę odtwarzania \"%s\", nie pliki.</string>
     <string name="remove_from_playlist">Usuń z listy odtwarzania</string>
-    <string name="remove_from_playlist_description">To usunie tylko elementy z playlisty \"%s\", pliki zostaną nienaruszone.</string>
+    <string name="remove_from_playlist_description">To usunie tylko elementy z listy odtwarzania \"%s\", pliki zostaną nienaruszone.</string>
     <string name="delete_the_files_too">Usuń też pliki</string>
     <string name="open_playlist">Otwórz listę odtwarzania</string>
     <string name="all_songs_cannot_be_deleted">Lista odtwarzania \'Wszystkie utwory\' nie może zostać usunięta</string>
@@ -44,11 +44,11 @@
     <string name="all_songs">Wszystkie utwory</string>
     <string name="create_playlist_from_folder">Utwórz nową listę odtwarzania z folderu</string>
     <string name="folder_contains_no_audio">Wybrany folder nie zawiera plików audio</string>
-    <string name="delete_current_song">Delete current song</string>
-    <string name="remove_current_song">Remove current song from playlist</string>
-    <string name="show_filename">Show filename as song title:</string>
-    <string name="title_is_not_available">If title is not available</string>
-    <string name="show_album_cover">Show album cover on the main screen</string>
+    <string name="delete_current_song">Usuń obecną piosenkę</string>
+    <string name="remove_current_song">Usuń obecną piosenkę z listy odtwarzania</string>
+    <string name="show_filename">Pokazuj nazwę pliku jako tytuł piosenki:</string>
+    <string name="title_is_not_available">Jeśli tytuł jest niedostępny</string>
+    <string name="show_album_cover">Pokazuj okładkę albumu na głównym ekranie</string>
 
     <!-- Settings -->
     <string name="equalizer">Korektor</string>
@@ -61,7 +61,7 @@
 
         Zawiera widżet z konfigurowalnymi kolorami napisów i tła.
 
-        Nie zawiera natomiast żadnych reklam i nie potrzebuje całej masy uprawnień. Jest w pełni otwartoźródłowa i w pełni podatna na kolorowanie.
+        Nie zawiera natomiast żadnych reklam, nie potrzebuje całej masy uprawnień, jest w pełni otwartoźródłowa i w pełni podatna na kolorowanie.
 
         Niniejsza aplikacja jest tylko częścią naszej kolekcji prostych narzędzi. Ta, jak i pozostałe, dostępne są na stronie http://www.simplemobiletools.com
     </string>
