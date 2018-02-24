@@ -2,9 +2,9 @@
     <string name="app_name">Simple Music Player</string>
     <string name="app_launcher_name">Musikspelare</string>
     <string name="playlist_empty">Din spellista är tom</string>
-    <string name="rename_song">Döp om låt</string>
-    <string name="rename_song_error">Ett fel uppstod vid omdöpningen</string>
-    <string name="rename_song_empty">Alla fält måste fyllas i</string>
+    <string name="rename_song">Byt namn på låt</string>
+    <string name="rename_song_error">Ett fel uppstod under namnbytet</string>
+    <string name="rename_song_empty">Du måste fylla i alla fält</string>
     <string name="enable_song_repetition">Repetera nuvarande låt</string>
     <string name="disable_song_repetition">Sluta repetera nuvarande låt</string>
     <string name="song_repetition_enabled">Repetering av nuvarande låt är aktiverad</string>
@@ -44,11 +44,11 @@
     <string name="all_songs">Alla låtar</string>
     <string name="create_playlist_from_folder">Skapa ny spellista från mapp</string>
     <string name="folder_contains_no_audio">Den valda mappen innehåller inga ljudfiler</string>
-    <string name="delete_current_song">Delete current song</string>
-    <string name="remove_current_song">Remove current song from playlist</string>
-    <string name="show_filename">Show filename as song title:</string>
-    <string name="title_is_not_available">If title is not available</string>
-    <string name="show_album_cover">Show album cover on the main screen</string>
+    <string name="delete_current_song">Ta bort aktuell låt</string>
+    <string name="remove_current_song">Ta bort aktuell låt från spellista</string>
+    <string name="show_filename">Ersätt låttitel med filnamn:</string>
+    <string name="title_is_not_available">Om titeln inte är tillgänglig</string>
+    <string name="show_album_cover">Visa skivomslag i huvudvyn</string>
 
     <!-- Settings -->
     <string name="equalizer">Equalizer</string>
