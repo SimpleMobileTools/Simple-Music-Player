@@ -648,6 +648,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
         if (isPlaying) {
             val filter = IntentFilter(Intent.ACTION_HEADSET_PLUG)
+            filter.addAction(AudioManager.ACTION_AUDIO_BECOMING_NOISY)
             registerReceiver(mHeadsetPlugReceiver, filter)
         } else {
             try {
