@@ -26,6 +26,7 @@ import com.simplemobiletools.commons.dialogs.RadioGroupDialog
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.*
 import com.simplemobiletools.commons.interfaces.RecyclerScrollCallback
+import com.simplemobiletools.commons.models.FileDirItem
 import com.simplemobiletools.commons.models.RadioItem
 import com.simplemobiletools.commons.models.Release
 import com.simplemobiletools.commons.views.MyLinearLayoutManager
@@ -310,7 +311,7 @@ class MainActivity : SimpleActivity(), SongListListener {
             RemovePlaylistDialog(this, playlist) {
                 if (it) {
                     val paths = dbHelper.getPlaylistSongPaths(config.currentPlaylist)
-                    val files = paths.map(::File) as ArrayList<File>
+                    val files = paths.map { FileDirItem(it, it.getFilenameFromPath()) } as ArrayList<FileDirItem>
                     dbHelper.removeSongsFromPlaylist(paths, -1)
                     deleteFiles(files) { }
                 }

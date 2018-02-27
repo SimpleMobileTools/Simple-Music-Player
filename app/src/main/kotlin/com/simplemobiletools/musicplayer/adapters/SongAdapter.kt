@@ -1,7 +1,6 @@
 package com.simplemobiletools.musicplayer.adapters
 
 import android.content.Intent
-import android.net.Uri
 import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +10,7 @@ import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
 import com.simplemobiletools.commons.dialogs.ConfirmationDialog
 import com.simplemobiletools.commons.dialogs.PropertiesDialog
 import com.simplemobiletools.commons.extensions.*
+import com.simplemobiletools.commons.models.FileDirItem
 import com.simplemobiletools.commons.views.FastScroller
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.musicplayer.BuildConfig
@@ -26,7 +26,6 @@ import com.simplemobiletools.musicplayer.models.Song
 import com.simplemobiletools.musicplayer.services.MusicService
 import kotlinx.android.synthetic.main.item_navigation.view.*
 import kotlinx.android.synthetic.main.item_song.view.*
-import java.io.File
 
 class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val listener: SongListListener, val transparentView: View,
                   recyclerView: MyRecyclerView, fastScroller: FastScroller, itemClick: (Any) -> Unit) : MyRecyclerViewAdapter(activity, recyclerView, fastScroller, itemClick) {
@@ -172,12 +171,11 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val list
     }
 
     private fun shareItems() {
-        val uris = ArrayList<Uri>()
+        val paths = ArrayList<String>()
         selectedPositions.forEach {
-            val file = File(songs[it].path)
-            uris.add(Uri.fromFile(file))
+            paths.add(songs[it].path)
         }
-        activity.shareUris(uris, BuildConfig.APPLICATION_ID)
+        activity.sharePathsIntent(paths, BuildConfig.APPLICATION_ID)
     }
 
     private fun askConfirmDelete() {
@@ -193,15 +191,15 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val list
         }
 
         val paths = ArrayList<String>(selectedPositions.size)
-        val files = ArrayList<File>(selectedPositions.size)
+        val fileDirItems = ArrayList<FileDirItem>(selectedPositions.size)
         val removeSongs = ArrayList<Song>(selectedPositions.size)
 
         val SAFPath = songs[selectedPositions.first()].path
-        activity.handleSAFDialog(File(SAFPath)) {
+        activity.handleSAFDialog(SAFPath) {
             selectedPositions.sortedDescending().forEach {
                 val song = songs[it]
                 paths.add(song.path)
-                files.add(File(song.path))
+                fileDirItems.add(FileDirItem(song.path, song.path.getFilenameFromPath()))
                 removeSongs.add(song)
                 if (song == MusicService.mCurrSong) {
                     activity.sendIntent(NEXT)
@@ -210,7 +208,7 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val list
 
             songs.removeAll(removeSongs)
             activity.dbHelper.removeSongsFromPlaylist(paths, -1)
-            activity.deleteFiles(files) { }
+            activity.deleteFiles(fileDirItems) { }
             removeSelectedItems()
 
             if (songs.isEmpty()) {

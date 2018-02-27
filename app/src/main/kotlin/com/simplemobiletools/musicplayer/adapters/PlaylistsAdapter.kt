@@ -4,10 +4,8 @@ import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
-import com.simplemobiletools.commons.extensions.applyColorFilter
-import com.simplemobiletools.commons.extensions.beInvisibleIf
-import com.simplemobiletools.commons.extensions.deleteFiles
-import com.simplemobiletools.commons.extensions.toast
+import com.simplemobiletools.commons.extensions.*
+import com.simplemobiletools.commons.models.FileDirItem
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
@@ -19,7 +17,6 @@ import com.simplemobiletools.musicplayer.helpers.DBHelper
 import com.simplemobiletools.musicplayer.interfaces.RefreshPlaylistsListener
 import com.simplemobiletools.musicplayer.models.Playlist
 import kotlinx.android.synthetic.main.item_playlist.view.*
-import java.io.File
 import java.util.*
 
 class PlaylistsAdapter(activity: SimpleActivity, val playlists: ArrayList<Playlist>, val listener: RefreshPlaylistsListener?, recyclerView: MyRecyclerView,
@@ -76,7 +73,7 @@ class PlaylistsAdapter(activity: SimpleActivity, val playlists: ArrayList<Playli
 
     private fun deletePlaylistSongs(ids: ArrayList<Int>, callback: () -> Unit) {
         var cnt = ids.size
-        ids.map { activity.dbHelper.getPlaylistSongPaths(it).map(::File) as ArrayList<File> }
+        ids.map { activity.dbHelper.getPlaylistSongPaths(it).map { FileDirItem(it, it.getFilenameFromPath()) } as ArrayList<FileDirItem> }
                 .forEach {
                     activity.deleteFiles(it) {
                         if (--cnt <= 0) {

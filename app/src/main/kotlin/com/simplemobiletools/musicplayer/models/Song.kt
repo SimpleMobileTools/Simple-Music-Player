@@ -2,10 +2,10 @@ package com.simplemobiletools.musicplayer.models
 
 import android.provider.MediaStore
 import com.simplemobiletools.commons.extensions.getFormattedDuration
+import com.simplemobiletools.commons.helpers.SORT_BY_ARTIST
+import com.simplemobiletools.commons.helpers.SORT_BY_PATH
+import com.simplemobiletools.commons.helpers.SORT_BY_TITLE
 import com.simplemobiletools.commons.helpers.SORT_DESCENDING
-import com.simplemobiletools.musicplayer.helpers.SORT_BY_ARTIST
-import com.simplemobiletools.musicplayer.helpers.SORT_BY_PATH
-import com.simplemobiletools.musicplayer.helpers.SORT_BY_TITLE
 import java.io.Serializable
 
 data class Song(val id: Long, var title: String, var artist: String, var path: String, val duration: Int, val album: String) : Serializable, Comparable<Song> {

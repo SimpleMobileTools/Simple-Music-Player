@@ -273,10 +273,10 @@ class DBHelper private constructor(val context: Context) : SQLiteOpenHelper(cont
         }
 
         pathsMap.forEach {
-            val file = File(it)
             val unknown = MediaStore.UNKNOWN_STRING
-            val title = file.getSongTitle() ?: unknown
-            val song = Song(0, getSongTitle(title, showFilename, it), file.getArtist() ?: unknown, it, file.getDurationSeconds(), "")
+            val title = it.getFileSongTitle() ?: unknown
+            val song = Song(0, getSongTitle(title, showFilename, it), it.getFileArtist() ?: unknown, it, it.getFileDurationSeconds()
+                    ?: 0, "")
             songs.add(song)
         }
 

@@ -4,13 +4,9 @@ import android.app.Activity
 import android.support.v7.app.AlertDialog
 import android.view.View
 import com.simplemobiletools.commons.extensions.setupDialogStuff
-import com.simplemobiletools.commons.helpers.SORT_DESCENDING
+import com.simplemobiletools.commons.helpers.*
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.extensions.config
-import com.simplemobiletools.musicplayer.helpers.SORT_BY_ARTIST
-import com.simplemobiletools.musicplayer.helpers.SORT_BY_DURATION
-import com.simplemobiletools.musicplayer.helpers.SORT_BY_PATH
-import com.simplemobiletools.musicplayer.helpers.SORT_BY_TITLE
 import kotlinx.android.synthetic.main.dialog_change_sorting.view.*
 
 class ChangeSortingDialog(val activity: Activity, val callback: () -> Unit) {
