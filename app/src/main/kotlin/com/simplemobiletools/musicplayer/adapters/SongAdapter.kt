@@ -84,6 +84,8 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val list
                 setupView(itemView, song, layoutPosition)
             }
             bindViewHolder(holder, position - LIST_HEADERS_COUNT, view)
+        } else {
+            holder.itemView.tag = holder
         }
     }
 
