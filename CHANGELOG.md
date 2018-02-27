@@ -1,6 +1,12 @@
 Changelog
 ==========
 
+Version 3.2.2 *(2018-02-27)*
+----------------------------
+
+ * Properly handle song repetition if there is just one in the playlist
+ * Misc stability improvements and smaller fixes
+
 Version 3.2.1 *(2018-02-12)*
 ----------------------------
 
