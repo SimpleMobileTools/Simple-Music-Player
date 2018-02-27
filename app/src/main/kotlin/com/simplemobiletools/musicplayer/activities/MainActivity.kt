@@ -113,6 +113,12 @@ class MainActivity : SimpleActivity(), SongListListener {
                 song_list_background.translationY = Math.max(0, -scrollY + topArtHeight).toFloat()
             }
         }
+
+        if (savedInstanceState != null) {
+            songs_list.onGlobalLayout {
+                songs_list.scrollToPosition(0)
+            }
+        }
     }
 
     override fun onResume() {
