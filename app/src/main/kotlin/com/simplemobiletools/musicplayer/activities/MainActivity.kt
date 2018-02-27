@@ -559,7 +559,7 @@ class MainActivity : SimpleActivity(), SongListListener {
                     override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean) = false
 
                     override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
-                        oldCover = resource
+                        oldCover = resource?.constantState?.newDrawable()
                         return false
                     }
                 })
