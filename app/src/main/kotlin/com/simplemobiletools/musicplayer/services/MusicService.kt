@@ -446,8 +446,8 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     }
 
     private fun restartSong() {
-        if (mPlayedSongIndexes.isNotEmpty())
-            setSong(mPlayedSongIndexes[mPlayedSongIndexes.size - 1], false)
+        val newSongIndex = if (mPlayedSongIndexes.isEmpty()) 0 else mPlayedSongIndexes[mPlayedSongIndexes.size - 1]
+        setSong(newSongIndex, false)
     }
 
     private fun playSong(intent: Intent) {
@@ -503,8 +503,9 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     override fun onBind(intent: Intent) = null
 
     override fun onCompletion(mp: MediaPlayer) {
-        if (!config.autoplay)
+        if (!config.autoplay) {
             return
+        }
 
         if (config.repeatSong) {
             restartSong()
