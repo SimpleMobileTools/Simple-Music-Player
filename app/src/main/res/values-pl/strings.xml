@@ -17,7 +17,6 @@
     <string name="disable_autoplay">Wyłącz autoodtwarzanie</string>
     <string name="autoplay_enabled">Autoodtwarzanie włączone</string>
     <string name="autoplay_disabled">Autoodtwarzanie wyłączone</string>
-    <string name="unknown">Nieznany</string>
 
     <string name="previous">Poprzedni</string>
     <string name="playpause">Odtwórz / zatrzymaj</string>

@@ -17,7 +17,6 @@
     <string name="disable_autoplay">Desativar reprodução automática</string>
     <string name="autoplay_enabled">Reprodução automática ativada</string>
     <string name="autoplay_disabled">Reprodução automática desativada</string>
-    <string name="unknown">Desconhecido</string>
 
     <string name="previous">Anterior</string>
     <string name="playpause">Reproduzir / Pausa</string>
