@@ -17,7 +17,7 @@
     <string name="disable_autoplay">Играть вручную</string>
     <string name="autoplay_enabled">Автоматическое воспроизведение включено</string>
     <string name="autoplay_disabled">Автоматическое воспроизведение выключено</string>
-    <string name="unknown">Unknown</string>
+    <string name="unknown">Неизвестно</string>
 
     <string name="previous">Предыдущая</string>
     <string name="playpause">Воспроизведение / Пауза</string>
@@ -38,17 +38,17 @@
     <string name="remove_from_playlist_description">Композиции будут удалены только из плейлиста «%s», сами файлы удалены не будут.</string>
     <string name="delete_the_files_too">Удалить файлы тоже</string>
     <string name="open_playlist">Открыть плейлист</string>
-    <string name="all_songs_cannot_be_deleted">Плейлист \'Все композиции\' не может быть удален</string>
+    <string name="all_songs_cannot_be_deleted">Плейлист «Все композиции» не может быть удалён</string>
     <string name="empty_playlist">Текущий плейлист пуст</string>
     <string name="fetching_songs">Загрузка композиций…</string>
     <string name="all_songs">Все композиции</string>
     <string name="create_playlist_from_folder">Создать новый плейлист из папки</string>
     <string name="folder_contains_no_audio">Выбранная папка не содержит аудиофайлов</string>
-    <string name="delete_current_song">Delete current song</string>
-    <string name="remove_current_song">Remove current song from playlist</string>
-    <string name="show_filename">Show filename as song title:</string>
-    <string name="title_is_not_available">If title is not available</string>
-    <string name="show_album_cover">Show album cover on the main screen</string>
+    <string name="delete_current_song">Удалить текущую композицию</string>
+    <string name="remove_current_song">Убрать текущую композицию из плейлиста</string>
+    <string name="show_filename">Имя файла вместо названия композиции:</string>
+    <string name="title_is_not_available">Если название недоступно</string>
+    <string name="show_album_cover">Показывать обложку альбома на главном экране</string>
 
     <!-- Settings -->
     <string name="equalizer">Эквалайзер</string>
