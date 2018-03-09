@@ -331,6 +331,10 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             }
         }
 
+        if (mCurrSongCover?.isRecycled == true) {
+            mCurrSongCover = resources.getColoredBitmap(R.drawable.ic_headset, config.textColor)
+        }
+
         val notification = NotificationCompat.Builder(this)
                 .setStyle(android.support.v4.media.app.NotificationCompat.MediaStyle().setShowActionsInCompactView(playPauseButtonPosition, nextButtonPosition))
                 .setContentTitle(title)
