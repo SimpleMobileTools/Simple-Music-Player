@@ -61,7 +61,7 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val list
         view?.song_frame?.isSelected = select
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return when (viewType) {
             VIEW_TYPE_TRANSPARENT -> getTransparentViewHolder()
             VIEW_TYPE_NAVIGATION -> getNavigationViewHolder()

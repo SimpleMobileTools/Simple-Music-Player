@@ -30,7 +30,7 @@ class PlaylistsAdapter(activity: SimpleActivity, val playlists: ArrayList<Playli
         view?.playlist_frame?.isSelected = select
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int) = createViewHolder(R.layout.item_playlist, parent)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = createViewHolder(R.layout.item_playlist, parent)
 
     override fun onBindViewHolder(holder: MyRecyclerViewAdapter.ViewHolder, position: Int) {
         val playlist = playlists[position]
