@@ -1,6 +1,12 @@
 Changelog
 ==========
 
+Version 3.2.3 *(2018-03-09)*
+----------------------------
+
+ * Improve Media Button handling (by bvp)
+ * Misc smaller bugfixes and translation improvements
+
 Version 3.2.2 *(2018-02-27)*
 ----------------------------
 
