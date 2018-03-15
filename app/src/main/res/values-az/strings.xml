@@ -13,8 +13,8 @@
     <string name="disable_shuffle">Qarışdırmanı qapat</string>
     <string name="shuffle_enabled">Qarışdırma aktivdir</string>
     <string name="shuffle_disabled">Qarışdırma deaktivdir</string>
-    <string name="enable_autoplay">Avto-oxuma'nı aç</string>
-    <string name="disable_autoplay">Avto-oxuma'nı qapat</string>
+    <string name="enable_autoplay">Avto-oxuma\'nı aç</string>
+    <string name="disable_autoplay">Avto-oxuma\'nı qapat</string>
     <string name="autoplay_enabled">Avto-oxuma aktivdir</string>
     <string name="autoplay_disabled">Avto-oxuma deaktivdir</string>
 
