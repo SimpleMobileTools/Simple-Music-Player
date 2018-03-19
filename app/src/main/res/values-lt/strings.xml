@@ -1,0 +1,72 @@
+<resources>
+    <string name="app_name">Paprastas muzikos grotuvas</string>
+    <string name="app_launcher_name">Muzikos grotuvas</string>
+    <string name="playlist_empty">Jūsų grojaraštis tuščias</string>
+    <string name="rename_song">Pervardinti dainą</string>
+    <string name="rename_song_error">Įvyko klaida pervardinant</string>
+    <string name="rename_song_empty">Prašome užpildyti visus laukelius</string>
+    <string name="enable_song_repetition">Pakartoti dabartinę dainą</string>
+    <string name="disable_song_repetition">Nebekartoti dabartinės dainos</string>
+    <string name="song_repetition_enabled">Dabartinės dainos kartojimas įjungtas</string>
+    <string name="song_repetition_disabled">Dabartinės dainos kartojimas išjungtas</string>
+    <string name="enable_shuffle">Įjungti grojimą atsitiktine tvarka</string>
+    <string name="disable_shuffle">Išjungti grojimą atsitiktine tvarka</string>
+    <string name="shuffle_enabled">Grojimas atsitiktine tvarka įjungtas</string>
+    <string name="shuffle_disabled">Grojimas atsitiktine tvarka išjungtas</string>
+    <string name="enable_autoplay">Įjungti automatinį grojimą</string>
+    <string name="disable_autoplay">Išjungti automatinį grojimą/string>
+    <string name="autoplay_enabled">Automatinis grojimas įjungtas</string>
+    <string name="autoplay_disabled">Automatinis grojimas išjungtas</string>
+
+    <string name="previous">Prieš tai buvusi</string>
+    <string name="playpause">Groti / Pristabdyti</string>
+    <string name="next">Kita</string>
+
+    <!-- Playlists -->
+    <string name="add_file_to_playlist">Pridėti bylą į grojaraštį</string>
+    <string name="add_folder_to_playlist">Pridėti aplanką į grojaraštį</string>
+    <string name="manage_playlists">Tvarkyti grojaraščius</string>
+    <string name="playlists">Grojaraščiai</string>
+    <string name="create_playlist">Sukurti grojaraštį</string>
+    <string name="rename_playlist">Pervardinti grojaraštį</string>
+    <string name="playlist_name_exists">Grojaraštis šiuo pavadinimu jau yra</string>
+    <string name="remove_playlist">Pašalinti grojaraštį</string>
+    <string name="remove_playlist_description">Tai tik ištrins pasirinktus grojaraščius, ne garso bylas.</string>
+    <string name="remove_playlist_description_placeholder">Tai tik ištrins pasirinktą grojaraščtį \"%s\", ne garso bylas.</string>
+    <string name="remove_from_playlist">Ištrinti iš grojaraščio</string>
+    <string name="remove_from_playlist_description">Tai tik ištrins elementus iš grojaraščio \"%s\", garso bylos nebus ištrintos.</string>
+    <string name="delete_the_files_too">Taip pat ištrinti bylas</string>
+    <string name="open_playlist">Atidaryti grojaraštį</string>
+    <string name="all_songs_cannot_be_deleted">\'Visos dainos\' grojaraštis negali būti ištrintas</string>
+    <string name="empty_playlist">Dabartinis grojaraštis yra tuščias</string>
+    <string name="fetching_songs">Įtraukia dainas…</string>
+    <string name="all_songs">Visos dainos</string>
+    <string name="create_playlist_from_folder">Sukurti naują grojaraštį iš aplanko</string>
+    <string name="folder_contains_no_audio">Pasirinktame aplanke nėra garso bylų</string>
+    <string name="delete_current_song">Ištrinti dabartinę dainą</string>
+    <string name="remove_current_song">Ištrinti dabartinę dainą iš grojaraščio</string>
+    <string name="show_filename">Rodyti bylos pavadinimą kaip dainos pavadinimą:</string>
+    <string name="title_is_not_available">Jei pavadinimas negalimas</string>
+    <string name="show_album_cover">Rodyti albumo nuotrauką pagrindiniame lange</string>
+
+    <!-- Settings -->
+    <string name="equalizer">Ekvalaizeris</string>
+
+    <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
+    <!-- Short description has to have less than 80 chars -->
+    <string name="app_short_description">Paprastas muzikos grotuvas su derinamu valdikliu.</string>
+    <string name="app_long_description">
+        Muzikos grotuvas lengvai valdomas per būsenos juostelę, namų lango valdikliu arba per ausinių mygtukus. Jūs galite rūšiuoti takelius pagal pavadinimą arba atlikėją, taip pat reguliuoti ekvalaizerį. Nepalaiko filtravimo pagal atlikėją ir albumą, laukite pakeitimų!
+
+        Turi valdiklį su tinkinama teksto, pagrindine ir fono spalvomis.
+
+        Neturi reklamų ar nereikalingų leidimų. Programėlė visiškai atviro kodo, yra galimybė keisti spalvas.
+
+        Ši programėle yra vienintelė iš keletos mūsų programėlių. Likusias Jūs galite rasti čia http://www.simplemobiletools.com
+    </string>
+
+    <!--
+        Haven't found some strings? There's more at
+        https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
+    -->
+</resources>
