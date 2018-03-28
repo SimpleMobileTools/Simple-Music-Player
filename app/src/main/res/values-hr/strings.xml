@@ -1,0 +1,72 @@
+<resources>
+    <string name="app_name">Jednostavni glazbeni svirač</string>
+    <string name="app_launcher_name">Glazbeni svirač</string>
+    <string name="playlist_empty">Vaš popis za reprodukciju je prazan</string>
+    <string name="rename_song">Preimenuj pjesmu</string>
+    <string name="rename_song_error">Došlo je do pogreške prilikom preimenovanja</string>
+    <string name="rename_song_empty">Ispunite sva polja</string>
+    <string name="enable_song_repetition">Ponovi trenutnu pjesmu</string>
+    <string name="disable_song_repetition">Prestani ponavljati trenutnu pjesmu</string>
+    <string name="song_repetition_enabled">Ponavljanje trenutne pjesme omogućeno</string>
+    <string name="song_repetition_disabled">Ponavljanje trenutne pjesme onemogućeno</string>
+    <string name="enable_shuffle">Omogući slučajnu reprodukciju</string>
+    <string name="disable_shuffle">Onemogući slučajnu reprodukciju</string>
+    <string name="shuffle_enabled">Omogućena je slučajna reprodukcija</string>
+    <string name="shuffle_disabled">Onemogućena je slučajna reprodukcija</string>
+    <string name="enable_autoplay">Omogući automatsku reprodukciju</string>
+    <string name="disable_autoplay">Onemogući automatsku reprodukciju</string>
+    <string name="autoplay_enabled">Automatska reprodukcija omogućena</string>
+    <string name="autoplay_disabled">Automatska reprodukcija onemogućena</string>
+
+    <string name="previous">Prijašnja</string>
+    <string name="playpause">Reproduciraj / Pauziraj</string>
+    <string name="next">Sljedeća</string>
+
+    <!-- Playlists -->
+    <string name="add_file_to_playlist">Dodajte datoteku na popis za reprodukciju</string>
+    <string name="add_folder_to_playlist">Dodajte mapu na popis za reprodukciju</string>
+    <string name="manage_playlists">Upravljanje popisima za reprodukciju</string>
+    <string name="playlists">Popisi za reprodukciju</string>
+    <string name="create_playlist">Izradi popis za reprodukciju</string>
+    <string name="rename_playlist">Preimenuj popis za reprodukciju</string>
+    <string name="playlist_name_exists">Popis za reprodukciju s tim nazivom već postoji</string>
+    <string name="remove_playlist">Ukloni popis za reprodukciju</string>
+    <string name="remove_playlist_description">To će ukloniti samo odabrane popise za reprodukciju, a ne stvarne datoteke.</string>
+    <string name="remove_playlist_description_placeholder">To će samo ukloniti popise \"%s\" za reprodukciju, a ne stvarne datoteke.</string>
+    <string name="remove_from_playlist">Ukloni s popisa pjesama</string>
+    <string name="remove_from_playlist_description">To će samo ukloniti stavke \"%s\" s popisa za reprodukciju, stvarne datoteke neće biti izbrisane.</string>
+    <string name="delete_the_files_too">Također izbriši datoteke</string>
+    <string name="open_playlist">Otvori popis za reprodukciju</string>
+    <string name="all_songs_cannot_be_deleted">Nije moguće izbrisati popis pjesama \'Sve pjesme\'</string>
+    <string name="empty_playlist">Trenutačni popis za reprodukciju je prazan</string>
+    <string name="fetching_songs">Dohvaćanje pjesama...</string>
+    <string name="all_songs">Sve pjesme</string>
+    <string name="create_playlist_from_folder">Izradite novi popis za reprodukciju iz mape</string>
+    <string name="folder_contains_no_audio">Odabrana mapa ne sadrži audio datoteke</string>
+    <string name="delete_current_song">Brisanje trenutne pjesme</string>
+    <string name="remove_current_song">Uklonite trenutnu pjesmu s popisa pjesama</string>
+    <string name="show_filename">Prikaži naziv datoteke kao naslov pjesme:</string>
+    <string name="title_is_not_available">Ako naslov nije dostupan</string>
+    <string name="show_album_cover">Pokazivanje naslovnice albuma na glavnom zaslonu</string>
+
+    <!-- Settings -->
+    <string name="equalizer">Equalizer</string>
+
+    <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
+    <!-- Short description has to have less than 80 chars -->
+    <string name="app_short_description">Jednostavan glazbeni svirač s prilagodljivim widgetom, bez oglasa.</string>
+    <string name="app_long_description">
+        Jednostavan glazbeni svirač koji se može lako kontrolirati putem trake za obavijesti, widgeta početnog zaslona ili gumba na slušalicama. Možete sortirati sve pjesme po naslovu ili izvođaču i prilagoditi equalizer. Sortiranje po izvođaču ili albumu još nije podržano, budite u tijeku!
+
+        Aplikacija uključuje widget s prilagodljivom bojom teksta, transparentnošću i bojom pozadine.
+
+        Ne sadrži oglase ili nepotrebne dozvole. Aplikacije je otvorenog koda, pruža prilagodljive boje.
+
+        Ova je aplikacija samo dio većeg broja aplikacija. Možete pronaći ostatak na http://www.simplemobiletools.com
+    </string>
+
+    <!--
+        Haven't found some strings? There's more at
+        https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
+    -->
+</resources>
