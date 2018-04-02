@@ -66,7 +66,6 @@ class MainActivity : SimpleActivity(), SongListListener {
     private var actionbarSize = 0
     private var topArtHeight = 0
 
-    private var storedUseEnglish = false
     private var storedTextColor = 0
     private var storedShowAlbumCover = true
 
@@ -126,11 +125,6 @@ class MainActivity : SimpleActivity(), SongListListener {
 
     override fun onResume() {
         super.onResume()
-        if (storedUseEnglish != config.useEnglish) {
-            restartActivity()
-            return
-        }
-
         if (storedTextColor != config.textColor) {
             updateAlbumCover()
         }
@@ -221,7 +215,6 @@ class MainActivity : SimpleActivity(), SongListListener {
 
     private fun storeStateVariables() {
         config.apply {
-            storedUseEnglish = useEnglish
             storedTextColor = textColor
             storedShowAlbumCover = showAlbumCover
         }
@@ -453,7 +446,7 @@ class MainActivity : SimpleActivity(), SongListListener {
         repeat_btn.applyColorFilter(if (config.repeatSong) getAdjustedPrimaryColor() else config.textColor)
         repeat_btn.alpha = if (config.repeatSong) 1f else LOWER_ALPHA
 
-        getSongsAdapter()?.textColor = textColor
+        getSongsAdapter()?.updateTextColor(textColor)
         songs_fastscroller.updatePrimaryColor()
     }
 
@@ -490,7 +483,6 @@ class MainActivity : SimpleActivity(), SongListListener {
             SongAdapter(this@MainActivity, songs, this, artView!!, songs_list, songs_fastscroller) {
                 songPicked(getSongIndex(it as Song))
             }.apply {
-                setupDragListener(true)
                 isThirdPartyIntent = this@MainActivity.isThirdPartyIntent
                 addVerticalDividers(true)
                 songs_list.adapter = this

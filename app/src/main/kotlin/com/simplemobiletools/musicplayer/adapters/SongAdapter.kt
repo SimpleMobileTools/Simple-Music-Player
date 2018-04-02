@@ -50,6 +50,7 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val list
     var isThirdPartyIntent = false
 
     init {
+        setupDragListener(true)
         positionOffset = LIST_HEADERS_COUNT
     }
 

@@ -26,7 +26,6 @@ class PlaylistsActivity : SimpleActivity(), RefreshPlaylistsListener {
                     getPlaylists()
                     playlistChanged((it as Playlist).id)
                 }.apply {
-                    setupDragListener(true)
                     playlists_list.adapter = this
                 }
             }
