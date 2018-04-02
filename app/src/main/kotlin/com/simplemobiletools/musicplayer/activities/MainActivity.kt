@@ -7,6 +7,7 @@ import android.graphics.Paint
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.media.AudioManager
+import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.support.v4.view.MenuItemCompat
@@ -24,10 +25,7 @@ import com.bumptech.glide.request.target.Target
 import com.simplemobiletools.commons.dialogs.FilePickerDialog
 import com.simplemobiletools.commons.dialogs.RadioGroupDialog
 import com.simplemobiletools.commons.extensions.*
-import com.simplemobiletools.commons.helpers.LICENSE_MULTISELECT
-import com.simplemobiletools.commons.helpers.LICENSE_OTTO
-import com.simplemobiletools.commons.helpers.LICENSE_STETHO
-import com.simplemobiletools.commons.helpers.PERMISSION_WRITE_STORAGE
+import com.simplemobiletools.commons.helpers.*
 import com.simplemobiletools.commons.interfaces.RecyclerScrollCallback
 import com.simplemobiletools.commons.models.FAQItem
 import com.simplemobiletools.commons.models.FileDirItem
@@ -424,8 +422,14 @@ class MainActivity : SimpleActivity(), SongListListener {
 
     private fun initializePlayer() {
         if (isThirdPartyIntent) {
+            val realPath = intent.getStringExtra(REAL_FILE_PATH)
+            var fileUri = intent.data
+            if (realPath.isNotEmpty()) {
+                fileUri = Uri.fromFile(File(realPath))
+            }
+
             Intent(this, MusicService::class.java).apply {
-                data = intent.data
+                data = fileUri
                 action = INIT_PATH
                 startService(this)
             }
