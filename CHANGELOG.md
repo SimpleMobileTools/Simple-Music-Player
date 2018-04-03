@@ -1,6 +1,12 @@
 Changelog
 ==========
 
+Version 3.2.4 *(2018-04-03)*
+----------------------------
+
+ * Fix a couple glitches related to third party intent handling
+ * Many smaller stability and UX improvements
+
 Version 3.2.3 *(2018-03-09)*
 ----------------------------
 
