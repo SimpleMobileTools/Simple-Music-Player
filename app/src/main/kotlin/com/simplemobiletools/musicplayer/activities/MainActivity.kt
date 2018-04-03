@@ -165,7 +165,7 @@ class MainActivity : SimpleActivity(), SongListListener {
         super.onDestroy()
         bus.unregister(this)
 
-        if (isThirdPartyIntent) {
+        if (isThirdPartyIntent && !isChangingConfigurations) {
             sendIntent(FINISH)
         }
     }
@@ -215,6 +215,14 @@ class MainActivity : SimpleActivity(), SongListListener {
         config.apply {
             storedTextColor = textColor
             storedShowAlbumCover = showAlbumCover
+        }
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        if (intent.action == Intent.ACTION_VIEW) {
+            setIntent(intent)
+            initThirdPartyIntent()
         }
     }
 
@@ -422,19 +430,23 @@ class MainActivity : SimpleActivity(), SongListListener {
 
     private fun initializePlayer() {
         if (isThirdPartyIntent) {
-            val realPath = intent.getStringExtra(REAL_FILE_PATH)
-            var fileUri = intent.data
-            if (realPath.isNotEmpty()) {
-                fileUri = Uri.fromFile(File(realPath))
-            }
-
-            Intent(this, MusicService::class.java).apply {
-                data = fileUri
-                action = INIT_PATH
-                startService(this)
-            }
+            initThirdPartyIntent()
         } else {
             sendIntent(INIT)
+        }
+    }
+
+    private fun initThirdPartyIntent() {
+        val realPath = intent.getStringExtra(REAL_FILE_PATH)
+        var fileUri = intent.data
+        if (realPath.isNotEmpty()) {
+            fileUri = Uri.fromFile(File(realPath))
+        }
+
+        Intent(this, MusicService::class.java).apply {
+            data = fileUri
+            action = INIT_PATH
+            startService(this)
         }
     }
 

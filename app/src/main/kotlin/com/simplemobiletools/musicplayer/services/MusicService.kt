@@ -130,9 +130,13 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             }
             INIT_PATH -> {
                 mIsThirdPartyIntent = true
-                intentUri = intent.data
-                initService()
-                initSongs()
+                if (intentUri != intent.data) {
+                    intentUri = intent.data
+                    initService()
+                    initSongs()
+                } else {
+                    updateUI()
+                }
             }
             SETUP -> {
                 mPlayOnPrepare = true
