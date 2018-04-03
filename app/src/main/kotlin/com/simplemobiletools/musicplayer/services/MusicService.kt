@@ -40,6 +40,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         private val TAG = MusicService::class.java.simpleName
         private const val MIN_INITIAL_DURATION = 30
         private const val PROGRESS_UPDATE_INTERVAL = 1000
+        private const val MIN_SKIP_LENGTH = 2000
         private const val NOTIFICATION_ID = 78    // just a random number
 
         var mCurrSong: Song? = null
@@ -694,7 +695,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
     private fun skip(forward: Boolean) {
         val curr = mPlayer!!.currentPosition
-        val twoPercents = mPlayer!!.duration / 50
+        val twoPercents = Math.max(mPlayer!!.duration / 50, MIN_SKIP_LENGTH)
         val newProgress = if (forward) curr + twoPercents else curr - twoPercents
         mPlayer!!.seekTo(newProgress)
         resumeSong()
