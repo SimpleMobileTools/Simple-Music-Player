@@ -344,7 +344,8 @@ class MainActivity : SimpleActivity(), SongListListener {
             RadioGroupDialog(this, items, config.currentPlaylist) {
                 if (it == -1) {
                     NewPlaylistDialog(this) {
-                        playlistChanged(it)
+                        MusicService.mCurrSong = null
+                        playlistChanged(it, false)
                         invalidateOptionsMenu()
                     }
                 } else {

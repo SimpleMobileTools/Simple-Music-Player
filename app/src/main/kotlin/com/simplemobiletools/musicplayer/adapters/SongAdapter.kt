@@ -289,9 +289,11 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val list
     fun deleteCurrentSong() {
         ConfirmationDialog(activity) {
             selectedPositions.clear()
-            selectedPositions.add(currentSongIndex - positionOffset)
-            deleteSongs()
-            selectedPositions.clear()
+            if (songs.isNotEmpty()) {
+                selectedPositions.add(currentSongIndex - positionOffset)
+                deleteSongs()
+                selectedPositions.clear()
+            }
         }
     }
 

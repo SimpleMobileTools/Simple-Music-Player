@@ -21,11 +21,13 @@ val Context.config: Config get() = Config.newInstance(applicationContext)
 
 val Context.dbHelper: DBHelper get() = DBHelper.newInstance(applicationContext)
 
-fun Context.playlistChanged(newID: Int) {
+fun Context.playlistChanged(newID: Int, callSetup: Boolean = true) {
     config.currentPlaylist = newID
     sendIntent(PAUSE)
     sendIntent(REFRESH_LIST)
-    sendIntent(SETUP)
+    if (callSetup) {
+        sendIntent(SETUP)
+    }
 }
 
 fun Context.getActionBarHeight(): Int {
