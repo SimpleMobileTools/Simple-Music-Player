@@ -1,6 +1,11 @@
 Changelog
 ==========
 
+Version 3.2.5 *(2018-04-04)*
+----------------------------
+
+ * Fix a crash at handling third party intents
+
 Version 3.2.4 *(2018-04-03)*
 ----------------------------
 
