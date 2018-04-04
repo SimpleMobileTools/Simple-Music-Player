@@ -438,7 +438,7 @@ class MainActivity : SimpleActivity(), SongListListener {
     }
 
     private fun initThirdPartyIntent() {
-        val realPath = intent.getStringExtra(REAL_FILE_PATH)
+        val realPath = intent.getStringExtra(REAL_FILE_PATH) ?: ""
         var fileUri = intent.data
         if (realPath.isNotEmpty()) {
             fileUri = Uri.fromFile(File(realPath))
