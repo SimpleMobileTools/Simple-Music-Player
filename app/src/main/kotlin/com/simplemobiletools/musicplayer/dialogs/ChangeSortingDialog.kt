@@ -12,7 +12,6 @@ import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.extensions.config
 import kotlinx.android.synthetic.main.dialog_change_sorting.view.*
 
-@RequiresApi(Build.VERSION_CODES.N)
 class ChangeSortingDialog(val activity: Activity, val callback: () -> Unit) {
     private var currSorting = 0
     var config = activity.config
