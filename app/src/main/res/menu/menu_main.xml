@@ -34,10 +34,12 @@
                 android:id="@+id/remove_current"
                 android:title="@string/remove_current_song"
                 app:showAsAction="never"/>
+            <!-- add_fold_to_playlist icon is white, chanced to black-->
             <item
                 android:id="@+id/add_folder_to_playlist"
-                android:icon="@drawable/ic_plus"
+                android:icon="@android:drawable/ic_menu_add"
                 android:title="@string/add_folder_to_playlist"
+                android:iconTint="@color/color_primary"
                 app:showAsAction="ifRoom"/>
             <item
                 android:id="@+id/add_file_to_playlist"
@@ -49,7 +51,7 @@
                 app:showAsAction="never"/>
             <item
                 android:id="@+id/remove_playlist"
-                android:icon="@drawable/ic_delete"
+                android:icon="@android:drawable/ic_menu_delete"
                 android:title="@string/remove_playlist"
                 app:showAsAction="ifRoom"/>
         </menu>
