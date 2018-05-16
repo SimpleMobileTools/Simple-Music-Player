@@ -14,6 +14,7 @@ import kotlinx.android.synthetic.main.dialog_rename_song.view.*
 import java.io.File
 
 class EditDialog(val activity: BaseSimpleActivity, val song: Song, val callback: (Song) -> Unit) {
+    //Add more comments with explanations about the class
     init {
         val view = activity.layoutInflater.inflate(R.layout.dialog_rename_song, null).apply {
             title.setText(song.title)
