@@ -1,10 +1,7 @@
 package com.simplemobiletools.musicplayer.dialogs
 
 import android.app.Activity
-import android.os.Build
-import android.support.annotation.RequiresApi
 import android.support.v7.app.AlertDialog
-import android.text.Html
 import android.view.View
 import com.simplemobiletools.commons.extensions.setupDialogStuff
 import com.simplemobiletools.commons.helpers.*
