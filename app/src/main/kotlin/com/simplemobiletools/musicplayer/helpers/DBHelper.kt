@@ -108,6 +108,13 @@ class DBHelper private constructor(val context: Context) : SQLiteOpenHelper(cont
         }
     }
 
+    fun updateSongPath(oldPath: String, newPath: String) {
+        val selectionArgs = arrayOf(oldPath)
+        val values = ContentValues().apply { put(COL_PATH, newPath) }
+        val selection = "$COL_PATH = ?"
+        mDb.update(TABLE_NAME_SONGS, values, selection, selectionArgs)
+    }
+
     fun getPlaylists(callback: (types: ArrayList<Playlist>) -> Unit) {
         val playlists = ArrayList<Playlist>(3)
         val cols = arrayOf(COL_ID, COL_TITLE)

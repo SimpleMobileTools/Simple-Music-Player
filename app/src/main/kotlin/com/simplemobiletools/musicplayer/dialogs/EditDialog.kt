@@ -7,6 +7,7 @@ import android.support.v7.app.AlertDialog
 import com.simplemobiletools.commons.activities.BaseSimpleActivity
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.musicplayer.R
+import com.simplemobiletools.musicplayer.extensions.dbHelper
 import com.simplemobiletools.musicplayer.models.Song
 import kotlinx.android.synthetic.main.dialog_rename_song.*
 import kotlinx.android.synthetic.main.dialog_rename_song.view.*
@@ -53,6 +54,7 @@ class EditDialog(val activity: BaseSimpleActivity, val song: Song, val callback:
 
                             activity.renameFile(oldPath, newPath) {
                                 if (it) {
+                                    activity.dbHelper.updateSongPath(oldPath, newPath)
                                     song.path = newPath
                                     callback(song)
                                 } else {
