@@ -5,6 +5,7 @@ import android.os.Bundle
 import com.simplemobiletools.commons.dialogs.RadioGroupDialog
 import com.simplemobiletools.commons.extensions.beVisibleIf
 import com.simplemobiletools.commons.extensions.updateTextColors
+import com.simplemobiletools.commons.helpers.IS_CUSTOMIZING_COLORS
 import com.simplemobiletools.commons.models.RadioItem
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.extensions.config
@@ -27,6 +28,7 @@ class SettingsActivity : SimpleActivity() {
         super.onResume()
 
         setupCustomizeColors()
+        setupCustomizeWidgetColors()
         setupManagePlaylists()
         setupUseEnglish()
         setupAvoidWhatsNew()
@@ -40,6 +42,15 @@ class SettingsActivity : SimpleActivity() {
     private fun setupCustomizeColors() {
         settings_customize_colors_holder.setOnClickListener {
             startCustomizationActivity()
+        }
+    }
+
+    private fun setupCustomizeWidgetColors() {
+        settings_customize_widget_colors_holder.setOnClickListener {
+            Intent(this, WidgetConfigureActivity::class.java).apply {
+                putExtra(IS_CUSTOMIZING_COLORS, true)
+                startActivity(this)
+            }
         }
     }
 
