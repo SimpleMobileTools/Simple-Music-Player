@@ -568,23 +568,20 @@ class MainActivity : SimpleActivity(), SongListListener {
             return
         }
 
-        try {
-            val options = RequestOptions().placeholder(oldCover)
-            Glide.with(this).clear(art_image)
-            Glide.with(this)
-                    .load(MusicService.mCurrSongCover)
-                    .apply(options)
-                    .listener(object : RequestListener<Drawable> {
-                        override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean) = false
+        val options = RequestOptions().placeholder(oldCover)
+        Glide.with(this).clear(art_image)
+        Glide.with(this)
+                .load(MusicService.mCurrSongCover)
+                .apply(options)
+                .listener(object : RequestListener<Drawable> {
+                    override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean) = false
 
-                        override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
-                            oldCover = resource?.constantState?.newDrawable()
-                            return false
-                        }
-                    })
-                    .into(art_image)
-        } catch (ignored: Exception) {
-        }
+                    override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
+                        oldCover = resource?.constantState?.newDrawable()
+                        return false
+                    }
+                })
+                .into(art_image)
     }
 
     private fun searchQueryChanged(text: String) {

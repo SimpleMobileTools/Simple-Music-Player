@@ -27,9 +27,9 @@ class DBHelper private constructor(val context: Context) : SQLiteOpenHelper(cont
     private val mDb: SQLiteDatabase = writableDatabase
 
     companion object {
-        private val DB_VERSION = 1
-        val DB_NAME = "playlists.db"
-        val ALL_SONGS_ID = 1
+        private const val DB_VERSION = 1
+        const val DB_NAME = "playlists.db"
+        const val ALL_SONGS_ID = 1
 
         fun newInstance(context: Context) = DBHelper(context)
     }
