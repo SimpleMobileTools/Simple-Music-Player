@@ -11,6 +11,7 @@ import com.simplemobiletools.commons.dialogs.ColorPickerDialog
 import com.simplemobiletools.commons.extensions.adjustAlpha
 import com.simplemobiletools.commons.extensions.applyColorFilter
 import com.simplemobiletools.commons.extensions.setBackgroundColor
+import com.simplemobiletools.commons.extensions.setFillWithStroke
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.helpers.MyWidgetProvider
@@ -102,12 +103,12 @@ class WidgetConfigureActivity : SimpleActivity() {
     private fun updateBackgroundColor() {
         mBgColor = mBgColorWithoutTransparency.adjustAlpha(mBgAlpha)
         config_player.setBackgroundColor(mBgColor)
-        config_bg_color.setBackgroundColor(mBgColor)
         config_save.setBackgroundColor(mBgColor)
+        config_bg_color.setFillWithStroke(mBgColor, Color.BLACK)
     }
 
     private fun updateTextColor() {
-        config_text_color.setBackgroundColor(mTextColor)
+        config_text_color.setFillWithStroke(mTextColor, Color.BLACK)
 
         config_save.setTextColor(mTextColor)
         song_info_title.setTextColor(mTextColor)
@@ -119,16 +120,20 @@ class WidgetConfigureActivity : SimpleActivity() {
     }
 
     private fun pickBackgroundColor() {
-        ColorPickerDialog(this, mBgColorWithoutTransparency) {
-            mBgColorWithoutTransparency = it
-            updateBackgroundColor()
+        ColorPickerDialog(this, mBgColorWithoutTransparency) { wasPositivePressed, color ->
+            if (wasPositivePressed) {
+                mBgColorWithoutTransparency = color
+                updateBackgroundColor()
+            }
         }
     }
 
     private fun pickTextColor() {
-        ColorPickerDialog(this, mTextColor) {
-            mTextColor = it
-            updateTextColor()
+        ColorPickerDialog(this, mTextColor) { wasPositivePressed, color ->
+            if (wasPositivePressed) {
+                mTextColor = color
+                updateTextColor()
+            }
         }
     }
 

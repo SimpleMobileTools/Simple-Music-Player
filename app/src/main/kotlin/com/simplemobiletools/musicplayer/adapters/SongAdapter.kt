@@ -254,6 +254,7 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val list
             songs = newSongs
             currentSongIndex = -1
             notifyDataSetChanged()
+            fastScroller?.measureRecyclerView()
         }
     }
 
