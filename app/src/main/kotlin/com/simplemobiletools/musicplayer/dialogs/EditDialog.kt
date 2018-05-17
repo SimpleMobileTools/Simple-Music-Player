@@ -2,7 +2,6 @@ package com.simplemobiletools.musicplayer.dialogs
 
 import android.content.ContentValues
 import android.content.Context
-import android.net.Uri
 import android.provider.MediaStore
 import android.support.v7.app.AlertDialog
 import com.simplemobiletools.commons.activities.BaseSimpleActivity
@@ -11,7 +10,6 @@ import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.models.Song
 import kotlinx.android.synthetic.main.dialog_rename_song.*
 import kotlinx.android.synthetic.main.dialog_rename_song.view.*
-import java.io.File
 
 class EditDialog(val activity: BaseSimpleActivity, val song: Song, val callback: (Song) -> Unit) {
     init {
@@ -41,45 +39,41 @@ class EditDialog(val activity: BaseSimpleActivity, val song: Song, val callback:
                                 return@setOnClickListener
                             }
 
-                            val uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
                             song.artist = newArtist
                             song.title = newTitle
+                            updateContentResolver(context, song.id, newTitle, newArtist)
 
-                            if (updateContentResolver(context, uri, song.id, newTitle, newArtist)) {
-                                context.contentResolver.notifyChange(uri, null)
+                            val oldPath = song.path
+                            val newPath = "${oldPath.getParentPath()}/$newFilename.$newFileExtension"
+                            if (oldPath == newPath) {
+                                callback(song)
+                                dismiss()
+                                return@setOnClickListener
+                            }
 
-                                val file = File(song.path)
-                                val newFile = File(file.parent, "$newFilename.$newFileExtension")
-                                if (file == newFile) {
+                            activity.renameFile(oldPath, newPath) {
+                                if (it) {
+                                    song.path = newPath
                                     callback(song)
-                                    dismiss()
-                                    return@setOnClickListener
+                                } else {
+                                    activity.toast(R.string.rename_song_error)
                                 }
-
-                                if (file.renameTo(newFile)) {
-                                    context.scanFiles(arrayListOf(file, newFile)) {
-                                        song.path = newFile.absolutePath
-                                        callback(song)
-                                    }
-                                    dismiss()
-                                    return@setOnClickListener
-                                }
-
-                                activity.toast(R.string.rename_song_error)
+                                dismiss()
                             }
                         }
                     }
                 }
     }
 
-    private fun updateContentResolver(context: Context, uri: Uri, songID: Long, newSongTitle: String, newSongArtist: String): Boolean {
-        val where = "${MediaStore.Images.Media._ID} = ?"
+    private fun updateContentResolver(context: Context, songID: Long, newSongTitle: String, newSongArtist: String) {
+        val uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
+        val where = "${MediaStore.Audio.Media._ID} = ?"
         val args = arrayOf(songID.toString())
 
         val values = ContentValues().apply {
             put(MediaStore.Audio.Media.TITLE, newSongTitle)
             put(MediaStore.Audio.Media.ARTIST, newSongArtist)
         }
-        return context.contentResolver.update(uri, values, where, args) == 1
+        context.contentResolver.update(uri, values, where, args)
     }
 }
