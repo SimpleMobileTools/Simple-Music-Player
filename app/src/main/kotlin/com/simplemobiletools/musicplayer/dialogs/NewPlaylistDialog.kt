@@ -2,8 +2,8 @@ package com.simplemobiletools.musicplayer.dialogs
 
 import android.app.Activity
 import android.support.v7.app.AlertDialog
-import android.view.WindowManager
 import com.simplemobiletools.commons.extensions.setupDialogStuff
+import com.simplemobiletools.commons.extensions.showKeyboard
 import com.simplemobiletools.commons.extensions.toast
 import com.simplemobiletools.commons.extensions.value
 import com.simplemobiletools.musicplayer.R
@@ -26,40 +26,40 @@ class NewPlaylistDialog(val activity: Activity, var playlist: Playlist? = null, 
                 .setPositiveButton(R.string.ok, null)
                 .setNegativeButton(R.string.cancel, null)
                 .create().apply {
-            window!!.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE)
-            val dialogTitle = if (isNewPlaylist) R.string.create_playlist else R.string.rename_playlist
-            activity.setupDialogStuff(view, this, dialogTitle) {
-                getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
-                    val title = view.new_playlist_title.value
-                    val playlistIdWithTitle = activity.dbHelper.getPlaylistIdWithTitle(title)
-                    var isPlaylistTitleTaken = isNewPlaylist && playlistIdWithTitle != -1
-                    if (!isPlaylistTitleTaken)
-                        isPlaylistTitleTaken = !isNewPlaylist && playlist!!.id != playlistIdWithTitle && playlistIdWithTitle != -1
+                    val dialogTitle = if (isNewPlaylist) R.string.create_playlist else R.string.rename_playlist
+                    activity.setupDialogStuff(view, this, dialogTitle) {
+                        showKeyboard(view.new_playlist_title)
+                        getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
+                            val title = view.new_playlist_title.value
+                            val playlistIdWithTitle = activity.dbHelper.getPlaylistIdWithTitle(title)
+                            var isPlaylistTitleTaken = isNewPlaylist && playlistIdWithTitle != -1
+                            if (!isPlaylistTitleTaken)
+                                isPlaylistTitleTaken = !isNewPlaylist && playlist!!.id != playlistIdWithTitle && playlistIdWithTitle != -1
 
-                    if (title.isEmpty()) {
-                        activity.toast(R.string.empty_name)
-                        return@setOnClickListener
-                    } else if (isPlaylistTitleTaken) {
-                        activity.toast(R.string.playlist_name_exists)
-                        return@setOnClickListener
-                    }
+                            if (title.isEmpty()) {
+                                activity.toast(R.string.empty_name)
+                                return@setOnClickListener
+                            } else if (isPlaylistTitleTaken) {
+                                activity.toast(R.string.playlist_name_exists)
+                                return@setOnClickListener
+                            }
 
-                    playlist!!.title = title
+                            playlist!!.title = title
 
-                    val eventTypeId = if (isNewPlaylist) {
-                        activity.dbHelper.insertPlaylist(playlist!!)
-                    } else {
-                        activity.dbHelper.updatePlaylist(playlist!!)
-                    }
+                            val eventTypeId = if (isNewPlaylist) {
+                                activity.dbHelper.insertPlaylist(playlist!!)
+                            } else {
+                                activity.dbHelper.updatePlaylist(playlist!!)
+                            }
 
-                    if (eventTypeId != -1) {
-                        dismiss()
-                        callback(eventTypeId)
-                    } else {
-                        activity.toast(R.string.unknown_error_occurred)
+                            if (eventTypeId != -1) {
+                                dismiss()
+                                callback(eventTypeId)
+                            } else {
+                                activity.toast(R.string.unknown_error_occurred)
+                            }
+                        }
                     }
                 }
-            }
-        }
     }
 }
