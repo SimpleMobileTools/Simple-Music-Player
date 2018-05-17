@@ -80,6 +80,10 @@ class WidgetConfigureActivity : SimpleActivity() {
         storeWidgetColors()
         requestWidgetUpdate()
 
+        if (config.initialWidgetHeight == 0) {
+            config.widgetIdToMeasure = mWidgetId
+        }
+
         Intent().apply {
             putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, mWidgetId)
             setResult(Activity.RESULT_OK, this)

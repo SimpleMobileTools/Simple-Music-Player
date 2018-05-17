@@ -148,13 +148,12 @@ class MyWidgetProvider : AppWidgetProvider() {
     private fun getRemoteViews(appWidgetManager: AppWidgetManager, context: Context, widgetId: Int): RemoteViews {
         val options = appWidgetManager.getAppWidgetOptions(widgetId)
         val minHeight = options.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT)
-        val rows = getCellsForSize(minHeight)
 
-        var layoutId = R.layout.widget
-        if (rows == 1) {
-            layoutId = R.layout.small_widget
+        if (widgetId == context.config.widgetIdToMeasure && context.config.initialWidgetHeight == 0) {
+            context.config.initialWidgetHeight = minHeight
         }
 
+        val layoutId = if (minHeight < context.config.initialWidgetHeight / 2) R.layout.small_widget else R.layout.widget
         return RemoteViews(context.packageName, layoutId)
     }
 
@@ -170,13 +169,5 @@ class MyWidgetProvider : AppWidgetProvider() {
             mBus!!.unregister(this)
         } catch (e: Exception) {
         }
-    }
-
-    private fun getCellsForSize(size: Int): Int {
-        var n = 2
-        while (70 * n - 30 < size) {
-            ++n
-        }
-        return n - 1
     }
 }
