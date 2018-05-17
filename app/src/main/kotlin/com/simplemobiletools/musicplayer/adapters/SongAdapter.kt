@@ -39,6 +39,7 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val list
     private var currentSong: Song? = null
     private var initialProgress = 0
     private var initialIsPlaying = false
+    private var textToHighlight = ""
 
     private var transparentViewHolder: TransparentViewHolder? = null
     private var transparentViewHeight = 0
@@ -48,6 +49,7 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val list
     private var navigationViewHeight = 0
 
     var isThirdPartyIntent = false
+    var adjustedPrimaryColor = activity.getAdjustedPrimaryColor()
 
     init {
         setupDragListener(true)
@@ -247,15 +249,19 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val list
         }
     }
 
-    fun updateSongs(newSongs: ArrayList<Song>) {
+    fun updateSongs(newSongs: ArrayList<Song>, highlightText: String = "") {
         val newHashCode = newSongs.hashCode()
         if (newHashCode != songsHashCode) {
             songsHashCode = newHashCode
+            textToHighlight = highlightText
             songs = newSongs
             currentSongIndex = -1
             notifyDataSetChanged()
-            fastScroller?.measureRecyclerView()
+        } else if (textToHighlight != highlightText) {
+            textToHighlight = highlightText
+            notifyDataSetChanged()
         }
+        fastScroller?.measureRecyclerView()
     }
 
     fun updateCurrentSongIndex(index: Int) {
@@ -341,6 +347,7 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val list
         textColor = config.textColor
         primaryColor = config.primaryColor
         backgroundColor = config.backgroundColor
+        adjustedPrimaryColor = activity.getAdjustedPrimaryColor()
         navigationView?.apply {
             previous_btn.applyColorFilter(textColor)
             play_pause_btn.applyColorFilter(textColor)
@@ -395,10 +402,10 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val list
 
     private fun setupView(view: View, song: Song, layoutPosition: Int) {
         view.apply {
-            song_title.text = song.title
+            song_title.text = if (textToHighlight.isEmpty()) song.title else song.title.highlightTextPart(textToHighlight, adjustedPrimaryColor)
             song_title.setTextColor(textColor)
 
-            song_artist.text = song.artist
+            song_artist.text = if (textToHighlight.isEmpty()) song.artist else song.artist.highlightTextPart(textToHighlight, adjustedPrimaryColor)
             song_artist.setTextColor(textColor)
 
             song_note_image.beInvisibleIf(currentSongIndex != layoutPosition)

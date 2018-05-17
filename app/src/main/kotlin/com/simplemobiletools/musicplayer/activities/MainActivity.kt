@@ -34,7 +34,6 @@ import com.simplemobiletools.commons.models.Release
 import com.simplemobiletools.commons.views.MyLinearLayoutManager
 import com.simplemobiletools.musicplayer.BuildConfig
 import com.simplemobiletools.musicplayer.R
-import com.simplemobiletools.musicplayer.R.id.*
 import com.simplemobiletools.musicplayer.adapters.SongAdapter
 import com.simplemobiletools.musicplayer.dialogs.ChangeSortingDialog
 import com.simplemobiletools.musicplayer.dialogs.NewPlaylistDialog
@@ -592,7 +591,7 @@ class MainActivity : SimpleActivity(), SongListListener {
         val filtered = songs.filter { it.artist.contains(text, true) || it.title.contains(text, true) } as ArrayList
         filtered.sortBy { !(it.artist.startsWith(text, true) || it.title.startsWith(text, true)) }
         songs_playlist_empty.beVisibleIf(filtered.isEmpty())
-        getSongsAdapter()?.updateSongs(filtered)
+        getSongsAdapter()?.updateSongs(filtered, text)
     }
 
     private fun initSeekbarChangeListener() {
