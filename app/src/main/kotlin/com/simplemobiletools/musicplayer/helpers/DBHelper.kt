@@ -243,6 +243,7 @@ class DBHelper private constructor(val context: Context) : SQLiteOpenHelper(cont
                 MediaStore.Audio.Media.DATA,
                 MediaStore.Audio.Media.DURATION,
                 MediaStore.Audio.Media.ALBUM)
+
         val pathsMap = HashSet<String>()
         paths.mapTo(pathsMap, { it })
 
