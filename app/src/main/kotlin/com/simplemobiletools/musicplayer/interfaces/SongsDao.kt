@@ -9,4 +9,7 @@ import com.simplemobiletools.musicplayer.models.Song
 interface SongsDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(song: Song)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertAll(songs: List<Song>)
 }
