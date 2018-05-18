@@ -8,7 +8,7 @@ import com.simplemobiletools.commons.helpers.SORT_BY_TITLE
 import com.simplemobiletools.commons.helpers.SORT_DESCENDING
 import java.io.Serializable
 
-data class Song(val id: Long, var title: String, var artist: String, var path: String, val duration: Int, val album: String) : Serializable, Comparable<Song> {
+data class Song(val resolverID: Long, var title: String, var artist: String, var path: String, val duration: Int, val album: String) : Serializable, Comparable<Song> {
     companion object {
         private const val serialVersionUID = 6717978793256842245L
         var sorting = 0
