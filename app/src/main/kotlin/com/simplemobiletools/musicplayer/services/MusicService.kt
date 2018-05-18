@@ -13,6 +13,7 @@ import android.media.MediaPlayer
 import android.media.audiofx.Equalizer
 import android.net.Uri
 import android.os.Handler
+import android.os.Looper
 import android.os.PowerManager
 import android.provider.MediaStore
 import android.support.v4.app.NotificationCompat
@@ -171,8 +172,12 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
                 destroyPlayer()
             }
             REFRESH_LIST -> {
-                getSortedSongs()
-                mBus!!.post(Events.PlaylistUpdated(mSongs))
+                Thread {
+                    getSortedSongs()
+                    Handler(Looper.getMainLooper()).post {
+                        mBus!!.post(Events.PlaylistUpdated(mSongs))
+                    }
+                }.start()
             }
             SET_PROGRESS -> {
                 if (mPlayer != null) {
