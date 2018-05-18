@@ -1,5 +1,7 @@
 package com.simplemobiletools.musicplayer.models
 
+import android.arch.persistence.room.ColumnInfo
+import android.arch.persistence.room.Entity
 import android.provider.MediaStore
 import com.simplemobiletools.commons.extensions.getFormattedDuration
 import com.simplemobiletools.commons.helpers.SORT_BY_ARTIST
@@ -8,9 +10,18 @@ import com.simplemobiletools.commons.helpers.SORT_BY_TITLE
 import com.simplemobiletools.commons.helpers.SORT_DESCENDING
 import java.io.Serializable
 
-data class Song(val resolverID: Long, var title: String, var artist: String, var path: String, val duration: Int, val album: String) : Serializable, Comparable<Song> {
+@Entity(tableName = "songs", primaryKeys = ["path", "playlist_id"])
+data class Song(
+        @ColumnInfo(name = "media_store_id") val mediaStoreId: Long,
+        @ColumnInfo(name = "title") var title: String,
+        @ColumnInfo(name = "artist") var artist: String,
+        @ColumnInfo(name = "path") var path: String,
+        @ColumnInfo(name = "duration") val duration: Int,
+        @ColumnInfo(name = "album") val album: String,
+        @ColumnInfo(name = "playlist_id") val playListId: Int) : Serializable, Comparable<Song> {
+
     companion object {
-        private const val serialVersionUID = 6717978793256842245L
+        private const val serialVersionUID = 6717978793256852245L
         var sorting = 0
     }
 

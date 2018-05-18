@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.util.TypedValue
 import com.simplemobiletools.musicplayer.R
+import com.simplemobiletools.musicplayer.databases.SongsDatabase
 import com.simplemobiletools.musicplayer.helpers.*
 import com.simplemobiletools.musicplayer.services.MusicService
 
@@ -20,6 +21,8 @@ fun Context.sendIntent(action: String) {
 val Context.config: Config get() = Config.newInstance(applicationContext)
 
 val Context.dbHelper: DBHelper get() = DBHelper.newInstance(applicationContext)
+
+val Context.songsDB: SongsDatabase get() = SongsDatabase.getInstance(applicationContext)
 
 fun Context.playlistChanged(newID: Int, callSetup: Boolean = true) {
     config.currentPlaylist = newID

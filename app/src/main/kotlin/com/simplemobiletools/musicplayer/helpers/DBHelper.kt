@@ -263,14 +263,14 @@ class DBHelper private constructor(val context: Context) : SQLiteOpenHelper(cont
                 cursor = context.contentResolver.query(uri, columns, selection, selectionArgs, null)
                 if (cursor?.moveToFirst() == true) {
                     do {
-                        val id = cursor.getLongValue(MediaStore.Audio.Media._ID)
+                        val mediaStoreId = cursor.getLongValue(MediaStore.Audio.Media._ID)
                         val title = cursor.getStringValue(MediaStore.Audio.Media.TITLE)
                         val artist = cursor.getStringValue(MediaStore.Audio.Media.ARTIST)
                         val path = cursor.getStringValue(MediaStore.Audio.Media.DATA)
                         val duration = cursor.getIntValue(MediaStore.Audio.Media.DURATION) / 1000
                         val album = cursor.getStringValue(MediaStore.Audio.Media.ALBUM)
                         val newTitle = getSongTitle(title, showFilename, path)
-                        val song = Song(id, newTitle, artist, path, duration, album)
+                        val song = Song(mediaStoreId, newTitle, artist, path, duration, album, 0)
                         songs.add(song)
                         pathsMap.remove(path)
                     } while (cursor.moveToNext())
@@ -284,7 +284,7 @@ class DBHelper private constructor(val context: Context) : SQLiteOpenHelper(cont
             val unknown = MediaStore.UNKNOWN_STRING
             val title = it.getFileSongTitle() ?: unknown
             val song = Song(0, getSongTitle(title, showFilename, it), it.getFileArtist() ?: unknown, it, it.getFileDurationSeconds()
-                    ?: 0, "")
+                    ?: 0, "", 0)
             songs.add(song)
         }
 
