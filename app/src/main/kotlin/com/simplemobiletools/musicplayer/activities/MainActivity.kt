@@ -50,6 +50,7 @@ import com.squareup.otto.Bus
 import com.squareup.otto.Subscribe
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.item_navigation.*
+import kotlinx.android.synthetic.main.item_navigation.view.*
 import java.io.File
 import java.util.*
 
@@ -477,8 +478,8 @@ class MainActivity : SimpleActivity(), SongListListener {
     }
 
     private fun updateSongInfo(song: Song?) {
-        song_info_title.text = song?.title ?: ""
-        song_info_artist.text = song?.artist ?: ""
+        top_navigation.song_info_title.text = song?.title ?: ""
+        top_navigation.song_info_artist.text = song?.artist ?: ""
         song_progressbar.max = song?.duration ?: 0
         song_progressbar.progress = 0
 

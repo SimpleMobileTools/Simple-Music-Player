@@ -123,10 +123,12 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         when (intent.action) {
             INIT -> {
                 mIsThirdPartyIntent = false
-                if (!isServiceInitialized) {
-                    initService()
-                }
-                initSongs()
+                Thread {
+                    if (!isServiceInitialized) {
+                        initService()
+                    }
+                    initSongs()
+                }.start()
             }
             INIT_PATH -> {
                 mIsThirdPartyIntent = true
@@ -232,13 +234,17 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             setupSong()
         } else {
             val secs = mPlayer!!.currentPosition / 1000
-            mBus!!.post(Events.ProgressUpdated(secs))
+            Handler(Looper.getMainLooper()).post {
+                mBus!!.post(Events.ProgressUpdated(secs))
+            }
         }
     }
 
     private fun updateUI() {
-        mBus!!.post(Events.PlaylistUpdated(mSongs))
-        songChanged(mCurrSong)
+        Handler(Looper.getMainLooper()).post {
+            mBus!!.post(Events.PlaylistUpdated(mSongs))
+            songChanged(mCurrSong)
+        }
         songStateChanged(getIsPlaying())
     }
 
@@ -364,7 +370,9 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         startForeground(NOTIFICATION_ID, notification.build())
 
         if (!getIsPlaying()) {
-            Handler().postDelayed({ stopForeground(false) }, 500)
+            Handler(Looper.getMainLooper()).postDelayed({
+                stopForeground(false)
+            }, 500)
         }
     }
 
@@ -544,7 +552,9 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
     private fun songChanged(song: Song?) {
         mCurrSongCover = getAlbumImage(song)
-        mBus!!.post(Events.SongChanged(song))
+        Handler(Looper.getMainLooper()).post {
+            mBus!!.post(Events.SongChanged(song))
+        }
     }
 
     private fun getAlbumImage(song: Song?): Bitmap {
@@ -658,7 +668,9 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     private fun songStateChanged(isPlaying: Boolean) {
         handleProgressHandler(isPlaying)
         setupNotification()
-        mBus!!.post(Events.SongStateChanged(isPlaying))
+        Handler(Looper.getMainLooper()).post {
+            mBus!!.post(Events.SongStateChanged(isPlaying))
+        }
 
         if (isPlaying) {
             val filter = IntentFilter(Intent.ACTION_HEADSET_PLUG)
