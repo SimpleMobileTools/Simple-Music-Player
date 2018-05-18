@@ -84,9 +84,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             mOreoFocusHandler = OreoAudioFocusHandler(applicationContext)
         }
 
-        if (hasPermission(PERMISSION_WRITE_STORAGE)) {
-            initService()
-        } else {
+        if (!hasPermission(PERMISSION_WRITE_STORAGE)) {
             mBus!!.post(Events.NoStoragePermission())
         }
     }
