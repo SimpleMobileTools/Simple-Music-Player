@@ -337,22 +337,29 @@ class MainActivity : SimpleActivity(), SongListListener {
     }
 
     private fun openPlaylist() {
-        dbHelper.getPlaylists {
-            val items = arrayListOf<RadioItem>()
-            it.mapTo(items) { RadioItem(it.id, it.title) }
-            items.add(RadioItem(-1, getString(R.string.create_playlist)))
+        Thread {
+            val playlists = songsDB.PlaylistsDao().getAll() as ArrayList<Playlist>
+            runOnUiThread {
+                showPlaylists(playlists)
+            }
+        }.start()
+    }
 
-            RadioGroupDialog(this, items, config.currentPlaylist) {
-                if (it == -1) {
-                    NewPlaylistDialog(this) {
-                        MusicService.mCurrSong = null
-                        playlistChanged(it, false)
-                        invalidateOptionsMenu()
-                    }
-                } else {
-                    playlistChanged(it as Int)
+    private fun showPlaylists(playlists: ArrayList<Playlist>) {
+        val items = arrayListOf<RadioItem>()
+        playlists.mapTo(items) { RadioItem(it.id, it.title) }
+        items.add(RadioItem(-1, getString(R.string.create_playlist)))
+
+        RadioGroupDialog(this, items, config.currentPlaylist) {
+            if (it == -1) {
+                NewPlaylistDialog(this) {
+                    MusicService.mCurrSong = null
+                    playlistChanged(it, false)
                     invalidateOptionsMenu()
                 }
+            } else {
+                playlistChanged(it as Int)
+                invalidateOptionsMenu()
             }
         }
     }
@@ -423,8 +430,8 @@ class MainActivity : SimpleActivity(), SongListListener {
         }
 
         val playlist = Playlist(0, playlistName)
-        val newPlaylistId = dbHelper.insertPlaylist(playlist)
-        dbHelper.addSongsToPlaylist(songs, newPlaylistId)
+        val newPlaylistId = songsDB.PlaylistsDao().insert(playlist).toInt()
+        //dbHelper.addSongsToPlaylist(songs, newPlaylistId)
         playlistChanged(newPlaylistId)
     }
 

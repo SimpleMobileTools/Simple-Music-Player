@@ -8,6 +8,7 @@ import com.simplemobiletools.commons.extensions.toast
 import com.simplemobiletools.commons.extensions.value
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.extensions.dbHelper
+import com.simplemobiletools.musicplayer.extensions.songsDB
 import com.simplemobiletools.musicplayer.models.Playlist
 import kotlinx.android.synthetic.main.dialog_new_playlist.view.*
 
@@ -46,18 +47,20 @@ class NewPlaylistDialog(val activity: Activity, var playlist: Playlist? = null, 
 
                             playlist!!.title = title
 
-                            val eventTypeId = if (isNewPlaylist) {
-                                activity.dbHelper.insertPlaylist(playlist!!)
-                            } else {
-                                activity.dbHelper.updatePlaylist(playlist!!)
-                            }
+                            Thread {
+                                val eventTypeId = if (isNewPlaylist) {
+                                    activity.songsDB.PlaylistsDao().insert(playlist!!).toInt()
+                                } else {
+                                    activity.dbHelper.updatePlaylist(playlist!!)
+                                }
 
-                            if (eventTypeId != -1) {
-                                dismiss()
-                                callback(eventTypeId)
-                            } else {
-                                activity.toast(R.string.unknown_error_occurred)
-                            }
+                                if (eventTypeId != -1) {
+                                    dismiss()
+                                    callback(eventTypeId)
+                                } else {
+                                    activity.toast(R.string.unknown_error_occurred)
+                                }
+                            }.start()
                         }
                     }
                 }

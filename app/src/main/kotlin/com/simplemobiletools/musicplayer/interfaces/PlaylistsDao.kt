@@ -9,7 +9,7 @@ import com.simplemobiletools.musicplayer.models.Playlist
 @Dao
 interface PlaylistsDao {
     @Insert
-    fun insert(playlist: Playlist)
+    fun insert(playlist: Playlist): Long
 
     @Delete
     fun deletePlaylists(playlist: List<Playlist>)
