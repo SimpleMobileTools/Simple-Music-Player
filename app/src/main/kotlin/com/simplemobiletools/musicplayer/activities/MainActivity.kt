@@ -324,7 +324,7 @@ class MainActivity : SimpleActivity(), SongListListener {
             toast(R.string.all_songs_cannot_be_deleted)
         } else {
             Thread {
-                val playlist = songsDB.PlaylistsDao().getPlaylistWithId(config.currentPlaylist)
+                val playlist = playlistDAO.getPlaylistWithId(config.currentPlaylist)
                 runOnUiThread {
                     RemovePlaylistDialog(this, playlist) {
                         if (it) {
@@ -334,7 +334,7 @@ class MainActivity : SimpleActivity(), SongListListener {
                             deleteFiles(files) { }
                         }
                         Thread {
-                            songsDB.PlaylistsDao().deletePlaylistById(config.currentPlaylist)
+                            playlistDAO.deletePlaylistById(config.currentPlaylist)
                         }.start()
                     }
                 }
@@ -344,7 +344,7 @@ class MainActivity : SimpleActivity(), SongListListener {
 
     private fun openPlaylist() {
         Thread {
-            val playlists = songsDB.PlaylistsDao().getAll() as ArrayList<Playlist>
+            val playlists = playlistDAO.getAll() as ArrayList<Playlist>
             runOnUiThread {
                 showPlaylists(playlists)
             }
@@ -436,7 +436,7 @@ class MainActivity : SimpleActivity(), SongListListener {
         }
 
         val playlist = Playlist(0, playlistName)
-        val newPlaylistId = songsDB.PlaylistsDao().insert(playlist).toInt()
+        val newPlaylistId = playlistDAO.insert(playlist).toInt()
         //dbHelper.addSongsToPlaylist(songs, newPlaylistId)
         playlistChanged(newPlaylistId)
     }

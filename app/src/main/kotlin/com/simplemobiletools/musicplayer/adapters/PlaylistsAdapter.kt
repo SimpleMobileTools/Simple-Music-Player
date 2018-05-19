@@ -13,7 +13,7 @@ import com.simplemobiletools.musicplayer.dialogs.NewPlaylistDialog
 import com.simplemobiletools.musicplayer.dialogs.RemovePlaylistDialog
 import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.extensions.dbHelper
-import com.simplemobiletools.musicplayer.extensions.songsDB
+import com.simplemobiletools.musicplayer.extensions.playlistDAO
 import com.simplemobiletools.musicplayer.helpers.ALL_SONGS_PLAYLIST_ID
 import com.simplemobiletools.musicplayer.interfaces.RefreshPlaylistsListener
 import com.simplemobiletools.musicplayer.models.Playlist
@@ -72,7 +72,6 @@ class PlaylistsAdapter(activity: SimpleActivity, val playlists: ArrayList<Playli
             } else {
                 removePlaylists(ids)
             }
-            finishActMode()
         }
     }
 
@@ -108,14 +107,15 @@ class PlaylistsAdapter(activity: SimpleActivity, val playlists: ArrayList<Playli
         playlists.removeAll(playlistsToDelete)
 
         Thread {
-            activity.songsDB.PlaylistsDao().deletePlaylists(playlistsToDelete)
+            activity.playlistDAO.deletePlaylists(playlistsToDelete)
+            activity.runOnUiThread {
+                if (isDeletingCurrentPlaylist) {
+                    reloadList()
+                } else {
+                    removeSelectedItems()
+                }
+            }
         }.start()
-
-        if (isDeletingCurrentPlaylist) {
-            reloadList()
-        } else {
-            removeSelectedItems()
-        }
     }
 
     private fun showRenameDialog() {

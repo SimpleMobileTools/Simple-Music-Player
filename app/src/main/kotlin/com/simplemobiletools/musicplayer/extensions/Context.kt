@@ -6,6 +6,8 @@ import android.util.TypedValue
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.databases.SongsDatabase
 import com.simplemobiletools.musicplayer.helpers.*
+import com.simplemobiletools.musicplayer.interfaces.PlaylistsDao
+import com.simplemobiletools.musicplayer.interfaces.SongsDao
 import com.simplemobiletools.musicplayer.services.MusicService
 
 fun Context.sendIntent(action: String) {
@@ -24,6 +26,10 @@ val Context.dbHelper: DBHelper get() = DBHelper.newInstance(applicationContext)
 
 val Context.songsDB: SongsDatabase get() = SongsDatabase.getInstance(applicationContext)
 
+val Context.playlistDAO: PlaylistsDao get() = songsDB.PlaylistsDao()
+
+val Context.songsDAO: SongsDao get() = songsDB.SongsDao()
+
 fun Context.playlistChanged(newID: Int, callSetup: Boolean = true) {
     config.currentPlaylist = newID
     sendIntent(PAUSE)
@@ -41,4 +47,4 @@ fun Context.getActionBarHeight(): Int {
     return actionBarSize
 }
 
-fun Context.getPlaylistIdWithTitle(title: String) = songsDB.PlaylistsDao().getPlaylistWithTitle(title)?.id ?: -1
+fun Context.getPlaylistIdWithTitle(title: String) = playlistDAO.getPlaylistWithTitle(title)?.id ?: -1

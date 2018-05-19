@@ -7,7 +7,7 @@ import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.adapters.PlaylistsAdapter
 import com.simplemobiletools.musicplayer.dialogs.NewPlaylistDialog
 import com.simplemobiletools.musicplayer.extensions.playlistChanged
-import com.simplemobiletools.musicplayer.extensions.songsDB
+import com.simplemobiletools.musicplayer.extensions.playlistDAO
 import com.simplemobiletools.musicplayer.interfaces.RefreshPlaylistsListener
 import com.simplemobiletools.musicplayer.models.Playlist
 import kotlinx.android.synthetic.main.activity_playlists.*
@@ -21,7 +21,7 @@ class PlaylistsActivity : SimpleActivity(), RefreshPlaylistsListener {
 
     private fun getPlaylists() {
         Thread {
-            val playlists = songsDB.PlaylistsDao().getAll() as ArrayList<Playlist>
+            val playlists = playlistDAO.getAll() as ArrayList<Playlist>
             runOnUiThread {
                 PlaylistsAdapter(this@PlaylistsActivity, playlists, this@PlaylistsActivity, playlists_list) {
                     getPlaylists()

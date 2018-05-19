@@ -6,6 +6,7 @@ import android.arch.persistence.room.Room
 import android.arch.persistence.room.RoomDatabase
 import android.content.Context
 import com.simplemobiletools.musicplayer.R
+import com.simplemobiletools.musicplayer.extensions.playlistDAO
 import com.simplemobiletools.musicplayer.helpers.ALL_SONGS_PLAYLIST_ID
 import com.simplemobiletools.musicplayer.interfaces.PlaylistsDao
 import com.simplemobiletools.musicplayer.interfaces.SongsDao
@@ -50,7 +51,7 @@ abstract class SongsDatabase : RoomDatabase() {
         private fun addInitialPlaylist(context: Context) {
             val allSongs = context.resources.getString(R.string.all_songs)
             val playlist = Playlist(ALL_SONGS_PLAYLIST_ID, allSongs)
-            getInstance(context).PlaylistsDao().insert(playlist)
+            context.playlistDAO.insert(playlist)
         }
     }
 }

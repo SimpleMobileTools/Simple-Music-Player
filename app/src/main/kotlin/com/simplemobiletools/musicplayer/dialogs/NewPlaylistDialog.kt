@@ -9,7 +9,7 @@ import com.simplemobiletools.commons.extensions.value
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.extensions.dbHelper
 import com.simplemobiletools.musicplayer.extensions.getPlaylistIdWithTitle
-import com.simplemobiletools.musicplayer.extensions.songsDB
+import com.simplemobiletools.musicplayer.extensions.playlistDAO
 import com.simplemobiletools.musicplayer.models.Playlist
 import kotlinx.android.synthetic.main.dialog_new_playlist.view.*
 
@@ -33,24 +33,24 @@ class NewPlaylistDialog(val activity: Activity, var playlist: Playlist? = null, 
                         showKeyboard(view.new_playlist_title)
                         getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
                             val title = view.new_playlist_title.value
-                            val playlistIdWithTitle = activity.getPlaylistIdWithTitle(title)
-                            var isPlaylistTitleTaken = isNewPlaylist && playlistIdWithTitle != -1
-                            if (!isPlaylistTitleTaken)
-                                isPlaylistTitleTaken = !isNewPlaylist && playlist!!.id != playlistIdWithTitle && playlistIdWithTitle != -1
-
-                            if (title.isEmpty()) {
-                                activity.toast(R.string.empty_name)
-                                return@setOnClickListener
-                            } else if (isPlaylistTitleTaken) {
-                                activity.toast(R.string.playlist_name_exists)
-                                return@setOnClickListener
-                            }
-
-                            playlist!!.title = title
-
                             Thread {
+                                val playlistIdWithTitle = activity.getPlaylistIdWithTitle(title)
+                                var isPlaylistTitleTaken = isNewPlaylist && playlistIdWithTitle != -1
+                                if (!isPlaylistTitleTaken)
+                                    isPlaylistTitleTaken = !isNewPlaylist && playlist!!.id != playlistIdWithTitle && playlistIdWithTitle != -1
+
+                                if (title.isEmpty()) {
+                                    activity.toast(R.string.empty_name)
+                                    return@Thread
+                                } else if (isPlaylistTitleTaken) {
+                                    activity.toast(R.string.playlist_name_exists)
+                                    return@Thread
+                                }
+
+                                playlist!!.title = title
+
                                 val eventTypeId = if (isNewPlaylist) {
-                                    activity.songsDB.PlaylistsDao().insert(playlist!!).toInt()
+                                    activity.playlistDAO.insert(playlist!!).toInt()
                                 } else {
                                     activity.dbHelper.updatePlaylist(playlist!!)
                                 }
