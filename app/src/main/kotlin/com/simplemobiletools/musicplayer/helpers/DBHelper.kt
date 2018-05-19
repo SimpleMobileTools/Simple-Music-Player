@@ -62,10 +62,6 @@ class DBHelper private constructor(val context: Context) : SQLiteOpenHelper(cont
         return db.insert(TABLE_NAME_PLAYLISTS, null, values).toInt()
     }
 
-    fun removePlaylist(id: Int) {
-        removePlaylists(arrayListOf(id))
-    }
-
     fun removePlaylists(ids: ArrayList<Int>) {
         val args = TextUtils.join(", ", ids.filter { it != ALL_SONGS_PLAYLIST_ID })
         val selection = "$COL_ID IN ($args)"

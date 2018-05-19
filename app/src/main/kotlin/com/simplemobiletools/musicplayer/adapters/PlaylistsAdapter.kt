@@ -13,6 +13,7 @@ import com.simplemobiletools.musicplayer.dialogs.NewPlaylistDialog
 import com.simplemobiletools.musicplayer.dialogs.RemovePlaylistDialog
 import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.extensions.dbHelper
+import com.simplemobiletools.musicplayer.extensions.songsDB
 import com.simplemobiletools.musicplayer.helpers.ALL_SONGS_PLAYLIST_ID
 import com.simplemobiletools.musicplayer.interfaces.RefreshPlaylistsListener
 import com.simplemobiletools.musicplayer.models.Playlist
@@ -105,7 +106,10 @@ class PlaylistsAdapter(activity: SimpleActivity, val playlists: ArrayList<Playli
             playlistsToDelete.add(playlist)
         }
         playlists.removeAll(playlistsToDelete)
-        activity.dbHelper.removePlaylists(ids)
+
+        Thread {
+            activity.songsDB.PlaylistsDao().deletePlaylists(playlistsToDelete)
+        }.start()
 
         if (isDeletingCurrentPlaylist) {
             reloadList()

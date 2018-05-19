@@ -6,8 +6,8 @@ import android.view.MenuItem
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.adapters.PlaylistsAdapter
 import com.simplemobiletools.musicplayer.dialogs.NewPlaylistDialog
-import com.simplemobiletools.musicplayer.extensions.dbHelper
 import com.simplemobiletools.musicplayer.extensions.playlistChanged
+import com.simplemobiletools.musicplayer.extensions.songsDB
 import com.simplemobiletools.musicplayer.interfaces.RefreshPlaylistsListener
 import com.simplemobiletools.musicplayer.models.Playlist
 import kotlinx.android.synthetic.main.activity_playlists.*
@@ -20,16 +20,17 @@ class PlaylistsActivity : SimpleActivity(), RefreshPlaylistsListener {
     }
 
     private fun getPlaylists() {
-        dbHelper.getPlaylists {
+        Thread {
+            val playlists = songsDB.PlaylistsDao().getAll() as ArrayList<Playlist>
             runOnUiThread {
-                PlaylistsAdapter(this@PlaylistsActivity, it, this@PlaylistsActivity, playlists_list) {
+                PlaylistsAdapter(this@PlaylistsActivity, playlists, this@PlaylistsActivity, playlists_list) {
                     getPlaylists()
                     playlistChanged((it as Playlist).id)
                 }.apply {
                     playlists_list.adapter = this
                 }
             }
-        }
+        }.start()
     }
 
     override fun refreshItems() {

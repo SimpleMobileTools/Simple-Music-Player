@@ -331,7 +331,7 @@ class MainActivity : SimpleActivity(), SongListListener {
                     dbHelper.removeSongsFromPlaylist(paths, -1)
                     deleteFiles(files) { }
                 }
-                dbHelper.removePlaylist(config.currentPlaylist)
+                songsDB.PlaylistsDao().deletePlaylistById(config.currentPlaylist)
             }
         }
     }
