@@ -19,4 +19,10 @@ interface PlaylistsDao {
 
     @Query("DELETE FROM playlists WHERE id = :id")
     fun deletePlaylistById(id: Int)
+
+    @Query("SELECT * FROM playlists WHERE title = :title COLLATE NOCASE")
+    fun getPlaylistWithTitle(title: String): Playlist?
+
+    @Query("SELECT * FROM playlists WHERE id = :id")
+    fun getPlaylistWithId(id: Int): Playlist?
 }

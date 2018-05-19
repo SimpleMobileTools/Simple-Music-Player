@@ -130,39 +130,6 @@ class DBHelper private constructor(val context: Context) : SQLiteOpenHelper(cont
         callback(playlists)
     }
 
-    fun getPlaylistIdWithTitle(title: String): Int {
-        val cols = arrayOf(COL_ID)
-        val selection = "$COL_TITLE = ? COLLATE NOCASE"
-        val selectionArgs = arrayOf(title)
-        var cursor: Cursor? = null
-        try {
-            cursor = mDb.query(TABLE_NAME_PLAYLISTS, cols, selection, selectionArgs, null, null, null)
-            if (cursor?.moveToFirst() == true) {
-                return cursor.getIntValue(COL_ID)
-            }
-        } finally {
-            cursor?.close()
-        }
-        return -1
-    }
-
-    fun getPlaylistWithId(id: Int): Playlist? {
-        val cols = arrayOf(COL_TITLE)
-        val selection = "$COL_ID = ?"
-        val selectionArgs = arrayOf(id.toString())
-        var cursor: Cursor? = null
-        try {
-            cursor = mDb.query(TABLE_NAME_PLAYLISTS, cols, selection, selectionArgs, null, null, null)
-            if (cursor?.moveToFirst() == true) {
-                val title = cursor.getStringValue(COL_TITLE)
-                return Playlist(id, title)
-            }
-        } finally {
-            cursor?.close()
-        }
-        return null
-    }
-
     private fun removeSongFromPlaylist(path: String, playlistId: Int) {
         removeSongsFromPlaylist(ArrayList<String>().apply { add(path) }, playlistId)
     }

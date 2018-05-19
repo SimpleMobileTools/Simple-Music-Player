@@ -40,3 +40,5 @@ fun Context.getActionBarHeight(): Int {
     attrs.recycle()
     return actionBarSize
 }
+
+fun Context.getPlaylistIdWithTitle(title: String) = songsDB.PlaylistsDao().getPlaylistWithTitle(title)?.id ?: -1

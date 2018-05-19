@@ -323,16 +323,22 @@ class MainActivity : SimpleActivity(), SongListListener {
         if (config.currentPlaylist == ALL_SONGS_PLAYLIST_ID) {
             toast(R.string.all_songs_cannot_be_deleted)
         } else {
-            val playlist = dbHelper.getPlaylistWithId(config.currentPlaylist)
-            RemovePlaylistDialog(this, playlist) {
-                if (it) {
-                    val paths = dbHelper.getPlaylistSongPaths(config.currentPlaylist)
-                    val files = paths.map { FileDirItem(it, it.getFilenameFromPath()) } as ArrayList<FileDirItem>
-                    dbHelper.removeSongsFromPlaylist(paths, -1)
-                    deleteFiles(files) { }
+            Thread {
+                val playlist = songsDB.PlaylistsDao().getPlaylistWithId(config.currentPlaylist)
+                runOnUiThread {
+                    RemovePlaylistDialog(this, playlist) {
+                        if (it) {
+                            val paths = dbHelper.getPlaylistSongPaths(config.currentPlaylist)
+                            val files = paths.map { FileDirItem(it, it.getFilenameFromPath()) } as ArrayList<FileDirItem>
+                            dbHelper.removeSongsFromPlaylist(paths, -1)
+                            deleteFiles(files) { }
+                        }
+                        Thread {
+                            songsDB.PlaylistsDao().deletePlaylistById(config.currentPlaylist)
+                        }.start()
+                    }
                 }
-                songsDB.PlaylistsDao().deletePlaylistById(config.currentPlaylist)
-            }
+            }.start()
         }
     }
 
@@ -417,11 +423,11 @@ class MainActivity : SimpleActivity(), SongListListener {
         val folderName = path.getFilenameFromPath()
         var playlistName = folderName
         var curIndex = 1
-        val playlistIdWithTitle = dbHelper.getPlaylistIdWithTitle(folderName)
+        val playlistIdWithTitle = getPlaylistIdWithTitle(folderName)
         if (playlistIdWithTitle != -1) {
             while (true) {
                 playlistName = "${folderName}_$curIndex"
-                if (dbHelper.getPlaylistIdWithTitle(playlistName) == -1) {
+                if (getPlaylistIdWithTitle(playlistName) == -1) {
                     break
                 }
 
