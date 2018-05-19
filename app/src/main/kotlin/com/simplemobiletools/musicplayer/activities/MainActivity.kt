@@ -320,7 +320,7 @@ class MainActivity : SimpleActivity(), SongListListener {
     }
 
     private fun removePlaylist() {
-        if (config.currentPlaylist == DBHelper.ALL_SONGS_ID) {
+        if (config.currentPlaylist == ALL_SONGS_PLAYLIST_ID) {
             toast(R.string.all_songs_cannot_be_deleted)
         } else {
             val playlist = dbHelper.getPlaylistWithId(config.currentPlaylist)

@@ -13,7 +13,7 @@ import com.simplemobiletools.musicplayer.dialogs.NewPlaylistDialog
 import com.simplemobiletools.musicplayer.dialogs.RemovePlaylistDialog
 import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.extensions.dbHelper
-import com.simplemobiletools.musicplayer.helpers.DBHelper
+import com.simplemobiletools.musicplayer.helpers.ALL_SONGS_PLAYLIST_ID
 import com.simplemobiletools.musicplayer.interfaces.RefreshPlaylistsListener
 import com.simplemobiletools.musicplayer.models.Playlist
 import kotlinx.android.synthetic.main.item_playlist.view.*
@@ -92,7 +92,7 @@ class PlaylistsAdapter(activity: SimpleActivity, val playlists: ArrayList<Playli
         val playlistsToDelete = ArrayList<Playlist>(selectedPositions.size)
 
         for (pos in selectedPositions) {
-            if (playlists[pos].id == DBHelper.ALL_SONGS_ID) {
+            if (playlists[pos].id == ALL_SONGS_PLAYLIST_ID) {
                 activity.toast(R.string.all_songs_cannot_be_deleted)
                 selectedPositions.remove(pos)
                 toggleItemSelection(false, pos)

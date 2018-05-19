@@ -1,13 +1,17 @@
 package com.simplemobiletools.musicplayer.databases
 
+import android.arch.persistence.db.SupportSQLiteDatabase
 import android.arch.persistence.room.Database
 import android.arch.persistence.room.Room
 import android.arch.persistence.room.RoomDatabase
 import android.content.Context
+import com.simplemobiletools.musicplayer.R
+import com.simplemobiletools.musicplayer.helpers.ALL_SONGS_PLAYLIST_ID
 import com.simplemobiletools.musicplayer.interfaces.PlaylistsDao
 import com.simplemobiletools.musicplayer.interfaces.SongsDao
 import com.simplemobiletools.musicplayer.models.Playlist
 import com.simplemobiletools.musicplayer.models.Song
+import java.util.concurrent.Executors
 
 @Database(entities = [(Song::class), (Playlist::class)], version = 1)
 abstract class SongsDatabase : RoomDatabase() {
@@ -24,6 +28,14 @@ abstract class SongsDatabase : RoomDatabase() {
                 synchronized(SongsDatabase::class) {
                     if (db == null) {
                         db = Room.databaseBuilder(context.applicationContext, SongsDatabase::class.java, "songs.db")
+                                .addCallback(object : Callback() {
+                                    override fun onCreate(db: SupportSQLiteDatabase) {
+                                        super.onCreate(db)
+                                        Executors.newSingleThreadExecutor().execute {
+                                            addInitialPlaylist(context)
+                                        }
+                                    }
+                                })
                                 .build()
                     }
                 }
@@ -33,6 +45,12 @@ abstract class SongsDatabase : RoomDatabase() {
 
         fun destroyInstance() {
             db = null
+        }
+
+        private fun addInitialPlaylist(context: Context) {
+            val allSongs = context.resources.getString(R.string.all_songs)
+            val playlist = Playlist(ALL_SONGS_PLAYLIST_ID, allSongs)
+            getInstance(context).PlaylistsDao().insert(playlist)
         }
     }
 }

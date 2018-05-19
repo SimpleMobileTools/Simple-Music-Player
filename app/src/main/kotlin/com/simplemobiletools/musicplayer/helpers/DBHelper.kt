@@ -29,7 +29,6 @@ class DBHelper private constructor(val context: Context) : SQLiteOpenHelper(cont
     companion object {
         private const val DB_VERSION = 1
         const val DB_NAME = "playlists.db"
-        const val ALL_SONGS_ID = 1
 
         fun newInstance(context: Context) = DBHelper(context)
     }
@@ -50,7 +49,7 @@ class DBHelper private constructor(val context: Context) : SQLiteOpenHelper(cont
 
     private fun addAllSongsPlaylist(db: SQLiteDatabase) {
         val allSongs = context.resources.getString(R.string.all_songs)
-        val playlist = Playlist(ALL_SONGS_ID, allSongs)
+        val playlist = Playlist(ALL_SONGS_PLAYLIST_ID, allSongs)
         addPlaylist(playlist, db)
     }
 
@@ -68,7 +67,7 @@ class DBHelper private constructor(val context: Context) : SQLiteOpenHelper(cont
     }
 
     fun removePlaylists(ids: ArrayList<Int>) {
-        val args = TextUtils.join(", ", ids.filter { it != ALL_SONGS_ID })
+        val args = TextUtils.join(", ", ids.filter { it != ALL_SONGS_PLAYLIST_ID })
         val selection = "$COL_ID IN ($args)"
         mDb.delete(TABLE_NAME_PLAYLISTS, selection, null)
 
@@ -76,7 +75,7 @@ class DBHelper private constructor(val context: Context) : SQLiteOpenHelper(cont
         mDb.delete(TABLE_NAME_SONGS, songSelection, null)
 
         if (ids.contains(context.config.currentPlaylist)) {
-            context.playlistChanged(DBHelper.ALL_SONGS_ID)
+            context.playlistChanged(ALL_SONGS_PLAYLIST_ID)
         }
     }
 

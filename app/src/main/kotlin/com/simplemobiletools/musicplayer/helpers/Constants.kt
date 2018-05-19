@@ -3,6 +3,7 @@ package com.simplemobiletools.musicplayer.helpers
 const val SONG_POS = "song_position"
 const val PROGRESS = "progress"
 const val EDITED_SONG = "edited_song"
+const val ALL_SONGS_PLAYLIST_ID = 1
 
 private const val PATH = "com.simplemobiletools.musicplayer.action."
 
