@@ -178,19 +178,25 @@ class MainActivity : SimpleActivity(), SongListListener {
         val autoplay = menu.findItem(R.id.toggle_autoplay)
         autoplay.title = getString(if (config.autoplay) R.string.disable_autoplay else R.string.enable_autoplay)
 
-        val isSongSelected = MusicService.mCurrSong != null
         menu.apply {
             findItem(R.id.sort).isVisible = !isThirdPartyIntent
             findItem(R.id.toggle_autoplay).isVisible = !isThirdPartyIntent
             findItem(R.id.sort).isVisible = !isThirdPartyIntent
             findItem(R.id.open_playlist).isVisible = !isThirdPartyIntent
-            findItem(R.id.remove_current).isVisible = !isThirdPartyIntent && isSongSelected
-            findItem(R.id.delete_current).isVisible = !isThirdPartyIntent && isSongSelected
             findItem(R.id.add_folder_to_playlist).isVisible = !isThirdPartyIntent
             findItem(R.id.add_file_to_playlist).isVisible = !isThirdPartyIntent
             findItem(R.id.remove_playlist).isVisible = !isThirdPartyIntent
         }
 
+        return true
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu): Boolean {
+        val isSongSelected = MusicService.mCurrSong != null
+        menu.apply {
+            findItem(R.id.remove_current).isVisible = !isThirdPartyIntent && isSongSelected
+            findItem(R.id.delete_current).isVisible = !isThirdPartyIntent && isSongSelected
+        }
         return true
     }
 
