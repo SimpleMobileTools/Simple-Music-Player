@@ -330,8 +330,10 @@ class MainActivity : SimpleActivity(), SongListListener {
                         if (it) {
                             val paths = dbHelper.getPlaylistSongPaths(config.currentPlaylist)
                             val files = paths.map { FileDirItem(it, it.getFilenameFromPath()) } as ArrayList<FileDirItem>
-                            dbHelper.removeSongsFromPlaylist(paths, -1)
-                            deleteFiles(files) { }
+                            paths.forEach {
+                                songsDAO.removeSongPath(it)
+                            }
+                            deleteFiles(files)
                         }
                         Thread {
                             playlistDAO.deletePlaylistById(config.currentPlaylist)
@@ -397,12 +399,14 @@ class MainActivity : SimpleActivity(), SongListListener {
 
     private fun addFileToPlaylist() {
         FilePickerDialog(this, getFilePickerInitialPath()) {
-            if (it.isAudioFast()) {
-                dbHelper.addSongToPlaylist(it)
-                sendIntent(REFRESH_LIST)
-            } else {
-                toast(R.string.invalid_file_format)
-            }
+            Thread {
+                if (it.isAudioFast()) {
+                    RoomHelper(applicationContext).addSongToPlaylist(it)
+                    sendIntent(REFRESH_LIST)
+                } else {
+                    toast(R.string.invalid_file_format)
+                }
+            }.start()
         }
     }
 

@@ -18,8 +18,8 @@ import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
 import com.simplemobiletools.musicplayer.dialogs.EditDialog
 import com.simplemobiletools.musicplayer.extensions.config
-import com.simplemobiletools.musicplayer.extensions.dbHelper
 import com.simplemobiletools.musicplayer.extensions.sendIntent
+import com.simplemobiletools.musicplayer.extensions.songsDAO
 import com.simplemobiletools.musicplayer.helpers.*
 import com.simplemobiletools.musicplayer.interfaces.SongListListener
 import com.simplemobiletools.musicplayer.models.Song
@@ -170,7 +170,9 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val list
                 }
 
                 activity.sendIntent(REFRESH_LIST)
-                activity.runOnUiThread { finishActMode() }
+                activity.runOnUiThread {
+                    finishActMode()
+                }
             }
         }
     }
@@ -185,8 +187,12 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val list
 
     private fun askConfirmDelete() {
         ConfirmationDialog(activity) {
-            deleteSongs()
-            finishActMode()
+            Thread {
+                deleteSongs()
+                activity.runOnUiThread {
+                    finishActMode()
+                }
+            }.start()
         }
     }
 
@@ -206,15 +212,18 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val list
                 paths.add(song.path)
                 fileDirItems.add(FileDirItem(song.path, song.path.getFilenameFromPath()))
                 removeSongs.add(song)
+                activity.songsDAO.removeSongPath(song.path)
                 if (song == MusicService.mCurrSong) {
                     activity.sendIntent(NEXT)
                 }
             }
 
+            activity.runOnUiThread {
+                removeSelectedItems()
+            }
+
             songs.removeAll(removeSongs)
-            activity.dbHelper.removeSongsFromPlaylist(paths, -1)
-            activity.deleteFiles(fileDirItems) { }
-            removeSelectedItems()
+            activity.deleteFiles(fileDirItems)
 
             if (songs.isEmpty()) {
                 listener.refreshItems()
@@ -241,12 +250,14 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val list
 
         activity.config.addIgnoredPaths(paths)
         songs.removeAll(removeSongs)
-        activity.dbHelper.removeSongsFromPlaylist(paths)
         removeSelectedItems()
+        Thread {
+            activity.songsDAO.removeSongsFromPlaylists(removeSongs)
 
-        if (songs.isEmpty()) {
-            listener.refreshItems()
-        }
+            if (songs.isEmpty()) {
+                listener.refreshItems()
+            }
+        }.start()
     }
 
     fun updateSongs(newSongs: ArrayList<Song>, highlightText: String = "") {
@@ -298,8 +309,10 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val list
             selectedPositions.clear()
             if (songs.isNotEmpty()) {
                 selectedPositions.add(currentSongIndex - positionOffset)
-                deleteSongs()
-                selectedPositions.clear()
+                Thread {
+                    deleteSongs()
+                    selectedPositions.clear()
+                }.start()
             }
         }
     }

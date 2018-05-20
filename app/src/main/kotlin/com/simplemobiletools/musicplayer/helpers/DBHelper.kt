@@ -2,15 +2,10 @@ package com.simplemobiletools.musicplayer.helpers
 
 import android.content.ContentValues
 import android.content.Context
-import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import android.provider.MediaStore
 import android.text.TextUtils
-import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.musicplayer.extensions.config
-import com.simplemobiletools.musicplayer.models.Song
-import java.io.File
 
 class DBHelper private constructor(val context: Context) : SQLiteOpenHelper(context, DB_NAME, null, DB_VERSION) {
     private val TABLE_NAME_PLAYLISTS = "playlists"
@@ -49,10 +44,6 @@ class DBHelper private constructor(val context: Context) : SQLiteOpenHelper(cont
         mDb.delete(TABLE_NAME_SONGS, songSelection, null)
     }
 
-    fun addSongToPlaylist(path: String) {
-        addSongsToPlaylist(ArrayList<String>().apply { add(path) })
-    }
-
     fun addSongsToPlaylist(paths: ArrayList<String>, playlistId: Int = context.config.currentPlaylist) {
         try {
             mDb.beginTransaction()
@@ -77,136 +68,7 @@ class DBHelper private constructor(val context: Context) : SQLiteOpenHelper(cont
         mDb.update(TABLE_NAME_SONGS, values, selection, selectionArgs)
     }
 
-    private fun removeSongFromPlaylist(path: String, playlistId: Int) {
-        removeSongsFromPlaylist(ArrayList<String>().apply { add(path) }, playlistId)
-    }
-
-    fun removeSongsFromPlaylist(paths: ArrayList<String>, playlistId: Int = context.config.currentPlaylist) {
-        val SPLICE_SIZE = 200
-        for (i in 0 until paths.size step SPLICE_SIZE) {
-            val curPaths = paths.subList(i, Math.min(i + SPLICE_SIZE, paths.size))
-            val questionMarks = getQuestionMarks(curPaths.size)
-            var selection = "$COL_PATH IN ($questionMarks)"
-            if (playlistId != -1) {
-                selection += " AND $COL_PLAYLIST_ID = $playlistId"
-            }
-            val selectionArgs = curPaths.toTypedArray()
-
-            mDb.delete(TABLE_NAME_SONGS, selection, selectionArgs)
-        }
-    }
-
     fun getPlaylistSongPaths(playlistId: Int): ArrayList<String> {
-        val paths = ArrayList<String>()
-        val cols = arrayOf(COL_PATH)
-        val selection = "$COL_PLAYLIST_ID = ?"
-        val selectionArgs = arrayOf(playlistId.toString())
-        var cursor: Cursor? = null
-        try {
-            cursor = mDb.query(TABLE_NAME_SONGS, cols, selection, selectionArgs, null, null, null)
-            if (cursor?.moveToFirst() == true) {
-                do {
-                    val path = cursor.getStringValue(COL_PATH) ?: continue
-                    if (File(path).exists()) {
-                        paths.add(path)
-                    } else {
-                        removeSongFromPlaylist(path, -1)
-                    }
-                } while (cursor.moveToNext())
-            }
-        } finally {
-            cursor?.close()
-        }
-        return paths
-    }
-
-    fun getSongs(): ArrayList<Song> {
-        val SPLICE_SIZE = 200
-        val paths = getPlaylistSongPaths(context.config.currentPlaylist)
-        val songs = ArrayList<Song>(paths.size)
-        if (paths.isEmpty()) {
-            return songs
-        }
-
-        for (i in 0 until paths.size step SPLICE_SIZE) {
-            val curPaths = paths.subList(i, Math.min(i + SPLICE_SIZE, paths.size))
-            songs.addAll(getSongsFromPaths(curPaths))
-        }
-        return songs
-    }
-
-    fun getSongFromPath(path: String): Song? {
-        val songs = getSongsFromPaths(arrayListOf(path))
-        return if (songs.isNotEmpty()) {
-            songs.first()
-        } else {
-            null
-        }
-    }
-
-    private fun getSongsFromPaths(paths: List<String>): ArrayList<Song> {
-        val uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
-        val columns = arrayOf(MediaStore.Audio.Media._ID,
-                MediaStore.Audio.Media.TITLE,
-                MediaStore.Audio.Media.ARTIST,
-                MediaStore.Audio.Media.DATA,
-                MediaStore.Audio.Media.DURATION,
-                MediaStore.Audio.Media.ALBUM)
-
-        val pathsMap = HashSet<String>()
-        paths.mapTo(pathsMap, { it })
-
-        val ITEMS_PER_GROUP = 50
-        val songs = ArrayList<Song>(paths.size)
-        val showFilename = context.config.showFilename
-
-        val parts = paths.size / ITEMS_PER_GROUP
-        for (i in 0..parts) {
-            val sublist = paths.subList(i * ITEMS_PER_GROUP, Math.min((i + 1) * ITEMS_PER_GROUP, paths.size))
-            val questionMarks = getQuestionMarks(sublist.size)
-            val selection = "${MediaStore.Audio.Media.DATA} IN ($questionMarks)"
-            val selectionArgs = sublist.toTypedArray()
-
-            var cursor: Cursor? = null
-            try {
-                cursor = context.contentResolver.query(uri, columns, selection, selectionArgs, null)
-                if (cursor?.moveToFirst() == true) {
-                    do {
-                        val mediaStoreId = cursor.getLongValue(MediaStore.Audio.Media._ID)
-                        val title = cursor.getStringValue(MediaStore.Audio.Media.TITLE)
-                        val artist = cursor.getStringValue(MediaStore.Audio.Media.ARTIST)
-                        val path = cursor.getStringValue(MediaStore.Audio.Media.DATA)
-                        val duration = cursor.getIntValue(MediaStore.Audio.Media.DURATION) / 1000
-                        val album = cursor.getStringValue(MediaStore.Audio.Media.ALBUM)
-                        val newTitle = getSongTitle(title, showFilename, path)
-                        val song = Song(mediaStoreId, newTitle, artist, path, duration, album, 0, TYPE_FILE)
-                        songs.add(song)
-                        pathsMap.remove(path)
-                    } while (cursor.moveToNext())
-                }
-            } finally {
-                cursor?.close()
-            }
-        }
-
-        pathsMap.forEach {
-            val unknown = MediaStore.UNKNOWN_STRING
-            val title = it.getFileSongTitle() ?: unknown
-            val song = Song(0, getSongTitle(title, showFilename, it), it.getFileArtist() ?: unknown, it, it.getFileDurationSeconds()
-                    ?: 0, "", 0, TYPE_FILE)
-            songs.add(song)
-        }
-
-        return songs
-    }
-
-    private fun getQuestionMarks(cnt: Int) = "?" + ",?".repeat(Math.max(cnt - 1, 0))
-
-    private fun getSongTitle(title: String, showFilename: Int, path: String): String {
-        return when (showFilename) {
-            SHOW_FILENAME_NEVER -> title
-            SHOW_FILENAME_IF_UNAVAILABLE -> if (title == MediaStore.UNKNOWN_STRING) path.getFilenameFromPath() else title
-            else -> path.getFilenameFromPath()
-        }
+        return ArrayList<String>()
     }
 }

@@ -9,7 +9,7 @@ interface PlaylistsDao {
     fun insert(playlist: Playlist): Long
 
     @Delete
-    fun deletePlaylists(playlist: List<Playlist>)
+    fun deletePlaylists(playlists: List<Playlist>)
 
     @Query("SELECT * FROM playlists")
     fun getAll(): List<Playlist>

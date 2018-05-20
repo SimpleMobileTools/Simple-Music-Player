@@ -26,6 +26,7 @@ import com.simplemobiletools.musicplayer.activities.MainActivity
 import com.simplemobiletools.musicplayer.databases.SongsDatabase
 import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.extensions.dbHelper
+import com.simplemobiletools.musicplayer.extensions.songsDAO
 import com.simplemobiletools.musicplayer.helpers.*
 import com.simplemobiletools.musicplayer.models.Events
 import com.simplemobiletools.musicplayer.models.Song
@@ -102,7 +103,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         mCurrSong = null
         if (mIsThirdPartyIntent && intentUri != null) {
             val path = getRealPathFromURI(intentUri!!) ?: ""
-            val song = dbHelper.getSongFromPath(path)
+            val song = RoomHelper(this).getSongFromPath(path)
             if (song != null) {
                 mSongs.add(song)
             }
@@ -297,7 +298,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             getAllDeviceSongs()
         }
 
-        mSongs = dbHelper.getSongs()
+        mSongs = songsDAO.getSongsFromPlaylist(config.currentPlaylist) as ArrayList<Song>
         Song.sorting = config.sorting
         mSongs.sort()
     }
@@ -499,7 +500,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             }
         }
 
-        mCurrSong = mSongs[Math.min(songIndex, mSongs.size - 1)]
+        mCurrSong = mSongs.getOrNull(Math.min(songIndex, mSongs.size - 1)) ?: return
 
         try {
             val trackUri = if (mCurrSong!!.mediaStoreId == 0L) {
