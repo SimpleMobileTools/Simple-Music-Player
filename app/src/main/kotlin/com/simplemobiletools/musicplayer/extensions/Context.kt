@@ -8,7 +8,9 @@ import com.simplemobiletools.musicplayer.databases.SongsDatabase
 import com.simplemobiletools.musicplayer.helpers.*
 import com.simplemobiletools.musicplayer.interfaces.PlaylistsDao
 import com.simplemobiletools.musicplayer.interfaces.SongsDao
+import com.simplemobiletools.musicplayer.models.Song
 import com.simplemobiletools.musicplayer.services.MusicService
+import java.io.File
 
 fun Context.sendIntent(action: String) {
     Intent(this, MusicService::class.java).apply {
@@ -48,3 +50,24 @@ fun Context.getActionBarHeight(): Int {
 }
 
 fun Context.getPlaylistIdWithTitle(title: String) = playlistDAO.getPlaylistWithTitle(title)?.id ?: -1
+
+fun Context.getPlaylistSongs(playlistId: Int): ArrayList<Song> {
+    val validSongs = ArrayList<Song>()
+    val invalidSongs = ArrayList<Song>()
+    val songs = songsDAO.getSongsFromPlaylist(playlistId)
+    songs.forEach {
+        if (File(it.path).exists()) {
+            validSongs.add(it)
+        } else {
+            invalidSongs.add(it)
+        }
+    }
+
+    songsDB.runInTransaction {
+        invalidSongs.forEach {
+            songsDAO.removeSongPath(it.path)
+        }
+    }
+
+    return validSongs
+}

@@ -26,7 +26,7 @@ import com.simplemobiletools.musicplayer.activities.MainActivity
 import com.simplemobiletools.musicplayer.databases.SongsDatabase
 import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.extensions.dbHelper
-import com.simplemobiletools.musicplayer.extensions.songsDAO
+import com.simplemobiletools.musicplayer.extensions.getPlaylistSongs
 import com.simplemobiletools.musicplayer.helpers.*
 import com.simplemobiletools.musicplayer.models.Events
 import com.simplemobiletools.musicplayer.models.Song
@@ -297,7 +297,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             getAllDeviceSongs()
         }
 
-        mSongs = songsDAO.getSongsFromPlaylist(config.currentPlaylist) as ArrayList<Song>
+        mSongs = getPlaylistSongs(config.currentPlaylist)
         Song.sorting = config.sorting
         mSongs.sort()
     }
