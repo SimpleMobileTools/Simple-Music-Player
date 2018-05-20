@@ -9,7 +9,6 @@ import android.provider.MediaStore
 import android.text.TextUtils
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.musicplayer.extensions.config
-import com.simplemobiletools.musicplayer.extensions.playlistChanged
 import com.simplemobiletools.musicplayer.models.Song
 import java.io.File
 
@@ -46,15 +45,8 @@ class DBHelper private constructor(val context: Context) : SQLiteOpenHelper(cont
 
     fun removePlaylists(ids: ArrayList<Int>) {
         val args = TextUtils.join(", ", ids.filter { it != ALL_SONGS_PLAYLIST_ID })
-        val selection = "$COL_ID IN ($args)"
-        mDb.delete(TABLE_NAME_PLAYLISTS, selection, null)
-
         val songSelection = "$COL_PLAYLIST_ID IN ($args)"
         mDb.delete(TABLE_NAME_SONGS, songSelection, null)
-
-        if (ids.contains(context.config.currentPlaylist)) {
-            context.playlistChanged(ALL_SONGS_PLAYLIST_ID)
-        }
     }
 
     fun addSongToPlaylist(path: String) {
@@ -187,7 +179,7 @@ class DBHelper private constructor(val context: Context) : SQLiteOpenHelper(cont
                         val duration = cursor.getIntValue(MediaStore.Audio.Media.DURATION) / 1000
                         val album = cursor.getStringValue(MediaStore.Audio.Media.ALBUM)
                         val newTitle = getSongTitle(title, showFilename, path)
-                        val song = Song(mediaStoreId, newTitle, artist, path, duration, album, 0)
+                        val song = Song(mediaStoreId, newTitle, artist, path, duration, album, 0, TYPE_FILE)
                         songs.add(song)
                         pathsMap.remove(path)
                     } while (cursor.moveToNext())
@@ -201,7 +193,7 @@ class DBHelper private constructor(val context: Context) : SQLiteOpenHelper(cont
             val unknown = MediaStore.UNKNOWN_STRING
             val title = it.getFileSongTitle() ?: unknown
             val song = Song(0, getSongTitle(title, showFilename, it), it.getFileArtist() ?: unknown, it, it.getFileDurationSeconds()
-                    ?: 0, "", 0)
+                    ?: 0, "", 0, TYPE_FILE)
             songs.add(song)
         }
 

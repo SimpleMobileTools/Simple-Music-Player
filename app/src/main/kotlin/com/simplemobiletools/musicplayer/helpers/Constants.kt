@@ -39,3 +39,6 @@ const val LOWER_ALPHA = 0.5f
 const val SHOW_FILENAME_NEVER = 1
 const val SHOW_FILENAME_IF_UNAVAILABLE = 2
 const val SHOW_FILENAME_ALWAYS = 3
+
+const val TYPE_FILE = 1
+const val TYPE_FOLDER = 2
