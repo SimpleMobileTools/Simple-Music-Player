@@ -10,7 +10,6 @@ import android.text.TextUtils
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.extensions.playlistChanged
-import com.simplemobiletools.musicplayer.models.Playlist
 import com.simplemobiletools.musicplayer.models.Song
 import java.io.File
 
@@ -56,13 +55,6 @@ class DBHelper private constructor(val context: Context) : SQLiteOpenHelper(cont
         if (ids.contains(context.config.currentPlaylist)) {
             context.playlistChanged(ALL_SONGS_PLAYLIST_ID)
         }
-    }
-
-    fun updatePlaylist(playlist: Playlist): Int {
-        val selectionArgs = arrayOf(playlist.id.toString())
-        val values = ContentValues().apply { put(COL_TITLE, playlist.title) }
-        val selection = "$COL_ID = ?"
-        return mDb.update(TABLE_NAME_PLAYLISTS, values, selection, selectionArgs)
     }
 
     fun addSongToPlaylist(path: String) {

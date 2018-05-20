@@ -7,7 +7,6 @@ import com.simplemobiletools.commons.extensions.showKeyboard
 import com.simplemobiletools.commons.extensions.toast
 import com.simplemobiletools.commons.extensions.value
 import com.simplemobiletools.musicplayer.R
-import com.simplemobiletools.musicplayer.extensions.dbHelper
 import com.simplemobiletools.musicplayer.extensions.getPlaylistIdWithTitle
 import com.simplemobiletools.musicplayer.extensions.playlistDAO
 import com.simplemobiletools.musicplayer.models.Playlist
@@ -52,7 +51,8 @@ class NewPlaylistDialog(val activity: Activity, var playlist: Playlist? = null, 
                                 val eventTypeId = if (isNewPlaylist) {
                                     activity.playlistDAO.insert(playlist!!).toInt()
                                 } else {
-                                    activity.dbHelper.updatePlaylist(playlist!!)
+                                    activity.playlistDAO.update(playlist!!)
+                                    playlist!!.id
                                 }
 
                                 if (eventTypeId != -1) {

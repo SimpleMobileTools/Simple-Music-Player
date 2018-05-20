@@ -1,9 +1,6 @@
 package com.simplemobiletools.musicplayer.interfaces
 
-import android.arch.persistence.room.Dao
-import android.arch.persistence.room.Delete
-import android.arch.persistence.room.Insert
-import android.arch.persistence.room.Query
+import android.arch.persistence.room.*
 import com.simplemobiletools.musicplayer.models.Playlist
 
 @Dao
@@ -25,4 +22,7 @@ interface PlaylistsDao {
 
     @Query("SELECT * FROM playlists WHERE id = :id")
     fun getPlaylistWithId(id: Int): Playlist?
+
+    @Update
+    fun update(playlist: Playlist)
 }

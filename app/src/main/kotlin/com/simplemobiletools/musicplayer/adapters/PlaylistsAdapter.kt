@@ -120,7 +120,9 @@ class PlaylistsAdapter(activity: SimpleActivity, val playlists: ArrayList<Playli
 
     private fun showRenameDialog() {
         NewPlaylistDialog(activity, playlists[selectedPositions.first()]) {
-            reloadList()
+            activity.runOnUiThread {
+                reloadList()
+            }
         }
     }
 
