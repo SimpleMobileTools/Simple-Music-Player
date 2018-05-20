@@ -335,7 +335,7 @@ class MainActivity : SimpleActivity(), SongListListener {
                 runOnUiThread {
                     RemovePlaylistDialog(this, playlist) {
                         if (it) {
-                            val paths = dbHelper.getPlaylistSongPaths(config.currentPlaylist)
+                            val paths = songsDAO.getSongsFromPlaylist(config.currentPlaylist).map { it.path }
                             val files = paths.map { FileDirItem(it, it.getFilenameFromPath()) } as ArrayList<FileDirItem>
                             paths.forEach {
                                 songsDAO.removeSongPath(it)

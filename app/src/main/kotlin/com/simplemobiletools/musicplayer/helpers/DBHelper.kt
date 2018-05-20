@@ -67,8 +67,4 @@ class DBHelper private constructor(val context: Context) : SQLiteOpenHelper(cont
         val selection = "$COL_PATH = ?"
         mDb.update(TABLE_NAME_SONGS, values, selection, selectionArgs)
     }
-
-    fun getPlaylistSongPaths(playlistId: Int): ArrayList<String> {
-        return ArrayList<String>()
-    }
 }

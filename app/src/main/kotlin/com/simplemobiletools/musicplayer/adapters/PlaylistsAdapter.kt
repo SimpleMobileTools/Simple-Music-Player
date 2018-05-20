@@ -12,9 +12,9 @@ import com.simplemobiletools.musicplayer.activities.SimpleActivity
 import com.simplemobiletools.musicplayer.dialogs.NewPlaylistDialog
 import com.simplemobiletools.musicplayer.dialogs.RemovePlaylistDialog
 import com.simplemobiletools.musicplayer.extensions.config
-import com.simplemobiletools.musicplayer.extensions.dbHelper
 import com.simplemobiletools.musicplayer.extensions.playlistChanged
 import com.simplemobiletools.musicplayer.extensions.playlistDAO
+import com.simplemobiletools.musicplayer.extensions.songsDAO
 import com.simplemobiletools.musicplayer.helpers.ALL_SONGS_PLAYLIST_ID
 import com.simplemobiletools.musicplayer.interfaces.RefreshPlaylistsListener
 import com.simplemobiletools.musicplayer.models.Playlist
@@ -78,14 +78,15 @@ class PlaylistsAdapter(activity: SimpleActivity, val playlists: ArrayList<Playli
 
     private fun deletePlaylistSongs(ids: ArrayList<Int>, callback: () -> Unit) {
         var cnt = ids.size
-        ids.map { activity.dbHelper.getPlaylistSongPaths(it).map { FileDirItem(it, it.getFilenameFromPath()) } as ArrayList<FileDirItem> }
-                .forEach {
-                    activity.deleteFiles(it) {
-                        if (--cnt <= 0) {
-                            callback()
-                        }
-                    }
+        ids.map {
+            val paths = activity.songsDAO.getSongsFromPlaylist(it).map { it.path }
+            val fileDirItems = paths.map { FileDirItem(it, it.getFilenameFromPath()) } as ArrayList<FileDirItem>
+            activity.deleteFiles(fileDirItems) {
+                if (--cnt <= 0) {
+                    callback()
                 }
+            }
+        }
     }
 
     private fun removePlaylists(ids: ArrayList<Int>) {
