@@ -13,6 +13,7 @@ import com.simplemobiletools.musicplayer.dialogs.NewPlaylistDialog
 import com.simplemobiletools.musicplayer.dialogs.RemovePlaylistDialog
 import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.extensions.dbHelper
+import com.simplemobiletools.musicplayer.extensions.playlistChanged
 import com.simplemobiletools.musicplayer.extensions.playlistDAO
 import com.simplemobiletools.musicplayer.helpers.ALL_SONGS_PLAYLIST_ID
 import com.simplemobiletools.musicplayer.interfaces.RefreshPlaylistsListener
@@ -49,7 +50,7 @@ class PlaylistsAdapter(activity: SimpleActivity, val playlists: ArrayList<Playli
 
     override fun prepareActionMode(menu: Menu) {
         menu.apply {
-            findItem(R.id.cab_rename).isVisible = selectedPositions.size == 1
+            findItem(R.id.cab_rename).isVisible = isOneItemSelected()
         }
     }
 
@@ -92,11 +93,14 @@ class PlaylistsAdapter(activity: SimpleActivity, val playlists: ArrayList<Playli
         val playlistsToDelete = ArrayList<Playlist>(selectedPositions.size)
 
         for (pos in selectedPositions) {
-            if (playlists[pos].id == ALL_SONGS_PLAYLIST_ID) {
+            val playlist = playlists[pos]
+            if (playlist.id == ALL_SONGS_PLAYLIST_ID) {
                 activity.toast(R.string.all_songs_cannot_be_deleted)
                 selectedPositions.remove(pos)
                 toggleItemSelection(false, pos)
                 break
+            } else if (playlist.id == activity.config.currentPlaylist) {
+                activity.playlistChanged(ALL_SONGS_PLAYLIST_ID)
             }
         }
 

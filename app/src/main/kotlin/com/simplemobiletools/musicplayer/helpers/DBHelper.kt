@@ -22,7 +22,7 @@ class DBHelper private constructor(val context: Context) : SQLiteOpenHelper(cont
     private val COL_PATH = "path"
     private val COL_PLAYLIST_ID = "playlist_id"
 
-    private val mDb: SQLiteDatabase = writableDatabase
+    private val mDb = writableDatabase
 
     companion object {
         private const val DB_VERSION = 1

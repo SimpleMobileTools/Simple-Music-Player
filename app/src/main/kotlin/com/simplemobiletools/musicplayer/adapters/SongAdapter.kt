@@ -96,7 +96,7 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val list
 
     override fun prepareActionMode(menu: Menu) {
         menu.apply {
-            findItem(R.id.cab_rename).isVisible = selectedPositions.size == 1
+            findItem(R.id.cab_rename).isVisible = isOneItemSelected()
         }
     }
 

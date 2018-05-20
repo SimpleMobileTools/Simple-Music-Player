@@ -16,8 +16,9 @@ class NewPlaylistDialog(val activity: Activity, var playlist: Playlist? = null, 
     var isNewPlaylist = playlist == null
 
     init {
-        if (playlist == null)
+        if (playlist == null) {
             playlist = Playlist(0, "")
+        }
 
         val view = activity.layoutInflater.inflate(R.layout.dialog_new_playlist, null).apply {
             new_playlist_title.setText(playlist!!.title)
@@ -35,8 +36,9 @@ class NewPlaylistDialog(val activity: Activity, var playlist: Playlist? = null, 
                             Thread {
                                 val playlistIdWithTitle = activity.getPlaylistIdWithTitle(title)
                                 var isPlaylistTitleTaken = isNewPlaylist && playlistIdWithTitle != -1
-                                if (!isPlaylistTitleTaken)
+                                if (!isPlaylistTitleTaken) {
                                     isPlaylistTitleTaken = !isNewPlaylist && playlist!!.id != playlistIdWithTitle && playlistIdWithTitle != -1
+                                }
 
                                 if (title.isEmpty()) {
                                     activity.toast(R.string.empty_name)
