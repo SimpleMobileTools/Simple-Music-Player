@@ -60,11 +60,4 @@ class DBHelper private constructor(val context: Context) : SQLiteOpenHelper(cont
             mDb.endTransaction()
         }
     }
-
-    fun updateSongPath(oldPath: String, newPath: String) {
-        val selectionArgs = arrayOf(oldPath)
-        val values = ContentValues().apply { put(COL_PATH, newPath) }
-        val selection = "$COL_PATH = ?"
-        mDb.update(TABLE_NAME_SONGS, values, selection, selectionArgs)
-    }
 }
