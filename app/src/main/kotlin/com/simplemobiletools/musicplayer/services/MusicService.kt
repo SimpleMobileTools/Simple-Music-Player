@@ -232,21 +232,20 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     }
 
     private fun initSongs() {
-        updateUI()
         if (mCurrSong == null) {
             setupSong()
-        } else {
-            val secs = mPlayer!!.currentPosition / 1000
-            Handler(Looper.getMainLooper()).post {
-                mBus!!.post(Events.ProgressUpdated(secs))
-            }
         }
+        updateUI()
     }
 
     private fun updateUI() {
         Handler(Looper.getMainLooper()).post {
             mBus!!.post(Events.PlaylistUpdated(mSongs))
-            songChanged(mCurrSong)
+            mCurrSongCover = getAlbumImage(mCurrSong)
+            mBus!!.post(Events.SongChanged(mCurrSong))
+
+            val secs = mPlayer!!.currentPosition / 1000
+            mBus!!.post(Events.ProgressUpdated(secs))
         }
         songStateChanged(getIsPlaying())
     }

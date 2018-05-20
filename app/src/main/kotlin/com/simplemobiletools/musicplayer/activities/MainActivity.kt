@@ -59,6 +59,7 @@ class MainActivity : SimpleActivity(), SongListListener {
     private var songs = ArrayList<Song>()
     private var searchMenuItem: MenuItem? = null
     private var isSearchOpen = false
+    private var wasInitialPlaylistSet = false
     private var artView: ViewGroup? = null
     private var oldCover: Drawable? = null
 
@@ -383,8 +384,8 @@ class MainActivity : SimpleActivity(), SongListListener {
         FilePickerDialog(this, getFilePickerInitialPath(), pickFile = false) {
             toast(R.string.fetching_songs)
             Thread {
-                val songs = getFolderSongs(File(it))
-                dbHelper.addSongsToPlaylist(songs)
+                val folderSongs = getFolderSongs(File(it))
+                dbHelper.addSongsToPlaylist(folderSongs)
                 sendIntent(REFRESH_LIST)
             }.start()
         }
@@ -425,8 +426,8 @@ class MainActivity : SimpleActivity(), SongListListener {
     }
 
     private fun createPlaylistFrom(path: String) {
-        val songs = getFolderSongs(File(path))
-        if (songs.isEmpty()) {
+        val folderSongs = getFolderSongs(File(path))
+        if (folderSongs.isEmpty()) {
             toast(R.string.folder_contains_no_audio)
             return
         }
@@ -448,7 +449,7 @@ class MainActivity : SimpleActivity(), SongListListener {
 
         val playlist = Playlist(0, playlistName)
         val newPlaylistId = playlistDAO.insert(playlist).toInt()
-        //dbHelper.addSongsToPlaylist(songs, newPlaylistId)
+        //dbHelper.addSongsToPlaylist(folderSongs, newPlaylistId)
         playlistChanged(newPlaylistId)
     }
 
@@ -551,6 +552,10 @@ class MainActivity : SimpleActivity(), SongListListener {
 
     @Subscribe
     fun songChangedEvent(event: Events.SongChanged) {
+        if (!wasInitialPlaylistSet) {
+            return
+        }
+
         val song = event.song
         updateSongInfo(song)
         markCurrentSong()
@@ -566,6 +571,7 @@ class MainActivity : SimpleActivity(), SongListListener {
 
     @Subscribe
     fun playlistUpdated(event: Events.PlaylistUpdated) {
+        wasInitialPlaylistSet = true
         fillSongsListView(event.songs)
     }
 
