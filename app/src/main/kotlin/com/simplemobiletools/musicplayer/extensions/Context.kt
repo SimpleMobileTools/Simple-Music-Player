@@ -5,10 +5,10 @@ import android.content.Intent
 import android.util.TypedValue
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.databases.SongsDatabase
+import com.simplemobiletools.musicplayer.helpers.CALL_SETUP_AFTER
 import com.simplemobiletools.musicplayer.helpers.Config
 import com.simplemobiletools.musicplayer.helpers.PAUSE
 import com.simplemobiletools.musicplayer.helpers.REFRESH_LIST
-import com.simplemobiletools.musicplayer.helpers.SETUP
 import com.simplemobiletools.musicplayer.interfaces.PlaylistsDao
 import com.simplemobiletools.musicplayer.interfaces.SongsDao
 import com.simplemobiletools.musicplayer.models.Playlist
@@ -37,9 +37,10 @@ val Context.songsDAO: SongsDao get() = songsDB.SongsDao()
 fun Context.playlistChanged(newID: Int, callSetup: Boolean = true) {
     config.currentPlaylist = newID
     sendIntent(PAUSE)
-    sendIntent(REFRESH_LIST)
-    if (callSetup) {
-        sendIntent(SETUP)
+    Intent(this, MusicService::class.java).apply {
+        putExtra(CALL_SETUP_AFTER, callSetup)
+        action = REFRESH_LIST
+        startService(this)
     }
 }
 

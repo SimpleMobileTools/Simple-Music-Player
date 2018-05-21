@@ -180,6 +180,11 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
                     Handler(Looper.getMainLooper()).post {
                         mBus!!.post(Events.PlaylistUpdated(mSongs))
                     }
+
+                    if (intent.getBooleanExtra(CALL_SETUP_AFTER, false)) {
+                        mPlayOnPrepare = false
+                        setupNextSong()
+                    }
                 }.start()
             }
             SET_PROGRESS -> {
