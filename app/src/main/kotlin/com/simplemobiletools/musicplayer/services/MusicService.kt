@@ -26,6 +26,7 @@ import com.simplemobiletools.musicplayer.activities.MainActivity
 import com.simplemobiletools.musicplayer.databases.SongsDatabase
 import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.extensions.getPlaylistSongs
+import com.simplemobiletools.musicplayer.extensions.songsDAO
 import com.simplemobiletools.musicplayer.helpers.*
 import com.simplemobiletools.musicplayer.models.Events
 import com.simplemobiletools.musicplayer.models.Song
@@ -294,6 +295,8 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             cursor?.close()
         }
 
+        val storedAllSongPaths = songsDAO.getSongsFromPlaylist(ALL_SONGS_PLAYLIST_ID).map { it.path }
+        paths.removeAll(storedAllSongPaths)
         RoomHelper(this).addSongsToPlaylist(paths)
     }
 

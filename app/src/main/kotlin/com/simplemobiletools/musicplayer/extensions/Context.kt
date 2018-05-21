@@ -28,7 +28,6 @@ fun Context.sendIntent(action: String) {
 
 val Context.config: Config get() = Config.newInstance(applicationContext)
 
-
 val Context.playlistDAO: PlaylistsDao get() = getSongsDB().PlaylistsDao()
 
 val Context.songsDAO: SongsDao get() = getSongsDB().SongsDao()
