@@ -1,6 +1,15 @@
 Changelog
 ==========
 
+Version 4.0.0 *(2018-05-21)*
+----------------------------
+
+ * Allow customizing the app launcher icon color
+ * Fully rewrote the way songs are stored for better performance
+ * Fixed widget resizing
+ * Added a Settings button for customizing widget colors without recreating it
+ * Many smaller bugfixes and ux/stability improvements
+
 Version 3.2.5 *(2018-04-04)*
 ----------------------------
 
