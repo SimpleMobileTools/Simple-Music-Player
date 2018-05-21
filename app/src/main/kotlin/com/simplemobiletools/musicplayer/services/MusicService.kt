@@ -175,6 +175,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
                 destroyPlayer()
             }
             REFRESH_LIST -> {
+                mSongs.clear()
                 Thread {
                     getSortedSongs()
                     Handler(Looper.getMainLooper()).post {
