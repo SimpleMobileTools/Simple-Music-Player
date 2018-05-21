@@ -80,12 +80,6 @@ class MainActivity : SimpleActivity(), SongListListener {
         appLaunched(BuildConfig.APPLICATION_ID)
         isThirdPartyIntent = intent.action == Intent.ACTION_VIEW
 
-        if (!config.wereSongsMigrated) {
-            Thread {
-                handleSongMigration()
-            }.start()
-        }
-
         bus = BusProvider.instance
         bus.register(this)
         initSeekbarChangeListener()
@@ -245,6 +239,11 @@ class MainActivity : SimpleActivity(), SongListListener {
 
     private fun handleSongMigration() {
         dbHelper.getAllSongs {
+            if (it.isEmpty()) {
+                config.wereSongsMigrated = true
+                return@getAllSongs
+            }
+
             val songs = it
             dbHelper.getAllPlaylists {
                 it.forEach {
@@ -487,6 +486,12 @@ class MainActivity : SimpleActivity(), SongListListener {
     private fun getFilePickerInitialPath() = if (songs.isEmpty()) Environment.getExternalStorageDirectory().toString() else songs[0].path
 
     private fun initializePlayer() {
+        if (!config.wereSongsMigrated) {
+            Thread {
+                handleSongMigration()
+            }.start()
+        }
+
         if (isThirdPartyIntent) {
             initThirdPartyIntent()
         } else {
