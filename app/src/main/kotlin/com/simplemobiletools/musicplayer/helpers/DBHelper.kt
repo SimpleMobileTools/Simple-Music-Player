@@ -79,4 +79,9 @@ class DBHelper private constructor(val context: Context) : SQLiteOpenHelper(cont
         }
         callback(songs)
     }
+
+    fun clearDatabase() {
+        mDb.execSQL("DELETE FROM $TABLE_NAME_PLAYLISTS")
+        mDb.execSQL("DELETE FROM $TABLE_NAME_SONGS")
+    }
 }

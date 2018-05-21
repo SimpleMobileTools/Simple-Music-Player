@@ -256,6 +256,7 @@ class MainActivity : SimpleActivity(), SongListListener {
 
                 playlistChanged(ALL_SONGS_PLAYLIST_ID)
                 config.wereSongsMigrated = true
+                dbHelper.clearDatabase()
             }
         }
     }
