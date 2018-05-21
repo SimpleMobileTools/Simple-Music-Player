@@ -46,4 +46,8 @@ class Config(context: Context) : BaseConfig(context) {
     var showFilename: Int
         get() = prefs.getInt(SHOW_FILENAME, SHOW_FILENAME_IF_UNAVAILABLE)
         set(showFilename) = prefs.edit().putInt(SHOW_FILENAME, showFilename).apply()
+
+    var wereSongsMigrated: Boolean
+        get() = prefs.getBoolean(WERE_SONGS_MIGRATED, false)
+        set(wereSongsMigrated) = prefs.edit().putBoolean(WERE_SONGS_MIGRATED, wereSongsMigrated).apply()
 }

@@ -80,6 +80,12 @@ class MainActivity : SimpleActivity(), SongListListener {
         appLaunched(BuildConfig.APPLICATION_ID)
         isThirdPartyIntent = intent.action == Intent.ACTION_VIEW
 
+        if (!config.wereSongsMigrated) {
+            Thread {
+                handleSongMigration()
+            }.start()
+        }
+
         bus = BusProvider.instance
         bus.register(this)
         initSeekbarChangeListener()
@@ -234,6 +240,22 @@ class MainActivity : SimpleActivity(), SongListListener {
         if (intent.action == Intent.ACTION_VIEW) {
             setIntent(intent)
             initThirdPartyIntent()
+        }
+    }
+
+    private fun handleSongMigration() {
+        dbHelper.getAllSongs {
+            val songs = it
+            dbHelper.getAllPlaylists {
+                it.forEach {
+                    val playlist = it
+                    val newPlaylistId = playlistDAO.insert(it).toInt()
+                    val playlistSongPaths = songs.filter { it.playListId == newPlaylistId }.map { it.path } as ArrayList<String>
+                    RoomHelper(applicationContext).addSongsToPlaylist(playlistSongPaths, playlist.id)
+                }
+
+                config.wereSongsMigrated = true
+            }
         }
     }
 

@@ -33,6 +33,7 @@ const val IGNORED_PATHS = "ignored_paths"
 const val CURRENT_PLAYLIST = "current_playlist"
 const val SHOW_FILENAME = "show_filename"
 const val SHOW_ALBUM_COVER = "show_album_cover"
+const val WERE_SONGS_MIGRATED = "were_songs_migrated"   // check migration from old sqlite to Room
 
 const val LIST_HEADERS_COUNT = 2
 const val LOWER_ALPHA = 0.5f
