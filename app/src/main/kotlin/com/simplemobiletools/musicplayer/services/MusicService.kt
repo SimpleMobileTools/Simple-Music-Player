@@ -311,7 +311,10 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     }
 
     private fun setupEqualizer() {
-        mEqualizer = Equalizer(1, mPlayer!!.audioSessionId)
+        try {
+            mEqualizer = Equalizer(1, mPlayer!!.audioSessionId)
+        } catch (ignored: Exception) {
+        }
         mEqualizer?.enabled = true
         setPreset(config.equalizer)
     }
