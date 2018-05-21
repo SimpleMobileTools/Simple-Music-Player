@@ -249,11 +249,12 @@ class MainActivity : SimpleActivity(), SongListListener {
             dbHelper.getAllPlaylists {
                 it.forEach {
                     val playlist = it
-                    val newPlaylistId = playlistDAO.insert(it).toInt()
+                    val newPlaylistId = if (playlist.id == ALL_SONGS_PLAYLIST_ID) ALL_SONGS_PLAYLIST_ID else playlistDAO.insert(playlist.copy(id = 0)).toInt()
                     val playlistSongPaths = songs.filter { it.playListId == newPlaylistId }.map { it.path } as ArrayList<String>
-                    RoomHelper(applicationContext).addSongsToPlaylist(playlistSongPaths, playlist.id)
+                    RoomHelper(applicationContext).addSongsToPlaylist(playlistSongPaths, newPlaylistId)
                 }
 
+                playlistChanged(ALL_SONGS_PLAYLIST_ID)
                 config.wereSongsMigrated = true
             }
         }
