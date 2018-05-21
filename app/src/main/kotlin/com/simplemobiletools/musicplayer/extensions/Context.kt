@@ -28,11 +28,10 @@ fun Context.sendIntent(action: String) {
 
 val Context.config: Config get() = Config.newInstance(applicationContext)
 
-val Context.songsDB: SongsDatabase get() = SongsDatabase.getInstance(applicationContext)
 
-val Context.playlistDAO: PlaylistsDao get() = songsDB.PlaylistsDao()
+val Context.playlistDAO: PlaylistsDao get() = getSongsDB().PlaylistsDao()
 
-val Context.songsDAO: SongsDao get() = songsDB.SongsDao()
+val Context.songsDAO: SongsDao get() = getSongsDB().SongsDao()
 
 fun Context.playlistChanged(newID: Int, callSetup: Boolean = true) {
     config.currentPlaylist = newID
@@ -52,6 +51,8 @@ fun Context.getActionBarHeight(): Int {
     return actionBarSize
 }
 
+fun Context.getSongsDB() = SongsDatabase.getInstance(this)
+
 fun Context.getPlaylistIdWithTitle(title: String) = playlistDAO.getPlaylistWithTitle(title)?.id ?: -1
 
 fun Context.getPlaylistSongs(playlistId: Int): ArrayList<Song> {
@@ -66,7 +67,7 @@ fun Context.getPlaylistSongs(playlistId: Int): ArrayList<Song> {
         }
     }
 
-    songsDB.runInTransaction {
+    getSongsDB().runInTransaction {
         invalidSongs.forEach {
             songsDAO.removeSongPath(it.path)
         }
