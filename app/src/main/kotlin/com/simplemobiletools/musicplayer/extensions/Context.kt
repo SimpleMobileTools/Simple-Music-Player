@@ -5,7 +5,10 @@ import android.content.Intent
 import android.util.TypedValue
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.databases.SongsDatabase
-import com.simplemobiletools.musicplayer.helpers.*
+import com.simplemobiletools.musicplayer.helpers.Config
+import com.simplemobiletools.musicplayer.helpers.PAUSE
+import com.simplemobiletools.musicplayer.helpers.REFRESH_LIST
+import com.simplemobiletools.musicplayer.helpers.SETUP
 import com.simplemobiletools.musicplayer.interfaces.PlaylistsDao
 import com.simplemobiletools.musicplayer.interfaces.SongsDao
 import com.simplemobiletools.musicplayer.models.Playlist
@@ -24,8 +27,6 @@ fun Context.sendIntent(action: String) {
 }
 
 val Context.config: Config get() = Config.newInstance(applicationContext)
-
-val Context.dbHelper: DBHelper get() = DBHelper.newInstance(applicationContext)
 
 val Context.songsDB: SongsDatabase get() = SongsDatabase.getInstance(applicationContext)
 

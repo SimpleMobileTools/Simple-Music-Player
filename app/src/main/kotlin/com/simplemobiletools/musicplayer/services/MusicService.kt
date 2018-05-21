@@ -25,7 +25,6 @@ import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.MainActivity
 import com.simplemobiletools.musicplayer.databases.SongsDatabase
 import com.simplemobiletools.musicplayer.extensions.config
-import com.simplemobiletools.musicplayer.extensions.dbHelper
 import com.simplemobiletools.musicplayer.extensions.getPlaylistSongs
 import com.simplemobiletools.musicplayer.helpers.*
 import com.simplemobiletools.musicplayer.models.Events
@@ -290,7 +289,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             cursor?.close()
         }
 
-        dbHelper.addSongsToPlaylist(paths)
+        RoomHelper(this).addSongsToPlaylist(paths)
     }
 
     private fun getSortedSongs() {

@@ -371,11 +371,13 @@ class MainActivity : SimpleActivity(), SongListListener {
         RadioGroupDialog(this, items, config.currentPlaylist) {
             if (it == -1) {
                 NewPlaylistDialog(this) {
+                    wasInitialPlaylistSet = false
                     MusicService.mCurrSong = null
                     playlistChanged(it, false)
                     invalidateOptionsMenu()
                 }
             } else {
+                wasInitialPlaylistSet = false
                 playlistChanged(it as Int)
                 invalidateOptionsMenu()
             }
@@ -387,7 +389,7 @@ class MainActivity : SimpleActivity(), SongListListener {
             toast(R.string.fetching_songs)
             Thread {
                 val folderSongs = getFolderSongs(File(it))
-                dbHelper.addSongsToPlaylist(folderSongs)
+                RoomHelper(applicationContext).addSongsToPlaylist(folderSongs)
                 sendIntent(REFRESH_LIST)
             }.start()
         }
@@ -451,7 +453,7 @@ class MainActivity : SimpleActivity(), SongListListener {
 
         val playlist = Playlist(0, playlistName)
         val newPlaylistId = playlistDAO.insert(playlist).toInt()
-        //dbHelper.addSongsToPlaylist(folderSongs, newPlaylistId)
+        RoomHelper(applicationContext).addSongsToPlaylist(folderSongs, newPlaylistId)
         playlistChanged(newPlaylistId)
     }
 
