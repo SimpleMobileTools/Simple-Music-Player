@@ -343,7 +343,7 @@ class MainActivity : SimpleActivity(), SongListListener {
                             deleteFiles(files)
                         }
                         Thread {
-                            playlistDAO.deletePlaylistById(config.currentPlaylist)
+                            playlistDAO.deletePlaylists(listOf(playlist))
                             playlistChanged(ALL_SONGS_PLAYLIST_ID)
                         }.start()
                     }

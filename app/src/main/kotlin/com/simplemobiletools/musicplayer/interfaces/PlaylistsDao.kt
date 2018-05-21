@@ -9,13 +9,10 @@ interface PlaylistsDao {
     fun insert(playlist: Playlist): Long
 
     @Delete
-    fun deletePlaylists(playlists: List<Playlist>)
+    fun deletePlaylists(playlists: List<Playlist?>)
 
     @Query("SELECT * FROM playlists")
     fun getAll(): List<Playlist>
-
-    @Query("DELETE FROM playlists WHERE id = :id")
-    fun deletePlaylistById(id: Int)
 
     @Query("SELECT * FROM playlists WHERE title = :title COLLATE NOCASE")
     fun getPlaylistWithTitle(title: String): Playlist?
