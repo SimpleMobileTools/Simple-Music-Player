@@ -8,6 +8,7 @@ import com.simplemobiletools.musicplayer.databases.SongsDatabase
 import com.simplemobiletools.musicplayer.helpers.*
 import com.simplemobiletools.musicplayer.interfaces.PlaylistsDao
 import com.simplemobiletools.musicplayer.interfaces.SongsDao
+import com.simplemobiletools.musicplayer.models.Playlist
 import com.simplemobiletools.musicplayer.models.Song
 import com.simplemobiletools.musicplayer.services.MusicService
 import java.io.File
@@ -70,4 +71,11 @@ fun Context.getPlaylistSongs(playlistId: Int): ArrayList<Song> {
     }
 
     return validSongs
+}
+
+fun Context.deletePlaylists(playlists: ArrayList<Playlist>) {
+    playlistDAO.deletePlaylists(playlists)
+    playlists.forEach {
+        songsDAO.removePlaylistSongs(it.id)
+    }
 }

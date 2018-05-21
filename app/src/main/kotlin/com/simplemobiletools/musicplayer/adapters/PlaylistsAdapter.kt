@@ -12,9 +12,9 @@ import com.simplemobiletools.musicplayer.activities.SimpleActivity
 import com.simplemobiletools.musicplayer.dialogs.NewPlaylistDialog
 import com.simplemobiletools.musicplayer.dialogs.RemovePlaylistDialog
 import com.simplemobiletools.musicplayer.extensions.config
+import com.simplemobiletools.musicplayer.extensions.deletePlaylists
 import com.simplemobiletools.musicplayer.extensions.getPlaylistSongs
 import com.simplemobiletools.musicplayer.extensions.playlistChanged
-import com.simplemobiletools.musicplayer.extensions.playlistDAO
 import com.simplemobiletools.musicplayer.helpers.ALL_SONGS_PLAYLIST_ID
 import com.simplemobiletools.musicplayer.interfaces.RefreshPlaylistsListener
 import com.simplemobiletools.musicplayer.models.Playlist
@@ -112,7 +112,7 @@ class PlaylistsAdapter(activity: SimpleActivity, val playlists: ArrayList<Playli
         playlists.removeAll(playlistsToDelete)
 
         Thread {
-            activity.playlistDAO.deletePlaylists(playlistsToDelete)
+            activity.deletePlaylists(playlistsToDelete)
             activity.runOnUiThread {
                 if (isDeletingCurrentPlaylist) {
                     reloadList()
