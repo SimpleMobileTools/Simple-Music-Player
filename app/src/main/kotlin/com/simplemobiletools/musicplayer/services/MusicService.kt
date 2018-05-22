@@ -35,7 +35,6 @@ import com.simplemobiletools.musicplayer.receivers.HeadsetPlugReceiver
 import com.simplemobiletools.musicplayer.receivers.RemoteControlReceiver
 import com.squareup.otto.Bus
 import java.io.File
-import java.io.IOException
 import java.util.*
 
 class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnErrorListener, MediaPlayer.OnCompletionListener, AudioManager.OnAudioFocusChangeListener {
@@ -307,7 +306,10 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
         mSongs = getPlaylistSongs(config.currentPlaylist)
         Song.sorting = config.sorting
-        mSongs.sort()
+        try {
+            mSongs.sort()
+        } catch (ignored: Exception) {
+        }
     }
 
     private fun setupEqualizer() {
@@ -521,13 +523,13 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             mPlayer!!.setDataSource(applicationContext, trackUri)
             mPlayer!!.prepareAsync()
             songChanged(mCurrSong)
-        } catch (e: IOException) {
+        } catch (e: Exception) {
             Log.e(TAG, "setSong IOException $e")
         }
     }
 
     private fun handleEmptyPlaylist() {
-        mPlayer!!.pause()
+        mPlayer?.pause()
         abandonAudioFocus()
         mCurrSong = null
         songChanged(null)
