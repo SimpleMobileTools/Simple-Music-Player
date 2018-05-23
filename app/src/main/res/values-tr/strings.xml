@@ -1,0 +1,72 @@
+<resources>
+    <string name="app_name">Basit Müzik Çalar</string>
+    <string name="app_launcher_name">Müzik Çalar</string>
+    <string name="playlist_empty">Çalma listeniz boş</string>
+    <string name="rename_song">Şarkıyı yeniden adlandır</string>
+    <string name="rename_song_error">Yeniden adlandırma sırasında bir hata oluştu</string>
+    <string name="rename_song_empty">lütfen tüm boşlukları doldurun</string>
+    <string name="enable_song_repetition">Geçerli şarkıyı tekrarla</string>
+    <string name="disable_song_repetition">Geçerli şarkıyı tekrarlamayı durdur</string>
+    <string name="song_repetition_enabled">Geçerli şarkıyı tekrarlama etkin</string>
+    <string name="song_repetition_disabled">Geçerli şarkıyı tekrarlama devre dışı</string>
+    <string name="enable_shuffle">Karıştırmayı etkinleştir</string>
+    <string name="disable_shuffle">Karıştırmayı devre dışı bırak</string>
+    <string name="shuffle_enabled">Karıştırma etkin</string>
+    <string name="shuffle_disabled">Karıştırma devre dışı</string>
+    <string name="enable_autoplay">Otomatik çalmayı etkinleştir</string>
+    <string name="disable_autoplay">Otomatik çalmayı devre dışı bırak</string>
+    <string name="autoplay_enabled">Otomatik çalma etkin</string>
+    <string name="autoplay_disabled">Otomatik çalma devre dışı</string>
+
+    <string name="previous">Önceki</string>
+    <string name="playpause">Çal / Duraklat</string>
+    <string name="next">Sonraki</string>
+
+    <!-- Playlists -->
+    <string name="add_file_to_playlist">Çalma listesine dosya ekle</string>
+    <string name="add_folder_to_playlist">Çalma listesine klasör ekle</string>
+    <string name="manage_playlists">Çalma listelerini yönet</string>
+    <string name="playlists">Çalma listeleri</string>
+    <string name="create_playlist">Çalma listesi oluştur</string>
+    <string name="rename_playlist">Çalma listesini yeniden adlandır</string>
+    <string name="playlist_name_exists">Bu ada sahip bir çalma listesi zaten var</string>
+    <string name="remove_playlist">Çalma listesini kaldır</string>
+    <string name="remove_playlist_description">Bu asıl dosyaları değil, sadece seçilen çalma listelerini kaldıracak.</string>
+    <string name="remove_playlist_description_placeholder">Bu asıl dosyaları değil, sadece \"%s\" listesini kaldıracak.</string>
+    <string name="remove_from_playlist">Çalma listesinden kaldır</string>
+    <string name="remove_from_playlist_description">Bu sadece öğeleri \"%s\" listesinden kaldırır, asıl dosyalar silinmez.</string>
+    <string name="delete_the_files_too">Dosyaları da sil</string>
+    <string name="open_playlist">Çalma listesini aç</string>
+    <string name="all_songs_cannot_be_deleted">\'Tüm şarkılar\' çalma listesi silinemez</string>
+    <string name="empty_playlist">Geçerli çalma listesi boş</string>
+    <string name="fetching_songs">Şarkılar alınıyor…</string>
+    <string name="all_songs">Tüm şarkılar</string>
+    <string name="create_playlist_from_folder">Klasörden yeni çalma listesi oluştur</string>
+    <string name="folder_contains_no_audio">Seçilen klasörde ses dosyası yok</string>
+    <string name="delete_current_song">Geçerli şarkıyı sil</string>
+    <string name="remove_current_song">Geçerli şarkıyı çalma listesinden kaldır</string>
+    <string name="show_filename">Şarkı başlığı olarak dosya adını göster:</string>
+    <string name="title_is_not_available">Başlık yoksa</string>
+    <string name="show_album_cover">Ana ekranda albüm kapağını göster</string>
+
+    <!-- Settings -->
+    <string name="equalizer">Ekolayzır</string>
+
+    <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
+    <!-- Short description has to have less than 80 chars -->
+    <string name="app_short_description">Özelleştirilebilir widget'lı temiz bir müzik çalar.</string>
+    <string name="app_long_description">
+        Durum çubuğundan, ana ekran widget'ından veya kulaklıktaki donanım düğmelerinden kolayca kontrol edilebilen bir müzik çalar. Parçaları Başlık veya Sanatçı'ya göre sıralayabilir ve Ekolayzır'ı değiştirebilirsiniz. Sanatçı veya albüme göre filtrelemeyi henüz desteklemiyor, izlemeye devam edin!
+
+        Özelleştirilebilir metin, alfa ve arka plan renkli bir widget içerir.
+
+        Reklam veya gereksiz izinler içermez. Tamamen açık kaynaktır, özelleştirilebilir renkler sağlar.
+
+        Bu uygulama, daha büyük bir uygulama serisinden sadece bir parça. Geri kalanı http://www.simplemobiletools.com adresinde bulabilirsiniz
+    </string>
+
+    <!--
+        Haven't found some strings? There's more at
+        https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
+    -->
+</resources>
