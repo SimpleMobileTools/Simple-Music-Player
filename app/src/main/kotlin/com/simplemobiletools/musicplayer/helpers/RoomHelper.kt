@@ -63,6 +63,7 @@ class RoomHelper(val context: Context) {
                         pathsMap.remove(path)
                     } while (cursor.moveToNext())
                 }
+            } catch (e: Exception) {
             } finally {
                 cursor?.close()
             }
