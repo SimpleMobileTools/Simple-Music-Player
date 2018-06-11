@@ -1,6 +1,7 @@
 package com.simplemobiletools.musicplayer.services
 
 import android.annotation.SuppressLint
+import android.annotation.TargetApi
 import android.app.*
 import android.content.*
 import android.database.Cursor
@@ -12,11 +13,16 @@ import android.media.MediaMetadataRetriever
 import android.media.MediaPlayer
 import android.media.audiofx.Equalizer
 import android.net.Uri
+import android.os.Build
 import android.os.Handler
 import android.os.Looper
 import android.os.PowerManager
 import android.provider.MediaStore
 import android.support.v4.app.NotificationCompat
+import android.support.v4.media.MediaMetadataCompat
+import android.support.v4.media.session.MediaSessionCompat
+import android.support.v4.media.session.PlaybackStateCompat
+import android.support.v4.media.session.PlaybackStateCompat.PLAYBACK_POSITION_UNKNOWN
 import android.util.Log
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.PERMISSION_WRITE_STORAGE
@@ -62,12 +68,14 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         private var mPlayOnPrepare = true
         private var mIsThirdPartyIntent = false
         private var intentUri: Uri? = null
+        private var mediaSession: MediaSessionCompat? = null
         private var isServiceInitialized = false
         private var prevAudioFocusState = 0
 
         fun getIsPlaying() = mPlayer?.isPlaying == true
     }
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreate() {
         super.onCreate()
 
@@ -78,6 +86,8 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
         mCoverArtHeight = resources.getDimension(R.dimen.top_art_height).toInt()
         mProgressHandler = Handler()
+        mediaSession = MediaSessionCompat(this, "MusicService")
+
         val remoteControlComponent = ComponentName(packageName, RemoteControlReceiver::class.java.name)
         mAudioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager
         mAudioManager!!.registerMediaButtonEventReceiver(remoteControlComponent)
@@ -94,6 +104,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         super.onDestroy()
         destroyPlayer()
         SongsDatabase.destroyInstance()
+        mediaSession?.isActive = false
     }
 
     private fun initService() {
@@ -247,7 +258,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         Handler(Looper.getMainLooper()).post {
             if (mPlayer != null) {
                 mBus!!.post(Events.PlaylistUpdated(mSongs))
-                mCurrSongCover = getAlbumImage(mCurrSong)
+                mCurrSongCover = getAlbumImage(mCurrSong).first
                 mBus!!.post(Events.SongChanged(mCurrSong))
 
                 val secs = mPlayer!!.currentPosition / 1000
@@ -362,16 +373,11 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             }
         }
 
-        if (mCurrSongCover?.isRecycled == true) {
-            mCurrSongCover = resources.getColoredBitmap(R.drawable.ic_headset, config.textColor)
-        }
-
         val notification = NotificationCompat.Builder(this)
                 .setStyle(android.support.v4.media.app.NotificationCompat.MediaStyle().setShowActionsInCompactView(playPauseButtonPosition, nextButtonPosition))
                 .setContentTitle(title)
                 .setContentText(artist)
                 .setSmallIcon(R.drawable.ic_headset_small)
-                .setLargeIcon(mCurrSongCover)
                 .setVisibility(Notification.VISIBILITY_PUBLIC)
                 .setPriority(Notification.PRIORITY_MAX)
                 .setWhen(notifWhen)
@@ -391,6 +397,11 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
                 stopForeground(false)
             }, 500)
         }
+
+        val playbackState = if (getIsPlaying()) PlaybackStateCompat.STATE_PLAYING else PlaybackStateCompat.STATE_PAUSED
+        mediaSession!!.setPlaybackState(PlaybackStateCompat.Builder()
+                .setState(playbackState, PLAYBACK_POSITION_UNKNOWN, 1.0f)
+                .build())
     }
 
     private fun getContentIntent(): PendingIntent {
@@ -496,6 +507,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             val pos = intent.getIntExtra(SONG_POS, 0)
             setSong(pos, true)
         }
+        mediaSession?.isActive = true
     }
 
     private fun setSong(songIndex: Int, addNewSongToHistory: Boolean) {
@@ -568,13 +580,22 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     }
 
     private fun songChanged(song: Song?) {
-        mCurrSongCover = getAlbumImage(song)
+        val albumImage = getAlbumImage(song)
+        mCurrSongCover = albumImage.first
         Handler(Looper.getMainLooper()).post {
             mBus!!.post(Events.SongChanged(song))
         }
+
+        val lockScreenImage = if (albumImage.second) albumImage.first else null
+        val metadata = MediaMetadataCompat.Builder()
+                .putBitmap(MediaMetadataCompat.METADATA_KEY_ALBUM_ART, lockScreenImage)
+                .build()
+
+        mediaSession?.setMetadata(metadata)
     }
 
-    private fun getAlbumImage(song: Song?): Bitmap {
+    // do not just return the album cover, but also a boolean to indicate if it a real cover, or just the placeholder
+    private fun getAlbumImage(song: Song?): Pair<Bitmap, Boolean> {
         if (File(song?.path ?: "").exists()) {
             try {
                 val mediaMetadataRetriever = MediaMetadataRetriever()
@@ -584,19 +605,20 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
                     val options = BitmapFactory.Options()
                     val bitmap = BitmapFactory.decodeByteArray(rawArt, 0, rawArt.size, options)
                     if (bitmap != null) {
-                        return if (bitmap.height > mCoverArtHeight * 2) {
+                        val resultBitmap = if (bitmap.height > mCoverArtHeight * 2) {
                             val ratio = bitmap.width / bitmap.height.toFloat()
                             Bitmap.createScaledBitmap(bitmap, (mCoverArtHeight * ratio * 2).toInt(), mCoverArtHeight * 2, false)
                         } else {
                             bitmap
                         }
+                        return Pair(resultBitmap, true)
                     }
                 }
             } catch (e: Exception) {
             }
         }
 
-        return resources.getColoredBitmap(R.drawable.ic_headset, config.textColor)
+        return Pair(resources.getColoredBitmap(R.drawable.ic_headset, config.textColor), false)
     }
 
     private fun destroyPlayer() {
@@ -685,6 +707,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     private fun songStateChanged(isPlaying: Boolean) {
         handleProgressHandler(isPlaying)
         setupNotification()
+        mediaSession?.isActive = isPlaying
         Handler(Looper.getMainLooper()).post {
             mBus!!.post(Events.SongStateChanged(isPlaying))
         }
