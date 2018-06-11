@@ -346,8 +346,6 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     private fun setupNotification() {
         val title = mCurrSong?.title ?: ""
         val artist = mCurrSong?.artist ?: ""
-        val playPauseButtonPosition = 1
-        val nextButtonPosition = 2
         val playPauseIcon = if (getIsPlaying()) R.drawable.ic_pause else R.drawable.ic_play
 
         var notifWhen = 0L
@@ -373,13 +371,17 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             }
         }
 
-        val notification = NotificationCompat.Builder(this)
-                .setStyle(android.support.v4.media.app.NotificationCompat.MediaStyle().setShowActionsInCompactView(playPauseButtonPosition, nextButtonPosition))
+        if (mCurrSongCover?.isRecycled == true) {
+            mCurrSongCover = resources.getColoredBitmap(R.drawable.ic_headset, config.textColor)
+        }
+
+        val notification = NotificationCompat.Builder(applicationContext, channelId)
                 .setContentTitle(title)
                 .setContentText(artist)
                 .setSmallIcon(R.drawable.ic_headset_small)
+                .setLargeIcon(mCurrSongCover)
                 .setVisibility(Notification.VISIBILITY_PUBLIC)
-                .setPriority(Notification.PRIORITY_MAX)
+                .setPriority(NotificationCompat.PRIORITY_MAX)
                 .setWhen(notifWhen)
                 .setShowWhen(showWhen)
                 .setUsesChronometer(usesChronometer)
