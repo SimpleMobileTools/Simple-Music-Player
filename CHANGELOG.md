@@ -1,6 +1,13 @@
 Changelog
 ==========
 
+Version 4.1.0 *(2018-06-12)*
+----------------------------
+
+ * Show the album cover on the lock screen, if available
+ * Make sure the Previous button is shown at the notification too
+ * Some stability and translation improvements
+
 Version 4.0.1 *(2018-05-22)*
 ----------------------------
 
