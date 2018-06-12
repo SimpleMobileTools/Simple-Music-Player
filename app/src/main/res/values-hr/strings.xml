@@ -39,7 +39,7 @@
     <string name="open_playlist">Otvori popis za reprodukciju</string>
     <string name="all_songs_cannot_be_deleted">Nije moguće izbrisati popis pjesama \'Sve pjesme\'</string>
     <string name="empty_playlist">Trenutačni popis za reprodukciju je prazan</string>
-    <string name="fetching_songs">Dohvaćanje pjesama...</string>
+    <string name="fetching_songs">Dohvaćanje pjesama…</string>
     <string name="all_songs">Sve pjesme</string>
     <string name="create_playlist_from_folder">Izradite novi popis za reprodukciju iz mape</string>
     <string name="folder_contains_no_audio">Odabrana mapa ne sadrži audio datoteke</string>
@@ -52,6 +52,10 @@
     <!-- Settings -->
     <string name="equalizer">Equalizer</string>
 
+    <!-- FAQ -->
+    <string name="faq_1_title">How can I fast-forward songs?</string>
+    <string name="faq_1_text">You can click on the current or max duration texts near the seekbar, that will move the song either backward, or forward.</string>
+
     <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
     <!-- Short description has to have less than 80 chars -->
     <string name="app_short_description">Jednostavan glazbeni svirač s prilagodljivim widgetom, bez oglasa.</string>
@@ -62,7 +66,7 @@
 
         Ne sadrži oglase ili nepotrebne dozvole. Aplikacije je otvorenog koda, pruža prilagodljive boje.
 
-        Ova je aplikacija samo dio većeg broja aplikacija. Možete pronaći ostatak na http://www.simplemobiletools.com
+        Ova je aplikacija samo dio većeg broja aplikacija. Možete pronaći ostatak na https://www.simplemobiletools.com
     </string>
 
     <!--

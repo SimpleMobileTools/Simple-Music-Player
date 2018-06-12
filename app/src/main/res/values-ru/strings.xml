@@ -52,6 +52,10 @@
     <!-- Settings -->
     <string name="equalizer">Эквалайзер</string>
 
+    <!-- FAQ -->
+    <string name="faq_1_title">How can I fast-forward songs?</string>
+    <string name="faq_1_text">You can click on the current or max duration texts near the seekbar, that will move the song either backward, or forward.</string>
+
     <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
     <!-- Short description has to have less than 80 chars -->
     <string name="app_short_description">Чистый музыкальный проигрыватель с настраиваемым виджетом.</string>
@@ -62,7 +66,7 @@
 
         Это приложение не показывает рекламу и не запрашивает лишние разрешения. У него полностью открытый исходный код и настраиваемые цвета оформления.
 
-        Это приложение является лишь частью более крупной серии приложений. Вы можете найти остальные на http://www.simplemobiletools.com
+        Это приложение является лишь частью более крупной серии приложений. Вы можете найти остальные на https://www.simplemobiletools.com
     </string>
 
     <!--

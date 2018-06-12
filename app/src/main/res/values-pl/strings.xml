@@ -52,6 +52,10 @@
     <!-- Settings -->
     <string name="equalizer">Korektor</string>
 
+    <!-- FAQ -->
+    <string name="faq_1_title">How can I fast-forward songs?</string>
+    <string name="faq_1_text">You can click on the current or max duration texts near the seekbar, that will move the song either backward, or forward.</string>
+
     <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
     <!-- Short description has to have less than 80 chars -->
     <string name="app_short_description">Prosty odtwarzacz muzyki z konfigurowalnym widżetem..</string>
@@ -62,7 +66,7 @@
 
         Nie zawiera natomiast żadnych reklam, nie potrzebuje całej masy uprawnień, jest w pełni otwartoźródłowa i w pełni podatna na kolorowanie.
 
-        Niniejsza aplikacja jest tylko częścią naszej kolekcji prostych narzędzi. Ta, jak i pozostałe, dostępne są na stronie http://www.simplemobiletools.com
+        Niniejsza aplikacja jest tylko częścią naszej kolekcji prostych narzędzi. Ta, jak i pozostałe, dostępne są na stronie https://www.simplemobiletools.com
     </string>
 
     <!--

@@ -52,6 +52,10 @@
     <!-- Settings -->
     <string name="equalizer">Ekvalizér</string>
 
+    <!-- FAQ -->
+    <string name="faq_1_title">Ako viem posunúť skladbu vpred?</string>
+    <string name="faq_1_text">Môžete kliknúť na texty súčasnej, alebo maximálnej dĺžky skladby, ktoré sú vedľa indikátora súčasného progresu. To posunie skladbu buď vpred, alebo vzad.</string>
+
     <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
     <!-- Short description has to have less than 80 chars -->
     <string name="app_short_description">Jednoduchý hudobný prehrávač s meniteľným widgetom na plochu.</string>
@@ -62,7 +66,7 @@
 
         Neobsahuje žiadne reklamy a nepotrebné oprávnenia. Je opensource, poskytuje možnosť zmeny farieb.
 
-        Táto aplikácia je iba jednou zo skupiny aplikácií. Ostatné viete nájsť na http://www.simplemobiletools.com
+        Táto aplikácia je iba jednou zo skupiny aplikácií. Ostatné viete nájsť na https://www.simplemobiletools.com
     </string>
 
     <!--
