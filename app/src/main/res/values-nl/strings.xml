@@ -53,8 +53,8 @@
     <string name="equalizer">Equalizer</string>
 
     <!-- FAQ -->
-    <string name="faq_1_title">How can I fast-forward songs?</string>
-    <string name="faq_1_text">You can click on the current or max duration texts near the seekbar, that will move the song either backward, or forward.</string>
+    <string name="faq_1_title">Hoe kan ik een nummer vooruitspoelen?</string>
+    <string name="faq_1_text">Klik op de tijdsindicatoren voor de voortgang of de looptijd om resp. terug of vooruit te spoelen.</string>
 
     <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
     <!-- Short description has to have less than 80 chars -->
