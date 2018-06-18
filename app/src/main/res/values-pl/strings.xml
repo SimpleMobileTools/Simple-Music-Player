@@ -1,7 +1,7 @@
 <resources>
-    <string name="app_name">Prosty Odtwarzacz Muzyki</string>
-    <string name="app_launcher_name">Prosty Odtwarzacz Muzyki</string>
-    <string name="playlist_empty">Twoja playlista jest pusta</string>
+    <string name="app_name">Prosty odtwarzacz muzyki</string>
+    <string name="app_launcher_name">Odtwarzacz muzyki</string>
+    <string name="playlist_empty">Twoja lista odtwarzania jest pusta</string>
     <string name="rename_song">Zmień nazwę</string>
     <string name="rename_song_error">Wystąpił błąd podczas zmiany nazwy</string>
     <string name="rename_song_empty">Wypełnij wszystkie pola</string>
@@ -53,8 +53,8 @@
     <string name="equalizer">Korektor</string>
 
     <!-- FAQ -->
-    <string name="faq_1_title">How can I fast-forward songs?</string>
-    <string name="faq_1_text">You can click on the current or max duration texts near the seekbar, that will move the song either backward, or forward.</string>
+    <string name="faq_1_title">Jak mogę przewijać piosenki?</string>
+    <string name="faq_1_text">Kliknij napis z obecnym jej momentem lub całkowitym czasem trwania.</string>
 
     <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
     <!-- Short description has to have less than 80 chars -->
