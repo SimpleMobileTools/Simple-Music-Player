@@ -23,48 +23,48 @@
     <string name="next">次へ</string>
 
     <!-- Playlists -->
-    <string name="add_file_to_playlist">Add file to playlist</string>
-    <string name="add_folder_to_playlist">Add folder to playlist</string>
-    <string name="manage_playlists">Manage playlists</string>
-    <string name="playlists">Playlists</string>
-    <string name="create_playlist">Create playlist</string>
-    <string name="rename_playlist">Rename playlist</string>
-    <string name="playlist_name_exists">A playlist with that name already exists</string>
-    <string name="remove_playlist">Remove playlist</string>
-    <string name="remove_playlist_description">This will only remove the selected playlists, not the actual files.</string>
-    <string name="remove_playlist_description_placeholder">This will only remove playlist \"%s\", not the actual files.</string>
-    <string name="remove_from_playlist">Remove from playlist</string>
-    <string name="remove_from_playlist_description">This will only remove the items from playlist \"%s\", the actual files will not be deleted.</string>
-    <string name="delete_the_files_too">Delete the files too</string>
-    <string name="open_playlist">Open playlist</string>
-    <string name="all_songs_cannot_be_deleted">\'All songs\' playlist cannot be deleted</string>
-    <string name="empty_playlist">Current playlist is empty</string>
-    <string name="fetching_songs">Fetching songs…</string>
-    <string name="all_songs">All songs</string>
-    <string name="create_playlist_from_folder">Create new playlist from folder</string>
-    <string name="folder_contains_no_audio">The selected folder contains no audio files</string>
-    <string name="delete_current_song">Delete current song</string>
-    <string name="remove_current_song">Remove current song from playlist</string>
-    <string name="show_filename">Show filename as song title:</string>
-    <string name="title_is_not_available">If title is not available</string>
-    <string name="show_album_cover">Show album cover on the main screen</string>
+    <string name="add_file_to_playlist">プレイリストにファイルを追加</string>
+    <string name="add_folder_to_playlist">プレイリストにフォルダを追加</string>
+    <string name="manage_playlists">プレイリストを管理</string>
+    <string name="playlists">プレイリスト</string>
+    <string name="create_playlist">プレイリストを作成</string>
+    <string name="rename_playlist">プレイリストの名前を変更</string>
+    <string name="playlist_name_exists">その名前のプレイリストは既に存在します</string>
+    <string name="remove_playlist">プレイリストを削除</string>
+    <string name="remove_playlist_description">この操作により、実際のファイルではなくプレイリストのみ削除されます。</string>
+    <string name="remove_playlist_description_placeholder">この操作により、実際のファイルではなくプレイリスト \"%s\" のみ削除されます。</string>
+    <string name="remove_from_playlist">プレイリストから削除</string>
+    <string name="remove_from_playlist_description">この操作は、プレイリスト \"%s\" からアイテムを削除するだけで、実際のファイルは削除されません。</string>
+    <string name="delete_the_files_too">実際のファイルも削除する</string>
+    <string name="open_playlist">プレイリストを開く</string>
+    <string name="all_songs_cannot_be_deleted">プレイリスト \'すべての曲\' は削除できません</string>
+    <string name="empty_playlist">プレイリストは空です</string>
+    <string name="fetching_songs">曲を取得中…</string>
+    <string name="all_songs">すべての曲</string>
+    <string name="create_playlist_from_folder">フォルダから新しいプレイリストを作成する</string>
+    <string name="folder_contains_no_audio">選択したフォルダにはオーディオファイルが含まれていません</string>
+    <string name="delete_current_song">現在の曲を削除</string>
+    <string name="remove_current_song">プレイリストから現在の曲を削除</string>
+    <string name="show_filename">ファイル名を曲名として表示:</string>
+    <string name="title_is_not_available">曲名が使用できない場合</string>
+    <string name="show_album_cover">メイン画面にアルバムカバーを表示する</string>
 
     <!-- Settings -->
     <string name="equalizer">イコライザー</string>
 
     <!-- FAQ -->
-    <string name="faq_1_title">How can I fast-forward songs?</string>
-    <string name="faq_1_text">You can click on the current or max duration texts near the seekbar, that will move the song either backward, or forward.</string>
+    <string name="faq_1_title">曲を早送りするにはどうすればよいですか？</string>
+    <string name="faq_1_text">シークバーの近くにある[再生中]または[再生時間]をタップすると、曲の巻戻しまたは早送りをすることができます。</string>
 
     <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
     <!-- Short description has to have less than 80 chars -->
     <string name="app_short_description">カスタマイズ可能なウィジェットを持つクリーンなミュージック プレイヤー。</string>
     <string name="app_long_description">
-        ステータスバー、ホーム画面ウィジェット、またはヘッドセットのハードウェアボタンから簡単にコントロールできるミュージック プレイヤー。 タイトルやアーティストでトラックを並べ替えるだけでなく、イコライザーを変更することもできます。 アーティストやアルバムによるフィルタリングはまだサポートしていません。乞うご期待!
+        ステータスバー、ホーム画面ウィジェット、またはヘッドセットのハードウェアボタンから簡単にコントロールできるミュージック プレイヤー。 曲名やアーティストでトラックを並べ替えるだけでなく、イコライザーを変更することもできます。 アーティストやアルバムによるフィルタリングはまだサポートしていません。乞うご期待!
 
-        文字の色、背景のアルファと色をカスタマイズ可能なウィジェットを含みます。
+        文字色や背景色、透明度をカスタマイズ可能なウィジェットを含みます。
 
-        広告や不要なアクセス許可は含まれていません。 完全にオープンソースで、ダークテーマも提供しています。
+        広告や不要なアクセス権限は含まれていません。 完全にオープンソースで、ダークテーマも提供しています。
 
         このアプリは、大きな一連のアプリの一つです。 他のアプリは https://www.simplemobiletools.com で見つけることができます
     </string>
