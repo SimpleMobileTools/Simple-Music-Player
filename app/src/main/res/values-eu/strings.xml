@@ -1,0 +1,76 @@
+<resources>
+    <string name="app_name">Musika erreproduzitzaile sinplea</string>
+    <string name="app_launcher_name">Musika erreproduzitzailea</string>
+    <string name="playlist_empty">Zure erreprodukzio zerrenda hutsik dago</string>
+    <string name="rename_song">Abestia berrizendatu</string>
+    <string name="rename_song_error">Akats bat gertatu da berrizendatzerakoan</string>
+    <string name="rename_song_empty">Mesedez, eremu guztiak bete itzazu</string>
+    <string name="enable_song_repetition">Uneko abestia errepikatu</string>
+    <string name="disable_song_repetition">Utzi uneko abestia errepikatzeari</string>
+    <string name="song_repetition_enabled">Uneko abestiaren errepikapena gaituta</string>
+    <string name="song_repetition_disabled">Uneko abestiaren errepikapena ezgaituta</string>
+    <string name="enable_shuffle">Nahastea gaitu</string>
+    <string name="disable_shuffle">Nahastea ezgaitu</string>
+    <string name="shuffle_enabled">Nahastea gaituta</string>
+    <string name="shuffle_disabled">Nahastea ezgaituta</string>
+    <string name="enable_autoplay">Erreprodukzio automatikoa gaitu</string>
+    <string name="disable_autoplay">Erreprodukzio automatikoa ezgaitu</string>
+    <string name="autoplay_enabled">Erreprodukzio automatikoa gaituta</string>
+    <string name="autoplay_disabled">Erreprodukzio automatikoa ezgaituta</string>
+
+    <string name="previous">Aurrekoa</string>
+    <string name="playpause">Erreproduzitu / Gelditu</string>
+    <string name="next">Hurrengoa</string>
+
+    <!-- Playlists -->
+    <string name="add_file_to_playlist">Fitxategia erreprodukzio zerrendara gehitu</string>
+    <string name="add_folder_to_playlist">Karpeta erreprodukzio zerrendara gehitu</string>
+    <string name="manage_playlists">Erreprodukzio zerrendak kudeatu</string>
+    <string name="playlists">Erreprodukzio zerrendak</string>
+    <string name="create_playlist">Erreprodukzio zerrenda sortu</string>
+    <string name="rename_playlist">Erreprodukzio zerrenda berrizendatu</string>
+    <string name="playlist_name_exists">Izen hori duen erreprodukzio zerrenda bat existitzen da dagoeneko</string>
+    <string name="remove_playlist">Erreprodukzio zerrenda kendu</string>
+    <string name="remove_playlist_description">Honek hautatutako erreprodukzio zerrendak kenduko ditu soilik, ez bertako fitxategiak.</string>
+    <string name="remove_playlist_description_placeholder">Honek \"%s\" erreprodukzio zerrenda kenduko du soilik, ez bertako fitxategiak.</string>
+    <string name="remove_from_playlist">Erreprodukzio zerrendatik kendu</string>
+    <string name="remove_from_playlist_description">Honek \"%s\" erreprodukzio zerrendako elementuak kenduko ditu soilik, bertako fitxategiak ez dira ezabatuko.</string>
+    <string name="delete_the_files_too">Fitxategiak ere ezabatu</string>
+    <string name="open_playlist">Erreprodukzio zerrenda ireki</string>
+    <string name="all_songs_cannot_be_deleted">\'Abesti guztiak\' erreprodukzio zerrenda ezin da ezabatu</string>
+    <string name="empty_playlist">Uneko erreprodukzio zerrenda hutsik dago</string>
+    <string name="fetching_songs">Abestiak eskuratzenâ€¦</string>
+    <string name="all_songs">Abesti guztiak</string>
+    <string name="create_playlist_from_folder">Erreprodukzio zerrenda berria sortu karpetatik</string>
+    <string name="folder_contains_no_audio">Hautatutako karpetak ez du audio fitxategirik barruan</string>
+    <string name="delete_current_song">Uneko abestia ezabatu</string>
+    <string name="remove_current_song">Uneko abestia erreprodukzio zerrendatik kendu</string>
+    <string name="show_filename">Fitxategiaren izena abestiaren izenburu gisa erakutsi:</string>
+    <string name="title_is_not_available">Izenburua eskuragarri ez badago</string>
+    <string name="show_album_cover">Albumaren azala pantaila nagusian erakutsi</string>
+
+    <!-- Settings -->
+    <string name="equalizer">Ekualizadorea</string>
+
+    <!-- FAQ -->
+    <string name="faq_1_title">Nola aurreratu ditzaket azkar abestiak?</string>
+    <string name="faq_1_text">Uneko edo gehienezko iraupen testuetan klik egin dezakezu bilatze barraren ondoan, horrek abestia atzera mugituko du, edo aurrera.</string>
+
+    <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
+    <!-- Short description has to have less than 80 chars -->
+    <string name="app_short_description">Musika erreproduzitzaile garbia widget pertsonalizagarri batekin.</string>
+    <string name="app_long_description">
+        Musika erreproduzitzaile bat, egoera barratik, etxeko pantailako widgetetik edo zure entzungailuaren botoietatik erraz kontrola daitekeena. Abestiak izenburu edo artistaren arabera ordenatu ditzakezu, baita ekualizadorea aldatu ere. Oraingoz ez du artista edo alburamen araberako iragazkia egitea baimentzen, egon adi prest dagoenerako!
+
+        Widget bat dauka testuaren kolorea, gardentasuna eta atzealdeko kolorea pertsonalizatzea baimentzen duena.
+
+        Ez du iragarkirik edota beharrezkoak ez diren baimenik. Iturburu irekikoa da erabat, koloreak pertsonalizagarriak dira.
+
+        Aplikazio hau aplikazio multzo handiago baten zati bat da. Gainerakoak hemen aurki ditzakezu https://www.simplemobiletools.com
+    </string>
+
+    <!--
+        Haven't found some strings? There's more at
+        https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
+    -->
+</resources>
