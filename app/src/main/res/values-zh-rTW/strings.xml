@@ -53,8 +53,8 @@
     <string name="equalizer">等化器</string>
 
     <!-- FAQ -->
-    <string name="faq_1_title">How can I fast-forward songs?</string>
-    <string name="faq_1_text">You can click on the current or max duration texts near the seekbar, that will move the song either backward, or forward.</string>
+    <string name="faq_1_title">我如何快轉歌曲?</string>
+    <string name="faq_1_text">你可以點擊進度條附近的當前或總時長文字，歌曲就會快進或倒退。</string>
 
     <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
     <!-- Short description has to have less than 80 chars -->
