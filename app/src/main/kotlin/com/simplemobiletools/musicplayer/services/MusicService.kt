@@ -642,6 +642,29 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             }
         }
 
+        if (song != null) {
+            val songParentDirectory = File(song.path).parentFile;
+            val albumArtFiles = arrayOf("folder.jpg", "Folder.jpg", "AlbumArt.jpg")
+            for (albumArtFile in albumArtFiles) {
+                try {
+                    val albumArtFilePath = songParentDirectory.toString() + File.separator + albumArtFile;
+                    if (File(albumArtFilePath).exists()) {
+                        val bitmap = BitmapFactory.decodeFile(albumArtFilePath);
+                        if (bitmap != null) {
+                            val resultBitmap = if (bitmap.height > mCoverArtHeight * 2) {
+                                val ratio = bitmap.width / bitmap.height.toFloat()
+                                Bitmap.createScaledBitmap(bitmap, (mCoverArtHeight * ratio * 2).toInt(), mCoverArtHeight * 2, false)
+                            } else {
+                                bitmap
+                            }
+                            return Pair(resultBitmap, true)
+                        }
+                    }
+                } catch (e: Exception) {
+                }
+            }
+        }
+
         return Pair(resources.getColoredBitmap(R.drawable.ic_headset, config.textColor), false)
     }
 
