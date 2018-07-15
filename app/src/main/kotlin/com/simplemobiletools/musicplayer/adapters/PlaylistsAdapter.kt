@@ -30,17 +30,17 @@ class PlaylistsAdapter(activity: SimpleActivity, val playlists: ArrayList<Playli
 
     override fun getActionMenuId() = R.menu.cab_playlists
 
-    override fun prepareItemSelection(view: View) {}
+    override fun prepareItemSelection(viewHolder: ViewHolder) {}
 
-    override fun markItemSelection(select: Boolean, view: View?) {
-        view?.playlist_frame?.isSelected = select
+    override fun markViewHolderSelection(select: Boolean, viewHolder: ViewHolder?) {
+        viewHolder?.itemView?.playlist_frame?.isSelected = select
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = createViewHolder(R.layout.item_playlist, parent)
 
     override fun onBindViewHolder(holder: MyRecyclerViewAdapter.ViewHolder, position: Int) {
         val playlist = playlists[position]
-        val view = holder.bindView(playlist) { itemView, layoutPosition ->
+        val view = holder.bindView(playlist, true, true) { itemView, layoutPosition ->
             setupView(itemView, playlist)
         }
         bindViewHolder(holder, position, view)
@@ -62,6 +62,8 @@ class PlaylistsAdapter(activity: SimpleActivity, val playlists: ArrayList<Playli
     }
 
     override fun getSelectableItemCount() = playlists.size
+
+    override fun getIsItemSelectable(position: Int) = true
 
     private fun askConfirmDelete() {
         RemovePlaylistDialog(activity) {

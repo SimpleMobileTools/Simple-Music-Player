@@ -58,10 +58,10 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val list
 
     override fun getActionMenuId() = R.menu.cab
 
-    override fun prepareItemSelection(view: View) {}
+    override fun prepareItemSelection(viewHolder: ViewHolder) {}
 
-    override fun markItemSelection(select: Boolean, view: View?) {
-        view?.song_frame?.isSelected = select
+    override fun markViewHolderSelection(select: Boolean, viewHolder: ViewHolder?) {
+        viewHolder?.itemView?.song_frame?.isSelected = select
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -83,7 +83,7 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val list
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         if (holder !is TransparentViewHolder && holder !is NavigationViewHolder) {
             val song = songs[position - LIST_HEADERS_COUNT]
-            val view = holder.bindView(song, !isThirdPartyIntent) { itemView, layoutPosition ->
+            val view = holder.bindView(song, true, !isThirdPartyIntent) { itemView, layoutPosition ->
                 setupView(itemView, song, layoutPosition)
             }
             bindViewHolder(holder, position - LIST_HEADERS_COUNT, view)
@@ -112,6 +112,8 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val list
     }
 
     override fun getSelectableItemCount() = songs.size
+
+    override fun getIsItemSelectable(position: Int) = position >= 0
 
     fun searchOpened() {
         transparentViewHeight = transparentView.height
