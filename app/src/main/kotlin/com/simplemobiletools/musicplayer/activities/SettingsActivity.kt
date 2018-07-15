@@ -4,6 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import com.simplemobiletools.commons.dialogs.RadioGroupDialog
 import com.simplemobiletools.commons.extensions.beVisibleIf
+import com.simplemobiletools.commons.extensions.isThankYouInstalled
+import com.simplemobiletools.commons.extensions.launchPurchaseThankYouIntent
 import com.simplemobiletools.commons.extensions.updateTextColors
 import com.simplemobiletools.commons.helpers.IS_CUSTOMIZING_COLORS
 import com.simplemobiletools.commons.models.RadioItem
@@ -27,6 +29,7 @@ class SettingsActivity : SimpleActivity() {
     override fun onResume() {
         super.onResume()
 
+        setupPurchaseThankYou()
         setupCustomizeColors()
         setupCustomizeWidgetColors()
         setupManagePlaylists()
@@ -37,6 +40,13 @@ class SettingsActivity : SimpleActivity() {
         setupEqualizer()
         setupReplaceTitle()
         updateTextColors(settings_scrollview)
+    }
+
+    private fun setupPurchaseThankYou() {
+        settings_purchase_thank_you_holder.beVisibleIf(!isThankYouInstalled())
+        settings_purchase_thank_you_holder.setOnClickListener {
+            launchPurchaseThankYouIntent()
+        }
     }
 
     private fun setupCustomizeColors() {
