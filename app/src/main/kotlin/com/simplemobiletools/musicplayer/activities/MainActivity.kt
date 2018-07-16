@@ -63,6 +63,7 @@ class MainActivity : SimpleActivity(), SongListListener {
     private var searchMenuItem: MenuItem? = null
     private var isSearchOpen = false
     private var wasInitialPlaylistSet = false
+    private var lastFilePickerPath = ""
     private var artView: ViewGroup? = null
     private var oldCover: Drawable? = null
 
@@ -428,6 +429,7 @@ class MainActivity : SimpleActivity(), SongListListener {
         files.forEach {
             if (it.isDirectory) {
                 songFiles.addAll(getFolderSongs(it))
+                lastFilePickerPath = it.absolutePath
             } else if (it.isAudioFast()) {
                 songFiles.add(it.absolutePath)
             }
@@ -438,6 +440,7 @@ class MainActivity : SimpleActivity(), SongListListener {
     private fun addFileToPlaylist() {
         FilePickerDialog(this, getFilePickerInitialPath()) {
             Thread {
+                lastFilePickerPath = it
                 if (it.isAudioFast()) {
                     RoomHelper(applicationContext).addSongToPlaylist(it)
                     sendIntent(REFRESH_LIST)
@@ -463,6 +466,7 @@ class MainActivity : SimpleActivity(), SongListListener {
             return
         }
 
+        lastFilePickerPath = path
         val folderName = path.getFilenameFromPath()
         var playlistName = folderName
         var curIndex = 1
@@ -484,7 +488,17 @@ class MainActivity : SimpleActivity(), SongListListener {
         playlistChanged(newPlaylistId)
     }
 
-    private fun getFilePickerInitialPath() = if (songs.isEmpty()) Environment.getExternalStorageDirectory().toString() else songs[0].path
+    private fun getFilePickerInitialPath(): String {
+        if (lastFilePickerPath.isEmpty()) {
+            lastFilePickerPath = if (songs.isEmpty()) {
+                Environment.getExternalStorageDirectory().toString()
+            } else {
+                songs[0].path
+            }
+        }
+
+        return lastFilePickerPath
+    }
 
     private fun initializePlayer() {
         if (!config.wereSongsMigrated) {
