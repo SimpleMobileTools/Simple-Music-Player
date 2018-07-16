@@ -623,7 +623,7 @@ class MainActivity : SimpleActivity(), SongListListener {
     @Subscribe
     fun playlistUpdated(event: Events.PlaylistUpdated) {
         wasInitialPlaylistSet = true
-        fillSongsListView(event.songs)
+        fillSongsListView(event.songs.clone() as ArrayList<Song>)
     }
 
     @Subscribe
