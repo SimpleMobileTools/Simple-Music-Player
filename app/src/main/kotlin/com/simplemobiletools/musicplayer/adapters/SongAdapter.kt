@@ -216,7 +216,7 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val list
                 removeSongs.add(song)
                 activity.songsDAO.removeSongPath(song.path)
                 if (song == MusicService.mCurrSong) {
-                    activity.sendIntent(NEXT)
+                    activity.sendIntent(RESET)
                 }
             }
 
@@ -311,6 +311,7 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val list
             selectedPositions.clear()
             if (songs.isNotEmpty()) {
                 selectedPositions.add(currentSongIndex - positionOffset)
+                activity.sendIntent(NEXT)
                 Thread {
                     deleteSongs()
                     selectedPositions.clear()

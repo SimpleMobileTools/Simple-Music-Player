@@ -174,6 +174,12 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
                 mPlayOnPrepare = true
                 setupNextSong()
             }
+            RESET -> {
+                if (mPlayedSongIndexes.size - 1 != -1) {
+                    mPlayOnPrepare = true
+                    setSong(mPlayedSongIndexes[mPlayedSongIndexes.size - 1], false)
+                }
+            }
             PLAYPOS -> playSong(intent)
             EDIT -> {
                 mCurrSong = intent.getSerializableExtra(EDITED_SONG) as Song
