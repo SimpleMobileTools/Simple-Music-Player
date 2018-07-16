@@ -650,10 +650,16 @@ class MainActivity : SimpleActivity(), SongListListener {
             return
         }
 
-        val options = RequestOptions().placeholder(oldCover)
         Glide.with(this).clear(art_image)
+        val coverToUse = if (MusicService.mCurrSongCover?.isRecycled == true) {
+            resources.getColoredBitmap(R.drawable.ic_headset, config.textColor)
+        } else {
+            MusicService.mCurrSongCover
+        }
+
+        val options = RequestOptions().placeholder(oldCover)
         Glide.with(this)
-                .load(MusicService.mCurrSongCover)
+                .load(coverToUse)
                 .apply(options)
                 .listener(object : RequestListener<Drawable> {
                     override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean) = false
