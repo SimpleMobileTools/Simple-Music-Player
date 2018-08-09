@@ -367,15 +367,16 @@ class MainActivity : SimpleActivity(), SongListListener {
                 val playlist = playlistDAO.getPlaylistWithId(config.currentPlaylist)
                 runOnUiThread {
                     RemovePlaylistDialog(this, playlist) {
-                        if (it) {
-                            val paths = getPlaylistSongs(config.currentPlaylist).map { it.path }
-                            val files = paths.map { FileDirItem(it, it.getFilenameFromPath()) } as ArrayList<FileDirItem>
-                            paths.forEach {
-                                songsDAO.removeSongPath(it)
-                            }
-                            deleteFiles(files)
-                        }
                         Thread {
+                            if (it) {
+                                val paths = getPlaylistSongs(config.currentPlaylist).map { it.path }
+                                val files = paths.map { FileDirItem(it, it.getFilenameFromPath()) } as ArrayList<FileDirItem>
+                                paths.forEach {
+                                    songsDAO.removeSongPath(it)
+                                }
+                                deleteFiles(files)
+                            }
+
                             if (playlist != null) {
                                 deletePlaylists(arrayListOf(playlist))
                             }
@@ -644,10 +645,13 @@ class MainActivity : SimpleActivity(), SongListListener {
     }
 
     private fun markCurrentSong() {
+        getSongsAdapter()?.updateCurrentSongIndex(getCurrentSongIndex())
+    }
+
+    private fun getCurrentSongIndex(): Int {
         val newSong = MusicService.mCurrSong
         val cnt = songs.size - 1
-        val songIndex = (0..cnt).firstOrNull { songs[it] == newSong } ?: -1
-        getSongsAdapter()?.updateCurrentSongIndex(songIndex)
+        return (0..cnt).firstOrNull { songs[it] == newSong } ?: -1
     }
 
     private fun updateAlbumCover() {

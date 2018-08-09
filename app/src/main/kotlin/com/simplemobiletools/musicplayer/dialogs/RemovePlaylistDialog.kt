@@ -14,7 +14,7 @@ class RemovePlaylistDialog(val activity: Activity, val playlist: Playlist? = nul
         }
 
         AlertDialog.Builder(activity)
-                .setPositiveButton(R.string.ok, { dialog, which -> callback(view.remove_playlist_checkbox.isChecked) })
+                .setPositiveButton(R.string.ok) { dialog, which -> callback(view.remove_playlist_checkbox.isChecked) }
                 .setNegativeButton(R.string.cancel, null)
                 .create().apply {
                     activity.setupDialogStuff(view, this, R.string.remove_playlist)

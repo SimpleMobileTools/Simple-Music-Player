@@ -33,7 +33,7 @@ class RoomHelper(val context: Context) {
                 MediaStore.Audio.Media.ALBUM)
 
         val pathsMap = HashSet<String>()
-        paths.mapTo(pathsMap, { it })
+        paths.mapTo(pathsMap) { it }
 
         val ITEMS_PER_GROUP = 50
         val songs = ArrayList<Song>(paths.size)
