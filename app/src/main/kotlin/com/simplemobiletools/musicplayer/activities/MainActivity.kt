@@ -316,6 +316,8 @@ class MainActivity : SimpleActivity(), SongListListener {
     }
 
     private fun launchAbout() {
+        val licenses = LICENSE_OTTO or LICENSE_MULTISELECT
+
         val faqItems = arrayListOf(
                 FAQItem(R.string.faq_1_title, R.string.faq_1_text),
                 FAQItem(R.string.faq_1_title_commons, R.string.faq_1_text_commons),
@@ -323,7 +325,7 @@ class MainActivity : SimpleActivity(), SongListListener {
                 FAQItem(R.string.faq_2_title_commons, R.string.faq_2_text_commons)
         )
 
-        startAboutActivity(R.string.app_name, LICENSE_OTTO or LICENSE_MULTISELECT, BuildConfig.VERSION_NAME, faqItems)
+        startAboutActivity(R.string.app_name, licenses, BuildConfig.VERSION_NAME, faqItems, true)
     }
 
     private fun showSortingDialog() {
