@@ -125,6 +125,8 @@ class MainActivity : SimpleActivity(), SongListListener {
                 songs_list.scrollToPosition(0)
             }
         }
+
+        checkAppOnSDCard()
     }
 
     override fun onResume() {
