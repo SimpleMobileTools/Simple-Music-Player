@@ -1,6 +1,13 @@
 Changelog
 ==========
 
+Version 4.2.0 *(2018-08-09)*
+----------------------------
+
+ * Make sure the current song gets marked at closing Search
+ * Show a warning about missing widgets if the app is installed on an SD card
+ * Other smaller UX and stability improvements
+
 Version 4.1.1 *(2018-07-16)*
 ----------------------------
 
