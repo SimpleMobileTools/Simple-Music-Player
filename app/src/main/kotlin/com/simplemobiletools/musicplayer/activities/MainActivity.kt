@@ -142,7 +142,10 @@ class MainActivity : SimpleActivity(), SongListListener {
             if (config.showAlbumCover) {
                 updateAlbumCover()
             } else {
-                art_image.setImageDrawable(null)
+                try {
+                    art_image.setImageDrawable(null)
+                } catch (ignored: Exception) {
+                }
             }
         }
 
@@ -680,8 +683,7 @@ class MainActivity : SimpleActivity(), SongListListener {
                         oldCover = resource?.constantState?.newDrawable()
                         return false
                     }
-                })
-                .into(art_image)
+                }).into(art_image)
     }
 
     private fun searchQueryChanged(text: String) {
