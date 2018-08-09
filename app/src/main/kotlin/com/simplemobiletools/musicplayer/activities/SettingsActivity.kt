@@ -3,10 +3,7 @@ package com.simplemobiletools.musicplayer.activities
 import android.content.Intent
 import android.os.Bundle
 import com.simplemobiletools.commons.dialogs.RadioGroupDialog
-import com.simplemobiletools.commons.extensions.beVisibleIf
-import com.simplemobiletools.commons.extensions.isThankYouInstalled
-import com.simplemobiletools.commons.extensions.launchPurchaseThankYouIntent
-import com.simplemobiletools.commons.extensions.updateTextColors
+import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.IS_CUSTOMIZING_COLORS
 import com.simplemobiletools.commons.models.RadioItem
 import com.simplemobiletools.musicplayer.R
@@ -107,7 +104,11 @@ class SettingsActivity : SimpleActivity() {
     private fun setupEqualizer() {
         val equalizer = MusicService.mEqualizer ?: return
         val items = arrayListOf<RadioItem>()
-        (0 until equalizer.numberOfPresets).mapTo(items) { RadioItem(it, equalizer.getPresetName(it.toShort())) }
+        try {
+            (0 until equalizer.numberOfPresets).mapTo(items) { RadioItem(it, equalizer.getPresetName(it.toShort())) }
+        } catch (e: Exception) {
+            settings_equalizer_holder.beGone()
+        }
 
         settings_equalizer.text = items[config.equalizer].title
         settings_equalizer_holder.setOnClickListener {
