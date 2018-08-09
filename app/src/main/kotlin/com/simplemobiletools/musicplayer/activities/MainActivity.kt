@@ -304,6 +304,7 @@ class MainActivity : SimpleActivity(), SongListListener {
                 if (isSearchOpen) {
                     searchQueryChanged("")
                     getSongsAdapter()?.searchClosed()
+                    markCurrentSong()
                 }
                 isSearchOpen = false
                 return true
