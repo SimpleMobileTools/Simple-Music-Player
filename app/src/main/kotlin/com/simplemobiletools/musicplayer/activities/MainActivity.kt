@@ -11,6 +11,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.support.v4.view.MenuItemCompat
+import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.SearchView
 import android.view.Menu
 import android.view.MenuItem
@@ -305,6 +306,8 @@ class MainActivity : SimpleActivity(), SongListListener {
                     searchQueryChanged("")
                     getSongsAdapter()?.searchClosed()
                     markCurrentSong()
+                    (songs_list.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(0, 0)
+                    songs_fastscroller?.setScrollToY(0)
                 }
                 isSearchOpen = false
                 return true
