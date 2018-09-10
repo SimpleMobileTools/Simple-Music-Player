@@ -108,6 +108,7 @@ class SettingsActivity : SimpleActivity() {
             (0 until equalizer.numberOfPresets).mapTo(items) { RadioItem(it, equalizer.getPresetName(it.toShort())) }
         } catch (e: Exception) {
             settings_equalizer_holder.beGone()
+            return
         }
 
         settings_equalizer.text = items[config.equalizer].title
