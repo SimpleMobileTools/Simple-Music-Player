@@ -246,7 +246,11 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val list
             paths.add(song.path)
             removeSongs.add(song)
             if (song == MusicService.mCurrSong) {
-                activity.sendIntent(NEXT)
+                if (songs.size == removeSongs.size) {
+                    activity.sendIntent(REMOVE_CURRENT_SONG)
+                } else {
+                    activity.sendIntent(NEXT)
+                }
             }
         }
 

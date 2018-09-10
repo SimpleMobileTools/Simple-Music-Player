@@ -220,6 +220,12 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             }
             SKIP_BACKWARD -> skipBackward()
             SKIP_FORWARD -> skipForward()
+            REMOVE_CURRENT_SONG -> {
+                pauseSong()
+                mCurrSong = null
+                songChanged(null)
+                setupNotification()
+            }
         }
 
         return START_NOT_STICKY
