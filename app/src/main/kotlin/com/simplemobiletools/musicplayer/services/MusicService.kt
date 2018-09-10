@@ -618,7 +618,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
                     if (bitmap != null) {
                         val resultBitmap = if (bitmap.height > mCoverArtHeight * 2) {
                             val ratio = bitmap.width / bitmap.height.toFloat()
-                            Bitmap.createScaledBitmap(bitmap, (mCoverArtHeight * ratio * 2).toInt(), mCoverArtHeight * 2, false)
+                            Bitmap.createScaledBitmap(bitmap, (mCoverArtHeight * ratio).toInt(), mCoverArtHeight, false)
                         } else {
                             bitmap
                         }
