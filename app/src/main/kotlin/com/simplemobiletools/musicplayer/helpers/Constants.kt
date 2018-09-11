@@ -3,6 +3,7 @@ package com.simplemobiletools.musicplayer.helpers
 const val SONG_POS = "song_position"
 const val PROGRESS = "progress"
 const val CALL_SETUP_AFTER = "call_setup_after"
+const val SONG_IDS = "song_ids"
 const val EDITED_SONG = "edited_song"
 const val ALL_SONGS_PLAYLIST_ID = 1
 
@@ -25,6 +26,7 @@ const val SET_EQUALIZER = PATH + "SET_EQUALIZER"
 const val SKIP_BACKWARD = PATH + "SKIP_BACKWARD"
 const val SKIP_FORWARD = PATH + "SKIP_FORWARD"
 const val REMOVE_CURRENT_SONG = PATH + "REMOVE_CURRENT_SONG"
+const val REMOVE_SONG_IDS = PATH + "REMOVE_SONG_IDS"
 
 // shared preferences
 const val SHUFFLE = "shuffle"

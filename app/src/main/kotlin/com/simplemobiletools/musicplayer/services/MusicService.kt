@@ -226,6 +226,16 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
                 songChanged(null)
                 setupNotification()
             }
+            REMOVE_SONG_IDS -> {
+                val ids = intent.getIntegerArrayListExtra(SONG_IDS)
+                val songsToRemove = ArrayList<Song>()
+                mSongs.forEach {
+                    if (ids.contains(it.mediaStoreId.toInt())) {
+                        songsToRemove.add(it)
+                    }
+                }
+                mSongs.removeAll(songsToRemove)
+            }
         }
 
         return START_NOT_STICKY

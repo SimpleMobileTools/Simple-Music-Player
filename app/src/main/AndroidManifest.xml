@@ -118,6 +118,7 @@
                 <action android:name="com.simplemobiletools.musicplayer.action.SKIP_BACKWARD"/>
                 <action android:name="com.simplemobiletools.musicplayer.action.SKIP_FORWARD"/>
                 <action android:name="com.simplemobiletools.musicplayer.action.REMOVE_CURRENT_SONG"/>
+                <action android:name="com.simplemobiletools.musicplayer.action.REMOVE_SONG_IDS"/>
             </intent-filter>
         </service>
 

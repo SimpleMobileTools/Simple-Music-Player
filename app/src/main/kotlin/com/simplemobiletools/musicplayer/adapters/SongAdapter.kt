@@ -238,6 +238,18 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val list
             return
         }
 
+        // remove the songs from playlist asap, so they dont get played at Next, if the currently playing song is removed from playlist
+        val songIDs = ArrayList<Int>(selectedPositions.size)
+        selectedPositions.forEach {
+            val song = songs[it]
+            songIDs.add(song.mediaStoreId.toInt())
+        }
+        Intent(activity, MusicService::class.java).apply {
+            putExtra(SONG_IDS, songIDs)
+            action = REMOVE_SONG_IDS
+            activity.startService(this)
+        }
+
         val paths = ArrayList<String>(selectedPositions.size)
         val removeSongs = ArrayList<Song>(selectedPositions.size)
 
