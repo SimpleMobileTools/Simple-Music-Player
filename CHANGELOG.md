@@ -1,6 +1,11 @@
 Changelog
 ==========
 
+Version 4.3.0 *(2018-09-11)*
+----------------------------
+
+ * Adding some stability and UX improvements, bugfixes
+
 Version 4.2.0 *(2018-08-09)*
 ----------------------------
 
