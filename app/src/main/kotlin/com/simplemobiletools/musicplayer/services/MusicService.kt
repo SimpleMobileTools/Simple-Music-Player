@@ -486,9 +486,6 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     }
 
     private fun pauseSong() {
-        if (mSongs.isEmpty())
-            return
-
         initMediaPlayerIfNeeded()
 
         mPlayer!!.pause()
