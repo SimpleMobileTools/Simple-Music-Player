@@ -50,11 +50,11 @@
     <string name="show_album_cover">Pokazivanje naslovnice albuma na glavnom zaslonu</string>
 
     <!-- Settings -->
-    <string name="equalizer">Equalizer</string>
+    <string name="equalizer">Ekvilajzer</string>
 
     <!-- FAQ -->
-    <string name="faq_1_title">How can I fast-forward songs?</string>
-    <string name="faq_1_text">You can click on the current or max duration texts near the seekbar, that will move the song either backward, or forward.</string>
+    <string name="faq_1_title">Kako mogu premotati pjesme?</string>
+    <string name="faq_1_text">Možete kliknuti na tekst trenutnog ili krajnjeg trajanja pjesme u blizini trake za pretraživanje, pomoću kojeg ćete premotati pjesmu unatrag ili naprijed.</string>
 
     <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
     <!-- Short description has to have less than 80 chars -->
