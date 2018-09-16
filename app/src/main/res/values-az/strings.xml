@@ -20,34 +20,34 @@
 
     <string name="previous">Əvvəlki</string>
     <string name="playpause">Oynat / Dayan</string>
-    <string name="next">Sonrakıt</string>
+    <string name="next">Sonrakı</string>
 
     <!-- Playlists -->
-    <string name="add_file_to_playlist">Oynatma siyahısına fayl əlavə et</string>
-    <string name="add_folder_to_playlist">Oynatma siyahısına qovluq əlavə et</string>
-    <string name="manage_playlists">Oynatma siyahılarını idarə et</string>
+    <string name="add_file_to_playlist">Alboma fayl əlavə et</string>
+    <string name="add_folder_to_playlist">Alboma qovluq əlavə et</string>
+    <string name="manage_playlists">Albomları idarə et</string>
     <string name="playlists">Oynatma siyahıları</string>
-    <string name="create_playlist">Oynatma siyahısı yarat</string>
-    <string name="rename_playlist">Oynatma siyahısını yenidən adlandır</string>
-    <string name="playlist_name_exists">Eyni adda oynatma siyahısı artıq mövcuddur</string>
-    <string name="remove_playlist">Oynatma siyahısını sil</string>
-    <string name="remove_playlist_description">Bu yalnız seçilmiş oynatma siyahılarını siləcək, həqiqi faylları yox.</string>
-    <string name="remove_playlist_description_placeholder">Bu yalnız \"%s\" adlı siyahını siləcək, həqiqi faylları yox.</string>
-    <string name="remove_from_playlist">Oynatma siyahısını sil</string>
-    <string name="remove_from_playlist_description">Bu yalnız \"%s\" adlı siyahıdakı faylları siləcək, həqiqi fayllar silinməyəcək.</string>
+    <string name="create_playlist">Albom yarat</string>
+    <string name="rename_playlist">Albomu yenidən adlandır</string>
+    <string name="playlist_name_exists">Eyni adda albom artıq mövcuddur</string>
+    <string name="remove_playlist">Albomu sil</string>
+    <string name="remove_playlist_description">Bu yalnız seçilmiş albomları siləcək, həqiqi faylları yox.</string>
+    <string name="remove_playlist_description_placeholder">Bu yalnız \"%s\" adlı albomu siləcək, həqiqi faylları yox.</string>
+    <string name="remove_from_playlist">Albomu sil</string>
+    <string name="remove_from_playlist_description">Bu yalnız \"%s\" adlı albomdakı faylları siləcək, həqiqi fayllar silinməyəcək.</string>
     <string name="delete_the_files_too">Faylları da sil</string>
-    <string name="open_playlist">Oynatma siyahısını aç</string>
-    <string name="all_songs_cannot_be_deleted">\'Bütün Mahnılar\' siyahısı silinə bilməz</string>
-    <string name="empty_playlist">Hazırki oynatma siyahısı boşdur</string>
+    <string name="open_playlist">Albomu aç</string>
+    <string name="all_songs_cannot_be_deleted">\'Bütün Mahnılar\' albomu silinə bilməz</string>
+    <string name="empty_playlist">Hazırki albom boşdur</string>
     <string name="fetching_songs">Mahnılar gətirilir…</string>
     <string name="all_songs">Bütün Mahnılar</string>
-    <string name="create_playlist_from_folder">Qovluqdan yeni oynatma siyahısı yarat</string>
-    <string name="folder_contains_no_audio">Seçilmiş qovluq heçbir mahnı ehtiva etmir</string>
+    <string name="create_playlist_from_folder">Qovluqdan yeni albom yarat</string>
+    <string name="folder_contains_no_audio">Seçilmiş qovluqda mahnı yoxdur</string>
     <string name="delete_current_song">Hazırki mahnını sil</string>
-    <string name="remove_current_song">Hazırki mahnını oynatma siyahısından sil</string>
+    <string name="remove_current_song">Hazırki mahnını albomdan sil</string>
     <string name="show_filename">Fayl adını mahnı başlığı kimi göstər:</string>
     <string name="title_is_not_available">Əgər başlıq yoxdursa</string>
-    <string name="show_album_cover">Əsas ekranda album çərçivəsini göstər</string>
+    <string name="show_album_cover">Əsas ekranda albom çərçivəsini göstər</string>
 
     <!-- Settings -->
     <string name="equalizer">Qarışdırıcı</string>
