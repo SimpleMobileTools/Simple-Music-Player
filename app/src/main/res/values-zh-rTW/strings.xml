@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">簡易音樂撥放器</string>
+    <string name="app_name">簡易音樂播放器</string>
     <string name="app_launcher_name">簡易音樂撥放器</string>
     <string name="playlist_empty">你的播放清單是空白的</string>
     <string name="rename_song">重新命名歌曲</string>
