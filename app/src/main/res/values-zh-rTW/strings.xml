@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name">簡易音樂撥放器</string>
-    <string name="app_launcher_name">簡易音樂撥放器</string>
+    <string name="app_name">簡易音樂播放器</string>
+    <string name="app_launcher_name">簡易音樂播放器</string>
     <string name="playlist_empty">你的播放清單是空白的</string>
     <string name="rename_song">重新命名歌曲</string>
     <string name="rename_song_error">重新命名時發生錯誤</string>
@@ -13,10 +13,10 @@
     <string name="disable_shuffle">停用隨機</string>
     <string name="shuffle_enabled">隨機已啟用</string>
     <string name="shuffle_disabled">隨機已停用</string>
-    <string name="enable_autoplay">啟用自動撥放</string>
-    <string name="disable_autoplay">停用自動撥放</string>
-    <string name="autoplay_enabled">自動撥放已啟用</string>
-    <string name="autoplay_disabled">自動撥放已停用</string>
+    <string name="enable_autoplay">啟用自動播放</string>
+    <string name="disable_autoplay">停用自動播放</string>
+    <string name="autoplay_enabled">自動播放已啟用</string>
+    <string name="autoplay_disabled">自動播放已停用</string>
 
     <string name="previous">上一首</string>
     <string name="playpause">播放 / 暫停</string>
@@ -58,7 +58,7 @@
 
     <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
     <!-- Short description has to have less than 80 chars -->
-    <string name="app_short_description">一個乾淨的音樂撥放器，還有可自訂的小工具。</string>
+    <string name="app_short_description">一個乾淨的音樂播放器，還有可自訂的小工具。</string>
     <string name="app_long_description">
         一個能夠從狀態欄、主畫面小工具或耳機上實體鍵輕易控制的音樂撥放器。你可以根據標題或演唱者來排序曲目，還能更改等化器。尚不支援以演唱者或專輯來篩選，敬請期待!
 		
