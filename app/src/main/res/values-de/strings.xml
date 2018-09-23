@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Schlichter Musik-Player</string>
     <string name="app_launcher_name">Musik-Player</string>
-    <string name="playlist_empty">Deine Playlist ist leer</string>
+    <string name="playlist_empty">Deine Wiedergabeliste ist leer</string>
     <string name="rename_song">Song umbenennen</string>
     <string name="rename_song_error">Während des Umbenennens ist ein Fehler aufgetreten</string>
     <string name="rename_song_empty">Fülle bitte alle Felder aus</string>
@@ -19,42 +19,42 @@
     <string name="autoplay_disabled">Automatische Wiedergabe deaktiviert</string>
 
     <string name="previous">Vorheriger Titel</string>
-    <string name="playpause">Play / Pause</string>
+    <string name="playpause">Wiedergabe / Pause</string>
     <string name="next">Nächster Titel</string>
 
     <!-- Playlists -->
-    <string name="add_file_to_playlist">Datei zu Playlist hinzufügen</string>
-    <string name="add_folder_to_playlist">Ordner zu Playlist hinzufügen</string>
-    <string name="manage_playlists">Playlisten verwalten</string>
-    <string name="playlists">Playlisten</string>
-    <string name="create_playlist">Playlist erstellen</string>
-    <string name="rename_playlist">Playlist umbenennen</string>
-    <string name="playlist_name_exists">Es gibt bereits eine Playlist mit diesem Namen</string>
-    <string name="remove_playlist">Playlist löschen</string>
-    <string name="remove_playlist_description">Gelöscht wird nur die ausgewählte Playlist, die eigentlichen Dateien werden nicht gelöscht.</string>
-    <string name="remove_playlist_description_placeholder">Gelöscht wird nur die Playlist \"%s\", die eigentlichen Dateien werden nicht gelöscht.</string>
-    <string name="remove_from_playlist">Aus Playlist entfernen</string>
-    <string name="remove_from_playlist_description">Es werden nur die Elemente aus der Playlist \"%s\" entfernt, die eigentlichen Dateien werden nicht gelöscht.</string>
+    <string name="add_file_to_playlist">Datei zu Wiedergabeliste hinzufügen</string>
+    <string name="add_folder_to_playlist">Ordner zu Wiedergabeliste hinzufügen</string>
+    <string name="manage_playlists">Wiedergabelisten verwalten</string>
+    <string name="playlists">Wiedergabelisten</string>
+    <string name="create_playlist">Wiedergabeliste erstellen</string>
+    <string name="rename_playlist">Wiedergabeliste umbenennen</string>
+    <string name="playlist_name_exists">Es gibt bereits eine Wiedergabeliste mit diesem Namen</string>
+    <string name="remove_playlist">Wiedergabeliste löschen</string>
+    <string name="remove_playlist_description">Gelöscht wird nur die ausgewählte Wiedergabeliste, die eigentlichen Dateien werden nicht gelöscht.</string>
+    <string name="remove_playlist_description_placeholder">Gelöscht wird nur die Wiedergabeliste \"%s\", die eigentlichen Dateien werden nicht gelöscht.</string>
+    <string name="remove_from_playlist">Aus Wiedergabeliste entfernen</string>
+    <string name="remove_from_playlist_description">Es werden nur die Elemente aus der Wiedergabeliste \"%s\" entfernt, die eigentlichen Dateien werden nicht gelöscht.</string>
     <string name="delete_the_files_too">Dateien auch löschen</string>
-    <string name="open_playlist">Playlist öffnen</string>
-    <string name="all_songs_cannot_be_deleted">Playlist \'Alle Songs\' kann nicht gelöscht werden</string>
-    <string name="empty_playlist">Die derzeitige Playlist ist leer</string>
-    <string name="fetching_songs">Rufe Songs ab…</string>
+    <string name="open_playlist">Wiedergabeliste öffnen</string>
+    <string name="all_songs_cannot_be_deleted">Wiedergabeliste \'Alle Songs\' kann nicht gelöscht werden</string>
+    <string name="empty_playlist">Die derzeitige Wiedergabeliste ist leer</string>
+    <string name="fetching_songs">Songs werden abgerufen…</string>
     <string name="all_songs">Alle Songs</string>
-    <string name="create_playlist_from_folder">Neue Playlist aus Ordner erstellen</string>
+    <string name="create_playlist_from_folder">Neue Wiedergabeliste aus Ordner erstellen</string>
     <string name="folder_contains_no_audio">Der ausgewählte Ordner enthält keine Audiodateien</string>
     <string name="delete_current_song">Aktuellen Song löschen</string>
-    <string name="remove_current_song">Aktuellen Song aus Playlist entfernen</string>
-    <string name="show_filename">Zeige Dateiname als Songtitel:</string>
+    <string name="remove_current_song">Aktuellen Song aus der Wiedergabeliste entfernen</string>
+    <string name="show_filename">Dateiname als Songtitel anzeigen:</string>
     <string name="title_is_not_available">Wenn Titel nicht verfügbar</string>
-    <string name="show_album_cover">Zeige Albumcover im Hauptbildschirm</string>
+    <string name="show_album_cover">Albumcover im Hauptbildschirm anzeigen</string>
 
     <!-- Settings -->
     <string name="equalizer">Equalizer</string>
 
     <!-- FAQ -->
-    <string name="faq_1_title">How can I fast-forward songs?</string>
-    <string name="faq_1_text">You can click on the current or max duration texts near the seekbar, that will move the song either backward, or forward.</string>
+    <string name="faq_1_title">Wie kann ich Songs vorspulen?</string>
+    <string name="faq_1_text">Du kannst auf den Text der aktuellen oder maximalen Dauer in der Nähe der Suchleiste klicken, der den Song entweder rückwärts oder vorwärts verschiebt.</string>
 
     <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
     <!-- Short description has to have less than 80 chars -->
