@@ -1,6 +1,11 @@
 Changelog
 ==========
 
+Version 4.3.1 *(2018-09-29)*
+----------------------------
+
+ * Fixing a glitch happening on Android 9
+
 Version 4.3.0 *(2018-09-11)*
 ----------------------------
 
