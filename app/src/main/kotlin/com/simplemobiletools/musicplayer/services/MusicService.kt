@@ -369,12 +369,13 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         val title = mCurrSong?.title ?: ""
         val artist = mCurrSong?.artist ?: ""
         val playPauseIcon = if (getIsPlaying()) R.drawable.ic_pause else R.drawable.ic_play
+        val showDuration = config.showDuration;
 
         var notifWhen = 0L
         var showWhen = false
         var usesChronometer = false
         var ongoing = false
-        if (getIsPlaying()) {
+        if (getIsPlaying() && showDuration) {
             notifWhen = System.currentTimeMillis() - mPlayer!!.currentPosition
             showWhen = true
             usesChronometer = true
