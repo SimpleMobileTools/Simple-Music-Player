@@ -34,6 +34,7 @@ class SettingsActivity : SimpleActivity() {
         setupAvoidWhatsNew()
         setupShowInfoBubble()
         setupShowAlbumCover()
+        setupSwapPrevNext()
         setupEqualizer()
         setupReplaceTitle()
         updateTextColors(settings_scrollview)
@@ -98,6 +99,15 @@ class SettingsActivity : SimpleActivity() {
         settings_show_album_cover_holder.setOnClickListener {
             settings_show_album_cover.toggle()
             config.showAlbumCover = settings_show_album_cover.isChecked
+        }
+    }
+
+
+    private fun setupSwapPrevNext() {
+        settings_swap_prev_next.isChecked = config.swapPrevNext
+        settings_swap_prev_next_holder.setOnClickListener {
+            settings_swap_prev_next.toggle()
+            config.swapPrevNext = settings_swap_prev_next.isChecked
         }
     }
 

@@ -51,6 +51,7 @@
 
     <!-- Settings -->
     <string name="equalizer">Ekolayzır</string>
+    <string name="swap_prev_next">Swap previous/next keycodes</string>
 
     <!-- FAQ -->
     <string name="faq_1_title">Şarkıları nasıl hızlıca ileri sarabilirim?</string>
