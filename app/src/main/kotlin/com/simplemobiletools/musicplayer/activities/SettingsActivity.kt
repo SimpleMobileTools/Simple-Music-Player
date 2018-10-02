@@ -34,6 +34,7 @@ class SettingsActivity : SimpleActivity() {
         setupAvoidWhatsNew()
         setupShowInfoBubble()
         setupShowAlbumCover()
+        setupShowDuration()
         setupEqualizer()
         setupReplaceTitle()
         updateTextColors(settings_scrollview)
@@ -98,6 +99,14 @@ class SettingsActivity : SimpleActivity() {
         settings_show_album_cover_holder.setOnClickListener {
             settings_show_album_cover.toggle()
             config.showAlbumCover = settings_show_album_cover.isChecked
+        }
+    }
+
+    private fun setupShowDuration() {
+        settings_show_duration.isChecked = config.showDuration
+        settings_show_duration_holder.setOnClickListener {
+            settings_show_duration.toggle()
+            config.showDuration = settings_show_duration.isChecked
         }
     }
 

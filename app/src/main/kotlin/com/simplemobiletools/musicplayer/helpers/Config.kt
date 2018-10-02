@@ -50,4 +50,8 @@ class Config(context: Context) : BaseConfig(context) {
     var wereSongsMigrated: Boolean
         get() = prefs.getBoolean(WERE_SONGS_MIGRATED, false)
         set(wereSongsMigrated) = prefs.edit().putBoolean(WERE_SONGS_MIGRATED, wereSongsMigrated).apply()
+
+    var showDuration: Boolean
+        get() = prefs.getBoolean(SHOW_DURATION, false)
+        set(showDuration) = prefs.edit().putBoolean(SHOW_DURATION, showDuration).apply()
 }
