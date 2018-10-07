@@ -1,72 +1,72 @@
 <resources>
     <string name="app_name">Simple Music Player</string>
-    <string name="app_launcher_name">Music Player</string>
-    <string name="playlist_empty">La tua playlist è vuota</string>
-    <string name="rename_song">Rinomina canzone</string>
-    <string name="rename_song_error">Errore durante la rinominazione</string>
+    <string name="app_launcher_name">Riproduttore musicale</string>
+    <string name="playlist_empty">La scaletta è vuota</string>
+    <string name="rename_song">Rinomina brano</string>
+    <string name="rename_song_error">Impossibile rinominare</string>
     <string name="rename_song_empty">Completa tutti i campi</string>
-    <string name="enable_song_repetition">Repeat current song</string>
-    <string name="disable_song_repetition">Stop repeating current song</string>
-    <string name="song_repetition_enabled">Current song repetition enabled</string>
-    <string name="song_repetition_disabled">Current song repetition disabled</string>
-    <string name="enable_shuffle">Enable shuffle</string>
-    <string name="disable_shuffle">Disable shuffle</string>
-    <string name="shuffle_enabled">Shuffle enabled</string>
-    <string name="shuffle_disabled">Shuffle disabled</string>
-    <string name="enable_autoplay">Enable autoplay</string>
-    <string name="disable_autoplay">Disable autoplay</string>
-    <string name="autoplay_enabled">Autoplay enabled</string>
-    <string name="autoplay_disabled">Autoplay disabled</string>
+    <string name="enable_song_repetition">Ripeti il brano attuale</string>
+    <string name="disable_song_repetition">Non ripetere il brano attuale</string>
+    <string name="song_repetition_enabled">Ripetizione del brano attuale abilitata</string>
+    <string name="song_repetition_disabled">Ripetizione del brano attuale disabilitata</string>
+    <string name="enable_shuffle">Abilita riproduzione casuale</string>
+    <string name="disable_shuffle">Disabilita riproduzione casuale</string>
+    <string name="shuffle_enabled">Riproduzione casuale abilitata</string>
+    <string name="shuffle_disabled">Riproduzione casuale disabilitata</string>
+    <string name="enable_autoplay">Abilita riproduzione automatica</string>
+    <string name="disable_autoplay">Disabilita riproduzione automatica</string>
+    <string name="autoplay_enabled">Riproduzione automatica abilitata</string>
+    <string name="autoplay_disabled">Riproduzione automatica disabilitata</string>
 
-    <string name="previous">Previous</string>
-    <string name="playpause">Play / Pause</string>
-    <string name="next">Next</string>
+    <string name="previous">Precedente</string>
+    <string name="playpause">Riproduci / Pausa</string>
+    <string name="next">Successiva</string>
 
     <!-- Playlists -->
-    <string name="add_file_to_playlist">Add file to playlist</string>
-    <string name="add_folder_to_playlist">Add folder to playlist</string>
-    <string name="manage_playlists">Manage playlists</string>
-    <string name="playlists">Playlists</string>
-    <string name="create_playlist">Create playlist</string>
-    <string name="rename_playlist">Rename playlist</string>
-    <string name="playlist_name_exists">A playlist with that name already exists</string>
-    <string name="remove_playlist">Remove playlist</string>
-    <string name="remove_playlist_description">This will only remove the selected playlists, not the actual files.</string>
-    <string name="remove_playlist_description_placeholder">This will only remove playlist \"%s\", not the actual files.</string>
-    <string name="remove_from_playlist">Remove from playlist</string>
-    <string name="remove_from_playlist_description">This will only remove the items from playlist \"%s\", the actual files will not be deleted.</string>
-    <string name="delete_the_files_too">Delete the files too</string>
-    <string name="open_playlist">Open playlist</string>
-    <string name="all_songs_cannot_be_deleted">\'All songs\' playlist cannot be deleted</string>
-    <string name="empty_playlist">Current playlist is empty</string>
-    <string name="fetching_songs">Fetching songs…</string>
-    <string name="all_songs">All songs</string>
-    <string name="create_playlist_from_folder">Create new playlist from folder</string>
-    <string name="folder_contains_no_audio">The selected folder contains no audio files</string>
-    <string name="delete_current_song">Delete current song</string>
-    <string name="remove_current_song">Remove current song from playlist</string>
-    <string name="show_filename">Show filename as song title:</string>
-    <string name="title_is_not_available">If title is not available</string>
-    <string name="show_album_cover">Show album cover on the main screen</string>
+    <string name="add_file_to_playlist">Aggiungi file alla scaletta</string>
+    <string name="add_folder_to_playlist">Aggiungi cartella alla scaletta</string>
+    <string name="manage_playlists">Gestisci scalette</string>
+    <string name="playlists">Scalette</string>
+    <string name="create_playlist">Crea scaletta</string>
+    <string name="rename_playlist">Rinomina scaletta</string>
+    <string name="playlist_name_exists">È già esistente una scaletta con lo stesso nome</string>
+    <string name="remove_playlist">Rimuovi scaletta</string>
+    <string name="remove_playlist_description">Questo rimuoverà solamente le scalette selezionate, non realmente i file.</string>
+    <string name="remove_playlist_description_placeholder">Questo rimuoverà solamente la scaletta \"%s\", non realmente i file.</string>
+    <string name="remove_from_playlist">Rimuovi dalla scaletta</string>
+    <string name="remove_from_playlist_description">Questo rimuoverà solamente gli elementi dalla scaletta \"%s\", non realmente i file.</string>
+    <string name="delete_the_files_too">Rimuovi anche i file</string>
+    <string name="open_playlist">Apri scaletta</string>
+    <string name="all_songs_cannot_be_deleted">La scaletta \'Tutte i brani\' non può essere rimossa</string>
+    <string name="empty_playlist">La scaletta attuale è vuota</string>
+    <string name="fetching_songs">Recupero brani in corso…</string>
+    <string name="all_songs">Tutti i brani</string>
+    <string name="create_playlist_from_folder">Crea una nuova scaletta dalla cartella</string>
+    <string name="folder_contains_no_audio">La cartella selezionata non contiene file audio</string>
+    <string name="delete_current_song">Rimuovi il brano attuale</string>
+    <string name="remove_current_song">Rimuovi il brano attuale dalla scaletta</string>
+    <string name="show_filename">Mostra il nome del file come titolo del brano:</string>
+    <string name="title_is_not_available">Se il titolo non è disponibile</string>
+    <string name="show_album_cover">Mostra la copertina dell\'album nello schermo principale</string>
 
     <!-- Settings -->
     <string name="equalizer">Equalizzatore</string>
 
     <!-- FAQ -->
-    <string name="faq_1_title">How can I fast-forward songs?</string>
-    <string name="faq_1_text">You can click on the current or max duration texts near the seekbar, that will move the song either backward, or forward.</string>
+    <string name="faq_1_title">Come posso avanzare rapidamente nei brani?</string>
+    <string name="faq_1_text">Puoi fare click sui testi accanto alla barra di avanzamento, questi faranno spostare il brano in avanti od all\'indietro.</string>
 
     <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
     <!-- Short description has to have less than 80 chars -->
-    <string name="app_short_description">A clean music player with a customizable widget.</string>
+    <string name="app_short_description">Un semplice riproduttore musicale con un widget personalizzabile.</string>
     <string name="app_long_description">
-        A music player easily controllable from the status bar, home screen widget or by hardware buttons on your headset. You can sort the tracks by the Title or Artist, as well as change the Equalizer. Does not yet support filtering by artist or album, stay tuned!
+        Un riproduttore musicale facilmente controllabile dalla barra dello stato, dal widget sullo schermo oppure dai pulsanti fisici delle tue cuffie. Puoi ordinare le traccie per titolo od artista, puoi anche cambiare l\'equalizzatore. Ancora non supporta il filtro per artista o album, restate sintonizzati!
 
-        It contains a widget with customizable text color, alpha and the color of the background.
+        Contiene un widget con colori del testo, trasparenza e colori di sfondo personalizzabili.
 
-        Contains no ads or unnecessary permissions. It is fully opensource, provides customizable colors.
+        Non contiene pubblicità nè chiede permessi non necessari. È completamente open source ed offre colori personalizzabili.
 
-        This app is just one piece of a bigger series of apps. You can find the rest of them at https://www.simplemobiletools.com
+        Quest\'app fa parte di una serie più grande. Puoi trovare le altre su https://www.simplemobiletools.com
     </string>
 
     <!--
