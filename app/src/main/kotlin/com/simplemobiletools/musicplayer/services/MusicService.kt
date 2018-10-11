@@ -643,17 +643,17 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         }
 
         if (song != null) {
-            val songParentDirectory = File(song.path).parentFile;
-            val albumArtFiles = arrayOf("folder.jpg", "Folder.jpg", "AlbumArt.jpg")
-            for (albumArtFile in albumArtFiles) {
+            val songParentDirectory = File(song.path).parent.trimEnd('/')
+            val albumArtFiles = arrayListOf("folder.jpg", "albumart.jpg", "cover.jpg")
+            albumArtFiles.forEach {
                 try {
-                    val albumArtFilePath = songParentDirectory.toString() + File.separator + albumArtFile;
-                    if (File(albumArtFilePath).exists()) {
-                        val bitmap = BitmapFactory.decodeFile(albumArtFilePath);
+                    val albumArtFilePath = "$songParentDirectory/$it"
+                    if (getDoesFilePathExist(albumArtFilePath)) {
+                        val bitmap = BitmapFactory.decodeFile(albumArtFilePath)
                         if (bitmap != null) {
                             val resultBitmap = if (bitmap.height > mCoverArtHeight * 2) {
                                 val ratio = bitmap.width / bitmap.height.toFloat()
-                                Bitmap.createScaledBitmap(bitmap, (mCoverArtHeight * ratio * 2).toInt(), mCoverArtHeight * 2, false)
+                                Bitmap.createScaledBitmap(bitmap, (mCoverArtHeight * ratio).toInt(), mCoverArtHeight, false)
                             } else {
                                 bitmap
                             }
