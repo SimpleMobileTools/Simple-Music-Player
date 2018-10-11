@@ -51,6 +51,7 @@
 
     <!-- Settings -->
     <string name="equalizer">Equalizer</string>
+    <string name="swap_prev_next">Swap previous/next keycodes</string>
 
     <!-- FAQ -->
     <string name="faq_1_title">Hoe kan ik een nummer vooruitspoelen?</string>

@@ -51,6 +51,7 @@
 
     <!-- Settings -->
     <string name="equalizer">Qarışdırıcı</string>
+    <string name="swap_prev_next">Swap previous/next keycodes</string>
 
     <!-- FAQ -->
     <string name="faq_1_title">How can I fast-forward songs?</string>

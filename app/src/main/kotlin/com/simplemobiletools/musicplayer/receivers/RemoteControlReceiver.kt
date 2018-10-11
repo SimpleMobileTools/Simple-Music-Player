@@ -5,10 +5,12 @@ import android.content.Context
 import android.content.Intent
 import android.os.Handler
 import android.view.KeyEvent
+import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.extensions.sendIntent
 import com.simplemobiletools.musicplayer.helpers.NEXT
 import com.simplemobiletools.musicplayer.helpers.PLAYPAUSE
 import com.simplemobiletools.musicplayer.helpers.PREVIOUS
+import kotlinx.android.synthetic.main.activity_settings.view.*
 
 class RemoteControlReceiver : BroadcastReceiver() {
     companion object {
@@ -37,12 +39,15 @@ class RemoteControlReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         mContext = context
         if (intent.action == Intent.ACTION_MEDIA_BUTTON) {
+            val swapPrevNext = context.config.swapPrevNext
+            val intentNext = if (swapPrevNext) PREVIOUS else NEXT
+            val intentPrevious = if (swapPrevNext) NEXT else PREVIOUS
             val event = intent.getParcelableExtra<KeyEvent>(Intent.EXTRA_KEY_EVENT)
             if (event.action == KeyEvent.ACTION_UP) {
                 when (event.keyCode) {
                     KeyEvent.KEYCODE_MEDIA_PLAY, KeyEvent.KEYCODE_MEDIA_PAUSE -> context.sendIntent(PLAYPAUSE)
-                    KeyEvent.KEYCODE_MEDIA_PREVIOUS -> context.sendIntent(PREVIOUS)
-                    KeyEvent.KEYCODE_MEDIA_NEXT -> context.sendIntent(NEXT)
+                    KeyEvent.KEYCODE_MEDIA_PREVIOUS -> context.sendIntent(intentPrevious)
+                    KeyEvent.KEYCODE_MEDIA_NEXT -> context.sendIntent(intentNext)
                     KeyEvent.KEYCODE_HEADSETHOOK -> {
                         mClicksCnt++
 
