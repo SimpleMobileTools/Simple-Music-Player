@@ -51,7 +51,7 @@
 
     <!-- Settings -->
     <string name="equalizer">Equalizer</string>
-    <string name="swap_prev_next">Swap previous/next keycodes</string>
+    <string name="swap_prev_next">Swap previous/next headphone buttons</string>
 
     <!-- FAQ -->
     <string name="faq_1_title">How can I fast-forward songs?</string>

@@ -51,7 +51,7 @@
 
     <!-- Settings -->
     <string name="equalizer">Ekvalizér</string>
-    <string name="swap_prev_next">Swap previous/next keycodes</string>
+    <string name="swap_prev_next">Vymeniť slúchadlové tlačidlá pre ďalšiu/predošlú skladbu</string>
 
     <!-- FAQ -->
     <string name="faq_1_title">Ako viem posunúť skladbu vpred?</string>

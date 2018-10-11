@@ -51,7 +51,7 @@
 
     <!-- Settings -->
     <string name="equalizer">等化器</string>
-    <string name="swap_prev_next">Swap previous/next keycodes</string>
+    <string name="swap_prev_next">Swap previous/next headphone buttons</string>
 
     <!-- FAQ -->
     <string name="faq_1_title">我如何快轉歌曲?</string>

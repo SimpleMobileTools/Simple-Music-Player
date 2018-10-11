@@ -51,7 +51,7 @@
 
     <!-- Settings -->
     <string name="equalizer">Korektor</string>
-    <string name="swap_prev_next">Zamień kody przycisków poprzedni/następny</string>
+    <string name="swap_prev_next">Swap previous/next headphone buttons</string>
 
     <!-- FAQ -->
     <string name="faq_1_title">Jak mogę przewijać piosenki?</string>

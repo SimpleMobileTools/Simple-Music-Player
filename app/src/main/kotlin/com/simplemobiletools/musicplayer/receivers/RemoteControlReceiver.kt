@@ -10,7 +10,6 @@ import com.simplemobiletools.musicplayer.extensions.sendIntent
 import com.simplemobiletools.musicplayer.helpers.NEXT
 import com.simplemobiletools.musicplayer.helpers.PLAYPAUSE
 import com.simplemobiletools.musicplayer.helpers.PREVIOUS
-import kotlinx.android.synthetic.main.activity_settings.view.*
 
 class RemoteControlReceiver : BroadcastReceiver() {
     companion object {
