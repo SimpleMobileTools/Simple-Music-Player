@@ -51,7 +51,7 @@
 
     <!-- Settings -->
     <string name="equalizer">Equalizzatore</string>
-    <string name="swap_prev_next">Swap previous/next headphone buttons</string>
+    <string name="swap_prev_next">Inverti pulsanti successivo/precedente delle cuffiette</string>
 
     <!-- FAQ -->
     <string name="faq_1_title">Come posso avanzare rapidamente nei brani?</string>
