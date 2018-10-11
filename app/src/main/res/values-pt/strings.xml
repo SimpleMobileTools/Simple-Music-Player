@@ -51,7 +51,7 @@
 
     <!-- Settings -->
     <string name="equalizer">Equalizador</string>
-    <string name="swap_prev_next">Swap previous/next headphone buttons</string>
+    <string name="swap_prev_next">Trocar entre faixas com os botões do auricular</string>
 
     <!-- FAQ -->
     <string name="faq_1_title">How can I fast-forward songs?</string>
