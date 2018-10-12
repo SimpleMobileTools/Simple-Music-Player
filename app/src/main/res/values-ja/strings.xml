@@ -51,7 +51,7 @@
 
     <!-- Settings -->
     <string name="equalizer">イコライザー</string>
-    <string name="swap_prev_next">Swap previous/next headphone buttons</string>
+    <string name="swap_prev_next">ヘッドフォンの "前へ/次へ" ボタンを入れ替える</string>
 
     <!-- FAQ -->
     <string name="faq_1_title">曲を早送りするにはどうすればよいですか？</string>
