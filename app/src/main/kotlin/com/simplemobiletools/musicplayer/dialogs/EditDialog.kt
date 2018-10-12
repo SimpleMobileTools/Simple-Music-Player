@@ -3,7 +3,7 @@ package com.simplemobiletools.musicplayer.dialogs
 import android.content.ContentValues
 import android.content.Context
 import android.provider.MediaStore
-import android.support.v7.app.AlertDialog
+import androidx.appcompat.app.AlertDialog
 import com.simplemobiletools.commons.activities.BaseSimpleActivity
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.musicplayer.R
@@ -15,8 +15,8 @@ import kotlinx.android.synthetic.main.dialog_rename_song.view.*
 class EditDialog(val activity: BaseSimpleActivity, val song: Song, val callback: (Song) -> Unit) {
     init {
         val view = activity.layoutInflater.inflate(R.layout.dialog_rename_song, null).apply {
-            title.setText(song.title)
-            artist.setText(song.artist)
+            song_title.setText(song.title)
+            song_artist.setText(song.artist)
 
             val filename = song.path.getFilenameFromPath()
             file_name.setText(filename.substring(0, filename.lastIndexOf(".")))
@@ -28,10 +28,10 @@ class EditDialog(val activity: BaseSimpleActivity, val song: Song, val callback:
                 .setNegativeButton(R.string.cancel, null)
                 .create().apply {
                     activity.setupDialogStuff(view, this, R.string.rename_song) {
-                        showKeyboard(title)
+                        showKeyboard(song_title)
                         getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
-                            val newTitle = view.title.value
-                            val newArtist = view.artist.value
+                            val newTitle = view.song_title.value
+                            val newArtist = view.song_artist.value
                             val newFilename = view.file_name.value
                             val newFileExtension = view.extension.value
 

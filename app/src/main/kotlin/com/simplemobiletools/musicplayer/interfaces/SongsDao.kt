@@ -1,6 +1,6 @@
 package com.simplemobiletools.musicplayer.interfaces
 
-import android.arch.persistence.room.*
+import androidx.room.*
 import com.simplemobiletools.musicplayer.models.Song
 
 @Dao

@@ -13,13 +13,13 @@
         android:padding="@dimen/activity_margin">
 
         <com.simplemobiletools.commons.views.MyTextView
-            android:id="@+id/title_label"
+            android:id="@+id/song_title_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/title"/>
 
         <com.simplemobiletools.commons.views.MyEditText
-            android:id="@+id/title"
+            android:id="@+id/song_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/activity_margin"
@@ -29,13 +29,13 @@
             android:textSize="@dimen/normal_text_size"/>
 
         <com.simplemobiletools.commons.views.MyTextView
-            android:id="@+id/artist_label"
+            android:id="@+id/song_artist_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/artist"/>
 
         <com.simplemobiletools.commons.views.MyEditText
-            android:id="@+id/artist"
+            android:id="@+id/song_artist"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/activity_margin"

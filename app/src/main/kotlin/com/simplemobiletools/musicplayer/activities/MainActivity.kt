@@ -10,13 +10,12 @@ import android.media.AudioManager
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
-import android.support.v4.view.MenuItemCompat
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.SearchView
 import android.view.Menu
 import android.view.MenuItem
 import android.view.ViewGroup
 import android.widget.SeekBar
+import androidx.appcompat.widget.SearchView
+import androidx.core.view.MenuItemCompat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
@@ -26,7 +25,6 @@ import com.bumptech.glide.request.target.Target
 import com.simplemobiletools.commons.dialogs.FilePickerDialog
 import com.simplemobiletools.commons.dialogs.RadioGroupDialog
 import com.simplemobiletools.commons.extensions.*
-import com.simplemobiletools.commons.helpers.LICENSE_MULTISELECT
 import com.simplemobiletools.commons.helpers.LICENSE_OTTO
 import com.simplemobiletools.commons.helpers.PERMISSION_WRITE_STORAGE
 import com.simplemobiletools.commons.helpers.REAL_FILE_PATH
@@ -309,7 +307,7 @@ class MainActivity : SimpleActivity(), SongListListener {
                     searchQueryChanged("")
                     getSongsAdapter()?.searchClosed()
                     markCurrentSong()
-                    (songs_list.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(0, 0)
+                    (songs_list.layoutManager as androidx.recyclerview.widget.LinearLayoutManager).scrollToPositionWithOffset(0, 0)
                     songs_fastscroller?.setScrollToY(0)
                 }
                 isSearchOpen = false
@@ -323,7 +321,7 @@ class MainActivity : SimpleActivity(), SongListListener {
     }
 
     private fun launchAbout() {
-        val licenses = LICENSE_OTTO or LICENSE_MULTISELECT
+        val licenses = LICENSE_OTTO
 
         val faqItems = arrayListOf(
                 FAQItem(R.string.faq_1_title, R.string.faq_1_text),

@@ -1,8 +1,8 @@
 package com.simplemobiletools.musicplayer.models
 
-import android.arch.persistence.room.ColumnInfo
-import android.arch.persistence.room.Entity
 import android.provider.MediaStore
+import androidx.room.ColumnInfo
+import androidx.room.Entity
 import com.simplemobiletools.commons.extensions.getFormattedDuration
 import com.simplemobiletools.commons.helpers.SORT_BY_ARTIST
 import com.simplemobiletools.commons.helpers.SORT_BY_PATH

@@ -5,7 +5,7 @@
         android:id="@+id/search"
         android:icon="@drawable/ic_search"
         android:title="@string/search"
-        app:actionViewClass="android.support.v7.widget.SearchView"
+        app:actionViewClass="androidx.appcompat.widget.SearchView"
         app:showAsAction="collapseActionView|ifRoom"/>
     <item
         android:id="@+id/sort"
@@ -36,9 +36,8 @@
                 app:showAsAction="never"/>
             <item
                 android:id="@+id/add_folder_to_playlist"
-                android:icon="@drawable/ic_plus"
                 android:title="@string/add_folder_to_playlist"
-                app:showAsAction="ifRoom"/>
+                app:showAsAction="never"/>
             <item
                 android:id="@+id/add_file_to_playlist"
                 android:title="@string/add_file_to_playlist"
@@ -49,9 +48,8 @@
                 app:showAsAction="never"/>
             <item
                 android:id="@+id/remove_playlist"
-                android:icon="@drawable/ic_delete"
                 android:title="@string/remove_playlist"
-                app:showAsAction="ifRoom"/>
+                app:showAsAction="never"/>
         </menu>
     </item>
     <item

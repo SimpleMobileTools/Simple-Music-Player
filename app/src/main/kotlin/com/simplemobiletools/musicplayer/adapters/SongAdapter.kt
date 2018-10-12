@@ -5,7 +5,6 @@ import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
-import com.bignerdranch.android.multiselector.MultiSelector
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
 import com.simplemobiletools.commons.dialogs.ConfirmationDialog
 import com.simplemobiletools.commons.dialogs.PropertiesDialog
@@ -49,7 +48,7 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val list
     private var navigationViewHeight = 0
 
     var isThirdPartyIntent = false
-    var adjustedPrimaryColor = activity.getAdjustedPrimaryColor()
+    private var adjustedPrimaryColor = activity.getAdjustedPrimaryColor()
 
     init {
         setupDragListener(true)
@@ -57,12 +56,6 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val list
     }
 
     override fun getActionMenuId() = R.menu.cab
-
-    override fun prepareItemSelection(viewHolder: ViewHolder) {}
-
-    override fun markViewHolderSelection(select: Boolean, viewHolder: ViewHolder?) {
-        viewHolder?.itemView?.song_frame?.isSelected = select
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return when (viewType) {
@@ -80,19 +73,21 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val list
         }
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: MyRecyclerViewAdapter.ViewHolder, position: Int) {
         if (holder !is TransparentViewHolder && holder !is NavigationViewHolder) {
             val song = songs[position - LIST_HEADERS_COUNT]
-            val view = holder.bindView(song, true, !isThirdPartyIntent) { itemView, layoutPosition ->
-                setupView(itemView, song, layoutPosition)
+            holder.bindView(song, false, true) { itemView, layoutPosition ->
+                setupView(itemView, song, layoutPosition, isKeySelected(song.path))
             }
-            bindViewHolder(holder, position - LIST_HEADERS_COUNT, view)
+            bindViewHolder(holder)
         } else {
             holder.itemView.tag = holder
         }
     }
 
     override fun getItemCount() = songs.size + LIST_HEADERS_COUNT
+
+    private fun getItemWithKey(key: String): Song? = songs.firstOrNull { it.path == key }
 
     override fun prepareActionMode(menu: Menu) {
         menu.apply {
@@ -101,6 +96,10 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val list
     }
 
     override fun actionItemPressed(id: Int) {
+        if (selectedKeys.isEmpty()) {
+            return
+        }
+
         when (id) {
             R.id.cab_properties -> showProperties()
             R.id.cab_rename -> displayEditDialog()
@@ -114,6 +113,10 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val list
     override fun getSelectableItemCount() = songs.size
 
     override fun getIsItemSelectable(position: Int) = position >= 0
+
+    override fun getItemKeyPosition(key: String) = songs.indexOfFirst { it.path == key }
+
+    override fun getItemSelectionKey(position: Int) = songs[position].path
 
     fun searchOpened() {
         transparentViewHeight = transparentView.height
@@ -151,39 +154,33 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val list
     }
 
     private fun showProperties() {
-        if (selectedPositions.size <= 1) {
-            PropertiesDialog(activity, songs[selectedPositions.first()].path)
+        if (selectedKeys.size <= 1) {
+            PropertiesDialog(activity, getFirstSelectedItemPath())
         } else {
-            val paths = ArrayList<String>()
-            selectedPositions.forEach { paths.add(songs[it].path) }
+            val paths = getSelectedSongs().map { it.path }
             PropertiesDialog(activity, paths)
         }
     }
 
     private fun displayEditDialog() {
-        if (selectedPositions.size == 1) {
-            EditDialog(activity, songs[selectedPositions.first()]) {
-                if (it == MusicService.mCurrSong) {
-                    Intent(activity, MusicService::class.java).apply {
-                        putExtra(EDITED_SONG, it)
-                        action = EDIT
-                        activity.startService(this)
-                    }
+        EditDialog(activity, getSelectedSongs().first()) {
+            if (it == MusicService.mCurrSong) {
+                Intent(activity, MusicService::class.java).apply {
+                    putExtra(EDITED_SONG, it)
+                    action = EDIT
+                    activity.startService(this)
                 }
+            }
 
-                activity.sendIntent(REFRESH_LIST)
-                activity.runOnUiThread {
-                    finishActMode()
-                }
+            activity.sendIntent(REFRESH_LIST)
+            activity.runOnUiThread {
+                finishActMode()
             }
         }
     }
 
     private fun shareItems() {
-        val paths = ArrayList<String>()
-        selectedPositions.forEach {
-            paths.add(songs[it].path)
-        }
+        val paths = getSelectedSongs().map { it.path } as ArrayList<String>
         activity.sharePathsIntent(paths, BuildConfig.APPLICATION_ID)
     }
 
@@ -199,34 +196,45 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val list
     }
 
     private fun deleteSongs() {
-        if (selectedPositions.isEmpty()) {
+        if (selectedKeys.isEmpty()) {
             return
         }
 
-        val paths = ArrayList<String>(selectedPositions.size)
-        val fileDirItems = ArrayList<FileDirItem>(selectedPositions.size)
-        val removeSongs = ArrayList<Song>(selectedPositions.size)
-
-        val SAFPath = songs[selectedPositions.first()].path
+        val SAFPath = getFirstSelectedItemPath()
         activity.handleSAFDialog(SAFPath) {
-            selectedPositions.sortedDescending().forEach {
-                val song = songs[it]
-                paths.add(song.path)
-                fileDirItems.add(FileDirItem(song.path, song.path.getFilenameFromPath()))
-                removeSongs.add(song)
-                activity.songsDAO.removeSongPath(song.path)
-                if (song == MusicService.mCurrSong) {
-                    activity.sendIntent(RESET)
+            val files = ArrayList<FileDirItem>(selectedKeys.size)
+            val removeSongs = ArrayList<Song>(selectedKeys.size)
+            val positions = ArrayList<Int>()
+
+            for (key in selectedKeys) {
+                val song = getItemWithKey(key) ?: continue
+
+                val position = songs.indexOfFirst { it.path == key }
+                if (position != -1) {
+                    positions.add(position + positionOffset)
+                    files.add(FileDirItem(song.path))
+                    removeSongs.add(song)
+                    activity.songsDAO.removeSongPath(song.path)
+                    if (song == MusicService.mCurrSong) {
+                        activity.sendIntent(RESET)
+                    }
                 }
             }
 
+            positions.sortDescending()
             activity.runOnUiThread {
-                removeSelectedItems()
+                removeSelectedItems(positions)
+            }
+            activity.deleteFiles(files)
+
+            val songIds = removeSongs.map { it.mediaStoreId.toInt() } as ArrayList<Int>
+            Intent(activity, MusicService::class.java).apply {
+                putExtra(SONG_IDS, songIds)
+                action = REMOVE_SONG_IDS
+                activity.startService(this)
             }
 
             songs.removeAll(removeSongs)
-            activity.deleteFiles(fileDirItems)
-
             if (songs.isEmpty()) {
                 listener.refreshItems()
             }
@@ -234,41 +242,47 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val list
     }
 
     private fun removeFromPlaylist() {
-        if (selectedPositions.isEmpty()) {
+        if (selectedKeys.isEmpty()) {
             return
         }
 
         // remove the songs from playlist asap, so they dont get played at Next, if the currently playing song is removed from playlist
-        val songIDs = ArrayList<Int>(selectedPositions.size)
-        selectedPositions.forEach {
-            val song = songs[it]
-            songIDs.add(song.mediaStoreId.toInt())
+        val songIds = ArrayList<Int>(selectedKeys.size)
+        for (key in selectedKeys) {
+            val song = getItemWithKey(key) ?: continue
+            songIds.add(song.mediaStoreId.toInt())
         }
+
         Intent(activity, MusicService::class.java).apply {
-            putExtra(SONG_IDS, songIDs)
+            putExtra(SONG_IDS, songIds)
             action = REMOVE_SONG_IDS
             activity.startService(this)
         }
 
-        val paths = ArrayList<String>(selectedPositions.size)
-        val removeSongs = ArrayList<Song>(selectedPositions.size)
+        val removeSongs = ArrayList<Song>(selectedKeys.size)
+        val positions = ArrayList<Int>()
 
-        selectedPositions.sortedDescending().forEach {
-            val song = songs[it]
-            paths.add(song.path)
-            removeSongs.add(song)
-            if (song == MusicService.mCurrSong) {
-                if (songs.size == removeSongs.size) {
-                    activity.sendIntent(REMOVE_CURRENT_SONG)
-                } else {
-                    activity.sendIntent(NEXT)
+        for (key in selectedKeys) {
+            val song = getItemWithKey(key) ?: continue
+
+            val position = songs.indexOfFirst { it.path == key }
+            if (position != -1) {
+                positions.add(position + positionOffset)
+                removeSongs.add(song)
+                if (song == MusicService.mCurrSong) {
+                    if (songs.size == removeSongs.size) {
+                        activity.sendIntent(REMOVE_CURRENT_SONG)
+                    } else {
+                        activity.sendIntent(NEXT)
+                    }
                 }
             }
         }
 
-        activity.config.addIgnoredPaths(paths)
+        val removePaths = removeSongs.map { it.path } as ArrayList<String>
+        activity.config.addIgnoredPaths(removePaths)
         songs.removeAll(removeSongs)
-        removeSelectedItems()
+        removeSelectedItems(positions)
         Thread {
             activity.songsDAO.removeSongsFromPlaylists(removeSongs)
 
@@ -276,6 +290,18 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val list
                 listener.refreshItems()
             }
         }.start()
+    }
+
+    private fun getFirstSelectedItemPath() = getSelectedSongs().first().path
+
+    private fun getSelectedSongs(): ArrayList<Song> {
+        val selectedSongs = ArrayList<Song>(selectedKeys.size)
+        selectedKeys.forEach {
+            getItemWithKey(it)?.apply {
+                selectedSongs.add(this)
+            }
+        }
+        return selectedSongs
     }
 
     fun updateSongs(newSongs: ArrayList<Song>, highlightText: String = "") {
@@ -316,21 +342,23 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val list
     }
 
     fun removeCurrentSongFromPlaylist() {
-        selectedPositions.clear()
-        selectedPositions.add(currentSongIndex - positionOffset)
-        removeFromPlaylist()
-        selectedPositions.clear()
+        if (currentSong != null) {
+            selectedKeys.clear()
+            selectedKeys.add(currentSong!!.path)
+            removeFromPlaylist()
+            selectedKeys.clear()
+        }
     }
 
     fun deleteCurrentSong() {
         ConfirmationDialog(activity) {
-            selectedPositions.clear()
-            if (songs.isNotEmpty()) {
-                selectedPositions.add(currentSongIndex - positionOffset)
+            selectedKeys.clear()
+            if (songs.isNotEmpty() && currentSong != null) {
+                selectedKeys.add(currentSong!!.path)
                 activity.sendIntent(NEXT)
                 Thread {
                     deleteSongs()
-                    selectedPositions.clear()
+                    selectedKeys.clear()
                 }.start()
             }
         }
@@ -386,17 +414,17 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val list
             next_btn.applyColorFilter(textColor)
             repeat_btn.applyColorFilter(textColor)
 
-            shuffle_btn.applyColorFilter(if (config.isShuffleEnabled) activity.getAdjustedPrimaryColor() else textColor)
+            shuffle_btn.applyColorFilter(if (config.isShuffleEnabled) adjustedPrimaryColor else textColor)
             shuffle_btn.alpha = if (config.isShuffleEnabled) 1f else LOWER_ALPHA
 
-            repeat_btn.applyColorFilter(if (config.repeatSong) activity.getAdjustedPrimaryColor() else textColor)
+            repeat_btn.applyColorFilter(if (config.repeatSong) adjustedPrimaryColor else textColor)
             repeat_btn.alpha = if (config.repeatSong) 1f else LOWER_ALPHA
 
             song_info_title.setTextColor(textColor)
             song_info_artist.setTextColor(textColor)
             song_progress_current.setTextColor(textColor)
             song_progress_max.setTextColor(textColor)
-            song_progressbar.setColors(textColor, activity.getAdjustedPrimaryColor(), backgroundColor)
+            song_progressbar.setColors(textColor, adjustedPrimaryColor, backgroundColor)
         }
     }
 
@@ -416,24 +444,25 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val list
 
     fun updateShuffle(enable: Boolean) {
         navigationView?.apply {
-            shuffle_btn.applyColorFilter(if (enable) activity.getAdjustedPrimaryColor() else textColor)
+            shuffle_btn.applyColorFilter(if (enable) adjustedPrimaryColor else textColor)
             shuffle_btn.alpha = if (enable) 1f else LOWER_ALPHA
         }
     }
 
     fun updateRepeatSong(repeat: Boolean) {
         navigationView?.apply {
-            repeat_btn.applyColorFilter(if (repeat) activity.getAdjustedPrimaryColor() else textColor)
+            repeat_btn.applyColorFilter(if (repeat) adjustedPrimaryColor else textColor)
             repeat_btn.alpha = if (repeat) 1f else LOWER_ALPHA
         }
     }
 
-    class TransparentViewHolder(view: View) : ViewHolder(view, multiSelector = MultiSelector())
+    inner class TransparentViewHolder(view: View) : MyRecyclerViewAdapter.ViewHolder(view)
 
-    class NavigationViewHolder(view: ViewGroup) : ViewHolder(view, multiSelector = MultiSelector())
+    inner class NavigationViewHolder(view: View) : MyRecyclerViewAdapter.ViewHolder(view)
 
-    private fun setupView(view: View, song: Song, layoutPosition: Int) {
+    private fun setupView(view: View, song: Song, layoutPosition: Int, isSelected: Boolean) {
         view.apply {
+            song_frame?.isSelected = isSelected
             song_title.text = if (textToHighlight.isEmpty()) song.title else song.title.highlightTextPart(textToHighlight, adjustedPrimaryColor)
             song_title.setTextColor(textColor)
 
