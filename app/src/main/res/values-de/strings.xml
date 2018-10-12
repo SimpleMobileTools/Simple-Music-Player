@@ -51,7 +51,7 @@
 
     <!-- Settings -->
     <string name="equalizer">Equalizer</string>
-    <string name="swap_prev_next">Swap previous/next headphone buttons</string>
+    <string name="swap_prev_next">Vertausche die Kopfhörerknöpfe "Vorheriger/Nächster Titel"</string>
 
     <!-- FAQ -->
     <string name="faq_1_title">Wie kann ich Songs vorspulen?</string>
