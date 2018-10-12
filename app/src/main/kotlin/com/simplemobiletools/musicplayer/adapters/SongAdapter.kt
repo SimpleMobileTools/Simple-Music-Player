@@ -76,7 +76,7 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val list
     override fun onBindViewHolder(holder: MyRecyclerViewAdapter.ViewHolder, position: Int) {
         if (holder !is TransparentViewHolder && holder !is NavigationViewHolder) {
             val song = songs[position - LIST_HEADERS_COUNT]
-            holder.bindView(song, false, true) { itemView, layoutPosition ->
+            holder.bindView(song, true, true) { itemView, layoutPosition ->
                 setupView(itemView, song, layoutPosition, isKeySelected(song.path))
             }
             bindViewHolder(holder)
