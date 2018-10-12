@@ -1,6 +1,15 @@
 Changelog
 ==========
 
+Version 5.0.0 *(2018-10-12)*
+----------------------------
+
+ * Increase the minimal Android OS version required to 5 (Lollipop)
+ * Adding an option for toggling previous/next headset buttons (by Pawel)
+ * Search the song folder for album art, if metadata is empty (by Pawel)
+ * Show the Toggle Autoplay menu item at third party intents too
+ * Rewrote file selecting for better stability
+
 Version 4.3.1 *(2018-09-29)*
 ----------------------------
 
