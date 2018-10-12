@@ -189,7 +189,6 @@ class MainActivity : SimpleActivity(), SongListListener {
 
         menu.apply {
             findItem(R.id.sort).isVisible = !isThirdPartyIntent
-            findItem(R.id.toggle_autoplay).isVisible = !isThirdPartyIntent
             findItem(R.id.sort).isVisible = !isThirdPartyIntent
             findItem(R.id.open_playlist).isVisible = !isThirdPartyIntent
             findItem(R.id.add_folder_to_playlist).isVisible = !isThirdPartyIntent
