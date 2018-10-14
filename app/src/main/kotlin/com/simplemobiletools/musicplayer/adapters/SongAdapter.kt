@@ -116,7 +116,7 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val list
 
     override fun getItemKeyPosition(key: String) = songs.indexOfFirst { it.path == key }
 
-    override fun getItemSelectionKey(position: Int) = songs[position].path
+    override fun getItemSelectionKey(position: Int) = songs.getOrNull(position)?.path
 
     fun searchOpened() {
         transparentViewHeight = transparentView.height

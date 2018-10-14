@@ -61,7 +61,7 @@ class PlaylistsAdapter(activity: SimpleActivity, val playlists: ArrayList<Playli
 
     override fun getItemKeyPosition(key: String) = playlists.indexOfFirst { it.id.toString() == key }
 
-    override fun getItemSelectionKey(position: Int) = playlists[position].id.toString()
+    override fun getItemSelectionKey(position: Int) = playlists.getOrNull(position)?.id?.toString()
 
     private fun askConfirmDelete() {
         RemovePlaylistDialog(activity) {
