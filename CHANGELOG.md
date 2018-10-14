@@ -1,6 +1,12 @@
 Changelog
 ==========
 
+Version 5.0.1 *(2018-10-14)*
+----------------------------
+
+ * Fixing a crash at getting the album art
+ * Replacing the G+ button with Reddit
+
 Version 5.0.0 *(2018-10-12)*
 ----------------------------
 
