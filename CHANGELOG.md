@@ -1,6 +1,11 @@
 Changelog
 ==========
 
+Version 5.0.2 *(2018-10-19)*
+----------------------------
+
+ * Added a couple stability and UX improvements
+
 Version 5.0.1 *(2018-10-14)*
 ----------------------------
 
