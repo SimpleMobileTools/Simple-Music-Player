@@ -4,8 +4,8 @@ import android.app.SearchManager
 import android.content.Context
 import android.content.Intent
 import android.graphics.Paint
+import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.ColorDrawable
-import android.graphics.drawable.Drawable
 import android.media.AudioManager
 import android.net.Uri
 import android.os.Bundle
@@ -16,16 +16,11 @@ import android.view.ViewGroup
 import android.widget.SeekBar
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.MenuItemCompat
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.DataSource
-import com.bumptech.glide.load.engine.GlideException
-import com.bumptech.glide.request.RequestListener
-import com.bumptech.glide.request.RequestOptions
-import com.bumptech.glide.request.target.Target
 import com.simplemobiletools.commons.dialogs.FilePickerDialog
 import com.simplemobiletools.commons.dialogs.RadioGroupDialog
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.LICENSE_OTTO
+import com.simplemobiletools.commons.helpers.LICENSE_PICASSO
 import com.simplemobiletools.commons.helpers.PERMISSION_WRITE_STORAGE
 import com.simplemobiletools.commons.helpers.REAL_FILE_PATH
 import com.simplemobiletools.commons.interfaces.RecyclerScrollCallback
@@ -50,6 +45,7 @@ import com.simplemobiletools.musicplayer.models.Song
 import com.simplemobiletools.musicplayer.services.MusicService
 import com.squareup.otto.Bus
 import com.squareup.otto.Subscribe
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.item_navigation.*
 import kotlinx.android.synthetic.main.item_navigation.view.*
@@ -64,7 +60,6 @@ class MainActivity : SimpleActivity(), SongListListener {
     private var wasInitialPlaylistSet = false
     private var lastFilePickerPath = ""
     private var artView: ViewGroup? = null
-    private var oldCover: Drawable? = null
 
     private var actionbarSize = 0
     private var topArtHeight = 0
@@ -320,7 +315,7 @@ class MainActivity : SimpleActivity(), SongListListener {
     }
 
     private fun launchAbout() {
-        val licenses = LICENSE_OTTO
+        val licenses = LICENSE_OTTO or LICENSE_PICASSO
 
         val faqItems = arrayListOf(
                 FAQItem(R.string.faq_1_title, R.string.faq_1_text),
@@ -662,25 +657,20 @@ class MainActivity : SimpleActivity(), SongListListener {
             return
         }
 
-        Glide.with(this).clear(art_image)
         val coverToUse = if (MusicService.mCurrSongCover?.isRecycled == true) {
             resources.getColoredBitmap(R.drawable.ic_headset, config.textColor)
         } else {
             MusicService.mCurrSongCover
         }
 
-        val options = RequestOptions().placeholder(oldCover)
-        Glide.with(this)
-                .load(coverToUse)
-                .apply(options)
-                .listener(object : RequestListener<Drawable> {
-                    override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean) = false
-
-                    override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
-                        oldCover = resource?.constantState?.newDrawable()
-                        return false
-                    }
-                }).into(art_image)
+        // Picasso cannot load bitmaps/drawables directly, so as a workaround load images as placeholders
+        val bitmapDrawable = BitmapDrawable(resources, coverToUse)
+        val uri: Uri? = null
+        Picasso.get()
+                .load(uri)
+                .fit()
+                .placeholder(bitmapDrawable)
+                .into(art_image)
     }
 
     private fun searchQueryChanged(text: String) {
