@@ -11,8 +11,8 @@ android {
         applicationId "com.simplemobiletools.musicplayer"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 51
-        versionName "5.0.1"
+        versionCode 52
+        versionName "5.0.2"
         setProperty("archivesBaseName", "music-player")
     }
 
