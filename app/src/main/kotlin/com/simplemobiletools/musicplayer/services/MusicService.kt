@@ -1,26 +1,30 @@
 package com.simplemobiletools.musicplayer.services
 
 import android.annotation.SuppressLint
-import android.app.*
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.app.Service
 import android.content.*
 import android.database.Cursor
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.media.AudioManager
 import android.media.AudioManager.*
-import android.media.MediaMetadata
 import android.media.MediaMetadataRetriever
 import android.media.MediaPlayer
 import android.media.audiofx.Equalizer
-import android.media.session.MediaSession
-import android.media.session.PlaybackState
 import android.media.session.PlaybackState.PLAYBACK_POSITION_UNKNOWN
 import android.net.Uri
 import android.os.Handler
 import android.os.Looper
 import android.os.PowerManager
 import android.provider.MediaStore
+import android.support.v4.media.MediaMetadataCompat
+import android.support.v4.media.session.MediaSessionCompat
+import android.support.v4.media.session.PlaybackStateCompat
 import android.util.Log
+import androidx.core.app.NotificationCompat
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.PERMISSION_WRITE_STORAGE
 import com.simplemobiletools.commons.helpers.isOreoPlus
@@ -65,7 +69,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         private var mPlayOnPrepare = true
         private var mIsThirdPartyIntent = false
         private var intentUri: Uri? = null
-        private var mediaSession: MediaSession? = null
+        private var mediaSession: MediaSessionCompat? = null
         private var isServiceInitialized = false
         private var prevAudioFocusState = 0
 
@@ -82,7 +86,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
         mCoverArtHeight = resources.getDimension(R.dimen.top_art_height).toInt()
         mProgressHandler = Handler()
-        mediaSession = MediaSession(this, "MusicService")
+        mediaSession = MediaSessionCompat(this, "MusicService")
 
         val remoteControlComponent = ComponentName(packageName, RemoteControlReceiver::class.java.name)
         mAudioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager
@@ -393,20 +397,20 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             mCurrSongCover = resources.getColoredBitmap(R.drawable.ic_headset, config.textColor)
         }
 
-        val notification = Notification.Builder(applicationContext, channelId)
+        val notification = NotificationCompat.Builder(applicationContext, channelId)
                 .setContentTitle(title)
                 .setContentText(artist)
                 .setSmallIcon(R.drawable.ic_headset_small)
                 .setLargeIcon(mCurrSongCover)
-                .setVisibility(Notification.VISIBILITY_PUBLIC)
-                .setPriority(Notification.PRIORITY_MAX)
+                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+                .setPriority(NotificationCompat.PRIORITY_MAX)
                 .setWhen(notifWhen)
                 .setShowWhen(showWhen)
                 .setUsesChronometer(usesChronometer)
                 .setContentIntent(getContentIntent())
                 .setOngoing(ongoing)
                 .setChannelId(channelId)
-                .setStyle(Notification.MediaStyle()
+                .setStyle(androidx.media.app.NotificationCompat.MediaStyle()
                         .setShowActionsInCompactView(0, 1, 2)
                         .setMediaSession(mediaSession?.sessionToken))
                 .addAction(R.drawable.ic_previous, getString(R.string.previous), getIntent(PREVIOUS))
@@ -419,8 +423,8 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             stopForeground(false)
         }
 
-        val playbackState = if (getIsPlaying()) PlaybackState.STATE_PLAYING else PlaybackState.STATE_PAUSED
-        mediaSession!!.setPlaybackState(PlaybackState.Builder()
+        val playbackState = if (getIsPlaying()) PlaybackStateCompat.STATE_PLAYING else PlaybackStateCompat.STATE_PAUSED
+        mediaSession!!.setPlaybackState(PlaybackStateCompat.Builder()
                 .setState(playbackState, PLAYBACK_POSITION_UNKNOWN, 1.0f)
                 .build())
     }
@@ -605,8 +609,8 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         }
 
         val lockScreenImage = if (albumImage.second) albumImage.first else null
-        val metadata = MediaMetadata.Builder()
-                .putBitmap(MediaMetadata.METADATA_KEY_ALBUM_ART, lockScreenImage)
+        val metadata = MediaMetadataCompat.Builder()
+                .putBitmap(MediaMetadataCompat.METADATA_KEY_ALBUM_ART, lockScreenImage)
                 .build()
 
         mediaSession?.setMetadata(metadata)
