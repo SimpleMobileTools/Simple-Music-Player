@@ -227,7 +227,7 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val list
             }
             activity.deleteFiles(files)
 
-            val songIds = removeSongs.map { it.mediaStoreId.toInt() } as ArrayList<Int>
+            val songIds = removeSongs.map { it.path.hashCode() } as ArrayList<Int>
             Intent(activity, MusicService::class.java).apply {
                 putExtra(SONG_IDS, songIds)
                 action = REMOVE_SONG_IDS
@@ -250,7 +250,7 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val list
         val songIds = ArrayList<Int>(selectedKeys.size)
         for (key in selectedKeys) {
             val song = getItemWithKey(key) ?: continue
-            songIds.add(song.mediaStoreId.toInt())
+            songIds.add(song.path.hashCode())
         }
 
         Intent(activity, MusicService::class.java).apply {
@@ -282,6 +282,7 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val list
         val removePaths = removeSongs.map { it.path } as ArrayList<String>
         activity.config.addIgnoredPaths(removePaths)
         songs.removeAll(removeSongs)
+        positions.sortDescending()
         removeSelectedItems(positions)
         Thread {
             activity.songsDAO.removeSongsFromPlaylists(removeSongs)

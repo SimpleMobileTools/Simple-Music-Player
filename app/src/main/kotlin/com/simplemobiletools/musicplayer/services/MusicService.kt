@@ -225,8 +225,8 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             REMOVE_SONG_IDS -> {
                 val ids = intent.getIntegerArrayListExtra(SONG_IDS)
                 val songsToRemove = ArrayList<Song>()
-                mSongs.forEach {
-                    if (ids.contains(it.mediaStoreId.toInt())) {
+                mSongs.sortedDescending().forEach {
+                    if (ids.contains(it.path.hashCode())) {
                         songsToRemove.add(it)
                     }
                 }
