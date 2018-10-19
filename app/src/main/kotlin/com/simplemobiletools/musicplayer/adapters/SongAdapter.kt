@@ -77,7 +77,7 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val list
         if (holder !is TransparentViewHolder && holder !is NavigationViewHolder) {
             val song = songs[position - LIST_HEADERS_COUNT]
             holder.bindView(song, true, true) { itemView, layoutPosition ->
-                setupView(itemView, song, layoutPosition, isKeySelected(song.path))
+                setupView(itemView, song, layoutPosition)
             }
             bindViewHolder(holder)
         } else {
@@ -87,7 +87,7 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val list
 
     override fun getItemCount() = songs.size + LIST_HEADERS_COUNT
 
-    private fun getItemWithKey(key: String): Song? = songs.firstOrNull { it.path == key }
+    private fun getItemWithKey(key: Int): Song? = songs.firstOrNull { it.path.hashCode() == key }
 
     override fun prepareActionMode(menu: Menu) {
         menu.apply {
@@ -114,9 +114,9 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val list
 
     override fun getIsItemSelectable(position: Int) = position >= 0
 
-    override fun getItemKeyPosition(key: String) = songs.indexOfFirst { it.path == key }
+    override fun getItemSelectionKey(position: Int) = songs.getOrNull(position)?.path?.hashCode()
 
-    override fun getItemSelectionKey(position: Int) = songs.getOrNull(position)?.path
+    override fun getItemKeyPosition(key: Int) = songs.indexOfFirst { it.path.hashCode() == key }
 
     fun searchOpened() {
         transparentViewHeight = transparentView.height
@@ -209,7 +209,7 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val list
             for (key in selectedKeys) {
                 val song = getItemWithKey(key) ?: continue
 
-                val position = songs.indexOfFirst { it.path == key }
+                val position = songs.indexOfFirst { it.path.hashCode() == key }
                 if (position != -1) {
                     positions.add(position + positionOffset)
                     files.add(FileDirItem(song.path))
@@ -265,7 +265,7 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val list
         for (key in selectedKeys) {
             val song = getItemWithKey(key) ?: continue
 
-            val position = songs.indexOfFirst { it.path == key }
+            val position = songs.indexOfFirst { it.path.hashCode() == key }
             if (position != -1) {
                 positions.add(position + positionOffset)
                 removeSongs.add(song)
@@ -344,7 +344,7 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val list
     fun removeCurrentSongFromPlaylist() {
         if (currentSong != null) {
             selectedKeys.clear()
-            selectedKeys.add(currentSong!!.path)
+            selectedKeys.add(currentSong!!.path.hashCode())
             removeFromPlaylist()
             selectedKeys.clear()
         }
@@ -354,7 +354,7 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val list
         ConfirmationDialog(activity) {
             selectedKeys.clear()
             if (songs.isNotEmpty() && currentSong != null) {
-                selectedKeys.add(currentSong!!.path)
+                selectedKeys.add(currentSong!!.path.hashCode())
                 activity.sendIntent(NEXT)
                 Thread {
                     deleteSongs()
@@ -460,9 +460,9 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val list
 
     inner class NavigationViewHolder(view: View) : MyRecyclerViewAdapter.ViewHolder(view)
 
-    private fun setupView(view: View, song: Song, layoutPosition: Int, isSelected: Boolean) {
+    private fun setupView(view: View, song: Song, layoutPosition: Int) {
         view.apply {
-            song_frame?.isSelected = isSelected
+            song_frame?.isSelected = selectedKeys.contains(song.path.hashCode())
             song_title.text = if (textToHighlight.isEmpty()) song.title else song.title.highlightTextPart(textToHighlight, adjustedPrimaryColor)
             song_title.setTextColor(textColor)
 

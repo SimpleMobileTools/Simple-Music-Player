@@ -35,7 +35,7 @@ class PlaylistsAdapter(activity: SimpleActivity, val playlists: ArrayList<Playli
     override fun onBindViewHolder(holder: MyRecyclerViewAdapter.ViewHolder, position: Int) {
         val playlist = playlists[position]
         holder.bindView(playlist, true, true) { itemView, layoutPosition ->
-            setupView(itemView, playlist, isKeySelected(playlist.id.toString()))
+            setupView(itemView, playlist)
         }
         bindViewHolder(holder)
     }
@@ -59,13 +59,13 @@ class PlaylistsAdapter(activity: SimpleActivity, val playlists: ArrayList<Playli
 
     override fun getIsItemSelectable(position: Int) = true
 
-    override fun getItemKeyPosition(key: String) = playlists.indexOfFirst { it.id.toString() == key }
+    override fun getItemSelectionKey(position: Int) = playlists.getOrNull(position)?.id
 
-    override fun getItemSelectionKey(position: Int) = playlists.getOrNull(position)?.id?.toString()
+    override fun getItemKeyPosition(key: Int) = playlists.indexOfFirst { it.id == key }
 
     private fun askConfirmDelete() {
         RemovePlaylistDialog(activity) {
-            val ids = selectedKeys.map { it.toInt() } as ArrayList<Int>
+            val ids = selectedKeys.map { it } as ArrayList<Int>
             if (it) {
                 deletePlaylistSongs(ids) {
                     removePlaylists(ids)
@@ -94,8 +94,8 @@ class PlaylistsAdapter(activity: SimpleActivity, val playlists: ArrayList<Playli
             val playlist = getItemWithKey(key) ?: continue
             if (playlist.id == ALL_SONGS_PLAYLIST_ID) {
                 activity.toast(R.string.all_songs_cannot_be_deleted)
-                selectedKeys.remove(ALL_SONGS_PLAYLIST_ID.toString())
-                toggleItemSelection(false, getItemKeyPosition(ALL_SONGS_PLAYLIST_ID.toString()))
+                selectedKeys.remove(ALL_SONGS_PLAYLIST_ID)
+                toggleItemSelection(false, getItemKeyPosition(ALL_SONGS_PLAYLIST_ID))
                 break
             } else if (playlist.id == activity.config.currentPlaylist) {
                 activity.playlistChanged(ALL_SONGS_PLAYLIST_ID)
@@ -106,7 +106,7 @@ class PlaylistsAdapter(activity: SimpleActivity, val playlists: ArrayList<Playli
         val positions = ArrayList<Int>()
         for (key in selectedKeys) {
             val playlist = getItemWithKey(key) ?: continue
-            val position = playlists.indexOfFirst { it.id.toString() == key }
+            val position = playlists.indexOfFirst { it.id == key }
             if (position != -1) {
                 positions.add(position + positionOffset)
             }
@@ -128,10 +128,10 @@ class PlaylistsAdapter(activity: SimpleActivity, val playlists: ArrayList<Playli
         }.start()
     }
 
-    private fun getItemWithKey(key: String): Playlist? = playlists.firstOrNull { it.id.toString() == key }
+    private fun getItemWithKey(key: Int): Playlist? = playlists.firstOrNull { it.id == key }
 
     private fun showRenameDialog() {
-        NewPlaylistDialog(activity, playlists[getItemKeyPosition(selectedKeys.first().toString())]) {
+        NewPlaylistDialog(activity, playlists[getItemKeyPosition(selectedKeys.first())]) {
             activity.runOnUiThread {
                 reloadList()
             }
@@ -143,9 +143,9 @@ class PlaylistsAdapter(activity: SimpleActivity, val playlists: ArrayList<Playli
         listener?.refreshItems()
     }
 
-    private fun setupView(view: View, playlist: Playlist, isSelected: Boolean) {
+    private fun setupView(view: View, playlist: Playlist) {
         view.apply {
-            playlist_frame?.isSelected = isSelected
+            playlist_frame?.isSelected = selectedKeys.contains(playlist.id)
             playlist_title.text = playlist.title
             playlist_title.setTextColor(textColor)
             playlist_icon.applyColorFilter(textColor)
