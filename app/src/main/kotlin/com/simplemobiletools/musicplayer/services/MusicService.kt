@@ -424,9 +424,12 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         }
 
         val playbackState = if (getIsPlaying()) PlaybackStateCompat.STATE_PLAYING else PlaybackStateCompat.STATE_PAUSED
-        mediaSession!!.setPlaybackState(PlaybackStateCompat.Builder()
-                .setState(playbackState, PLAYBACK_POSITION_UNKNOWN, 1.0f)
-                .build())
+        try {
+            mediaSession!!.setPlaybackState(PlaybackStateCompat.Builder()
+                    .setState(playbackState, PLAYBACK_POSITION_UNKNOWN, 1.0f)
+                    .build())
+        } catch (ignored: IllegalStateException) {
+        }
     }
 
     private fun getContentIntent(): PendingIntent {
