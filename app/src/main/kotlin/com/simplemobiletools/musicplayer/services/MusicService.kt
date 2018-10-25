@@ -359,8 +359,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     private fun setPreset(id: Int) {
         try {
             mEqualizer?.usePreset(id.toShort())
-        } catch (e: IllegalArgumentException) {
-            Log.e(TAG, "setPreset $e")
+        } catch (ignored: IllegalArgumentException) {
         }
     }
 

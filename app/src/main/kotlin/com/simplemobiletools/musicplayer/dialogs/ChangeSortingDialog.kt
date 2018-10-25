@@ -1,8 +1,8 @@
 package com.simplemobiletools.musicplayer.dialogs
 
 import android.app.Activity
-import androidx.appcompat.app.AlertDialog
 import android.view.View
+import androidx.appcompat.app.AlertDialog
 import com.simplemobiletools.commons.extensions.setupDialogStuff
 import com.simplemobiletools.commons.helpers.*
 import com.simplemobiletools.musicplayer.R
@@ -16,7 +16,7 @@ class ChangeSortingDialog(val activity: Activity, val callback: () -> Unit) {
 
     init {
         AlertDialog.Builder(activity)
-                .setPositiveButton(R.string.ok, { dialog, which -> dialogConfirmed() })
+                .setPositiveButton(R.string.ok) { dialog, which -> dialogConfirmed() }
                 .setNegativeButton(R.string.cancel, null)
                 .create().apply {
                     activity.setupDialogStuff(view, this, R.string.sort_by)
