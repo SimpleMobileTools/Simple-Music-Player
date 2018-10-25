@@ -236,29 +236,6 @@ class MainActivity : SimpleActivity(), SongListListener {
         }
     }
 
-    private fun handleSongMigration() {
-        dbHelper.getAllSongs {
-            if (it.isEmpty()) {
-                config.wereSongsMigrated = true
-                return@getAllSongs
-            }
-
-            val songs = it
-            dbHelper.getAllPlaylists {
-                it.forEach {
-                    val playlist = it
-                    val newPlaylistId = if (playlist.id == ALL_SONGS_PLAYLIST_ID) ALL_SONGS_PLAYLIST_ID else playlistDAO.insert(playlist.copy(id = 0)).toInt()
-                    val playlistSongPaths = songs.filter { it.playListId == newPlaylistId }.map { it.path } as ArrayList<String>
-                    RoomHelper(applicationContext).addSongsToPlaylist(playlistSongPaths, newPlaylistId)
-                }
-
-                playlistChanged(ALL_SONGS_PLAYLIST_ID)
-                config.wereSongsMigrated = true
-                dbHelper.clearDatabase()
-            }
-        }
-    }
-
     private fun setTopArtHeight() {
         topArtHeight = if (config.showAlbumCover) resources.getDimensionPixelSize(R.dimen.top_art_height) else 0
         artView!!.setPadding(0, topArtHeight, 0, 0)
@@ -505,12 +482,6 @@ class MainActivity : SimpleActivity(), SongListListener {
     }
 
     private fun initializePlayer() {
-        if (!config.wereSongsMigrated) {
-            Thread {
-                handleSongMigration()
-            }.start()
-        }
-
         if (isThirdPartyIntent) {
             initThirdPartyIntent()
         } else {
