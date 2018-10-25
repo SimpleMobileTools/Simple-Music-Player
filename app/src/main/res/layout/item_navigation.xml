@@ -42,42 +42,42 @@
 
         <ImageView
             android:id="@+id/shuffle_btn"
-            style="@style/MyBorderlessBackgroundStyle"
             android:layout_width="@dimen/button_size"
             android:layout_height="@dimen/button_size"
             android:layout_weight="1"
-            android:paddingBottom="@dimen/small_margin"
+            android:background="?attr/selectableItemBackgroundBorderless"
             android:paddingTop="@dimen/small_margin"
+            android:paddingBottom="@dimen/small_margin"
             android:src="@drawable/ic_shuffle"/>
 
         <ImageView
             android:id="@+id/previous_btn"
-            style="@style/MyBorderlessBackgroundStyle"
             android:layout_width="@dimen/button_size"
             android:layout_height="@dimen/button_size"
             android:layout_weight="1"
-            android:paddingBottom="@dimen/small_margin"
+            android:background="?attr/selectableItemBackgroundBorderless"
             android:paddingTop="@dimen/small_margin"
+            android:paddingBottom="@dimen/small_margin"
             android:src="@drawable/ic_previous"/>
 
         <ImageView
             android:id="@+id/play_pause_btn"
-            style="@style/MyBorderlessBackgroundStyle"
             android:layout_width="@dimen/button_size"
             android:layout_height="@dimen/button_size"
             android:layout_weight="1"
-            android:paddingBottom="@dimen/small_margin"
+            android:background="?attr/selectableItemBackgroundBorderless"
             android:paddingTop="@dimen/small_margin"
+            android:paddingBottom="@dimen/small_margin"
             android:src="@drawable/ic_play"/>
 
         <ImageView
             android:id="@+id/next_btn"
-            style="@style/MyBorderlessBackgroundStyle"
             android:layout_width="@dimen/button_size"
             android:layout_height="@dimen/button_size"
             android:layout_weight="1"
-            android:paddingBottom="@dimen/small_margin"
+            android:background="?attr/selectableItemBackgroundBorderless"
             android:paddingTop="@dimen/small_margin"
+            android:paddingBottom="@dimen/small_margin"
             android:src="@drawable/ic_next"/>
 
         <ImageView
@@ -86,20 +86,20 @@
             android:layout_width="@dimen/button_size"
             android:layout_height="@dimen/button_size"
             android:layout_weight="1"
-            android:paddingBottom="@dimen/small_margin"
             android:paddingTop="@dimen/small_margin"
+            android:paddingBottom="@dimen/small_margin"
             android:src="@drawable/ic_repeat"/>
 
     </LinearLayout>
 
     <com.simplemobiletools.commons.views.MyTextView
         android:id="@+id/song_progress_current"
-        style="@style/MyBorderlessBackgroundStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/song_progressbar"
-        android:layout_alignTop="@+id/song_progressbar"
         android:layout_below="@+id/song_info_controls"
+        android:layout_alignTop="@+id/song_progressbar"
+        android:layout_alignBottom="@+id/song_progressbar"
+        android:background="?attr/selectableItemBackgroundBorderless"
         android:gravity="center_vertical"
         android:maxLines="1"
         android:paddingLeft="@dimen/normal_margin"
@@ -115,18 +115,18 @@
         android:layout_toRightOf="@+id/song_progress_current"
         android:clickable="true"
         android:focusable="true"
-        android:paddingBottom="@dimen/medium_margin"
-        android:paddingTop="@dimen/normal_margin"/>
+        android:paddingTop="@dimen/normal_margin"
+        android:paddingBottom="@dimen/medium_margin"/>
 
     <com.simplemobiletools.commons.views.MyTextView
         android:id="@+id/song_progress_max"
-        style="@style/MyBorderlessBackgroundStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/song_info_controls"
+        android:layout_alignTop="@+id/song_progressbar"
         android:layout_alignBottom="@+id/song_progressbar"
         android:layout_alignParentRight="true"
-        android:layout_alignTop="@+id/song_progressbar"
-        android:layout_below="@+id/song_info_controls"
+        android:background="?attr/selectableItemBackgroundBorderless"
         android:gravity="center_vertical"
         android:maxLines="1"
         android:paddingLeft="@dimen/medium_margin"
