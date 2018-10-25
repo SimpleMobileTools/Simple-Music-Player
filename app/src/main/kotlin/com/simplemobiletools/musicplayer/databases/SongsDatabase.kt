@@ -12,6 +12,7 @@ import com.simplemobiletools.musicplayer.interfaces.PlaylistsDao
 import com.simplemobiletools.musicplayer.interfaces.SongsDao
 import com.simplemobiletools.musicplayer.models.Playlist
 import com.simplemobiletools.musicplayer.models.Song
+import com.simplemobiletools.musicplayer.objects.MyExecutor
 import java.util.concurrent.Executors
 
 @Database(entities = [(Song::class), (Playlist::class)], version = 1)
@@ -29,6 +30,7 @@ abstract class SongsDatabase : RoomDatabase() {
                 synchronized(SongsDatabase::class) {
                     if (db == null) {
                         db = Room.databaseBuilder(context.applicationContext, SongsDatabase::class.java, "songs.db")
+                                .setQueryExecutor(MyExecutor.myExecutor)
                                 .addCallback(object : Callback() {
                                     override fun onCreate(db: SupportSQLiteDatabase) {
                                         super.onCreate(db)
