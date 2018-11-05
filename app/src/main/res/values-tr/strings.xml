@@ -51,7 +51,7 @@
 
     <!-- Settings -->
     <string name="equalizer">Ekolayzır</string>
-    <string name="swap_prev_next">Swap previous/next headphone buttons</string>
+    <string name="swap_prev_next">Önceki/sonraki kulaklık düğmelerini değiştir</string>
 
     <!-- FAQ -->
     <string name="faq_1_title">Şarkıları nasıl hızlıca ileri sarabilirim?</string>
