@@ -29,7 +29,7 @@
     <string name="playlists">Spellistor</string>
     <string name="create_playlist">Skapa spellista</string>
     <string name="rename_playlist">Byt namn på spellista</string>
-    <string name="playlist_name_exists">En spellista med det namnet finns redan</string>
+    <string name="playlist_name_exists">Det finns redan en spellista med samma namn</string>
     <string name="remove_playlist">Ta bort spellista</string>
     <string name="remove_playlist_description">Detta tar bara bort de markerade spellistorna, inte själva filerna.</string>
     <string name="remove_playlist_description_placeholder">Detta tar bara bort spellistan \"%s\", inte själva filerna.</string>
@@ -51,7 +51,7 @@
 
     <!-- Settings -->
     <string name="equalizer">Equalizer</string>
-    <string name="swap_prev_next">Swap previous/next headphone buttons</string>
+    <string name="swap_prev_next">Växla hörlurars föregående- och nästaknappar</string>
 
     <!-- FAQ -->
     <string name="faq_1_title">How can I fast-forward songs?</string>
