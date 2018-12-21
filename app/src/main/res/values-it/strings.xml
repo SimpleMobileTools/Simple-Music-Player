@@ -1,10 +1,10 @@
 <resources>
-    <string name="app_name">Simple Music Player</string>
+    <string name="app_name">Semplice Riproduttore Musicale</string>
     <string name="app_launcher_name">Riproduttore musicale</string>
     <string name="playlist_empty">La scaletta è vuota</string>
     <string name="rename_song">Rinomina brano</string>
     <string name="rename_song_error">Impossibile rinominare</string>
-    <string name="rename_song_empty">Completa tutti i campi</string>
+    <string name="rename_song_empty">Completare tutti i campi</string>
     <string name="enable_song_repetition">Ripeti il brano attuale</string>
     <string name="disable_song_repetition">Non ripetere il brano attuale</string>
     <string name="song_repetition_enabled">Ripetizione del brano attuale abilitata</string>
@@ -31,15 +31,15 @@
     <string name="rename_playlist">Rinomina scaletta</string>
     <string name="playlist_name_exists">È già esistente una scaletta con lo stesso nome</string>
     <string name="remove_playlist">Rimuovi scaletta</string>
-    <string name="remove_playlist_description">Questo rimuoverà solamente le scalette selezionate, non realmente i file.</string>
-    <string name="remove_playlist_description_placeholder">Questo rimuoverà solamente la scaletta \"%s\", non realmente i file.</string>
+    <string name="remove_playlist_description">Questo rimuoverà solamente le scalette selezionate, non i file.</string>
+    <string name="remove_playlist_description_placeholder">Questo rimuoverà solamente la scaletta \"%s\", non i file.</string>
     <string name="remove_from_playlist">Rimuovi dalla scaletta</string>
-    <string name="remove_from_playlist_description">Questo rimuoverà solamente gli elementi dalla scaletta \"%s\", non realmente i file.</string>
+    <string name="remove_from_playlist_description">Questo rimuoverà solamente gli elementi dalla scaletta \"%s\", non i file.</string>
     <string name="delete_the_files_too">Rimuovi anche i file</string>
     <string name="open_playlist">Apri scaletta</string>
-    <string name="all_songs_cannot_be_deleted">La scaletta \'Tutte i brani\' non può essere rimossa</string>
+    <string name="all_songs_cannot_be_deleted">La scaletta \'Tutti i brani\' non può essere rimossa</string>
     <string name="empty_playlist">La scaletta attuale è vuota</string>
-    <string name="fetching_songs">Recupero brani in corso…</string>
+    <string name="fetching_songs">Recupero dei brani in corso…</string>
     <string name="all_songs">Tutti i brani</string>
     <string name="create_playlist_from_folder">Crea una nuova scaletta dalla cartella</string>
     <string name="folder_contains_no_audio">La cartella selezionata non contiene file audio</string>
@@ -47,27 +47,28 @@
     <string name="remove_current_song">Rimuovi il brano attuale dalla scaletta</string>
     <string name="show_filename">Mostra il nome del file come titolo del brano:</string>
     <string name="title_is_not_available">Se il titolo non è disponibile</string>
-    <string name="show_album_cover">Mostra la copertina dell\'album nello schermo principale</string>
+    <string name="show_album_cover">Mostra la copertina dell\'album nella schermata principale</string>
 
     <!-- Settings -->
     <string name="equalizer">Equalizzatore</string>
-    <string name="swap_prev_next">Inverti pulsanti successivo/precedente delle cuffiette</string>
+    <string name="swap_prev_next">Inverti i pulsanti successivo/precedente delle cuffiette</string>
 
     <!-- FAQ -->
     <string name="faq_1_title">Come posso avanzare rapidamente nei brani?</string>
-    <string name="faq_1_text">Puoi fare click sui testi accanto alla barra di avanzamento, questi faranno spostare il brano in avanti od all\'indietro.</string>
+    <string name="faq_1_text">Si può premere rapidamente sui testi accanto alla barra di avanzamento, questi faranno spostare il brano in avanti o all\'indietro.</string>
 
     <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
     <!-- Short description has to have less than 80 chars -->
+    <!-- ITALIAN TRANSLATORS: the last two lines are translated the same way in other applications! -->
     <string name="app_short_description">Un semplice riproduttore musicale con un widget personalizzabile.</string>
     <string name="app_long_description">
-        Un riproduttore musicale facilmente controllabile dalla barra dello stato, dal widget sullo schermo oppure dai pulsanti fisici delle tue cuffie. Puoi ordinare le traccie per titolo od artista, puoi anche cambiare l\'equalizzatore. Ancora non supporta il filtro per artista o album, restate sintonizzati!
+        Un riproduttore musicale facilmente controllabile dalla barra dello stato, dal widget sullo schermo oppure dai pulsanti fisici delle proprie cuffie. Si può ordinare le tracce per titolo o artista, oltre a modificare l\'equalizzatore. Ancora non supporta filtri per artista o album, restate sintonizzati!
 
-        Contiene un widget con colori del testo, trasparenza e colori di sfondo personalizzabili.
+        Contiene un widget che si può personalizzare, agendo sui colori del testo e dello sfondo, assieme alla loro trasparenza.
 
-        Non contiene pubblicità nè chiede permessi non necessari. È completamente open source ed offre colori personalizzabili.
+        L\'applicazione non contiene pubblicità o permessi non necessari; è completamente opensource e la si può personalizzare con i propri colori preferiti.
 
-        Quest\'app fa parte di una serie più grande. Puoi trovare le altre su https://www.simplemobiletools.com
+        Questa è solamente una delle tante applicazioni della serie Simple Mobile Tools. Si possono trovare le altre su http://www.simplemobiletools.com
     </string>
 
     <!--
