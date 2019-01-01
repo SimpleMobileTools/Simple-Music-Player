@@ -447,6 +447,7 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val list
         navigationView?.apply {
             shuffle_btn.applyColorFilter(if (enable) adjustedPrimaryColor else textColor)
             shuffle_btn.alpha = if (enable) 1f else LOWER_ALPHA
+            shuffle_btn.contentDescription = resources.getString(if (enable) R.string.disable_shuffle else R.string.enable_shuffle)
         }
     }
 
@@ -454,6 +455,7 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val list
         navigationView?.apply {
             repeat_btn.applyColorFilter(if (repeat) adjustedPrimaryColor else textColor)
             repeat_btn.alpha = if (repeat) 1f else LOWER_ALPHA
+            repeat_btn.contentDescription = resources.getString(if (repeat) R.string.disable_song_repetition else R.string.enable_song_repetition)
         }
     }
 
