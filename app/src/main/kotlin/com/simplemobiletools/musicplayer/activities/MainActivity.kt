@@ -143,6 +143,7 @@ class MainActivity : SimpleActivity(), SongListListener {
         }
 
         setupIconColors()
+        setupIconDescriptions()
         markCurrentSong()
         updateTextColors(main_holder)
         getSongsAdapter()?.updateColors()
@@ -315,6 +316,7 @@ class MainActivity : SimpleActivity(), SongListListener {
         config.isShuffleEnabled = isShuffleEnabled
         shuffle_btn.applyColorFilter(if (isShuffleEnabled) getAdjustedPrimaryColor() else config.textColor)
         shuffle_btn.alpha = if (isShuffleEnabled) 1f else LOWER_ALPHA
+        shuffle_btn.contentDescription = getString(if (isShuffleEnabled) R.string.disable_shuffle else R.string.enable_shuffle)
         getSongsAdapter()?.updateShuffle(isShuffleEnabled)
         toast(if (isShuffleEnabled) R.string.shuffle_enabled else R.string.shuffle_disabled)
     }
@@ -324,6 +326,7 @@ class MainActivity : SimpleActivity(), SongListListener {
         config.repeatSong = repeatSong
         repeat_btn.applyColorFilter(if (repeatSong) getAdjustedPrimaryColor() else config.textColor)
         repeat_btn.alpha = if (repeatSong) 1f else LOWER_ALPHA
+        repeat_btn.contentDescription = getString(if (repeatSong) R.string.disable_song_repetition else R.string.enable_song_repetition)
         getSongsAdapter()?.updateRepeatSong(repeatSong)
         toast(if (repeatSong) R.string.song_repetition_enabled else R.string.song_repetition_disabled)
     }
@@ -519,8 +522,14 @@ class MainActivity : SimpleActivity(), SongListListener {
         songs_fastscroller.updatePrimaryColor()
     }
 
+    private fun setupIconDescriptions() {
+        shuffle_btn.contentDescription = getString(if (config.isShuffleEnabled) R.string.disable_shuffle else R.string.enable_shuffle)
+        repeat_btn.contentDescription = getString(if (config.repeatSong) R.string.disable_song_repetition else R.string.enable_song_repetition)
+    }
+
     private fun songPicked(pos: Int) {
         setupIconColors()
+        setupIconDescriptions()
         Intent(this, MusicService::class.java).apply {
             putExtra(SONG_POS, pos)
             action = PLAYPOS

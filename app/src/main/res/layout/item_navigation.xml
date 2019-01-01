@@ -48,7 +48,8 @@
             android:background="?attr/selectableItemBackgroundBorderless"
             android:paddingTop="@dimen/small_margin"
             android:paddingBottom="@dimen/small_margin"
-            android:src="@drawable/ic_shuffle"/>
+            android:src="@drawable/ic_shuffle"
+            android:contentDescription="@string/enable_shuffle"/>
 
         <ImageView
             android:id="@+id/previous_btn"
@@ -58,7 +59,8 @@
             android:background="?attr/selectableItemBackgroundBorderless"
             android:paddingTop="@dimen/small_margin"
             android:paddingBottom="@dimen/small_margin"
-            android:src="@drawable/ic_previous"/>
+            android:src="@drawable/ic_previous"
+            android:contentDescription="@string/previous"/>
 
         <ImageView
             android:id="@+id/play_pause_btn"
@@ -68,7 +70,8 @@
             android:background="?attr/selectableItemBackgroundBorderless"
             android:paddingTop="@dimen/small_margin"
             android:paddingBottom="@dimen/small_margin"
-            android:src="@drawable/ic_play"/>
+            android:src="@drawable/ic_play"
+            android:contentDescription="@string/playpause"/>
 
         <ImageView
             android:id="@+id/next_btn"
@@ -78,7 +81,8 @@
             android:background="?attr/selectableItemBackgroundBorderless"
             android:paddingTop="@dimen/small_margin"
             android:paddingBottom="@dimen/small_margin"
-            android:src="@drawable/ic_next"/>
+            android:src="@drawable/ic_next"
+            android:contentDescription="@string/next"/>
 
         <ImageView
             android:id="@+id/repeat_btn"
@@ -88,7 +92,8 @@
             android:layout_weight="1"
             android:paddingTop="@dimen/small_margin"
             android:paddingBottom="@dimen/small_margin"
-            android:src="@drawable/ic_repeat"/>
+            android:src="@drawable/ic_repeat"
+            android:contentDescription="@string/enable_song_repetition"/>
 
     </LinearLayout>
 
