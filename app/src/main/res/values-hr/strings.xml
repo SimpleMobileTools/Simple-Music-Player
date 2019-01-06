@@ -51,7 +51,7 @@
 
     <!-- Settings -->
     <string name="equalizer">Ekvilajzer</string>
-    <string name="swap_prev_next">Swap previous/next headphone buttons</string>
+    <string name="swap_prev_next">Zamijeni prethodna/sljedeća tipke slušalica</string>
 
     <!-- FAQ -->
     <string name="faq_1_title">Kako mogu premotati pjesme?</string>
@@ -61,7 +61,7 @@
     <!-- Short description has to have less than 80 chars -->
     <string name="app_short_description">Jednostavan glazbeni svirač s prilagodljivim widgetom, bez oglasa.</string>
     <string name="app_long_description">
-        Jednostavan glazbeni svirač koji se može lako kontrolirati putem trake za obavijesti, widgeta početnog zaslona ili gumba na slušalicama. Možete sortirati sve pjesme po naslovu ili izvođaču i prilagoditi equalizer. Sortiranje po izvođaču ili albumu još nije podržano, budite u tijeku!
+        Jednostavan glazbeni svirač koji se može lako kontrolirati putem trake za obavijesti, widgeta početnog zaslona ili gumba na slušalicama. Možete sortirati sve pjesme po naslovu ili izvođaču i prilagoditi ekvilajzer. Sortiranje po izvođaču ili albumu još nije podržano, budite u tijeku!
 
         Aplikacija uključuje widget s prilagodljivom bojom teksta, transparentnošću i bojom pozadine.
 
