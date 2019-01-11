@@ -418,9 +418,12 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
         startForeground(NOTIFICATION_ID, notification.build())
 
-        if (!getIsPlaying()) {
-            stopForeground(false)
-        }
+        // delay foreground state updating a bit, so the notification can be swiped away properly after initial display
+        Handler(Looper.getMainLooper()).postDelayed({
+            if (!getIsPlaying()) {
+                stopForeground(false)
+            }
+        }, 100L)
 
         val playbackState = if (getIsPlaying()) PlaybackStateCompat.STATE_PLAYING else PlaybackStateCompat.STATE_PAUSED
         try {
