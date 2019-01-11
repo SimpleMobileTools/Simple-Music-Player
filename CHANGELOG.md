@@ -1,6 +1,12 @@
 Changelog
 ==========
 
+Version 5.1.0 *(2019-01-11)*
+----------------------------
+
+ * Fixed headset button handling
+ * Fixed a couple other smaller glitches + translation improvements
+
 Version 5.0.3 *(2018-10-25)*
 ----------------------------
 
