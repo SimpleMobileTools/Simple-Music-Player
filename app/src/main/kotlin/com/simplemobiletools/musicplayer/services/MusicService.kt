@@ -5,7 +5,10 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.app.Service
-import android.content.*
+import android.content.ContentUris
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.database.Cursor
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -24,7 +27,9 @@ import android.support.v4.media.MediaMetadataCompat
 import android.support.v4.media.session.MediaSessionCompat
 import android.support.v4.media.session.PlaybackStateCompat
 import android.util.Log
+import android.view.KeyEvent
 import androidx.core.app.NotificationCompat
+import androidx.media.session.MediaButtonReceiver
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.PERMISSION_WRITE_STORAGE
 import com.simplemobiletools.commons.helpers.isOreoPlus
@@ -33,13 +38,13 @@ import com.simplemobiletools.musicplayer.activities.MainActivity
 import com.simplemobiletools.musicplayer.databases.SongsDatabase
 import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.extensions.getPlaylistSongs
+import com.simplemobiletools.musicplayer.extensions.sendIntent
 import com.simplemobiletools.musicplayer.extensions.songsDAO
 import com.simplemobiletools.musicplayer.helpers.*
 import com.simplemobiletools.musicplayer.models.Events
 import com.simplemobiletools.musicplayer.models.Song
 import com.simplemobiletools.musicplayer.receivers.ControlActionsListener
 import com.simplemobiletools.musicplayer.receivers.HeadsetPlugReceiver
-import com.simplemobiletools.musicplayer.receivers.RemoteControlReceiver
 import com.squareup.otto.Bus
 import java.io.File
 import java.util.*
@@ -50,12 +55,13 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         private const val MIN_INITIAL_DURATION = 30
         private const val PROGRESS_UPDATE_INTERVAL = 1000
         private const val MIN_SKIP_LENGTH = 2000
+        private const val MAX_CLICK_DURATION = 700
         private const val NOTIFICATION_ID = 78    // just a random number
 
         var mCurrSong: Song? = null
         var mCurrSongCover: Bitmap? = null
         var mEqualizer: Equalizer? = null
-        private var mHeadsetPlugReceiver: HeadsetPlugReceiver? = null
+        private var mHeadsetPlugReceiver = HeadsetPlugReceiver()
         private var mPlayer: MediaPlayer? = null
         private var mPlayedSongIndexes = ArrayList<Int>()
         private var mBus: Bus? = null
@@ -76,6 +82,22 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         fun getIsPlaying() = mPlayer?.isPlaying == true
     }
 
+    private var mClicksCnt = 0
+    private val mRemoteControlHandler = Handler()
+    private val runnable = Runnable {
+        if (mClicksCnt == 0)
+            return@Runnable
+
+        sendIntent(
+                when (mClicksCnt) {
+                    1 -> PLAYPAUSE
+                    2 -> NEXT
+                    else -> PREVIOUS
+                }
+        )
+        mClicksCnt = 0
+    }
+
     override fun onCreate() {
         super.onCreate()
 
@@ -87,10 +109,15 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         mCoverArtHeight = resources.getDimension(R.dimen.top_art_height).toInt()
         mProgressHandler = Handler()
         mediaSession = MediaSessionCompat(this, "MusicService")
+        mediaSession!!.setFlags(MediaSessionCompat.FLAG_HANDLES_MEDIA_BUTTONS)
+        mediaSession!!.setCallback(object : MediaSessionCompat.Callback() {
+            override fun onMediaButtonEvent(mediaButtonEvent: Intent): Boolean {
+                handleMediaButton(mediaButtonEvent)
+                return super.onMediaButtonEvent(mediaButtonEvent)
+            }
+        })
 
-        val remoteControlComponent = ComponentName(packageName, RemoteControlReceiver::class.java.name)
         mAudioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager
-        mAudioManager!!.registerMediaButtonEventReceiver(remoteControlComponent)
         if (isOreoPlus()) {
             mOreoFocusHandler = OreoAudioFocusHandler(applicationContext)
         }
@@ -121,7 +148,6 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             getSortedSongs()
         }
 
-        mHeadsetPlugReceiver = HeadsetPlugReceiver()
         mWasPlayingAtFocusLost = false
         initMediaPlayerIfNeeded()
         setupNotification()
@@ -238,6 +264,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             }
         }
 
+        MediaButtonReceiver.handleIntent(mediaSession!!, intent)
         return START_NOT_STICKY
     }
 
@@ -683,9 +710,6 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         stopSelf()
         mIsThirdPartyIntent = false
         isServiceInitialized = false
-
-        val remoteControlComponent = ComponentName(packageName, RemoteControlReceiver::class.java.name)
-        mAudioManager!!.unregisterMediaButtonEventReceiver(remoteControlComponent)
         abandonAudioFocus()
     }
 
@@ -799,5 +823,31 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         val newProgress = if (forward) curr + twoPercents else curr - twoPercents
         mPlayer!!.seekTo(newProgress)
         resumeSong()
+    }
+
+    private fun handleMediaButton(mediaButtonEvent: Intent) {
+        if (mediaButtonEvent.action == Intent.ACTION_MEDIA_BUTTON) {
+            val swapPrevNext = config.swapPrevNext
+            val intentNext = if (swapPrevNext) PREVIOUS else NEXT
+            val intentPrevious = if (swapPrevNext) NEXT else PREVIOUS
+            val event = mediaButtonEvent.getParcelableExtra<KeyEvent>(Intent.EXTRA_KEY_EVENT)
+            if (event.action == KeyEvent.ACTION_UP) {
+                when (event.keyCode) {
+                    KeyEvent.KEYCODE_MEDIA_PLAY, KeyEvent.KEYCODE_MEDIA_PAUSE -> sendIntent(PLAYPAUSE)
+                    KeyEvent.KEYCODE_MEDIA_PREVIOUS -> sendIntent(intentPrevious)
+                    KeyEvent.KEYCODE_MEDIA_NEXT -> sendIntent(intentNext)
+                    KeyEvent.KEYCODE_HEADSETHOOK -> {
+                        mClicksCnt++
+
+                        mRemoteControlHandler.removeCallbacks(runnable)
+                        if (mClicksCnt >= 3) {
+                            mRemoteControlHandler.post(runnable)
+                        } else {
+                            mRemoteControlHandler.postDelayed(runnable, MAX_CLICK_DURATION.toLong())
+                        }
+                    }
+                }
+            }
+        }
     }
 }
