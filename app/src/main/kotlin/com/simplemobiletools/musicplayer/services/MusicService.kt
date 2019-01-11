@@ -26,7 +26,6 @@ import android.provider.MediaStore
 import android.support.v4.media.MediaMetadataCompat
 import android.support.v4.media.session.MediaSessionCompat
 import android.support.v4.media.session.PlaybackStateCompat
-import android.util.Log
 import android.view.KeyEvent
 import androidx.core.app.NotificationCompat
 import androidx.media.session.MediaButtonReceiver
@@ -38,7 +37,6 @@ import com.simplemobiletools.musicplayer.activities.MainActivity
 import com.simplemobiletools.musicplayer.databases.SongsDatabase
 import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.extensions.getPlaylistSongs
-import com.simplemobiletools.musicplayer.extensions.sendIntent
 import com.simplemobiletools.musicplayer.extensions.songsDAO
 import com.simplemobiletools.musicplayer.helpers.*
 import com.simplemobiletools.musicplayer.models.Events
@@ -51,11 +49,10 @@ import java.util.*
 
 class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnErrorListener, MediaPlayer.OnCompletionListener, AudioManager.OnAudioFocusChangeListener {
     companion object {
-        private val TAG = MusicService::class.java.simpleName
         private const val MIN_INITIAL_DURATION = 30
-        private const val PROGRESS_UPDATE_INTERVAL = 1000
+        private const val PROGRESS_UPDATE_INTERVAL = 1000L
         private const val MIN_SKIP_LENGTH = 2000
-        private const val MAX_CLICK_DURATION = 700
+        private const val MAX_CLICK_DURATION = 700L
         private const val NOTIFICATION_ID = 78    // just a random number
 
         var mCurrSong: Song? = null
@@ -74,27 +71,26 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         private var mWasPlayingAtFocusLost = false
         private var mPlayOnPrepare = true
         private var mIsThirdPartyIntent = false
-        private var intentUri: Uri? = null
-        private var mediaSession: MediaSessionCompat? = null
-        private var isServiceInitialized = false
-        private var prevAudioFocusState = 0
+        private var mIntentUri: Uri? = null
+        private var mMediaSession: MediaSessionCompat? = null
+        private var mIsServiceInitialized = false
+        private var mPrevAudioFocusState = 0
 
         fun getIsPlaying() = mPlayer?.isPlaying == true
     }
 
     private var mClicksCnt = 0
     private val mRemoteControlHandler = Handler()
-    private val runnable = Runnable {
-        if (mClicksCnt == 0)
+    private val mRunnable = Runnable {
+        if (mClicksCnt == 0) {
             return@Runnable
+        }
 
-        sendIntent(
-                when (mClicksCnt) {
-                    1 -> PLAYPAUSE
-                    2 -> NEXT
-                    else -> PREVIOUS
-                }
-        )
+        when (mClicksCnt) {
+            1 -> handlePlayPause()
+            2 -> handleNext()
+            else -> handlePrevious()
+        }
         mClicksCnt = 0
     }
 
@@ -108,9 +104,9 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
         mCoverArtHeight = resources.getDimension(R.dimen.top_art_height).toInt()
         mProgressHandler = Handler()
-        mediaSession = MediaSessionCompat(this, "MusicService")
-        mediaSession!!.setFlags(MediaSessionCompat.FLAG_HANDLES_MEDIA_BUTTONS)
-        mediaSession!!.setCallback(object : MediaSessionCompat.Callback() {
+        mMediaSession = MediaSessionCompat(this, "MusicService")
+        mMediaSession!!.setFlags(MediaSessionCompat.FLAG_HANDLES_MEDIA_BUTTONS)
+        mMediaSession!!.setCallback(object : MediaSessionCompat.Callback() {
             override fun onMediaButtonEvent(mediaButtonEvent: Intent): Boolean {
                 handleMediaButton(mediaButtonEvent)
                 return super.onMediaButtonEvent(mediaButtonEvent)
@@ -131,15 +127,45 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         super.onDestroy()
         destroyPlayer()
         SongsDatabase.destroyInstance()
-        mediaSession?.isActive = false
+        mMediaSession?.isActive = false
+    }
+
+    override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
+        if (!hasPermission(PERMISSION_WRITE_STORAGE)) {
+            return START_NOT_STICKY
+        }
+
+        when (intent.action) {
+            INIT -> handleInit()
+            INIT_PATH -> handleInitPath(intent)
+            SETUP -> handleSetup()
+            PREVIOUS -> handlePrevious()
+            PAUSE -> pauseSong()
+            PLAYPAUSE -> handlePlayPause()
+            NEXT -> handleNext()
+            RESET -> handleReset()
+            PLAYPOS -> playSong(intent)
+            EDIT -> handleEdit(intent)
+            FINISH -> handleFinish()
+            REFRESH_LIST -> handleRefreshList(intent)
+            SET_PROGRESS -> handleSetProgress(intent)
+            SET_EQUALIZER -> handleSetEqualizer(intent)
+            SKIP_BACKWARD -> skip(false)
+            SKIP_FORWARD -> skip(true)
+            REMOVE_CURRENT_SONG -> handleRemoveCurrentSong()
+            REMOVE_SONG_IDS -> handleRemoveSongIDS(intent)
+        }
+
+        MediaButtonReceiver.handleIntent(mMediaSession!!, intent)
+        return START_NOT_STICKY
     }
 
     private fun initService() {
         mSongs.clear()
         mPlayedSongIndexes = ArrayList()
         mCurrSong = null
-        if (mIsThirdPartyIntent && intentUri != null) {
-            val path = getRealPathFromURI(intentUri!!) ?: ""
+        if (mIsThirdPartyIntent && mIntentUri != null) {
+            val path = getRealPathFromURI(mIntentUri!!) ?: ""
             val song = RoomHelper(this).getSongFromPath(path)
             if (song != null) {
                 mSongs.add(song)
@@ -151,121 +177,119 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         mWasPlayingAtFocusLost = false
         initMediaPlayerIfNeeded()
         setupNotification()
-        isServiceInitialized = true
+        mIsServiceInitialized = true
     }
 
-    override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
-        if (!hasPermission(PERMISSION_WRITE_STORAGE)) {
-            return START_NOT_STICKY
-        }
+    private fun handleInit() {
+        mIsThirdPartyIntent = false
+        Thread {
+            if (!mIsServiceInitialized) {
+                initService()
+            }
+            initSongs()
+        }.start()
+    }
 
-        when (intent.action) {
-            INIT -> {
-                mIsThirdPartyIntent = false
-                Thread {
-                    if (!isServiceInitialized) {
-                        initService()
-                    }
-                    initSongs()
-                }.start()
+    private fun handleInitPath(intent: Intent) {
+        mIsThirdPartyIntent = true
+        if (mIntentUri != intent.data) {
+            mIntentUri = intent.data
+            initService()
+            initSongs()
+        } else {
+            updateUI()
+        }
+    }
+
+    private fun handleSetup() {
+        mPlayOnPrepare = true
+        setupNextSong()
+    }
+
+    private fun handlePrevious() {
+        mPlayOnPrepare = true
+        playPreviousSong()
+    }
+
+    private fun handlePlayPause() {
+        mPlayOnPrepare = true
+        if (getIsPlaying()) {
+            pauseSong()
+        } else {
+            resumeSong()
+        }
+    }
+
+    private fun handleNext() {
+        mPlayOnPrepare = true
+        setupNextSong()
+    }
+
+    private fun handleReset() {
+        if (mPlayedSongIndexes.size - 1 != -1) {
+            mPlayOnPrepare = true
+            setSong(mPlayedSongIndexes[mPlayedSongIndexes.size - 1], false)
+        }
+    }
+
+    private fun handleEdit(intent: Intent) {
+        mCurrSong = intent.getSerializableExtra(EDITED_SONG) as Song
+        songChanged(mCurrSong)
+        setupNotification()
+    }
+
+    private fun handleFinish() {
+        mBus!!.post(Events.ProgressUpdated(0))
+        destroyPlayer()
+    }
+
+    private fun handleRefreshList(intent: Intent) {
+        mSongs.clear()
+        Thread {
+            getSortedSongs()
+            Handler(Looper.getMainLooper()).post {
+                mBus!!.post(Events.PlaylistUpdated(mSongs))
             }
-            INIT_PATH -> {
-                mIsThirdPartyIntent = true
-                if (intentUri != intent.data) {
-                    intentUri = intent.data
-                    initService()
-                    initSongs()
-                } else {
-                    updateUI()
-                }
-            }
-            SETUP -> {
-                mPlayOnPrepare = true
+
+            if (intent.getBooleanExtra(CALL_SETUP_AFTER, false)) {
+                mPlayOnPrepare = false
                 setupNextSong()
             }
-            PREVIOUS -> {
-                mPlayOnPrepare = true
-                playPreviousSong()
-            }
-            PAUSE -> pauseSong()
-            PLAYPAUSE -> {
-                mPlayOnPrepare = true
-                if (getIsPlaying()) {
-                    pauseSong()
-                } else {
-                    resumeSong()
-                }
-            }
-            NEXT -> {
-                mPlayOnPrepare = true
-                setupNextSong()
-            }
-            RESET -> {
-                if (mPlayedSongIndexes.size - 1 != -1) {
-                    mPlayOnPrepare = true
-                    setSong(mPlayedSongIndexes[mPlayedSongIndexes.size - 1], false)
-                }
-            }
-            PLAYPOS -> playSong(intent)
-            EDIT -> {
-                mCurrSong = intent.getSerializableExtra(EDITED_SONG) as Song
-                songChanged(mCurrSong)
-                setupNotification()
-            }
-            FINISH -> {
-                mBus!!.post(Events.ProgressUpdated(0))
-                destroyPlayer()
-            }
-            REFRESH_LIST -> {
-                mSongs.clear()
-                Thread {
-                    getSortedSongs()
-                    Handler(Looper.getMainLooper()).post {
-                        mBus!!.post(Events.PlaylistUpdated(mSongs))
-                    }
+        }.start()
+    }
 
-                    if (intent.getBooleanExtra(CALL_SETUP_AFTER, false)) {
-                        mPlayOnPrepare = false
-                        setupNextSong()
-                    }
-                }.start()
-            }
-            SET_PROGRESS -> {
-                if (mPlayer != null) {
-                    val progress = intent.getIntExtra(PROGRESS, mPlayer!!.currentPosition / 1000)
-                    updateProgress(progress)
-                }
-            }
-            SET_EQUALIZER -> {
-                if (intent.extras?.containsKey(EQUALIZER) == true) {
-                    val presetID = intent.extras.getInt(EQUALIZER)
-                    if (mEqualizer != null) {
-                        setPreset(presetID)
-                    }
-                }
-            }
-            SKIP_BACKWARD -> skipBackward()
-            SKIP_FORWARD -> skipForward()
-            REMOVE_CURRENT_SONG -> {
-                pauseSong()
-                mCurrSong = null
-                songChanged(null)
-                setupNotification()
-            }
-            REMOVE_SONG_IDS -> {
-                val ids = intent.getIntegerArrayListExtra(SONG_IDS)
-                val songsToRemove = ArrayList<Song>()
-                mSongs.sortedDescending().forEach {
-                    if (ids.contains(it.path.hashCode())) {
-                        songsToRemove.add(it)
-                    }
-                }
-                mSongs.removeAll(songsToRemove)
+    private fun handleSetProgress(intent: Intent) {
+        if (mPlayer != null) {
+            val progress = intent.getIntExtra(PROGRESS, mPlayer!!.currentPosition / 1000)
+            updateProgress(progress)
+        }
+    }
+
+    private fun handleSetEqualizer(intent: Intent) {
+        if (intent.extras?.containsKey(EQUALIZER) == true) {
+            val presetID = intent.extras?.getInt(EQUALIZER) ?: 0
+            if (mEqualizer != null) {
+                setPreset(presetID)
             }
         }
+    }
 
-        MediaButtonReceiver.handleIntent(mediaSession!!, intent)
-        return START_NOT_STICKY
+    private fun handleRemoveCurrentSong() {
+        pauseSong()
+        mCurrSong = null
+        songChanged(null)
+        setupNotification()
+    }
+
+    private fun handleRemoveSongIDS(intent: Intent) {
+        val ids = intent.getIntegerArrayListExtra(SONG_IDS)
+        val songsToRemove = ArrayList<Song>()
+        mSongs.sortedDescending().forEach {
+            if (ids.contains(it.path.hashCode())) {
+                songsToRemove.add(it)
+            }
+        }
+        mSongs.removeAll(songsToRemove)
     }
 
     private fun setupSong() {
@@ -275,7 +299,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             try {
                 mPlayer!!.apply {
                     reset()
-                    setDataSource(applicationContext, intentUri)
+                    setDataSource(applicationContext, mIntentUri)
                     setOnPreparedListener(null)
                     prepare()
                     start()
@@ -287,8 +311,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
                 mSongs.add(song)
                 mCurrSong = song
                 updateUI()
-            } catch (e: Exception) {
-                Log.e(TAG, "setupSong Exception $e")
+            } catch (ignored: Exception) {
             }
         } else {
             mPlayOnPrepare = false
@@ -318,8 +341,9 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     }
 
     private fun initMediaPlayerIfNeeded() {
-        if (mPlayer != null)
+        if (mPlayer != null) {
             return
+        }
 
         mPlayer = MediaPlayer().apply {
             setWakeMode(applicationContext, PowerManager.PARTIAL_WAKE_LOCK)
@@ -438,7 +462,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
                 .setChannelId(channelId)
                 .setStyle(androidx.media.app.NotificationCompat.MediaStyle()
                         .setShowActionsInCompactView(0, 1, 2)
-                        .setMediaSession(mediaSession?.sessionToken))
+                        .setMediaSession(mMediaSession?.sessionToken))
                 .addAction(R.drawable.ic_previous, getString(R.string.previous), getIntent(PREVIOUS))
                 .addAction(playPauseIcon, getString(R.string.playpause), getIntent(PLAYPAUSE))
                 .addAction(R.drawable.ic_next, getString(R.string.next), getIntent(NEXT))
@@ -454,7 +478,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
         val playbackState = if (getIsPlaying()) PlaybackStateCompat.STATE_PLAYING else PlaybackStateCompat.STATE_PAUSED
         try {
-            mediaSession!!.setPlaybackState(PlaybackStateCompat.Builder()
+            mMediaSession!!.setPlaybackState(PlaybackStateCompat.Builder()
                     .setState(playbackState, PLAYBACK_POSITION_UNKNOWN, 1.0f)
                     .build())
         } catch (ignored: IllegalStateException) {
@@ -561,7 +585,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             val pos = intent.getIntExtra(SONG_POS, 0)
             setSong(pos, true)
         }
-        mediaSession?.isActive = true
+        mMediaSession?.isActive = true
     }
 
     private fun setSong(songIndex: Int, addNewSongToHistory: Boolean) {
@@ -591,8 +615,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             mPlayer!!.setDataSource(applicationContext, trackUri)
             mPlayer!!.prepareAsync()
             songChanged(mCurrSong)
-        } catch (e: Exception) {
-            Log.e(TAG, "setSong IOException $e")
+        } catch (ignored: Exception) {
         }
     }
 
@@ -645,7 +668,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
                 .putBitmap(MediaMetadataCompat.METADATA_KEY_ALBUM_ART, lockScreenImage)
                 .build()
 
-        mediaSession?.setMetadata(metadata)
+        mMediaSession?.setMetadata(metadata)
     }
 
     // do not just return the album cover, but also a boolean to indicate if it a real cover, or just the placeholder
@@ -709,7 +732,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         stopForeground(true)
         stopSelf()
         mIsThirdPartyIntent = false
-        isServiceInitialized = false
+        mIsServiceInitialized = false
         abandonAudioFocus()
     }
 
@@ -735,7 +758,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK -> duckAudio()
             AUDIOFOCUS_LOSS, AUDIOFOCUS_LOSS_TRANSIENT -> audioFocusLost()
         }
-        prevAudioFocusState = focusChange
+        mPrevAudioFocusState = focusChange
     }
 
     private fun audioFocusLost() {
@@ -749,7 +772,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
     private fun audioFocusGained() {
         if (mWasPlayingAtFocusLost) {
-            if (prevAudioFocusState == AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK) {
+            if (mPrevAudioFocusState == AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK) {
                 unduckAudio()
             } else {
                 resumeSong()
@@ -776,7 +799,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     private fun songStateChanged(isPlaying: Boolean) {
         handleProgressHandler(isPlaying)
         setupNotification()
-        mediaSession?.isActive = isPlaying
+        mMediaSession?.isActive = isPlaying
         Handler(Looper.getMainLooper()).post {
             mBus!!.post(Events.SongStateChanged(isPlaying))
         }
@@ -788,8 +811,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         } else {
             try {
                 unregisterReceiver(mHeadsetPlugReceiver)
-            } catch (e: IllegalArgumentException) {
-                Log.e(TAG, "IllegalArgumentException $e")
+            } catch (ignored: IllegalArgumentException) {
             }
         }
     }
@@ -801,20 +823,12 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
                     val secs = mPlayer!!.currentPosition / 1000
                     mBus!!.post(Events.ProgressUpdated(secs))
                     mProgressHandler!!.removeCallbacksAndMessages(null)
-                    mProgressHandler!!.postDelayed(this, PROGRESS_UPDATE_INTERVAL.toLong())
+                    mProgressHandler!!.postDelayed(this, PROGRESS_UPDATE_INTERVAL)
                 }
             })
         } else {
             mProgressHandler!!.removeCallbacksAndMessages(null)
         }
-    }
-
-    private fun skipBackward() {
-        skip(false)
-    }
-
-    private fun skipForward() {
-        skip(true)
     }
 
     private fun skip(forward: Boolean) {
@@ -828,22 +842,20 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     private fun handleMediaButton(mediaButtonEvent: Intent) {
         if (mediaButtonEvent.action == Intent.ACTION_MEDIA_BUTTON) {
             val swapPrevNext = config.swapPrevNext
-            val intentNext = if (swapPrevNext) PREVIOUS else NEXT
-            val intentPrevious = if (swapPrevNext) NEXT else PREVIOUS
             val event = mediaButtonEvent.getParcelableExtra<KeyEvent>(Intent.EXTRA_KEY_EVENT)
             if (event.action == KeyEvent.ACTION_UP) {
                 when (event.keyCode) {
-                    KeyEvent.KEYCODE_MEDIA_PLAY, KeyEvent.KEYCODE_MEDIA_PAUSE -> sendIntent(PLAYPAUSE)
-                    KeyEvent.KEYCODE_MEDIA_PREVIOUS -> sendIntent(intentPrevious)
-                    KeyEvent.KEYCODE_MEDIA_NEXT -> sendIntent(intentNext)
+                    KeyEvent.KEYCODE_MEDIA_PLAY, KeyEvent.KEYCODE_MEDIA_PAUSE -> handlePlayPause()
+                    KeyEvent.KEYCODE_MEDIA_PREVIOUS -> if (swapPrevNext) handleNext() else handlePrevious()
+                    KeyEvent.KEYCODE_MEDIA_NEXT -> if (swapPrevNext) handlePrevious() else handleNext()
                     KeyEvent.KEYCODE_HEADSETHOOK -> {
                         mClicksCnt++
 
-                        mRemoteControlHandler.removeCallbacks(runnable)
+                        mRemoteControlHandler.removeCallbacks(mRunnable)
                         if (mClicksCnt >= 3) {
-                            mRemoteControlHandler.post(runnable)
+                            mRemoteControlHandler.post(mRunnable)
                         } else {
-                            mRemoteControlHandler.postDelayed(runnable, MAX_CLICK_DURATION.toLong())
+                            mRemoteControlHandler.postDelayed(mRunnable, MAX_CLICK_DURATION)
                         }
                     }
                 }
