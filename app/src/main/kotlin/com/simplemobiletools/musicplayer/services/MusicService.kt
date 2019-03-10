@@ -696,7 +696,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
                 val albumArtFiles = arrayListOf("folder.jpg", "albumart.jpg", "cover.jpg")
                 albumArtFiles.forEach {
                     val albumArtFilePath = "$songParentDirectory/$it"
-                    if (getDoesFilePathExist(albumArtFilePath)) {
+                    if (File(albumArtFilePath).exists()) {
                         val bitmap = BitmapFactory.decodeFile(albumArtFilePath)
                         if (bitmap != null) {
                             val resultBitmap = if (bitmap.height > mCoverArtHeight * 2) {
