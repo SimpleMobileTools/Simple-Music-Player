@@ -51,7 +51,7 @@ android {
 }
 
 dependencies {
-    implementation 'com.simplemobiletools:commons:5.10.8'
+    implementation 'com.simplemobiletools:commons:5.10.22'
     implementation 'com.squareup:otto:1.3.8'
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'androidx.media:media:1.0.1'
