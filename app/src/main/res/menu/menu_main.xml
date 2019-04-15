@@ -6,12 +6,12 @@
         android:icon="@drawable/ic_search"
         android:title="@string/search"
         app:actionViewClass="androidx.appcompat.widget.SearchView"
-        app:showAsAction="collapseActionView|ifRoom"/>
+        app:showAsAction="collapseActionView|always"/>
     <item
         android:id="@+id/sort"
         android:icon="@drawable/ic_sort"
         android:title="@string/sort_by"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="always"/>
     <item
         android:id="@+id/toggle_autoplay"
         android:title="@string/disable_autoplay"
@@ -20,7 +20,7 @@
         android:id="@+id/open_playlist"
         android:icon="@drawable/ic_open_playlist"
         android:title="@string/open_playlist"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="always"/>
     <item
         android:id="@+id/delete_current"
         android:title="@string/delete_current_song"
