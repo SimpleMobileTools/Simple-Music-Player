@@ -1,0 +1,77 @@
+<resources>
+    <string name="app_name">Простий Музичний Програвач</string>
+    <string name="app_launcher_name">Music Player</string>
+    <string name="playlist_empty">Ваш список для відтворення порожній</string>
+    <string name="rename_song">Перейменувати пісню</string>
+    <string name="rename_song_error">Трапилася помилка під час перейменування</string>
+    <string name="rename_song_empty">Будь ласка, заповніть всі поля</string>
+    <string name="enable_song_repetition">Повторити поточну пісню</string>
+    <string name="disable_song_repetition">Зупинити повторення поточної пісні</string>
+    <string name="song_repetition_enabled">Активовано повторення поточної пісні</string>
+    <string name="song_repetition_disabled">Припинено повторення поточної пісні</string>
+    <string name="enable_shuffle">Відтворювати пісні довільно</string>
+    <string name="disable_shuffle">Відтворювати за списком</string>
+    <string name="shuffle_enabled">Активовано довільне відтворення</string>
+    <string name="shuffle_disabled">Припинено довільне відтворення</string>
+    <string name="enable_autoplay">Відтворювати автоматично</string>
+    <string name="disable_autoplay">Припинити автоматичне відтворення</string>
+    <string name="autoplay_enabled">Активовано автоматичне відтворення</string>
+    <string name="autoplay_disabled">Припинено автоматичне відтворення</string>
+
+    <string name="previous">Попередній</string>
+    <string name="playpause">Відтворення / Пауза</string>
+    <string name="next">Наступний</string>
+
+    <!-- Playlists -->
+    <string name="add_file_to_playlist">Додати файл до списку відтворення</string>
+    <string name="add_folder_to_playlist">Додати теку до списку відтворення</string>
+    <string name="manage_playlists">Керувати списками відтворення</string>
+    <string name="playlists">Списки відтворення</string>
+    <string name="create_playlist">Створити список відтворення</string>
+    <string name="rename_playlist">Перейменувати список відтворення</string>
+    <string name="playlist_name_exists">Список відтворення з таким ім\'ям вже існує</string>
+    <string name="remove_playlist">Вилучити список відтворення</string>
+    <string name="remove_playlist_description">Буде вилучено лише обрані списки відтворення, а не файли.</string>
+    <string name="remove_playlist_description_placeholder">Буде вилучено лише список відтворення \"%s\", а не файли.</string>
+    <string name="remove_from_playlist">Вилучити зі списку відтворення</string>
+    <string name="remove_from_playlist_description">Буде вилучено лише композиції зі списку відтворення \"%s\", файли не буде видалено.</string>
+    <string name="delete_the_files_too">Видалити файли також</string>
+    <string name="open_playlist">Відкрити список відтворення</string>
+    <string name="all_songs_cannot_be_deleted">Не можна видалити список \'Всі композиції\'</string>
+    <string name="empty_playlist">Поточний список відтворення є порожнім</string>
+    <string name="fetching_songs">Триває завантаження композицій…</string>
+    <string name="all_songs">Всі композиції</string>
+    <string name="create_playlist_from_folder">Створити новий список відтворення з теки</string>
+    <string name="folder_contains_no_audio">Обрана тека не містить аудіофайлів</string>
+    <string name="delete_current_song">Видалити поточну композицію</string>
+    <string name="remove_current_song">Видалити поточну композицію зі списку відтворення</string>
+    <string name="show_filename">Показувати ім\'я файлу як назву композиції:</string>
+    <string name="title_is_not_available">Якщо назва недоступна</string>
+    <string name="show_album_cover">Показувати обгортку альбома на головному екрані</string>
+
+    <!-- Settings -->
+    <string name="equalizer">Еквалайзер</string>
+    <string name="swap_prev_next">Змінити призначення кнопок навушників Попередній/Наступний</string>
+
+    <!-- FAQ -->
+    <string name="faq_1_title">Як я можу перемістити момент відтворення композиції?</string>
+    <string name="faq_1_text">Ви можете натиснути на текст поточної або загальної тривалості відтворення поруч із повзунком, це перемістить відтворення композиції або вперед, або назад.</string>
+
+    <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
+    <!-- Short description has to have less than 80 chars -->
+    <string name="app_short_description">Чистий музичний програвач з віджетом, що легко налаштувати. Без реклами.</string>
+    <string name="app_long_description">
+        Музичний програвач, який легко контролювати з рядка стану, віджета на домашньому екрані або кнопок на ваших навушниках. Ви можете сортувати композиції за Назвою, Ім\'ям виконавця, також налаштовувати Еквалайзер. Поки не підтримує фільтрування за ім\'ям виконавця і назвою альбому, слідкуйте за оновленнями!
+
+        Містить віджет, в якого можна налаштувати колір тексту, колір фону та прозорість.
+
+        Цей додаток не буде показувати рекламу, потрібні лише найнеобхідніші дозволи. Додаток має повністю відкритий програмний код, кольори оформлення можна легко налаштувати.
+
+        Простий Музичний Програвач - це один із ряду додатків від Simple Mobile Tools. Інші додатки можна знайти тут: https://www.simplemobiletools.com
+    </string>
+
+    <!--
+        Haven't found some strings? There's more at
+        https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
+    -->
+</resources>
