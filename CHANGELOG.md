@@ -1,6 +1,11 @@
 Changelog
 ==========
 
+Version 5.1.3 *(2019-06-22)*
+----------------------------
+
+ * Some translation and stability improvements
+
 Version 5.1.2 *(2019-04-08)*
 ----------------------------
 
