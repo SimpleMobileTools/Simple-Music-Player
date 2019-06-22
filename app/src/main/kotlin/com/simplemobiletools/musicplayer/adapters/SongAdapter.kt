@@ -75,7 +75,7 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val list
 
     override fun onBindViewHolder(holder: MyRecyclerViewAdapter.ViewHolder, position: Int) {
         if (holder !is TransparentViewHolder && holder !is NavigationViewHolder) {
-            val song = songs[position - LIST_HEADERS_COUNT]
+            val song = songs.getOrNull(position - LIST_HEADERS_COUNT) ?: return
             holder.bindView(song, true, true) { itemView, layoutPosition ->
                 setupView(itemView, song, layoutPosition)
             }
@@ -293,7 +293,7 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val list
         }.start()
     }
 
-    private fun getFirstSelectedItemPath() = getSelectedSongs().first().path
+    private fun getFirstSelectedItemPath() = getSelectedSongs().firstOrNull()?.path ?: ""
 
     private fun getSelectedSongs(): ArrayList<Song> {
         val selectedSongs = ArrayList<Song>(selectedKeys.size)
