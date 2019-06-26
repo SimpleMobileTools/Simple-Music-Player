@@ -1,0 +1,77 @@
+<resources>
+    <string name="app_name">Simple Music Player</string>
+    <string name="app_launcher_name">Musik</string>
+    <string name="playlist_empty">Daftar putar anda kosong</string>
+    <string name="rename_song">Ubah nama lagu</string>
+    <string name="rename_song_error">Terjadi kesalahan saat mengubah nama</string>
+    <string name="rename_song_empty">Silakan isi semua ruas</string>
+    <string name="enable_song_repetition">Ulangi lagi ini</string>
+    <string name="disable_song_repetition">Berhenti mengulangi lagu ini</string>
+    <string name="song_repetition_enabled">Perulangan lagu diaktifkan</string>
+    <string name="song_repetition_disabled">Perulangan lagu dinonaktifkan</string>
+    <string name="enable_shuffle">Aktifkan acak</string>
+    <string name="disable_shuffle">Nonaktifkan acak</string>
+    <string name="shuffle_enabled">Acak diaktifkan</string>
+    <string name="shuffle_disabled">Acak dinonaktifkan</string>
+    <string name="enable_autoplay">Aktifkan putar otomatis</string>
+    <string name="disable_autoplay">Nonaktifkan putar otomatis</string>
+    <string name="autoplay_enabled">Putar otomatis diaktifkan</string>
+    <string name="autoplay_disabled">Putar otomatis dinonaktifkan</string>
+
+    <string name="previous">Sebelumnya</string>
+    <string name="playpause">Putar / Jeda</string>
+    <string name="next">Berikutnya</string>
+
+    <!-- Playlists -->
+    <string name="add_file_to_playlist">Tambah berkas ke daftar putar</string>
+    <string name="add_folder_to_playlist">Tambah folder ke daftar putar</string>
+    <string name="manage_playlists">Kelola daftar putar</string>
+    <string name="playlists">Daftar putar</string>
+    <string name="create_playlist">Buat daftar putar</string>
+    <string name="rename_playlist">Ubah nama daftar putar</string>
+    <string name="playlist_name_exists">Daftar putar dengan nama sama sudah ada</string>
+    <string name="remove_playlist">Buang daftar putar</string>
+    <string name="remove_playlist_description">Ini hanya akan membuang daftar putar yang dipilih, bukan berkas musik yang disimpan di perangkat anda.</string>
+    <string name="remove_playlist_description_placeholder">Ini hanya akan membuang daftar putar \"%s\", bukan berkas musik yang disimpan di perangkat anda.</string>
+    <string name="remove_from_playlist">Buang dari daftar putar</string>
+    <string name="remove_from_playlist_description">Ini hanya akan membuang item dari daftar putar \"%s\", berkas aslinya tidak akan dihapus.</string>
+    <string name="delete_the_files_too">Hapus juga berkas yang disimpan di perangkat anda</string>
+    <string name="open_playlist">Buka daftar putar</string>
+    <string name="all_songs_cannot_be_deleted">Daftar putar \'Semua lagu\' tidak bisa dihapus</string>
+    <string name="empty_playlist">Daftar putar ini kosong</string>
+    <string name="fetching_songs">Memuat lagu…</string>
+    <string name="all_songs">Semua lagu</string>
+    <string name="create_playlist_from_folder">Buat daftar putar baru dari folder</string>
+    <string name="folder_contains_no_audio">Folder yang dipilih tidak berisi berkas audio</string>
+    <string name="delete_current_song">Hapus lagu ini</string>
+    <string name="remove_current_song">Hapus lagu ini dari daftar putar</string>
+    <string name="show_filename">Tampilkan nama berkas sebagai judul lagu:</string>
+    <string name="title_is_not_available">Jika judul tidak tersedia</string>
+    <string name="show_album_cover">Tampilkan kover album pada layar utama</string>
+
+    <!-- Settings -->
+    <string name="equalizer">Equalizer</string>
+    <string name="swap_prev_next">Tukar tombol pemilih lagu sebelumnya/berikutnya pada headphone</string>
+
+    <!-- FAQ -->
+    <string name="faq_1_title">Bagaimana saya memajukan lagu?</string>
+    <string name="faq_1_text">Anda bisa klik teks durasi di dekat bilah laju, tindakan tersebut akan memajukan atau memundurkan lagu.</string>
+
+    <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
+    <!-- Short description has to have less than 80 chars -->
+    <string name="app_short_description">Pemutar musik dengan widget yang bisa disesuaikan.</string>
+    <string name="app_long_description">
+        Pemutar musik yang mudah dikendalikan dari bilah status, widget layar beranda atau tombol perangkat keras pada perangkat headset anda. Anda bisa mengurutkan lagu berdasarkan Judul atau Artis, juga mengubah Equalizer. Belum mendukung filter lagu berdasarkan artis atau album, stay tuned!
+
+        Fitur widget dengan warna teks, latar belakang dan transparansi yang bisa disesuaikan.
+
+        Sama sekali tidak berisi iklan dan tidak membutuhkan perizinan yang tidak perlu. Sepenuhnya bersumber terbuka, dengan warna yang bisa disesuaikan.
+
+        Aplikasi ini hanya salah satu bagian dari rangkaian aplikasi yang lebih besar. Anda bisa menemukan yang lainnya di at https://www.simplemobiletools.com
+    </string>
+
+    <!--
+        Haven't found some strings? There's more at
+        https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
+    -->
+</resources>
