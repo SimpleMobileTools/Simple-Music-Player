@@ -368,7 +368,8 @@ class MainActivity : SimpleActivity(), SongListListener {
     private fun startSleepTimer() {
         sleep_timer_holder.beVisible()
 
-        sleepTimer = object : CountDownTimer((config.lastSleepTimerSeconds + 1) * 1000L, 1000) {
+        val millisInFuture = config.sleepInTS - System.currentTimeMillis() + 1000L
+        sleepTimer = object : CountDownTimer(millisInFuture, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 val seconds = (millisUntilFinished / 1000).toInt()
                 sleep_timer_value.text = seconds.getFormattedDuration()
