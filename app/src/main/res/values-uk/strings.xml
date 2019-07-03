@@ -46,7 +46,7 @@
     <string name="folder_contains_no_audio">Обрана тека не містить аудіофайлів</string>
     <string name="delete_current_song">Видалити поточну композицію</string>
     <string name="remove_current_song">Видалити поточну композицію зі списку відтворення</string>
-    <string name="show_filename">Показувати ім\'я файлу як назву композиції:</string>
+    <string name="show_filename">Показувати ім\'я файлу як назву композиції</string>
     <string name="title_is_not_available">Якщо назва недоступна</string>
     <string name="show_album_cover">Показувати обгортку альбома на головному екрані</string>
 

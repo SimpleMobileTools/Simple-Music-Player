@@ -46,7 +46,7 @@
     <string name="folder_contains_no_audio">Wybrany folder nie zawiera plików audio</string>
     <string name="delete_current_song">Usuń obecną piosenkę</string>
     <string name="remove_current_song">Usuń obecną piosenkę z listy odtwarzania</string>
-    <string name="show_filename">Pokazuj nazwę pliku jako tytuł piosenki:</string>
+    <string name="show_filename">Pokazuj nazwę pliku jako tytuł piosenki</string>
     <string name="title_is_not_available">Jeśli tytuł jest niedostępny</string>
     <string name="show_album_cover">Pokazuj okładkę albumu na głównym ekranie</string>
 

@@ -46,7 +46,7 @@
     <string name="folder_contains_no_audio">Hautatutako karpetak ez du audio fitxategirik barruan</string>
     <string name="delete_current_song">Uneko abestia ezabatu</string>
     <string name="remove_current_song">Uneko abestia erreprodukzio zerrendatik kendu</string>
-    <string name="show_filename">Fitxategiaren izena abestiaren izenburu gisa erakutsi:</string>
+    <string name="show_filename">Fitxategiaren izena abestiaren izenburu gisa erakutsi</string>
     <string name="title_is_not_available">Izenburua eskuragarri ez badago</string>
     <string name="show_album_cover">Albumaren azala pantaila nagusian erakutsi</string>
 

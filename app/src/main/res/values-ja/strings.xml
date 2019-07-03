@@ -46,7 +46,7 @@
     <string name="folder_contains_no_audio">選択したフォルダにはオーディオファイルが含まれていません</string>
     <string name="delete_current_song">現在の曲を削除</string>
     <string name="remove_current_song">プレイリストから現在の曲を削除</string>
-    <string name="show_filename">ファイル名を曲名として表示:</string>
+    <string name="show_filename">ファイル名を曲名として表示</string>
     <string name="title_is_not_available">曲名が使用できない場合</string>
     <string name="show_album_cover">メイン画面にアルバムカバーを表示する</string>
 

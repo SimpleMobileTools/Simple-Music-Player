@@ -46,7 +46,7 @@
     <string name="folder_contains_no_audio">Seçilmiş qovluqda mahnı yoxdur</string>
     <string name="delete_current_song">Hazırki mahnını sil</string>
     <string name="remove_current_song">Hazırki mahnını albomdan sil</string>
-    <string name="show_filename">Fayl adını mahnı başlığı kimi göstər:</string>
+    <string name="show_filename">Fayl adını mahnı başlığı kimi göstər</string>
     <string name="title_is_not_available">Əgər başlıq yoxdursa</string>
     <string name="show_album_cover">Əsas ekranda albom çərçivəsini göstər</string>
 

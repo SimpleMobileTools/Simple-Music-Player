@@ -46,7 +46,7 @@
     <string name="folder_contains_no_audio">Seçilen klasörde ses dosyası yok</string>
     <string name="delete_current_song">Geçerli şarkıyı sil</string>
     <string name="remove_current_song">Geçerli şarkıyı çalma listesinden kaldır</string>
-    <string name="show_filename">Şarkı başlığı olarak dosya adını göster:</string>
+    <string name="show_filename">Şarkı başlığı olarak dosya adını göster</string>
     <string name="title_is_not_available">Başlık yoksa</string>
     <string name="show_album_cover">Ana ekranda albüm kapağını göster</string>
 

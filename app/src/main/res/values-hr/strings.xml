@@ -46,7 +46,7 @@
     <string name="folder_contains_no_audio">Odabrana mapa ne sadrži audio datoteke</string>
     <string name="delete_current_song">Brisanje trenutne pjesme</string>
     <string name="remove_current_song">Uklonite trenutnu pjesmu s popisa pjesama</string>
-    <string name="show_filename">Prikaži naziv datoteke kao naslov pjesme:</string>
+    <string name="show_filename">Prikaži naziv datoteke kao naslov pjesme</string>
     <string name="title_is_not_available">Ako naslov nije dostupan</string>
     <string name="show_album_cover">Pokazivanje naslovnice albuma na glavnom zaslonu</string>
 

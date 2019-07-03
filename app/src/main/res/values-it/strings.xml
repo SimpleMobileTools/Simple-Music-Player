@@ -46,7 +46,7 @@
     <string name="folder_contains_no_audio">La cartella selezionata non contiene file audio</string>
     <string name="delete_current_song">Rimuovi il brano attuale</string>
     <string name="remove_current_song">Rimuovi il brano attuale dalla scaletta</string>
-    <string name="show_filename">Mostra il nome del file come titolo del brano:</string>
+    <string name="show_filename">Mostra il nome del file come titolo del brano</string>
     <string name="title_is_not_available">Se il titolo non è disponibile</string>
     <string name="show_album_cover">Mostra la copertina dell\'album nella schermata principale</string>
 

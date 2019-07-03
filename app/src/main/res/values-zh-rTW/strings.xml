@@ -46,7 +46,7 @@
     <string name="folder_contains_no_audio">所選資料夾不包含音訊檔案</string>
     <string name="delete_current_song">刪除當前歌曲</string>
     <string name="remove_current_song">從播放清單移除當前歌曲</string>
-    <string name="show_filename">顯示檔案名稱作為歌名:</string>
+    <string name="show_filename">顯示檔案名稱作為歌名</string>
     <string name="title_is_not_available">如果標題不可用</string>
     <string name="show_album_cover">在主畫面顯示專輯封面</string>
 
