@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/dialog_custom_sleep_timer_holder"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingLeft="@dimen/activity_margin"
+    android:paddingTop="@dimen/activity_margin"
+    android:paddingRight="@dimen/activity_margin">
+
+    <com.simplemobiletools.commons.views.MyEditText
+        android:id="@+id/dialog_custom_sleep_timer_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:digits="0123456789"
+        android:ems="6"
+        android:inputType="number"
+        android:maxLength="5"
+        android:textCursorDrawable="@null"
+        android:textSize="@dimen/bigger_text_size"/>
+
+    <com.simplemobiletools.commons.views.MyTextView
+        android:id="@+id/dialog_custom_sleep_timer_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/activity_margin"
+        android:text="@string/minutes_raw"
+        android:textSize="@dimen/bigger_text_size"/>
+
+</LinearLayout>

@@ -33,6 +33,7 @@ import com.simplemobiletools.musicplayer.adapters.SongAdapter
 import com.simplemobiletools.musicplayer.dialogs.ChangeSortingDialog
 import com.simplemobiletools.musicplayer.dialogs.NewPlaylistDialog
 import com.simplemobiletools.musicplayer.dialogs.RemovePlaylistDialog
+import com.simplemobiletools.musicplayer.dialogs.SleepTimerCustomDialog
 import com.simplemobiletools.musicplayer.extensions.*
 import com.simplemobiletools.musicplayer.helpers.*
 import com.simplemobiletools.musicplayer.inlines.indexOfFirstOrNull
@@ -351,15 +352,24 @@ class MainActivity : SimpleActivity(), SongListListener {
                 RadioItem(10 * 60, "10 $minutes"),
                 RadioItem(20 * 60, "20 $minutes"),
                 RadioItem(30 * 60, "30 $minutes"),
-                RadioItem(60 * 60, hour))
+                RadioItem(60 * 60, hour),
+                RadioItem(-1, getString(R.string.custom)))
 
         RadioGroupDialog(this, items, config.lastSleepTimerSeconds) {
-            if (it as Int > 0) {
-                config.lastSleepTimerSeconds = it
-                config.sleepInTS = System.currentTimeMillis() + it * 1000
-                startSleepTimer()
+            if (it as Int == -1) {
+                SleepTimerCustomDialog(this) {
+                    pickedSleepTimer(it)
+                }
+            } else if (it > 0) {
+                pickedSleepTimer(it)
             }
         }
+    }
+
+    private fun pickedSleepTimer(seconds: Int) {
+        config.lastSleepTimerSeconds = seconds
+        config.sleepInTS = System.currentTimeMillis() + seconds * 1000
+        startSleepTimer()
     }
 
     private fun startSleepTimer() {
