@@ -121,6 +121,9 @@ class MainActivity : SimpleActivity(), SongListListener {
             }
         }
 
+        if (config.sleepInTS != 0L) {
+            startSleepTimer()
+        }
         checkAppOnSDCard()
     }
 
