@@ -3,11 +3,14 @@ package com.simplemobiletools.musicplayer.models
 import android.provider.MediaStore
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import com.simplemobiletools.commons.extensions.getFilenameFromPath
 import com.simplemobiletools.commons.extensions.getFormattedDuration
 import com.simplemobiletools.commons.helpers.SORT_BY_ARTIST
 import com.simplemobiletools.commons.helpers.SORT_BY_PATH
 import com.simplemobiletools.commons.helpers.SORT_BY_TITLE
 import com.simplemobiletools.commons.helpers.SORT_DESCENDING
+import com.simplemobiletools.musicplayer.helpers.SHOW_FILENAME_IF_UNAVAILABLE
+import com.simplemobiletools.musicplayer.helpers.SHOW_FILENAME_NEVER
 import java.io.Serializable
 
 @Entity(tableName = "songs", primaryKeys = ["path", "playlist_id"])
@@ -66,5 +69,13 @@ data class Song(
         sorting and SORT_BY_ARTIST != 0 -> artist
         sorting and SORT_BY_PATH != 0 -> path
         else -> duration.getFormattedDuration()
+    }
+
+    fun getProperTitle(showFilename: Int): String {
+        return when (showFilename) {
+            SHOW_FILENAME_NEVER -> title
+            SHOW_FILENAME_IF_UNAVAILABLE -> if (title == MediaStore.UNKNOWN_STRING) path.getFilenameFromPath() else title
+            else -> path.getFilenameFromPath()
+        }
     }
 }

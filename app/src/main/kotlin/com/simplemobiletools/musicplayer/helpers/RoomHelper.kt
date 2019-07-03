@@ -57,8 +57,8 @@ class RoomHelper(val context: Context) {
                         val path = cursor.getStringValue(MediaStore.Audio.Media.DATA)
                         val duration = cursor.getIntValue(MediaStore.Audio.Media.DURATION) / 1000
                         val album = cursor.getStringValue(MediaStore.Audio.Media.ALBUM)
-                        val newTitle = getSongTitle(title, showFilename, path)
-                        val song = Song(mediaStoreId, newTitle, artist, path, duration, album, playlistId, TYPE_FILE)
+                        val song = Song(mediaStoreId, title, artist, path, duration, album, playlistId, TYPE_FILE)
+                        song.title = song.getProperTitle(showFilename)
                         songs.add(song)
                         pathsMap.remove(path)
                     } while (cursor.moveToNext())
@@ -72,8 +72,8 @@ class RoomHelper(val context: Context) {
         pathsMap.forEach {
             val unknown = MediaStore.UNKNOWN_STRING
             val title = it.getFileSongTitle() ?: unknown
-            val song = Song(0, getSongTitle(title, showFilename, it), it.getFileArtist() ?: unknown, it, it.getFileDurationSeconds()
-                    ?: 0, "", playlistId, TYPE_FILE)
+            val song = Song(0, title, it.getFileArtist() ?: unknown, it, it.getFileDurationSeconds() ?: 0, "", playlistId, TYPE_FILE)
+            song.title = song.getProperTitle(showFilename)
             songs.add(song)
         }
 
@@ -81,12 +81,4 @@ class RoomHelper(val context: Context) {
     }
 
     private fun getQuestionMarks(cnt: Int) = "?" + ",?".repeat(Math.max(cnt - 1, 0))
-
-    private fun getSongTitle(title: String, showFilename: Int, path: String): String {
-        return when (showFilename) {
-            SHOW_FILENAME_NEVER -> title
-            SHOW_FILENAME_IF_UNAVAILABLE -> if (title == MediaStore.UNKNOWN_STRING) path.getFilenameFromPath() else title
-            else -> path.getFilenameFromPath()
-        }
-    }
 }

@@ -58,7 +58,11 @@ fun Context.getPlaylistSongs(playlistId: Int): ArrayList<Song> {
     val validSongs = ArrayList<Song>()
     val invalidSongs = ArrayList<Song>()
     val songs = songsDAO.getSongsFromPlaylist(playlistId)
+    val showFilename = config.showFilename
+
     songs.forEach {
+        it.title = it.getProperTitle(showFilename)
+
         if (File(it.path).exists()) {
             validSongs.add(it)
         } else {
