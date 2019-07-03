@@ -10,6 +10,7 @@ import android.graphics.drawable.LayerDrawable
 import android.media.AudioManager
 import android.net.Uri
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.os.Environment
 import android.view.Menu
 import android.view.MenuItem
@@ -54,6 +55,7 @@ class MainActivity : SimpleActivity(), SongListListener {
     private var isThirdPartyIntent = false
     private var songs = ArrayList<Song>()
     private var searchMenuItem: MenuItem? = null
+    private var sleepTimer: CountDownTimer? = null
     private var isSearchOpen = false
     private var wasInitialPlaylistSet = false
     private var lastFilePickerPath = ""
@@ -97,7 +99,7 @@ class MainActivity : SimpleActivity(), SongListListener {
         repeat_btn.setOnClickListener { toggleSongRepetition() }
         song_progress_current.setOnClickListener { sendIntent(SKIP_BACKWARD) }
         song_progress_max.setOnClickListener { sendIntent(SKIP_FORWARD) }
-        sleep_timer_stop.setOnClickListener { }
+        sleep_timer_stop.setOnClickListener { stopSleepTimer() }
 
         songs_playlist_empty_add_folder.setOnClickListener { addFolderToPlaylist() }
         volumeControlStream = AudioManager.STREAM_MUSIC
@@ -174,6 +176,7 @@ class MainActivity : SimpleActivity(), SongListListener {
     override fun onDestroy() {
         super.onDestroy()
         bus.unregister(this)
+        sleepTimer?.cancel()
 
         if (isThirdPartyIntent && !isChangingConfigurations) {
             sendIntent(FINISH)
@@ -353,13 +356,34 @@ class MainActivity : SimpleActivity(), SongListListener {
                 RadioItem(30 * 60, "30 $minutes"),
                 RadioItem(60 * 60, hour))
 
-        RadioGroupDialog(this, items, config.lastSleepTimerMinutes) {
+        RadioGroupDialog(this, items, config.lastSleepTimerSeconds) {
             if (it as Int > 0) {
-                config.lastSleepTimerMinutes = it
-                sleep_timer_holder.beVisible()
-                sleep_timer_value.text = it.getFormattedDuration()
+                config.lastSleepTimerSeconds = it
+                config.sleepInTS = System.currentTimeMillis() + it * 1000
+                startSleepTimer()
             }
         }
+    }
+
+    private fun startSleepTimer() {
+        sleep_timer_holder.beVisible()
+
+        sleepTimer = object : CountDownTimer((config.lastSleepTimerSeconds + 1) * 1000L, 1000) {
+            override fun onTick(millisUntilFinished: Long) {
+                val seconds = (millisUntilFinished / 1000).toInt()
+                sleep_timer_value.text = seconds.getFormattedDuration()
+            }
+
+            override fun onFinish() {
+            }
+        }
+        sleepTimer?.start()
+    }
+
+    private fun stopSleepTimer() {
+        config.sleepInTS = 0
+        sleepTimer?.cancel()
+        sleep_timer_holder.beGone()
     }
 
     private fun removePlaylist() {
