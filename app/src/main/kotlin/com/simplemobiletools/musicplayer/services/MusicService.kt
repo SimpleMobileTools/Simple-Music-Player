@@ -31,6 +31,7 @@ import androidx.core.app.NotificationCompat
 import androidx.media.session.MediaButtonReceiver
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.PERMISSION_WRITE_STORAGE
+import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.commons.helpers.isOreoPlus
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.MainActivity
@@ -182,12 +183,12 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
     private fun handleInit() {
         mIsThirdPartyIntent = false
-        Thread {
+        ensureBackgroundThread {
             if (!mIsServiceInitialized) {
                 initService()
             }
             initSongs()
-        }.start()
+        }
     }
 
     private fun handleInitPath(intent: Intent) {
@@ -245,7 +246,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
     private fun handleRefreshList(intent: Intent) {
         mSongs.clear()
-        Thread {
+        ensureBackgroundThread {
             getSortedSongs()
             Handler(Looper.getMainLooper()).post {
                 mBus!!.post(Events.PlaylistUpdated(mSongs))
@@ -255,7 +256,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
                 mPlayOnPrepare = false
                 setupNextSong()
             }
-        }.start()
+        }
     }
 
     private fun handleSetProgress(intent: Intent) {

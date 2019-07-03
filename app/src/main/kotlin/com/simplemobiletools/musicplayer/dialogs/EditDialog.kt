@@ -6,6 +6,7 @@ import android.provider.MediaStore
 import androidx.appcompat.app.AlertDialog
 import com.simplemobiletools.commons.activities.BaseSimpleActivity
 import com.simplemobiletools.commons.extensions.*
+import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.extensions.songsDAO
 import com.simplemobiletools.musicplayer.models.Song
@@ -69,13 +70,13 @@ class EditDialog(val activity: BaseSimpleActivity, val song: Song, val callback:
     }
 
     private fun storeEditedSong(song: Song, oldPath: String, newPath: String) {
-        Thread {
+        ensureBackgroundThread {
             try {
                 activity.songsDAO.updateSongInfo(newPath, song.artist, song.title, oldPath)
             } catch (e: Exception) {
                 activity.showErrorToast(e)
             }
-        }.start()
+        }
     }
 
     private fun updateContentResolver(context: Context, songID: Long, newSongTitle: String, newSongArtist: String) {

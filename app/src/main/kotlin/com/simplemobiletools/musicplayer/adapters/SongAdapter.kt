@@ -9,6 +9,7 @@ import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
 import com.simplemobiletools.commons.dialogs.ConfirmationDialog
 import com.simplemobiletools.commons.dialogs.PropertiesDialog
 import com.simplemobiletools.commons.extensions.*
+import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.commons.models.FileDirItem
 import com.simplemobiletools.commons.views.FastScroller
 import com.simplemobiletools.commons.views.MyRecyclerView
@@ -186,12 +187,12 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val list
 
     private fun askConfirmDelete() {
         ConfirmationDialog(activity) {
-            Thread {
+            ensureBackgroundThread {
                 deleteSongs()
                 activity.runOnUiThread {
                     finishActMode()
                 }
-            }.start()
+            }
         }
     }
 
@@ -284,13 +285,13 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val list
         songs.removeAll(removeSongs)
         positions.sortDescending()
         removeSelectedItems(positions)
-        Thread {
+        ensureBackgroundThread {
             activity.songsDAO.removeSongsFromPlaylists(removeSongs)
 
             if (songs.isEmpty()) {
                 listener.refreshItems()
             }
-        }.start()
+        }
     }
 
     private fun getFirstSelectedItemPath() = getSelectedSongs().firstOrNull()?.path ?: ""
@@ -357,10 +358,10 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val list
             if (songs.isNotEmpty() && currentSong != null) {
                 selectedKeys.add(currentSong!!.path.hashCode())
                 activity.sendIntent(NEXT)
-                Thread {
+                ensureBackgroundThread {
                     deleteSongs()
                     selectedKeys.clear()
-                }.start()
+                }
             }
         }
     }

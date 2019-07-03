@@ -19,10 +19,7 @@ import androidx.core.view.MenuItemCompat
 import com.simplemobiletools.commons.dialogs.FilePickerDialog
 import com.simplemobiletools.commons.dialogs.RadioGroupDialog
 import com.simplemobiletools.commons.extensions.*
-import com.simplemobiletools.commons.helpers.LICENSE_OTTO
-import com.simplemobiletools.commons.helpers.LICENSE_PICASSO
-import com.simplemobiletools.commons.helpers.PERMISSION_WRITE_STORAGE
-import com.simplemobiletools.commons.helpers.REAL_FILE_PATH
+import com.simplemobiletools.commons.helpers.*
 import com.simplemobiletools.commons.interfaces.RecyclerScrollCallback
 import com.simplemobiletools.commons.models.FAQItem
 import com.simplemobiletools.commons.models.FileDirItem
@@ -341,11 +338,11 @@ class MainActivity : SimpleActivity(), SongListListener {
         if (config.currentPlaylist == ALL_SONGS_PLAYLIST_ID) {
             toast(R.string.all_songs_cannot_be_deleted)
         } else {
-            Thread {
+            ensureBackgroundThread {
                 val playlist = playlistDAO.getPlaylistWithId(config.currentPlaylist)
                 runOnUiThread {
                     RemovePlaylistDialog(this, playlist) {
-                        Thread {
+                        ensureBackgroundThread {
                             if (it) {
                                 val paths = getPlaylistSongs(config.currentPlaylist).map { it.path }
                                 val files = paths.map { FileDirItem(it, it.getFilenameFromPath()) } as ArrayList<FileDirItem>
@@ -359,20 +356,20 @@ class MainActivity : SimpleActivity(), SongListListener {
                                 deletePlaylists(arrayListOf(playlist))
                             }
                             playlistChanged(ALL_SONGS_PLAYLIST_ID)
-                        }.start()
+                        }
                     }
                 }
-            }.start()
+            }
         }
     }
 
     private fun openPlaylist() {
-        Thread {
+        ensureBackgroundThread {
             val playlists = playlistDAO.getAll() as ArrayList<Playlist>
             runOnUiThread {
                 showPlaylists(playlists)
             }
-        }.start()
+        }
     }
 
     private fun showPlaylists(playlists: ArrayList<Playlist>) {
@@ -399,11 +396,11 @@ class MainActivity : SimpleActivity(), SongListListener {
     private fun addFolderToPlaylist() {
         FilePickerDialog(this, getFilePickerInitialPath(), pickFile = false) {
             toast(R.string.fetching_songs)
-            Thread {
+            ensureBackgroundThread {
                 val folderSongs = getFolderSongs(File(it))
                 RoomHelper(applicationContext).addSongsToPlaylist(folderSongs)
                 sendIntent(REFRESH_LIST)
-            }.start()
+            }
         }
     }
 
@@ -423,7 +420,7 @@ class MainActivity : SimpleActivity(), SongListListener {
 
     private fun addFileToPlaylist() {
         FilePickerDialog(this, getFilePickerInitialPath()) {
-            Thread {
+            ensureBackgroundThread {
                 lastFilePickerPath = it
                 if (it.isAudioFast()) {
                     RoomHelper(applicationContext).addSongToPlaylist(it)
@@ -431,15 +428,15 @@ class MainActivity : SimpleActivity(), SongListListener {
                 } else {
                     toast(R.string.invalid_file_format)
                 }
-            }.start()
+            }
         }
     }
 
     private fun createPlaylistFromFolder() {
         FilePickerDialog(this, getFilePickerInitialPath(), pickFile = false) {
-            Thread {
+            ensureBackgroundThread {
                 createPlaylistFrom(it)
-            }.start()
+            }
         }
     }
 

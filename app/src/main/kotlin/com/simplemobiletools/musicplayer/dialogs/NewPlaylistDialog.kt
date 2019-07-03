@@ -6,6 +6,7 @@ import com.simplemobiletools.commons.extensions.setupDialogStuff
 import com.simplemobiletools.commons.extensions.showKeyboard
 import com.simplemobiletools.commons.extensions.toast
 import com.simplemobiletools.commons.extensions.value
+import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.extensions.getPlaylistIdWithTitle
 import com.simplemobiletools.musicplayer.extensions.playlistDAO
@@ -33,7 +34,7 @@ class NewPlaylistDialog(val activity: Activity, var playlist: Playlist? = null, 
                         showKeyboard(view.new_playlist_title)
                         getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
                             val title = view.new_playlist_title.value
-                            Thread {
+                            ensureBackgroundThread {
                                 val playlistIdWithTitle = activity.getPlaylistIdWithTitle(title)
                                 var isPlaylistTitleTaken = isNewPlaylist && playlistIdWithTitle != -1
                                 if (!isPlaylistTitleTaken) {
@@ -42,10 +43,10 @@ class NewPlaylistDialog(val activity: Activity, var playlist: Playlist? = null, 
 
                                 if (title.isEmpty()) {
                                     activity.toast(R.string.empty_name)
-                                    return@Thread
+                                    return@ensureBackgroundThread
                                 } else if (isPlaylistTitleTaken) {
                                     activity.toast(R.string.playlist_name_exists)
-                                    return@Thread
+                                    return@ensureBackgroundThread
                                 }
 
                                 playlist!!.title = title
@@ -63,7 +64,7 @@ class NewPlaylistDialog(val activity: Activity, var playlist: Playlist? = null, 
                                 } else {
                                     activity.toast(R.string.unknown_error_occurred)
                                 }
-                            }.start()
+                            }
                         }
                     }
                 }

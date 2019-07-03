@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
 import com.simplemobiletools.commons.extensions.*
+import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.commons.models.FileDirItem
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.musicplayer.R
@@ -115,7 +116,7 @@ class PlaylistsAdapter(activity: SimpleActivity, val playlists: ArrayList<Playli
 
         playlists.removeAll(playlistsToDelete)
 
-        Thread {
+        ensureBackgroundThread {
             val isDeletingCurrentPlaylist = ids.contains(activity.config.currentPlaylist)
             activity.deletePlaylists(playlistsToDelete)
             activity.runOnUiThread {
@@ -125,7 +126,7 @@ class PlaylistsAdapter(activity: SimpleActivity, val playlists: ArrayList<Playli
                     removeSelectedItems(positions)
                 }
             }
-        }.start()
+        }
     }
 
     private fun getItemWithKey(key: Int): Playlist? = playlists.firstOrNull { it.id == key }

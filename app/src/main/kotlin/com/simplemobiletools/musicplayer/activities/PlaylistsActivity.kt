@@ -3,6 +3,7 @@ package com.simplemobiletools.musicplayer.activities
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.adapters.PlaylistsAdapter
 import com.simplemobiletools.musicplayer.dialogs.NewPlaylistDialog
@@ -20,7 +21,7 @@ class PlaylistsActivity : SimpleActivity(), RefreshPlaylistsListener {
     }
 
     private fun getPlaylists() {
-        Thread {
+        ensureBackgroundThread {
             val playlists = playlistDAO.getAll() as ArrayList<Playlist>
             runOnUiThread {
                 PlaylistsAdapter(this@PlaylistsActivity, playlists, this@PlaylistsActivity, playlists_list) {
@@ -30,7 +31,7 @@ class PlaylistsActivity : SimpleActivity(), RefreshPlaylistsListener {
                     playlists_list.adapter = this
                 }
             }
-        }.start()
+        }
     }
 
     override fun refreshItems() {
