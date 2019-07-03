@@ -352,13 +352,22 @@ class MainActivity : SimpleActivity(), SongListListener {
                 RadioItem(10 * 60, "10 $minutes"),
                 RadioItem(20 * 60, "20 $minutes"),
                 RadioItem(30 * 60, "30 $minutes"),
-                RadioItem(60 * 60, hour),
-                RadioItem(-1, getString(R.string.custom)))
+                RadioItem(60 * 60, hour))
+
+        if (items.none { it.id == config.lastSleepTimerSeconds }) {
+            val lastSleepTimerMinutes = config.lastSleepTimerSeconds / 60
+            val text = resources.getQuantityString(R.plurals.minutes, lastSleepTimerMinutes, lastSleepTimerMinutes)
+            items.add(RadioItem(config.lastSleepTimerSeconds, text))
+        }
+
+        items.add(RadioItem(-1, getString(R.string.custom)))
 
         RadioGroupDialog(this, items, config.lastSleepTimerSeconds) {
             if (it as Int == -1) {
                 SleepTimerCustomDialog(this) {
-                    pickedSleepTimer(it)
+                    if (it > 0) {
+                        pickedSleepTimer(it)
+                    }
                 }
             } else if (it > 0) {
                 pickedSleepTimer(it)
