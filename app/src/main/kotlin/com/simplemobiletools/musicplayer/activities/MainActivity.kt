@@ -375,6 +375,9 @@ class MainActivity : SimpleActivity(), SongListListener {
             }
 
             override fun onFinish() {
+                config.sleepInTS = 0
+                sendIntent(FINISH)
+                finish()
             }
         }
         sleepTimer?.start()
