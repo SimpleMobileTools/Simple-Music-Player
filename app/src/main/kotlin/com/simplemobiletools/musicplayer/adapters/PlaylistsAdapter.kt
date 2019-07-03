@@ -68,8 +68,10 @@ class PlaylistsAdapter(activity: SimpleActivity, val playlists: ArrayList<Playli
         RemovePlaylistDialog(activity) {
             val ids = selectedKeys.map { it } as ArrayList<Int>
             if (it) {
-                deletePlaylistSongs(ids) {
-                    removePlaylists(ids)
+                ensureBackgroundThread {
+                    deletePlaylistSongs(ids) {
+                        removePlaylists(ids)
+                    }
                 }
             } else {
                 removePlaylists(ids)
