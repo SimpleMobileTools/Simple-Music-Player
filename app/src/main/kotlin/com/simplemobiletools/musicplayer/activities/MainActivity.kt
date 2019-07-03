@@ -360,6 +360,7 @@ class MainActivity : SimpleActivity(), SongListListener {
             items.add(RadioItem(config.lastSleepTimerSeconds, text))
         }
 
+        items.sortBy { it.id }
         items.add(RadioItem(-1, getString(R.string.custom)))
 
         RadioGroupDialog(this, items, config.lastSleepTimerSeconds) {
