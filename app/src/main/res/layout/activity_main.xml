@@ -98,6 +98,7 @@
             android:id="@+id/sleep_timer_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:padding="@dimen/activity_margin"
             android:text="@string/sleep_timer"
             android:textSize="@dimen/big_text_size"/>
@@ -106,10 +107,24 @@
             android:id="@+id/sleep_timer_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:padding="@dimen/activity_margin"
+            android:layout_centerVertical="true"
+            android:layout_toStartOf="@+id/sleep_timer_stop"
+            android:paddingTop="@dimen/activity_margin"
+            android:paddingBottom="@dimen/activity_margin"
             android:textSize="@dimen/big_text_size"
             tools:text="05:00"/>
+
+        <ImageView
+            android:id="@+id/sleep_timer_stop"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/small_margin"
+            android:layout_marginEnd="@dimen/small_margin"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:padding="@dimen/normal_margin"
+            android:src="@drawable/ic_stop_shape"/>
 
     </RelativeLayout>
 </RelativeLayout>

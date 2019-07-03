@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/ic_stop_shape_background">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/default_text_color"/>
+        </shape>
+    </item>
+</layer-list>
