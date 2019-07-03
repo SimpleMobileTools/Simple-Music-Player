@@ -63,7 +63,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         private var mPlayer: MediaPlayer? = null
         private var mPlayedSongIndexes = ArrayList<Int>()
         private var mBus: Bus? = null
-        private var mProgressHandler: Handler? = null
+        private var mProgressHandler = Handler()
         private var mSongs = ArrayList<Song>()
         private var mAudioManager: AudioManager? = null
         private var mCoverArtHeight = 0
@@ -104,7 +104,6 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         }
 
         mCoverArtHeight = resources.getDimension(R.dimen.top_art_height).toInt()
-        mProgressHandler = Handler()
         mMediaSession = MediaSessionCompat(this, "MusicService")
         mMediaSession!!.setFlags(MediaSessionCompat.FLAG_HANDLES_MEDIA_BUTTONS)
         mMediaSession!!.setCallback(object : MediaSessionCompat.Callback() {
@@ -819,16 +818,16 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
     private fun handleProgressHandler(isPlaying: Boolean) {
         if (isPlaying) {
-            mProgressHandler!!.post(object : Runnable {
+            mProgressHandler.post(object : Runnable {
                 override fun run() {
                     val secs = mPlayer!!.currentPosition / 1000
                     mBus!!.post(Events.ProgressUpdated(secs))
-                    mProgressHandler!!.removeCallbacksAndMessages(null)
-                    mProgressHandler!!.postDelayed(this, PROGRESS_UPDATE_INTERVAL)
+                    mProgressHandler.removeCallbacksAndMessages(null)
+                    mProgressHandler.postDelayed(this, PROGRESS_UPDATE_INTERVAL)
                 }
             })
         } else {
-            mProgressHandler!!.removeCallbacksAndMessages(null)
+            mProgressHandler.removeCallbacksAndMessages(null)
         }
     }
 
