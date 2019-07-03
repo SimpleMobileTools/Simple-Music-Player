@@ -347,14 +347,18 @@ class MainActivity : SimpleActivity(), SongListListener {
         val hour = resources.getQuantityString(R.plurals.hours, 1, 1)
 
         val items = arrayListOf(
-                RadioItem(5, "5 $minutes"),
-                RadioItem(10, "10 $minutes"),
-                RadioItem(20, "20 $minutes"),
-                RadioItem(30, "30 $minutes"),
-                RadioItem(60, hour))
+                RadioItem(5 * 60, "5 $minutes"),
+                RadioItem(10 * 60, "10 $minutes"),
+                RadioItem(20 * 60, "20 $minutes"),
+                RadioItem(30 * 60, "30 $minutes"),
+                RadioItem(60 * 60, hour))
 
         RadioGroupDialog(this, items, config.lastSleepTimerMinutes) {
-            config.lastSleepTimerMinutes = it as Int
+            if (it as Int > 0) {
+                config.lastSleepTimerMinutes = it
+                sleep_timer_holder.beVisible()
+                sleep_timer_value.text = it.getFormattedDuration()
+            }
         }
     }
 
