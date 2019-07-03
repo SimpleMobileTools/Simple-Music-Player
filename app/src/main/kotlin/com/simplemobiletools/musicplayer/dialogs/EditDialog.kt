@@ -70,7 +70,11 @@ class EditDialog(val activity: BaseSimpleActivity, val song: Song, val callback:
 
     private fun storeEditedSong(song: Song, oldPath: String, newPath: String) {
         Thread {
-            activity.songsDAO.updateSongInfo(newPath, song.artist, song.title, oldPath)
+            try {
+                activity.songsDAO.updateSongInfo(newPath, song.artist, song.title, oldPath)
+            } catch (e: Exception) {
+                activity.showErrorToast(e)
+            }
         }.start()
     }
 
