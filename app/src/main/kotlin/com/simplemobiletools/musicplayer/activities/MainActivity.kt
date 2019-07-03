@@ -149,9 +149,10 @@ class MainActivity : SimpleActivity(), SongListListener {
 
         songs_fastscroller.allowBubbleDisplay = config.showInfoBubble
         songs_fastscroller.updateBubbleColors()
-        art_holder.background = ColorDrawable(config.backgroundColor)
-        song_list_background.background = ColorDrawable(config.backgroundColor)
-        top_navigation.background = ColorDrawable(config.backgroundColor)
+
+        arrayListOf(art_holder, song_list_background, top_navigation, sleep_timer_holder).forEach {
+            it.background = ColorDrawable(config.backgroundColor)
+        }
     }
 
     override fun onPause() {

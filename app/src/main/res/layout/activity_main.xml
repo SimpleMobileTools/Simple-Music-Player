@@ -2,6 +2,7 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_holder"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -52,8 +53,6 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:paddingLeft="@dimen/normal_margin"
         android:paddingStart="@dimen/normal_margin">
 
         <include layout="@layout/fastscroller_handle_vertical"/>
@@ -67,8 +66,8 @@
         android:layout_centerHorizontal="true"
         android:gravity="center"
         android:paddingLeft="@dimen/big_margin"
-        android:paddingRight="@dimen/big_margin"
         android:paddingTop="@dimen/big_margin"
+        android:paddingRight="@dimen/big_margin"
         android:text="@string/playlist_empty"
         android:textSize="@dimen/bigger_text_size"/>
 
@@ -84,4 +83,33 @@
         android:text="@string/add_folder_to_playlist"
         android:textSize="@dimen/bigger_text_size"/>
 
+    <RelativeLayout
+        android:id="@+id/sleep_timer_holder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/default_background_color"
+        android:clickable="true"
+        android:visibility="gone">
+
+        <include layout="@layout/divider"/>
+
+        <com.simplemobiletools.commons.views.MyTextView
+            android:id="@+id/sleep_timer_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/activity_margin"
+            android:text="@string/sleep_timer"
+            android:textSize="@dimen/big_text_size"/>
+
+        <com.simplemobiletools.commons.views.MyTextView
+            android:id="@+id/sleep_timer_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:padding="@dimen/activity_margin"
+            android:textSize="@dimen/big_text_size"
+            tools:text="05:00"/>
+
+    </RelativeLayout>
 </RelativeLayout>
