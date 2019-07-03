@@ -19,6 +19,7 @@ import android.media.MediaPlayer
 import android.media.audiofx.Equalizer
 import android.media.session.PlaybackState.PLAYBACK_POSITION_UNKNOWN
 import android.net.Uri
+import android.os.CountDownTimer
 import android.os.Handler
 import android.os.Looper
 import android.os.PowerManager
@@ -38,6 +39,7 @@ import com.simplemobiletools.musicplayer.activities.MainActivity
 import com.simplemobiletools.musicplayer.databases.SongsDatabase
 import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.extensions.getPlaylistSongs
+import com.simplemobiletools.musicplayer.extensions.sendIntent
 import com.simplemobiletools.musicplayer.extensions.songsDAO
 import com.simplemobiletools.musicplayer.helpers.*
 import com.simplemobiletools.musicplayer.models.Events
@@ -64,6 +66,8 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         private var mPlayedSongIndexes = ArrayList<Int>()
         private var mBus: Bus? = null
         private var mProgressHandler = Handler()
+        private var mSleepTimerHandler = Handler()
+        private var mSleepTimer: CountDownTimer? = null
         private var mSongs = ArrayList<Song>()
         private var mAudioManager: AudioManager? = null
         private var mCoverArtHeight = 0
@@ -128,6 +132,8 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         destroyPlayer()
         SongsDatabase.destroyInstance()
         mMediaSession?.isActive = false
+        mSleepTimer?.cancel()
+        config.sleepInTS = 0L
     }
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
@@ -154,6 +160,8 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             SKIP_FORWARD -> skip(true)
             REMOVE_CURRENT_SONG -> handleRemoveCurrentSong()
             REMOVE_SONG_IDS -> handleRemoveSongIDS(intent)
+            START_SLEEP_TIMER -> startSleepTimer()
+            STOP_SLEEP_TIMER -> stopSleepTimer()
         }
 
         MediaButtonReceiver.handleIntent(mMediaSession!!, intent)
@@ -837,6 +845,29 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         val newProgress = if (forward) curr + twoPercents else curr - twoPercents
         mPlayer!!.seekTo(newProgress)
         resumeSong()
+    }
+
+    private fun startSleepTimer() {
+        val millisInFuture = config.sleepInTS - System.currentTimeMillis() + 1000L
+        mSleepTimer?.cancel()
+        mSleepTimer = object : CountDownTimer(millisInFuture, 1000) {
+            override fun onTick(millisUntilFinished: Long) {
+                val seconds = (millisUntilFinished / 1000).toInt()
+                mBus!!.post(Events.SleepTimerChanged(seconds))
+            }
+
+            override fun onFinish() {
+                mBus!!.post(Events.SleepTimerChanged(0))
+                config.sleepInTS = 0
+                sendIntent(FINISH)
+            }
+        }
+        mSleepTimer?.start()
+    }
+
+    private fun stopSleepTimer() {
+        config.sleepInTS = 0
+        mSleepTimer?.cancel()
     }
 
     private fun handleMediaButton(mediaButtonEvent: Intent) {

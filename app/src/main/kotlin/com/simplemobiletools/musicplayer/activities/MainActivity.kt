@@ -10,7 +10,6 @@ import android.graphics.drawable.LayerDrawable
 import android.media.AudioManager
 import android.net.Uri
 import android.os.Bundle
-import android.os.CountDownTimer
 import android.os.Environment
 import android.view.Menu
 import android.view.MenuItem
@@ -55,7 +54,6 @@ class MainActivity : SimpleActivity(), SongListListener {
     private var isThirdPartyIntent = false
     private var songs = ArrayList<Song>()
     private var searchMenuItem: MenuItem? = null
-    private var sleepTimer: CountDownTimer? = null
     private var isSearchOpen = false
     private var wasInitialPlaylistSet = false
     private var lastFilePickerPath = ""
@@ -121,9 +119,6 @@ class MainActivity : SimpleActivity(), SongListListener {
             }
         }
 
-        if (config.sleepInTS != 0L) {
-            startSleepTimer()
-        }
         checkAppOnSDCard()
     }
 
@@ -179,7 +174,6 @@ class MainActivity : SimpleActivity(), SongListListener {
     override fun onDestroy() {
         super.onDestroy()
         bus.unregister(this)
-        sleepTimer?.cancel()
 
         if (isThirdPartyIntent && !isChangingConfigurations) {
             sendIntent(FINISH)
@@ -370,26 +364,11 @@ class MainActivity : SimpleActivity(), SongListListener {
 
     private fun startSleepTimer() {
         sleep_timer_holder.beVisible()
-
-        val millisInFuture = config.sleepInTS - System.currentTimeMillis() + 1000L
-        sleepTimer = object : CountDownTimer(millisInFuture, 1000) {
-            override fun onTick(millisUntilFinished: Long) {
-                val seconds = (millisUntilFinished / 1000).toInt()
-                sleep_timer_value.text = seconds.getFormattedDuration()
-            }
-
-            override fun onFinish() {
-                config.sleepInTS = 0
-                sendIntent(FINISH)
-                finish()
-            }
-        }
-        sleepTimer?.start()
+        sendIntent(START_SLEEP_TIMER)
     }
 
     private fun stopSleepTimer() {
-        config.sleepInTS = 0
-        sleepTimer?.cancel()
+        sendIntent(STOP_SLEEP_TIMER)
         sleep_timer_holder.beGone()
     }
 
@@ -676,6 +655,16 @@ class MainActivity : SimpleActivity(), SongListListener {
     @Subscribe
     fun noStoragePermission(event: Events.NoStoragePermission) {
         toast(R.string.no_storage_permissions)
+    }
+
+    @Subscribe
+    fun sleepTimerChanged(event: Events.SleepTimerChanged) {
+        sleep_timer_holder.beVisible()
+        sleep_timer_value.text = event.seconds.getFormattedDuration()
+
+        if (event.seconds == 0) {
+            finish()
+        }
     }
 
     private fun markCurrentSong() {

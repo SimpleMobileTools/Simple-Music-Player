@@ -11,5 +11,7 @@ class Events {
 
     class ProgressUpdated internal constructor(val progress: Int)
 
+    class SleepTimerChanged internal constructor(val seconds: Int)
+
     class NoStoragePermission internal constructor()
 }
