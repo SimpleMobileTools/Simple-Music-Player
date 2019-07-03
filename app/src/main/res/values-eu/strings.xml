@@ -17,6 +17,7 @@
     <string name="disable_autoplay">Erreprodukzio automatikoa ezgaitu</string>
     <string name="autoplay_enabled">Erreprodukzio automatikoa gaituta</string>
     <string name="autoplay_disabled">Erreprodukzio automatikoa ezgaituta</string>
+    <string name="sleep_timer">Sleep timer</string>
 
     <string name="previous">Aurrekoa</string>
     <string name="playpause">Erreproduzitu / Gelditu</string>

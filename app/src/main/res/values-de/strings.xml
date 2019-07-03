@@ -17,6 +17,7 @@
     <string name="disable_autoplay">Automatische Wiedergabe deaktivieren</string>
     <string name="autoplay_enabled">Automatische Wiedergabe aktiviert</string>
     <string name="autoplay_disabled">Automatische Wiedergabe deaktiviert</string>
+    <string name="sleep_timer">Sleep timer</string>
 
     <string name="previous">Vorheriger Titel</string>
     <string name="playpause">Wiedergabe / Pause</string>

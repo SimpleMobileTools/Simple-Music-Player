@@ -17,6 +17,7 @@
     <string name="disable_autoplay">Припинити автоматичне відтворення</string>
     <string name="autoplay_enabled">Активовано автоматичне відтворення</string>
     <string name="autoplay_disabled">Припинено автоматичне відтворення</string>
+    <string name="sleep_timer">Sleep timer</string>
 
     <string name="previous">Попередній</string>
     <string name="playpause">Відтворення / Пауза</string>

@@ -17,6 +17,7 @@
     <string name="disable_autoplay">Avto-oxuma\'nı qapat</string>
     <string name="autoplay_enabled">Avto-oxuma aktivdir</string>
     <string name="autoplay_disabled">Avto-oxuma deaktivdir</string>
+    <string name="sleep_timer">Sleep timer</string>
 
     <string name="previous">Əvvəlki</string>
     <string name="playpause">Oynat / Dayan</string>

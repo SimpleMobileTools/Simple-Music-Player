@@ -17,6 +17,7 @@
     <string name="disable_autoplay">Išjungti automatinį grojimą</string>
     <string name="autoplay_enabled">Automatinis grojimas įjungtas</string>
     <string name="autoplay_disabled">Automatinis grojimas išjungtas</string>
+    <string name="sleep_timer">Sleep timer</string>
 
     <string name="previous">Prieš tai buvusi</string>
     <string name="playpause">Groti / Pristabdyti</string>

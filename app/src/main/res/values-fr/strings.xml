@@ -17,6 +17,7 @@
     <string name="disable_autoplay">Désactiver la lecture automatique</string>
     <string name="autoplay_enabled">Lecture automatique activée</string>
     <string name="autoplay_disabled">Lecture automatique désactivée</string>
+    <string name="sleep_timer">Sleep timer</string>
 
     <string name="previous">Précédent</string>
     <string name="playpause">Lecture / Pause</string>

@@ -17,6 +17,7 @@
     <string name="disable_autoplay">Disable autoplay</string>
     <string name="autoplay_enabled">Autoplay enabled</string>
     <string name="autoplay_disabled">Autoplay disabled</string>
+    <string name="sleep_timer">Sleep timer</string>
 
     <string name="previous">前へ</string>
     <string name="playpause">再生 / 一時停止</string>

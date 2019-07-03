@@ -17,6 +17,7 @@
     <string name="disable_autoplay">Inaktivera automatisk uppspelning</string>
     <string name="autoplay_enabled">Automatisk uppspelning har aktiverats</string>
     <string name="autoplay_disabled">Automatisk uppspelning har inaktiverats</string>
+    <string name="sleep_timer">Sleep timer</string>
 
     <string name="previous">Föregående</string>
     <string name="playpause">Spela / Pausa</string>

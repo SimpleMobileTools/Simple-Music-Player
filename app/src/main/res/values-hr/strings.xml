@@ -17,6 +17,7 @@
     <string name="disable_autoplay">Onemogući automatsku reprodukciju</string>
     <string name="autoplay_enabled">Automatska reprodukcija omogućena</string>
     <string name="autoplay_disabled">Automatska reprodukcija onemogućena</string>
+    <string name="sleep_timer">Sleep timer</string>
 
     <string name="previous">Prijašnja</string>
     <string name="playpause">Reproduciraj / Pauziraj</string>

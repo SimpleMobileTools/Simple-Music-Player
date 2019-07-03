@@ -17,6 +17,7 @@
     <string name="disable_autoplay">Nonaktifkan putar otomatis</string>
     <string name="autoplay_enabled">Putar otomatis diaktifkan</string>
     <string name="autoplay_disabled">Putar otomatis dinonaktifkan</string>
+    <string name="sleep_timer">Sleep timer</string>
 
     <string name="previous">Sebelumnya</string>
     <string name="playpause">Putar / Jeda</string>

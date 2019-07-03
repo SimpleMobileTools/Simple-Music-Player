@@ -17,6 +17,7 @@
     <string name="disable_autoplay">자동재생 비 활성화</string>
     <string name="autoplay_enabled">자동재생 활성화됨</string>
     <string name="autoplay_disabled">자동재생 비 활성화됨</string>
+    <string name="sleep_timer">Sleep timer</string>
 
     <string name="previous">이전</string>
     <string name="playpause">재생 / 정지</string>

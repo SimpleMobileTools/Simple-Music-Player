@@ -17,6 +17,7 @@
     <string name="disable_autoplay">Otomatik çalmayı devre dışı bırak</string>
     <string name="autoplay_enabled">Otomatik çalma etkin</string>
     <string name="autoplay_disabled">Otomatik çalma devre dışı</string>
+    <string name="sleep_timer">Sleep timer</string>
 
     <string name="previous">Önceki</string>
     <string name="playpause">Çal / Duraklat</string>

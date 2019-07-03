@@ -17,6 +17,7 @@
     <string name="disable_autoplay">Disabilita riproduzione automatica</string>
     <string name="autoplay_enabled">Riproduzione automatica abilitata</string>
     <string name="autoplay_disabled">Riproduzione automatica disabilitata</string>
+    <string name="sleep_timer">Sleep timer</string>
 
     <string name="previous">Precedente</string>
     <string name="playpause">Riproduci / Pausa</string>
