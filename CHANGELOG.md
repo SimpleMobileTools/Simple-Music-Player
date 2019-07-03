@@ -1,6 +1,14 @@
 Changelog
 ==========
 
+Version 5.2.0 *(2019-07-03)*
+----------------------------
+
+ * Added a Sleep timer
+ * Fixed filename showing as song title
+ * Use a dark themed menu
+ * Other stability and translation improvements
+
 Version 5.1.3 *(2019-06-22)*
 ----------------------------
 
