@@ -50,4 +50,8 @@ class Config(context: Context) : BaseConfig(context) {
     var swapPrevNext: Boolean
         get() = prefs.getBoolean(SWAP_PREV_NEXT, false)
         set(swapPrevNext) = prefs.edit().putBoolean(SWAP_PREV_NEXT, swapPrevNext).apply()
+
+    var lastSleepTimerMinutes: Int
+        get() = prefs.getInt(LAST_SLEEP_TIMER_MINUTES, 30)
+        set(lastSleepTimerMinutes) = prefs.edit().putInt(LAST_SLEEP_TIMER_MINUTES, lastSleepTimerMinutes).apply()
 }

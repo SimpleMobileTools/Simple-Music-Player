@@ -206,6 +206,7 @@ class MainActivity : SimpleActivity(), SongListListener {
             R.id.sort -> showSortingDialog()
             R.id.remove_current -> getSongsAdapter()?.removeCurrentSongFromPlaylist()
             R.id.delete_current -> getSongsAdapter()?.deleteCurrentSong()
+            R.id.sleep_timer -> showSleepTimer()
             R.id.open_playlist -> openPlaylist()
             R.id.toggle_autoplay -> toggleAutoplay()
             R.id.add_folder_to_playlist -> addFolderToPlaylist()
@@ -332,6 +333,22 @@ class MainActivity : SimpleActivity(), SongListListener {
         config.autoplay = !config.autoplay
         invalidateOptionsMenu()
         toast(if (config.autoplay) R.string.autoplay_enabled else R.string.autoplay_disabled)
+    }
+
+    private fun showSleepTimer() {
+        val minutes = getString(R.string.minutes_raw)
+        val hour = resources.getQuantityString(R.plurals.hours, 1, 1)
+
+        val items = arrayListOf(
+                RadioItem(5, "5 $minutes"),
+                RadioItem(10, "10 $minutes"),
+                RadioItem(20, "20 $minutes"),
+                RadioItem(30, "30 $minutes"),
+                RadioItem(60, hour))
+
+        RadioGroupDialog(this, items, config.lastSleepTimerMinutes) {
+            config.lastSleepTimerMinutes = it as Int
+        }
     }
 
     private fun removePlaylist() {

@@ -26,6 +26,10 @@
         android:title="@string/delete_current_song"
         app:showAsAction="never"/>
     <item
+        android:id="@+id/sleep_timer"
+        android:title="@string/sleep_timer"
+        app:showAsAction="never"/>
+    <item
         android:id="@+id/menu_rotate"
         android:title="@string/playlists"
         app:showAsAction="never">
