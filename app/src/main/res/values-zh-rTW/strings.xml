@@ -17,7 +17,7 @@
     <string name="disable_autoplay">停用自動播放</string>
     <string name="autoplay_enabled">自動播放已啟用</string>
     <string name="autoplay_disabled">自動播放已停用</string>
-    <string name="sleep_timer">Sleep timer</string>
+    <string name="sleep_timer">睡眠定時器</string>
 
     <string name="previous">上一首</string>
     <string name="playpause">播放 / 暫停</string>
