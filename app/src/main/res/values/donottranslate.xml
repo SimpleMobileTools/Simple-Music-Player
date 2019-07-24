@@ -1,6 +1,7 @@
 <resources>
 
     <!-- Release notes -->
+    <string name="release_59">Allow customizing the bottom navigation bar color</string>
     <string name="release_37">
         Allow skipping backward/forward by pressing the current/max song progress\n
         Allow replacing song title with filename, if title is not available
