@@ -66,7 +66,6 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         private var mPlayedSongIndexes = ArrayList<Int>()
         private var mBus: Bus? = null
         private var mProgressHandler = Handler()
-        private var mSleepTimerHandler = Handler()
         private var mSleepTimer: CountDownTimer? = null
         private var mSongs = ArrayList<Song>()
         private var mAudioManager: AudioManager? = null
@@ -378,7 +377,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
                     val duration = cursor.getIntValue(MediaStore.Audio.Media.DURATION) / 1000
                     if (duration > MIN_INITIAL_DURATION) {
                         val path = cursor.getStringValue(MediaStore.Audio.Media.DATA)
-                        if (!ignoredPaths.contains(path)) {
+                        if (!ignoredPaths.contains(path) && !path.doesThisOrParentHaveNoMedia()) {
                             paths.add(path)
                         }
                     }
