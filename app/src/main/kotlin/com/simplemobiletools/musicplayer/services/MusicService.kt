@@ -840,7 +840,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     }
 
     private fun skip(forward: Boolean) {
-        val curr = mPlayer!!.currentPosition
+        val curr = mPlayer?.currentPosition ?: return
         val twoPercents = Math.max(mPlayer!!.duration / 50, MIN_SKIP_LENGTH)
         val newProgress = if (forward) curr + twoPercents else curr - twoPercents
         mPlayer!!.seekTo(newProgress)
