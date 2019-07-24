@@ -1,6 +1,13 @@
 Changelog
 ==========
 
+Version 5.2.1 *(2019-07-24)*
+----------------------------
+
+ * Added some dark theme improvements
+ * Allow customizing the bottom navigation bar color
+ * Ignore folders containing .nomedia at the initial scan
+
 Version 5.2.0 *(2019-07-03)*
 ----------------------------
 
