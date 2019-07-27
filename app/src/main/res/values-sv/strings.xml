@@ -17,7 +17,7 @@
     <string name="disable_autoplay">Inaktivera automatisk uppspelning</string>
     <string name="autoplay_enabled">Automatisk uppspelning har aktiverats</string>
     <string name="autoplay_disabled">Automatisk uppspelning har inaktiverats</string>
-    <string name="sleep_timer">Sleep timer</string>
+    <string name="sleep_timer">Vilotimer</string>
 
     <string name="previous">Föregående</string>
     <string name="playpause">Spela / Pausa</string>
@@ -32,7 +32,7 @@
     <string name="rename_playlist">Byt namn på spellista</string>
     <string name="playlist_name_exists">Det finns redan en spellista med samma namn</string>
     <string name="remove_playlist">Ta bort spellista</string>
-    <string name="remove_playlist_description">Detta tar bara bort de markerade spellistorna, inte själva filerna.</string>
+    <string name="remove_playlist_description">Detta tar bara bort de valda spellistorna, inte själva filerna.</string>
     <string name="remove_playlist_description_placeholder">Detta tar bara bort spellistan \"%s\", inte själva filerna.</string>
     <string name="remove_from_playlist">Ta bort från spellista</string>
     <string name="remove_from_playlist_description">Detta tar bara bort objekten från spellistan \"%s\", själva filerna tas inte bort.</string>
