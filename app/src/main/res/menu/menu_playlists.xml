@@ -3,7 +3,7 @@
       xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/create_playlist"
-        android:icon="@drawable/ic_plus"
+        android:icon="@drawable/ic_plus_vector"
         android:title="@string/create_playlist"
         app:showAsAction="ifRoom"/>
 </menu>

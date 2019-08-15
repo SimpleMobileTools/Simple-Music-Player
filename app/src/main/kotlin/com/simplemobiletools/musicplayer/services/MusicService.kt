@@ -425,7 +425,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     private fun setupNotification() {
         val title = mCurrSong?.title ?: ""
         val artist = mCurrSong?.artist ?: ""
-        val playPauseIcon = if (getIsPlaying()) R.drawable.ic_pause else R.drawable.ic_play
+        val playPauseIcon = if (getIsPlaying()) R.drawable.ic_pause_vector else R.drawable.ic_play_vector
 
         var notifWhen = 0L
         var showWhen = false

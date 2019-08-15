@@ -434,7 +434,7 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val list
         if (navigationView == null) {
             initialIsPlaying = isPlaying
         }
-        navigationView?.play_pause_btn?.setImageDrawable(resources.getDrawable(if (isPlaying) R.drawable.ic_pause else R.drawable.ic_play))
+        navigationView?.play_pause_btn?.setImageDrawable(resources.getDrawable(if (isPlaying) R.drawable.ic_pause_vector else R.drawable.ic_play_vector))
     }
 
     fun updateSongProgress(progress: Int) {

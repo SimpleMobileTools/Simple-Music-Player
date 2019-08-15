@@ -70,7 +70,7 @@
             android:background="?attr/selectableItemBackgroundBorderless"
             android:paddingTop="@dimen/small_margin"
             android:paddingBottom="@dimen/small_margin"
-            android:src="@drawable/ic_play"
+            android:src="@drawable/ic_play_vector"
             android:contentDescription="@string/playpause"/>
 
         <ImageView

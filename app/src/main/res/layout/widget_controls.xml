@@ -24,7 +24,7 @@
         android:layout_weight="1"
         android:paddingBottom="@dimen/medium_margin"
         android:paddingTop="@dimen/medium_margin"
-        android:src="@drawable/ic_play"/>
+        android:src="@drawable/ic_play_vector"/>
 
     <ImageView
         android:id="@+id/next_btn"

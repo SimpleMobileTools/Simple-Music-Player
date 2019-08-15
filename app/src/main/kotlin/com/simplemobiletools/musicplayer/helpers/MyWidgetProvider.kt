@@ -96,7 +96,7 @@ class MyWidgetProvider : AppWidgetProvider() {
     }
 
     private fun updatePlayPauseButton(views: RemoteViews, isPlaying: Boolean) {
-        val drawableId = if (isPlaying) R.drawable.ic_pause else R.drawable.ic_play
+        val drawableId = if (isPlaying) R.drawable.ic_pause_vector else R.drawable.ic_play_vector
         val widgetTextColor = mContext!!.config.widgetTextColor
         val icon = mContext!!.resources.getColoredBitmap(drawableId, widgetTextColor)
         views.setImageViewBitmap(R.id.play_pause_btn, icon)

@@ -655,7 +655,7 @@ class MainActivity : SimpleActivity(), SongListListener {
     @Subscribe
     fun songStateChanged(event: Events.SongStateChanged) {
         val isPlaying = event.isPlaying
-        play_pause_btn.setImageDrawable(resources.getDrawable(if (isPlaying) R.drawable.ic_pause else R.drawable.ic_play))
+        play_pause_btn.setImageDrawable(resources.getDrawable(if (isPlaying) R.drawable.ic_pause_vector else R.drawable.ic_play_vector))
         getSongsAdapter()?.updateSongState(isPlaying)
     }
 
