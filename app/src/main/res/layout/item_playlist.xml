@@ -32,7 +32,7 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:clickable="false"
-            android:src="@drawable/ic_music_note"
+            android:src="@drawable/ic_music_note_vector"
             android:visibility="invisible"/>
 
     </RelativeLayout>

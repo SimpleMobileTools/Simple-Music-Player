@@ -470,9 +470,9 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
                 .setStyle(androidx.media.app.NotificationCompat.MediaStyle()
                         .setShowActionsInCompactView(0, 1, 2)
                         .setMediaSession(mMediaSession?.sessionToken))
-                .addAction(R.drawable.ic_previous, getString(R.string.previous), getIntent(PREVIOUS))
+                .addAction(R.drawable.ic_previous_vector, getString(R.string.previous), getIntent(PREVIOUS))
                 .addAction(playPauseIcon, getString(R.string.playpause), getIntent(PLAYPAUSE))
-                .addAction(R.drawable.ic_next, getString(R.string.next), getIntent(NEXT))
+                .addAction(R.drawable.ic_next_vector, getString(R.string.next), getIntent(NEXT))
 
         startForeground(NOTIFICATION_ID, notification.build())
 

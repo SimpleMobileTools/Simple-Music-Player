@@ -112,8 +112,8 @@ class MyWidgetProvider : AppWidgetProvider() {
             setBackgroundColor(R.id.widget_holder, widgetBgColor)
             setTextColor(R.id.song_info_title, widgetTextColor)
             setTextColor(R.id.song_info_artist, widgetTextColor)
-            setImageViewBitmap(R.id.previous_btn, res.getColoredBitmap(R.drawable.ic_previous, widgetTextColor))
-            setImageViewBitmap(R.id.next_btn, res.getColoredBitmap(R.drawable.ic_next, widgetTextColor))
+            setImageViewBitmap(R.id.previous_btn, res.getColoredBitmap(R.drawable.ic_previous_vector, widgetTextColor))
+            setImageViewBitmap(R.id.next_btn, res.getColoredBitmap(R.drawable.ic_next_vector, widgetTextColor))
         }
     }
 

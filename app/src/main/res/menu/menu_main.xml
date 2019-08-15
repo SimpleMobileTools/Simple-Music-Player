@@ -18,7 +18,7 @@
         app:showAsAction="never"/>
     <item
         android:id="@+id/open_playlist"
-        android:icon="@drawable/ic_open_playlist"
+        android:icon="@drawable/ic_open_playlist_vector"
         android:title="@string/open_playlist"
         app:showAsAction="ifRoom"/>
     <item

@@ -48,7 +48,7 @@
             android:background="?attr/selectableItemBackgroundBorderless"
             android:paddingTop="@dimen/small_margin"
             android:paddingBottom="@dimen/small_margin"
-            android:src="@drawable/ic_shuffle"
+            android:src="@drawable/ic_shuffle_vector"
             android:contentDescription="@string/enable_shuffle"/>
 
         <ImageView
@@ -59,7 +59,7 @@
             android:background="?attr/selectableItemBackgroundBorderless"
             android:paddingTop="@dimen/small_margin"
             android:paddingBottom="@dimen/small_margin"
-            android:src="@drawable/ic_previous"
+            android:src="@drawable/ic_previous_vector"
             android:contentDescription="@string/previous"/>
 
         <ImageView
@@ -81,7 +81,7 @@
             android:background="?attr/selectableItemBackgroundBorderless"
             android:paddingTop="@dimen/small_margin"
             android:paddingBottom="@dimen/small_margin"
-            android:src="@drawable/ic_next"
+            android:src="@drawable/ic_next_vector"
             android:contentDescription="@string/next"/>
 
         <ImageView
@@ -92,7 +92,7 @@
             android:layout_weight="1"
             android:paddingTop="@dimen/small_margin"
             android:paddingBottom="@dimen/small_margin"
-            android:src="@drawable/ic_repeat"
+            android:src="@drawable/ic_repeat_vector"
             android:contentDescription="@string/enable_song_repetition"/>
 
     </LinearLayout>

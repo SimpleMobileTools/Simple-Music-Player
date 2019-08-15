@@ -14,7 +14,7 @@
         android:layout_weight="1"
         android:paddingBottom="@dimen/medium_margin"
         android:paddingTop="@dimen/medium_margin"
-        android:src="@drawable/ic_previous"/>
+        android:src="@drawable/ic_previous_vector"/>
 
     <ImageView
         android:id="@+id/play_pause_btn"
@@ -34,6 +34,6 @@
         android:layout_weight="1"
         android:paddingBottom="@dimen/medium_margin"
         android:paddingTop="@dimen/medium_margin"
-        android:src="@drawable/ic_next"/>
+        android:src="@drawable/ic_next_vector"/>
 
 </LinearLayout>

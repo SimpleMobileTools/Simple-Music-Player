@@ -16,14 +16,14 @@
         android:id="@+id/song_holder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="@dimen/medium_margin"
-        android:paddingTop="@dimen/medium_margin">
+        android:paddingTop="@dimen/medium_margin"
+        android:paddingBottom="@dimen/medium_margin">
 
         <com.simplemobiletools.commons.views.MyTextView
             android:id="@+id/song_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_toLeftOf="@+id/song_note_image"
+            android:layout_toStartOf="@+id/song_note_image"
             android:ellipsize="end"
             android:maxLines="3"
             android:textSize="@dimen/bigger_text_size"
@@ -34,7 +34,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/song_title"
-            android:layout_toLeftOf="@+id/song_note_image"
+            android:layout_toStartOf="@+id/song_note_image"
             android:ellipsize="end"
             android:maxLines="3"
             android:textSize="@dimen/normal_text_size"
@@ -45,9 +45,8 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:src="@drawable/ic_music_note"
+            android:src="@drawable/ic_music_note_vector"
             android:visibility="invisible"/>
 
     </RelativeLayout>
