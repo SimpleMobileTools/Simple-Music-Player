@@ -2,6 +2,7 @@ package com.simplemobiletools.musicplayer.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
 import com.simplemobiletools.commons.dialogs.RadioGroupDialog
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.IS_CUSTOMIZING_COLORS
@@ -37,6 +38,12 @@ class SettingsActivity : SimpleActivity() {
         setupEqualizer()
         setupReplaceTitle()
         updateTextColors(settings_scrollview)
+        invalidateOptionsMenu()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        updateMenuItemColors(menu)
+        return super.onCreateOptionsMenu(menu)
     }
 
     private fun setupPurchaseThankYou() {

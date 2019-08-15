@@ -160,6 +160,7 @@ class MainActivity : SimpleActivity(), SongListListener {
         val stopDrawable = resources.getDrawable(R.drawable.ic_stop_shape)
         (stopDrawable as LayerDrawable).findDrawableByLayerId(R.id.ic_stop_shape_background).applyColorFilter(config.textColor)
         sleep_timer_stop.setImageDrawable(stopDrawable)
+        invalidateOptionsMenu()
     }
 
     override fun onPause() {
@@ -197,6 +198,7 @@ class MainActivity : SimpleActivity(), SongListListener {
             findItem(R.id.remove_playlist).isVisible = !isThirdPartyIntent
         }
 
+        updateMenuItemColors(menu)
         return true
     }
 

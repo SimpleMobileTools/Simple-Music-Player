@@ -38,8 +38,9 @@ class PlaylistsActivity : SimpleActivity(), RefreshPlaylistsListener {
         getPlaylists()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_playlists, menu)
+        updateMenuItemColors(menu)
         return true
     }
 
