@@ -1,8 +1,10 @@
 package com.simplemobiletools.musicplayer.extensions
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.util.TypedValue
+import com.simplemobiletools.commons.helpers.isOreoPlus
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.databases.SongsDatabase
 import com.simplemobiletools.musicplayer.helpers.CALL_SETUP_AFTER
@@ -16,11 +18,16 @@ import com.simplemobiletools.musicplayer.models.Song
 import com.simplemobiletools.musicplayer.services.MusicService
 import java.io.File
 
+@SuppressLint("NewApi")
 fun Context.sendIntent(action: String) {
     Intent(this, MusicService::class.java).apply {
         this.action = action
         try {
-            startService(this)
+            if (isOreoPlus()) {
+                startForegroundService(this)
+            } else {
+                startService(this)
+            }
         } catch (ignored: Exception) {
         }
     }
