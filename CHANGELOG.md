@@ -1,6 +1,14 @@
 Changelog
 ==========
 
+Version 5.2.2 *(2019-08-16)*
+----------------------------
+
+ * Added some menu coloring improvements
+ * Fixed player initialization through widget
+ * Replaced icons with vectors for better quality and smaller size
+ * Some smaller stability and translation improvements
+
 Version 5.2.1 *(2019-07-24)*
 ----------------------------
 
