@@ -632,6 +632,10 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         mCurrSong = null
         songChanged(null)
         songStateChanged(false)
+
+        if (!mIsServiceInitialized) {
+            handleInit()
+        }
     }
 
     override fun onBind(intent: Intent) = null

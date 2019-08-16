@@ -120,6 +120,7 @@ class MyWidgetProvider : AppWidgetProvider() {
     override fun onReceive(context: Context, intent: Intent) {
         mContext = context
         val action = intent.action
+        registerBus()
         when (action) {
             PREVIOUS, PLAYPAUSE, NEXT -> context.sendIntent(action)
             else -> super.onReceive(context, intent)
@@ -159,15 +160,19 @@ class MyWidgetProvider : AppWidgetProvider() {
 
     private fun registerBus() {
         try {
+            if (mBus == null) {
+                mBus = BusProvider.instance
+            }
+
             mBus!!.register(this)
-        } catch (e: Exception) {
+        } catch (ignored: Exception) {
         }
     }
 
     private fun unregisterBus() {
         try {
-            mBus!!.unregister(this)
-        } catch (e: Exception) {
+            mBus?.unregister(this)
+        } catch (ignored: Exception) {
         }
     }
 }
