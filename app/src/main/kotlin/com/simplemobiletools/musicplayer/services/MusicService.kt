@@ -12,6 +12,7 @@ import android.content.IntentFilter
 import android.database.Cursor
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.media.AudioAttributes
 import android.media.AudioManager
 import android.media.AudioManager.*
 import android.media.MediaMetadataRetriever
@@ -354,10 +355,14 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
         mPlayer = MediaPlayer().apply {
             setWakeMode(applicationContext, PowerManager.PARTIAL_WAKE_LOCK)
-            setAudioStreamType(AudioManager.STREAM_MUSIC)
             setOnPreparedListener(this@MusicService)
             setOnCompletionListener(this@MusicService)
             setOnErrorListener(this@MusicService)
+            setAudioAttributes(
+                     AudioAttributes
+                            .Builder()
+                            .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                            .build())
         }
         setupEqualizer()
     }
