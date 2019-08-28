@@ -13,6 +13,7 @@ import android.os.Bundle
 import android.os.Environment
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
 import androidx.appcompat.widget.SearchView
@@ -228,6 +229,14 @@ class MainActivity : SimpleActivity(), SongListListener {
             else -> return super.onOptionsItemSelected(item)
         }
         return true
+    }
+
+    fun jumpBackward(v : View){
+        sendIntent(JUMP_BACKWARD)
+    }
+
+    fun jumpForward(v : View){
+        sendIntent(JUMP_FORWARD)
     }
 
     private fun storeStateVariables() {

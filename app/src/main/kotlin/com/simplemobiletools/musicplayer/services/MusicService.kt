@@ -158,6 +158,8 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             SET_EQUALIZER -> handleSetEqualizer(intent)
             SKIP_BACKWARD -> skip(false)
             SKIP_FORWARD -> skip(true)
+            JUMP_BACKWARD -> handleJumpBackward()
+            JUMP_FORWARD -> handleJumpForward()
             REMOVE_CURRENT_SONG -> handleRemoveCurrentSong()
             REMOVE_SONG_IDS -> handleRemoveSongIDS(intent)
             START_SLEEP_TIMER -> startSleepTimer()
@@ -238,6 +240,53 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             mPlayOnPrepare = true
             setSong(mPlayedSongIndexes[mPlayedSongIndexes.size - 1], false)
         }
+    }
+
+    private fun handleJumpBackward(){
+        if (mSongs.isEmpty()) {
+            handleEmptyPlaylist()
+            return
+        }
+
+        initMediaPlayerIfNeeded()
+        if (mCurrSong == null) {
+            setupNextSong()
+        } else {
+            val position = mPlayer!!.currentPosition
+            val jumpToPosition = position - 5000
+            if (0 > jumpToPosition) {
+                setupNextSong()
+                return
+            }
+            mPlayer!!.seekTo(jumpToPosition)
+            mPlayer!!.start()
+            requestAudioFocus()
+        }
+        songStateChanged(true)
+    }
+
+    private fun handleJumpForward(){
+        if (mSongs.isEmpty()) {
+            handleEmptyPlaylist()
+            return
+        }
+
+        initMediaPlayerIfNeeded()
+        if (mCurrSong == null) {
+            setupNextSong()
+        } else {
+            val position = mPlayer!!.currentPosition
+            val jumpToPosition = position + 5000
+            if (mPlayer!!.duration < jumpToPosition) {
+                setupNextSong()
+                return
+            }
+            mPlayer!!.seekTo(jumpToPosition)
+            mPlayer!!.start()
+            requestAudioFocus()
+        }
+
+        songStateChanged(true)
     }
 
     private fun handleEdit(intent: Intent) {
