@@ -17,7 +17,7 @@
     <string name="disable_autoplay">Desativar reprodução automática</string>
     <string name="autoplay_enabled">Reprodução automática ativada</string>
     <string name="autoplay_disabled">Reprodução automática desativada</string>
-    <string name="sleep_timer">Sleep timer</string>
+    <string name="sleep_timer">Temporizador</string>
 
     <string name="previous">Anterior</string>
     <string name="playpause">Reproduzir / Pausa</string>
@@ -52,7 +52,7 @@
 
     <!-- Settings -->
     <string name="equalizer">Equalizador</string>
-    <string name="swap_prev_next">Trocar entre faixas com os botões do auricular</string>
+    <string name="swap_prev_next">Trocar de faixa com os botões do auricular</string>
 
     <!-- FAQ -->
     <string name="faq_1_title">How can I fast-forward songs?</string>
