@@ -1,10 +1,7 @@
 package com.simplemobiletools.musicplayer.services
 
 import android.annotation.SuppressLint
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.app.PendingIntent
-import android.app.Service
+import android.app.*
 import android.content.ContentUris
 import android.content.Context
 import android.content.Intent
@@ -473,6 +470,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
                 .setContentIntent(getContentIntent())
                 .setOngoing(ongoing)
                 .setChannelId(NOTIFICATION_CHANNEL)
+                .setCategory(Notification.CATEGORY_SERVICE)
                 .setStyle(androidx.media.app.NotificationCompat.MediaStyle()
                         .setShowActionsInCompactView(0, 1, 2)
                         .setMediaSession(mMediaSession?.sessionToken))
@@ -518,6 +516,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                 .setPriority(NotificationCompat.PRIORITY_MAX)
                 .setChannelId(NOTIFICATION_CHANNEL)
+                .setCategory(Notification.CATEGORY_SERVICE)
 
         startForeground(NOTIFICATION_ID, notification.build())
     }
