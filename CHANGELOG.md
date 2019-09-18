@@ -1,6 +1,12 @@
 Changelog
 ==========
 
+Version 5.2.3 *(2019-09-18)*
+----------------------------
+
+ * Fixed a couple crashes
+ * Some smaller translation improvements
+
 Version 5.2.2 *(2019-08-16)*
 ----------------------------
 
