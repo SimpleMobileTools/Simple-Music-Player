@@ -56,6 +56,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         private const val PROGRESS_UPDATE_INTERVAL = 1000L
         private const val MIN_SKIP_LENGTH = 2000
         private const val MAX_CLICK_DURATION = 700L
+        private const val NOTIFICATION_CHANNEL = "music_player_channel"
         private const val NOTIFICATION_ID = 78    // just a random number
 
         var mCurrSong: Song? = null
@@ -140,7 +141,12 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             return START_NOT_STICKY
         }
 
-        when (intent.action) {
+        val action = intent.action
+        if (isOreoPlus() && action != NEXT && action != PREVIOUS && action != PLAYPAUSE) {
+            setupFakeNotification()
+        }
+
+        when (action) {
             INIT -> handleInit()
             INIT_PATH -> handleInitPath(intent)
             SETUP -> handleSetup()
@@ -164,6 +170,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         }
 
         MediaButtonReceiver.handleIntent(mMediaSession!!, intent)
+        setupNotification()
         return START_NOT_STICKY
     }
 
@@ -242,7 +249,6 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     private fun handleEdit(intent: Intent) {
         mCurrSong = intent.getSerializableExtra(EDITED_SONG) as Song
         songChanged(mCurrSong)
-        setupNotification()
     }
 
     private fun handleFinish() {
@@ -262,6 +268,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
                 mPlayOnPrepare = false
                 setupNextSong()
             }
+
         }
     }
 
@@ -285,7 +292,6 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         pauseSong()
         mCurrSong = null
         songChanged(null)
-        setupNotification()
     }
 
     private fun handleRemoveSongIDS(intent: Intent) {
@@ -432,18 +438,17 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         var usesChronometer = false
         var ongoing = false
         if (getIsPlaying()) {
-            notifWhen = System.currentTimeMillis() - mPlayer!!.currentPosition
+            notifWhen = System.currentTimeMillis() - (mPlayer?.currentPosition ?: 0)
             showWhen = true
             usesChronometer = true
             ongoing = true
         }
 
-        val channelId = "music_player_channel"
         if (isOreoPlus()) {
             val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             val name = resources.getString(R.string.app_name)
             val importance = NotificationManager.IMPORTANCE_LOW
-            NotificationChannel(channelId, name, importance).apply {
+            NotificationChannel(NOTIFICATION_CHANNEL, name, importance).apply {
                 enableLights(false)
                 enableVibration(false)
                 notificationManager.createNotificationChannel(this)
@@ -454,7 +459,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             mCurrSongCover = resources.getColoredBitmap(R.drawable.ic_headset, config.textColor)
         }
 
-        val notification = NotificationCompat.Builder(applicationContext, channelId)
+        val notification = NotificationCompat.Builder(applicationContext, NOTIFICATION_CHANNEL)
                 .setContentTitle(title)
                 .setContentText(artist)
                 .setSmallIcon(R.drawable.ic_headset_small)
@@ -466,7 +471,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
                 .setUsesChronometer(usesChronometer)
                 .setContentIntent(getContentIntent())
                 .setOngoing(ongoing)
-                .setChannelId(channelId)
+                .setChannelId(NOTIFICATION_CHANNEL)
                 .setStyle(androidx.media.app.NotificationCompat.MediaStyle()
                         .setShowActionsInCompactView(0, 1, 2)
                         .setMediaSession(mMediaSession?.sessionToken))
@@ -481,7 +486,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             if (!getIsPlaying()) {
                 stopForeground(false)
             }
-        }, 100L)
+        }, 200L)
 
         val playbackState = if (getIsPlaying()) PlaybackStateCompat.STATE_PLAYING else PlaybackStateCompat.STATE_PAUSED
         try {
@@ -501,6 +506,19 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         val intent = Intent(this, ControlActionsListener::class.java)
         intent.action = action
         return PendingIntent.getBroadcast(applicationContext, 0, intent, 0)
+    }
+
+    // on Android 8+ the service is launched with startForegroundService(), so startForeground must be called within a few secs
+    private fun setupFakeNotification() {
+        val notification = NotificationCompat.Builder(applicationContext, NOTIFICATION_CHANNEL)
+                .setContentTitle("")
+                .setContentText("")
+                .setSmallIcon(R.drawable.ic_headset_small)
+                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+                .setPriority(NotificationCompat.PRIORITY_MAX)
+                .setChannelId(NOTIFICATION_CHANNEL)
+
+        startForeground(NOTIFICATION_ID, notification.build())
     }
 
     private fun getNewSongId(): Int {
