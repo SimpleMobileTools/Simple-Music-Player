@@ -1,0 +1,7 @@
+Pemutar musik yang mudah dikendalikan dari bilah status, widget layar beranda atau tombol perangkat keras pada perangkat headset anda. Anda bisa mengurutkan lagu berdasarkan Judul atau Artis, juga mengubah Equalizer. Belum mendukung filter lagu berdasarkan artis atau album, stay tuned!
+
+Fitur widget dengan warna teks, latar belakang dan transparansi yang bisa disesuaikan.
+
+Sama sekali tidak berisi iklan dan tidak membutuhkan perizinan yang tidak perlu. Sepenuhnya bersumber terbuka, dengan warna yang bisa disesuaikan.
+
+Aplikasi ini hanya salah satu bagian dari rangkaian aplikasi yang lebih besar. Anda bisa menemukan yang lainnya di at https://www.simplemobiletools.com

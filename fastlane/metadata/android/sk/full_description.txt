@@ -1,0 +1,7 @@
+Hudobný prehrávač jednoducho ovládateľný zo statovej lišty, widgetu na ploche, alebo hardvérovými tlačidlami na slúchadlách. Poskytuje rôzne možnosti zoradenia pesničiek, ako aj rôzne ekvalizéry.
+
+Obsahuje škálovateľný widget, kde viete upraviť farbu textu, ako aj priehľadnosť a farbu pozadia.
+
+Neobsahuje žiadne reklamy a nepotrebné oprávnenia. Je opensource, poskytuje možnosť zmeny farieb.
+
+Táto aplikácia je iba jednou zo skupiny aplikácií. Ostatné viete nájsť na https://www.simplemobiletools.com

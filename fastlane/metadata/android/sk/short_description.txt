@@ -1,0 +1,1 @@
+Jednoduchý hudobný prehrávač s meniteľným widgetom na plochu.

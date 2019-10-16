@@ -1,0 +1,7 @@
+Jednostavan glazbeni svirač koji se može lako kontrolirati putem trake za obavijesti, widgeta početnog zaslona ili gumba na slušalicama. Možete sortirati sve pjesme po naslovu ili izvođaču i prilagoditi ekvilajzer. Sortiranje po izvođaču ili albumu još nije podržano, budite u tijeku!
+
+Aplikacija uključuje widget s prilagodljivom bojom teksta, transparentnošću i bojom pozadine.
+
+Ne sadrži oglase ili nepotrebne dozvole. Aplikacije je otvorenog koda, pruža prilagodljive boje.
+
+Ova je aplikacija samo dio većeg broja aplikacija. Možete pronaći ostatak na https://www.simplemobiletools.com

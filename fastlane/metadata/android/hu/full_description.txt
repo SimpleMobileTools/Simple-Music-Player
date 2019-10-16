@@ -1,0 +1,7 @@
+Az állapotsorról, kezdőképernyő widgetről vagy a fejhallgató hardveres gombjaival könnyen vezérelhető zenelejátszó. Rendezheti a számait cím vagy előadó szerint, és módosíthatja a hangszínszabályzót. Egyelőre még nem támogatja az előadó vagy album szerinti szűrést.
+
+Egy testreszabható widgetet tartalmaz, amelynek a szövegszínét, átlátszóságát, és háttérszínét lehet állítani.
+
+Nem tartalmaz reklámokat, és nem kér szükségtelen engedélyeket. Teljesen nyílt forráskódú, és testreszabhatóak a színei.
+
+Ez az app egy nagyobb appsorozat része. A többit itt megtalálja: https://www.simplemobiletools.com

@@ -1,0 +1,7 @@
+Ein schlichter Musik-Player, der ganz einfach über die Benachrichtigungsleiste, das Homescreen Widget oder die Tasten an deinem Headset gesteuert werden kann. Du kannst alle Songs nach Titel oder Künstler sortieren und den Equalizer anpassen. Das Filtern nach Künstler oder Album wird noch nicht unterstützt, bleib dran!
+
+Die App beinhaltet ein Widget mit anpassbarer Textfarbe, Transparenz und Hintergrundfarbe.
+
+Beinhaltet keine Werbung oder unnötige Berechtigungen. Sie ist komplett Open Source, alle verwendeten Farben sind anpassbar.
+
+Diese App ist nur eine aus einer größeren Serie von schlichten Apps. Der Rest davon findet sich auf https://www.simplemobiletools.com

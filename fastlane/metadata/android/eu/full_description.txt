@@ -1,0 +1,7 @@
+Musika erreproduzitzaile bat, egoera barratik, etxeko pantailako widgetetik edo zure entzungailuaren botoietatik erraz kontrola daitekeena. Abestiak izenburu edo artistaren arabera ordenatu ditzakezu, baita ekualizadorea aldatu ere. Oraingoz ez du artista edo alburamen araberako iragazkia egitea baimentzen, egon adi prest dagoenerako!
+
+Widget bat dauka testuaren kolorea, gardentasuna eta atzealdeko kolorea pertsonalizatzea baimentzen duena.
+
+Ez du iragarkirik edota beharrezkoak ez diren baimenik. Iturburu irekikoa da erabat, koloreak pertsonalizagarriak dira.
+
+Aplikazio hau aplikazio multzo handiago baten zati bat da. Gainerakoak hemen aurki ditzakezu https://www.simplemobiletools.com

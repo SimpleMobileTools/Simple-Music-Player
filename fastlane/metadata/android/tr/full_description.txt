@@ -1,0 +1,7 @@
+Durum çubuğundan, ana ekran widget'ından veya kulaklıktaki donanım düğmelerinden kolayca kontrol edilebilen bir müzik çalar. Parçaları Başlık veya Sanatçı'ya göre sıralayabilir ve Ekolayzır'ı değiştirebilirsiniz. Sanatçı veya albüme göre filtrelemeyi henüz desteklemiyor, izlemeye devam edin!
+
+Özelleştirilebilir metin, alfa ve arka plan renkli bir widget içerir.
+
+Reklam veya gereksiz izinler içermez. Tamamen açık kaynaktır, özelleştirilebilir renkler sağlar.
+
+Bu uygulama, daha büyük bir uygulama serisinden sadece bir parça. Geri kalanı https://www.simplemobiletools.com adresinde bulabilirsiniz

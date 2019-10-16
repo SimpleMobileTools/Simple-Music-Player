@@ -1,0 +1,1 @@
+Egy letisztult zenelejátszó, testreszabható widgettel.

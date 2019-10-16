@@ -1,0 +1,7 @@
+Een muziekspeler die gemakkelijk te bedienen is via statusbalk, widget of met de fysieke knoppen op de headset. Je kunt de nummers sorteren op titel of artiest en de Equalizer aanpassen.
+
+De achtergrond en kleuren van de widget zijn aan te passen.
+
+Bevat geen advertenties of onnodige permissies. Volledig open-source. Kleuren van de app kunnen worden aangepast.
+
+Deze app is onderdeel van een grotere verzameling. Vind de andere apps op https://www.simplemobiletools.com

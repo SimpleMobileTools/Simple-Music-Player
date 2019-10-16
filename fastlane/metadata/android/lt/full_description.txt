@@ -1,0 +1,7 @@
+Muzikos grotuvas lengvai valdomas per būsenos juostelę, namų lango valdikliu arba per ausinių mygtukus. Jūs galite rūšiuoti takelius pagal pavadinimą arba atlikėją, taip pat reguliuoti ekvalaizerį. Nepalaiko filtravimo pagal atlikėją ir albumą, laukite pakeitimų!
+
+Turi valdiklį su tinkinama teksto, pagrindine ir fono spalvomis.
+
+Neturi reklamų ar nereikalingų leidimų. Programėlė visiškai atviro kodo, yra galimybė keisti spalvas.
+
+Ši programėle yra viena iš keletos mūsų programėlių. Likusias Jūs galite rasti čia https://www.simplemobiletools.com

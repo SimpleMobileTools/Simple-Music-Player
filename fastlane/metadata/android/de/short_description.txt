@@ -1,0 +1,1 @@
+Ein schlichter Musik-Player mit anpassbarem Widget, ganz ohne Werbung.

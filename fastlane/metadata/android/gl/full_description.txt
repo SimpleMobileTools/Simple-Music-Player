@@ -1,0 +1,7 @@
+Un reprodutor de música fácilmente controlable desde a barra de estado, co widget na pantalla de inicio ou cos botóns dos auriculares. Pode ordenar as listas por Título ou Artista, e tamén xestionar o Ecualizador. Por agora non filtra por artista ou álbume, pero agarde!
+
+Pode personalizar a cor de fondo do widget, a intensidade e a cor do texto.
+
+Non ten publicidade nin permisos innecesarios. É un aplicativo 100% de código aberto, con cores personalizadas.
+
+Este aplicativo pertence a un conxunto de software máis grande. Pode atopar o resto de aplicativos en https://www.simplemobiletools.com

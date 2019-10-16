@@ -1,0 +1,1 @@
+Reprodutor simple con un widget personalizable.
