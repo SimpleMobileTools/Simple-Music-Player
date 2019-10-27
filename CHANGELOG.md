@@ -1,6 +1,11 @@
 Changelog
 ==========
 
+Version 5.2.4 *(2019-10-27)*
+----------------------------
+
+ * Couple translation and stability improvements
+
 Version 5.2.3 *(2019-09-18)*
 ----------------------------
 
