@@ -59,6 +59,8 @@
     <string name="faq_1_text">Vous pouvez cliquer sur les textes de durée courante ou maximale près de la barre de recherche, qui déplaceront le morceau vers l\'arrière ou vers l\'avant.</string>
 
     <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
+    <!-- App title has to have less than 50 characters. If you cannot squeeze it, just remove a part of it -->
+    <string name="app_title">Simple Music Player - A cool player for your songs</string>
     <!-- Short description has to have less than 80 chars -->
     <string name="app_short_description">Un lecteur de musique propre avec un widget personnalisable.</string>
     <string name="app_long_description">

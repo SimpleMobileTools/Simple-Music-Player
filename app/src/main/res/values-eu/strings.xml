@@ -59,6 +59,8 @@
     <string name="faq_1_text">Uneko edo gehienezko iraupen testuetan klik egin dezakezu bilatze barraren ondoan, horrek abestia atzera mugituko du, edo aurrera.</string>
 
     <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
+    <!-- App title has to have less than 50 characters. If you cannot squeeze it, just remove a part of it -->
+    <string name="app_title">Simple Music Player - A cool player for your songs</string>
     <!-- Short description has to have less than 80 chars -->
     <string name="app_short_description">Musika erreproduzitzaile garbia widget pertsonalizagarri batekin.</string>
     <string name="app_long_description">

@@ -59,8 +59,9 @@
     <string name="faq_1_text">Si può premere rapidamente sui testi accanto alla barra di avanzamento, questi faranno spostare il brano in avanti o all\'indietro.</string>
 
     <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
+    <!-- App title has to have less than 50 characters. If you cannot squeeze it, just remove a part of it -->
+    <string name="app_title">Simple Music Player - A cool player for your songs</string>
     <!-- Short description has to have less than 80 chars -->
-    <!-- ITALIAN TRANSLATORS: the last two lines are translated the same way in other applications! -->
     <string name="app_short_description">Un semplice riproduttore musicale con un widget personalizzabile.</string>
     <string name="app_long_description">
         Un riproduttore musicale facilmente controllabile dalla barra dello stato, dal widget sullo schermo oppure dai pulsanti fisici delle proprie cuffie. Si può ordinare le tracce per titolo o artista, oltre a modificare l\'equalizzatore. Ancora non supporta filtri per artista o album, restate sintonizzati!

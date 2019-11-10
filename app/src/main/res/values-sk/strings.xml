@@ -59,6 +59,8 @@
     <string name="faq_1_text">Môžete kliknúť na texty súčasnej, alebo maximálnej dĺžky skladby, ktoré sú vedľa indikátora súčasného progresu. To posunie skladbu buď vpred, alebo vzad.</string>
 
     <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
+    <!-- App title has to have less than 50 characters. If you cannot squeeze it, just remove a part of it -->
+    <string name="app_title">Jednoduchý hudobný prehrávač</string>
     <!-- Short description has to have less than 80 chars -->
     <string name="app_short_description">Jednoduchý hudobný prehrávač s meniteľným widgetom na plochu.</string>
     <string name="app_long_description">

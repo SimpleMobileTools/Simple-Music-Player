@@ -59,6 +59,8 @@
     <string name="faq_1_text">你可以點擊進度條附近的當前或總時長文字，歌曲就會快進或倒退。</string>
 
     <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
+    <!-- App title has to have less than 50 characters. If you cannot squeeze it, just remove a part of it -->
+    <string name="app_title">Simple Music Player - A cool player for your songs</string>
     <!-- Short description has to have less than 80 chars -->
     <string name="app_short_description">一個乾淨的音樂播放器，還有可自訂的小工具。</string>
     <string name="app_long_description">
