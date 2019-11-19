@@ -55,12 +55,12 @@
     <string name="swap_prev_next">Trocar de faixa com os botões do auricular</string>
 
     <!-- FAQ -->
-    <string name="faq_1_title">How can I fast-forward songs?</string>
-    <string name="faq_1_text">You can click on the current or max duration texts near the seekbar, that will move the song either backward, or forward.</string>
+    <string name="faq_1_title">Como posso avançar/recuar rapidamente uma faixa?</string>
+    <string name="faq_1_text">Pode tocar nos textos de duração máxima/atual junto à barra de progresso para avançar ou recuar a posição na faixa.</string>
 
     <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
     <!-- App title has to have less than 50 characters. If you cannot squeeze it, just remove a part of it -->
-    <string name="app_title">Simple Music Player - A cool player for your songs</string>
+    <string name="app_title">Simple Music Player - Reprodutor de músicas</string>
     <!-- Short description has to have less than 80 chars -->
     <string name="app_short_description">Um reprodutor de músicas com um widget personalizável.</string>
     <string name="app_long_description">
