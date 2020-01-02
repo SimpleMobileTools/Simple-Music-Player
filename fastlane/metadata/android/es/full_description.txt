@@ -1,0 +1,6 @@
+Un reproductor de música fácilmente controlable desde la barra de estado, widget de la pantalla principal o por los botones de tus audífonos. Puedes ordenar las pistas por Título o Artista, Así como modificar el ecualizador. Aún no soporta filtrar por álbum, ¡Sigue sintonizando!
+
+Contiene un widget con color de texto personalizable, transparencia y el color de fondo.
+No contiene anuncios o permisos innecesarios. Es completamente de código abierto, provee colores personalizables.
+
+Esta es solo una aplicación de una serie de aplicaciones más grande. Puedes encontrar el resto en https://www.simplemobiletools.com
