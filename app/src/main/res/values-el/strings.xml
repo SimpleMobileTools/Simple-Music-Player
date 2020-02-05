@@ -1,0 +1,81 @@
+<resources>
+    <string name="app_name">Απλός Music Player</string>
+    <string name="app_launcher_name">Music Player</string>
+    <string name="playlist_empty">Η λίστα αναπαραγωγής σας είναι κενή</string>
+    <string name="rename_song">Μετονομασία τραγουδιού</string>
+    <string name="rename_song_error">Παρουσιάστηκε σφάλμα κατά τη μετονομασία</string>
+    <string name="rename_song_empty">Συμπληρώστε όλα τα πεδία</string>
+    <string name="enable_song_repetition">Επανάληψη τρέχοντος τραγουδιού</string>
+    <string name="disable_song_repetition">Διακοπή επανάληψης τρέχοντος τραγουδιού</string>
+    <string name="song_repetition_enabled">Ενεργοποίηση επανάληψης τρέχοντος τραγουδιού</string>
+    <string name="song_repetition_disabled">Απενεργοποίηση επανάληψης τρέχοντος τραγουδιού</string>
+    <string name="enable_shuffle">Ενεργοποίηση τυχαίας σειράς</string>
+    <string name="disable_shuffle">Απενεργοποίηση τυχαίας σειράς</string>
+    <string name="shuffle_enabled">Τυχαία σειρά Ενεργή</string>
+    <string name="shuffle_disabled">Τυχαία σειρά Ανενεργή</string>
+    <string name="enable_autoplay">Ενεργοποίηση αυτόματης εκτέλεσης</string>
+    <string name="disable_autoplay">Απενεργοποίηση αυτόματης εκτέλεσης</string>
+    <string name="autoplay_enabled">Αυτόματη εκτέλεση Ενεργή</string>
+    <string name="autoplay_disabled">Αυτόματη εκτέλεση Ανενεργή</string>
+    <string name="sleep_timer">Χρονοδιακόπτης</string>
+
+    <string name="previous">Προηγούμενο</string>
+    <string name="playpause">Αναπαραγωγή / Παύση</string>
+    <string name="next">Επόμενο</string>
+
+    <!-- Playlists -->
+    <string name="add_file_to_playlist">Προσθήκη αρχείου στη λίστα</string>
+    <string name="add_folder_to_playlist">Προσθήκη φακέλου στη λίστα</string>
+    <string name="manage_playlists">Διαχείριση λιστών </string>
+    <string name="playlists">Λίστες αναπαραγωγής</string>
+    <string name="create_playlist">Δημιουργία λίστας</string>
+    <string name="rename_playlist">Μετονομασία λίστας</string>
+    <string name="playlist_name_exists">Υπάρχει ήδη μια λίστα με αυτό το όνομα</string>
+    <string name="remove_playlist">Αφαίρεση λίστας</string>
+    <string name="remove_playlist_description">Αυτό θα αφαιρέσει μόνο τις επιλεγμένες λίστες, όχι τα πραγματικά αρχεία.</string>
+    <string name="remove_playlist_description_placeholder">Αυτό θα αφαιρέσει μόνο τη λίστα \"%s\", όχι τα πραγματικά αρχεία.</string>
+    <string name="remove_from_playlist">Αφαίρεση από τη λίστα</string>
+    <string name="remove_from_playlist_description">Αυτό θα αφαιρέσει μόνο τα στοιχεία από τη λίστα \"%s\", τα πραγματικά αρχεία δε θα διαγραφούν.</string>
+    <string name="delete_the_files_too">Διαγραφή και των αρχείων</string>
+    <string name="open_playlist">Άνοιγμα λίστας</string>
+    <string name="all_songs_cannot_be_deleted">Αδύνατη η διαγραφή της λίστας \'Όλα τα τραγούδια\'</string>
+    <string name="empty_playlist">Η τρέχουσα λίστα είναι κενή</string>
+    <string name="fetching_songs">Ανάκτηση τραγουδιών...</string>
+    <string name="all_songs">Όλα τα τραγούδια</string>
+    <string name="create_playlist_from_folder">Δημιουργία νέας λίστας από φάκελο</string>
+    <string name="folder_contains_no_audio">Ο επιλεγμένος φάκελος δεν περιέχει αρχεία ήχου</string>
+    <string name="delete_current_song">Διαγραφή τρέχοντος τραγουδιού</string>
+    <string name="remove_current_song">Αφαίρεση τρέχοντος τραγουδιού από τη λίστα</string>
+    <string name="show_filename">Εμφάνιση ονόματος αρχείου ως τίτλος τραγουδιού</string>
+    <string name="title_is_not_available">Εάν ο τίτλος δεν είναι διαθέσιμος</string>
+    <string name="show_album_cover">Εμφάνιση εξώφυλλου άλμπουμ στην κύρια οθόνη</string>
+
+    <!-- Settings -->
+    <string name="equalizer">Ισοσταθμιστής</string>
+    <string name="swap_prev_next">Εναλλαγή κουμπιών ακουστικών Πίσω/Εμπρός</string>
+
+    <!-- FAQ -->
+    <string name="faq_1_title">Πώς μπορώ να προωθήσω γρήγορα τα τραγούδια;</string>
+    <string name="faq_1_text">Μπορείτε να κάνετε κλικ στο τρέχον ή μέγιστης διάρκειας κείμενο κοντά στη γραμμή προόδου, το οποίο θα μετακινήσει το τραγούδι πίσω ή εμπρός.</string>
+
+    <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
+    <!-- App title has to have less than 50 characters. If you cannot squeeze it, just remove a part of it -->
+    <string name="app_title">Απλός Music Player - Οτι καλύτερος για μουσική</string>
+    <!-- Short description has to have less than 80 chars -->
+    <string name="app_short_description">Ένας καθαρός Music Player με προσαρμόσιμο Γραφικό στοιχείο.</string>
+    <string name="app_long_description">
+        Ένας Music Player με εύκολη ρύθμιση από τη γραμμή κατάστασης, το Γραφικό στοιχείο της αρχικής οθόνης ή από τα κουμπιά στα ακουστικά σας. Μπορείτε να ταξινομήσετε τα κομμάτια κατά τίτλο ή καλλιτέχνη, καθώς και να αλλάξετε τον ισοσταθμιστή. Δεν υποστηρίζει ακόμα φιλτράρισμα κατά καλλιτέχνη ή άλμπουμ, μείνετε συντονισμένοι!
+
+        Περιέχει ένα  Γραφικό στοιχείο με προσαρμόσιμο χρώμα κειμένου, άλφα και χρώμα  φόντου.
+
+        Δεν περιέχει διαφημίσεις ή περιττές άδειες. Είναι πλήρως ανοιχτού κώδικα, και παρέχει προσαρμόσιμα χρώματα.
+
+        Αυτή η εφαρμογή είναι μόνο ένα μέρος μιας σειράς εφαρμογών. Μπορείτε να βρείτε τις υπόλοιπες στο https://www.simplemobiletools.com
+    </string>
+
+    <!--
+        Haven't found some strings? There's more at
+        https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
+    -->
+</resources>
+
