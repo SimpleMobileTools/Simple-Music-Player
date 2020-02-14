@@ -74,7 +74,7 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val list
         }
     }
 
-    override fun onBindViewHolder(holder: MyRecyclerViewAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         if (holder !is TransparentViewHolder && holder !is NavigationViewHolder) {
             val song = songs.getOrNull(position - LIST_HEADERS_COUNT) ?: return
             holder.bindView(song, true, true) { itemView, layoutPosition ->
@@ -118,6 +118,10 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val list
     override fun getItemSelectionKey(position: Int) = songs.getOrNull(position)?.path?.hashCode()
 
     override fun getItemKeyPosition(key: Int) = songs.indexOfFirst { it.path.hashCode() == key }
+
+    override fun onActionModeCreated() {}
+
+    override fun onActionModeDestroyed() {}
 
     fun searchOpened() {
         transparentViewHeight = transparentView.height
@@ -460,9 +464,9 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val list
         }
     }
 
-    inner class TransparentViewHolder(view: View) : MyRecyclerViewAdapter.ViewHolder(view)
+    inner class TransparentViewHolder(view: View) : ViewHolder(view)
 
-    inner class NavigationViewHolder(view: View) : MyRecyclerViewAdapter.ViewHolder(view)
+    inner class NavigationViewHolder(view: View) : ViewHolder(view)
 
     private fun setupView(view: View, song: Song, layoutPosition: Int) {
         view.apply {

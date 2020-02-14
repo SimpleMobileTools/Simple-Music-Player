@@ -33,7 +33,7 @@ class PlaylistsAdapter(activity: SimpleActivity, val playlists: ArrayList<Playli
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = createViewHolder(R.layout.item_playlist, parent)
 
-    override fun onBindViewHolder(holder: MyRecyclerViewAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val playlist = playlists.getOrNull(position) ?: return
         holder.bindView(playlist, true, true) { itemView, layoutPosition ->
             setupView(itemView, playlist)
@@ -63,6 +63,10 @@ class PlaylistsAdapter(activity: SimpleActivity, val playlists: ArrayList<Playli
     override fun getItemSelectionKey(position: Int) = playlists.getOrNull(position)?.id
 
     override fun getItemKeyPosition(key: Int) = playlists.indexOfFirst { it.id == key }
+
+    override fun onActionModeCreated() {}
+
+    override fun onActionModeDestroyed() {}
 
     private fun askConfirmDelete() {
         RemovePlaylistDialog(activity) {
