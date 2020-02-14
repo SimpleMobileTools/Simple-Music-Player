@@ -150,7 +150,7 @@ class MainActivity : SimpleActivity(), SongListListener {
         songs_playlist_empty_add_folder.setTextColor(getAdjustedPrimaryColor())
         songs_playlist_empty_add_folder.paintFlags = songs_playlist_empty_add_folder.paintFlags or Paint.UNDERLINE_TEXT_FLAG
 
-        songs_fastscroller.allowBubbleDisplay = config.showInfoBubble
+        songs_fastscroller.allowBubbleDisplay = true
         songs_fastscroller.updateBubbleColors()
 
         arrayListOf(art_holder, song_list_background, top_navigation, sleep_timer_holder).forEach {
