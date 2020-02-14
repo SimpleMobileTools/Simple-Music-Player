@@ -309,7 +309,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             try {
                 mPlayer!!.apply {
                     reset()
-                    setDataSource(applicationContext, mIntentUri)
+                    setDataSource(applicationContext, mIntentUri!!)
                     setOnPreparedListener(null)
                     prepare()
                     start()

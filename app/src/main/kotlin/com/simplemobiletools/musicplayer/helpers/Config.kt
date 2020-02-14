@@ -34,7 +34,7 @@ class Config(context: Context) : BaseConfig(context) {
 
     // initial playlist tries to load all songs from the device, store unwanted song paths here
     var ignoredPaths: Set<String>
-        get() = prefs.getStringSet(IGNORED_PATHS, HashSet<String>())
+        get() = prefs.getStringSet(IGNORED_PATHS, HashSet<String>())!!
         set(ignoredPaths) = prefs.edit().putStringSet(IGNORED_PATHS, ignoredPaths).apply()
 
     fun addIgnoredPaths(paths: ArrayList<String>) {

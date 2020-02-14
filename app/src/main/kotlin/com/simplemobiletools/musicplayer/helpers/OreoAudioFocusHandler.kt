@@ -18,7 +18,7 @@ class OreoAudioFocusHandler constructor(val context: Context) {
 
     fun abandonAudioFocus() {
         if (audioFocusRequest != null) {
-            audioManager?.abandonAudioFocusRequest(audioFocusRequest)
+            audioManager?.abandonAudioFocusRequest(audioFocusRequest!!)
         }
     }
 
@@ -33,6 +33,6 @@ class OreoAudioFocusHandler constructor(val context: Context) {
                 .setAudioAttributes(audioAttributes)
                 .build()
 
-        audioManager?.requestAudioFocus(audioFocusRequest)
+        audioManager?.requestAudioFocus(audioFocusRequest!!)
     }
 }

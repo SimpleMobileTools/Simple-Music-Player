@@ -48,7 +48,7 @@ class MyWidgetProvider : AppWidgetProvider() {
         registerBus()
     }
 
-    private fun getComponentName() = ComponentName(mContext, MyWidgetProvider::class.java)
+    private fun getComponentName() = ComponentName(mContext!!, MyWidgetProvider::class.java)
 
     private fun setupIntent(views: RemoteViews, action: String, id: Int) {
         val intent = Intent(mContext, MyWidgetProvider::class.java)
