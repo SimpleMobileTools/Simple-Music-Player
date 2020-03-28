@@ -1,0 +1,2 @@
+ * Removed the song divider lines to make the UI cleaner
+ * Some translation and UI improvements

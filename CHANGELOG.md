@@ -1,6 +1,12 @@
 Changelog
 ==========
 
+Version 5.2.7 *(2020-03-28)*
+----------------------------
+
+ * Removed the song divider lines to make the UI cleaner
+ * Some translation and UI improvements
+
 Version 5.2.6 *(2020-03-05)*
 ----------------------------
 
