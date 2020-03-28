@@ -619,7 +619,6 @@ class MainActivity : SimpleActivity(), SongListListener {
                 songPicked(getSongIndex(it as Song))
             }.apply {
                 isThirdPartyIntent = this@MainActivity.isThirdPartyIntent
-                addVerticalDividers(true)
                 songs_list.adapter = this
             }
         } else {
