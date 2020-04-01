@@ -51,8 +51,8 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     companion object {
         private const val MIN_INITIAL_DURATION = 30
         private const val PROGRESS_UPDATE_INTERVAL = 1000L
-        private const val MIN_SKIP_LENGTH = 2000
         private const val MAX_CLICK_DURATION = 700L
+        private const val FAST_FORWARD_SKIP_MS = 10000
         private const val NOTIFICATION_CHANNEL = "music_player_channel"
         private const val NOTIFICATION_ID = 78    // just a random number
 
@@ -872,8 +872,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
     private fun skip(forward: Boolean) {
         val curr = mPlayer?.currentPosition ?: return
-        val twoPercents = Math.max(mPlayer!!.duration / 50, MIN_SKIP_LENGTH)
-        val newProgress = if (forward) curr + twoPercents else curr - twoPercents
+        val newProgress = if (forward) curr + FAST_FORWARD_SKIP_MS else curr - FAST_FORWARD_SKIP_MS
         mPlayer!!.seekTo(newProgress)
         resumeSong()
     }
