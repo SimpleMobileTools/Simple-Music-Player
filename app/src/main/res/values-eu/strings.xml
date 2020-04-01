@@ -19,10 +19,6 @@
     <string name="autoplay_disabled">Erreprodukzio automatikoa ezgaituta</string>
     <string name="sleep_timer">Sleep timer</string>
 
-    <string name="previous">Aurrekoa</string>
-    <string name="playpause">Erreproduzitu / Gelditu</string>
-    <string name="next">Hurrengoa</string>
-
     <!-- Playlists -->
     <string name="add_file_to_playlist">Fitxategia erreprodukzio zerrendara gehitu</string>
     <string name="add_folder_to_playlist">Karpeta erreprodukzio zerrendara gehitu</string>

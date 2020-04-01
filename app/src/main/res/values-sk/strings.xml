@@ -19,10 +19,6 @@
     <string name="autoplay_disabled">Automatické prehrávanie vypnuté</string>
     <string name="sleep_timer">Časovač vypnutia</string>
 
-    <string name="previous">Predošlá</string>
-    <string name="playpause">Hrať / Pauznúť</string>
-    <string name="next">Nasledujúca</string>
-
     <!-- Playlists -->
     <string name="add_file_to_playlist">Pridať súbor do zoznamu skladieb</string>
     <string name="add_folder_to_playlist">Pridať priečinok do zoznamu skladieb</string>

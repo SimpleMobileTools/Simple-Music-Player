@@ -19,10 +19,6 @@
     <string name="autoplay_disabled">Riproduzione automatica disabilitata</string>
     <string name="sleep_timer">Sleep timer</string>
 
-    <string name="previous">Precedente</string>
-    <string name="playpause">Riproduci / Pausa</string>
-    <string name="next">Successiva</string>
-
     <!-- Playlists -->
     <string name="add_file_to_playlist">Aggiungi file alla scaletta</string>
     <string name="add_folder_to_playlist">Aggiungi cartella alla scaletta</string>

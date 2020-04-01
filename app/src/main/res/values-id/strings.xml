@@ -19,10 +19,6 @@
     <string name="autoplay_disabled">Putar otomatis dinonaktifkan</string>
     <string name="sleep_timer">Sleep timer</string>
 
-    <string name="previous">Sebelumnya</string>
-    <string name="playpause">Putar / Jeda</string>
-    <string name="next">Berikutnya</string>
-
     <!-- Playlists -->
     <string name="add_file_to_playlist">Tambah berkas ke daftar putar</string>
     <string name="add_folder_to_playlist">Tambah folder ke daftar putar</string>

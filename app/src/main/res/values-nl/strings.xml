@@ -19,10 +19,6 @@
     <string name="autoplay_disabled">Autoplay uitgeschakeld</string>
     <string name="sleep_timer">Slaaptimer</string>
 
-    <string name="previous">Vorige</string>
-    <string name="playpause">Afspelen / Pauzeren</string>
-    <string name="next">Volgende</string>
-
     <!-- Playlists -->
     <string name="add_file_to_playlist">Bestand toevoegen aan afspeellijst</string>
     <string name="add_folder_to_playlist">Map toevoegen aan afspeellijst</string>

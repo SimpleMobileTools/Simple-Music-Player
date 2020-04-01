@@ -19,10 +19,6 @@
     <string name="autoplay_disabled">Otomatik çalma devre dışı</string>
     <string name="sleep_timer">Uyku zamanlayıcısı</string>
 
-    <string name="previous">Önceki</string>
-    <string name="playpause">Çal / Duraklat</string>
-    <string name="next">Sonraki</string>
-
     <!-- Playlists -->
     <string name="add_file_to_playlist">Çalma listesine dosya ekle</string>
     <string name="add_folder_to_playlist">Çalma listesine klasör ekle</string>

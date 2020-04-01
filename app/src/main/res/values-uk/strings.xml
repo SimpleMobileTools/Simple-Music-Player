@@ -19,10 +19,6 @@
     <string name="autoplay_disabled">Припинено автоматичне відтворення</string>
     <string name="sleep_timer">Sleep timer</string>
 
-    <string name="previous">Попередній</string>
-    <string name="playpause">Відтворення / Пауза</string>
-    <string name="next">Наступний</string>
-
     <!-- Playlists -->
     <string name="add_file_to_playlist">Додати файл до списку відтворення</string>
     <string name="add_folder_to_playlist">Додати теку до списку відтворення</string>

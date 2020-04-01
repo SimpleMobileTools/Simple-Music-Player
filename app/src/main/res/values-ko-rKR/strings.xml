@@ -19,10 +19,6 @@
     <string name="autoplay_disabled">자동재생 비 활성화됨</string>
     <string name="sleep_timer">Sleep timer</string>
 
-    <string name="previous">이전</string>
-    <string name="playpause">재생 / 정지</string>
-    <string name="next">다음</string>
-
     <!-- Playlists -->
     <string name="add_file_to_playlist">재생목록에 파일 추가</string>
     <string name="add_folder_to_playlist">재생목록에 폴더 추가</string>

@@ -19,10 +19,6 @@
     <string name="autoplay_disabled">Automatinis grojimas išjungtas</string>
     <string name="sleep_timer">Sleep timer</string>
 
-    <string name="previous">Prieš tai buvusi</string>
-    <string name="playpause">Groti / Pristabdyti</string>
-    <string name="next">Kita</string>
-
     <!-- Playlists -->
     <string name="add_file_to_playlist">Pridėti bylą į grojaraštį</string>
     <string name="add_folder_to_playlist">Pridėti aplanką į grojaraštį</string>

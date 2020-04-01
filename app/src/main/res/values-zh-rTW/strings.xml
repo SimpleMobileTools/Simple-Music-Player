@@ -19,10 +19,6 @@
     <string name="autoplay_disabled">自動播放已停用</string>
     <string name="sleep_timer">睡眠定時器</string>
 
-    <string name="previous">上一首</string>
-    <string name="playpause">播放 / 暫停</string>
-    <string name="next">下一首</string>
-
     <!-- Playlists -->
     <string name="add_file_to_playlist">添加檔案到播放清單</string>
     <string name="add_folder_to_playlist">添加資料夾到播放清單</string>

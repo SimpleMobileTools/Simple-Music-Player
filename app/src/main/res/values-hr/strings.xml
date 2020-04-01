@@ -19,10 +19,6 @@
     <string name="autoplay_disabled">Automatska reprodukcija onemogućena</string>
     <string name="sleep_timer">Sleep timer</string>
 
-    <string name="previous">Prijašnja</string>
-    <string name="playpause">Reproduciraj / Pauziraj</string>
-    <string name="next">Sljedeća</string>
-
     <!-- Playlists -->
     <string name="add_file_to_playlist">Dodajte datoteku na popis za reprodukciju</string>
     <string name="add_folder_to_playlist">Dodajte mapu na popis za reprodukciju</string>

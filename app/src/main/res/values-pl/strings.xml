@@ -19,10 +19,6 @@
     <string name="autoplay_disabled">Autoodtwarzanie wyłączone</string>
     <string name="sleep_timer">Wyłącznik czasowy</string>
 
-    <string name="previous">Poprzedni</string>
-    <string name="playpause">Odtwórz / zatrzymaj</string>
-    <string name="next">Następny</string>
-
     <!-- Playlists -->
     <string name="add_file_to_playlist">Dodaj plik do listy odtwarzania</string>
     <string name="add_folder_to_playlist">Dodaj folder do listy odtwarzania</string>

@@ -19,10 +19,6 @@
     <string name="autoplay_disabled">Automatische Wiedergabe deaktiviert</string>
     <string name="sleep_timer">Sleep timer</string>
 
-    <string name="previous">Vorheriger Titel</string>
-    <string name="playpause">Wiedergabe / Pause</string>
-    <string name="next">Nächster Titel</string>
-
     <!-- Playlists -->
     <string name="add_file_to_playlist">Datei zu Wiedergabeliste hinzufügen</string>
     <string name="add_folder_to_playlist">Ordner zu Wiedergabeliste hinzufügen</string>
