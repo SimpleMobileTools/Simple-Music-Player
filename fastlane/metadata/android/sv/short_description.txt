@@ -1,1 +1,1 @@
-En ren musikspelare med en anpassningsbar widget.
+En ren musikspelare med en anpassningsbar gränssnittskomponent.
