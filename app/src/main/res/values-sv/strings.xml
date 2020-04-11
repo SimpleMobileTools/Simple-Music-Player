@@ -56,9 +56,9 @@
 
     <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
     <!-- App title has to have less than 50 characters. If you cannot squeeze it, just remove a part of it -->
-    <string name="app_title">Simple Music Player - En cool spelare för dina låtar</string>
+    <string name="app_title">Simple Music Player - A cool player for your songs</string>
     <!-- Short description has to have less than 80 chars -->
-    <string name="app_short_description">En ren musikspelare med en anpassningsbar gränssnittskomponent, snyggt gränssnitt och ingen reklam.</string>
+    <string name="app_short_description">A clean music player with a customizable widget, stylish interface and no ads.</string>
     <string name="app_long_description">
         En musikspelare som du enkelt styr från statusfältet, en gränssnittskomponent på startskärmen eller knapparna på din mikrofonlur. Det har alla förväntade funktioner som sortering på olika sätt samt ändring av Equalizer. Lyssna på din favorit mp3, andra låtar eller podcasts med denna gratis och vackra musikspelare.
 
