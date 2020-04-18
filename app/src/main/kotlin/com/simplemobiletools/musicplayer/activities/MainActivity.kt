@@ -100,7 +100,7 @@ class MainActivity : SimpleActivity(), SongListListener {
         song_progress_max.setOnClickListener { sendIntent(SKIP_FORWARD) }
         sleep_timer_stop.setOnClickListener { stopSleepTimer() }
 
-        songs_playlist_empty_add_folder.setOnClickListener { addFolderToPlaylist() }
+        songs_playlist_empty_placeholder_2.setOnClickListener { addFolderToPlaylist() }
         volumeControlStream = AudioManager.STREAM_MUSIC
         checkWhatsNewDialog()
         storeStateVariables()
@@ -147,8 +147,8 @@ class MainActivity : SimpleActivity(), SongListListener {
         markCurrentSong()
         updateTextColors(main_holder)
         getSongsAdapter()?.updateColors()
-        songs_playlist_empty_add_folder.setTextColor(getAdjustedPrimaryColor())
-        songs_playlist_empty_add_folder.paintFlags = songs_playlist_empty_add_folder.paintFlags or Paint.UNDERLINE_TEXT_FLAG
+        songs_playlist_empty_placeholder_2.setTextColor(getAdjustedPrimaryColor())
+        songs_playlist_empty_placeholder_2.paintFlags = songs_playlist_empty_placeholder_2.paintFlags or Paint.UNDERLINE_TEXT_FLAG
 
         songs_fastscroller.allowBubbleDisplay = true
         songs_fastscroller.updateBubbleColors()
@@ -270,8 +270,8 @@ class MainActivity : SimpleActivity(), SongListListener {
 
         MenuItemCompat.setOnActionExpandListener(searchMenuItem, object : MenuItemCompat.OnActionExpandListener {
             override fun onMenuItemActionExpand(item: MenuItem?): Boolean {
-                songs_playlist_empty.text = getString(R.string.no_items_found)
-                songs_playlist_empty_add_folder.beGone()
+                songs_playlist_placeholder.text = getString(R.string.no_items_found)
+                songs_playlist_empty_placeholder_2.beGone()
                 art_holder.beGone()
                 getSongsAdapter()?.searchOpened()
                 top_navigation.beGone()
@@ -280,8 +280,8 @@ class MainActivity : SimpleActivity(), SongListListener {
             }
 
             override fun onMenuItemActionCollapse(item: MenuItem?): Boolean {
-                songs_playlist_empty.text = getString(R.string.playlist_empty)
-                songs_playlist_empty_add_folder.beVisibleIf(songs.isEmpty())
+                songs_playlist_placeholder.text = getString(R.string.playlist_empty)
+                songs_playlist_empty_placeholder_2.beVisibleIf(songs.isEmpty())
                 art_holder.beVisibleIf(songs.isNotEmpty())
                 if (isSearchOpen) {
                     searchQueryChanged("")
@@ -633,8 +633,8 @@ class MainActivity : SimpleActivity(), SongListListener {
 
         songs_list.beVisibleIf(songs.isNotEmpty())
         art_holder.beVisibleIf(songs_list.isVisible())
-        songs_playlist_empty.beVisibleIf(songs.isEmpty())
-        songs_playlist_empty_add_folder.beVisibleIf(songs.isEmpty())
+        songs_playlist_placeholder.beVisibleIf(songs.isEmpty())
+        songs_playlist_empty_placeholder_2.beVisibleIf(songs.isEmpty())
     }
 
     private fun getSongIndex(song: Song) = songs.indexOfFirstOrNull { it == song } ?: 0
@@ -722,7 +722,7 @@ class MainActivity : SimpleActivity(), SongListListener {
     private fun searchQueryChanged(text: String) {
         val filtered = songs.filter { it.artist.contains(text, true) || it.title.contains(text, true) } as ArrayList
         filtered.sortBy { !(it.artist.startsWith(text, true) || it.title.startsWith(text, true)) }
-        songs_playlist_empty.beVisibleIf(filtered.isEmpty())
+        songs_playlist_placeholder.beVisibleIf(filtered.isEmpty())
         getSongsAdapter()?.updateSongs(filtered, text)
     }
 

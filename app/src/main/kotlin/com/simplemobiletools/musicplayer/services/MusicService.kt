@@ -356,7 +356,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
         mPlayer = MediaPlayer().apply {
             setWakeMode(applicationContext, PowerManager.PARTIAL_WAKE_LOCK)
-            setAudioStreamType(AudioManager.STREAM_MUSIC)
+            setAudioStreamType(STREAM_MUSIC)
             setOnPreparedListener(this@MusicService)
             setOnCompletionListener(this@MusicService)
             setOnErrorListener(this@MusicService)
@@ -773,7 +773,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         if (isOreoPlus()) {
             mOreoFocusHandler?.requestAudioFocus(this)
         } else {
-            mAudioManager?.requestAudioFocus(this, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN)
+            mAudioManager?.requestAudioFocus(this, STREAM_MUSIC, AUDIOFOCUS_GAIN)
         }
     }
 
@@ -839,7 +839,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
         if (isPlaying) {
             val filter = IntentFilter(Intent.ACTION_HEADSET_PLUG)
-            filter.addAction(AudioManager.ACTION_AUDIO_BECOMING_NOISY)
+            filter.addAction(ACTION_AUDIO_BECOMING_NOISY)
             registerReceiver(mHeadsetPlugReceiver, filter)
         } else {
             try {

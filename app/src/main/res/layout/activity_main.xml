@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_holder"
@@ -17,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:adjustViewBounds="true"
-            android:src="@drawable/ic_headset"/>
+            android:src="@drawable/ic_headset" />
 
     </RelativeLayout>
 
@@ -25,14 +24,14 @@
         android:id="@+id/song_list_background"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/transparent"/>
+        android:background="@android:color/transparent" />
 
     <com.simplemobiletools.commons.views.MyRecyclerView
         android:id="@+id/songs_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="false"
-        app:layoutManager="com.simplemobiletools.commons.views.MyLinearLayoutManager"/>
+        app:layoutManager="com.simplemobiletools.commons.views.MyLinearLayoutManager" />
 
     <LinearLayout
         android:id="@+id/top_navigation"
@@ -43,9 +42,9 @@
         android:orientation="vertical"
         android:visibility="gone">
 
-        <include layout="@layout/item_navigation"/>
+        <include layout="@layout/item_navigation" />
 
-        <include layout="@layout/divider"/>
+        <include layout="@layout/divider" />
     </LinearLayout>
 
     <com.simplemobiletools.commons.views.FastScroller
@@ -55,33 +54,35 @@
         android:layout_alignParentEnd="true"
         android:paddingStart="@dimen/normal_margin">
 
-        <include layout="@layout/fastscroller_handle_vertical"/>
+        <include layout="@layout/fastscroller_handle_vertical" />
 
     </com.simplemobiletools.commons.views.FastScroller>
 
     <com.simplemobiletools.commons.views.MyTextView
-        android:id="@+id/songs_playlist_empty"
+        android:id="@+id/songs_playlist_placeholder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
+        android:alpha="0.8"
         android:gravity="center"
-        android:paddingLeft="@dimen/big_margin"
-        android:paddingTop="@dimen/big_margin"
-        android:paddingRight="@dimen/big_margin"
+        android:paddingStart="@dimen/activity_margin"
+        android:paddingTop="@dimen/activity_margin"
+        android:paddingEnd="@dimen/activity_margin"
         android:text="@string/playlist_empty"
-        android:textSize="@dimen/bigger_text_size"/>
+        android:textSize="@dimen/bigger_text_size"
+        android:textStyle="italic" />
 
     <com.simplemobiletools.commons.views.MyTextView
-        android:id="@+id/songs_playlist_empty_add_folder"
+        android:id="@+id/songs_playlist_empty_placeholder_2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/songs_playlist_empty"
+        android:layout_below="@+id/songs_playlist_placeholder"
         android:layout_centerHorizontal="true"
         android:background="?attr/selectableItemBackground"
         android:gravity="center"
         android:padding="@dimen/activity_margin"
         android:text="@string/add_folder_to_playlist"
-        android:textSize="@dimen/bigger_text_size"/>
+        android:textSize="@dimen/bigger_text_size" />
 
     <RelativeLayout
         android:id="@+id/sleep_timer_holder"
@@ -92,7 +93,7 @@
         android:clickable="true"
         android:visibility="gone">
 
-        <include layout="@layout/divider"/>
+        <include layout="@layout/divider" />
 
         <com.simplemobiletools.commons.views.MyTextView
             android:id="@+id/sleep_timer_label"
@@ -101,7 +102,7 @@
             android:layout_centerVertical="true"
             android:padding="@dimen/activity_margin"
             android:text="@string/sleep_timer"
-            android:textSize="@dimen/big_text_size"/>
+            android:textSize="@dimen/big_text_size" />
 
         <com.simplemobiletools.commons.views.MyTextView
             android:id="@+id/sleep_timer_value"
@@ -112,7 +113,7 @@
             android:paddingTop="@dimen/activity_margin"
             android:paddingBottom="@dimen/activity_margin"
             android:textSize="@dimen/big_text_size"
-            tools:text="05:00"/>
+            tools:text="05:00" />
 
         <ImageView
             android:id="@+id/sleep_timer_stop"
@@ -124,7 +125,7 @@
             android:layout_marginEnd="@dimen/small_margin"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:padding="@dimen/normal_margin"
-            android:src="@drawable/ic_stop_shape"/>
+            android:src="@drawable/ic_stop_shape" />
 
     </RelativeLayout>
 </RelativeLayout>
