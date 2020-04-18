@@ -10,7 +10,6 @@ import android.widget.SeekBar
 import com.simplemobiletools.commons.dialogs.ColorPickerDialog
 import com.simplemobiletools.commons.extensions.adjustAlpha
 import com.simplemobiletools.commons.extensions.applyColorFilter
-import com.simplemobiletools.commons.extensions.setBackgroundColor
 import com.simplemobiletools.commons.extensions.setFillWithStroke
 import com.simplemobiletools.commons.helpers.IS_CUSTOMIZING_COLORS
 import com.simplemobiletools.musicplayer.R
@@ -18,6 +17,7 @@ import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.helpers.MyWidgetProvider
 import com.simplemobiletools.musicplayer.services.MusicService
 import kotlinx.android.synthetic.main.widget.*
+import kotlinx.android.synthetic.main.widget.view.*
 import kotlinx.android.synthetic.main.widget_config.*
 import kotlinx.android.synthetic.main.widget_controls.*
 
@@ -73,8 +73,11 @@ class WidgetConfigureActivity : SimpleActivity() {
 
     private fun saveConfig() {
         val appWidgetManager = AppWidgetManager.getInstance(this)
-        val views = RemoteViews(packageName, R.layout.widget)
-        views.setBackgroundColor(R.id.widget_holder, mBgColor)
+        val views = RemoteViews(packageName, R.layout.widget).apply {
+            setInt(R.id.widget_background, "setColorFilter", mBgColor)
+            setInt(R.id.widget_background, "setImageAlpha", Color.alpha(mBgColor))
+        }
+
         appWidgetManager.updateAppWidget(mWidgetId, views)
 
         storeWidgetColors()
@@ -107,7 +110,7 @@ class WidgetConfigureActivity : SimpleActivity() {
 
     private fun updateBackgroundColor() {
         mBgColor = mBgColorWithoutTransparency.adjustAlpha(mBgAlpha)
-        config_player.setBackgroundColor(mBgColor)
+        config_player.widget_background.applyColorFilter(mBgColor)
         config_save.setBackgroundColor(mBgColor)
         config_bg_color.setFillWithStroke(mBgColor, Color.BLACK)
     }
@@ -148,12 +151,8 @@ class WidgetConfigureActivity : SimpleActivity() {
             updateBackgroundColor()
         }
 
-        override fun onStartTrackingTouch(seekBar: SeekBar) {
+        override fun onStartTrackingTouch(seekBar: SeekBar) {}
 
-        }
-
-        override fun onStopTrackingTouch(seekBar: SeekBar) {
-
-        }
+        override fun onStopTrackingTouch(seekBar: SeekBar) {}
     }
 }

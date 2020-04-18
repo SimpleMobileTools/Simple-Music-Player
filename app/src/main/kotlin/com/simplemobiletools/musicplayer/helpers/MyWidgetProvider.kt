@@ -6,11 +6,11 @@ import android.appwidget.AppWidgetProvider
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.widget.RemoteViews
 import com.simplemobiletools.commons.extensions.getColoredBitmap
 import com.simplemobiletools.commons.extensions.getLaunchIntent
-import com.simplemobiletools.commons.extensions.setBackgroundColor
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.SplashActivity
 import com.simplemobiletools.musicplayer.extensions.config
@@ -106,7 +106,8 @@ class MyWidgetProvider : AppWidgetProvider() {
         val widgetTextColor = config.widgetTextColor
 
         views.apply {
-            setBackgroundColor(R.id.widget_holder, widgetBgColor)
+            setInt(R.id.widget_background, "setColorFilter", widgetBgColor)
+            setInt(R.id.widget_background, "setImageAlpha", Color.alpha(widgetBgColor))
             setTextColor(R.id.song_info_title, widgetTextColor)
             setTextColor(R.id.song_info_artist, widgetTextColor)
             setImageViewBitmap(R.id.previous_btn, res.getColoredBitmap(R.drawable.ic_previous_vector, widgetTextColor))
