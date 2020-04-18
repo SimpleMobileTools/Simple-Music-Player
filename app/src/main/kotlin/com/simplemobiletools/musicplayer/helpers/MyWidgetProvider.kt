@@ -19,11 +19,11 @@ import com.simplemobiletools.musicplayer.models.Events
 import com.simplemobiletools.musicplayer.models.Song
 import com.simplemobiletools.musicplayer.services.MusicService
 import com.simplemobiletools.musicplayer.services.MusicService.Companion.mCurrSong
-import com.squareup.otto.Bus
-import com.squareup.otto.Subscribe
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
 
 class MyWidgetProvider : AppWidgetProvider() {
-    private var mBus: Bus? = null
+    private var mBus: EventBus? = null
     private var mContext: Context? = null
 
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
@@ -42,9 +42,6 @@ class MyWidgetProvider : AppWidgetProvider() {
             appWidgetManager.updateAppWidget(it, views)
         }
 
-        if (mBus == null) {
-            mBus = BusProvider.instance
-        }
         registerBus()
     }
 
@@ -161,7 +158,7 @@ class MyWidgetProvider : AppWidgetProvider() {
     private fun registerBus() {
         try {
             if (mBus == null) {
-                mBus = BusProvider.instance
+                mBus = EventBus.getDefault()
             }
 
             mBus!!.register(this)

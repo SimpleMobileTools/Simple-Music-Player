@@ -42,7 +42,7 @@ import com.simplemobiletools.musicplayer.models.Events
 import com.simplemobiletools.musicplayer.models.Song
 import com.simplemobiletools.musicplayer.receivers.ControlActionsListener
 import com.simplemobiletools.musicplayer.receivers.HeadsetPlugReceiver
-import com.squareup.otto.Bus
+import org.greenrobot.eventbus.EventBus
 import java.io.File
 import java.util.*
 
@@ -61,7 +61,6 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         private var mHeadsetPlugReceiver = HeadsetPlugReceiver()
         private var mPlayer: MediaPlayer? = null
         private var mPlayedSongIndexes = ArrayList<Int>()
-        private var mBus: Bus? = null
         private var mProgressHandler = Handler()
         private var mSleepTimer: CountDownTimer? = null
         private var mSongs = ArrayList<Song>()
@@ -97,12 +96,6 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
     override fun onCreate() {
         super.onCreate()
-
-        if (mBus == null) {
-            mBus = BusProvider.instance
-            mBus!!.register(this)
-        }
-
         mCoverArtHeight = resources.getDimension(R.dimen.top_art_height).toInt()
         mMediaSession = MediaSessionCompat(this, "MusicService")
         mMediaSession!!.setFlags(MediaSessionCompat.FLAG_HANDLES_MEDIA_BUTTONS)
@@ -119,7 +112,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         }
 
         if (!hasPermission(PERMISSION_WRITE_STORAGE)) {
-            mBus!!.post(Events.NoStoragePermission())
+            EventBus.getDefault().post(Events.NoStoragePermission())
         }
     }
 
@@ -248,7 +241,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     }
 
     private fun handleFinish() {
-        mBus!!.post(Events.ProgressUpdated(0))
+        EventBus.getDefault().post(Events.ProgressUpdated(0))
         destroyPlayer()
     }
 
@@ -257,7 +250,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         ensureBackgroundThread {
             getSortedSongs()
             Handler(Looper.getMainLooper()).post {
-                mBus!!.post(Events.PlaylistUpdated(mSongs))
+                EventBus.getDefault().post(Events.PlaylistUpdated(mSongs))
             }
 
             if (intent.getBooleanExtra(CALL_SETUP_AFTER, false)) {
@@ -338,12 +331,12 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     private fun updateUI() {
         Handler(Looper.getMainLooper()).post {
             if (mPlayer != null) {
-                mBus!!.post(Events.PlaylistUpdated(mSongs))
+                EventBus.getDefault().post(Events.PlaylistUpdated(mSongs))
                 mCurrSongCover = getAlbumImage(mCurrSong).first
-                mBus!!.post(Events.SongChanged(mCurrSong))
+                EventBus.getDefault().post(Events.SongChanged(mCurrSong))
 
                 val secs = mPlayer!!.currentPosition / 1000
-                mBus!!.post(Events.ProgressUpdated(secs))
+                EventBus.getDefault().post(Events.ProgressUpdated(secs))
             }
         }
         songStateChanged(getIsPlaying())
@@ -693,7 +686,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         val albumImage = getAlbumImage(song)
         mCurrSongCover = albumImage.first
         Handler(Looper.getMainLooper()).post {
-            mBus!!.post(Events.SongChanged(song))
+            EventBus.getDefault().post(Events.SongChanged(song))
         }
 
         val lockScreenImage = if (albumImage.second) albumImage.first else null
@@ -754,11 +747,8 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         mPlayer?.release()
         mPlayer = null
 
-        if (mBus != null) {
-            songStateChanged(false)
-            songChanged(null)
-            mBus!!.unregister(this)
-        }
+        songStateChanged(false)
+        songChanged(null)
 
         mEqualizer?.release()
 
@@ -834,7 +824,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         setupNotification()
         mMediaSession?.isActive = isPlaying
         Handler(Looper.getMainLooper()).post {
-            mBus!!.post(Events.SongStateChanged(isPlaying))
+            EventBus.getDefault().post(Events.SongStateChanged(isPlaying))
         }
 
         if (isPlaying) {
@@ -854,7 +844,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             mProgressHandler.post(object : Runnable {
                 override fun run() {
                     val secs = mPlayer!!.currentPosition / 1000
-                    mBus!!.post(Events.ProgressUpdated(secs))
+                    EventBus.getDefault().post(Events.ProgressUpdated(secs))
                     mProgressHandler.removeCallbacksAndMessages(null)
                     mProgressHandler.postDelayed(this, PROGRESS_UPDATE_INTERVAL)
                 }
@@ -877,11 +867,11 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         mSleepTimer = object : CountDownTimer(millisInFuture, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 val seconds = (millisUntilFinished / 1000).toInt()
-                mBus!!.post(Events.SleepTimerChanged(seconds))
+                EventBus.getDefault().post(Events.SleepTimerChanged(seconds))
             }
 
             override fun onFinish() {
-                mBus!!.post(Events.SleepTimerChanged(0))
+                EventBus.getDefault().post(Events.SleepTimerChanged(0))
                 config.sleepInTS = 0
                 sendIntent(FINISH)
             }

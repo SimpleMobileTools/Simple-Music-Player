@@ -41,12 +41,12 @@ import com.simplemobiletools.musicplayer.models.Events
 import com.simplemobiletools.musicplayer.models.Playlist
 import com.simplemobiletools.musicplayer.models.Song
 import com.simplemobiletools.musicplayer.services.MusicService
-import com.squareup.otto.Bus
-import com.squareup.otto.Subscribe
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.item_navigation.*
 import kotlinx.android.synthetic.main.item_navigation.view.*
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
 import java.io.File
 import java.util.*
 
@@ -65,7 +65,7 @@ class MainActivity : SimpleActivity(), SongListListener {
     private var storedTextColor = 0
     private var storedShowAlbumCover = true
 
-    lateinit var bus: Bus
+    lateinit var bus: EventBus
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -73,7 +73,7 @@ class MainActivity : SimpleActivity(), SongListListener {
         appLaunched(BuildConfig.APPLICATION_ID)
         isThirdPartyIntent = intent.action == Intent.ACTION_VIEW
 
-        bus = BusProvider.instance
+        bus = EventBus.getDefault()
         bus.register(this)
         initSeekbarChangeListener()
 
@@ -300,7 +300,7 @@ class MainActivity : SimpleActivity(), SongListListener {
     }
 
     private fun launchAbout() {
-        val licenses = LICENSE_OTTO or LICENSE_PICASSO
+        val licenses = LICENSE_EVENT_BUS or LICENSE_PICASSO
 
         val faqItems = arrayListOf(
                 FAQItem(R.string.faq_1_title, R.string.faq_1_text),
