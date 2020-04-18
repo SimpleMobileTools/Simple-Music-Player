@@ -20,7 +20,7 @@ import android.os.CountDownTimer
 import android.os.Handler
 import android.os.Looper
 import android.os.PowerManager
-import android.provider.MediaStore
+import android.provider.MediaStore.Audio
 import android.support.v4.media.MediaMetadataCompat
 import android.support.v4.media.session.MediaSessionCompat
 import android.support.v4.media.session.PlaybackStateCompat
@@ -47,7 +47,7 @@ import com.squareup.otto.Bus
 import java.io.File
 import java.util.*
 
-class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnErrorListener, MediaPlayer.OnCompletionListener, AudioManager.OnAudioFocusChangeListener {
+class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnErrorListener, MediaPlayer.OnCompletionListener, OnAudioFocusChangeListener {
     companion object {
         private const val MIN_INITIAL_DURATION = 30
         private const val PROGRESS_UPDATE_INTERVAL = 1000L
@@ -367,8 +367,8 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
     private fun getAllDeviceSongs() {
         val ignoredPaths = config.ignoredPaths
-        val uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
-        val columns = arrayOf(MediaStore.Audio.Media.DURATION, MediaStore.Audio.Media.DATA)
+        val uri = Audio.Media.EXTERNAL_CONTENT_URI
+        val columns = arrayOf(Audio.Media.DURATION, Audio.Media.DATA)
 
         var cursor: Cursor? = null
         val paths = ArrayList<String>()
@@ -377,9 +377,9 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             cursor = contentResolver.query(uri, columns, null, null, null)
             if (cursor != null && cursor.moveToFirst()) {
                 do {
-                    val duration = cursor.getIntValue(MediaStore.Audio.Media.DURATION) / 1000
+                    val duration = cursor.getIntValue(Audio.Media.DURATION) / 1000
                     if (duration > MIN_INITIAL_DURATION) {
-                        val path = cursor.getStringValue(MediaStore.Audio.Media.DATA)
+                        val path = cursor.getStringValue(Audio.Media.DATA)
                         if (!ignoredPaths.contains(path) && !path.doesThisOrParentHaveNoMedia()) {
                             paths.add(path)
                         }
@@ -645,7 +645,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             val trackUri = if (mCurrSong!!.mediaStoreId == 0L) {
                 Uri.fromFile(File(mCurrSong!!.path))
             } else {
-                ContentUris.withAppendedId(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, mCurrSong!!.mediaStoreId)
+                ContentUris.withAppendedId(Audio.Media.EXTERNAL_CONTENT_URI, mCurrSong!!.mediaStoreId)
             }
             mPlayer!!.setDataSource(applicationContext, trackUri)
             mPlayer!!.prepareAsync()
