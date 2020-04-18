@@ -6,7 +6,6 @@ import android.content.ContentUris
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.database.Cursor
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.media.AudioManager
@@ -368,26 +367,21 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     private fun getAllDeviceSongs() {
         val ignoredPaths = config.ignoredPaths
         val uri = Audio.Media.EXTERNAL_CONTENT_URI
-        val columns = arrayOf(Audio.Media.DURATION, Audio.Media.DATA)
+        val projection = arrayOf(
+                Audio.Media.DURATION,
+                Audio.Media.DATA
+        )
 
-        var cursor: Cursor? = null
         val paths = ArrayList<String>()
 
-        try {
-            cursor = contentResolver.query(uri, columns, null, null, null)
-            if (cursor != null && cursor.moveToFirst()) {
-                do {
-                    val duration = cursor.getIntValue(Audio.Media.DURATION) / 1000
-                    if (duration > MIN_INITIAL_DURATION) {
-                        val path = cursor.getStringValue(Audio.Media.DATA)
-                        if (!ignoredPaths.contains(path) && !path.doesThisOrParentHaveNoMedia()) {
-                            paths.add(path)
-                        }
-                    }
-                } while (cursor.moveToNext())
+        queryCursor(uri, projection) { cursor ->
+            val duration = cursor.getIntValue(Audio.Media.DURATION) / 1000
+            if (duration > MIN_INITIAL_DURATION) {
+                val path = cursor.getStringValue(Audio.Media.DATA)
+                if (!ignoredPaths.contains(path) && !path.doesThisOrParentHaveNoMedia()) {
+                    paths.add(path)
+                }
             }
-        } finally {
-            cursor?.close()
         }
 
         val storedAllSongPaths = songsDAO.getSongsFromPlaylist(ALL_SONGS_PLAYLIST_ID).map { it.path }

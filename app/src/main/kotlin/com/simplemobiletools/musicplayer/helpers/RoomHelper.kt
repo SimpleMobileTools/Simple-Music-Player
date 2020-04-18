@@ -1,7 +1,6 @@
 package com.simplemobiletools.musicplayer.helpers
 
 import android.content.Context
-import android.database.Cursor
 import android.provider.MediaStore
 import android.provider.MediaStore.Audio
 import com.simplemobiletools.commons.extensions.*
@@ -26,7 +25,7 @@ class RoomHelper(val context: Context) {
 
     private fun getSongsFromPaths(paths: List<String>, playlistId: Int): ArrayList<Song> {
         val uri = Audio.Media.EXTERNAL_CONTENT_URI
-        val columns = arrayOf(Audio.Media._ID,
+        val projection = arrayOf(Audio.Media._ID,
                 Audio.Media.TITLE,
                 Audio.Media.ARTIST,
                 Audio.Media.DATA,
@@ -47,26 +46,17 @@ class RoomHelper(val context: Context) {
             val selection = "${Audio.Media.DATA} IN ($questionMarks)"
             val selectionArgs = sublist.toTypedArray()
 
-            var cursor: Cursor? = null
-            try {
-                cursor = context.contentResolver.query(uri, columns, selection, selectionArgs, null)
-                if (cursor?.moveToFirst() == true) {
-                    do {
-                        val mediaStoreId = cursor.getLongValue(Audio.Media._ID)
-                        val title = cursor.getStringValue(Audio.Media.TITLE)
-                        val artist = cursor.getStringValue(Audio.Media.ARTIST)
-                        val path = cursor.getStringValue(Audio.Media.DATA)
-                        val duration = cursor.getIntValue(Audio.Media.DURATION) / 1000
-                        val album = cursor.getStringValue(Audio.Media.ALBUM)
-                        val song = Song(mediaStoreId, title, artist, path, duration, album, playlistId, TYPE_FILE)
-                        song.title = song.getProperTitle(showFilename)
-                        songs.add(song)
-                        pathsMap.remove(path)
-                    } while (cursor.moveToNext())
-                }
-            } catch (e: Exception) {
-            } finally {
-                cursor?.close()
+            context.queryCursor(uri, projection, selection, selectionArgs) { cursor ->
+                val mediaStoreId = cursor.getLongValue(Audio.Media._ID)
+                val title = cursor.getStringValue(Audio.Media.TITLE)
+                val artist = cursor.getStringValue(Audio.Media.ARTIST)
+                val path = cursor.getStringValue(Audio.Media.DATA)
+                val duration = cursor.getIntValue(Audio.Media.DURATION) / 1000
+                val album = cursor.getStringValue(Audio.Media.ALBUM)
+                val song = Song(mediaStoreId, title, artist, path, duration, album, playlistId, TYPE_FILE)
+                song.title = song.getProperTitle(showFilename)
+                songs.add(song)
+                pathsMap.remove(path)
             }
         }
 
