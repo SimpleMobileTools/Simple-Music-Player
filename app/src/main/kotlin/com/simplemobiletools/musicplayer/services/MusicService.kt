@@ -313,8 +313,8 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
                     setOnPreparedListener(null)
                     prepare()
                     start()
-                    requestAudioFocus()
                 }
+                requestAudioFocus()
 
                 val song = mSongs.first()
                 mSongs.clear()
