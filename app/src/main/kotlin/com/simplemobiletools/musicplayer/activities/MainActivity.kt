@@ -6,7 +6,6 @@ import android.content.Intent
 import android.graphics.Paint
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.ColorDrawable
-import android.graphics.drawable.LayerDrawable
 import android.media.AudioManager
 import android.net.Uri
 import android.os.Bundle
@@ -157,8 +156,8 @@ class MainActivity : SimpleActivity(), SongListListener {
             it.background = ColorDrawable(config.backgroundColor)
         }
 
-        val stopDrawable = resources.getDrawable(R.drawable.ic_stop_shape)
-        (stopDrawable as LayerDrawable).findDrawableByLayerId(R.id.ic_stop_shape_background).applyColorFilter(config.textColor)
+        val stopDrawable = resources.getDrawable(R.drawable.ic_stop_vector)
+        stopDrawable.applyColorFilter(config.textColor)
         sleep_timer_stop.setImageDrawable(stopDrawable)
         invalidateOptionsMenu()
     }

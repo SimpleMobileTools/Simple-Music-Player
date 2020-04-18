@@ -117,15 +117,14 @@
 
         <ImageView
             android:id="@+id/sleep_timer_stop"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="@dimen/normal_icon_size"
+            android:layout_height="@dimen/normal_icon_size"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginStart="@dimen/small_margin"
             android:layout_marginEnd="@dimen/small_margin"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:padding="@dimen/normal_margin"
-            android:src="@drawable/ic_stop_shape" />
+            android:src="@drawable/ic_stop_vector" />
 
     </RelativeLayout>
 </RelativeLayout>
