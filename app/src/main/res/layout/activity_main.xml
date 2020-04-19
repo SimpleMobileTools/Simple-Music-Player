@@ -1,88 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_holder"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <RelativeLayout
-        android:id="@+id/art_holder"
+    <com.simplemobiletools.commons.views.MyViewPager
+        android:id="@+id/viewpager"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/top_art_height">
-
-        <ImageView
-            android:id="@+id/art_image"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:adjustViewBounds="true"
-            android:src="@drawable/ic_headset" />
-
-    </RelativeLayout>
-
-    <View
-        android:id="@+id/song_list_background"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/transparent" />
-
-    <com.simplemobiletools.commons.views.MyRecyclerView
-        android:id="@+id/songs_list"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:clipToPadding="false"
-        app:layoutManager="com.simplemobiletools.commons.views.MyLinearLayoutManager" />
-
-    <LinearLayout
-        android:id="@+id/top_navigation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        android:focusable="true"
-        android:orientation="vertical"
-        android:visibility="gone">
-
-        <include layout="@layout/item_navigation" />
-
-        <include layout="@layout/divider" />
-    </LinearLayout>
-
-    <com.simplemobiletools.commons.views.FastScroller
-        android:id="@+id/songs_fastscroller"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_alignParentEnd="true"
-        android:paddingStart="@dimen/normal_margin">
-
-        <include layout="@layout/fastscroller_handle_vertical" />
-
-    </com.simplemobiletools.commons.views.FastScroller>
-
-    <com.simplemobiletools.commons.views.MyTextView
-        android:id="@+id/songs_playlist_placeholder"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:alpha="0.8"
-        android:gravity="center"
-        android:paddingStart="@dimen/activity_margin"
-        android:paddingTop="@dimen/activity_margin"
-        android:paddingEnd="@dimen/activity_margin"
-        android:text="@string/playlist_empty"
-        android:textSize="@dimen/bigger_text_size"
-        android:textStyle="italic" />
-
-    <com.simplemobiletools.commons.views.MyTextView
-        android:id="@+id/songs_playlist_empty_placeholder_2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/songs_playlist_placeholder"
-        android:layout_centerHorizontal="true"
-        android:background="?attr/selectableItemBackground"
-        android:gravity="center"
-        android:padding="@dimen/activity_margin"
-        android:text="@string/add_folder_to_playlist"
-        android:textSize="@dimen/bigger_text_size" />
+        android:layout_height="match_parent" />
 
     <RelativeLayout
         android:id="@+id/sleep_timer_holder"

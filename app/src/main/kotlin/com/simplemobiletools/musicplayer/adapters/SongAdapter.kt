@@ -372,11 +372,11 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val list
 
     private fun initNavigationView() {
         navigationView?.apply {
-            shuffle_btn.setOnClickListener { listener.listToggleShuffle() }
+            shuffle_btn.setOnClickListener { listener.toggleShuffle() }
             previous_btn.setOnClickListener { activity.sendIntent(PREVIOUS) }
             play_pause_btn.setOnClickListener { activity.sendIntent(PLAYPAUSE) }
             next_btn.setOnClickListener { activity.sendIntent(NEXT) }
-            repeat_btn.setOnClickListener { listener.listToggleSongRepetition() }
+            repeat_btn.setOnClickListener { listener.toggleSongRepetition() }
             song_progress_current.setOnClickListener { activity.sendIntent(SKIP_BACKWARD) }
             song_progress_max.setOnClickListener { activity.sendIntent(SKIP_FORWARD) }
 
