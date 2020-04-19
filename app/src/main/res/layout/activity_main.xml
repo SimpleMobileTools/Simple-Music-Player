@@ -124,7 +124,7 @@
             android:layout_marginStart="@dimen/small_margin"
             android:layout_marginEnd="@dimen/small_margin"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:padding="@dimen/small_margin"
+            android:padding="@dimen/medium_margin"
             android:src="@drawable/ic_cross_vector" />
 
     </RelativeLayout>
