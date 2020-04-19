@@ -1,6 +1,14 @@
 Changelog
 ==========
 
+Version 5.3.0 *(2020-04-19)*
+----------------------------
+
+ * Made the widget nicer and more reliable
+ * Added many UI improvements
+ * Always skip by 10 seconds at pressing the current and max duration
+ * Many other improvements here and there
+
 Version 5.2.7 *(2020-03-28)*
 ----------------------------
 
