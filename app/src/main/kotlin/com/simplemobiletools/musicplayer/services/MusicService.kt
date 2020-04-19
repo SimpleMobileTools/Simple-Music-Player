@@ -153,6 +153,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             REMOVE_SONG_IDS -> handleRemoveSongIDS(intent)
             START_SLEEP_TIMER -> startSleepTimer()
             STOP_SLEEP_TIMER -> stopSleepTimer()
+            BROADCAST_STATUS -> broadcastPlayerStatus()
         }
 
         MediaButtonReceiver.handleIntent(mMediaSession!!, intent)
@@ -883,6 +884,12 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     private fun stopSleepTimer() {
         config.sleepInTS = 0
         mSleepTimer?.cancel()
+    }
+
+    // used at updating the widget at create or resize
+    private fun broadcastPlayerStatus() {
+        broadcastSongStateChange(mPlayer?.isPlaying ?: false)
+        broadcastSongChange(mCurrSong)
     }
 
     private fun handleMediaButton(mediaButtonEvent: Intent) {

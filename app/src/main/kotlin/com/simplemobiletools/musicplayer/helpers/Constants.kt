@@ -33,6 +33,7 @@ const val NEW_SONG = "NEW_SONG"
 const val IS_PLAYING = "IS_PLAYING"
 const val SONG_CHANGED = "SONG_CHANGED"
 const val SONG_STATE_CHANGED = "SONG_STATE_CHANGED"
+const val BROADCAST_STATUS = "BROADCAST_STATUS"
 
 // shared preferences
 const val SHUFFLE = "shuffle"

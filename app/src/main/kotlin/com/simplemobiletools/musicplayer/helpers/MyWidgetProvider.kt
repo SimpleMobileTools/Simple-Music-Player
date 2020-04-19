@@ -34,6 +34,10 @@ class MyWidgetProvider : AppWidgetProvider() {
         }
     }
 
+    override fun onEnabled(context: Context) {
+        context.sendIntent(BROADCAST_STATUS)
+    }
+
     override fun onReceive(context: Context, intent: Intent) {
         val action = intent.action
         when (action) {
@@ -46,6 +50,7 @@ class MyWidgetProvider : AppWidgetProvider() {
 
     override fun onAppWidgetOptionsChanged(context: Context, appWidgetManager: AppWidgetManager, widgetId: Int, newOptions: Bundle) {
         performUpdate(context)
+        context.sendIntent(BROADCAST_STATUS)
         super.onAppWidgetOptionsChanged(context, appWidgetManager, widgetId, newOptions)
     }
 
