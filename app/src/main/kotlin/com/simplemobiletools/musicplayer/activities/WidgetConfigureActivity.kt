@@ -55,12 +55,7 @@ class WidgetConfigureActivity : SimpleActivity() {
 
     private fun initVariables() {
         mBgColor = config.widgetBgColor
-        if (mBgColor == 1) {
-            mBgColor = Color.BLACK
-            mBgAlpha = .2f
-        } else {
-            mBgAlpha = Color.alpha(mBgColor) / 255.toFloat()
-        }
+        mBgAlpha = Color.alpha(mBgColor) / 255.toFloat()
 
         mBgColorWithoutTransparency = Color.rgb(Color.red(mBgColor), Color.green(mBgColor), Color.blue(mBgColor))
         config_bg_seekbar.setOnSeekBarChangeListener(seekbarChangeListener)
@@ -74,8 +69,7 @@ class WidgetConfigureActivity : SimpleActivity() {
     private fun saveConfig() {
         val appWidgetManager = AppWidgetManager.getInstance(this)
         val views = RemoteViews(packageName, R.layout.widget).apply {
-            setInt(R.id.widget_background, "setColorFilter", mBgColor)
-            setInt(R.id.widget_background, "setImageAlpha", Color.alpha(mBgColor))
+            applyColorFilter(R.id.widget_background, mBgColor)
         }
 
         appWidgetManager.updateAppWidget(mWidgetId, views)

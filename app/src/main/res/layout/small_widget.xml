@@ -1,12 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/widget_holder"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@android:color/black"
-    android:gravity="center_horizontal">
+    android:gravity="center">
 
-    <include layout="@layout/widget_controls"/>
+    <ImageView
+        android:id="@+id/widget_background"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/widget_controls"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:src="@drawable/widget_background" />
+
+    <include
+        android:id="@+id/widget_controls"
+        layout="@layout/widget_controls"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/controls_row_height" />
 
 </RelativeLayout>

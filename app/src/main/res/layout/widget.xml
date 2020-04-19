@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/widget_holder"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -15,40 +16,46 @@
         android:layout_alignParentEnd="true"
         android:src="@drawable/widget_background" />
 
-    <TextView
-        android:id="@+id/song_info_title"
+    <RelativeLayout
+        android:id="@+id/song_info_holder"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/activity_margin"
-        android:layout_marginTop="@dimen/small_margin"
-        android:layout_marginRight="@dimen/activity_margin"
-        android:ellipsize="end"
-        android:gravity="center"
-        android:lines="1"
-        android:text="@string/title"
-        android:textColor="@android:color/white"
-        android:textSize="@dimen/big_text_size" />
+        android:layout_height="@dimen/controls_row_height"
+        android:gravity="center_vertical"
+        android:paddingTop="@dimen/small_margin">
 
-    <TextView
-        android:id="@+id/song_info_artist"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/song_info_title"
-        android:layout_marginLeft="@dimen/activity_margin"
-        android:layout_marginRight="@dimen/activity_margin"
-        android:layout_marginBottom="@dimen/small_margin"
-        android:ellipsize="end"
-        android:gravity="center"
-        android:lines="1"
-        android:text="@string/artist"
-        android:textColor="@android:color/white"
-        android:textSize="@dimen/bigger_text_size" />
+        <TextView
+            android:id="@+id/song_info_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/activity_margin"
+            android:layout_marginEnd="@dimen/activity_margin"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:lines="1"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/big_text_size"
+            tools:text="@string/title" />
+
+        <TextView
+            android:id="@+id/song_info_artist"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/song_info_title"
+            android:layout_marginStart="@dimen/activity_margin"
+            android:layout_marginEnd="@dimen/activity_margin"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:lines="1"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/bigger_text_size"
+            tools:text="@string/artist" />
+    </RelativeLayout>
 
     <include
         android:id="@+id/widget_controls"
         layout="@layout/widget_controls"
         android:layout_width="match_parent"
         android:layout_height="@dimen/controls_row_height"
-        android:layout_below="@+id/song_info_artist" />
+        android:layout_below="@+id/song_info_holder" />
 
 </RelativeLayout>

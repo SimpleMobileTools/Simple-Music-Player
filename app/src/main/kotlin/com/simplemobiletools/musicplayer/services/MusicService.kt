@@ -689,8 +689,10 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     }
 
     private fun broadcastSongChange(song: Song?) {
-        broadcastUpdateWidgetSong(song)
-        EventBus.getDefault().post(Events.SongChanged(song))
+        Handler(Looper.getMainLooper()).post {
+            broadcastUpdateWidgetSong(song)
+            EventBus.getDefault().post(Events.SongChanged(song))
+        }
     }
 
     private fun broadcastSongStateChange(isPlaying: Boolean) {

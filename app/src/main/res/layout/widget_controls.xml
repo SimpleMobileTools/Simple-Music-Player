@@ -3,6 +3,7 @@
     android:id="@+id/main_controls"
     android:layout_width="match_parent"
     android:layout_height="@dimen/controls_row_height"
+    android:gravity="center_vertical"
     android:orientation="horizontal">
 
     <ImageView
