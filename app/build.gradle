@@ -58,7 +58,7 @@ android {
 }
 
 dependencies {
-    implementation 'com.simplemobiletools:commons:5.26.3'
+    implementation 'com.simplemobiletools:commons:5.26.4'
     implementation 'org.greenrobot:eventbus:3.2.0'
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'androidx.media:media:1.1.0'
