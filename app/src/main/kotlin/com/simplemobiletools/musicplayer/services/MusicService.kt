@@ -33,10 +33,7 @@ import com.simplemobiletools.commons.helpers.isOreoPlus
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.MainActivity
 import com.simplemobiletools.musicplayer.databases.SongsDatabase
-import com.simplemobiletools.musicplayer.extensions.config
-import com.simplemobiletools.musicplayer.extensions.getPlaylistSongs
-import com.simplemobiletools.musicplayer.extensions.sendIntent
-import com.simplemobiletools.musicplayer.extensions.songsDAO
+import com.simplemobiletools.musicplayer.extensions.*
 import com.simplemobiletools.musicplayer.helpers.*
 import com.simplemobiletools.musicplayer.models.Events
 import com.simplemobiletools.musicplayer.models.Song
@@ -249,9 +246,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         mSongs.clear()
         ensureBackgroundThread {
             getSortedSongs()
-            Handler(Looper.getMainLooper()).post {
-                EventBus.getDefault().post(Events.PlaylistUpdated(mSongs))
-            }
+            EventBus.getDefault().post(Events.PlaylistUpdated(mSongs))
 
             if (intent.getBooleanExtra(CALL_SETUP_AFTER, false)) {
                 mPlayOnPrepare = false
@@ -329,15 +324,13 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     }
 
     private fun updateUI() {
-        Handler(Looper.getMainLooper()).post {
-            if (mPlayer != null) {
-                EventBus.getDefault().post(Events.PlaylistUpdated(mSongs))
-                mCurrSongCover = getAlbumImage(mCurrSong).first
-                EventBus.getDefault().post(Events.SongChanged(mCurrSong))
+        if (mPlayer != null) {
+            EventBus.getDefault().post(Events.PlaylistUpdated(mSongs))
+            mCurrSongCover = getAlbumImage(mCurrSong).first
+            broadcastSongChange(mCurrSong)
 
-                val secs = mPlayer!!.currentPosition / 1000
-                EventBus.getDefault().post(Events.ProgressUpdated(secs))
-            }
+            val secs = mPlayer!!.currentPosition / 1000
+            EventBus.getDefault().post(Events.ProgressUpdated(secs))
         }
         songStateChanged(getIsPlaying())
     }
@@ -685,9 +678,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     private fun songChanged(song: Song?) {
         val albumImage = getAlbumImage(song)
         mCurrSongCover = albumImage.first
-        Handler(Looper.getMainLooper()).post {
-            EventBus.getDefault().post(Events.SongChanged(song))
-        }
+        broadcastSongChange(song)
 
         val lockScreenImage = if (albumImage.second) albumImage.first else null
         val metadata = MediaMetadataCompat.Builder()
@@ -695,6 +686,16 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
                 .build()
 
         mMediaSession?.setMetadata(metadata)
+    }
+
+    private fun broadcastSongChange(song: Song?) {
+        broadcastUpdateWidgetSong(song)
+        EventBus.getDefault().post(Events.SongChanged(song))
+    }
+
+    private fun broadcastSongStateChange(isPlaying: Boolean) {
+        broadcastUpdateWidgetSongState(isPlaying)
+        EventBus.getDefault().post(Events.SongStateChanged(isPlaying))
     }
 
     // do not just return the album cover, but also a boolean to indicate if it a real cover, or just the placeholder
@@ -823,9 +824,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         handleProgressHandler(isPlaying)
         setupNotification()
         mMediaSession?.isActive = isPlaying
-        Handler(Looper.getMainLooper()).post {
-            EventBus.getDefault().post(Events.SongStateChanged(isPlaying))
-        }
+        broadcastSongStateChange(isPlaying)
 
         if (isPlaying) {
             val filter = IntentFilter(Intent.ACTION_HEADSET_PLUG)

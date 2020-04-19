@@ -15,15 +15,11 @@ import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.SplashActivity
 import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.extensions.sendIntent
-import com.simplemobiletools.musicplayer.models.Events
 import com.simplemobiletools.musicplayer.models.Song
 import com.simplemobiletools.musicplayer.services.MusicService
 import com.simplemobiletools.musicplayer.services.MusicService.Companion.mCurrSong
-import org.greenrobot.eventbus.EventBus
-import org.greenrobot.eventbus.Subscribe
 
 class MyWidgetProvider : AppWidgetProvider() {
-    private var mBus: EventBus? = null
     private var mContext: Context? = null
 
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
@@ -41,8 +37,6 @@ class MyWidgetProvider : AppWidgetProvider() {
             updatePlayPauseButton(views, MusicService.getIsPlaying())
             appWidgetManager.updateAppWidget(it, views)
         }
-
-        registerBus()
     }
 
     private fun getComponentName() = ComponentName(mContext!!, MyWidgetProvider::class.java)
@@ -60,12 +54,12 @@ class MyWidgetProvider : AppWidgetProvider() {
         views.setOnClickPendingIntent(id, pendingIntent)
     }
 
-    @Subscribe
-    fun songChangedEvent(event: Events.SongChanged) {
+    private fun songChanged(intent: Intent) {
+        val song = intent.getSerializableExtra(NEW_SONG) as? Song ?: return
         val appWidgetManager = AppWidgetManager.getInstance(mContext)
         appWidgetManager.getAppWidgetIds(getComponentName()).forEach {
             val views = getRemoteViews(appWidgetManager, mContext!!, it)
-            updateSongInfo(views, event.song)
+            updateSongInfo(views, song)
             appWidgetManager.updateAppWidget(it, views)
         }
     }
@@ -82,12 +76,12 @@ class MyWidgetProvider : AppWidgetProvider() {
         views.setTextViewText(R.id.song_info_artist, artist)
     }
 
-    @Subscribe
-    fun songStateChanged(event: Events.SongStateChanged) {
+    private fun songStateChanged(intent: Intent) {
+        val isPlaying = intent.getBooleanExtra(IS_PLAYING, false)
         val appWidgetManager = AppWidgetManager.getInstance(mContext)
         appWidgetManager.getAppWidgetIds(getComponentName()).forEach {
             val views = getRemoteViews(appWidgetManager, mContext!!, it)
-            updatePlayPauseButton(views, event.isPlaying)
+            updatePlayPauseButton(views, isPlaying)
             appWidgetManager.updateAppWidget(it, views)
         }
     }
@@ -118,16 +112,12 @@ class MyWidgetProvider : AppWidgetProvider() {
     override fun onReceive(context: Context, intent: Intent) {
         mContext = context
         val action = intent.action
-        registerBus()
         when (action) {
+            SONG_CHANGED -> songChanged(intent)
+            SONG_STATE_CHANGED -> songStateChanged(intent)
             PREVIOUS, PLAYPAUSE, NEXT -> context.sendIntent(action)
             else -> super.onReceive(context, intent)
         }
-    }
-
-    override fun onDeleted(context: Context, appWidgetIds: IntArray) {
-        super.onDeleted(context, appWidgetIds)
-        unregisterBus()
     }
 
     private fun setupButtons(views: RemoteViews) {
@@ -154,23 +144,5 @@ class MyWidgetProvider : AppWidgetProvider() {
 
         val layoutId = if (minHeight < context.config.initialWidgetHeight / 2) R.layout.small_widget else R.layout.widget
         return RemoteViews(context.packageName, layoutId)
-    }
-
-    private fun registerBus() {
-        try {
-            if (mBus == null) {
-                mBus = EventBus.getDefault()
-            }
-
-            mBus!!.register(this)
-        } catch (ignored: Exception) {
-        }
-    }
-
-    private fun unregisterBus() {
-        try {
-            mBus?.unregister(this)
-        } catch (ignored: Exception) {
-        }
     }
 }

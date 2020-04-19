@@ -29,6 +29,10 @@ const val SKIP_BACKWARD = PATH + "SKIP_BACKWARD"
 const val SKIP_FORWARD = PATH + "SKIP_FORWARD"
 const val REMOVE_CURRENT_SONG = PATH + "REMOVE_CURRENT_SONG"
 const val REMOVE_SONG_IDS = PATH + "REMOVE_SONG_IDS"
+const val NEW_SONG = "NEW_SONG"
+const val IS_PLAYING = "IS_PLAYING"
+const val SONG_CHANGED = "SONG_CHANGED"
+const val SONG_STATE_CHANGED = "SONG_STATE_CHANGED"
 
 // shared preferences
 const val SHUFFLE = "shuffle"

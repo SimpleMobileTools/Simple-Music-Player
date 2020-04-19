@@ -47,6 +47,7 @@ import kotlinx.android.synthetic.main.item_navigation.*
 import kotlinx.android.synthetic.main.item_navigation.view.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import java.io.File
 import java.util.*
 
@@ -638,7 +639,7 @@ class MainActivity : SimpleActivity(), SongListListener {
 
     private fun getSongsAdapter() = songs_list.adapter as? SongAdapter
 
-    @Subscribe
+    @Subscribe(threadMode = ThreadMode.MAIN)
     fun songChangedEvent(event: Events.SongChanged) {
         if (!wasInitialPlaylistSet) {
             return
@@ -650,32 +651,32 @@ class MainActivity : SimpleActivity(), SongListListener {
         updateAlbumCover()
     }
 
-    @Subscribe
+    @Subscribe(threadMode = ThreadMode.MAIN)
     fun songStateChanged(event: Events.SongStateChanged) {
         val isPlaying = event.isPlaying
         play_pause_btn.setImageDrawable(resources.getDrawable(if (isPlaying) R.drawable.ic_pause_vector else R.drawable.ic_play_vector))
         getSongsAdapter()?.updateSongState(isPlaying)
     }
 
-    @Subscribe
+    @Subscribe(threadMode = ThreadMode.MAIN)
     fun playlistUpdated(event: Events.PlaylistUpdated) {
         wasInitialPlaylistSet = true
         fillSongsListView(event.songs.clone() as ArrayList<Song>)
     }
 
-    @Subscribe
+    @Subscribe(threadMode = ThreadMode.MAIN)
     fun progressUpdated(event: Events.ProgressUpdated) {
         val progress = event.progress
         song_progressbar.progress = progress
         getSongsAdapter()?.updateSongProgress(progress)
     }
 
-    @Subscribe
+    @Subscribe(threadMode = ThreadMode.MAIN)
     fun noStoragePermission(event: Events.NoStoragePermission) {
         toast(R.string.no_storage_permissions)
     }
 
-    @Subscribe
+    @Subscribe(threadMode = ThreadMode.MAIN)
     fun sleepTimerChanged(event: Events.SleepTimerChanged) {
         sleep_timer_holder.beVisible()
         sleep_timer_value.text = event.seconds.getFormattedDuration()

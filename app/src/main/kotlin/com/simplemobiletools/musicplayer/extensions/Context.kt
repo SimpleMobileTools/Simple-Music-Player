@@ -7,10 +7,7 @@ import android.util.TypedValue
 import com.simplemobiletools.commons.helpers.isOreoPlus
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.databases.SongsDatabase
-import com.simplemobiletools.musicplayer.helpers.CALL_SETUP_AFTER
-import com.simplemobiletools.musicplayer.helpers.Config
-import com.simplemobiletools.musicplayer.helpers.PAUSE
-import com.simplemobiletools.musicplayer.helpers.REFRESH_LIST
+import com.simplemobiletools.musicplayer.helpers.*
 import com.simplemobiletools.musicplayer.interfaces.PlaylistsDao
 import com.simplemobiletools.musicplayer.interfaces.SongsDao
 import com.simplemobiletools.musicplayer.models.Playlist
@@ -90,5 +87,21 @@ fun Context.deletePlaylists(playlists: ArrayList<Playlist>) {
     playlistDAO.deletePlaylists(playlists)
     playlists.forEach {
         songsDAO.removePlaylistSongs(it.id)
+    }
+}
+
+fun Context.broadcastUpdateWidgetSong(newSong: Song?) {
+    Intent(this, MyWidgetProvider::class.java).apply {
+        putExtra(NEW_SONG, newSong)
+        action = SONG_CHANGED
+        sendBroadcast(this)
+    }
+}
+
+fun Context.broadcastUpdateWidgetSongState(isPlaying: Boolean) {
+    Intent(this, MyWidgetProvider::class.java).apply {
+        putExtra(IS_PLAYING, isPlaying)
+        action = SONG_STATE_CHANGED
+        sendBroadcast(this)
     }
 }
