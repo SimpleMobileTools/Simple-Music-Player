@@ -156,9 +156,7 @@ class MainActivity : SimpleActivity(), SongListListener {
             it.background = ColorDrawable(config.backgroundColor)
         }
 
-        val stopDrawable = resources.getDrawable(R.drawable.ic_stop_vector)
-        stopDrawable.applyColorFilter(config.textColor)
-        sleep_timer_stop.setImageDrawable(stopDrawable)
+        sleep_timer_stop.applyColorFilter(config.textColor)
         invalidateOptionsMenu()
     }
 
