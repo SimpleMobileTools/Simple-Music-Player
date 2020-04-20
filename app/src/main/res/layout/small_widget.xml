@@ -13,7 +13,7 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:src="@drawable/widget_background" />
+        android:src="@drawable/widget_round_background" />
 
     <include
         android:id="@+id/widget_controls"
