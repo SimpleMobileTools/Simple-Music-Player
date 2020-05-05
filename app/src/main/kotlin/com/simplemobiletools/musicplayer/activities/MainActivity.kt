@@ -43,11 +43,12 @@ import java.util.*
 
 class MainActivity : SimpleActivity(), MainActivityInterface {
     private var isThirdPartyIntent = false
-    private var searchMenuItem: MenuItem? = null
     private var isSearchOpen = false
     private var wasInitialPlaylistSet = false
     private var lastFilePickerPath = ""
-    lateinit var bus: EventBus
+
+    private var searchMenuItem: MenuItem? = null
+    private var bus: EventBus? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,7 +59,7 @@ class MainActivity : SimpleActivity(), MainActivityInterface {
         handlePermission(PERMISSION_WRITE_STORAGE) {
             if (it) {
                 bus = EventBus.getDefault()
-                bus.register(this)
+                bus!!.register(this)
                 sleep_timer_stop.setOnClickListener { stopSleepTimer() }
 
                 initFragments()
@@ -96,7 +97,7 @@ class MainActivity : SimpleActivity(), MainActivityInterface {
 
     override fun onDestroy() {
         super.onDestroy()
-        bus.unregister(this)
+        bus?.unregister(this)
 
         if (isThirdPartyIntent && !isChangingConfigurations) {
             sendIntent(FINISH)
@@ -215,11 +216,11 @@ class MainActivity : SimpleActivity(), MainActivityInterface {
         val hour = resources.getQuantityString(R.plurals.hours, 1, 1)
 
         val items = arrayListOf(
-                RadioItem(5 * 60, "5 $minutes"),
-                RadioItem(10 * 60, "10 $minutes"),
-                RadioItem(20 * 60, "20 $minutes"),
-                RadioItem(30 * 60, "30 $minutes"),
-                RadioItem(60 * 60, hour))
+            RadioItem(5 * 60, "5 $minutes"),
+            RadioItem(10 * 60, "10 $minutes"),
+            RadioItem(20 * 60, "20 $minutes"),
+            RadioItem(30 * 60, "30 $minutes"),
+            RadioItem(60 * 60, hour))
 
         if (items.none { it.id == config.lastSleepTimerSeconds }) {
             val lastSleepTimerMinutes = config.lastSleepTimerSeconds / 60
@@ -474,11 +475,11 @@ class MainActivity : SimpleActivity(), MainActivityInterface {
         val licenses = LICENSE_EVENT_BUS or LICENSE_PICASSO
 
         val faqItems = arrayListOf(
-                FAQItem(R.string.faq_1_title, R.string.faq_1_text),
-                FAQItem(R.string.faq_1_title_commons, R.string.faq_1_text_commons),
-                FAQItem(R.string.faq_4_title_commons, R.string.faq_4_text_commons),
-                FAQItem(R.string.faq_2_title_commons, R.string.faq_2_text_commons),
-                FAQItem(R.string.faq_6_title_commons, R.string.faq_6_text_commons))
+            FAQItem(R.string.faq_1_title, R.string.faq_1_text),
+            FAQItem(R.string.faq_1_title_commons, R.string.faq_1_text_commons),
+            FAQItem(R.string.faq_4_title_commons, R.string.faq_4_text_commons),
+            FAQItem(R.string.faq_2_title_commons, R.string.faq_2_text_commons),
+            FAQItem(R.string.faq_6_title_commons, R.string.faq_6_text_commons))
 
         startAboutActivity(R.string.app_name, licenses, BuildConfig.VERSION_NAME, faqItems, true)
     }
