@@ -176,7 +176,9 @@ class SongsFragment(context: Context, attributeSet: AttributeSet) : MyViewPagerF
     }
 
     override fun refreshItems() {
-        activity.sendIntent(REFRESH_LIST)
+        if (!activityInterface.getIsSearchOpen()) {
+            activity.sendIntent(REFRESH_LIST)
+        }
     }
 
     private fun setupIconColors() {
