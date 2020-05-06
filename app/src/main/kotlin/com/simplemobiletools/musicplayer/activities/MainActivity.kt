@@ -65,6 +65,8 @@ class MainActivity : SimpleActivity(), MainActivityInterface {
                     finish()
                 }
             }
+        } else {
+            initActivity()
         }
 
         volumeControlStream = AudioManager.STREAM_MUSIC
