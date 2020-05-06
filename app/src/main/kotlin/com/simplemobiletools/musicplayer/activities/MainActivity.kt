@@ -66,7 +66,14 @@ class MainActivity : SimpleActivity(), MainActivityInterface {
                 }
             }
         } else {
-            initActivity()
+            handlePermission(PERMISSION_READ_STORAGE) {
+                if (it) {
+                    initActivity()
+                } else {
+                    toast(R.string.no_storage_permissions)
+                    finish()
+                }
+            }
         }
 
         volumeControlStream = AudioManager.STREAM_MUSIC
