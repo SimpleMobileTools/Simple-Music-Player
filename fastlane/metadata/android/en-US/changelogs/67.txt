@@ -1,0 +1,2 @@
+ * Rely more on the MediaStore at fetching songs on Android Q+
+ * Added some UI improvements and crashfixes

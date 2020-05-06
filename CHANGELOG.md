@@ -1,6 +1,12 @@
 Changelog
 ==========
 
+Version 5.3.1 *(2020-05-06)*
+----------------------------
+
+ * Rely more on the MediaStore at fetching songs on Android Q+
+ * Added some UI improvements and crashfixes
+
 Version 5.3.0 *(2020-04-19)*
 ----------------------------
 
