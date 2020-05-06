@@ -366,15 +366,17 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             val showFilename = config.showFilename
             val songs = ArrayList<Song>()
             queryCursor(uri, projection) { cursor ->
-                val id = cursor.getLongValue(Audio.Media._ID)
-                val path = ContentUris.withAppendedId(uri, id).toString()
-                val title = cursor.getStringValue(Audio.Media.TITLE)
-                val artist = cursor.getStringValue(Audio.Media.ARTIST)
                 val duration = cursor.getIntValue(Audio.Media.DURATION) / 1000
-                val album = cursor.getStringValue(Audio.Media.ALBUM)
-                val song = Song(id, title, artist, path, duration, album, ALL_SONGS_PLAYLIST_ID)
-                song.title = song.getProperTitle(showFilename)
-                songs.add(song)
+                if (duration > MIN_INITIAL_DURATION) {
+                    val id = cursor.getLongValue(Audio.Media._ID)
+                    val path = ContentUris.withAppendedId(uri, id).toString()
+                    val title = cursor.getStringValue(Audio.Media.TITLE)
+                    val artist = cursor.getStringValue(Audio.Media.ARTIST)
+                    val album = cursor.getStringValue(Audio.Media.ALBUM)
+                    val song = Song(id, title, artist, path, duration, album, ALL_SONGS_PLAYLIST_ID)
+                    song.title = song.getProperTitle(showFilename)
+                    songs.add(song)
+                }
             }
             RoomHelper(this).addSongsToPlaylist(songs)
         } else {
