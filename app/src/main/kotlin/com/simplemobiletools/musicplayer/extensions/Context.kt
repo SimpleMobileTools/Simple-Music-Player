@@ -3,12 +3,9 @@ package com.simplemobiletools.musicplayer.extensions
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import android.provider.MediaStore
 import android.util.TypedValue
-import com.simplemobiletools.commons.extensions.getIntValue
-import com.simplemobiletools.commons.extensions.getStringValue
-import com.simplemobiletools.commons.extensions.queryCursor
 import com.simplemobiletools.commons.helpers.isOreoPlus
+import com.simplemobiletools.commons.helpers.isQPlus
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.databases.SongsDatabase
 import com.simplemobiletools.musicplayer.helpers.*
@@ -64,23 +61,26 @@ fun Context.getPlaylistIdWithTitle(title: String) = playlistDAO.getPlaylistWithT
 
 fun Context.getPlaylistSongs(playlistId: Int): ArrayList<Song> {
     val validSongs = ArrayList<Song>()
-    val invalidSongs = ArrayList<Song>()
-    val songs = songsDAO.getSongsFromPlaylist(playlistId)
-    val showFilename = config.showFilename
+    if (isQPlus()) {
+        validSongs.addAll(songsDAO.getSongsFromPlaylist(playlistId))
+    } else {
+        val invalidSongs = ArrayList<Song>()
+        val songs = songsDAO.getSongsFromPlaylist(playlistId)
+        val showFilename = config.showFilename
+        songs.forEach {
+            it.title = it.getProperTitle(showFilename)
 
-    songs.forEach {
-        it.title = it.getProperTitle(showFilename)
-
-        if (File(it.path).exists() || it.path.startsWith("content://")) {
-            validSongs.add(it)
-        } else {
-            invalidSongs.add(it)
+            if (File(it.path).exists() || it.path.startsWith("content://")) {
+                validSongs.add(it)
+            } else {
+                invalidSongs.add(it)
+            }
         }
-    }
 
-    getSongsDB().runInTransaction {
-        invalidSongs.forEach {
-            songsDAO.removeSongPath(it.path)
+        getSongsDB().runInTransaction {
+            invalidSongs.forEach {
+                songsDAO.removeSongPath(it.path)
+            }
         }
     }
 
@@ -108,22 +108,4 @@ fun Context.broadcastUpdateWidgetSongState(isPlaying: Boolean) {
         action = SONG_STATE_CHANGED
         sendBroadcast(this)
     }
-}
-
-fun Context.getPlaylists(): ArrayList<Playlist> {
-    val playlists = ArrayList<Playlist>()
-    val uri = MediaStore.Audio.Playlists.EXTERNAL_CONTENT_URI
-    val projection = arrayOf(
-        MediaStore.Audio.Playlists._ID,
-        MediaStore.Audio.Playlists.NAME
-    )
-
-    queryCursor(uri, projection) { cursor ->
-        val id = cursor.getIntValue(MediaStore.Audio.Playlists._ID)
-        val name = cursor.getStringValue(MediaStore.Audio.Playlists.NAME)
-        val playlist = Playlist(id, name)
-        playlists.add(playlist)
-    }
-
-    return playlists
 }

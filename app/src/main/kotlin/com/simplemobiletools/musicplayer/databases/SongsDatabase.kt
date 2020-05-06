@@ -7,7 +7,6 @@ import androidx.room.RoomDatabase
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.simplemobiletools.musicplayer.R
-import com.simplemobiletools.musicplayer.extensions.getPlaylists
 import com.simplemobiletools.musicplayer.extensions.playlistDAO
 import com.simplemobiletools.musicplayer.helpers.ALL_SONGS_PLAYLIST_ID
 import com.simplemobiletools.musicplayer.interfaces.PlaylistsDao
@@ -57,10 +56,6 @@ abstract class SongsDatabase : RoomDatabase() {
             val allSongs = context.resources.getString(R.string.all_songs)
             val playlist = Playlist(ALL_SONGS_PLAYLIST_ID, allSongs)
             context.playlistDAO.insert(playlist)
-
-            context.getPlaylists().forEach {
-                context.playlistDAO.insert(it)
-            }
         }
 
         // removing the "type" value of Song
