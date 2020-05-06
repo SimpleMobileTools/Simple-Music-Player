@@ -23,6 +23,7 @@ import android.provider.MediaStore.Audio
 import android.support.v4.media.MediaMetadataCompat
 import android.support.v4.media.session.MediaSessionCompat
 import android.support.v4.media.session.PlaybackStateCompat
+import android.util.Size
 import android.view.KeyEvent
 import androidx.core.app.NotificationCompat
 import androidx.media.session.MediaButtonReceiver
@@ -724,6 +725,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     }
 
     // do not just return the album cover, but also a boolean to indicate if it a real cover, or just the placeholder
+    @SuppressLint("NewApi")
     private fun getAlbumImage(song: Song?): Pair<Bitmap, Boolean> {
         if (File(song?.path ?: "").exists()) {
             try {
@@ -762,6 +764,15 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
                     }
                 }
             } catch (e: Exception) {
+            }
+        }
+
+        if (isQPlus() && song?.path?.startsWith("content://") == true) {
+            try {
+                val size = Size(512, 512)
+                val thumbnail = contentResolver.loadThumbnail(Uri.parse(song.path), size, null)
+                return Pair(thumbnail, true)
+            } catch (ignored: Exception) {
             }
         }
 

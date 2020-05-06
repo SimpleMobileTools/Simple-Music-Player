@@ -28,7 +28,8 @@ import kotlinx.android.synthetic.main.item_navigation.view.*
 import kotlinx.android.synthetic.main.item_song.view.*
 
 class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val listener: SongListListener, val transparentView: View,
-                  recyclerView: MyRecyclerView, fastScroller: FastScroller, itemClick: (Any) -> Unit) : MyRecyclerViewAdapter(activity, recyclerView, fastScroller, itemClick) {
+                  recyclerView: MyRecyclerView, fastScroller: FastScroller, itemClick: (Any) -> Unit) :
+        MyRecyclerViewAdapter(activity, recyclerView, fastScroller, itemClick) {
 
     private val VIEW_TYPE_TRANSPARENT = 0
     private val VIEW_TYPE_NAVIGATION = 1
