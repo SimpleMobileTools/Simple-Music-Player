@@ -367,7 +367,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             val songs = ArrayList<Song>()
             queryCursor(uri, projection) { cursor ->
                 val id = cursor.getLongValue(Audio.Media._ID)
-                val path = ContentUris.withAppendedId(Audio.Media.EXTERNAL_CONTENT_URI, id).toString()
+                val path = ContentUris.withAppendedId(uri, id).toString()
                 val title = cursor.getStringValue(Audio.Media.TITLE)
                 val artist = cursor.getStringValue(Audio.Media.ARTIST)
                 val duration = cursor.getIntValue(Audio.Media.DURATION) / 1000

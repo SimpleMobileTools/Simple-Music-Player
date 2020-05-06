@@ -66,8 +66,8 @@ class RoomHelper(val context: Context) {
 
         pathsMap.forEach {
             val unknown = MediaStore.UNKNOWN_STRING
-            val title = it.getFileSongTitle() ?: unknown
-            val song = Song(0, title, it.getFileArtist() ?: unknown, it, context.getDuration(it) ?: 0, "", playlistId, TYPE_FILE)
+            val title = context.getTitle(it) ?: unknown
+            val song = Song(0, title, context.getArtist(it) ?: unknown, it, context.getDuration(it) ?: 0, "", playlistId, TYPE_FILE)
             song.title = song.getProperTitle(showFilename)
             songs.add(song)
         }
