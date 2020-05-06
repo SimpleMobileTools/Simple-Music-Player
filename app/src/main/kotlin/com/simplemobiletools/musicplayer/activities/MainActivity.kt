@@ -56,23 +56,12 @@ class MainActivity : SimpleActivity(), MainActivityInterface {
         appLaunched(BuildConfig.APPLICATION_ID)
         isThirdPartyIntent = intent.action == Intent.ACTION_VIEW
 
-        if (!isQPlus()) {
-            handlePermission(PERMISSION_WRITE_STORAGE) {
-                if (it) {
-                    initActivity()
-                } else {
-                    toast(R.string.no_storage_permissions)
-                    finish()
-                }
-            }
-        } else {
-            handlePermission(PERMISSION_READ_STORAGE) {
-                if (it) {
-                    initActivity()
-                } else {
-                    toast(R.string.no_storage_permissions)
-                    finish()
-                }
+        handlePermission(PERMISSION_WRITE_STORAGE) {
+            if (it) {
+                initActivity()
+            } else {
+                toast(R.string.no_storage_permissions)
+                finish()
             }
         }
 
