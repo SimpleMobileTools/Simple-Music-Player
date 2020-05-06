@@ -7,6 +7,7 @@ import androidx.room.RoomDatabase
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.simplemobiletools.musicplayer.R
+import com.simplemobiletools.musicplayer.extensions.getPlaylists
 import com.simplemobiletools.musicplayer.extensions.playlistDAO
 import com.simplemobiletools.musicplayer.helpers.ALL_SONGS_PLAYLIST_ID
 import com.simplemobiletools.musicplayer.interfaces.PlaylistsDao
@@ -56,17 +57,27 @@ abstract class SongsDatabase : RoomDatabase() {
             val allSongs = context.resources.getString(R.string.all_songs)
             val playlist = Playlist(ALL_SONGS_PLAYLIST_ID, allSongs)
             context.playlistDAO.insert(playlist)
+
+            context.getPlaylists().forEach {
+                context.playlistDAO.insert(it)
+            }
         }
 
         // removing the "type" value of Song
         private val MIGRATION_1_2 = object : Migration(1, 2) {
             override fun migrate(database: SupportSQLiteDatabase) {
-                database.execSQL("CREATE TABLE songs_new (media_store_id INTEGER NOT NULL, title TEXT NOT NULL, artist TEXT NOT NULL, path TEXT NOT NULL, duration INTEGER NOT NULL, " +
-                        "album TEXT NOT NULL, playlist_id INTEGER NOT NULL, PRIMARY KEY(path, playlist_id))")
-                database.execSQL("INSERT INTO songs_new (media_store_id, title, artist, path, duration, album, playlist_id) " +
-                        "SELECT media_store_id, title, artist, path, duration, album, playlist_id FROM songs")
-                database.execSQL("DROP TABLE songs")
-                database.execSQL("ALTER TABLE songs_new RENAME TO songs")
+                database.apply {
+                    execSQL("CREATE TABLE songs_new (media_store_id INTEGER NOT NULL, title TEXT NOT NULL, artist TEXT NOT NULL, path TEXT NOT NULL, duration INTEGER NOT NULL, " +
+                            "album TEXT NOT NULL, playlist_id INTEGER NOT NULL, PRIMARY KEY(path, playlist_id))")
+
+                    execSQL("INSERT INTO songs_new (media_store_id, title, artist, path, duration, album, playlist_id) " +
+                            "SELECT media_store_id, title, artist, path, duration, album, playlist_id FROM songs")
+
+                    execSQL("DROP TABLE songs")
+                    execSQL("ALTER TABLE songs_new RENAME TO songs")
+
+                    execSQL("CREATE UNIQUE INDEX IF NOT EXISTS `index_playlists_id` ON `playlists` (`id`)")
+                }
             }
         }
     }
