@@ -372,7 +372,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
                 val artist = cursor.getStringValue(Audio.Media.ARTIST)
                 val duration = cursor.getIntValue(Audio.Media.DURATION) / 1000
                 val album = cursor.getStringValue(Audio.Media.ALBUM)
-                val song = Song(id, title, artist, path, duration, album, ALL_SONGS_PLAYLIST_ID, TYPE_FILE)
+                val song = Song(id, title, artist, path, duration, album, ALL_SONGS_PLAYLIST_ID)
                 song.title = song.getProperTitle(showFilename)
                 songs.add(song)
             }
