@@ -18,7 +18,7 @@ class RoomHelper(val context: Context) {
         context.songsDAO.insertAll(songs)
     }
 
-    fun addSongsToPlaylist(songs: ArrayList<Song>, playlistId: Int = context.config.currentPlaylist) {
+    fun addSongsToPlaylist(songs: ArrayList<Song>) {
         context.songsDAO.insertAll(songs)
     }
 
