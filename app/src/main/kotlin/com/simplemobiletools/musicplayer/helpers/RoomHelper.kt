@@ -9,12 +9,16 @@ import com.simplemobiletools.musicplayer.extensions.songsDAO
 import com.simplemobiletools.musicplayer.models.Song
 
 class RoomHelper(val context: Context) {
-    fun addSongToPlaylist(path: String) {
-        addSongsToPlaylist(arrayListOf(path))
+    fun addPathToPlaylist(path: String) {
+        addPathsToPlaylist(arrayListOf(path))
     }
 
-    fun addSongsToPlaylist(paths: ArrayList<String>, playlistId: Int = context.config.currentPlaylist) {
+    fun addPathsToPlaylist(paths: ArrayList<String>, playlistId: Int = context.config.currentPlaylist) {
         val songs = getSongsFromPaths(paths, playlistId)
+        context.songsDAO.insertAll(songs)
+    }
+
+    fun addSongsToPlaylist(songs: ArrayList<Song>, playlistId: Int = context.config.currentPlaylist) {
         context.songsDAO.insertAll(songs)
     }
 

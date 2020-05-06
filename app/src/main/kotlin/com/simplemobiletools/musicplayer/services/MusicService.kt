@@ -353,28 +353,47 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     }
 
     private fun getAllDeviceSongs() {
-        val ignoredPaths = config.ignoredPaths
         val uri = Audio.Media.EXTERNAL_CONTENT_URI
         val projection = arrayOf(
-                Audio.Media.DURATION,
-                Audio.Media.DATA
-        )
+            Audio.Media._ID,
+            Audio.Media.DURATION,
+            Audio.Media.DATA,
+            Audio.Media.ALBUM,
+            Audio.Media.TITLE,
+            Audio.Media.ARTIST)
 
-        val paths = ArrayList<String>()
-
-        queryCursor(uri, projection) { cursor ->
-            val duration = cursor.getIntValue(Audio.Media.DURATION) / 1000
-            if (duration > MIN_INITIAL_DURATION) {
-                val path = cursor.getStringValue(Audio.Media.DATA)
-                if (!ignoredPaths.contains(path) && !path.doesThisOrParentHaveNoMedia()) {
-                    paths.add(path)
+        if (isQPlus()) {
+            val showFilename = config.showFilename
+            val songs = ArrayList<Song>()
+            queryCursor(uri, projection) { cursor ->
+                val id = cursor.getLongValue(Audio.Media._ID)
+                val path = ContentUris.withAppendedId(Audio.Media.EXTERNAL_CONTENT_URI, id).toString()
+                val title = cursor.getStringValue(Audio.Media.TITLE)
+                val artist = cursor.getStringValue(Audio.Media.ARTIST)
+                val duration = cursor.getIntValue(Audio.Media.DURATION) / 1000
+                val album = cursor.getStringValue(Audio.Media.ALBUM)
+                val song = Song(id, title, artist, path, duration, album, ALL_SONGS_PLAYLIST_ID, TYPE_FILE)
+                song.title = song.getProperTitle(showFilename)
+                songs.add(song)
+            }
+            RoomHelper(this).addSongsToPlaylist(songs)
+        } else {
+            val ignoredPaths = config.ignoredPaths
+            val paths = ArrayList<String>()
+            queryCursor(uri, projection) { cursor ->
+                val duration = cursor.getIntValue(Audio.Media.DURATION) / 1000
+                if (duration > MIN_INITIAL_DURATION) {
+                    val path = cursor.getStringValue(Audio.Media.DATA)
+                    if (!ignoredPaths.contains(path) && !path.doesThisOrParentHaveNoMedia()) {
+                        paths.add(path)
+                    }
                 }
             }
-        }
 
-        val storedAllSongPaths = songsDAO.getSongsFromPlaylist(ALL_SONGS_PLAYLIST_ID).map { it.path }
-        paths.removeAll(storedAllSongPaths)
-        RoomHelper(this).addSongsToPlaylist(paths)
+            val storedAllSongPaths = songsDAO.getSongsFromPlaylist(ALL_SONGS_PLAYLIST_ID).map { it.path }
+            paths.removeAll(storedAllSongPaths)
+            RoomHelper(this).addPathsToPlaylist(paths)
+        }
     }
 
     private fun getSortedSongs() {
@@ -440,25 +459,25 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         }
 
         val notification = NotificationCompat.Builder(applicationContext, NOTIFICATION_CHANNEL)
-                .setContentTitle(title)
-                .setContentText(artist)
-                .setSmallIcon(R.drawable.ic_headset_small)
-                .setLargeIcon(mCurrSongCover)
-                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
-                .setPriority(NotificationCompat.PRIORITY_MAX)
-                .setWhen(notifWhen)
-                .setShowWhen(showWhen)
-                .setUsesChronometer(usesChronometer)
-                .setContentIntent(getContentIntent())
-                .setOngoing(ongoing)
-                .setChannelId(NOTIFICATION_CHANNEL)
-                .setCategory(Notification.CATEGORY_SERVICE)
-                .setStyle(androidx.media.app.NotificationCompat.MediaStyle()
-                        .setShowActionsInCompactView(0, 1, 2)
-                        .setMediaSession(mMediaSession?.sessionToken))
-                .addAction(R.drawable.ic_previous_vector, getString(R.string.previous), getIntent(PREVIOUS))
-                .addAction(playPauseIcon, getString(R.string.playpause), getIntent(PLAYPAUSE))
-                .addAction(R.drawable.ic_next_vector, getString(R.string.next), getIntent(NEXT))
+            .setContentTitle(title)
+            .setContentText(artist)
+            .setSmallIcon(R.drawable.ic_headset_small)
+            .setLargeIcon(mCurrSongCover)
+            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+            .setPriority(NotificationCompat.PRIORITY_MAX)
+            .setWhen(notifWhen)
+            .setShowWhen(showWhen)
+            .setUsesChronometer(usesChronometer)
+            .setContentIntent(getContentIntent())
+            .setOngoing(ongoing)
+            .setChannelId(NOTIFICATION_CHANNEL)
+            .setCategory(Notification.CATEGORY_SERVICE)
+            .setStyle(androidx.media.app.NotificationCompat.MediaStyle()
+                .setShowActionsInCompactView(0, 1, 2)
+                .setMediaSession(mMediaSession?.sessionToken))
+            .addAction(R.drawable.ic_previous_vector, getString(R.string.previous), getIntent(PREVIOUS))
+            .addAction(playPauseIcon, getString(R.string.playpause), getIntent(PLAYPAUSE))
+            .addAction(R.drawable.ic_next_vector, getString(R.string.next), getIntent(NEXT))
 
         startForeground(NOTIFICATION_ID, notification.build())
 
@@ -472,8 +491,8 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         val playbackState = if (getIsPlaying()) PlaybackStateCompat.STATE_PLAYING else PlaybackStateCompat.STATE_PAUSED
         try {
             mMediaSession!!.setPlaybackState(PlaybackStateCompat.Builder()
-                    .setState(playbackState, PLAYBACK_POSITION_UNKNOWN, 1.0f)
-                    .build())
+                .setState(playbackState, PLAYBACK_POSITION_UNKNOWN, 1.0f)
+                .build())
         } catch (ignored: IllegalStateException) {
         }
     }
@@ -502,13 +521,13 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         }
 
         val notification = NotificationCompat.Builder(applicationContext, NOTIFICATION_CHANNEL)
-                .setContentTitle("")
-                .setContentText("")
-                .setSmallIcon(R.drawable.ic_headset_small)
-                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
-                .setPriority(NotificationCompat.PRIORITY_MAX)
-                .setChannelId(NOTIFICATION_CHANNEL)
-                .setCategory(Notification.CATEGORY_SERVICE)
+            .setContentTitle("")
+            .setContentText("")
+            .setSmallIcon(R.drawable.ic_headset_small)
+            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+            .setPriority(NotificationCompat.PRIORITY_MAX)
+            .setChannelId(NOTIFICATION_CHANNEL)
+            .setCategory(Notification.CATEGORY_SERVICE)
 
         startForeground(NOTIFICATION_ID, notification.build())
     }
@@ -684,8 +703,8 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
         val lockScreenImage = if (albumImage.second) albumImage.first else null
         val metadata = MediaMetadataCompat.Builder()
-                .putBitmap(MediaMetadataCompat.METADATA_KEY_ALBUM_ART, lockScreenImage)
-                .build()
+            .putBitmap(MediaMetadataCompat.METADATA_KEY_ALBUM_ART, lockScreenImage)
+            .build()
 
         mMediaSession?.setMetadata(metadata)
     }

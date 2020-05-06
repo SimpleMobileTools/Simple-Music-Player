@@ -67,7 +67,7 @@ fun Context.getPlaylistSongs(playlistId: Int): ArrayList<Song> {
     songs.forEach {
         it.title = it.getProperTitle(showFilename)
 
-        if (File(it.path).exists()) {
+        if (File(it.path).exists() || it.path.startsWith("content://")) {
             validSongs.add(it)
         } else {
             invalidSongs.add(it)

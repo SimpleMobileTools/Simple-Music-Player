@@ -331,7 +331,7 @@ class MainActivity : SimpleActivity(), MainActivityInterface {
             toast(R.string.fetching_songs)
             ensureBackgroundThread {
                 val folderSongs = getFolderSongs(File(it))
-                RoomHelper(applicationContext).addSongsToPlaylist(folderSongs)
+                RoomHelper(applicationContext).addPathsToPlaylist(folderSongs)
                 sendIntent(REFRESH_LIST)
             }
         }
@@ -356,7 +356,7 @@ class MainActivity : SimpleActivity(), MainActivityInterface {
             ensureBackgroundThread {
                 lastFilePickerPath = it
                 if (it.isAudioFast()) {
-                    RoomHelper(applicationContext).addSongToPlaylist(it)
+                    RoomHelper(applicationContext).addPathToPlaylist(it)
                     sendIntent(REFRESH_LIST)
                 } else {
                     toast(R.string.invalid_file_format)
@@ -398,7 +398,7 @@ class MainActivity : SimpleActivity(), MainActivityInterface {
 
         val playlist = Playlist(0, playlistName)
         val newPlaylistId = playlistDAO.insert(playlist).toInt()
-        RoomHelper(applicationContext).addSongsToPlaylist(folderSongs, newPlaylistId)
+        RoomHelper(applicationContext).addPathsToPlaylist(folderSongs, newPlaylistId)
         playlistChanged(newPlaylistId)
     }
 
