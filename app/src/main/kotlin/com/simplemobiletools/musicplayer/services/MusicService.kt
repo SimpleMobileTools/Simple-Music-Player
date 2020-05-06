@@ -30,6 +30,7 @@ import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.PERMISSION_WRITE_STORAGE
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.commons.helpers.isOreoPlus
+import com.simplemobiletools.commons.helpers.isQPlus
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.MainActivity
 import com.simplemobiletools.musicplayer.databases.SongsDatabase
@@ -108,7 +109,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             mOreoFocusHandler = OreoAudioFocusHandler(applicationContext)
         }
 
-        if (!hasPermission(PERMISSION_WRITE_STORAGE)) {
+        if (!isQPlus() && !hasPermission(PERMISSION_WRITE_STORAGE)) {
             EventBus.getDefault().post(Events.NoStoragePermission())
         }
     }
@@ -123,7 +124,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     }
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
-        if (!hasPermission(PERMISSION_WRITE_STORAGE)) {
+        if (!isQPlus() && !hasPermission(PERMISSION_WRITE_STORAGE)) {
             return START_NOT_STICKY
         }
 

@@ -56,18 +56,14 @@ class MainActivity : SimpleActivity(), MainActivityInterface {
         appLaunched(BuildConfig.APPLICATION_ID)
         isThirdPartyIntent = intent.action == Intent.ACTION_VIEW
 
-        handlePermission(PERMISSION_WRITE_STORAGE) {
-            if (it) {
-                bus = EventBus.getDefault()
-                bus!!.register(this)
-                sleep_timer_stop.setOnClickListener { stopSleepTimer() }
-
-                initFragments()
-                initializePlayer()
-            } else {
-                toast(R.string.no_storage_permissions)
-                finish()
-                return@handlePermission
+        if (!isQPlus()) {
+            handlePermission(PERMISSION_WRITE_STORAGE) {
+                if (it) {
+                    initActivity()
+                } else {
+                    toast(R.string.no_storage_permissions)
+                    finish()
+                }
             }
         }
 
@@ -191,6 +187,15 @@ class MainActivity : SimpleActivity(), MainActivityInterface {
                 return true
             }
         })
+    }
+
+    private fun initActivity() {
+        bus = EventBus.getDefault()
+        bus!!.register(this)
+        sleep_timer_stop.setOnClickListener { stopSleepTimer() }
+
+        initFragments()
+        initializePlayer()
     }
 
     private fun initFragments() {
