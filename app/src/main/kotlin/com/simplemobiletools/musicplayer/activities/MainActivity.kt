@@ -12,6 +12,7 @@ import android.view.MenuItem
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.MenuItemCompat
 import com.simplemobiletools.commons.dialogs.FilePickerDialog
+import com.simplemobiletools.commons.dialogs.NewAppsIconsDialog
 import com.simplemobiletools.commons.dialogs.RadioGroupDialog
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.*
@@ -68,6 +69,12 @@ class MainActivity : SimpleActivity(), MainActivityInterface {
         volumeControlStream = AudioManager.STREAM_MUSIC
         checkWhatsNewDialog()
         checkAppOnSDCard()
+
+        // notify some users about the Dialer, SMS Messenger and Voice Recorder apps
+        if (!config.wasMessengerRecorderShown && config.appRunCount > 35) {
+            NewAppsIconsDialog(this)
+            config.wasMessengerRecorderShown = true
+        }
     }
 
     override fun onResume() {
