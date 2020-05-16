@@ -94,7 +94,7 @@ class MainActivity : SimpleActivity(), MainActivityInterface {
         bus?.unregister(this)
 
         if (isThirdPartyIntent && !isChangingConfigurations) {
-            sendIntent(FINISH)
+            sendIntent(FINISH_IF_NOT_PLAYING)
         }
     }
 

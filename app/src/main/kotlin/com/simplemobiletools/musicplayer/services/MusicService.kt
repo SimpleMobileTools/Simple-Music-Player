@@ -41,6 +41,7 @@ import com.simplemobiletools.musicplayer.models.Events
 import com.simplemobiletools.musicplayer.models.Song
 import com.simplemobiletools.musicplayer.receivers.ControlActionsListener
 import com.simplemobiletools.musicplayer.receivers.HeadsetPlugReceiver
+import com.simplemobiletools.musicplayer.receivers.NotificationDismissedReceiver
 import org.greenrobot.eventbus.EventBus
 import java.io.File
 import java.util.*
@@ -130,7 +131,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         }
 
         val action = intent.action
-        if (isOreoPlus() && action != NEXT && action != PREVIOUS && action != PLAYPAUSE) {
+        if (isOreoPlus() && action != NEXT && action != PREVIOUS && action != PLAYPAUSE && action != STOP_SERVICE) {
             setupFakeNotification()
         }
 
@@ -146,6 +147,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             PLAYPOS -> playSong(intent)
             EDIT -> handleEdit(intent)
             FINISH -> handleFinish()
+            FINISH_IF_NOT_PLAYING -> finishIfNotPlaying()
             REFRESH_LIST -> handleRefreshList(intent)
             SET_PROGRESS -> handleSetProgress(intent)
             SET_EQUALIZER -> handleSetEqualizer(intent)
@@ -156,6 +158,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             START_SLEEP_TIMER -> startSleepTimer()
             STOP_SLEEP_TIMER -> stopSleepTimer()
             BROADCAST_STATUS -> broadcastPlayerStatus()
+            STOP_SERVICE -> stopSelf()
         }
 
         MediaButtonReceiver.handleIntent(mMediaSession!!, intent)
@@ -238,6 +241,12 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     private fun handleEdit(intent: Intent) {
         mCurrSong = intent.getSerializableExtra(EDITED_SONG) as Song
         songChanged(mCurrSong)
+    }
+
+    private fun finishIfNotPlaying() {
+        if (!getIsPlaying()) {
+            handleFinish()
+        }
     }
 
     private fun handleFinish() {
@@ -461,6 +470,11 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             mCurrSongCover = resources.getColoredBitmap(R.drawable.ic_headset, config.textColor)
         }
 
+        val notificationDismissedIntent = Intent(this, NotificationDismissedReceiver::class.java).apply {
+            action = NOTIFICATION_DISMISSED
+        }
+        val notificationDismissedPendingIntent = PendingIntent.getBroadcast(this, 0, notificationDismissedIntent, PendingIntent.FLAG_CANCEL_CURRENT)
+
         val notification = NotificationCompat.Builder(applicationContext, NOTIFICATION_CHANNEL)
             .setContentTitle(title)
             .setContentText(artist)
@@ -478,6 +492,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             .setStyle(androidx.media.app.NotificationCompat.MediaStyle()
                 .setShowActionsInCompactView(0, 1, 2)
                 .setMediaSession(mMediaSession?.sessionToken))
+            .setDeleteIntent(notificationDismissedPendingIntent)
             .addAction(R.drawable.ic_previous_vector, getString(R.string.previous), getIntent(PREVIOUS))
             .addAction(playPauseIcon, getString(R.string.playpause), getIntent(PLAYPAUSE))
             .addAction(R.drawable.ic_next_vector, getString(R.string.next), getIntent(NEXT))
