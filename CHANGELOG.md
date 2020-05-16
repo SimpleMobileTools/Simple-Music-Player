@@ -1,6 +1,12 @@
 Changelog
 ==========
 
+Version 5.3.2 *(2020-05-16)*
+----------------------------
+
+ * Improved some third party Open File intent handling
+ * Gave the Open Playlist top menu item higher priority than Sort by
+
 Version 5.3.1 *(2020-05-06)*
 ----------------------------
 
