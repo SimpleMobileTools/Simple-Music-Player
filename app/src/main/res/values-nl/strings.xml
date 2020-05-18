@@ -56,33 +56,33 @@
 
     <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
     <!-- App title has to have less than 50 characters. If you cannot squeeze it, just remove a part of it -->
-    <string name="app_title">Simple Music Player - A cool player for your songs</string>
+    <string name="app_title">Eenvoudige Muziekspeler - Een coole jukebox</string>
     <!-- Short description has to have less than 80 chars -->
-    <string name="app_short_description">A clean music player with a customizable widget, stylish interface and no ads.</string>
+    <string name="app_short_description">Een eenvoudige muziekspeler met aan te passen widget, zonder advertenties.</string>
     <string name="app_long_description">
-        A simple music player easily controllable from the status bar, home screen widget or by hardware buttons on your headset. It provides all expected functions like sorting in various ways as well as changing the Equalizer.  Listen to your favorite mp3, other songs or podcasts with this free beautiful music player.
+        Een muziekspeler die gemakkelijk te bedienen is via statusbalk, widget of met de fysieke knoppen op de headset. Deze app bevat de mogelijkheid om nummers te sorteren op titel of artiest en om de Equalizer aan te passen. Luister naar mp3, podcasts en andere geluidsformaten met deze prachtige gratis app.
 
-        It offers exclusive extras like Search and showing Album Art, a sleep timer and many other settings. This elegant music player allows you creating and managing handy playlists as you desire.
+        De muziekspeler bevat unieke extra\'s, zoals Zoeken en het tonen van albumhoezen, een slaaptimer en nog veel meer. Deze elegante app biedt de mogelijkheid om snel afspeellijsten te maken en aan te passen.
 
-        Playlists are fully supported. You can add either individual files, or whole folders. If you won\'t like a file, you can either just remove it from a playlist, or delete the actual file altogether.
+        Afspeellijsten zijn volledig ondersteund: voeg individuele bestanden of hele mappen toe, verwijder snel een ongewenst nummer uit de lijst of zelfs het muziekbestand.
 
-        Comes with a handy sleep timer so that you can reliably delay the time of the app shutting down.
+        Bevat een handige slaaptimer, zodat de app na de opgegeven vertraging automatisch zal afsluiten.
 
-        Supports both shuffle and repeating a particular song, as well as skipping and fast forwarding.
+        Ook shuffle en repeat worden ondersteund, evenals het overslaan van en het terug-/vooruitzoeken in een nummer.
 
-        Available in many different languages, offers multiple different equalizers.
+        Beschikbaar in vele talen en biedt meerdere verschillende equalizers.
 
-        Easily check a file properties like the size, duration, last modified etc.
+        Controleer gemakkelijk de bestandseigenschappen, zoals grootte, duur, laatst gewijzigd etc.
 
-        Modify file EXIF data like the song title and artist.
+        Pas naar voorkeur de metadata van het bestand aan, zoals de titel en de artiestnaam.
 
-        Quickly share files with your friends on social networks, emails, or anywhere you would like.
+        Deel snel bestanden met vrienden op sociale media, per e-mail, of waar dan ook.
 
-        This stylish music player contains a widget with customizable text color, alpha and the color of the background for easy access and control.
+        Deze stijlvolle muziekspeler bevat een widget met aan te passen tekstkleur, transparantie en achtergrond voor eenvoudige toegang en bediening.
 
-        It properly handles third party intents too for playing individual audio files so it can help at setting ringtones too.
+        Het afspelen van een muziekbestand vanuit andere apps wordt ook ondersteund, evenals het instellen van ringtones.
 
-        It comes with material design and dark theme by default, provides great user experience for easy usage. The lack of internet access gives you more privacy, security and stability than other apps.
+        De app is ontworpen volgens material design en heeft standaard een donker thema. De app heeft geen toegang tot het internet nodig en voorziet van meer privacy, veiligheid en stabiliteit dan andere apps.
 
         Bevat geen advertenties of onnodige permissies. Volledig open-source. Kleuren van de app kunnen worden aangepast.
 
