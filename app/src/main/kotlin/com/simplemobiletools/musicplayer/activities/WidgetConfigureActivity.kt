@@ -6,10 +6,10 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.widget.RemoteViews
-import android.widget.SeekBar
 import com.simplemobiletools.commons.dialogs.ColorPickerDialog
 import com.simplemobiletools.commons.extensions.adjustAlpha
 import com.simplemobiletools.commons.extensions.applyColorFilter
+import com.simplemobiletools.commons.extensions.onSeekBarChangeListener
 import com.simplemobiletools.commons.extensions.setFillWithStroke
 import com.simplemobiletools.commons.helpers.IS_CUSTOMIZING_COLORS
 import com.simplemobiletools.musicplayer.R
@@ -22,11 +22,11 @@ import kotlinx.android.synthetic.main.widget_config.*
 import kotlinx.android.synthetic.main.widget_controls.*
 
 class WidgetConfigureActivity : SimpleActivity() {
-    private var mBgAlpha = 0.0f
+    private var mBgAlpha = 0f
     private var mWidgetId = 0
     private var mBgColor = 0
-    private var mBgColorWithoutTransparency = 0
     private var mTextColor = 0
+    private var mBgColorWithoutTransparency = 0
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         useDynamicTheme = false
@@ -58,9 +58,12 @@ class WidgetConfigureActivity : SimpleActivity() {
         mBgAlpha = Color.alpha(mBgColor) / 255.toFloat()
 
         mBgColorWithoutTransparency = Color.rgb(Color.red(mBgColor), Color.green(mBgColor), Color.blue(mBgColor))
-        config_bg_seekbar.setOnSeekBarChangeListener(seekbarChangeListener)
         config_bg_seekbar.progress = (mBgAlpha * 100).toInt()
         updateBackgroundColor()
+        config_bg_seekbar.onSeekBarChangeListener {
+            mBgAlpha = it / 100.toFloat()
+            updateBackgroundColor()
+        }
 
         mTextColor = config.widgetTextColor
         updateTextColor()
@@ -137,16 +140,5 @@ class WidgetConfigureActivity : SimpleActivity() {
                 updateTextColor()
             }
         }
-    }
-
-    private val seekbarChangeListener = object : SeekBar.OnSeekBarChangeListener {
-        override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
-            mBgAlpha = progress.toFloat() / 100.toFloat()
-            updateBackgroundColor()
-        }
-
-        override fun onStartTrackingTouch(seekBar: SeekBar) {}
-
-        override fun onStopTrackingTouch(seekBar: SeekBar) {}
     }
 }
