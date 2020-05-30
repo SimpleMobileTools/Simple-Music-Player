@@ -123,7 +123,6 @@
                 <action android:name="com.simplemobiletools.musicplayer.action.REMOVE_CURRENT_SONG"/>
                 <action android:name="com.simplemobiletools.musicplayer.action.REMOVE_SONG_IDS"/>
                 <action android:name="com.simplemobiletools.musicplayer.action.BROADCAST_STATUS"/>
-                <action android:name="com.simplemobiletools.musicplayer.action.STOP_SERVICE"/>
             </intent-filter>
         </service>
 

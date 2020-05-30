@@ -131,7 +131,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         }
 
         val action = intent.action
-        if (isOreoPlus() && action != NEXT && action != PREVIOUS && action != PLAYPAUSE && action != STOP_SERVICE) {
+        if (isOreoPlus() && action != NEXT && action != PREVIOUS && action != PLAYPAUSE) {
             setupFakeNotification()
         }
 
@@ -158,7 +158,6 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             START_SLEEP_TIMER -> startSleepTimer()
             STOP_SLEEP_TIMER -> stopSleepTimer()
             BROADCAST_STATUS -> broadcastPlayerStatus()
-            STOP_SERVICE -> stopSelf()
         }
 
         MediaButtonReceiver.handleIntent(mMediaSession!!, intent)
