@@ -1,6 +1,12 @@
 Changelog
 ==========
 
+Version 5.3.3 *(2020-05-30)*
+----------------------------
+
+ * Use a nicer app icon on older devices
+ * Adding some stability and translation improvements
+
 Version 5.3.2 *(2020-05-16)*
 ----------------------------
 
