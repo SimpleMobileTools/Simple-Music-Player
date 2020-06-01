@@ -1,0 +1,103 @@
+<resources>
+    <string name="app_name">简易音乐播放器</string>
+    <string name="app_launcher_name">音乐播放器</string>
+    <string name="playlist_empty">您的播放列表为空</string>
+    <string name="rename_song">重命名歌曲</string>
+    <string name="rename_song_error">在重命名过程中发生错误</string>
+    <string name="rename_song_empty">请填写全部字段</string>
+    <string name="enable_song_repetition">重复当前歌曲</string>
+    <string name="disable_song_repetition">停止重复当前歌曲</string>
+    <string name="song_repetition_enabled">已启用当前歌曲重复</string>
+    <string name="song_repetition_disabled">已禁用当前歌曲重复</string>
+    <string name="enable_shuffle">启用随机播放</string>
+    <string name="disable_shuffle">禁用随机播放</string>
+    <string name="shuffle_enabled">已启用随机播放</string>
+    <string name="shuffle_disabled">已禁用随机播放</string>
+    <string name="enable_autoplay">启用自动播放</string>
+    <string name="disable_autoplay">禁用自动播放</string>
+    <string name="autoplay_enabled">已启用自动播放</string>
+    <string name="autoplay_disabled">已禁用自动播放</string>
+    <string name="sleep_timer">睡眠定时器</string>
+
+    <!-- Playlists -->
+    <string name="add_file_to_playlist">添加文件至播放列表</string>
+    <string name="add_folder_to_playlist">添加文件夹至播放列表</string>
+    <string name="manage_playlists">管理播放列表</string>
+    <string name="playlists">播放列表</string>
+    <string name="create_playlist">创建播放列表</string>
+    <string name="rename_playlist">重命名播放列表</string>
+    <string name="playlist_name_exists">具有该名字的播放列表已存在</string>
+    <string name="remove_playlist">移除播放列表</string>
+    <string name="remove_playlist_description">这将仅移除选定的播放列表，并非实际文件。</string>
+    <string name="remove_playlist_description_placeholder">这将仅移除播放列表 \"%s\"，并非实际文件。</string>
+    <string name="remove_from_playlist">从播放列表移除</string>
+    <string name="remove_from_playlist_description">这将仅从播放列表 \"%s\" 移除条目，实际文件并未删除。</string>
+    <string name="delete_the_files_too">一并删除文件</string>
+    <string name="open_playlist">打开播放列表</string>
+    <string name="all_songs_cannot_be_deleted">\'全部歌曲\' 播放列表无法被删除</string>
+    <string name="empty_playlist">当前播放列表为空</string>
+    <string name="fetching_songs">获取歌曲中…</string>
+    <string name="all_songs">全部歌曲</string>
+    <string name="create_playlist_from_folder">从文件夹创建新的播放列表</string>
+    <string name="folder_contains_no_audio">所选的文件夹不包含任何音频文件</string>
+    <string name="delete_current_song">删除当前歌曲</string>
+    <string name="remove_current_song">从播放列表移除当前歌曲</string>
+    <string name="show_filename">显示文件名为歌曲标题</string>
+    <string name="title_is_not_available">如果标题不可用时</string>
+    <string name="show_album_cover">在主屏幕显示专辑封面</string>
+
+    <!-- Settings -->
+    <string name="equalizer">均衡器</string>
+    <string name="swap_prev_next">交换耳机上的上一首/下一首按钮</string>
+
+    <!-- FAQ -->
+    <string name="faq_1_title">我如何快进歌曲？</string>
+    <string name="faq_1_text">您可以点击搜索条旁边当前或者最大时长的文本，这将让歌曲后退或者前进。</string>
+
+    <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
+    <!-- App title has to have less than 50 characters. If you cannot squeeze it, just remove a part of it -->
+    <string name="app_title">简易音乐播放器 - 您歌曲的酷酷播放器</string>
+    <!-- Short description has to have less than 80 chars -->
+    <string name="app_short_description">一个清爽的音乐播放器，包含可自定义的小工具、有格调的界面且没有广告。</string>
+    <string name="app_long_description">
+        一个可从状态栏、主屏幕小工具或者耳机的硬件按钮轻松控制的简单音乐播放器。它提供所有预期中的功能包括各种排序方式和均衡器调整。欢迎使用该免费且漂亮的音乐播放器收听您收藏的 mp3、其他歌曲或者播客。
+
+        它提供一些独家的额外功能包括搜索和显示唱片艺术图，睡眠定时器和许多其他设定。这款精致的播放器允许您依据偏好创建和管理播放列表。
+
+        完整支持播放列表。您可以添加单独的文件或者整个文件夹。如果您不喜欢一个文件，您可以仅从播放列表移除它，或者一并删除文件本身。
+
+        自带便捷的睡眠定时器，您可以放心的依靠它延迟应用程序的关闭时间。
+
+        支持随机和重复播放特定的歌曲，以及跳过和快进。
+
+        内建多语言支持，提供多种不同的均衡器。
+
+        方便的检查文件的属性，诸如大小、时长和最后修改时间等。
+
+        可以修改文件 EXIF 数据比如歌曲标题和艺术家。
+
+        快速跟您在社交网络上、电子邮件或者任何您想要的地方的朋友分享文件。
+
+        这个有格调的音乐播放器包含一个支持自定义文字颜色、透明度和背景颜色的小工具，方便便捷访问和控制。
+
+        它可以正确处理来自第三方播放单独音乐文件的 Intent 从而也可以帮助设置铃声。
+
+        它遵循质感设计且默认应用黑暗模式，提供便于使用的极佳的用户体验。相对于其他应用，不包含互联网访问给予您更佳的隐私、保密性和稳定性。
+
+        不包含广告及非必要的权限，而且完全开放源代码，并提供自定义颜色。
+
+        <b>于此查看简易工具系列全套:</b>
+        https://www.simplemobiletools.com
+
+        <b>Facebook:</b>
+        https://www.facebook.com/simplemobiletools
+
+        <b>Reddit:</b>
+        https://www.reddit.com/r/SimpleMobileTools
+    </string>
+
+    <!--
+        Haven't found some strings? There's more at
+        https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
+    -->
+</resources>
