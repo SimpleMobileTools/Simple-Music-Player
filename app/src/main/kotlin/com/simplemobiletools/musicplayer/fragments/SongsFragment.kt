@@ -52,7 +52,6 @@ class SongsFragment(context: Context, attributeSet: AttributeSet) : MyViewPagerF
         songs_playlist_empty_placeholder_2.setTextColor(activity.getAdjustedPrimaryColor())
         songs_playlist_empty_placeholder_2.paintFlags = songs_playlist_empty_placeholder_2.paintFlags or Paint.UNDERLINE_TEXT_FLAG
 
-        songs_fastscroller.allowBubbleDisplay = true
         songs_fastscroller.updateBubbleColors()
 
         arrayListOf(art_holder, song_list_background, top_navigation).forEach {
