@@ -1,6 +1,11 @@
 Changelog
 ==========
 
+Version 5.3.4 *(2020-09-19)*
+----------------------------
+
+ * Adding some translation and UX improvements
+
 Version 5.3.3 *(2020-05-30)*
 ----------------------------
 
