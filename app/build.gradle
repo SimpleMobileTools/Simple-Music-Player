@@ -58,10 +58,11 @@ android {
 }
 
 dependencies {
-    implementation 'com.simplemobiletools:commons:5.29.20'
+    implementation 'com.simplemobiletools:commons:5.30.12'
     implementation 'org.greenrobot:eventbus:3.2.0'
     implementation 'com.squareup.picasso:picasso:2.71828'
-    implementation 'androidx.media:media:1.1.0'
+    implementation 'androidx.media:media:1.2.0'
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
 
     kapt "androidx.room:room-compiler:2.2.5"
     implementation "androidx.room:room-runtime:2.2.5"
