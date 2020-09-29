@@ -11,6 +11,7 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.MenuItemCompat
+import androidx.viewpager.widget.ViewPager
 import com.simplemobiletools.commons.dialogs.FilePickerDialog
 import com.simplemobiletools.commons.dialogs.NewAppsIconsDialog
 import com.simplemobiletools.commons.dialogs.RadioGroupDialog
@@ -205,6 +206,33 @@ class MainActivity : SimpleActivity(), MainActivityInterface {
 
     private fun initFragments() {
         viewpager.adapter = ViewPagerAdapter(this)
+        viewpager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+            override fun onPageScrollStateChanged(state: Int) {}
+
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
+
+            override fun onPageSelected(position: Int) {
+                main_tabs_holder.getTabAt(position)?.select()
+            }
+        })
+
+        main_tabs_holder.onTabSelectionChanged(
+            tabSelectedAction = {
+                viewpager.currentItem = it.position
+            }
+        )
+
+        val tabLabels = arrayOf("PLAYER", "PLAYLISTS")
+        main_tabs_holder.apply {
+            setTabTextColors(config.backgroundColor.getContrastColor(), getAdjustedPrimaryColor())
+            setSelectedTabIndicatorColor(getAdjustedPrimaryColor())
+            removeAllTabs()
+
+            for (i in tabLabels.indices) {
+                val tab = newTab().setText(tabLabels[i])
+                addTab(tab, i, i == 0)
+            }
+        }
     }
 
     private fun getCurrentFragment() = songs_fragment_holder

@@ -1,14 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_holder"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/main_tabs_holder"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        app:elevation="6dp"
+        app:tabIndicatorColor="@android:color/white"
+        app:tabIndicatorHeight="2dp"
+        app:tabMinWidth="150dp"
+        app:tabSelectedTextColor="@android:color/white" />
+
     <com.simplemobiletools.commons.views.MyViewPager
         android:id="@+id/viewpager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_below="@+id/main_tabs_holder" />
 
     <RelativeLayout
         android:id="@+id/sleep_timer_holder"

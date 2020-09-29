@@ -9,7 +9,7 @@ import com.simplemobiletools.musicplayer.fragments.SongsFragment
 
 class ViewPagerAdapter(val activity: SimpleActivity) : PagerAdapter() {
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
-        val layout = R.layout.fragment_songs
+        val layout = getFragment(position)
         val view = activity.layoutInflater.inflate(layout, container, false)
         container.addView(view)
 
@@ -24,7 +24,12 @@ class ViewPagerAdapter(val activity: SimpleActivity) : PagerAdapter() {
         container.removeView(item as View)
     }
 
-    override fun getCount() = 1
+    override fun getCount() = 2
 
     override fun isViewFromObject(view: View, item: Any) = view == item
+
+    private fun getFragment(position: Int) = when (position) {
+        0 -> R.layout.fragment_songs
+        else -> R.layout.fragment_playlists
+    }
 }
