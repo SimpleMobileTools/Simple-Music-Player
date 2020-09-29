@@ -87,7 +87,7 @@ class SongsFragment(context: Context, attributeSet: AttributeSet) : MyViewPagerF
         }
     }
 
-    fun setupFragment(simpleActivity: SimpleActivity) {
+    override fun setupFragment(simpleActivity: SimpleActivity) {
         storeStateVariables()
         activity = simpleActivity
         activityInterface = simpleActivity as MainActivityInterface

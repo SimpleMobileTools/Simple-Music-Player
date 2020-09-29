@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.viewpager.widget.PagerAdapter
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
-import com.simplemobiletools.musicplayer.fragments.SongsFragment
+import com.simplemobiletools.musicplayer.fragments.MyViewPagerFragment
 
 class ViewPagerAdapter(val activity: SimpleActivity) : PagerAdapter() {
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
@@ -13,7 +13,7 @@ class ViewPagerAdapter(val activity: SimpleActivity) : PagerAdapter() {
         val view = activity.layoutInflater.inflate(layout, container, false)
         container.addView(view)
 
-        (view as? SongsFragment)?.apply {
+        (view as MyViewPagerFragment).apply {
             setupFragment(activity)
         }
 
