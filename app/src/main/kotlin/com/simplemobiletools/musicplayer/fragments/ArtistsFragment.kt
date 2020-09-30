@@ -9,12 +9,18 @@ import com.simplemobiletools.commons.extensions.getStringValue
 import com.simplemobiletools.commons.extensions.showErrorToast
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
+import com.simplemobiletools.musicplayer.adapters.ArtistsAdapter
 import com.simplemobiletools.musicplayer.models.Artist
+import kotlinx.android.synthetic.main.fragment_artists.view.*
 
 class ArtistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPagerFragment(context, attributeSet) {
     override fun setupFragment(activity: SimpleActivity) {
-        getArtists(activity) {
+        getArtists(activity) { artists ->
+            ArtistsAdapter(activity, artists, artists_list) {
 
+            }.apply {
+                artists_list.adapter = this
+            }
         }
     }
 
