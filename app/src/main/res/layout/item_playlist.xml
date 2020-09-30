@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/playlist_frame"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -23,7 +22,7 @@
             android:layout_toLeftOf="@+id/playlist_icon"
             android:paddingLeft="@dimen/medium_margin"
             android:paddingRight="@dimen/medium_margin"
-            android:text="@string/text_color"/>
+            android:text="@string/text_color" />
 
         <ImageView
             android:id="@+id/playlist_icon"
@@ -33,7 +32,7 @@
             android:layout_alignParentRight="true"
             android:clickable="false"
             android:src="@drawable/ic_music_note_vector"
-            android:visibility="invisible"/>
+            android:visibility="invisible" />
 
     </RelativeLayout>
 </FrameLayout>

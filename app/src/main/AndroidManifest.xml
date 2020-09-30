@@ -104,6 +104,11 @@
             android:label="@string/manage_playlists"
             android:parentActivityName=".activities.SettingsActivity"/>
 
+        <activity
+            android:name=".activities.ArtistActivity"
+            android:label="@string/artist"
+            android:parentActivityName=".activities.MainActivity"/>
+
         <service
             android:name=".services.MusicService"
             android:exported="false">
