@@ -105,7 +105,7 @@
             android:parentActivityName=".activities.SettingsActivity"/>
 
         <activity
-            android:name=".activities.ArtistActivity"
+            android:name=".activities.AlbumsActivity"
             android:label="@string/artist"
             android:parentActivityName=".activities.MainActivity"/>
 

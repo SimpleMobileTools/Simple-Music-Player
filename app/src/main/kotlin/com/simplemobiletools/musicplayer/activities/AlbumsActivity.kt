@@ -16,7 +16,7 @@ import com.simplemobiletools.musicplayer.models.Album
 import com.simplemobiletools.musicplayer.models.Artist
 import kotlinx.android.synthetic.main.activity_artist.*
 
-class ArtistActivity : SimpleActivity() {
+class AlbumsActivity : SimpleActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_artist)

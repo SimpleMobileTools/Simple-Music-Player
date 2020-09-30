@@ -10,7 +10,7 @@ import com.simplemobiletools.commons.extensions.getIntValue
 import com.simplemobiletools.commons.extensions.getStringValue
 import com.simplemobiletools.commons.extensions.showErrorToast
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
-import com.simplemobiletools.musicplayer.activities.ArtistActivity
+import com.simplemobiletools.musicplayer.activities.AlbumsActivity
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
 import com.simplemobiletools.musicplayer.adapters.ArtistsAdapter
 import com.simplemobiletools.musicplayer.helpers.ARTIST
@@ -21,7 +21,7 @@ class ArtistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
     override fun setupFragment(activity: SimpleActivity) {
         getArtists(activity) { artists ->
             ArtistsAdapter(activity, artists, artists_list) {
-                Intent(activity, ArtistActivity::class.java).apply {
+                Intent(activity, AlbumsActivity::class.java).apply {
                     putExtra(ARTIST, Gson().toJson(it as Artist))
                     activity.startActivity(this)
                 }
