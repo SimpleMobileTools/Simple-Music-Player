@@ -8,6 +8,7 @@ import com.simplemobiletools.commons.extensions.getIntValue
 import com.simplemobiletools.commons.extensions.getStringValue
 import com.simplemobiletools.commons.extensions.showErrorToast
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
+import com.simplemobiletools.commons.helpers.isQPlus
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
 import com.simplemobiletools.musicplayer.adapters.ArtistsAdapter
 import com.simplemobiletools.musicplayer.models.Album
@@ -26,7 +27,7 @@ class ArtistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
     }
 
     private fun openArtist(activity: Activity, artist: Artist) {
-        getAlbums(activity, artist.id) {
+        getAlbums(activity, artist) {
 
         }
     }
@@ -66,27 +67,32 @@ class ArtistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
         }
     }
 
-    private fun getAlbums(activity: Activity, artistId: Int, callback: (artists: ArrayList<Album>) -> Unit) {
+    private fun getAlbums(activity: Activity, artist: Artist, callback: (artists: ArrayList<Album>) -> Unit) {
         ensureBackgroundThread {
             val albums = ArrayList<Album>()
             val uri = Audio.Albums.EXTERNAL_CONTENT_URI
             val projection = arrayOf(
-                Audio.Albums.ALBUM_ID,
+                Audio.Albums._ID,
                 Audio.Albums.ARTIST,
                 Audio.Albums.ALBUM)
 
-            val selection = "${Audio.Albums.ARTIST_ID} = ?"
-            val selectionArgs = arrayOf(artistId.toString())
+            var selection = "${Audio.Albums.ARTIST} = ?"
+            var selectionArgs = arrayOf(artist.title)
+
+            if (isQPlus()) {
+                selection = "${Audio.Albums.ARTIST_ID} = ?"
+                selectionArgs = arrayOf(artist.id.toString())
+            }
 
             try {
                 val cursor = activity.contentResolver.query(uri, projection, selection, selectionArgs, null)
                 cursor?.use {
                     if (cursor.moveToFirst()) {
                         do {
-                            val id = cursor.getIntValue(Audio.Albums.ALBUM_ID)
-                            val artist = cursor.getStringValue(Audio.Albums.ARTIST)
+                            val id = cursor.getIntValue(Audio.Albums._ID)
+                            val artistName = cursor.getStringValue(Audio.Albums.ARTIST)
                             val title = cursor.getStringValue(Audio.Albums.ALBUM)
-                            val album = Album(id, artist, title)
+                            val album = Album(id, artistName, title)
                             albums.add(album)
                         } while (cursor.moveToNext())
                     }
