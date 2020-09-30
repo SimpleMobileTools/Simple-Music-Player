@@ -109,6 +109,11 @@
             android:label="@string/artist"
             android:parentActivityName=".activities.MainActivity"/>
 
+        <activity
+            android:name=".activities.SongsActivity"
+            android:label="@string/artist"
+            android:parentActivityName=".activities.AlbumsActivity"/>
+
         <service
             android:name=".services.MusicService"
             android:exported="false">

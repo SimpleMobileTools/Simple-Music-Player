@@ -17,6 +17,7 @@ import com.simplemobiletools.musicplayer.helpers.ARTIST
 import com.simplemobiletools.musicplayer.models.Artist
 import kotlinx.android.synthetic.main.fragment_artists.view.*
 
+// Artists -> Albums -> Songs
 class ArtistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPagerFragment(context, attributeSet) {
     override fun setupFragment(activity: SimpleActivity) {
         getArtists(activity) { artists ->
