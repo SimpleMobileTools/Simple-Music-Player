@@ -10,6 +10,7 @@ import com.simplemobiletools.commons.extensions.showErrorToast
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
 import com.simplemobiletools.musicplayer.adapters.ArtistsAdapter
+import com.simplemobiletools.musicplayer.models.Album
 import com.simplemobiletools.musicplayer.models.Artist
 import kotlinx.android.synthetic.main.fragment_artists.view.*
 
@@ -17,10 +18,16 @@ class ArtistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
     override fun setupFragment(activity: SimpleActivity) {
         getArtists(activity) { artists ->
             ArtistsAdapter(activity, artists, artists_list) {
-
+                openArtist(activity, it as Artist)
             }.apply {
                 artists_list.adapter = this
             }
+        }
+    }
+
+    private fun openArtist(activity: Activity, artist: Artist) {
+        getAlbums(activity, artist.id) {
+
         }
     }
 
@@ -55,6 +62,41 @@ class ArtistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
 
             activity.runOnUiThread {
                 callback(artists)
+            }
+        }
+    }
+
+    private fun getAlbums(activity: Activity, artistId: Int, callback: (artists: ArrayList<Album>) -> Unit) {
+        ensureBackgroundThread {
+            val albums = ArrayList<Album>()
+            val uri = Audio.Albums.EXTERNAL_CONTENT_URI
+            val projection = arrayOf(
+                Audio.Albums.ALBUM_ID,
+                Audio.Albums.ARTIST,
+                Audio.Albums.ALBUM)
+
+            val selection = "${Audio.Albums.ARTIST_ID} = ?"
+            val selectionArgs = arrayOf(artistId.toString())
+
+            try {
+                val cursor = activity.contentResolver.query(uri, projection, selection, selectionArgs, null)
+                cursor?.use {
+                    if (cursor.moveToFirst()) {
+                        do {
+                            val id = cursor.getIntValue(Audio.Albums.ALBUM_ID)
+                            val artist = cursor.getStringValue(Audio.Albums.ARTIST)
+                            val title = cursor.getStringValue(Audio.Albums.ALBUM)
+                            val album = Album(id, artist, title)
+                            albums.add(album)
+                        } while (cursor.moveToNext())
+                    }
+                }
+            } catch (e: Exception) {
+                activity.showErrorToast(e)
+            }
+
+            activity.runOnUiThread {
+                callback(albums)
             }
         }
     }
