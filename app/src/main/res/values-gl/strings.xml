@@ -10,7 +10,7 @@
     <string name="song_repetition_enabled">Repetición canción actual activada</string>
     <string name="song_repetition_disabled">Repetición canción actual desactivada</string>
     <string name="enable_shuffle">Activa Modo aleatorio</string>
-    <string name="disable_shuffle">Desactivar Modo aleatorio</string>
+    <string name="disable_shuffle">Desactiva Modo aleatorio</string>
     <string name="shuffle_enabled">Modo aleatorio activado</string>
     <string name="shuffle_disabled">Modo aleatorio desactivado</string>
     <string name="enable_autoplay">Activa Autoreprodución</string>
@@ -26,12 +26,12 @@
     <string name="playlists">Listas de reprodución</string>
     <string name="create_playlist">Crear listas de reprodución</string>
     <string name="rename_playlist">Renomear listas de reprodución</string>
-    <string name="playlist_name_exists">Xa existe unha lista de reprodución con este nome</string>
+    <string name="playlist_name_exists">Xa existe unha lista de reprodución con ese nome</string>
     <string name="remove_playlist">Eliminar lista de reprodución</string>
     <string name="remove_playlist_description">Isto só elimina as listas de reprodución seleccionadas, non os ficheiros.</string>
-    <string name="remove_playlist_description_placeholder">Isto só eliminará as listas de reprodución \"%s"\, non os ficheiros.</string>
+    <string name="remove_playlist_description_placeholder">Isto só eliminará listas de reprodución\"%s\", non os ficheiros.</string>
     <string name="remove_from_playlist">Eliminar da lista de reprodución</string>
-    <string name="remove_from_playlist_description">Isto só elimina elementos da lista \"%s"\, non se eliminan os ficheiros.</string>
+    <string name="remove_from_playlist_description">Isto só elimina elementos da lista \"%s\", non se eliminan os ficheiros.</string>
     <string name="delete_the_files_too">Eliminar tamén os ficheiros</string>
     <string name="open_playlist">Abrir lista de reprodución</string>
     <string name="all_songs_cannot_be_deleted">Non se poden borrar \'todas as cancións'\ da lista</string>
@@ -42,7 +42,7 @@
     <string name="folder_contains_no_audio">O cartafol seleccionado non contén ficheiros de audio</string>
     <string name="delete_current_song">Eliminar esta canción</string>
     <string name="remove_current_song">Eliminar esta canción da lista de reprodución</string>
-    <string name="show_filename">Amosar o nome do ficheiro como título da canción</string>
+    <string name="show_filename">Amosar o nome de ficheiro como título da canción</string>
     <string name="title_is_not_available">O título non está dispoñible</string>
     <string name="show_album_cover">Amosar a portada do álbum na pantalla principal</string>
 
@@ -58,35 +58,35 @@
     <!-- App title has to have less than 50 characters. If you cannot squeeze it, just remove a part of it -->
     <string name="app_title">Simple Music Player - A cool player for your songs</string>
     <!-- Short description has to have less than 80 chars -->
-    <string name="app_short_description">A clean music player with a customizable widget, stylish interface and no ads.</string>
+    <string name="app_short_description">Reprodutor simple con un widget personalizable.</string>
     <string name="app_long_description">
-        A simple music player easily controllable from the status bar, home screen widget or by hardware buttons on your headset. It provides all expected functions like sorting in various ways as well as changing the Equalizer.  Listen to your favorite mp3, other songs or podcasts with this free beautiful music player.
+        Un reprodutor de música de balde, simple e facilmente controlable desde a barra de estado, desde o widget da pantalla principal ou desde os botóns do hardware nos auriculares. Fornece todas as funcións esperadas como pode ser ordenar de diferentes maneiras, cambiar o ecualizador, escoitar os teus mp3 favoritos ou outras cancións ou podcasts.
 
-        It offers exclusive extras like Search and showing Album Art, a sleep timer and many other settings. This elegant music player allows you creating and managing handy playlists as you desire.
+        Inclúe extras exclusivas como Buscar e ensinar a portada dun álbum, un temporizador e outras configuracións. Permíteche crear e xestionar listas de reprodución como ti queiras.
 
-        Playlists are fully supported. You can add either individual files, or whole folders. If you won\'t like a file, you can either just remove it from a playlist, or delete the actual file altogether.
+        Hai posibilidade de crear listas de reprodución. Engada tanto ficheiros individuais como un cartafol enteiro. Se non che gusta un ficheiro, pódelo eliminar da lista de reprodución ou por completo.
 
-        Comes with a handy sleep timer so that you can reliably delay the time of the app shutting down.
+        Tamén vén cun temporizador práctico para que de xeito fiable poidas atrasar o tempo do aplicativo pechándoo.
+        
+        Inclúe o modo aleatorio e repetir, saltar ou avanzar rápido nunha canción.
 
-        Supports both shuffle and repeating a particular song, as well as skipping and fast forwarding.
+        Dispoñible en moitos idiomas e ofrece diferentes ecualizadores.
 
-        Available in many different languages, offers multiple different equalizers.
+        Comproba de maneira fácil as propiedades do ficheiro como o tamaño, duración, última modificación, etc.
 
-        Easily check a file properties like the size, duration, last modified etc.
+        Modificar os datos do ficheiro EXIF como o título ou artista.
 
-        Modify file EXIF data like the song title and artist.
+        Compartir ficheiros de maneira rápida cos teus amigos nas redes sociais, no correo electrónico ou en calquera sitio que ti queiras.
 
-        Quickly share files with your friends on social networks, emails, or anywhere you would like.
+        Este reprodutor de música contén un widget con cor de texto, letras e fondo personalizables para un acceso e control máis fácil.
+        
+        A parte de reproducir de xeito individual ficheiros de audio, tamén pode establecelo como ton de chamada.
 
-        This stylish music player contains a widget with customizable text color, alpha and the color of the background for easy access and control.
+        E, por último, vén cun deseño material e tema escuro por defecto, fornece unha experiencia de usuario xenial para un uso fácil. O non acceso a Internet dáche máis privacidade, seguridade e estabilidade que a outros aplicativos.
 
-        It properly handles third party intents too for playing individual audio files so it can help at setting ringtones too.
+        Non ten publicidade nin permisos innecesarios. É un aplicativo 100% de código aberto, con cores personalizables.
 
-        It comes with material design and dark theme by default, provides great user experience for easy usage. The lack of internet access gives you more privacy, security and stability than other apps.
-
-        Non ten publicidade nin permisos innecesarios. É un aplicativo 100% de código aberto, con cores personalizadas.
-
-        <b>Check out the full suite of Simple Tools here:</b>
+        <b>Visita a nosa páxina aquí:</b>
         https://www.simplemobiletools.com
 
         <b>Facebook:</b>
