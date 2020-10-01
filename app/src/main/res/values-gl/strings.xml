@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Simple Music Player</string>
     <string name="app_launcher_name">Reprodutor</string>
-    <string name="playlist_empty">A lista de reprodución está baldeira</string>
+    <string name="playlist_empty">A lista de reprodución está baleira</string>
     <string name="rename_song">Renomear canción</string>
     <string name="rename_song_error">Algo fallou ao renomear</string>
     <string name="rename_song_empty">Por favor complete todos os campos</string>
@@ -9,50 +9,50 @@
     <string name="disable_song_repetition">Non repetir a canción actual</string>
     <string name="song_repetition_enabled">Repetición canción actual activada</string>
     <string name="song_repetition_disabled">Repetición canción actual desactivada</string>
-    <string name="enable_shuffle">Barallar</string>
-    <string name="disable_shuffle">Non barallar</string>
-    <string name="shuffle_enabled">Activar barallada</string>
-    <string name="shuffle_disabled">Desactivar barallada</string>
+    <string name="enable_shuffle">Activa Modo aleatorio</string>
+    <string name="disable_shuffle">Desactivar Modo aleatorio</string>
+    <string name="shuffle_enabled">Modo aleatorio activado</string>
+    <string name="shuffle_disabled">Modo aleatorio desactivado</string>
     <string name="enable_autoplay">Activa Autoreprodución</string>
     <string name="disable_autoplay">Desactiva Autoreprodución</string>
     <string name="autoplay_enabled">Autoreprodución activada</string>
     <string name="autoplay_disabled">Autoreprodución desactivada</string>
-    <string name="sleep_timer">Sleep timer</string>
+    <string name="sleep_timer">Temporizador</string>
 
     <!-- Playlists -->
-    <string name="add_file_to_playlist">Engadir ficheiro a lista reprodución</string>
-    <string name="add_folder_to_playlist">Engadir cartafol a lista reprodución</string>
+    <string name="add_file_to_playlist">Engadir ficheiro á lista de reprodución</string>
+    <string name="add_folder_to_playlist">Engadir cartafol á lista de reprodución</string>
     <string name="manage_playlists">Xestionar listas de reprodución</string>
     <string name="playlists">Listas de reprodución</string>
     <string name="create_playlist">Crear listas de reprodución</string>
     <string name="rename_playlist">Renomear listas de reprodución</string>
-    <string name="playlist_name_exists">Xa existe lista de reprodución con ese nome</string>
+    <string name="playlist_name_exists">Xa existe unha lista de reprodución con este nome</string>
     <string name="remove_playlist">Eliminar lista de reprodución</string>
-    <string name="remove_playlist_description">Esto só elimina as listas de reprodución seleccionadas, non os ficheiros.</string>
-    <string name="remove_playlist_description_placeholder">Esto só eliminará listas de reprodución\"%s\", non os ficheiros.</string>
-    <string name="remove_from_playlist">Quitar da lista de reprodución</string>
-    <string name="remove_from_playlist_description">Esto só quita elementos da lista \"%s\", non se eliminan os ficheiros.</string>
-    <string name="delete_the_files_too">Borrar tamén os ficheiros</string>
+    <string name="remove_playlist_description">Isto só elimina as listas de reprodución seleccionadas, non os ficheiros.</string>
+    <string name="remove_playlist_description_placeholder">Isto só eliminará as listas de reprodución \"%s"\, non os ficheiros.</string>
+    <string name="remove_from_playlist">Eliminar da lista de reprodución</string>
+    <string name="remove_from_playlist_description">Isto só elimina elementos da lista \"%s"\, non se eliminan os ficheiros.</string>
+    <string name="delete_the_files_too">Eliminar tamén os ficheiros</string>
     <string name="open_playlist">Abrir lista de reprodución</string>
-    <string name="all_songs_cannot_be_deleted">Non se poden borrar \'todas as cancións\' da lista</string>
-    <string name="empty_playlist">A lista actual está baldeira</string>
-    <string name="fetching_songs">Obtendo cancións…</string>
+    <string name="all_songs_cannot_be_deleted">Non se poden borrar \'todas as cancións'\ da lista</string>
+    <string name="empty_playlist">A lista actual está baleira</string>
+    <string name="fetching_songs">Buscando cancións_</string>
     <string name="all_songs">Todas as cancións</string>
     <string name="create_playlist_from_folder">Crear nova lista de reprodución desde cartafol</string>
     <string name="folder_contains_no_audio">O cartafol seleccionado non contén ficheiros de audio</string>
-    <string name="delete_current_song">Delete current song</string>
-    <string name="remove_current_song">Remove current song from playlist</string>
-    <string name="show_filename">Show filename as song title</string>
-    <string name="title_is_not_available">If title is not available</string>
-    <string name="show_album_cover">Show album cover on the main screen</string>
+    <string name="delete_current_song">Eliminar esta canción</string>
+    <string name="remove_current_song">Eliminar esta canción da lista de reprodución</string>
+    <string name="show_filename">Amosar o nome do ficheiro como título da canción</string>
+    <string name="title_is_not_available">O título non está dispoñible</string>
+    <string name="show_album_cover">Amosar a portada do álbum na pantalla principal</string>
 
     <!-- Settings -->
     <string name="equalizer">Ecualizador</string>
-    <string name="swap_prev_next">Swap previous/next headphone buttons</string>
+    <string name="swap_prev_next">Intercambiar os botóns anterior/posterior dos auriculares</string>
 
     <!-- FAQ -->
-    <string name="faq_1_title">How can I fast-forward songs?</string>
-    <string name="faq_1_text">You can click on the current or max duration texts near the seekbar, that will move the song either backward, or forward.</string>
+    <string name="faq_1_title">Como podo facer un avance rápido nas cancións?</string>
+    <string name="faq_1_text">Preme na duración actual ou máxima dos ficheiros preto da barra de busca, que moverá a canción tanto cara adiante como cara atrás.</string>
 
     <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
     <!-- App title has to have less than 50 characters. If you cannot squeeze it, just remove a part of it -->
