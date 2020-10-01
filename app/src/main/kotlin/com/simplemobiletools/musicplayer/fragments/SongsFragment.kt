@@ -15,7 +15,7 @@ import com.simplemobiletools.commons.interfaces.RecyclerScrollCallback
 import com.simplemobiletools.commons.views.MyLinearLayoutManager
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
-import com.simplemobiletools.musicplayer.adapters.SongAdapter
+import com.simplemobiletools.musicplayer.adapters.OldSongAdapter
 import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.extensions.getActionBarHeight
 import com.simplemobiletools.musicplayer.extensions.sendIntent
@@ -248,7 +248,7 @@ class SongsFragment(context: Context, attributeSet: AttributeSet) : MyViewPagerF
         }
 
         if (currAdapter == null) {
-            SongAdapter(activity, songs, this, artView!!, songs_list, songs_fastscroller) {
+            OldSongAdapter(activity, songs, this, artView!!, songs_list, songs_fastscroller) {
                 songPicked(getSongIndex(it as Song))
             }.apply {
                 isThirdPartyIntent = activityInterface.getIsThirdPartyIntent()
@@ -256,7 +256,7 @@ class SongsFragment(context: Context, attributeSet: AttributeSet) : MyViewPagerF
             }
         } else {
             val state = (songs_list.layoutManager as MyLinearLayoutManager).onSaveInstanceState()
-            (currAdapter as SongAdapter).apply {
+            (currAdapter as OldSongAdapter).apply {
                 isThirdPartyIntent = activityInterface.getIsThirdPartyIntent()
                 updateSongs(songs)
             }
@@ -312,7 +312,7 @@ class SongsFragment(context: Context, attributeSet: AttributeSet) : MyViewPagerF
 
     private fun getSongIndex(song: Song) = songs.indexOfFirstOrNull { it == song } ?: 0
 
-    fun getSongsAdapter() = songs_list.adapter as? SongAdapter
+    fun getSongsAdapter() = songs_list.adapter as? OldSongAdapter
 
     private fun initSeekbarChangeListener() {
         song_progressbar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {

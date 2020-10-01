@@ -25,10 +25,10 @@ import com.simplemobiletools.musicplayer.interfaces.SongListListener
 import com.simplemobiletools.musicplayer.models.Song
 import com.simplemobiletools.musicplayer.services.MusicService
 import kotlinx.android.synthetic.main.item_navigation.view.*
-import kotlinx.android.synthetic.main.item_song.view.*
+import kotlinx.android.synthetic.main.item_old_song.view.*
 
-class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val listener: SongListListener, val transparentView: View,
-                  recyclerView: MyRecyclerView, fastScroller: FastScroller, itemClick: (Any) -> Unit) :
+class OldSongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val listener: SongListListener, val transparentView: View,
+                     recyclerView: MyRecyclerView, fastScroller: FastScroller, itemClick: (Any) -> Unit) :
         MyRecyclerViewAdapter(activity, recyclerView, fastScroller, itemClick) {
 
     private val VIEW_TYPE_TRANSPARENT = 0
@@ -63,7 +63,7 @@ class SongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val list
         return when (viewType) {
             VIEW_TYPE_TRANSPARENT -> getTransparentViewHolder()
             VIEW_TYPE_NAVIGATION -> getNavigationViewHolder()
-            else -> createViewHolder(R.layout.item_song, parent)
+            else -> createViewHolder(R.layout.item_old_song, parent)
         }
     }
 
