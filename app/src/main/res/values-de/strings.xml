@@ -17,7 +17,7 @@
     <string name="disable_autoplay">Automatische Wiedergabe deaktivieren</string>
     <string name="autoplay_enabled">Automatische Wiedergabe aktiviert</string>
     <string name="autoplay_disabled">Automatische Wiedergabe deaktiviert</string>
-    <string name="sleep_timer">Sleep timer</string>
+    <string name="sleep_timer">Sleep-Timer</string>
 
     <!-- Playlists -->
     <string name="add_file_to_playlist">Datei zu Wiedergabeliste hinzufügen</string>
@@ -44,7 +44,7 @@
     <string name="remove_current_song">Aktuellen Song aus der Wiedergabeliste entfernen</string>
     <string name="show_filename">Dateiname als Songtitel anzeigen</string>
     <string name="title_is_not_available">Wenn Titel nicht verfügbar</string>
-    <string name="show_album_cover">Albumcover im Hauptbildschirm anzeigen</string>
+    <string name="show_album_cover">Album-Cover im Hauptbildschirm anzeigen</string>
 
     <!-- Settings -->
     <string name="equalizer">Equalizer</string>
@@ -56,37 +56,37 @@
 
     <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
     <!-- App title has to have less than 50 characters. If you cannot squeeze it, just remove a part of it -->
-    <string name="app_title">Simple Music Player - A cool player for your songs</string>
+    <string name="app_title">Schlichter Musik-Player - Coole Wiedergabe Deiner Songs</string>
     <!-- Short description has to have less than 80 chars -->
-    <string name="app_short_description">A clean music player with a customizable widget, stylish interface and no ads.</string>
+    <string name="app_short_description">Ein Musik-Player mit anpassbarem Widget, einer eleganten Oberfläche und ohne Werbung.</string>
     <string name="app_long_description">
-        A simple music player easily controllable from the status bar, home screen widget or by hardware buttons on your headset. It provides all expected functions like sorting in various ways as well as changing the Equalizer.  Listen to your favorite mp3, other songs or podcasts with this free beautiful music player.
+        Ein einfacher Musik-Player, der über die Statusleiste, das Startbildschirm-Widget oder über Hardwaretasten Ihres Headsets gesteuert werden kann. Er bietet alle Funktionen wie das Sortieren auf verschiedene Arten sowie das Anpassen des Equalizers. Hören Sie Ihre Lieblings-MP3s, andere Songs oder Podcasts mit diesem kostenlosen und wunderschönen Musik-Player.
 
-        It offers exclusive extras like Search and showing Album Art, a sleep timer and many other settings. This elegant music player allows you creating and managing handy playlists as you desire.
+        Er bietet exklusive Extras wie Suchen und Anzeigen von Album-Covers, einen Sleep-Timer und viele andere Einstellungen. Mit diesem eleganten Musik-Player können Sie Wiedergabelisten nach Ihren Wünschen erstellen und verwalten.
 
-        Playlists are fully supported. You can add either individual files, or whole folders. If you won\'t like a file, you can either just remove it from a playlist, or delete the actual file altogether.
+        Wiedergabelisten werden vollständig unterstützt. Sie können entweder einzelne Dateien oder ganze Ordner hinzufügen. Wenn Ihnen eine Datei nicht gefällt, können Sie sie entweder einfach aus einer Wiedergabeliste entfernen oder die eigentliche Datei ganz löschen.
 
-        Comes with a handy sleep timer so that you can reliably delay the time of the app shutting down.
+        Kommt mit einem praktischen Sleep-Timer, so dass Sie die Zeit des Schliessens der App zuverlässig verzögern können.
 
-        Supports both shuffle and repeating a particular song, as well as skipping and fast forwarding.
+        Unterstützt sowohl das Mischen als auch das Wiederholen eines bestimmten Songs sowie das Überspringen und den schnellen Vorlauf.
 
-        Available in many different languages, offers multiple different equalizers.
+        Erhältlich in vielen verschiedenen Sprachen, bietet mehrere verschiedene Equalizer.
 
-        Easily check a file properties like the size, duration, last modified etc.
+        Überprüfen Sie einfach die Eigenschaften einer Datei wie Grösse, Dauer, zuletzt geänderte Änderungen usw.
 
-        Modify file EXIF data like the song title and artist.
+        Ändern Sie die EXIF-Daten der Datei wie den Songtitel und den Interpreten.
 
-        Quickly share files with your friends on social networks, emails, or anywhere you would like.
+        Teilen Sie Dateien schnell mit Ihren Freunden in sozialen Netzwerken, E-Mails oder an einem beliebigen Ort.
 
-        This stylish music player contains a widget with customizable text color, alpha and the color of the background for easy access and control.
+        Dieser stilvolle Musik-Player enthält ein Widget mit anpassbarer Textfarbe, Alpha und Hintergrundfarbe für einfachen Zugriff und Kontrolle.
 
-        It properly handles third party intents too for playing individual audio files so it can help at setting ringtones too.
+        Unterstützt auch die Wiedergabe einzelner Audiodateien direkt aus anderen Apps.
 
-        It comes with material design and dark theme by default, provides great user experience for easy usage. The lack of internet access gives you more privacy, security and stability than other apps.
+        Weiter unterstützt die App standardmässig das Materialdesign und Dark-Theme und bietet eine hervorragende Benutzererfahrung für eine einfache Verwendung. Keine Internetverbindung nötig, dadurch mehr Privatsphäre, Sicherheit und Stabilität als andere Apps.
         
-        Beinhaltet keine Werbung oder unnötige Berechtigungen. Sie ist komplett Open Source, alle verwendeten Farben sind anpassbar.
+        Enthält keine Werbungen und benötigt keine unnötigen Berechtigungen. Vollständig OpenSource und bietet anpassbare Farben.
 
-        <b>Check out the full suite of Simple Tools here:</b>
+        <b>Schau dir die vollständige Serie der Schlichten Apps hier an:</b>
         https://www.simplemobiletools.com
 
         <b>Facebook:</b>
