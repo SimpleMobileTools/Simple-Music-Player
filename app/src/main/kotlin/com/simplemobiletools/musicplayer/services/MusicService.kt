@@ -660,10 +660,10 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         mCurrSong = mSongs.getOrNull(Math.min(songIndex, mSongs.size - 1)) ?: return
 
         try {
-            val trackUri = if (mCurrSong!!.mediaStoreId == 0L) {
+            val trackUri = if (mCurrSong!!.id == 0L) {
                 Uri.fromFile(File(mCurrSong!!.path))
             } else {
-                ContentUris.withAppendedId(Audio.Media.EXTERNAL_CONTENT_URI, mCurrSong!!.mediaStoreId)
+                ContentUris.withAppendedId(Audio.Media.EXTERNAL_CONTENT_URI, mCurrSong!!.id)
             }
             mPlayer!!.setDataSource(applicationContext, trackUri)
             mPlayer!!.prepareAsync()

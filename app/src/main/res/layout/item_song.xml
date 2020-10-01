@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/song_frame"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="@drawable/selector">
+
+    <RelativeLayout
+        android:id="@+id/song_holder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/activity_margin">
+
+        <com.simplemobiletools.commons.views.MyTextView
+            android:id="@+id/song_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:paddingLeft="@dimen/medium_margin"
+            android:paddingRight="@dimen/medium_margin"
+            android:text="@string/text_color" />
+
+    </RelativeLayout>
+</FrameLayout>

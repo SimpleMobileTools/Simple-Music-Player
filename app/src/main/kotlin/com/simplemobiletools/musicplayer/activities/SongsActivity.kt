@@ -10,9 +10,11 @@ import com.simplemobiletools.commons.extensions.getStringValue
 import com.simplemobiletools.commons.extensions.showErrorToast
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.musicplayer.R
+import com.simplemobiletools.musicplayer.adapters.SongsAdapter
 import com.simplemobiletools.musicplayer.helpers.ALBUM
 import com.simplemobiletools.musicplayer.models.Album
 import com.simplemobiletools.musicplayer.models.Song
+import kotlinx.android.synthetic.main.activity_songs.*
 
 // Artists -> Albums -> Songs
 class SongsActivity : SimpleActivity() {
@@ -24,8 +26,12 @@ class SongsActivity : SimpleActivity() {
         val album = Gson().fromJson<Album>(intent.getStringExtra(ALBUM), albumType)
         title = album.title
 
-        getSongs(album) {
+        getSongs(album) { songs ->
+            SongsAdapter(this, songs, songs_list) {
 
+            }.apply {
+                songs_list.adapter = this
+            }
         }
     }
 
