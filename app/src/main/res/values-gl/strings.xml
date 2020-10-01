@@ -34,7 +34,7 @@
     <string name="remove_from_playlist_description">Isto só elimina elementos da lista \"%s\", non se eliminan os ficheiros.</string>
     <string name="delete_the_files_too">Eliminar tamén os ficheiros</string>
     <string name="open_playlist">Abrir lista de reprodución</string>
-    <string name="all_songs_cannot_be_deleted">Non se poden borrar \'todas as cancións'\ da lista</string>
+    <string name="all_songs_cannot_be_deleted">Non se poden borrar \'todas as cancións\' da lista</string>
     <string name="empty_playlist">A lista actual está baleira</string>
     <string name="fetching_songs">Buscando cancións_</string>
     <string name="all_songs">Todas as cancións</string>
