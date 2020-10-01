@@ -56,9 +56,9 @@
 
     <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
     <!-- App title has to have less than 50 characters. If you cannot squeeze it, just remove a part of it -->
-    <string name="app_title">Simple Music Player - Un estupendo reprodutor para as túas cancións</string>
+    <string name="app_title">Simple Music Player - A cool player for your songs</string>
     <!-- Short description has to have less than 80 chars -->
-    <string name="app_short_description">Un reprodutor de música claro con widget personalizable, unha interface elegante and no ads.</string>
+    <string name="app_short_description">Reprodutor simple con un widget personalizable.</string>
     <string name="app_long_description">
         Un reprodutor de música de balde, simple e facilmente controlable desde a barra de estado, desde o widget da pantalla principal ou desde os botóns do hardware nos auriculares. Fornece todas as funcións esperadas como pode ser ordenar de diferentes maneiras, cambiar o ecualizador, escoitar os teus mp3 favoritos ou outras cancións ou podcasts.
 
