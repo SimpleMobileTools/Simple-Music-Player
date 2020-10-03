@@ -1,8 +1,14 @@
 package com.simplemobiletools.musicplayer.adapters
 
+import android.content.ContentUris
+import android.net.Uri
 import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.request.RequestOptions
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.musicplayer.R
@@ -55,6 +61,17 @@ class ArtistsAdapter(activity: SimpleActivity, val artists: ArrayList<Artist>, r
             artist_frame?.isSelected = selectedKeys.contains(artist.id)
             artist_title.text = artist.title
             artist_title.setTextColor(textColor)
+
+            val artworkUri = Uri.parse("content://media/external/audio/albumart")
+            val albumArtUri = ContentUris.withAppendedId(artworkUri, artist.albumArtId)
+
+            val options = RequestOptions()
+                .transform(CenterCrop(), RoundedCorners(10))
+
+            Glide.with(activity)
+                .load(albumArtUri)
+                .apply(options)
+                .into(findViewById(R.id.artist_image))
         }
     }
 }

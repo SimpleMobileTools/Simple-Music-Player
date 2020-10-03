@@ -7,6 +7,7 @@ import android.provider.MediaStore.Audio
 import android.util.AttributeSet
 import com.google.gson.Gson
 import com.simplemobiletools.commons.extensions.getIntValue
+import com.simplemobiletools.commons.extensions.getLongValue
 import com.simplemobiletools.commons.extensions.getStringValue
 import com.simplemobiletools.commons.extensions.showErrorToast
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
@@ -54,7 +55,8 @@ class ArtistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
                             val title = cursor.getStringValue(Audio.Artists.ARTIST)
                             val albumCnt = cursor.getIntValue(Audio.ArtistColumns.NUMBER_OF_ALBUMS)
                             val trackCnt = cursor.getIntValue(Audio.ArtistColumns.NUMBER_OF_TRACKS)
-                            val artist = Artist(id, title, albumCnt, trackCnt)
+                            val albumArtId = getArtistAlbumId(activity, id)
+                            val artist = Artist(id, title, albumCnt, trackCnt, albumArtId)
                             artists.add(artist)
                         } while (cursor.moveToNext())
                     }
@@ -67,5 +69,23 @@ class ArtistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
                 callback(artists)
             }
         }
+    }
+
+    private fun getArtistAlbumId(activity: Activity, artistId: Int): Long {
+        val uri = Audio.Albums.EXTERNAL_CONTENT_URI
+        val projection = arrayOf(Audio.Albums._ID)
+        val selection = "${Audio.Albums.ARTIST_ID} = ?"
+        val selectionArgs = arrayOf(artistId.toString())
+        try {
+            val cursor = activity.contentResolver.query(uri, projection, selection, selectionArgs, null)
+            cursor?.use {
+                if (cursor.moveToFirst()) {
+                    return cursor.getLongValue(Audio.Albums._ID)
+                }
+            }
+        } catch (e: Exception) {
+        }
+
+        return 0L
     }
 }

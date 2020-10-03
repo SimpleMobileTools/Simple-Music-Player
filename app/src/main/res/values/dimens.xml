@@ -1,4 +1,5 @@
 <resources>
     <dimen name="controls_row_height">60dp</dimen>
     <dimen name="top_art_height">220dp</dimen>
+    <dimen name="artist_image_size">80dp</dimen>
 </resources>
