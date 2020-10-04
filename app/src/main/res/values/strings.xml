@@ -46,6 +46,18 @@
     <string name="title_is_not_available">If title is not available</string>
     <string name="show_album_cover">Show album cover on the main screen</string>
 
+    <!-- Artists -->
+    <string name="artists">Artists</string>
+    <plurals name="albums">
+        <item quantity="one">%d album</item>
+        <item quantity="other">%d albums</item>
+    </plurals>
+
+    <plurals name="tracks">
+        <item quantity="one">%d track</item>
+        <item quantity="other">%d tracks</item>
+    </plurals>
+
     <!-- Settings -->
     <string name="equalizer">Equalizer</string>
     <string name="swap_prev_next">Swap previous/next headphone buttons</string>
