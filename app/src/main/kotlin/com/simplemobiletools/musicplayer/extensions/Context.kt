@@ -12,7 +12,6 @@ import com.simplemobiletools.commons.extensions.showErrorToast
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.commons.helpers.isOreoPlus
 import com.simplemobiletools.commons.helpers.isQPlus
-import com.simplemobiletools.commons.helpers.mydebug
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.databases.SongsDatabase
 import com.simplemobiletools.musicplayer.helpers.*
@@ -194,7 +193,6 @@ fun Context.getSongsSync(albumId: Int): ArrayList<Song> {
                     val path = ""
                     val artist = ""
                     val song = Song(id, title, artist, path, duration, "", 0, trackId)
-                    mydebug("song $song, track $trackId")
                     songs.add(song)
                 } while (cursor.moveToNext())
             }
