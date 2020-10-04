@@ -20,7 +20,7 @@ class SongsActivity : SimpleActivity() {
         val album = Gson().fromJson<Album>(intent.getStringExtra(ALBUM), albumType)
         title = album.title
 
-        getSongs(album) { songs ->
+        getSongs(album.id) { songs ->
             runOnUiThread {
                 SongsAdapter(this, songs, songs_list) {
 

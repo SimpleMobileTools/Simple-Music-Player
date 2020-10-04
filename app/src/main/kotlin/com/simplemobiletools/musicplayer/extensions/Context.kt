@@ -161,14 +161,14 @@ fun Context.getAlbumsSync(artist: Artist): ArrayList<Album> {
     return albums
 }
 
-fun Context.getSongs(album: Album, callback: (songs: ArrayList<Song>) -> Unit) {
+fun Context.getSongs(albumId: Int, callback: (songs: ArrayList<Song>) -> Unit) {
     ensureBackgroundThread {
-        val songs = getSongsSync(album)
+        val songs = getSongsSync(albumId)
         callback(songs)
     }
 }
 
-fun Context.getSongsSync(album: Album): ArrayList<Song> {
+fun Context.getSongsSync(albumId: Int): ArrayList<Song> {
     val songs = ArrayList<Song>()
     val uri = Audio.Media.EXTERNAL_CONTENT_URI
     val projection = arrayOf(
@@ -178,7 +178,7 @@ fun Context.getSongsSync(album: Album): ArrayList<Song> {
     )
 
     val selection = "${Audio.Albums.ALBUM_ID} = ?"
-    val selectionArgs = arrayOf(album.id.toString())
+    val selectionArgs = arrayOf(albumId.toString())
 
     try {
         val cursor = contentResolver.query(uri, projection, selection, selectionArgs, null)

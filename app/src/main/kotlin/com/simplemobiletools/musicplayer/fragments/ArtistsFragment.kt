@@ -14,6 +14,8 @@ import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.musicplayer.activities.AlbumsActivity
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
 import com.simplemobiletools.musicplayer.adapters.ArtistsAdapter
+import com.simplemobiletools.musicplayer.extensions.getAlbumsSync
+import com.simplemobiletools.musicplayer.extensions.getSongsSync
 import com.simplemobiletools.musicplayer.helpers.ARTIST
 import com.simplemobiletools.musicplayer.models.Artist
 import kotlinx.android.synthetic.main.fragment_artists.view.*
@@ -39,25 +41,21 @@ class ArtistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
             val uri = Audio.Artists.EXTERNAL_CONTENT_URI
             val projection = arrayOf(
                 Audio.Artists._ID,
-                Audio.Artists.ARTIST,
-                Audio.ArtistColumns.NUMBER_OF_ALBUMS,
-                Audio.ArtistColumns.NUMBER_OF_TRACKS
+                Audio.Artists.ARTIST
             )
 
-            val selection = "${Audio.ArtistColumns.NUMBER_OF_ALBUMS} > 0"
-
             try {
-                val cursor = activity.contentResolver.query(uri, projection, selection, null, null)
+                val cursor = activity.contentResolver.query(uri, projection, null, null, null)
                 cursor?.use {
                     if (cursor.moveToFirst()) {
                         do {
                             val id = cursor.getIntValue(Audio.Artists._ID)
                             val title = cursor.getStringValue(Audio.Artists.ARTIST)
-                            val albumCnt = cursor.getIntValue(Audio.ArtistColumns.NUMBER_OF_ALBUMS)
-                            val trackCnt = cursor.getIntValue(Audio.ArtistColumns.NUMBER_OF_TRACKS)
-                            val albumArtId = getArtistAlbumId(activity, id)
-                            val artist = Artist(id, title, albumCnt, trackCnt, albumArtId)
-                            artists.add(artist)
+                            var artist = Artist(id, title, 0, 0, 0)
+                            artist = fillArtistExtras(activity, artist)
+                            if (artist.albumCnt > 0) {
+                                artists.add(artist)
+                            }
                         } while (cursor.moveToNext())
                     }
                 }
@@ -71,21 +69,33 @@ class ArtistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
         }
     }
 
-    private fun getArtistAlbumId(activity: Activity, artistId: Int): Long {
+    private fun fillArtistExtras(activity: Activity, artist: Artist): Artist {
         val uri = Audio.Albums.EXTERNAL_CONTENT_URI
-        val projection = arrayOf(Audio.Albums._ID)
+        val projection = arrayOf(
+            Audio.Albums._ID)
+
         val selection = "${Audio.Albums.ARTIST_ID} = ?"
-        val selectionArgs = arrayOf(artistId.toString())
+        val selectionArgs = arrayOf(artist.id.toString())
+
+        artist.albumCnt = activity.getAlbumsSync(artist).size
+
         try {
             val cursor = activity.contentResolver.query(uri, projection, selection, selectionArgs, null)
             cursor?.use {
                 if (cursor.moveToFirst()) {
-                    return cursor.getLongValue(Audio.Albums._ID)
+                    do {
+                        val albumId = cursor.getLongValue(Audio.Albums._ID)
+                        if (artist.albumArtId == 0L) {
+                            artist.albumArtId = albumId
+                        }
+
+                        artist.trackCnt += activity.getSongsSync(albumId.toInt()).size
+                    } while (cursor.moveToNext())
                 }
             }
         } catch (e: Exception) {
         }
 
-        return 0L
+        return artist
     }
 }
