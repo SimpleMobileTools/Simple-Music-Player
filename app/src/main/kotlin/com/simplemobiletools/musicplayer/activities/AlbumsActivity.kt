@@ -7,10 +7,12 @@ import com.google.gson.reflect.TypeToken
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.adapters.AlbumsAdapter
 import com.simplemobiletools.musicplayer.extensions.getAlbums
+import com.simplemobiletools.musicplayer.extensions.getSongsSync
 import com.simplemobiletools.musicplayer.helpers.ALBUM
 import com.simplemobiletools.musicplayer.helpers.ARTIST
 import com.simplemobiletools.musicplayer.models.Album
 import com.simplemobiletools.musicplayer.models.Artist
+import com.simplemobiletools.musicplayer.models.Song
 import kotlinx.android.synthetic.main.activity_albums.*
 
 // Artists -> Albums -> Songs
@@ -34,6 +36,15 @@ class AlbumsActivity : SimpleActivity() {
                     albums_list.adapter = this
                 }
             }
+
+            fillSongs(albums)
+        }
+    }
+
+    private fun fillSongs(albums: ArrayList<Album>) {
+        val songs = ArrayList<Song>()
+        albums.forEach {
+            songs.addAll(getSongsSync(it.id))
         }
     }
 }
