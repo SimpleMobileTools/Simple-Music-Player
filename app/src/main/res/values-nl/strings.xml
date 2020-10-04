@@ -46,6 +46,18 @@
     <string name="title_is_not_available">Als titel niet beschikbaar is</string>
     <string name="show_album_cover">Albumhoes in hoofdscherm weergeven</string>
 
+    <!-- Artists -->
+    <string name="artists">Artiesten</string>
+    <plurals name="albums">
+        <item quantity="one">%d album</item>
+        <item quantity="other">%d albums</item>
+    </plurals>
+
+    <plurals name="tracks">
+        <item quantity="one">%d nummer</item>
+        <item quantity="other">%d nummers</item>
+    </plurals>
+
     <!-- Settings -->
     <string name="equalizer">Equalizer</string>
     <string name="swap_prev_next">Knoppen Vorige/Volgende op koptelefoon omdraaien</string>
