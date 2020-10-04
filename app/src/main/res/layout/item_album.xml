@@ -13,7 +13,7 @@
         android:id="@+id/album_holder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/activity_margin">
+        android:padding="@dimen/normal_margin">
 
         <ImageView
             android:id="@+id/album_image"

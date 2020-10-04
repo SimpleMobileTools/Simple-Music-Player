@@ -369,6 +369,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             Audio.Media.DATA,
             Audio.Media.ALBUM,
             Audio.Media.TITLE,
+            Audio.Media.TRACK,
             Audio.Media.ARTIST)
 
         if (isQPlus()) {
@@ -382,7 +383,8 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
                     val title = cursor.getStringValue(Audio.Media.TITLE)
                     val artist = cursor.getStringValue(Audio.Media.ARTIST)
                     val album = cursor.getStringValue(Audio.Media.ALBUM)
-                    val song = Song(id, title, artist, path, duration, album, ALL_SONGS_PLAYLIST_ID)
+                    val trackId = cursor.getIntValue(Audio.Media.TRACK) % 1000
+                    val song = Song(id, title, artist, path, duration, album, ALL_SONGS_PLAYLIST_ID, trackId)
                     song.title = song.getProperTitle(showFilename)
                     songs.add(song)
                 }

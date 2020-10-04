@@ -12,6 +12,7 @@ import com.simplemobiletools.commons.extensions.showErrorToast
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.commons.helpers.isOreoPlus
 import com.simplemobiletools.commons.helpers.isQPlus
+import com.simplemobiletools.commons.helpers.mydebug
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.databases.SongsDatabase
 import com.simplemobiletools.musicplayer.helpers.*
@@ -174,7 +175,8 @@ fun Context.getSongsSync(albumId: Int): ArrayList<Song> {
     val projection = arrayOf(
         Audio.Media._ID,
         Audio.Media.DURATION,
-        Audio.Media.TITLE
+        Audio.Media.TITLE,
+        Audio.Media.TRACK
     )
 
     val selection = "${Audio.Albums.ALBUM_ID} = ?"
@@ -188,9 +190,11 @@ fun Context.getSongsSync(albumId: Int): ArrayList<Song> {
                     val id = cursor.getLongValue(Audio.Media._ID)
                     val title = cursor.getStringValue(Audio.Media.TITLE)
                     val duration = cursor.getIntValue(Audio.Media.DURATION) / 1000
+                    val trackId = cursor.getIntValue(Audio.Media.TRACK) % 1000
                     val path = ""
                     val artist = ""
-                    val song = Song(id, title, artist, path, duration, "", 0)
+                    val song = Song(id, title, artist, path, duration, "", 0, trackId)
+                    mydebug("song $song, track $trackId")
                     songs.add(song)
                 } while (cursor.moveToNext())
             }
