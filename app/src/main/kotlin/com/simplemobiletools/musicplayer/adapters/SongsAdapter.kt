@@ -4,6 +4,7 @@ import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
+import com.simplemobiletools.commons.extensions.getFormattedDuration
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
@@ -55,6 +56,9 @@ class SongsAdapter(activity: SimpleActivity, val songs: ArrayList<Song>, recycle
             song_frame?.isSelected = selectedKeys.contains(song.id)
             song_title.text = song.title
             song_title.setTextColor(textColor)
+
+            song_id.text = song.trackId.toString()
+            song_duration.text = song.duration.getFormattedDuration()
         }
     }
 }

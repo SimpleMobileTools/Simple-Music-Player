@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/song_frame"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -15,13 +16,39 @@
         android:padding="@dimen/activity_margin">
 
         <com.simplemobiletools.commons.views.MyTextView
+            android:id="@+id/song_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:ems="2"
+            android:gravity="end"
+            android:paddingEnd="@dimen/medium_margin"
+            android:textSize="@dimen/bigger_text_size"
+            tools:text="1" />
+
+        <com.simplemobiletools.commons.views.MyTextView
             android:id="@+id/song_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:paddingLeft="@dimen/medium_margin"
-            android:paddingRight="@dimen/medium_margin"
-            android:text="@string/text_color" />
+            android:layout_toStartOf="@+id/song_duration"
+            android:layout_toEndOf="@+id/song_id"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:paddingStart="@dimen/medium_margin"
+            android:paddingEnd="@dimen/medium_margin"
+            android:textSize="@dimen/bigger_text_size"
+            tools:text="Track title" />
+
+        <com.simplemobiletools.commons.views.MyTextView
+            android:id="@+id/song_duration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:paddingEnd="@dimen/small_margin"
+            android:textSize="@dimen/bigger_text_size"
+            tools:text="3:45" />
 
     </RelativeLayout>
 </FrameLayout>
