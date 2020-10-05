@@ -9,6 +9,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
 import com.simplemobiletools.commons.extensions.beGone
+import com.simplemobiletools.commons.extensions.beVisible
 import com.simplemobiletools.commons.extensions.getFormattedDuration
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.musicplayer.R
@@ -109,8 +110,17 @@ class AlbumsAdapter(activity: SimpleActivity, val items: ArrayList<ListItem>, re
             song_title.setTextColor(textColor)
 
             song_id.beGone()
+            song_image.beVisible()
             song_duration.text = track.duration.getFormattedDuration()
             song_duration.setTextColor(textColor)
+
+            val options = RequestOptions()
+                .transform(CenterCrop(), RoundedCorners(8))
+
+            Glide.with(activity)
+                .load(track.coverArt)
+                .apply(options)
+                .into(findViewById(R.id.song_image))
         }
     }
 

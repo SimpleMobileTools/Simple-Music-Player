@@ -15,14 +15,21 @@
         android:layout_height="wrap_content"
         android:padding="@dimen/activity_margin">
 
+        <ImageView
+            android:id="@+id/song_image"
+            android:layout_width="@dimen/song_image_size"
+            android:layout_height="@dimen/song_image_size"
+            android:visibility="gone" />
+
         <com.simplemobiletools.commons.views.MyTextView
             android:id="@+id/song_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/song_image"
             android:ems="2"
             android:gravity="end"
-            android:paddingEnd="@dimen/medium_margin"
+            android:paddingEnd="@dimen/small_margin"
             android:textSize="@dimen/bigger_text_size"
             tools:text="1" />
 
@@ -35,7 +42,7 @@
             android:layout_toEndOf="@+id/song_id"
             android:ellipsize="end"
             android:maxLines="2"
-            android:paddingStart="@dimen/medium_margin"
+            android:paddingStart="@dimen/normal_margin"
             android:paddingEnd="@dimen/medium_margin"
             android:textSize="@dimen/bigger_text_size"
             tools:text="Track title" />
