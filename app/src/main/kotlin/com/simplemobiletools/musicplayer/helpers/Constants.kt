@@ -10,8 +10,10 @@ const val EDITED_SONG = "edited_song"
 const val ALL_SONGS_PLAYLIST_ID = 1
 const val START_SLEEP_TIMER = "start_sleep_timer"
 const val STOP_SLEEP_TIMER = "stop_sleep_timer"
+
 const val ARTIST = "artist"
 const val ALBUM = "album"
+const val TRACK = "track"
 
 private const val PATH = "com.simplemobiletools.musicplayer.action."
 val artworkUri = Uri.parse("content://media/external/audio/albumart")

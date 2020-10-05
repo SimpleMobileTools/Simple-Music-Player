@@ -11,6 +11,7 @@ import com.simplemobiletools.musicplayer.extensions.getAlbums
 import com.simplemobiletools.musicplayer.extensions.getSongsSync
 import com.simplemobiletools.musicplayer.helpers.ALBUM
 import com.simplemobiletools.musicplayer.helpers.ARTIST
+import com.simplemobiletools.musicplayer.helpers.TRACK
 import com.simplemobiletools.musicplayer.models.*
 import kotlinx.android.synthetic.main.activity_albums.*
 
@@ -48,6 +49,11 @@ class AlbumsActivity : SimpleActivity() {
                     if (it is Album) {
                         Intent(this, SongsActivity::class.java).apply {
                             putExtra(ALBUM, Gson().toJson(it))
+                            startActivity(this)
+                        }
+                    } else {
+                        Intent(this, TrackActivity::class.java).apply {
+                            putExtra(TRACK, Gson().toJson(it))
                             startActivity(this)
                         }
                     }
