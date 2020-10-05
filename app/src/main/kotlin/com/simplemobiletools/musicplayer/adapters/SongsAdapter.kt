@@ -101,6 +101,14 @@ class SongsAdapter(activity: SimpleActivity, val items: ArrayList<ListItem>, rec
             album_title.text = header.title
             album_title.setTextColor(textColor)
 
+            val tracks = resources.getQuantityString(R.plurals.tracks, header.songCnt, header.songCnt)
+            var year = ""
+            if (header.year != 0) {
+                year = "${header.year} • "
+            }
+
+            album_meta.text = "$year$tracks • ${header.duration.getFormattedDuration(true)}"
+
             val options = RequestOptions()
                 .error(placeholder)
                 .transform(CenterCrop(), RoundedCorners(16))

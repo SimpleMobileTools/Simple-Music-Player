@@ -22,6 +22,7 @@
             android:id="@+id/song_image"
             android:layout_width="@dimen/song_image_size"
             android:layout_height="@dimen/song_image_size"
+            android:layout_marginStart="@dimen/small_margin"
             android:visibility="gone" />
 
         <com.simplemobiletools.commons.views.MyTextView

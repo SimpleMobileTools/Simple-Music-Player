@@ -27,7 +27,8 @@ class SongsActivity : SimpleActivity() {
         getSongs(album.id) { songs ->
             val items = ArrayList<ListItem>()
             val coverArt = ContentUris.withAppendedId(artworkUri, album.id.toLong()).toString()
-            items.add(AlbumHeader(album.title, coverArt))
+            val header = AlbumHeader(album.title, coverArt, album.year, songs.size, songs.sumBy { it.duration })
+            items.add(header)
             items.addAll(songs)
 
             runOnUiThread {

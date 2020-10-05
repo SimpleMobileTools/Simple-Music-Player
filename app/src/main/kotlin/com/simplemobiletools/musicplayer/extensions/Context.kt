@@ -132,6 +132,7 @@ fun Context.getAlbumsSync(artist: Artist): ArrayList<Album> {
     val projection = arrayOf(
         Audio.Albums._ID,
         Audio.Albums.ARTIST,
+        Audio.Albums.FIRST_YEAR,
         Audio.Albums.ALBUM)
 
     var selection = "${Audio.Albums.ARTIST} = ?"
@@ -151,7 +152,8 @@ fun Context.getAlbumsSync(artist: Artist): ArrayList<Album> {
                     val artistName = cursor.getStringValue(Audio.Albums.ARTIST)
                     val title = cursor.getStringValue(Audio.Albums.ALBUM)
                     val coverArt = ContentUris.withAppendedId(artworkUri, id.toLong()).toString()
-                    val album = Album(id, artistName, title, coverArt)
+                    val year = cursor.getIntValue(Audio.Albums.FIRST_YEAR)
+                    val album = Album(id, artistName, title, coverArt, year)
                     albums.add(album)
                 } while (cursor.moveToNext())
             }
