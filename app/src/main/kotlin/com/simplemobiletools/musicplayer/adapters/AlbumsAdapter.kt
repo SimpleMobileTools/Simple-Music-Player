@@ -14,10 +14,12 @@ import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
 import com.simplemobiletools.musicplayer.models.Album
+import com.simplemobiletools.musicplayer.models.ListItem
 import kotlinx.android.synthetic.main.item_album.view.*
 import java.util.*
 
-class AlbumsAdapter(activity: SimpleActivity, val albums: ArrayList<Album>, recyclerView: MyRecyclerView, itemClick: (Any) -> Unit) :
+// we show both albums and individual songs here
+class AlbumsAdapter(activity: SimpleActivity, val items: ArrayList<ListItem>, recyclerView: MyRecyclerView, itemClick: (Any) -> Unit) :
         MyRecyclerViewAdapter(activity, recyclerView, null, itemClick) {
 
     init {
@@ -29,32 +31,32 @@ class AlbumsAdapter(activity: SimpleActivity, val albums: ArrayList<Album>, recy
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = createViewHolder(R.layout.item_album, parent)
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val album = albums.getOrNull(position) ?: return
+        val album = items.getOrNull(position) ?: return
         holder.bindView(album, true, true) { itemView, layoutPosition ->
-            setupView(itemView, album)
+            setupView(itemView, album as Album)
         }
         bindViewHolder(holder)
     }
 
-    override fun getItemCount() = albums.size
+    override fun getItemCount() = items.size
 
     override fun prepareActionMode(menu: Menu) {}
 
     override fun actionItemPressed(id: Int) {}
 
-    override fun getSelectableItemCount() = albums.size
+    override fun getSelectableItemCount() = items.size
 
     override fun getIsItemSelectable(position: Int) = true
 
-    override fun getItemSelectionKey(position: Int) = albums.getOrNull(position)?.id
+    override fun getItemSelectionKey(position: Int) = (items.getOrNull(position) as? Album)?.id
 
-    override fun getItemKeyPosition(key: Int) = albums.indexOfFirst { it.id == key }
+    override fun getItemKeyPosition(key: Int) = items.indexOfFirst { (it as Album).id == key }
 
     override fun onActionModeCreated() {}
 
     override fun onActionModeDestroyed() {}
 
-    private fun getItemWithKey(key: Int): Album? = albums.firstOrNull { it.id == key }
+    private fun getItemWithKey(key: Int): ListItem? = items.firstOrNull { (it as Album).id == key }
 
     private fun setupView(view: View, album: Album) {
         view.apply {

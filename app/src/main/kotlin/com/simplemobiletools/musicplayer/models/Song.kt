@@ -22,7 +22,7 @@ data class Song(
     @ColumnInfo(name = "duration") val duration: Int,
     @ColumnInfo(name = "album") val album: String,
     @ColumnInfo(name = "playlist_id") val playListId: Int,
-    @ColumnInfo(name = "track_id") val trackId: Int) : Serializable, Comparable<Song> {
+    @ColumnInfo(name = "track_id") val trackId: Int) : Serializable, Comparable<Song>, ListItem() {
 
     companion object {
         private const val serialVersionUID = 6717978793256852245L

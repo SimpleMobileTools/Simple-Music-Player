@@ -12,6 +12,7 @@ import com.simplemobiletools.musicplayer.helpers.ALBUM
 import com.simplemobiletools.musicplayer.helpers.ARTIST
 import com.simplemobiletools.musicplayer.models.Album
 import com.simplemobiletools.musicplayer.models.Artist
+import com.simplemobiletools.musicplayer.models.ListItem
 import com.simplemobiletools.musicplayer.models.Song
 import kotlinx.android.synthetic.main.activity_albums.*
 
@@ -26,8 +27,9 @@ class AlbumsActivity : SimpleActivity() {
         title = artist.title
 
         getAlbums(artist) { albums ->
+            val items = albums.toMutableList() as ArrayList<ListItem>
             runOnUiThread {
-                AlbumsAdapter(this, albums, albums_list) {
+                AlbumsAdapter(this, items, albums_list) {
                     Intent(this, SongsActivity::class.java).apply {
                         putExtra(ALBUM, Gson().toJson(it as Album))
                         startActivity(this)
