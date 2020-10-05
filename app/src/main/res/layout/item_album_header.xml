@@ -24,12 +24,29 @@
         android:paddingStart="@dimen/normal_margin"
         android:paddingEnd="@dimen/medium_margin"
         android:textSize="@dimen/big_text_size"
+        app:layout_constraintBottom_toTopOf="@+id/album_artist"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/album_image"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed"
+        tools:text="Album Title" />
+
+    <com.simplemobiletools.commons.views.MyTextView
+        android:id="@+id/album_artist"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/medium_margin"
+        android:alpha="0.8"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:paddingStart="@dimen/normal_margin"
+        android:paddingEnd="@dimen/medium_margin"
+        android:textSize="@dimen/bigger_text_size"
         app:layout_constraintBottom_toTopOf="@+id/album_meta"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/album_image"
-        app:layout_constraintTop_toTopOf="@+id/album_image"
-        app:layout_constraintVertical_chainStyle="packed"
-        tools:text="2019 • 3 Tracks • 0:35:40" />
+        app:layout_constraintTop_toBottomOf="@+id/album_title"
+        tools:text="Album Artist" />
 
     <com.simplemobiletools.commons.views.MyTextView
         android:id="@+id/album_meta"
@@ -41,10 +58,10 @@
         android:paddingStart="@dimen/normal_margin"
         android:paddingEnd="@dimen/medium_margin"
         android:textSize="@dimen/normal_text_size"
-        app:layout_constraintBottom_toBottomOf="@+id/album_image"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/album_image"
-        app:layout_constraintTop_toBottomOf="@+id/album_title"
+        app:layout_constraintTop_toBottomOf="@+id/album_artist"
         tools:text="2019 • 3 Tracks • 0:39:25" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

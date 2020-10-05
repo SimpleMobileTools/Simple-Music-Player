@@ -99,7 +99,7 @@ class SongsAdapter(activity: SimpleActivity, val items: ArrayList<ListItem>, rec
     private fun setupHeader(view: View, header: AlbumHeader) {
         view.apply {
             album_title.text = header.title
-            album_title.setTextColor(textColor)
+            album_artist.text = header.artist
 
             val tracks = resources.getQuantityString(R.plurals.tracks, header.songCnt, header.songCnt)
             var year = ""
@@ -108,6 +108,10 @@ class SongsAdapter(activity: SimpleActivity, val items: ArrayList<ListItem>, rec
             }
 
             album_meta.text = "$year$tracks • ${header.duration.getFormattedDuration(true)}"
+
+            arrayOf(album_title, album_artist, album_meta).forEach {
+                it.setTextColor(textColor)
+            }
 
             val options = RequestOptions()
                 .error(placeholder)
