@@ -10,6 +10,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
 import com.simplemobiletools.commons.extensions.beGone
 import com.simplemobiletools.commons.extensions.beVisible
+import com.simplemobiletools.commons.extensions.getColoredDrawableWithColor
 import com.simplemobiletools.commons.extensions.getFormattedDuration
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.musicplayer.R
@@ -26,10 +27,12 @@ import java.util.*
 // we show both albums and individual tracks here
 class AlbumsAdapter(activity: SimpleActivity, val items: ArrayList<ListItem>, recyclerView: MyRecyclerView, itemClick: (Any) -> Unit) :
         MyRecyclerViewAdapter(activity, recyclerView, null, itemClick) {
-
     private val ITEM_SECTION = 0
     private val ITEM_ALBUM = 1
     private val ITEM_TRACK = 2
+
+    private val placeholder = resources.getColoredDrawableWithColor(R.drawable.ic_headset_padded, textColor)
+    private val placeholderBig = resources.getColoredDrawableWithColor(R.drawable.ic_headset, textColor)
 
     init {
         setupDragListener(true)
@@ -94,6 +97,7 @@ class AlbumsAdapter(activity: SimpleActivity, val items: ArrayList<ListItem>, re
             album_title.setTextColor(textColor)
 
             val options = RequestOptions()
+                .error(placeholderBig)
                 .transform(CenterCrop(), RoundedCorners(16))
 
             Glide.with(activity)
@@ -115,6 +119,7 @@ class AlbumsAdapter(activity: SimpleActivity, val items: ArrayList<ListItem>, re
             song_duration.setTextColor(textColor)
 
             val options = RequestOptions()
+                .error(placeholder)
                 .transform(CenterCrop(), RoundedCorners(8))
 
             Glide.with(activity)

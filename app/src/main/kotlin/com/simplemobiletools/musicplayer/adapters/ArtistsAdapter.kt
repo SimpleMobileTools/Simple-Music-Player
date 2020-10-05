@@ -10,6 +10,7 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
+import com.simplemobiletools.commons.extensions.getColoredDrawableWithColor
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
@@ -19,6 +20,7 @@ import java.util.*
 
 class ArtistsAdapter(activity: SimpleActivity, val artists: ArrayList<Artist>, recyclerView: MyRecyclerView, itemClick: (Any) -> Unit) :
         MyRecyclerViewAdapter(activity, recyclerView, null, itemClick) {
+    private val placeholder = resources.getColoredDrawableWithColor(R.drawable.ic_headset_padded, textColor)
 
     init {
         setupDragListener(true)
@@ -71,6 +73,7 @@ class ArtistsAdapter(activity: SimpleActivity, val artists: ArrayList<Artist>, r
             val albumArtUri = ContentUris.withAppendedId(artworkUri, artist.albumArtId)
 
             val options = RequestOptions()
+                .error(placeholder)
                 .transform(CenterCrop(), RoundedCorners(16))
 
             Glide.with(activity)
