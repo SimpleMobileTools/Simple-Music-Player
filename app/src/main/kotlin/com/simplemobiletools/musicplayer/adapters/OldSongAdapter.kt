@@ -5,6 +5,10 @@ import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.request.RequestOptions
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
 import com.simplemobiletools.commons.dialogs.ConfirmationDialog
 import com.simplemobiletools.commons.dialogs.PropertiesDialog
@@ -34,6 +38,8 @@ class OldSongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val l
     private val VIEW_TYPE_TRANSPARENT = 0
     private val VIEW_TYPE_NAVIGATION = 1
     private val VIEW_TYPE_ITEM = 2
+
+    private val placeholder = resources.getColoredDrawableWithColor(R.drawable.ic_headset, textColor)
 
     private var currentSongIndex = 0
     private var songsHashCode = songs.hashCode()
@@ -482,6 +488,15 @@ class OldSongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val l
             if (currentSongIndex == layoutPosition) {
                 song_note_image.applyColorFilter(textColor)
             }
+
+            val options = RequestOptions()
+                .error(placeholder)
+                .transform(CenterCrop(), RoundedCorners(8))
+
+            Glide.with(activity)
+                .load(song.coverArt)
+                .apply(options)
+                .into(findViewById(R.id.song_image))
         }
     }
 }
