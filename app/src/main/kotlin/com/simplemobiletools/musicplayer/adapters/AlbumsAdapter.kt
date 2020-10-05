@@ -27,6 +27,7 @@ import java.util.*
 // we show both albums and individual tracks here
 class AlbumsAdapter(activity: SimpleActivity, val items: ArrayList<ListItem>, recyclerView: MyRecyclerView, itemClick: (Any) -> Unit) :
         MyRecyclerViewAdapter(activity, recyclerView, null, itemClick) {
+
     private val ITEM_SECTION = 0
     private val ITEM_ALBUM = 1
     private val ITEM_TRACK = 2
@@ -52,7 +53,8 @@ class AlbumsAdapter(activity: SimpleActivity, val items: ArrayList<ListItem>, re
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = items.getOrNull(position) ?: return
-        holder.bindView(item, true, true) { itemView, layoutPosition ->
+        val allowClicks = item !is AlbumSection
+        holder.bindView(item, allowClicks, allowClicks) { itemView, layoutPosition ->
             when (item) {
                 is AlbumSection -> setupSection(itemView, item)
                 is Album -> setupAlbum(itemView, item)
@@ -76,9 +78,9 @@ class AlbumsAdapter(activity: SimpleActivity, val items: ArrayList<ListItem>, re
 
     override fun actionItemPressed(id: Int) {}
 
-    override fun getSelectableItemCount() = items.size
+    override fun getSelectableItemCount() = items.filter { it !is AlbumSection }.size
 
-    override fun getIsItemSelectable(position: Int) = true
+    override fun getIsItemSelectable(position: Int) = items[position] !is AlbumSection
 
     override fun getItemSelectionKey(position: Int) = (items.getOrNull(position))?.hashCode()
 

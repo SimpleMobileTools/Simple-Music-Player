@@ -45,8 +45,8 @@ class SongsAdapter(activity: SimpleActivity, val items: ArrayList<ListItem>, rec
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = items.getOrNull(position) ?: return
-        val isTrack = item !is AlbumHeader
-        holder.bindView(item, isTrack, isTrack) { itemView, layoutPosition ->
+        val allowClicks = item !is AlbumHeader
+        holder.bindView(item, allowClicks, allowClicks) { itemView, layoutPosition ->
             when (item) {
                 is AlbumHeader -> setupHeader(itemView, item)
                 else -> setupSong(itemView, item as Song)
