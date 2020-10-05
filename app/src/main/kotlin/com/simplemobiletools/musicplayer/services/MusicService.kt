@@ -367,6 +367,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             Audio.Media._ID,
             Audio.Media.DURATION,
             Audio.Media.DATA,
+            Audio.Media.ALBUM_ID,
             Audio.Media.ALBUM,
             Audio.Media.TITLE,
             Audio.Media.TRACK,
@@ -383,8 +384,10 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
                     val title = cursor.getStringValue(Audio.Media.TITLE)
                     val artist = cursor.getStringValue(Audio.Media.ARTIST)
                     val album = cursor.getStringValue(Audio.Media.ALBUM)
+                    val albumId = cursor.getLongValue(Audio.Media.ALBUM_ID)
+                    val coverArt = ContentUris.withAppendedId(artworkUri, albumId).toString()
                     val trackId = cursor.getIntValue(Audio.Media.TRACK) % 1000
-                    val song = Song(id, title, artist, path, duration, album, ALL_SONGS_PLAYLIST_ID, trackId)
+                    val song = Song(id, title, artist, path, duration, album, coverArt, ALL_SONGS_PLAYLIST_ID, trackId)
                     song.title = song.getProperTitle(showFilename)
                     songs.add(song)
                 }

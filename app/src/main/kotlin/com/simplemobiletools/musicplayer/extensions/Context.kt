@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.content.ContentUris
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.provider.MediaStore.Audio
 import android.util.TypedValue
 import com.simplemobiletools.commons.extensions.getIntValue
@@ -129,7 +128,6 @@ fun Context.getAlbums(artist: Artist, callback: (artists: ArrayList<Album>) -> U
 
 fun Context.getAlbumsSync(artist: Artist): ArrayList<Album> {
     val albums = ArrayList<Album>()
-    val artworkUri = Uri.parse("content://media/external/audio/albumart")
     val uri = Audio.Albums.EXTERNAL_CONTENT_URI
     val projection = arrayOf(
         Audio.Albums._ID,
@@ -152,8 +150,8 @@ fun Context.getAlbumsSync(artist: Artist): ArrayList<Album> {
                     val id = cursor.getIntValue(Audio.Albums._ID)
                     val artistName = cursor.getStringValue(Audio.Albums.ARTIST)
                     val title = cursor.getStringValue(Audio.Albums.ALBUM)
-                    val coverArt = ContentUris.withAppendedId(artworkUri, id.toLong())
-                    val album = Album(id, artistName, title, coverArt.toString())
+                    val coverArt = ContentUris.withAppendedId(artworkUri, id.toLong()).toString()
+                    val album = Album(id, artistName, title, coverArt)
                     albums.add(album)
                 } while (cursor.moveToNext())
             }
@@ -196,7 +194,8 @@ fun Context.getSongsSync(albumId: Int): ArrayList<Song> {
                     val trackId = cursor.getIntValue(Audio.Media.TRACK) % 1000
                     val path = ""
                     val artist = ""
-                    val song = Song(id, title, artist, path, duration, "", 0, trackId)
+                    val coverArt = ContentUris.withAppendedId(artworkUri, albumId.toLong()).toString()
+                    val song = Song(id, title, artist, path, duration, "", coverArt, 0, trackId)
                     songs.add(song)
                 } while (cursor.moveToNext())
             }

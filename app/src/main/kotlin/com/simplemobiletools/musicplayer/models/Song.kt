@@ -21,6 +21,7 @@ data class Song(
     @ColumnInfo(name = "path") var path: String,
     @ColumnInfo(name = "duration") val duration: Int,
     @ColumnInfo(name = "album") val album: String,
+    @ColumnInfo(name = "cover_art") val coverArt: String,
     @ColumnInfo(name = "playlist_id") val playListId: Int,
     @ColumnInfo(name = "track_id") val trackId: Int) : Serializable, Comparable<Song>, ListItem() {
 

@@ -1,5 +1,7 @@
 package com.simplemobiletools.musicplayer.helpers
 
+import android.net.Uri
+
 const val SONG_POS = "song_position"
 const val PROGRESS = "progress"
 const val CALL_SETUP_AFTER = "call_setup_after"
@@ -12,6 +14,7 @@ const val ARTIST = "artist"
 const val ALBUM = "album"
 
 private const val PATH = "com.simplemobiletools.musicplayer.action."
+val artworkUri = Uri.parse("content://media/external/audio/albumart")
 
 const val INIT = PATH + "INIT"
 const val INIT_PATH = PATH + "INIT_PATH"
