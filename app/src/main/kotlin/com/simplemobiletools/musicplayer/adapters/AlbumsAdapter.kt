@@ -16,9 +16,11 @@ import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
 import com.simplemobiletools.musicplayer.models.Album
+import com.simplemobiletools.musicplayer.models.AlbumSection
 import com.simplemobiletools.musicplayer.models.ListItem
 import com.simplemobiletools.musicplayer.models.Song
 import kotlinx.android.synthetic.main.item_album.view.*
+import kotlinx.android.synthetic.main.item_section.view.*
 import kotlinx.android.synthetic.main.item_song.view.*
 import java.util.*
 
@@ -26,8 +28,9 @@ import java.util.*
 class AlbumsAdapter(activity: SimpleActivity, val items: ArrayList<ListItem>, recyclerView: MyRecyclerView, itemClick: (Any) -> Unit) :
         MyRecyclerViewAdapter(activity, recyclerView, null, itemClick) {
 
-    private val ITEM_ALBUM = 0
-    private val ITEM_TRACK = 1
+    private val ITEM_SECTION = 0
+    private val ITEM_ALBUM = 1
+    private val ITEM_TRACK = 2
 
     init {
         setupDragListener(true)
@@ -36,10 +39,10 @@ class AlbumsAdapter(activity: SimpleActivity, val items: ArrayList<ListItem>, re
     override fun getActionMenuId() = R.menu.cab_albums
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val layout = if (viewType == ITEM_ALBUM) {
-            R.layout.item_album
-        } else {
-            R.layout.item_song
+        val layout = when (viewType) {
+            ITEM_SECTION -> R.layout.item_section
+            ITEM_ALBUM -> R.layout.item_album
+            else -> R.layout.item_song
         }
 
         return createViewHolder(layout, parent)
@@ -48,10 +51,10 @@ class AlbumsAdapter(activity: SimpleActivity, val items: ArrayList<ListItem>, re
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = items.getOrNull(position) ?: return
         holder.bindView(item, true, true) { itemView, layoutPosition ->
-            if (item is Album) {
-                setupAlbum(itemView, item)
-            } else {
-                setupTrack(itemView, item as Song)
+            when (item) {
+                is AlbumSection -> setupSection(itemView, item)
+                is Album -> setupAlbum(itemView, item)
+                else -> setupTrack(itemView, item as Song)
             }
         }
         bindViewHolder(holder)
@@ -60,11 +63,10 @@ class AlbumsAdapter(activity: SimpleActivity, val items: ArrayList<ListItem>, re
     override fun getItemCount() = items.size
 
     override fun getItemViewType(position: Int): Int {
-        val item = items[position]
-        return if (item is Album) {
-            ITEM_ALBUM
-        } else {
-            ITEM_TRACK
+        return when (items[position]) {
+            is AlbumSection -> ITEM_SECTION
+            is Album -> ITEM_ALBUM
+            else -> ITEM_TRACK
         }
     }
 
@@ -114,6 +116,13 @@ class AlbumsAdapter(activity: SimpleActivity, val items: ArrayList<ListItem>, re
             song_id.beGone()
             song_duration.text = track.duration.getFormattedDuration()
             song_duration.setTextColor(textColor)
+        }
+    }
+
+    private fun setupSection(view: View, section: AlbumSection) {
+        view.apply {
+            item_section.text = section.title
+            item_section.setTextColor(textColor)
         }
     }
 }
