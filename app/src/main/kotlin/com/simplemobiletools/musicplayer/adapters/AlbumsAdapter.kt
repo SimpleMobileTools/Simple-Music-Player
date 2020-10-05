@@ -1,7 +1,5 @@
 package com.simplemobiletools.musicplayer.adapters
 
-import android.content.ContentUris
-import android.net.Uri
 import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
@@ -94,14 +92,11 @@ class AlbumsAdapter(activity: SimpleActivity, val items: ArrayList<ListItem>, re
             album_title.text = album.title
             album_title.setTextColor(textColor)
 
-            val artworkUri = Uri.parse("content://media/external/audio/albumart")
-            val albumArtUri = ContentUris.withAppendedId(artworkUri, album.id.toLong())
-
             val options = RequestOptions()
                 .transform(CenterCrop(), RoundedCorners(16))
 
             Glide.with(activity)
-                .load(albumArtUri)
+                .load(album.coverArt)
                 .apply(options)
                 .into(findViewById(R.id.album_image))
         }

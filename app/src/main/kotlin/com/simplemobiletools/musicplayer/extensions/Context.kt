@@ -1,8 +1,10 @@
 package com.simplemobiletools.musicplayer.extensions
 
 import android.annotation.SuppressLint
+import android.content.ContentUris
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.provider.MediaStore.Audio
 import android.util.TypedValue
 import com.simplemobiletools.commons.extensions.getIntValue
@@ -127,6 +129,7 @@ fun Context.getAlbums(artist: Artist, callback: (artists: ArrayList<Album>) -> U
 
 fun Context.getAlbumsSync(artist: Artist): ArrayList<Album> {
     val albums = ArrayList<Album>()
+    val artworkUri = Uri.parse("content://media/external/audio/albumart")
     val uri = Audio.Albums.EXTERNAL_CONTENT_URI
     val projection = arrayOf(
         Audio.Albums._ID,
@@ -149,7 +152,8 @@ fun Context.getAlbumsSync(artist: Artist): ArrayList<Album> {
                     val id = cursor.getIntValue(Audio.Albums._ID)
                     val artistName = cursor.getStringValue(Audio.Albums.ARTIST)
                     val title = cursor.getStringValue(Audio.Albums.ALBUM)
-                    val album = Album(id, artistName, title)
+                    val coverArt = ContentUris.withAppendedId(artworkUri, id.toLong())
+                    val album = Album(id, artistName, title, coverArt.toString())
                     albums.add(album)
                 } while (cursor.moveToNext())
             }

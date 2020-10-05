@@ -41,8 +41,8 @@ class AlbumsActivity : SimpleActivity() {
             var tracksSectionLabel = resources.getQuantityString(R.plurals.tracks, tracksToAdd.size, tracksToAdd.size)
             tracksSectionLabel += " • ${trackFullDuration.getFormattedDuration(true)}"
             listItems.add(AlbumSection(tracksSectionLabel))
-
             listItems.addAll(tracksToAdd)
+
             runOnUiThread {
                 AlbumsAdapter(this, listItems, albums_list) {
                     if (it is Album) {
