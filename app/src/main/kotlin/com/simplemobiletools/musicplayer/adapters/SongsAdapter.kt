@@ -55,7 +55,10 @@ class SongsAdapter(activity: SimpleActivity, val songs: ArrayList<Song>, recycle
         view.apply {
             song_frame?.isSelected = selectedKeys.contains(song.id)
             song_title.text = song.title
-            song_title.setTextColor(textColor)
+
+            arrayOf(song_id, song_title, song_duration).forEach {
+                it.setTextColor(textColor)
+            }
 
             song_id.text = song.trackId.toString()
             song_duration.text = song.duration.getFormattedDuration()
