@@ -116,6 +116,7 @@
 
         <activity
             android:name=".activities.TrackActivity"
+            android:theme="@style/TranslucentTheme"
             android:parentActivityName=".activities.MainActivity" />
 
         <service

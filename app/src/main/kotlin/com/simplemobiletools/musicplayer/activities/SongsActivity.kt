@@ -2,6 +2,7 @@ package com.simplemobiletools.musicplayer.activities
 
 import android.content.ContentUris
 import android.os.Bundle
+import android.view.Menu
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.simplemobiletools.musicplayer.R
@@ -39,5 +40,10 @@ class SongsActivity : SimpleActivity() {
                 }
             }
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        updateMenuItemColors(menu)
+        return super.onCreateOptionsMenu(menu)
     }
 }
