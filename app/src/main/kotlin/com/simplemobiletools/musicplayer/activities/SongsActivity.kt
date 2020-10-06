@@ -1,6 +1,7 @@
 package com.simplemobiletools.musicplayer.activities
 
 import android.content.ContentUris
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import com.google.gson.Gson
@@ -9,6 +10,7 @@ import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.adapters.SongsAdapter
 import com.simplemobiletools.musicplayer.extensions.getSongs
 import com.simplemobiletools.musicplayer.helpers.ALBUM
+import com.simplemobiletools.musicplayer.helpers.TRACK
 import com.simplemobiletools.musicplayer.helpers.artworkUri
 import com.simplemobiletools.musicplayer.models.Album
 import com.simplemobiletools.musicplayer.models.AlbumHeader
@@ -34,7 +36,10 @@ class SongsActivity : SimpleActivity() {
 
             runOnUiThread {
                 SongsAdapter(this, items, songs_list) {
-
+                    Intent(this, TrackActivity::class.java).apply {
+                        putExtra(TRACK, Gson().toJson(it))
+                        startActivity(this)
+                    }
                 }.apply {
                     songs_list.adapter = this
                 }

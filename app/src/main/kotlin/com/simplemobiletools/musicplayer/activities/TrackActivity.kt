@@ -27,8 +27,7 @@ class TrackActivity : SimpleActivity() {
         }
 
         val trackType = object : TypeToken<Song>() {}.type
-        val song = Gson().fromJson<Song>(intent.getStringExtra(TRACK), trackType)
-        title = song.title
+        val track = Gson().fromJson<Song>(intent.getStringExtra(TRACK), trackType)
     }
 
     override fun onResume() {
