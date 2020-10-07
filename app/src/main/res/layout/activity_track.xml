@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_track_holder"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:ignore="HardcodedText">
 
     <ImageView
         android:id="@+id/activity_track_image"
@@ -33,11 +34,11 @@
         android:maxLines="1"
         android:paddingStart="@dimen/normal_margin"
         android:paddingEnd="@dimen/medium_margin"
+        android:text="00:00"
         app:layout_constraintBottom_toBottomOf="@+id/activity_track_progressbar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/activity_track_image"
-        app:layout_constraintTop_toTopOf="@+id/activity_track_progressbar"
-        tools:text="00:00" />
+        app:layout_constraintTop_toTopOf="@+id/activity_track_progressbar" />
 
     <com.simplemobiletools.commons.views.MySeekBar
         android:id="@+id/activity_track_progressbar"
@@ -61,11 +62,11 @@
         android:maxLines="1"
         android:paddingStart="@dimen/medium_margin"
         android:paddingEnd="@dimen/normal_margin"
+        android:text="00:00"
         app:layout_constraintBottom_toBottomOf="@+id/activity_track_progressbar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/activity_track_image"
-        app:layout_constraintTop_toTopOf="@+id/activity_track_progressbar"
-        tools:text="00:00" />
+        app:layout_constraintTop_toTopOf="@+id/activity_track_progressbar" />
 
     <com.simplemobiletools.commons.views.MyTextView
         android:id="@+id/activity_track_title"
