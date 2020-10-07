@@ -12,7 +12,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.simplemobiletools.commons.extensions.getColoredDrawableWithColor
+import com.simplemobiletools.commons.extensions.applyColorFilter
 import com.simplemobiletools.commons.extensions.portrait
 import com.simplemobiletools.commons.extensions.realScreenSize
 import com.simplemobiletools.commons.extensions.statusBarHeight
@@ -51,9 +51,12 @@ class TrackActivity : SimpleActivity() {
     }
 
     private fun setupTopArt(coverArt: String) {
-        val placeholder = getResizedDrawable(resources.getColoredDrawableWithColor(R.drawable.ic_headset, config.textColor))
+        val drawable = resources.getDrawable(R.drawable.ic_headset)
+        val placeholder = getResizedDrawable(drawable)
+        placeholder.applyColorFilter(config.textColor)
+
         val wantedWidth = realScreenSize.x
-        val wantedHeight = if (portrait) realScreenSize.x else resources.getDimension(R.dimen.top_art_height).toInt()
+        val wantedHeight = if (portrait) realScreenSize.x else resources.getDimension(R.dimen.top_art_height_landscape).toInt()
 
         val options = RequestOptions()
             .error(placeholder)
@@ -67,7 +70,8 @@ class TrackActivity : SimpleActivity() {
     }
 
     private fun getResizedDrawable(drawable: Drawable): Drawable {
-        val size = resources.getDimension(R.dimen.top_art_height).toInt()
+        val dimension = if (portrait) R.dimen.top_art_height else R.dimen.top_art_height_landscape
+        val size = resources.getDimension(dimension).toInt()
         val bitmap = (drawable as BitmapDrawable).bitmap
         val bitmapResized = Bitmap.createScaledBitmap(bitmap, size, size, false)
         return BitmapDrawable(resources, bitmapResized)
