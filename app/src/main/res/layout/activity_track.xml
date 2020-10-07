@@ -25,6 +25,49 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.simplemobiletools.commons.views.MyTextView
+        android:id="@+id/activity_track_progress_current"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:gravity="center_vertical"
+        android:maxLines="1"
+        android:paddingStart="@dimen/normal_margin"
+        android:paddingEnd="@dimen/medium_margin"
+        app:layout_constraintBottom_toBottomOf="@+id/activity_track_progressbar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/activity_track_image"
+        app:layout_constraintTop_toTopOf="@+id/activity_track_progressbar"
+        tools:text="00:00" />
+
+    <com.simplemobiletools.commons.views.MySeekBar
+        android:id="@+id/activity_track_progressbar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/activity_margin"
+        android:clickable="true"
+        android:focusable="true"
+        android:paddingTop="@dimen/normal_margin"
+        android:paddingBottom="@dimen/medium_margin"
+        app:layout_constraintEnd_toStartOf="@+id/activity_track_progress_max"
+        app:layout_constraintStart_toEndOf="@+id/activity_track_progress_current"
+        app:layout_constraintTop_toBottomOf="@+id/activity_track_image" />
+
+    <com.simplemobiletools.commons.views.MyTextView
+        android:id="@+id/activity_track_progress_max"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:gravity="center_vertical"
+        android:maxLines="1"
+        android:paddingStart="@dimen/medium_margin"
+        android:paddingEnd="@dimen/normal_margin"
+        app:layout_constraintBottom_toBottomOf="@+id/activity_track_progressbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/activity_track_image"
+        app:layout_constraintTop_toTopOf="@+id/activity_track_progressbar"
+        tools:text="00:00" />
+
+    <com.simplemobiletools.commons.views.MyTextView
         android:id="@+id/activity_track_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -36,17 +79,17 @@
         android:textSize="@dimen/extra_big_text_size"
         app:layout_constraintBottom_toTopOf="@+id/activity_track_artist"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/activity_track_image"
+        app:layout_constraintTop_toBottomOf="@+id/activity_track_progressbar"
         tools:text="Track title" />
 
     <com.simplemobiletools.commons.views.MyTextView
         android:id="@+id/activity_track_artist"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:alpha="0.8"
         android:ellipsize="end"
         android:gravity="center"
         android:maxLines="2"
-        android:alpha="0.8"
         android:paddingStart="@dimen/activity_margin"
         android:paddingEnd="@dimen/activity_margin"
         android:textSize="@dimen/actionbar_text_size"
