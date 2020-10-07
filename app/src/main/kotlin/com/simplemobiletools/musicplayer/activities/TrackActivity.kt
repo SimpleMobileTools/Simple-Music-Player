@@ -1,12 +1,20 @@
 package com.simplemobiletools.musicplayer.activities
 
+import android.graphics.Bitmap
 import android.graphics.Color
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.Menu
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.simplemobiletools.commons.extensions.getColoredDrawableWithColor
+import com.simplemobiletools.commons.extensions.portrait
+import com.simplemobiletools.commons.extensions.realScreenSize
 import com.simplemobiletools.commons.extensions.statusBarHeight
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.extensions.config
@@ -28,6 +36,7 @@ class TrackActivity : SimpleActivity() {
 
         val trackType = object : TypeToken<Song>() {}.type
         val track = Gson().fromJson<Song>(intent.getStringExtra(TRACK), trackType)
+        setupTopArt(track.coverArt)
     }
 
     override fun onResume() {
@@ -39,5 +48,28 @@ class TrackActivity : SimpleActivity() {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         updateMenuItemColors(menu)
         return super.onCreateOptionsMenu(menu)
+    }
+
+    private fun setupTopArt(coverArt: String) {
+        val placeholder = getResizedDrawable(resources.getColoredDrawableWithColor(R.drawable.ic_headset, config.textColor))
+        val wantedWidth = realScreenSize.x
+        val wantedHeight = if (portrait) realScreenSize.x else resources.getDimension(R.dimen.top_art_height).toInt()
+
+        val options = RequestOptions()
+            .error(placeholder)
+            .centerCrop()
+
+        Glide.with(this)
+            .load(coverArt)
+            .apply(options)
+            .override(wantedWidth, wantedHeight)
+            .into(findViewById(R.id.activity_track_image))
+    }
+
+    private fun getResizedDrawable(drawable: Drawable): Drawable {
+        val size = resources.getDimension(R.dimen.top_art_height).toInt()
+        val bitmap = (drawable as BitmapDrawable).bitmap
+        val bitmapResized = Bitmap.createScaledBitmap(bitmap, size, size, false)
+        return BitmapDrawable(resources, bitmapResized)
     }
 }
