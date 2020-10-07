@@ -10,18 +10,22 @@ import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.extensions.playlistDAO
 import com.simplemobiletools.musicplayer.helpers.ALL_SONGS_PLAYLIST_ID
 import com.simplemobiletools.musicplayer.interfaces.PlaylistsDao
+import com.simplemobiletools.musicplayer.interfaces.QueueItemsDao
 import com.simplemobiletools.musicplayer.interfaces.SongsDao
 import com.simplemobiletools.musicplayer.models.Playlist
+import com.simplemobiletools.musicplayer.models.QueueItem
 import com.simplemobiletools.musicplayer.models.Song
 import com.simplemobiletools.musicplayer.objects.MyExecutor
 import java.util.concurrent.Executors
 
-@Database(entities = [(Song::class), (Playlist::class)], version = 3)
+@Database(entities = [(Song::class), (Playlist::class), QueueItem::class], version = 4)
 abstract class SongsDatabase : RoomDatabase() {
 
     abstract fun SongsDao(): SongsDao
 
     abstract fun PlaylistsDao(): PlaylistsDao
+
+    abstract fun QueueItemsDao(): QueueItemsDao
 
     companion object {
         private var db: SongsDatabase? = null
@@ -42,6 +46,7 @@ abstract class SongsDatabase : RoomDatabase() {
                             })
                             .addMigrations(MIGRATION_1_2)
                             .addMigrations(MIGRATION_2_3)
+                            .addMigrations(MIGRATION_3_4)
                             .build()
                     }
                 }
@@ -81,6 +86,14 @@ abstract class SongsDatabase : RoomDatabase() {
             override fun migrate(database: SupportSQLiteDatabase) {
                 database.execSQL("ALTER TABLE songs ADD COLUMN track_id INTEGER NOT NULL DEFAULT 0")
                 database.execSQL("ALTER TABLE songs ADD COLUMN cover_art TEXT default '' NOT NULL")
+            }
+        }
+
+        private val MIGRATION_3_4 = object : Migration(3, 4) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL("CREATE TABLE `queue_items` (`id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, `track_id` INTEGER NOT NULL, " +
+                        "`track_order` INTEGER NOT NULL, `is_playing` INTEGER NOT NULL, `last_position` INTEGER NOT NULL, `was_played` INTEGER NOT NULL)")
+                database.execSQL("CREATE UNIQUE INDEX `index_queue_items_id` ON `queue_items` (`id`)")
             }
         }
     }

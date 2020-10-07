@@ -17,6 +17,7 @@ import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.databases.SongsDatabase
 import com.simplemobiletools.musicplayer.helpers.*
 import com.simplemobiletools.musicplayer.interfaces.PlaylistsDao
+import com.simplemobiletools.musicplayer.interfaces.QueueItemsDao
 import com.simplemobiletools.musicplayer.interfaces.SongsDao
 import com.simplemobiletools.musicplayer.models.Album
 import com.simplemobiletools.musicplayer.models.Artist
@@ -45,6 +46,8 @@ val Context.config: Config get() = Config.newInstance(applicationContext)
 val Context.playlistDAO: PlaylistsDao get() = getSongsDB().PlaylistsDao()
 
 val Context.songsDAO: SongsDao get() = getSongsDB().SongsDao()
+
+val Context.queueDAO: QueueItemsDao get() = getSongsDB().QueueItemsDao()
 
 fun Context.playlistChanged(newID: Int, callSetup: Boolean = true) {
     config.currentPlaylist = newID
