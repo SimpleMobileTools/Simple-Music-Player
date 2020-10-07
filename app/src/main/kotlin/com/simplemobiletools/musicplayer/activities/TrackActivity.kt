@@ -82,11 +82,11 @@ class TrackActivity : SimpleActivity() {
 
     private fun setupTopArt(coverArt: String) {
         val drawable = resources.getDrawable(R.drawable.ic_headset)
-        val placeholder = getResizedDrawable(drawable)
+        val wantedHeight = resources.getDimension(R.dimen.top_art_height).toInt()
+        val placeholder = getResizedDrawable(drawable, wantedHeight)
         placeholder.applyColorFilter(config.textColor)
 
         val wantedWidth = realScreenSize.x
-        val wantedHeight = if (portrait) realScreenSize.x else resources.getDimension(R.dimen.top_art_height_landscape).toInt()
 
         val options = RequestOptions()
             .error(placeholder)
@@ -99,11 +99,9 @@ class TrackActivity : SimpleActivity() {
             .into(findViewById(R.id.activity_track_image))
     }
 
-    private fun getResizedDrawable(drawable: Drawable): Drawable {
-        val dimension = if (portrait) R.dimen.top_art_height else R.dimen.top_art_height_landscape
-        val size = resources.getDimension(dimension).toInt()
+    private fun getResizedDrawable(drawable: Drawable, wantedHeight: Int): Drawable {
         val bitmap = (drawable as BitmapDrawable).bitmap
-        val bitmapResized = Bitmap.createScaledBitmap(bitmap, size, size, false)
+        val bitmapResized = Bitmap.createScaledBitmap(bitmap, wantedHeight, wantedHeight, false)
         return BitmapDrawable(resources, bitmapResized)
     }
 
