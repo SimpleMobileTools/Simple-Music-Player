@@ -19,10 +19,7 @@ import com.simplemobiletools.musicplayer.helpers.*
 import com.simplemobiletools.musicplayer.interfaces.PlaylistsDao
 import com.simplemobiletools.musicplayer.interfaces.QueueItemsDao
 import com.simplemobiletools.musicplayer.interfaces.SongsDao
-import com.simplemobiletools.musicplayer.models.Album
-import com.simplemobiletools.musicplayer.models.Artist
-import com.simplemobiletools.musicplayer.models.Playlist
-import com.simplemobiletools.musicplayer.models.Song
+import com.simplemobiletools.musicplayer.models.*
 import com.simplemobiletools.musicplayer.services.MusicService
 import java.io.File
 
@@ -213,4 +210,19 @@ fun Context.getSongsSync(albumId: Int): ArrayList<Song> {
     }
 
     return songs
+}
+
+fun Context.resetQueueItems(newTracks: ArrayList<Song>, callback: () -> Unit) {
+    ensureBackgroundThread {
+        queueDAO.deleteAllItems()
+        val itemsToInsert = ArrayList<QueueItem>()
+        var order = 0
+        newTracks.forEach {
+            val queueItem = QueueItem(0, it.id, order++, false, 0, false)
+            itemsToInsert.add(queueItem)
+        }
+
+        queueDAO.insert(itemsToInsert)
+        callback()
+    }
 }

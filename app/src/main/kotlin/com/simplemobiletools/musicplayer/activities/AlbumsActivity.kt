@@ -10,6 +10,7 @@ import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.adapters.AlbumsAdapter
 import com.simplemobiletools.musicplayer.extensions.getAlbums
 import com.simplemobiletools.musicplayer.extensions.getSongsSync
+import com.simplemobiletools.musicplayer.extensions.resetQueueItems
 import com.simplemobiletools.musicplayer.helpers.ALBUM
 import com.simplemobiletools.musicplayer.helpers.ARTIST
 import com.simplemobiletools.musicplayer.helpers.TRACK
@@ -53,9 +54,11 @@ class AlbumsActivity : SimpleActivity() {
                             startActivity(this)
                         }
                     } else {
-                        Intent(this, TrackActivity::class.java).apply {
-                            putExtra(TRACK, Gson().toJson(it))
-                            startActivity(this)
+                        resetQueueItems(tracksToAdd) {
+                            Intent(this, TrackActivity::class.java).apply {
+                                putExtra(TRACK, Gson().toJson(it))
+                                startActivity(this)
+                            }
                         }
                     }
                 }.apply {
