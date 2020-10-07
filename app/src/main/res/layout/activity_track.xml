@@ -93,10 +93,80 @@
         android:paddingStart="@dimen/activity_margin"
         android:paddingEnd="@dimen/activity_margin"
         android:textSize="@dimen/actionbar_text_size"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/activity_track_toggle_shuffle"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/activity_track_title"
         tools:text="Track artist" />
+
+    <ImageView
+        android:id="@+id/activity_track_toggle_shuffle"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/normal_icon_size"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/enable_shuffle"
+        android:paddingTop="@dimen/small_margin"
+        android:paddingBottom="@dimen/small_margin"
+        android:src="@drawable/ic_shuffle_vector"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/activity_track_previous"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/activity_track_artist" />
+
+    <ImageView
+        android:id="@+id/activity_track_previous"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/normal_icon_size"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/previous"
+        android:paddingTop="@dimen/medium_margin"
+        android:paddingBottom="@dimen/medium_margin"
+        android:src="@drawable/ic_previous_vector"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/activity_track_play_pause"
+        app:layout_constraintStart_toEndOf="@+id/activity_track_toggle_shuffle"
+        app:layout_constraintTop_toBottomOf="@+id/activity_track_artist" />
+
+    <ImageView
+        android:id="@+id/activity_track_play_pause"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/normal_icon_size"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/playpause"
+        android:paddingTop="@dimen/medium_margin"
+        android:paddingBottom="@dimen/medium_margin"
+        android:src="@drawable/ic_play_vector"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/activity_track_next"
+        app:layout_constraintStart_toEndOf="@+id/activity_track_previous"
+        app:layout_constraintTop_toBottomOf="@+id/activity_track_artist" />
+
+    <ImageView
+        android:id="@+id/activity_track_next"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/normal_icon_size"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/next"
+        android:paddingTop="@dimen/medium_margin"
+        android:paddingBottom="@dimen/medium_margin"
+        android:src="@drawable/ic_next_vector"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/activity_track_repeat"
+        app:layout_constraintStart_toEndOf="@+id/activity_track_play_pause"
+        app:layout_constraintTop_toBottomOf="@+id/activity_track_artist" />
+
+    <ImageView
+        android:id="@+id/activity_track_repeat"
+        style="@style/MyTransparentButton"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/normal_icon_size"
+        android:contentDescription="@string/enable_song_repetition"
+        android:paddingTop="@dimen/small_margin"
+        android:paddingBottom="@dimen/small_margin"
+        android:src="@drawable/ic_repeat_vector"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/activity_track_next"
+        app:layout_constraintTop_toBottomOf="@+id/activity_track_artist" />
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/activity_track_appbar"
