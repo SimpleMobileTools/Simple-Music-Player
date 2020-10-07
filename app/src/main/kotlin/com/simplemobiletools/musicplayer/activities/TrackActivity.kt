@@ -20,7 +20,6 @@ import com.simplemobiletools.musicplayer.helpers.*
 import com.simplemobiletools.musicplayer.models.Events
 import com.simplemobiletools.musicplayer.models.Song
 import kotlinx.android.synthetic.main.activity_track.*
-import kotlinx.android.synthetic.main.item_navigation.view.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -75,9 +74,13 @@ class TrackActivity : SimpleActivity() {
     }
 
     private fun setupButtons() {
+        activity_track_toggle_shuffle.setOnClickListener { toggleShuffle() }
         activity_track_previous.setOnClickListener { sendIntent(PREVIOUS) }
         activity_track_play_pause.setOnClickListener { sendIntent(PLAYPAUSE) }
         activity_track_next.setOnClickListener { sendIntent(NEXT) }
+        activity_track_repeat.setOnClickListener { toggleSongRepetition() }
+        setupShuffleButton()
+        setupSongRepetitionButton()
     }
 
     private fun setupTopArt(coverArt: String) {
@@ -97,6 +100,38 @@ class TrackActivity : SimpleActivity() {
             .apply(options)
             .override(wantedWidth, wantedHeight)
             .into(findViewById(R.id.activity_track_image))
+    }
+
+    private fun toggleShuffle() {
+        val isShuffleEnabled = !config.isShuffleEnabled
+        config.isShuffleEnabled = isShuffleEnabled
+        toast(if (isShuffleEnabled) R.string.shuffle_enabled else R.string.shuffle_disabled)
+        setupShuffleButton()
+    }
+
+    private fun setupShuffleButton() {
+        val isShuffleEnabled = config.isShuffleEnabled
+        activity_track_toggle_shuffle.apply {
+            applyColorFilter(if (isShuffleEnabled) getAdjustedPrimaryColor() else config.textColor)
+            alpha = if (isShuffleEnabled) 1f else LOWER_ALPHA
+            contentDescription = getString(if (isShuffleEnabled) R.string.disable_shuffle else R.string.enable_shuffle)
+        }
+    }
+
+    private fun toggleSongRepetition() {
+        val repeatSong = !config.repeatSong
+        config.repeatSong = repeatSong
+        toast(if (repeatSong) R.string.song_repetition_enabled else R.string.song_repetition_disabled)
+        setupSongRepetitionButton()
+    }
+
+    private fun setupSongRepetitionButton() {
+        val repeatSong = config.repeatSong
+        activity_track_repeat.apply {
+            applyColorFilter(if (repeatSong) getAdjustedPrimaryColor() else config.textColor)
+            alpha = if (repeatSong) 1f else LOWER_ALPHA
+            contentDescription = getString(if (repeatSong) R.string.disable_song_repetition else R.string.enable_song_repetition)
+        }
     }
 
     private fun getResizedDrawable(drawable: Drawable, wantedHeight: Int): Drawable {
