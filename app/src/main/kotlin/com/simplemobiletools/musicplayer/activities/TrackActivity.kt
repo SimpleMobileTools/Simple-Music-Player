@@ -1,5 +1,6 @@
 package com.simplemobiletools.musicplayer.activities
 
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
@@ -7,6 +8,7 @@ import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.Menu
 import android.view.View
+import android.widget.SeekBar
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -19,6 +21,7 @@ import com.simplemobiletools.musicplayer.extensions.sendIntent
 import com.simplemobiletools.musicplayer.helpers.*
 import com.simplemobiletools.musicplayer.models.Events
 import com.simplemobiletools.musicplayer.models.Song
+import com.simplemobiletools.musicplayer.services.MusicService
 import kotlinx.android.synthetic.main.activity_track.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -81,6 +84,7 @@ class TrackActivity : SimpleActivity() {
         activity_track_repeat.setOnClickListener { toggleSongRepetition() }
         setupShuffleButton()
         setupSongRepetitionButton()
+        setupSeekbar()
     }
 
     private fun setupTopArt(coverArt: String) {
@@ -134,6 +138,25 @@ class TrackActivity : SimpleActivity() {
         }
     }
 
+    private fun setupSeekbar() {
+        activity_track_progressbar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
+                val formattedProgress = progress.getFormattedDuration()
+                activity_track_progress_current.text = formattedProgress
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar) {}
+
+            override fun onStopTrackingTouch(seekBar: SeekBar) {
+                Intent(this@TrackActivity, MusicService::class.java).apply {
+                    putExtra(PROGRESS, seekBar.progress)
+                    action = SET_PROGRESS
+                    startService(this)
+                }
+            }
+        })
+    }
+
     private fun getResizedDrawable(drawable: Drawable, wantedHeight: Int): Drawable {
         val bitmap = (drawable as BitmapDrawable).bitmap
         val bitmapResized = Bitmap.createScaledBitmap(bitmap, wantedHeight, wantedHeight, false)
@@ -142,7 +165,6 @@ class TrackActivity : SimpleActivity() {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun progressUpdated(event: Events.ProgressUpdated) {
-        activity_track_progress_current.text = event.progress.getFormattedDuration()
         activity_track_progressbar.progress = event.progress
     }
 
