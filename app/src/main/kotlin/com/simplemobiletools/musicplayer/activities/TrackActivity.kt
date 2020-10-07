@@ -15,10 +15,12 @@ import com.google.gson.reflect.TypeToken
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.extensions.config
-import com.simplemobiletools.musicplayer.helpers.TRACK
+import com.simplemobiletools.musicplayer.extensions.sendIntent
+import com.simplemobiletools.musicplayer.helpers.*
 import com.simplemobiletools.musicplayer.models.Events
 import com.simplemobiletools.musicplayer.models.Song
 import kotlinx.android.synthetic.main.activity_track.*
+import kotlinx.android.synthetic.main.item_navigation.view.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -41,13 +43,9 @@ class TrackActivity : SimpleActivity() {
 
         val trackType = object : TypeToken<Song>() {}.type
         val track = Gson().fromJson<Song>(intent.getStringExtra(TRACK), trackType)
-        setupTopArt(track.coverArt)
-
-        activity_track_title.text = track.title
-        activity_track_artist.text = track.artist
-
-        activity_track_progressbar.max = track.duration
-        activity_track_progress_max.text = track.duration.getFormattedDuration()
+        setupTrackInfo(track)
+        setupButtons()
+        sendIntent(INIT)
     }
 
     override fun onResume() {
@@ -65,6 +63,21 @@ class TrackActivity : SimpleActivity() {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         updateMenuItemColors(menu)
         return super.onCreateOptionsMenu(menu)
+    }
+
+    private fun setupTrackInfo(track: Song) {
+        setupTopArt(track.coverArt)
+        activity_track_title.text = track.title
+        activity_track_artist.text = track.artist
+
+        activity_track_progressbar.max = track.duration
+        activity_track_progress_max.text = track.duration.getFormattedDuration()
+    }
+
+    private fun setupButtons() {
+        activity_track_previous.setOnClickListener { sendIntent(PREVIOUS) }
+        activity_track_play_pause.setOnClickListener { sendIntent(PLAYPAUSE) }
+        activity_track_next.setOnClickListener { sendIntent(NEXT) }
     }
 
     private fun setupTopArt(coverArt: String) {
@@ -98,5 +111,19 @@ class TrackActivity : SimpleActivity() {
     fun progressUpdated(event: Events.ProgressUpdated) {
         activity_track_progress_current.text = event.progress.getFormattedDuration()
         activity_track_progressbar.progress = event.progress
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun songStateChanged(event: Events.SongStateChanged) {
+        val drawableId = if (event.isPlaying) R.drawable.ic_pause_vector else R.drawable.ic_play_vector
+        activity_track_play_pause.setImageDrawable(resources.getDrawable(drawableId))
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun songChangedEvent(event: Events.SongChanged) {
+        val song = event.song
+        if (song != null) {
+            setupTrackInfo(event.song)
+        }
     }
 }
