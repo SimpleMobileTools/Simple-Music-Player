@@ -12,10 +12,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.simplemobiletools.commons.extensions.applyColorFilter
-import com.simplemobiletools.commons.extensions.portrait
-import com.simplemobiletools.commons.extensions.realScreenSize
-import com.simplemobiletools.commons.extensions.statusBarHeight
+import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.helpers.TRACK
@@ -37,12 +34,16 @@ class TrackActivity : SimpleActivity() {
         val trackType = object : TypeToken<Song>() {}.type
         val track = Gson().fromJson<Song>(intent.getStringExtra(TRACK), trackType)
         setupTopArt(track.coverArt)
+
+        activity_track_title.text = track.title
+        activity_track_artist.text = track.artist
     }
 
     override fun onResume() {
         super.onResume()
         window.statusBarColor = Color.TRANSPARENT
         activity_track_holder.setBackgroundColor(config.backgroundColor)
+        updateTextColors(activity_track_holder)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

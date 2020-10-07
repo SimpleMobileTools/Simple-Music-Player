@@ -179,6 +179,8 @@ fun Context.getSongsSync(albumId: Int): ArrayList<Song> {
         Audio.Media._ID,
         Audio.Media.DURATION,
         Audio.Media.TITLE,
+        Audio.Media.ARTIST,
+        Audio.Media.ALBUM,
         Audio.Media.TRACK
     )
 
@@ -195,9 +197,10 @@ fun Context.getSongsSync(albumId: Int): ArrayList<Song> {
                     val duration = cursor.getIntValue(Audio.Media.DURATION) / 1000
                     val trackId = cursor.getIntValue(Audio.Media.TRACK) % 1000
                     val path = ""
-                    val artist = ""
+                    val artist = cursor.getStringValue(Audio.Media.ARTIST)
+                    val album = cursor.getStringValue(Audio.Media.ALBUM)
                     val coverArt = ContentUris.withAppendedId(artworkUri, albumId.toLong()).toString()
-                    val song = Song(id, title, artist, path, duration, "", coverArt, 0, trackId)
+                    val song = Song(id, title, artist, path, duration, album, coverArt, 0, trackId)
                     songs.add(song)
                 } while (cursor.moveToNext())
             }
