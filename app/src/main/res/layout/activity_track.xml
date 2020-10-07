@@ -49,7 +49,7 @@
         android:alpha="0.8"
         android:paddingStart="@dimen/activity_margin"
         android:paddingEnd="@dimen/activity_margin"
-        android:textSize="@dimen/bigger_text_size"
+        android:textSize="@dimen/actionbar_text_size"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/activity_track_title"
