@@ -34,7 +34,7 @@ class AlbumsActivity : SimpleActivity() {
             listItems.addAll(albums)
 
             var trackFullDuration = 0
-            val tracksToAdd = ArrayList<Song>()
+            val tracksToAdd = ArrayList<Track>()
             albums.forEach {
                 val tracks = getSongsSync(it.id)
                 trackFullDuration += tracks.sumBy { it.duration }

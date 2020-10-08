@@ -15,7 +15,7 @@ import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
 import com.simplemobiletools.musicplayer.models.AlbumHeader
 import com.simplemobiletools.musicplayer.models.ListItem
-import com.simplemobiletools.musicplayer.models.Song
+import com.simplemobiletools.musicplayer.models.Track
 import kotlinx.android.synthetic.main.item_album_header.view.*
 import kotlinx.android.synthetic.main.item_song.view.*
 import java.util.*
@@ -49,7 +49,7 @@ class SongsAdapter(activity: SimpleActivity, val items: ArrayList<ListItem>, rec
         holder.bindView(item, allowClicks, allowClicks) { itemView, layoutPosition ->
             when (item) {
                 is AlbumHeader -> setupHeader(itemView, item)
-                else -> setupSong(itemView, item as Song)
+                else -> setupSong(itemView, item as Track)
             }
         }
         bindViewHolder(holder)
@@ -82,7 +82,7 @@ class SongsAdapter(activity: SimpleActivity, val items: ArrayList<ListItem>, rec
 
     private fun getItemWithKey(key: Int) = items.firstOrNull { it.hashCode() == key }
 
-    private fun setupSong(view: View, song: Song) {
+    private fun setupSong(view: View, song: Track) {
         view.apply {
             song_frame?.isSelected = selectedKeys.contains(song.hashCode())
             song_title.text = song.title

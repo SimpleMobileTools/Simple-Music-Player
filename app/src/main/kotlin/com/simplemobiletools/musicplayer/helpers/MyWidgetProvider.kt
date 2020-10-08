@@ -15,7 +15,7 @@ import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.SplashActivity
 import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.extensions.sendIntent
-import com.simplemobiletools.musicplayer.models.Song
+import com.simplemobiletools.musicplayer.models.Track
 import com.simplemobiletools.musicplayer.services.MusicService
 
 class MyWidgetProvider : AppWidgetProvider() {
@@ -68,7 +68,7 @@ class MyWidgetProvider : AppWidgetProvider() {
     }
 
     private fun songChanged(context: Context, intent: Intent) {
-        val song = intent.getSerializableExtra(NEW_SONG) as? Song ?: return
+        val song = intent.getSerializableExtra(NEW_SONG) as? Track ?: return
         val appWidgetManager = AppWidgetManager.getInstance(context)
         appWidgetManager.getAppWidgetIds(getComponentName(context)).forEach {
             val views = getRemoteViews(appWidgetManager, context, it)
@@ -77,7 +77,7 @@ class MyWidgetProvider : AppWidgetProvider() {
         }
     }
 
-    private fun updateSongInfo(views: RemoteViews, currSong: Song?) {
+    private fun updateSongInfo(views: RemoteViews, currSong: Track?) {
         views.setTextViewText(R.id.song_info_title, currSong?.title ?: "")
         views.setTextViewText(R.id.song_info_artist, currSong?.artist ?: "")
     }

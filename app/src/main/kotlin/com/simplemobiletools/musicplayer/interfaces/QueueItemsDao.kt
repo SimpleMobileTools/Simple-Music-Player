@@ -9,10 +9,10 @@ import com.simplemobiletools.musicplayer.models.QueueItem
 @Dao
 interface QueueItemsDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(queueItems: List<QueueItem>)
+    fun insertAll(queueItems: List<QueueItem>)
 
     @Query("SELECT * FROM queue_items")
-    fun getQueueItems(): List<QueueItem>
+    fun getAll(): List<QueueItem>
 
     @Query("DELETE FROM queue_items")
     fun deleteAllItems()

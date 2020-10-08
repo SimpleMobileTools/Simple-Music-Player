@@ -20,7 +20,7 @@ import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.extensions.sendIntent
 import com.simplemobiletools.musicplayer.helpers.*
 import com.simplemobiletools.musicplayer.models.Events
-import com.simplemobiletools.musicplayer.models.Song
+import com.simplemobiletools.musicplayer.models.Track
 import com.simplemobiletools.musicplayer.services.MusicService
 import kotlinx.android.synthetic.main.activity_track.*
 import org.greenrobot.eventbus.EventBus
@@ -43,8 +43,8 @@ class TrackActivity : SimpleActivity() {
             finish()
         }
 
-        val trackType = object : TypeToken<Song>() {}.type
-        val track = Gson().fromJson<Song>(intent.getStringExtra(TRACK), trackType)
+        val trackType = object : TypeToken<Track>() {}.type
+        val track = Gson().fromJson<Track>(intent.getStringExtra(TRACK), trackType)
         setupTrackInfo(track)
         setupButtons()
         sendIntent(INIT)
@@ -67,7 +67,7 @@ class TrackActivity : SimpleActivity() {
         return super.onCreateOptionsMenu(menu)
     }
 
-    private fun setupTrackInfo(track: Song) {
+    private fun setupTrackInfo(track: Track) {
         setupTopArt(track.coverArt)
         activity_track_title.text = track.title
         activity_track_artist.text = track.artist

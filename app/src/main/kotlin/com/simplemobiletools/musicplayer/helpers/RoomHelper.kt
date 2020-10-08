@@ -8,7 +8,7 @@ import android.provider.MediaStore.Audio
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.extensions.songsDAO
-import com.simplemobiletools.musicplayer.models.Song
+import com.simplemobiletools.musicplayer.models.Track
 
 class RoomHelper(val context: Context) {
     fun addPathToPlaylist(path: String) {
@@ -17,19 +17,19 @@ class RoomHelper(val context: Context) {
 
     fun addPathsToPlaylist(paths: ArrayList<String>, playlistId: Int = context.config.currentPlaylist) {
         val songs = getSongsFromPaths(paths, playlistId)
-        context.songsDAO.insertAll(songs)
+        //context.songsDAO.insertAll(songs)
     }
 
-    fun addSongsToPlaylist(songs: ArrayList<Song>) {
-        context.songsDAO.insertAll(songs)
+    fun addSongsToPlaylist(songs: ArrayList<Track>) {
+        //context.songsDAO.insertAll(songs)
     }
 
-    fun getSongFromPath(path: String): Song? {
+    fun getSongFromPath(path: String): Track? {
         val songs = getSongsFromPaths(arrayListOf(path), 0)
         return songs.firstOrNull()
     }
 
-    private fun getSongsFromPaths(paths: List<String>, playlistId: Int): ArrayList<Song> {
+    private fun getSongsFromPaths(paths: List<String>, playlistId: Int): ArrayList<Track> {
         val uri = Audio.Media.EXTERNAL_CONTENT_URI
         val projection = arrayOf(Audio.Media._ID,
             Audio.Media.TITLE,
@@ -43,7 +43,7 @@ class RoomHelper(val context: Context) {
         paths.mapTo(pathsMap) { it }
 
         val ITEMS_PER_GROUP = 50
-        val songs = ArrayList<Song>(paths.size)
+        val songs = ArrayList<Track>(paths.size)
         val showFilename = context.config.showFilename
 
         val parts = paths.size / ITEMS_PER_GROUP
@@ -62,7 +62,7 @@ class RoomHelper(val context: Context) {
                 val album = cursor.getStringValue(Audio.Media.ALBUM)
                 val albumId = cursor.getLongValue(Audio.Media.ALBUM_ID)
                 val coverArt = ContentUris.withAppendedId(artworkUri, albumId).toString()
-                val song = Song(mediaStoreId, title, artist, path, duration, album, coverArt, playlistId, 0)
+                val song = Track(mediaStoreId, title, artist, path, duration, album, coverArt, playlistId, 0)
                 song.title = song.getProperTitle(showFilename)
                 songs.add(song)
                 pathsMap.remove(path)
@@ -72,7 +72,7 @@ class RoomHelper(val context: Context) {
         pathsMap.forEach {
             val unknown = MediaStore.UNKNOWN_STRING
             val title = context.getTitle(it) ?: unknown
-            val song = Song(0, title, context.getArtist(it) ?: unknown, it, context.getDuration(it) ?: 0, "", "", playlistId, 0)
+            val song = Track(0, title, context.getArtist(it) ?: unknown, it, context.getDuration(it) ?: 0, "", "", playlistId, 0)
             song.title = song.getProperTitle(showFilename)
             songs.add(song)
         }

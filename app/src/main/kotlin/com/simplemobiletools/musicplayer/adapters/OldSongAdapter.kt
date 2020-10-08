@@ -26,12 +26,12 @@ import com.simplemobiletools.musicplayer.extensions.sendIntent
 import com.simplemobiletools.musicplayer.extensions.songsDAO
 import com.simplemobiletools.musicplayer.helpers.*
 import com.simplemobiletools.musicplayer.interfaces.SongListListener
-import com.simplemobiletools.musicplayer.models.Song
+import com.simplemobiletools.musicplayer.models.Track
 import com.simplemobiletools.musicplayer.services.MusicService
 import kotlinx.android.synthetic.main.item_navigation.view.*
 import kotlinx.android.synthetic.main.item_old_song.view.*
 
-class OldSongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val listener: SongListListener, val transparentView: View,
+class OldSongAdapter(activity: SimpleActivity, var songs: ArrayList<Track>, val listener: SongListListener, val transparentView: View,
                      recyclerView: MyRecyclerView, fastScroller: FastScroller, itemClick: (Any) -> Unit) :
         MyRecyclerViewAdapter(activity, recyclerView, fastScroller, itemClick) {
 
@@ -43,7 +43,7 @@ class OldSongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val l
 
     private var currentSongIndex = 0
     private var songsHashCode = songs.hashCode()
-    private var currentSong: Song? = null
+    private var currentSong: Track? = null
     private var initialProgress = 0
     private var initialIsPlaying = false
     private var textToHighlight = ""
@@ -95,7 +95,7 @@ class OldSongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val l
 
     override fun getItemCount() = songs.size + LIST_HEADERS_COUNT
 
-    private fun getItemWithKey(key: Int): Song? = songs.firstOrNull { it.path.hashCode() == key }
+    private fun getItemWithKey(key: Int): Track? = songs.firstOrNull { it.path.hashCode() == key }
 
     override fun prepareActionMode(menu: Menu) {
         menu.apply {
@@ -215,7 +215,7 @@ class OldSongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val l
         val SAFPath = getFirstSelectedItemPath()
         activity.handleSAFDialog(SAFPath) {
             val files = ArrayList<FileDirItem>(selectedKeys.size)
-            val removeSongs = ArrayList<Song>(selectedKeys.size)
+            val removeSongs = ArrayList<Track>(selectedKeys.size)
             val positions = ArrayList<Int>()
 
             for (key in selectedKeys) {
@@ -271,7 +271,7 @@ class OldSongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val l
             activity.startService(this)
         }
 
-        val removeSongs = ArrayList<Song>(selectedKeys.size)
+        val removeSongs = ArrayList<Track>(selectedKeys.size)
         val positions = ArrayList<Int>()
 
         for (key in selectedKeys) {
@@ -307,8 +307,8 @@ class OldSongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val l
 
     private fun getFirstSelectedItemPath() = getSelectedSongs().firstOrNull()?.path ?: ""
 
-    private fun getSelectedSongs(): ArrayList<Song> {
-        val selectedSongs = ArrayList<Song>(selectedKeys.size)
+    private fun getSelectedSongs(): ArrayList<Track> {
+        val selectedSongs = ArrayList<Track>(selectedKeys.size)
         selectedKeys.forEach {
             getItemWithKey(it)?.apply {
                 selectedSongs.add(this)
@@ -317,7 +317,7 @@ class OldSongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val l
         return selectedSongs
     }
 
-    fun updateSongs(newSongs: ArrayList<Song>, highlightText: String = "") {
+    fun updateSongs(newSongs: ArrayList<Track>, highlightText: String = "") {
         val newHashCode = newSongs.hashCode()
         if (newHashCode != songsHashCode) {
             songsHashCode = newHashCode
@@ -344,7 +344,7 @@ class OldSongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val l
         }
     }
 
-    fun updateSong(song: Song?) {
+    fun updateSong(song: Track?) {
         currentSong = song
         navigationView?.apply {
             song_info_title.text = song?.title ?: ""
@@ -475,7 +475,7 @@ class OldSongAdapter(activity: SimpleActivity, var songs: ArrayList<Song>, val l
 
     inner class NavigationViewHolder(view: View) : ViewHolder(view)
 
-    private fun setupView(view: View, song: Song, layoutPosition: Int) {
+    private fun setupView(view: View, song: Track, layoutPosition: Int) {
         view.apply {
             song_frame?.isSelected = selectedKeys.contains(song.path.hashCode())
             song_title.text = if (textToHighlight.isEmpty()) song.title else song.title.highlightTextPart(textToHighlight, adjustedPrimaryColor)

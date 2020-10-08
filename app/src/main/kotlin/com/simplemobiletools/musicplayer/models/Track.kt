@@ -13,8 +13,8 @@ import com.simplemobiletools.musicplayer.helpers.SHOW_FILENAME_IF_UNAVAILABLE
 import com.simplemobiletools.musicplayer.helpers.SHOW_FILENAME_NEVER
 import java.io.Serializable
 
-@Entity(tableName = "songs", primaryKeys = ["media_store_id", "playlist_id"])
-data class Song(
+@Entity(tableName = "tracks", primaryKeys = ["media_store_id", "playlist_id"])
+data class Track(
     @ColumnInfo(name = "media_store_id") val id: Long,
     @ColumnInfo(name = "title") var title: String,
     @ColumnInfo(name = "artist") var artist: String,
@@ -23,14 +23,14 @@ data class Song(
     @ColumnInfo(name = "album") val album: String,
     @ColumnInfo(name = "cover_art") val coverArt: String,
     @ColumnInfo(name = "playlist_id") val playListId: Int,
-    @ColumnInfo(name = "track_id") val trackId: Int) : Serializable, Comparable<Song>, ListItem() {
+    @ColumnInfo(name = "track_id") val trackId: Int) : Serializable, Comparable<Track>, ListItem() {
 
     companion object {
         private const val serialVersionUID = 6717978793256852245L
         var sorting = 0
     }
 
-    override fun compareTo(other: Song): Int {
+    override fun compareTo(other: Track): Int {
         var res = when {
             sorting and SORT_BY_TITLE != 0 -> {
                 if (title == MediaStore.UNKNOWN_STRING && other.title != MediaStore.UNKNOWN_STRING) {

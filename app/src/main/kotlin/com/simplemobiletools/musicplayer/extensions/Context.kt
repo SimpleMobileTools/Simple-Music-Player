@@ -68,12 +68,12 @@ fun Context.getSongsDB() = SongsDatabase.getInstance(this)
 
 fun Context.getPlaylistIdWithTitle(title: String) = playlistDAO.getPlaylistWithTitle(title)?.id ?: -1
 
-fun Context.getPlaylistSongs(playlistId: Int): ArrayList<Song> {
-    val validSongs = ArrayList<Song>()
+fun Context.getPlaylistSongs(playlistId: Int): ArrayList<Track> {
+    val validSongs = ArrayList<Track>()
     if (isQPlus()) {
         validSongs.addAll(songsDAO.getSongsFromPlaylist(playlistId))
     } else {
-        val invalidSongs = ArrayList<Song>()
+        val invalidSongs = ArrayList<Track>()
         val songs = songsDAO.getSongsFromPlaylist(playlistId)
         val showFilename = config.showFilename
         songs.forEach {
@@ -103,7 +103,7 @@ fun Context.deletePlaylists(playlists: ArrayList<Playlist>) {
     }
 }
 
-fun Context.broadcastUpdateWidgetSong(newSong: Song?) {
+fun Context.broadcastUpdateWidgetSong(newSong: Track?) {
     Intent(this, MyWidgetProvider::class.java).apply {
         putExtra(NEW_SONG, newSong)
         action = SONG_CHANGED
@@ -165,15 +165,15 @@ fun Context.getAlbumsSync(artist: Artist): ArrayList<Album> {
     return albums
 }
 
-fun Context.getSongs(albumId: Int, callback: (songs: ArrayList<Song>) -> Unit) {
+fun Context.getSongs(albumId: Int, callback: (songs: ArrayList<Track>) -> Unit) {
     ensureBackgroundThread {
         val songs = getSongsSync(albumId)
         callback(songs)
     }
 }
 
-fun Context.getSongsSync(albumId: Int): ArrayList<Song> {
-    val songs = ArrayList<Song>()
+fun Context.getSongsSync(albumId: Int): ArrayList<Track> {
+    val songs = ArrayList<Track>()
     val uri = Audio.Media.EXTERNAL_CONTENT_URI
     val projection = arrayOf(
         Audio.Media._ID,
@@ -200,7 +200,7 @@ fun Context.getSongsSync(albumId: Int): ArrayList<Song> {
                     val artist = cursor.getStringValue(Audio.Media.ARTIST)
                     val album = cursor.getStringValue(Audio.Media.ALBUM)
                     val coverArt = ContentUris.withAppendedId(artworkUri, albumId.toLong()).toString()
-                    val song = Song(id, title, artist, path, duration, album, coverArt, 0, trackId)
+                    val song = Track(id, title, artist, path, duration, album, coverArt, 0, trackId)
                     songs.add(song)
                 } while (cursor.moveToNext())
             }
@@ -212,7 +212,7 @@ fun Context.getSongsSync(albumId: Int): ArrayList<Song> {
     return songs
 }
 
-fun Context.resetQueueItems(newTracks: ArrayList<Song>, callback: () -> Unit) {
+fun Context.resetQueueItems(newTracks: ArrayList<Track>, callback: () -> Unit) {
     ensureBackgroundThread {
         queueDAO.deleteAllItems()
         val itemsToInsert = ArrayList<QueueItem>()
@@ -222,7 +222,8 @@ fun Context.resetQueueItems(newTracks: ArrayList<Song>, callback: () -> Unit) {
             itemsToInsert.add(queueItem)
         }
 
-        queueDAO.insert(itemsToInsert)
+        songsDAO.insertAll(newTracks)
+        queueDAO.insertAll(itemsToInsert)
         callback()
     }
 }

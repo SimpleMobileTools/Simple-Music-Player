@@ -23,7 +23,7 @@ import com.simplemobiletools.musicplayer.helpers.*
 import com.simplemobiletools.musicplayer.inlines.indexOfFirstOrNull
 import com.simplemobiletools.musicplayer.interfaces.MainActivityInterface
 import com.simplemobiletools.musicplayer.interfaces.SongListListener
-import com.simplemobiletools.musicplayer.models.Song
+import com.simplemobiletools.musicplayer.models.Track
 import com.simplemobiletools.musicplayer.services.MusicService
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_songs.view.*
@@ -31,7 +31,7 @@ import kotlinx.android.synthetic.main.item_navigation.view.*
 import java.util.*
 
 class SongsFragment(context: Context, attributeSet: AttributeSet) : MyViewPagerFragment(context, attributeSet), SongListListener {
-    private var songs = ArrayList<Song>()
+    private var songs = ArrayList<Track>()
     private var artView: ViewGroup? = null
     private var actionbarSize = 0
     private var topArtHeight = 0
@@ -211,7 +211,7 @@ class SongsFragment(context: Context, attributeSet: AttributeSet) : MyViewPagerF
         }
     }
 
-    fun songChangedEvent(song: Song?) {
+    fun songChangedEvent(song: Track?) {
         updateSongInfo(song)
         markCurrentSong()
         updateAlbumCover()
@@ -227,7 +227,7 @@ class SongsFragment(context: Context, attributeSet: AttributeSet) : MyViewPagerF
         getSongsAdapter()?.updateSongProgress(seconds)
     }
 
-    private fun updateSongInfo(song: Song?) {
+    private fun updateSongInfo(song: Track?) {
         top_navigation.song_info_title.text = song?.title ?: ""
         top_navigation.song_info_artist.text = song?.artist ?: ""
         song_progressbar.max = song?.duration ?: 0
@@ -239,7 +239,7 @@ class SongsFragment(context: Context, attributeSet: AttributeSet) : MyViewPagerF
         }
     }
 
-    fun fillSongsListView(songs: ArrayList<Song>) {
+    fun fillSongsListView(songs: ArrayList<Track>) {
         this.songs = songs
         val currAdapter = songs_list.adapter
         songs_fastscroller.setViews(songs_list) {
@@ -249,7 +249,7 @@ class SongsFragment(context: Context, attributeSet: AttributeSet) : MyViewPagerF
 
         if (currAdapter == null) {
             OldSongAdapter(activity, songs, this, artView!!, songs_list, songs_fastscroller) {
-                songPicked(getSongIndex(it as Song))
+                songPicked(getSongIndex(it as Track))
             }.apply {
                 isThirdPartyIntent = activityInterface.getIsThirdPartyIntent()
                 songs_list.adapter = this
@@ -310,7 +310,7 @@ class SongsFragment(context: Context, attributeSet: AttributeSet) : MyViewPagerF
                 .into(art_image)
     }
 
-    private fun getSongIndex(song: Song) = songs.indexOfFirstOrNull { it == song } ?: 0
+    private fun getSongIndex(song: Track) = songs.indexOfFirstOrNull { it == song } ?: 0
 
     fun getSongsAdapter() = songs_list.adapter as? OldSongAdapter
 

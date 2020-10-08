@@ -33,7 +33,7 @@ import com.simplemobiletools.musicplayer.helpers.*
 import com.simplemobiletools.musicplayer.interfaces.MainActivityInterface
 import com.simplemobiletools.musicplayer.models.Events
 import com.simplemobiletools.musicplayer.models.Playlist
-import com.simplemobiletools.musicplayer.models.Song
+import com.simplemobiletools.musicplayer.models.Track
 import com.simplemobiletools.musicplayer.services.MusicService
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_songs.*
@@ -478,7 +478,7 @@ class MainActivity : SimpleActivity(), MainActivityInterface {
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun playlistUpdated(event: Events.PlaylistUpdated) {
         wasInitialPlaylistSet = true
-        getCurrentFragment()?.fillSongsListView(event.songs.clone() as ArrayList<Song>)
+        getCurrentFragment()?.fillSongsListView(event.songs.clone() as ArrayList<Track>)
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

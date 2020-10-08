@@ -1,29 +1,32 @@
 package com.simplemobiletools.musicplayer.interfaces
 
 import androidx.room.*
-import com.simplemobiletools.musicplayer.models.Song
+import com.simplemobiletools.musicplayer.models.Track
 
 @Dao
 interface SongsDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(song: Song)
+    fun insert(song: Track)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAll(songs: List<Song>)
+    fun insertAll(songs: List<Track>)
 
-    @Query("SELECT * FROM songs WHERE playlist_id = :playlistId")
-    fun getSongsFromPlaylist(playlistId: Int): List<Song>
+    @Query("SELECT * FROM tracks")
+    fun getAll(): List<Track>
+
+    @Query("SELECT * FROM tracks WHERE playlist_id = :playlistId")
+    fun getSongsFromPlaylist(playlistId: Int): List<Track>
 
     @Delete
-    fun removeSongsFromPlaylists(songs: List<Song>)
+    fun removeSongsFromPlaylists(songs: List<Track>)
 
-    @Query("DELETE FROM songs WHERE playlist_id = :playlistId")
+    @Query("DELETE FROM tracks WHERE playlist_id = :playlistId")
     fun removePlaylistSongs(playlistId: Int)
 
     // this removes the given song from every playlist
-    @Query("DELETE FROM songs WHERE path = :path")
+    @Query("DELETE FROM tracks WHERE path = :path")
     fun removeSongPath(path: String)
 
-    @Query("UPDATE songs SET path = :newPath, artist = :artist, title = :title WHERE path = :oldPath")
+    @Query("UPDATE tracks SET path = :newPath, artist = :artist, title = :title WHERE path = :oldPath")
     fun updateSongInfo(newPath: String, artist: String, title: String, oldPath: String)
 }

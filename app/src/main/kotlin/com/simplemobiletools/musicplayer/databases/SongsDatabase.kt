@@ -14,11 +14,11 @@ import com.simplemobiletools.musicplayer.interfaces.QueueItemsDao
 import com.simplemobiletools.musicplayer.interfaces.SongsDao
 import com.simplemobiletools.musicplayer.models.Playlist
 import com.simplemobiletools.musicplayer.models.QueueItem
-import com.simplemobiletools.musicplayer.models.Song
+import com.simplemobiletools.musicplayer.models.Track
 import com.simplemobiletools.musicplayer.objects.MyExecutor
 import java.util.concurrent.Executors
 
-@Database(entities = [(Song::class), (Playlist::class), QueueItem::class], version = 5)
+@Database(entities = [(Track::class), (Playlist::class), QueueItem::class], version = 5)
 abstract class SongsDatabase : RoomDatabase() {
 
     abstract fun SongsDao(): SongsDao
@@ -110,7 +110,7 @@ abstract class SongsDatabase : RoomDatabase() {
                             "SELECT media_store_id, title, artist, path, duration, album, playlist_id FROM songs")
 
                     execSQL("DROP TABLE songs")
-                    execSQL("ALTER TABLE songs_new RENAME TO songs")
+                    execSQL("ALTER TABLE songs_new RENAME TO tracks")
                 }
             }
         }

@@ -38,7 +38,7 @@ import com.simplemobiletools.musicplayer.databases.SongsDatabase
 import com.simplemobiletools.musicplayer.extensions.*
 import com.simplemobiletools.musicplayer.helpers.*
 import com.simplemobiletools.musicplayer.models.Events
-import com.simplemobiletools.musicplayer.models.Song
+import com.simplemobiletools.musicplayer.models.Track
 import com.simplemobiletools.musicplayer.receivers.ControlActionsListener
 import com.simplemobiletools.musicplayer.receivers.HeadsetPlugReceiver
 import com.simplemobiletools.musicplayer.receivers.NotificationDismissedReceiver
@@ -55,7 +55,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         private const val NOTIFICATION_CHANNEL = "music_player_channel"
         private const val NOTIFICATION_ID = 78    // just a random number
 
-        var mCurrSong: Song? = null
+        var mCurrSong: Track? = null
         var mCurrSongCover: Bitmap? = null
         var mEqualizer: Equalizer? = null
         private var mHeadsetPlugReceiver = HeadsetPlugReceiver()
@@ -63,7 +63,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         private var mPlayedSongIndexes = ArrayList<Int>()
         private var mProgressHandler = Handler()
         private var mSleepTimer: CountDownTimer? = null
-        private var mSongs = ArrayList<Song>()
+        private var mSongs = ArrayList<Track>()
         private var mAudioManager: AudioManager? = null
         private var mCoverArtHeight = 0
         private var mOreoFocusHandler: OreoAudioFocusHandler? = null
@@ -238,7 +238,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     }
 
     private fun handleEdit(intent: Intent) {
-        mCurrSong = intent.getSerializableExtra(EDITED_SONG) as Song
+        mCurrSong = intent.getSerializableExtra(EDITED_SONG) as Track
         songChanged(mCurrSong)
     }
 
@@ -291,7 +291,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
     private fun handleRemoveSongIDS(intent: Intent) {
         val ids = intent.getIntegerArrayListExtra(SONG_IDS)
-        val songsToRemove = ArrayList<Song>()
+        val songsToRemove = ArrayList<Track>()
         mSongs.sortedDescending().forEach {
             if (ids.contains(it.path.hashCode())) {
                 songsToRemove.add(it)
@@ -375,7 +375,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
         if (isQPlus()) {
             val showFilename = config.showFilename
-            val songs = ArrayList<Song>()
+            val songs = ArrayList<Track>()
             queryCursor(uri, projection) { cursor ->
                 val duration = cursor.getIntValue(Audio.Media.DURATION) / 1000
                 if (duration > MIN_INITIAL_DURATION) {
@@ -387,7 +387,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
                     val albumId = cursor.getLongValue(Audio.Media.ALBUM_ID)
                     val coverArt = ContentUris.withAppendedId(artworkUri, albumId).toString()
                     val trackId = cursor.getIntValue(Audio.Media.TRACK) % 1000
-                    val song = Song(id, title, artist, path, duration, album, coverArt, ALL_SONGS_PLAYLIST_ID, trackId)
+                    val song = Track(id, title, artist, path, duration, album, coverArt, ALL_SONGS_PLAYLIST_ID, trackId)
                     song.title = song.getProperTitle(showFilename)
                     songs.add(song)
                 }
@@ -417,8 +417,8 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             getAllDeviceSongs()
         }
 
-        mSongs = getPlaylistSongs(config.currentPlaylist)
-        Song.sorting = config.sorting
+        mSongs = getQueuedTracks()
+        Track.sorting = config.sorting
         try {
             mSongs.sort()
         } catch (ignored: Exception) {
@@ -440,6 +440,18 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             mEqualizer?.usePreset(id.toShort())
         } catch (ignored: IllegalArgumentException) {
         }
+    }
+
+    private fun getQueuedTracks(): ArrayList<Track> {
+        val tracks = ArrayList<Track>()
+        val allTracks = songsDAO.getAll()
+        val queueItemIds = queueDAO.getAll().map { it.trackId }.toMutableList().getChoppedList()
+        queueItemIds.forEach { wantedTrackIds ->
+            val wantedTracks = allTracks.filter { wantedTrackIds.contains(it.id) }
+            tracks.addAll(wantedTracks)
+        }
+
+        return tracks
     }
 
     @SuppressLint("NewApi")
@@ -718,7 +730,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         setupNotification()
     }
 
-    private fun songChanged(song: Song?) {
+    private fun songChanged(song: Track?) {
         val albumImage = getAlbumImage(song)
         mCurrSongCover = albumImage.first
         broadcastSongChange(song)
@@ -731,7 +743,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         mMediaSession?.setMetadata(metadata)
     }
 
-    private fun broadcastSongChange(song: Song?) {
+    private fun broadcastSongChange(song: Track?) {
         Handler(Looper.getMainLooper()).post {
             broadcastUpdateWidgetSong(song)
             EventBus.getDefault().post(Events.SongChanged(song))
@@ -745,7 +757,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
     // do not just return the album cover, but also a boolean to indicate if it a real cover, or just the placeholder
     @SuppressLint("NewApi")
-    private fun getAlbumImage(song: Song?): Pair<Bitmap, Boolean> {
+    private fun getAlbumImage(song: Track?): Pair<Bitmap, Boolean> {
         if (File(song?.path ?: "").exists()) {
             try {
                 val mediaMetadataRetriever = MediaMetadataRetriever()
