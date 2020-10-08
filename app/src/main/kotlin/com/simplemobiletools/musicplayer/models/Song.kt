@@ -13,7 +13,7 @@ import com.simplemobiletools.musicplayer.helpers.SHOW_FILENAME_IF_UNAVAILABLE
 import com.simplemobiletools.musicplayer.helpers.SHOW_FILENAME_NEVER
 import java.io.Serializable
 
-@Entity(tableName = "songs", primaryKeys = ["path", "playlist_id"])
+@Entity(tableName = "songs", primaryKeys = ["media_store_id", "playlist_id"])
 data class Song(
     @ColumnInfo(name = "media_store_id") val id: Long,
     @ColumnInfo(name = "title") var title: String,

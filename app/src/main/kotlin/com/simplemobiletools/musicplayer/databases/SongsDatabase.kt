@@ -18,7 +18,7 @@ import com.simplemobiletools.musicplayer.models.Song
 import com.simplemobiletools.musicplayer.objects.MyExecutor
 import java.util.concurrent.Executors
 
-@Database(entities = [(Song::class), (Playlist::class), QueueItem::class], version = 4)
+@Database(entities = [(Song::class), (Playlist::class), QueueItem::class], version = 5)
 abstract class SongsDatabase : RoomDatabase() {
 
     abstract fun SongsDao(): SongsDao
@@ -47,6 +47,7 @@ abstract class SongsDatabase : RoomDatabase() {
                             .addMigrations(MIGRATION_1_2)
                             .addMigrations(MIGRATION_2_3)
                             .addMigrations(MIGRATION_3_4)
+                            .addMigrations(MIGRATION_4_5)
                             .build()
                     }
                 }
@@ -94,6 +95,23 @@ abstract class SongsDatabase : RoomDatabase() {
                 database.execSQL("CREATE TABLE `queue_items` (`id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, `track_id` INTEGER NOT NULL, " +
                         "`track_order` INTEGER NOT NULL, `is_playing` INTEGER NOT NULL, `last_position` INTEGER NOT NULL, `was_played` INTEGER NOT NULL)")
                 database.execSQL("CREATE UNIQUE INDEX `index_queue_items_id` ON `queue_items` (`id`)")
+            }
+        }
+
+        // change the primary keys from path + playlist_id to id + playlist_id
+        private val MIGRATION_4_5 = object : Migration(4, 5) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.apply {
+                    execSQL("CREATE TABLE songs_new (media_store_id INTEGER NOT NULL, title TEXT NOT NULL, artist TEXT NOT NULL, path TEXT NOT NULL, duration INTEGER NOT NULL, " +
+                            "album TEXT NOT NULL, playlist_id INTEGER NOT NULL, track_id INTEGER NOT NULL DEFAULT 0, " +
+                            "cover_art TEXT default '' NOT NULL, PRIMARY KEY(media_store_id, playlist_id))")
+
+                    execSQL("INSERT INTO songs_new (media_store_id, title, artist, path, duration, album, playlist_id) " +
+                            "SELECT media_store_id, title, artist, path, duration, album, playlist_id FROM songs")
+
+                    execSQL("DROP TABLE songs")
+                    execSQL("ALTER TABLE songs_new RENAME TO songs")
+                }
             }
         }
     }
