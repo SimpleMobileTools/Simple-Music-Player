@@ -24,13 +24,12 @@ class ViewPagerAdapter(val activity: SimpleActivity) : PagerAdapter() {
         container.removeView(item as View)
     }
 
-    override fun getCount() = 3
+    override fun getCount() = 2
 
     override fun isViewFromObject(view: View, item: Any) = view == item
 
     private fun getFragment(position: Int) = when (position) {
-        0 -> R.layout.fragment_songs
-        1 -> R.layout.fragment_playlists
-        else -> R.layout.fragment_artists
+        0 -> R.layout.fragment_artists
+        else -> R.layout.fragment_playlists
     }
 }
