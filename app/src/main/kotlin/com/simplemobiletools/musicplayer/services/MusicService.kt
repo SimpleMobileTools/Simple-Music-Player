@@ -569,28 +569,26 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         startForeground(NOTIFICATION_ID, notification.build())
     }
 
-    private fun getNewSongId(): Int {
+    private fun getNewTrackId(): Long {
         return if (config.isShuffleEnabled) {
             val cnt = mTracks.size
             when (cnt) {
-                0 -> -1
-                1 -> 0
+                0 -> -1L
+                1 -> mTracks.first().id
                 else -> {
                     val random = Random()
-                    var newSongIndex = random.nextInt(cnt)
-                    while (mPlayedTrackIndexes.contains(newSongIndex)) {
-                        newSongIndex = random.nextInt(cnt)
-                    }
-                    newSongIndex
+                    val newSongIndex = random.nextInt(cnt)
+                    mTracks[newSongIndex].id
                 }
             }
         } else {
             if (mPlayedTrackIndexes.isEmpty()) {
-                return 0
+                return 0L
             }
 
             val lastIndex = mPlayedTrackIndexes[mPlayedTrackIndexes.size - 1]
-            (lastIndex + 1) % Math.max(mTracks.size, 1)
+            val index = (lastIndex + 1) % Math.max(mTracks.size, 1)
+            mTracks[index].id
         }
     }
 
@@ -641,7 +639,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         if (mIsThirdPartyIntent) {
             setupTrack()
         } else {
-            //setTrack(getNewSongId(), true)
+            setTrack(getNewTrackId(), true)
         }
     }
 
