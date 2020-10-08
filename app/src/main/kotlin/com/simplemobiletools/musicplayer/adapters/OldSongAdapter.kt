@@ -430,8 +430,8 @@ class OldSongAdapter(activity: SimpleActivity, var songs: ArrayList<Track>, val 
             shuffle_btn.applyColorFilter(if (config.isShuffleEnabled) adjustedPrimaryColor else textColor)
             shuffle_btn.alpha = if (config.isShuffleEnabled) 1f else LOWER_ALPHA
 
-            repeat_btn.applyColorFilter(if (config.repeatSong) adjustedPrimaryColor else textColor)
-            repeat_btn.alpha = if (config.repeatSong) 1f else LOWER_ALPHA
+            repeat_btn.applyColorFilter(if (config.repeatTrack) adjustedPrimaryColor else textColor)
+            repeat_btn.alpha = if (config.repeatTrack) 1f else LOWER_ALPHA
 
             song_info_title.setTextColor(textColor)
             song_info_artist.setTextColor(textColor)

@@ -709,7 +709,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             return
         }
 
-        if (config.repeatSong) {
+        if (config.repeatTrack) {
             restartTrack()
         } else if (mPlayer!!.currentPosition > 0) {
             mPlayer!!.reset()
@@ -753,7 +753,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
     private fun broadcastTrackStateChange(isPlaying: Boolean) {
         broadcastUpdateWidgetTrackState(isPlaying)
-        EventBus.getDefault().post(Events.SongStateChanged(isPlaying))
+        EventBus.getDefault().post(Events.TrackStateChanged(isPlaying))
     }
 
     // do not just return the album cover, but also a boolean to indicate if it a real cover, or just the placeholder

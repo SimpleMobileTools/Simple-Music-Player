@@ -86,9 +86,11 @@ class TrackActivity : SimpleActivity() {
         activity_track_previous.setOnClickListener { sendIntent(PREVIOUS) }
         activity_track_play_pause.setOnClickListener { sendIntent(PLAYPAUSE) }
         activity_track_next.setOnClickListener { sendIntent(NEXT) }
-        activity_track_repeat.setOnClickListener { toggleSongRepetition() }
+        activity_track_progress_current.setOnClickListener { sendIntent(SKIP_BACKWARD) }
+        activity_track_progress_max.setOnClickListener { sendIntent(SKIP_FORWARD) }
+        activity_track_repeat.setOnClickListener { toggleTrackRepetition() }
         setupShuffleButton()
-        setupSongRepetitionButton()
+        setupTrackRepetitionButton()
         setupSeekbar()
     }
 
@@ -127,19 +129,19 @@ class TrackActivity : SimpleActivity() {
         }
     }
 
-    private fun toggleSongRepetition() {
-        val repeatSong = !config.repeatSong
-        config.repeatSong = repeatSong
-        toast(if (repeatSong) R.string.song_repetition_enabled else R.string.song_repetition_disabled)
-        setupSongRepetitionButton()
+    private fun toggleTrackRepetition() {
+        val repeatTrack = !config.repeatTrack
+        config.repeatTrack = repeatTrack
+        toast(if (repeatTrack) R.string.song_repetition_enabled else R.string.song_repetition_disabled)
+        setupTrackRepetitionButton()
     }
 
-    private fun setupSongRepetitionButton() {
-        val repeatSong = config.repeatSong
+    private fun setupTrackRepetitionButton() {
+        val repeatTrack = config.repeatTrack
         activity_track_repeat.apply {
-            applyColorFilter(if (repeatSong) getAdjustedPrimaryColor() else config.textColor)
-            alpha = if (repeatSong) 1f else LOWER_ALPHA
-            contentDescription = getString(if (repeatSong) R.string.disable_song_repetition else R.string.enable_song_repetition)
+            applyColorFilter(if (repeatTrack) getAdjustedPrimaryColor() else config.textColor)
+            alpha = if (repeatTrack) 1f else LOWER_ALPHA
+            contentDescription = getString(if (repeatTrack) R.string.disable_song_repetition else R.string.enable_song_repetition)
         }
     }
 
@@ -174,13 +176,13 @@ class TrackActivity : SimpleActivity() {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun songStateChanged(event: Events.SongStateChanged) {
+    fun trackStateChanged(event: Events.TrackStateChanged) {
         val drawableId = if (event.isPlaying) R.drawable.ic_pause_vector else R.drawable.ic_play_vector
         activity_track_play_pause.setImageDrawable(resources.getDrawable(drawableId))
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun songChangedEvent(event: Events.TrackChanged) {
+    fun trackChangedEvent(event: Events.TrackChanged) {
         val track = event.track
         if (track == null) {
             finish()

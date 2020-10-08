@@ -222,7 +222,7 @@ class MainActivity : SimpleActivity(), MainActivityInterface {
             }
         )
 
-        val tabLabels = arrayOf("PLAYER", "PLAYLISTS", "ARTISTS")
+        val tabLabels = arrayOf("ARTISTS", "PLAYLISTS")
         main_tabs_holder.apply {
             setTabTextColors(config.backgroundColor.getContrastColor(), getAdjustedPrimaryColor())
             setSelectedTabIndicatorColor(getAdjustedPrimaryColor())
@@ -464,14 +464,14 @@ class MainActivity : SimpleActivity(), MainActivityInterface {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun songChangedEvent(event: Events.TrackChanged) {
+    fun trackChangedEvent(event: Events.TrackChanged) {
         if (wasInitialPlaylistSet) {
             getCurrentFragment()?.songChangedEvent(event.track)
         }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun songStateChanged(event: Events.SongStateChanged) {
+    fun trackStateChanged(event: Events.TrackStateChanged) {
         getCurrentFragment()?.songStateChanged(event.isPlaying)
     }
 

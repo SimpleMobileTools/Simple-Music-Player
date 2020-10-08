@@ -20,7 +20,7 @@ class Config(context: Context) : BaseConfig(context) {
         get() = prefs.getInt(CURRENT_PLAYLIST, ALL_TRACKS_PLAYLIST_ID)
         set(currentPlaylist) = prefs.edit().putInt(CURRENT_PLAYLIST, currentPlaylist).apply()
 
-    var repeatSong: Boolean
+    var repeatTrack: Boolean
         get() = prefs.getBoolean(REPEAT_TRACK, false)
         set(repeat) = prefs.edit().putBoolean(REPEAT_TRACK, repeat).apply()
 

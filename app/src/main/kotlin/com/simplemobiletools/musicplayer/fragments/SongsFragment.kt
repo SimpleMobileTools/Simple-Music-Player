@@ -165,8 +165,8 @@ class SongsFragment(context: Context, attributeSet: AttributeSet) : MyViewPagerF
     }
 
     override fun toggleSongRepetition() {
-        val repeatSong = !config.repeatSong
-        config.repeatSong = repeatSong
+        val repeatSong = !config.repeatTrack
+        config.repeatTrack = repeatSong
         repeat_btn.applyColorFilter(if (repeatSong) activity.getAdjustedPrimaryColor() else config.textColor)
         repeat_btn.alpha = if (repeatSong) 1f else LOWER_ALPHA
         repeat_btn.contentDescription = activity.getString(if (repeatSong) R.string.disable_song_repetition else R.string.enable_song_repetition)
@@ -189,8 +189,8 @@ class SongsFragment(context: Context, attributeSet: AttributeSet) : MyViewPagerF
         shuffle_btn.applyColorFilter(if (config.isShuffleEnabled) activity.getAdjustedPrimaryColor() else config.textColor)
         shuffle_btn.alpha = if (config.isShuffleEnabled) 1f else LOWER_ALPHA
 
-        repeat_btn.applyColorFilter(if (config.repeatSong) activity.getAdjustedPrimaryColor() else config.textColor)
-        repeat_btn.alpha = if (config.repeatSong) 1f else LOWER_ALPHA
+        repeat_btn.applyColorFilter(if (config.repeatTrack) activity.getAdjustedPrimaryColor() else config.textColor)
+        repeat_btn.alpha = if (config.repeatTrack) 1f else LOWER_ALPHA
 
         getSongsAdapter()?.updateTextColor(textColor)
         songs_fastscroller.updatePrimaryColor()
@@ -198,7 +198,7 @@ class SongsFragment(context: Context, attributeSet: AttributeSet) : MyViewPagerF
 
     private fun setupIconDescriptions() {
         shuffle_btn.contentDescription = activity.getString(if (config.isShuffleEnabled) R.string.disable_shuffle else R.string.enable_shuffle)
-        repeat_btn.contentDescription = activity.getString(if (config.repeatSong) R.string.disable_song_repetition else R.string.enable_song_repetition)
+        repeat_btn.contentDescription = activity.getString(if (config.repeatTrack) R.string.disable_song_repetition else R.string.enable_song_repetition)
     }
 
     private fun songPicked(pos: Int) {
