@@ -445,7 +445,7 @@ class MainActivity : SimpleActivity(), MainActivityInterface {
         if (isThirdPartyIntent) {
             initThirdPartyIntent()
         } else {
-            sendIntent(INIT)
+            //sendIntent(INIT)
         }
     }
 

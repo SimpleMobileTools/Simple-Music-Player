@@ -136,7 +136,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         }
 
         when (action) {
-            INIT -> handleInit()
+            INIT -> handleInit(intent)
             INIT_PATH -> handleInitPath(intent)
             SETUP -> handleSetup()
             PREVIOUS -> handlePrevious()
@@ -165,7 +165,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         return START_NOT_STICKY
     }
 
-    private fun initService() {
+    private fun initService(intent: Intent?) {
         mSongs.clear()
         mPlayedSongIndexes = ArrayList()
         mCurrSong = null
@@ -177,6 +177,9 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             }
         } else {
             getSortedSongs()
+
+            val wantedSongId = intent?.getLongExtra(TRACK_ID, -1L)
+            mCurrSong = mSongs.firstOrNull { it.id == wantedSongId }
         }
 
         mWasPlayingAtFocusLost = false
@@ -185,11 +188,13 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         mIsServiceInitialized = true
     }
 
-    private fun handleInit() {
+    private fun handleInit(intent: Intent? = null) {
         mIsThirdPartyIntent = false
         ensureBackgroundThread {
-            initService()
-            initSongs()
+            initService(intent)
+
+            val wantedTrackId = intent?.getLongExtra(TRACK_ID, -1L) ?: -1L
+            setTrack(wantedTrackId, true)
         }
     }
 
@@ -197,7 +202,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         mIsThirdPartyIntent = true
         if (mIntentUri != intent.data) {
             mIntentUri = intent.data
-            initService()
+            initService(intent)
             initSongs()
         } else {
             updateUI()
@@ -231,7 +236,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     private fun handleReset() {
         if (mPlayedSongIndexes.size - 1 != -1) {
             mPlayOnPrepare = true
-            setSong(mPlayedSongIndexes[mPlayedSongIndexes.size - 1], false)
+            //setTrack(mPlayedSongIndexes[mPlayedSongIndexes.size - 1], false)
         }
     }
 
@@ -601,7 +606,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         // remove the latest song from the list
         if (mPlayedSongIndexes.size > 1 && mPlayer!!.currentPosition < 5000) {
             mPlayedSongIndexes.removeAt(mPlayedSongIndexes.size - 1)
-            setSong(mPlayedSongIndexes[mPlayedSongIndexes.size - 1], false)
+            //setTrack(mPlayedSongIndexes[mPlayedSongIndexes.size - 1], false)
         } else {
             restartSong()
         }
@@ -636,13 +641,13 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         if (mIsThirdPartyIntent) {
             setupSong()
         } else {
-            setSong(getNewSongId(), true)
+            //setTrack(getNewSongId(), true)
         }
     }
 
     private fun restartSong() {
-        val newSongIndex = if (mPlayedSongIndexes.isEmpty()) 0 else mPlayedSongIndexes[mPlayedSongIndexes.size - 1]
-        setSong(newSongIndex, false)
+        /*val newSongIndex = if (mPlayedSongIndexes.isEmpty()) 0 else mPlayedSongIndexes[mPlayedSongIndexes.size - 1]
+        setTrack(newSongIndex, false)*/
     }
 
     private fun playSong(intent: Intent) {
@@ -650,13 +655,13 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             setupSong()
         } else {
             mPlayOnPrepare = true
-            val pos = intent.getIntExtra(SONG_POS, 0)
-            setSong(pos, true)
+            /*val pos = intent.getIntExtra(SONG_POS, 0)
+            setTrack(pos, true)*/
         }
         mMediaSession?.isActive = true
     }
 
-    private fun setSong(songIndex: Int, addNewSongToHistory: Boolean) {
+    private fun setTrack(wantedTrackId: Long, addNewSongToHistory: Boolean) {
         if (mSongs.isEmpty()) {
             handleEmptyPlaylist()
             return
@@ -665,14 +670,14 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         initMediaPlayerIfNeeded()
 
         mPlayer!!.reset()
-        if (addNewSongToHistory) {
-            mPlayedSongIndexes.add(songIndex)
+        /*if (addNewSongToHistory) {
+            mPlayedSongIndexes.add(trackId)
             if (mPlayedSongIndexes.size >= mSongs.size) {
                 mPlayedSongIndexes.clear()
             }
-        }
+        }*/
 
-        mCurrSong = mSongs.getOrNull(Math.min(songIndex, mSongs.size - 1)) ?: return
+        mCurrSong = mSongs.firstOrNull { it.id == wantedTrackId } ?: return
 
         try {
             val trackUri = if (mCurrSong!!.id == 0L) {

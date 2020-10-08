@@ -47,7 +47,12 @@ class TrackActivity : SimpleActivity() {
         val track = Gson().fromJson<Track>(intent.getStringExtra(TRACK), trackType)
         setupTrackInfo(track)
         setupButtons()
-        sendIntent(INIT)
+
+        Intent(this, MusicService::class.java).apply {
+            putExtra(TRACK_ID, track.id)
+            action = INIT
+            startService(this)
+        }
     }
 
     override fun onResume() {
