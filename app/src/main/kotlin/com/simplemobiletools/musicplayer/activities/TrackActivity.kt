@@ -177,7 +177,9 @@ class TrackActivity : SimpleActivity() {
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun songChangedEvent(event: Events.SongChanged) {
         val song = event.song
-        if (song != null) {
+        if (song == null) {
+            finish()
+        } else {
             setupTrackInfo(event.song)
         }
     }
