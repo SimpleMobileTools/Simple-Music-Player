@@ -16,7 +16,7 @@ import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.extensions.deletePlaylists
 import com.simplemobiletools.musicplayer.extensions.getPlaylistSongs
 import com.simplemobiletools.musicplayer.extensions.playlistChanged
-import com.simplemobiletools.musicplayer.helpers.ALL_SONGS_PLAYLIST_ID
+import com.simplemobiletools.musicplayer.helpers.ALL_TRACKS_PLAYLIST_ID
 import com.simplemobiletools.musicplayer.interfaces.RefreshPlaylistsListener
 import com.simplemobiletools.musicplayer.models.Playlist
 import kotlinx.android.synthetic.main.item_playlist.view.*
@@ -99,13 +99,13 @@ class PlaylistsAdapter(activity: SimpleActivity, val playlists: ArrayList<Playli
     private fun removePlaylists(ids: ArrayList<Int>) {
         for (key in selectedKeys) {
             val playlist = getItemWithKey(key) ?: continue
-            if (playlist.id == ALL_SONGS_PLAYLIST_ID) {
+            if (playlist.id == ALL_TRACKS_PLAYLIST_ID) {
                 activity.toast(R.string.all_songs_cannot_be_deleted)
-                selectedKeys.remove(ALL_SONGS_PLAYLIST_ID)
-                toggleItemSelection(false, getItemKeyPosition(ALL_SONGS_PLAYLIST_ID))
+                selectedKeys.remove(ALL_TRACKS_PLAYLIST_ID)
+                toggleItemSelection(false, getItemKeyPosition(ALL_TRACKS_PLAYLIST_ID))
                 break
             } else if (playlist.id == activity.config.currentPlaylist) {
-                activity.playlistChanged(ALL_SONGS_PLAYLIST_ID)
+                activity.playlistChanged(ALL_TRACKS_PLAYLIST_ID)
             }
         }
 

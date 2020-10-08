@@ -8,7 +8,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.adapters.SongsAdapter
-import com.simplemobiletools.musicplayer.extensions.getSongs
+import com.simplemobiletools.musicplayer.extensions.getTracks
 import com.simplemobiletools.musicplayer.extensions.resetQueueItems
 import com.simplemobiletools.musicplayer.helpers.ALBUM
 import com.simplemobiletools.musicplayer.helpers.TRACK
@@ -19,7 +19,7 @@ import com.simplemobiletools.musicplayer.models.ListItem
 import kotlinx.android.synthetic.main.activity_songs.*
 
 // Artists -> Albums -> Songs
-class SongsActivity : SimpleActivity() {
+class TracksActivity : SimpleActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_songs)
@@ -28,16 +28,16 @@ class SongsActivity : SimpleActivity() {
         val album = Gson().fromJson<Album>(intent.getStringExtra(ALBUM), albumType)
         title = album.title
 
-        getSongs(album.id) { songs ->
+        getTracks(album.id) { tracks ->
             val items = ArrayList<ListItem>()
             val coverArt = ContentUris.withAppendedId(artworkUri, album.id.toLong()).toString()
-            val header = AlbumHeader(album.title, coverArt, album.year, songs.size, songs.sumBy { it.duration }, album.artist)
+            val header = AlbumHeader(album.title, coverArt, album.year, tracks.size, tracks.sumBy { it.duration }, album.artist)
             items.add(header)
-            items.addAll(songs)
+            items.addAll(tracks)
 
             runOnUiThread {
                 SongsAdapter(this, items, songs_list) {
-                    resetQueueItems(songs) {
+                    resetQueueItems(tracks) {
                         Intent(this, TrackActivity::class.java).apply {
                             putExtra(TRACK, Gson().toJson(it))
                             startActivity(this)

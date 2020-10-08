@@ -15,7 +15,7 @@ interface SongsDao {
     fun getAll(): List<Track>
 
     @Query("SELECT * FROM tracks WHERE playlist_id = :playlistId")
-    fun getSongsFromPlaylist(playlistId: Int): List<Track>
+    fun getTracksFromPlaylist(playlistId: Int): List<Track>
 
     @Delete
     fun removeSongsFromPlaylists(songs: List<Track>)

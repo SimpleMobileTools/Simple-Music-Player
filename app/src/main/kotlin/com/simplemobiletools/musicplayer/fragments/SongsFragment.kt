@@ -205,7 +205,7 @@ class SongsFragment(context: Context, attributeSet: AttributeSet) : MyViewPagerF
         setupIconColors()
         setupIconDescriptions()
         Intent(activity, MusicService::class.java).apply {
-            putExtra(SONG_POS, pos)
+            putExtra(TRACK_POS, pos)
             action = PLAYPOS
             activity.startService(this)
         }
@@ -275,7 +275,7 @@ class SongsFragment(context: Context, attributeSet: AttributeSet) : MyViewPagerF
     }
 
     private fun getCurrentSongIndex(): Int {
-        val newSong = MusicService.mCurrSong
+        val newSong = MusicService.mCurrTrack
         val cnt = songs.size - 1
         return (0..cnt).firstOrNull { songs[it] == newSong } ?: -1
     }
@@ -294,10 +294,10 @@ class SongsFragment(context: Context, attributeSet: AttributeSet) : MyViewPagerF
             return
         }
 
-        val coverToUse = if (MusicService.mCurrSongCover?.isRecycled == true) {
+        val coverToUse = if (MusicService.mCurrTrackCover?.isRecycled == true) {
             resources.getColoredBitmap(R.drawable.ic_headset, config.textColor)
         } else {
-            MusicService.mCurrSongCover
+            MusicService.mCurrTrackCover
         }
 
         // Picasso cannot load bitmaps/drawables directly, so as a workaround load images as placeholders

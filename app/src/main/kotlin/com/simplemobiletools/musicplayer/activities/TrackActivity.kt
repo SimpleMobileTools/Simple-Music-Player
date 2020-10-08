@@ -180,12 +180,12 @@ class TrackActivity : SimpleActivity() {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun songChangedEvent(event: Events.SongChanged) {
-        val song = event.song
-        if (song == null) {
+    fun songChangedEvent(event: Events.TrackChanged) {
+        val track = event.track
+        if (track == null) {
             finish()
         } else {
-            setupTrackInfo(event.song)
+            setupTrackInfo(event.track)
         }
     }
 }

@@ -9,7 +9,7 @@ import com.simplemobiletools.commons.extensions.getFormattedDuration
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.adapters.AlbumsAdapter
 import com.simplemobiletools.musicplayer.extensions.getAlbums
-import com.simplemobiletools.musicplayer.extensions.getSongsSync
+import com.simplemobiletools.musicplayer.extensions.getTracksSync
 import com.simplemobiletools.musicplayer.extensions.resetQueueItems
 import com.simplemobiletools.musicplayer.helpers.ALBUM
 import com.simplemobiletools.musicplayer.helpers.ARTIST
@@ -17,7 +17,7 @@ import com.simplemobiletools.musicplayer.helpers.TRACK
 import com.simplemobiletools.musicplayer.models.*
 import kotlinx.android.synthetic.main.activity_albums.*
 
-// Artists -> Albums -> Songs
+// Artists -> Albums -> Tracks
 class AlbumsActivity : SimpleActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,7 +36,7 @@ class AlbumsActivity : SimpleActivity() {
             var trackFullDuration = 0
             val tracksToAdd = ArrayList<Track>()
             albums.forEach {
-                val tracks = getSongsSync(it.id)
+                val tracks = getTracksSync(it.id)
                 trackFullDuration += tracks.sumBy { it.duration }
                 tracksToAdd.addAll(tracks)
             }
@@ -49,7 +49,7 @@ class AlbumsActivity : SimpleActivity() {
             runOnUiThread {
                 AlbumsAdapter(this, listItems, albums_list) {
                     if (it is Album) {
-                        Intent(this, SongsActivity::class.java).apply {
+                        Intent(this, TracksActivity::class.java).apply {
                             putExtra(ALBUM, Gson().toJson(it))
                             startActivity(this)
                         }

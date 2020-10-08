@@ -23,7 +23,7 @@ import com.simplemobiletools.musicplayer.activities.SimpleActivity
 import com.simplemobiletools.musicplayer.dialogs.EditDialog
 import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.extensions.sendIntent
-import com.simplemobiletools.musicplayer.extensions.songsDAO
+import com.simplemobiletools.musicplayer.extensions.tracksDAO
 import com.simplemobiletools.musicplayer.helpers.*
 import com.simplemobiletools.musicplayer.interfaces.SongListListener
 import com.simplemobiletools.musicplayer.models.Track
@@ -176,9 +176,9 @@ class OldSongAdapter(activity: SimpleActivity, var songs: ArrayList<Track>, val 
 
     private fun displayEditDialog() {
         EditDialog(activity, getSelectedSongs().first()) {
-            if (it == MusicService.mCurrSong) {
+            if (it == MusicService.mCurrTrack) {
                 Intent(activity, MusicService::class.java).apply {
-                    putExtra(EDITED_SONG, it)
+                    putExtra(EDITED_TRACK, it)
                     action = EDIT
                     activity.startService(this)
                 }
@@ -226,8 +226,8 @@ class OldSongAdapter(activity: SimpleActivity, var songs: ArrayList<Track>, val 
                     positions.add(position + positionOffset)
                     files.add(FileDirItem(song.path))
                     removeSongs.add(song)
-                    activity.songsDAO.removeSongPath(song.path)
-                    if (song == MusicService.mCurrSong) {
+                    activity.tracksDAO.removeSongPath(song.path)
+                    if (song == MusicService.mCurrTrack) {
                         activity.sendIntent(RESET)
                     }
                 }
@@ -241,8 +241,8 @@ class OldSongAdapter(activity: SimpleActivity, var songs: ArrayList<Track>, val 
 
             val songIds = removeSongs.map { it.path.hashCode() } as ArrayList<Int>
             Intent(activity, MusicService::class.java).apply {
-                putExtra(SONG_IDS, songIds)
-                action = REMOVE_SONG_IDS
+                putExtra(TRACK_IDS, songIds)
+                action = REMOVE_TRACK_IDS
                 activity.startService(this)
             }
 
@@ -266,8 +266,8 @@ class OldSongAdapter(activity: SimpleActivity, var songs: ArrayList<Track>, val 
         }
 
         Intent(activity, MusicService::class.java).apply {
-            putExtra(SONG_IDS, songIds)
-            action = REMOVE_SONG_IDS
+            putExtra(TRACK_IDS, songIds)
+            action = REMOVE_TRACK_IDS
             activity.startService(this)
         }
 
@@ -281,9 +281,9 @@ class OldSongAdapter(activity: SimpleActivity, var songs: ArrayList<Track>, val 
             if (position != -1) {
                 positions.add(position + positionOffset)
                 removeSongs.add(song)
-                if (song == MusicService.mCurrSong) {
+                if (song == MusicService.mCurrTrack) {
                     if (songs.size == removeSongs.size) {
-                        activity.sendIntent(REMOVE_CURRENT_SONG)
+                        activity.sendIntent(REMOVE_CURRENT_TRACK)
                     } else {
                         activity.sendIntent(NEXT)
                     }
@@ -297,7 +297,7 @@ class OldSongAdapter(activity: SimpleActivity, var songs: ArrayList<Track>, val 
         positions.sortDescending()
         removeSelectedItems(positions)
         ensureBackgroundThread {
-            activity.songsDAO.removeSongsFromPlaylists(removeSongs)
+            activity.tracksDAO.removeSongsFromPlaylists(removeSongs)
 
             if (songs.isEmpty()) {
                 listener.refreshItems()

@@ -127,7 +127,7 @@ class MainActivity : SimpleActivity(), MainActivityInterface {
     }
 
     override fun onPrepareOptionsMenu(menu: Menu): Boolean {
-        val isSongSelected = MusicService.mCurrSong != null
+        val isSongSelected = MusicService.mCurrTrack != null
         menu.apply {
             findItem(R.id.remove_current).isVisible = !isThirdPartyIntent && isSongSelected
             findItem(R.id.delete_current).isVisible = !isThirdPartyIntent && isSongSelected
@@ -299,7 +299,7 @@ class MainActivity : SimpleActivity(), MainActivityInterface {
     }
 
     private fun removePlaylist() {
-        if (config.currentPlaylist == ALL_SONGS_PLAYLIST_ID) {
+        if (config.currentPlaylist == ALL_TRACKS_PLAYLIST_ID) {
             toast(R.string.all_songs_cannot_be_deleted)
         } else {
             ensureBackgroundThread {
@@ -311,7 +311,7 @@ class MainActivity : SimpleActivity(), MainActivityInterface {
                                 val paths = getPlaylistSongs(config.currentPlaylist).map { it.path }
                                 val files = paths.map { FileDirItem(it, it.getFilenameFromPath()) } as ArrayList<FileDirItem>
                                 paths.forEach {
-                                    songsDAO.removeSongPath(it)
+                                    tracksDAO.removeSongPath(it)
                                 }
                                 deleteFiles(files)
                             }
@@ -319,7 +319,7 @@ class MainActivity : SimpleActivity(), MainActivityInterface {
                             if (playlist != null) {
                                 deletePlaylists(arrayListOf(playlist))
                             }
-                            playlistChanged(ALL_SONGS_PLAYLIST_ID)
+                            playlistChanged(ALL_TRACKS_PLAYLIST_ID)
                         }
                     }
                 }
@@ -345,7 +345,7 @@ class MainActivity : SimpleActivity(), MainActivityInterface {
             if (it == -1) {
                 NewPlaylistDialog(this) {
                     wasInitialPlaylistSet = false
-                    MusicService.mCurrSong = null
+                    MusicService.mCurrTrack = null
                     playlistChanged(it, false)
                     invalidateOptionsMenu()
                 }
@@ -464,9 +464,9 @@ class MainActivity : SimpleActivity(), MainActivityInterface {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun songChangedEvent(event: Events.SongChanged) {
+    fun songChangedEvent(event: Events.TrackChanged) {
         if (wasInitialPlaylistSet) {
-            getCurrentFragment()?.songChangedEvent(event.song)
+            getCurrentFragment()?.songChangedEvent(event.track)
         }
     }
 
@@ -478,7 +478,7 @@ class MainActivity : SimpleActivity(), MainActivityInterface {
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun playlistUpdated(event: Events.PlaylistUpdated) {
         wasInitialPlaylistSet = true
-        getCurrentFragment()?.fillSongsListView(event.songs.clone() as ArrayList<Track>)
+        getCurrentFragment()?.fillSongsListView(event.tracks.clone() as ArrayList<Track>)
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

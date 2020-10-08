@@ -8,7 +8,7 @@ import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.extensions.playlistDAO
-import com.simplemobiletools.musicplayer.helpers.ALL_SONGS_PLAYLIST_ID
+import com.simplemobiletools.musicplayer.helpers.ALL_TRACKS_PLAYLIST_ID
 import com.simplemobiletools.musicplayer.interfaces.PlaylistsDao
 import com.simplemobiletools.musicplayer.interfaces.QueueItemsDao
 import com.simplemobiletools.musicplayer.interfaces.SongsDao
@@ -61,7 +61,7 @@ abstract class SongsDatabase : RoomDatabase() {
 
         private fun addInitialPlaylist(context: Context) {
             val allSongs = context.resources.getString(R.string.all_songs)
-            val playlist = Playlist(ALL_SONGS_PLAYLIST_ID, allSongs)
+            val playlist = Playlist(ALL_TRACKS_PLAYLIST_ID, allSongs)
             context.playlistDAO.insert(playlist)
         }
 

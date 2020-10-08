@@ -17,12 +17,12 @@ class Config(context: Context) : BaseConfig(context) {
         set(equalizer) = prefs.edit().putInt(EQUALIZER, equalizer).apply()
 
     var currentPlaylist: Int
-        get() = prefs.getInt(CURRENT_PLAYLIST, ALL_SONGS_PLAYLIST_ID)
+        get() = prefs.getInt(CURRENT_PLAYLIST, ALL_TRACKS_PLAYLIST_ID)
         set(currentPlaylist) = prefs.edit().putInt(CURRENT_PLAYLIST, currentPlaylist).apply()
 
     var repeatSong: Boolean
-        get() = prefs.getBoolean(REPEAT_SONG, false)
-        set(repeat) = prefs.edit().putBoolean(REPEAT_SONG, repeat).apply()
+        get() = prefs.getBoolean(REPEAT_TRACK, false)
+        set(repeat) = prefs.edit().putBoolean(REPEAT_TRACK, repeat).apply()
 
     var autoplay: Boolean
         get() = prefs.getBoolean(AUTOPLAY, true)

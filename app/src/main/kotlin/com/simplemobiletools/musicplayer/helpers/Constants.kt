@@ -2,12 +2,12 @@ package com.simplemobiletools.musicplayer.helpers
 
 import android.net.Uri
 
-const val SONG_POS = "song_position"
+const val TRACK_POS = "track_position"
 const val PROGRESS = "progress"
 const val CALL_SETUP_AFTER = "call_setup_after"
-const val SONG_IDS = "song_ids"
-const val EDITED_SONG = "edited_song"
-const val ALL_SONGS_PLAYLIST_ID = 1
+const val TRACK_IDS = "track_ids"
+const val EDITED_TRACK = "edited_track"
+const val ALL_TRACKS_PLAYLIST_ID = 1
 const val START_SLEEP_TIMER = "start_sleep_timer"
 const val STOP_SLEEP_TIMER = "stop_sleep_timer"
 const val TRACK_ID = "track_id"
@@ -36,20 +36,20 @@ const val SET_PROGRESS = PATH + "SET_PROGRESS"
 const val SET_EQUALIZER = PATH + "SET_EQUALIZER"
 const val SKIP_BACKWARD = PATH + "SKIP_BACKWARD"
 const val SKIP_FORWARD = PATH + "SKIP_FORWARD"
-const val REMOVE_CURRENT_SONG = PATH + "REMOVE_CURRENT_SONG"
-const val REMOVE_SONG_IDS = PATH + "REMOVE_SONG_IDS"
+const val REMOVE_CURRENT_TRACK = PATH + "REMOVE_CURRENT_TRACK"
+const val REMOVE_TRACK_IDS = PATH + "REMOVE_TRACK_IDS"
 const val BROADCAST_STATUS = PATH + "BROADCAST_STATUS"
 const val NOTIFICATION_DISMISSED = PATH + "NOTIFICATION_DISMISSED"
 
-const val NEW_SONG = "NEW_SONG"
+const val NEW_TRACK = "NEW_TRACK"
 const val IS_PLAYING = "IS_PLAYING"
-const val SONG_CHANGED = "SONG_CHANGED"
-const val SONG_STATE_CHANGED = "SONG_STATE_CHANGED"
+const val TRACK_CHANGED = "TRACK_CHANGED"
+const val TRACK_STATE_CHANGED = "TRACK_STATE_CHANGED"
 
 // shared preferences
 const val SHUFFLE = "shuffle"
 const val EQUALIZER = "equalizer"
-const val REPEAT_SONG = "repeat_song"
+const val REPEAT_TRACK = "repeat_track"
 const val AUTOPLAY = "autoplay"
 const val IGNORED_PATHS = "ignored_paths"
 const val CURRENT_PLAYLIST = "current_playlist"

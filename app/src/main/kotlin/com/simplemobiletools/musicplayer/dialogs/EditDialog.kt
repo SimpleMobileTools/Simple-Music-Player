@@ -8,7 +8,7 @@ import com.simplemobiletools.commons.activities.BaseSimpleActivity
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.musicplayer.R
-import com.simplemobiletools.musicplayer.extensions.songsDAO
+import com.simplemobiletools.musicplayer.extensions.tracksDAO
 import com.simplemobiletools.musicplayer.models.Track
 import kotlinx.android.synthetic.main.dialog_rename_song.*
 import kotlinx.android.synthetic.main.dialog_rename_song.view.*
@@ -72,7 +72,7 @@ class EditDialog(val activity: BaseSimpleActivity, val song: Track, val callback
     private fun storeEditedSong(song: Track, oldPath: String, newPath: String) {
         ensureBackgroundThread {
             try {
-                activity.songsDAO.updateSongInfo(newPath, song.artist, song.title, oldPath)
+                activity.tracksDAO.updateSongInfo(newPath, song.artist, song.title, oldPath)
             } catch (e: Exception) {
                 activity.showErrorToast(e)
             }

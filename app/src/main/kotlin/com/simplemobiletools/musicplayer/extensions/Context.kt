@@ -42,7 +42,7 @@ val Context.config: Config get() = Config.newInstance(applicationContext)
 
 val Context.playlistDAO: PlaylistsDao get() = getSongsDB().PlaylistsDao()
 
-val Context.songsDAO: SongsDao get() = getSongsDB().SongsDao()
+val Context.tracksDAO: SongsDao get() = getSongsDB().SongsDao()
 
 val Context.queueDAO: QueueItemsDao get() = getSongsDB().QueueItemsDao()
 
@@ -71,10 +71,10 @@ fun Context.getPlaylistIdWithTitle(title: String) = playlistDAO.getPlaylistWithT
 fun Context.getPlaylistSongs(playlistId: Int): ArrayList<Track> {
     val validSongs = ArrayList<Track>()
     if (isQPlus()) {
-        validSongs.addAll(songsDAO.getSongsFromPlaylist(playlistId))
+        validSongs.addAll(tracksDAO.getTracksFromPlaylist(playlistId))
     } else {
         val invalidSongs = ArrayList<Track>()
-        val songs = songsDAO.getSongsFromPlaylist(playlistId)
+        val songs = tracksDAO.getTracksFromPlaylist(playlistId)
         val showFilename = config.showFilename
         songs.forEach {
             it.title = it.getProperTitle(showFilename)
@@ -88,7 +88,7 @@ fun Context.getPlaylistSongs(playlistId: Int): ArrayList<Track> {
 
         getSongsDB().runInTransaction {
             invalidSongs.forEach {
-                songsDAO.removeSongPath(it.path)
+                tracksDAO.removeSongPath(it.path)
             }
         }
     }
@@ -99,22 +99,22 @@ fun Context.getPlaylistSongs(playlistId: Int): ArrayList<Track> {
 fun Context.deletePlaylists(playlists: ArrayList<Playlist>) {
     playlistDAO.deletePlaylists(playlists)
     playlists.forEach {
-        songsDAO.removePlaylistSongs(it.id)
+        tracksDAO.removePlaylistSongs(it.id)
     }
 }
 
-fun Context.broadcastUpdateWidgetSong(newSong: Track?) {
+fun Context.broadcastUpdateWidgetTrack(newSong: Track?) {
     Intent(this, MyWidgetProvider::class.java).apply {
-        putExtra(NEW_SONG, newSong)
-        action = SONG_CHANGED
+        putExtra(NEW_TRACK, newSong)
+        action = TRACK_CHANGED
         sendBroadcast(this)
     }
 }
 
-fun Context.broadcastUpdateWidgetSongState(isPlaying: Boolean) {
+fun Context.broadcastUpdateWidgetTrackState(isPlaying: Boolean) {
     Intent(this, MyWidgetProvider::class.java).apply {
         putExtra(IS_PLAYING, isPlaying)
-        action = SONG_STATE_CHANGED
+        action = TRACK_STATE_CHANGED
         sendBroadcast(this)
     }
 }
@@ -165,14 +165,14 @@ fun Context.getAlbumsSync(artist: Artist): ArrayList<Album> {
     return albums
 }
 
-fun Context.getSongs(albumId: Int, callback: (songs: ArrayList<Track>) -> Unit) {
+fun Context.getTracks(albumId: Int, callback: (tracks: ArrayList<Track>) -> Unit) {
     ensureBackgroundThread {
-        val songs = getSongsSync(albumId)
-        callback(songs)
+        val tracks = getTracksSync(albumId)
+        callback(tracks)
     }
 }
 
-fun Context.getSongsSync(albumId: Int): ArrayList<Track> {
+fun Context.getTracksSync(albumId: Int): ArrayList<Track> {
     val songs = ArrayList<Track>()
     val uri = Audio.Media.EXTERNAL_CONTENT_URI
     val projection = arrayOf(
@@ -222,7 +222,7 @@ fun Context.resetQueueItems(newTracks: ArrayList<Track>, callback: () -> Unit) {
             itemsToInsert.add(queueItem)
         }
 
-        songsDAO.insertAll(newTracks)
+        tracksDAO.insertAll(newTracks)
         queueDAO.insertAll(itemsToInsert)
         callback()
     }

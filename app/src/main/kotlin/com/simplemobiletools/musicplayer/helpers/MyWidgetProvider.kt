@@ -41,8 +41,8 @@ class MyWidgetProvider : AppWidgetProvider() {
     override fun onReceive(context: Context, intent: Intent) {
         val action = intent.action
         when (action) {
-            SONG_CHANGED -> songChanged(context, intent)
-            SONG_STATE_CHANGED -> songStateChanged(context, intent)
+            TRACK_CHANGED -> songChanged(context, intent)
+            TRACK_STATE_CHANGED -> songStateChanged(context, intent)
             PREVIOUS, PLAYPAUSE, NEXT -> context.sendIntent(action)
             else -> super.onReceive(context, intent)
         }
@@ -68,7 +68,7 @@ class MyWidgetProvider : AppWidgetProvider() {
     }
 
     private fun songChanged(context: Context, intent: Intent) {
-        val song = intent.getSerializableExtra(NEW_SONG) as? Track ?: return
+        val song = intent.getSerializableExtra(NEW_TRACK) as? Track ?: return
         val appWidgetManager = AppWidgetManager.getInstance(context)
         appWidgetManager.getAppWidgetIds(getComponentName(context)).forEach {
             val views = getRemoteViews(appWidgetManager, context, it)

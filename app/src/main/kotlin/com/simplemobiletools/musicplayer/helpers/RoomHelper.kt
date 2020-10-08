@@ -2,12 +2,10 @@ package com.simplemobiletools.musicplayer.helpers
 
 import android.content.ContentUris
 import android.content.Context
-import android.net.Uri
 import android.provider.MediaStore
 import android.provider.MediaStore.Audio
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.musicplayer.extensions.config
-import com.simplemobiletools.musicplayer.extensions.songsDAO
 import com.simplemobiletools.musicplayer.models.Track
 
 class RoomHelper(val context: Context) {
@@ -16,20 +14,20 @@ class RoomHelper(val context: Context) {
     }
 
     fun addPathsToPlaylist(paths: ArrayList<String>, playlistId: Int = context.config.currentPlaylist) {
-        val songs = getSongsFromPaths(paths, playlistId)
+        val songs = getTracksFromPaths(paths, playlistId)
         //context.songsDAO.insertAll(songs)
     }
 
-    fun addSongsToPlaylist(songs: ArrayList<Track>) {
+    fun addTracksToPlaylist(songs: ArrayList<Track>) {
         //context.songsDAO.insertAll(songs)
     }
 
-    fun getSongFromPath(path: String): Track? {
-        val songs = getSongsFromPaths(arrayListOf(path), 0)
+    fun getTrackFromPath(path: String): Track? {
+        val songs = getTracksFromPaths(arrayListOf(path), 0)
         return songs.firstOrNull()
     }
 
-    private fun getSongsFromPaths(paths: List<String>, playlistId: Int): ArrayList<Track> {
+    private fun getTracksFromPaths(paths: List<String>, playlistId: Int): ArrayList<Track> {
         val uri = Audio.Media.EXTERNAL_CONTENT_URI
         val projection = arrayOf(Audio.Media._ID,
             Audio.Media.TITLE,

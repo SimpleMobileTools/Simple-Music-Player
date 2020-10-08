@@ -46,7 +46,7 @@ class WidgetConfigureActivity : SimpleActivity() {
         config_bg_color.setOnClickListener { pickBackgroundColor() }
         config_text_color.setOnClickListener { pickTextColor() }
 
-        val currSong = MusicService.mCurrSong
+        val currSong = MusicService.mCurrTrack
         if (currSong != null) {
             song_info_title.text = currSong.title
             song_info_artist.text = currSong.artist
