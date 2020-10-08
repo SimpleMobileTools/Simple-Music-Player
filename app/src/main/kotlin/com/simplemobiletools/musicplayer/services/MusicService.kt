@@ -188,9 +188,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     private fun handleInit() {
         mIsThirdPartyIntent = false
         ensureBackgroundThread {
-            if (!mIsServiceInitialized) {
-                initService()
-            }
+            initService()
             initSongs()
         }
     }
