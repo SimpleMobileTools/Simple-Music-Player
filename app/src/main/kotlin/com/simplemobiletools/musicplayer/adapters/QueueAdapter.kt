@@ -14,6 +14,7 @@ import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
 import com.simplemobiletools.musicplayer.models.Track
+import com.simplemobiletools.musicplayer.services.MusicService
 import kotlinx.android.synthetic.main.item_track_queue.view.*
 import java.util.*
 
@@ -64,7 +65,8 @@ class QueueAdapter(activity: SimpleActivity, val items: ArrayList<Track>, recycl
             track_queue_title.text = track.title
 
             arrayOf(track_queue_title, track_queue_duration).forEach {
-                it.setTextColor(textColor)
+                val color = if (track == MusicService.mCurrTrack) primaryColor else textColor
+                it.setTextColor(color)
             }
 
             track_queue_duration.text = track.duration.getFormattedDuration()
