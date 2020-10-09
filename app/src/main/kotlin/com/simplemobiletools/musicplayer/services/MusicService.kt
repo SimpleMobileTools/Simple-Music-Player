@@ -180,6 +180,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
             val wantedTrackId = intent?.getLongExtra(TRACK_ID, -1L)
             mCurrTrack = mTracks.firstOrNull { it.id == wantedTrackId }
+            shuffleTracks()
         }
 
         mWasPlayingAtFocusLost = false
@@ -421,11 +422,12 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         }
 
         mTracks = getQueuedTracks()
-        Track.sorting = config.sorting
+
+        /*Track.sorting = config.sorting
         try {
             mTracks.sort()
         } catch (ignored: Exception) {
-        }
+        }*/
     }
 
     private fun setupEqualizer() {
@@ -455,6 +457,19 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         }
 
         return tracks
+    }
+
+    private fun shuffleTracks() {
+        if (!config.isShuffleEnabled) {
+            return
+        }
+
+        mTracks.shuffle()
+
+        if (mCurrTrack != null) {
+            mTracks.remove(mCurrTrack)
+            mTracks.add(0, mCurrTrack!!)
+        }
     }
 
     @SuppressLint("NewApi")
