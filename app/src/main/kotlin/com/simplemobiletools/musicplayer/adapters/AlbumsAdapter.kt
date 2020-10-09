@@ -120,14 +120,18 @@ class AlbumsAdapter(activity: SimpleActivity, val items: ArrayList<ListItem>, re
             song_duration.text = track.duration.getFormattedDuration()
             song_duration.setTextColor(textColor)
 
-            val options = RequestOptions()
-                .error(placeholder)
-                .transform(CenterCrop(), RoundedCorners(8))
+            if (track.coverArt.isEmpty()) {
+                song_image.setImageDrawable(placeholder)
+            } else {
+                val options = RequestOptions()
+                    .error(placeholder)
+                    .transform(CenterCrop(), RoundedCorners(8))
 
-            Glide.with(activity)
-                .load(track.coverArt)
-                .apply(options)
-                .into(findViewById(R.id.song_image))
+                Glide.with(activity)
+                    .load(track.coverArt)
+                    .apply(options)
+                    .into(findViewById(R.id.song_image))
+            }
         }
     }
 

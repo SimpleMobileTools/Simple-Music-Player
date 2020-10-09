@@ -173,7 +173,7 @@ fun Context.getTracks(albumId: Int, callback: (tracks: ArrayList<Track>) -> Unit
 }
 
 fun Context.getTracksSync(albumId: Int): ArrayList<Track> {
-    val songs = ArrayList<Track>()
+    val tracks = ArrayList<Track>()
     val uri = Audio.Media.EXTERNAL_CONTENT_URI
     val projection = arrayOf(
         Audio.Media._ID,
@@ -186,6 +186,15 @@ fun Context.getTracksSync(albumId: Int): ArrayList<Track> {
 
     val selection = "${Audio.Albums.ALBUM_ID} = ?"
     val selectionArgs = arrayOf(albumId.toString())
+    val coverUri = ContentUris.withAppendedId(artworkUri, albumId.toLong())
+    var coverArt = ""
+
+    // check if the album art file exists at all
+    try {
+        contentResolver.openInputStream(coverUri)
+        coverArt = coverUri.toString()
+    } catch (e: Exception) {
+    }
 
     try {
         val cursor = contentResolver.query(uri, projection, selection, selectionArgs, null)
@@ -199,9 +208,8 @@ fun Context.getTracksSync(albumId: Int): ArrayList<Track> {
                     val path = ""
                     val artist = cursor.getStringValue(Audio.Media.ARTIST)
                     val album = cursor.getStringValue(Audio.Media.ALBUM)
-                    val coverArt = ContentUris.withAppendedId(artworkUri, albumId.toLong()).toString()
-                    val song = Track(id, title, artist, path, duration, album, coverArt, 0, trackId)
-                    songs.add(song)
+                    val track = Track(id, title, artist, path, duration, album, coverArt, 0, trackId)
+                    tracks.add(track)
                 } while (cursor.moveToNext())
             }
         }
@@ -209,7 +217,7 @@ fun Context.getTracksSync(albumId: Int): ArrayList<Track> {
         showErrorToast(e)
     }
 
-    return songs
+    return tracks
 }
 
 fun Context.resetQueueItems(newTracks: ArrayList<Track>, callback: () -> Unit) {

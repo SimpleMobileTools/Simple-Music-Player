@@ -71,14 +71,18 @@ class QueueAdapter(activity: SimpleActivity, val items: ArrayList<Track>, recycl
 
             track_queue_duration.text = track.duration.getFormattedDuration()
 
-            val options = RequestOptions()
-                .error(placeholder)
-                .transform(CenterCrop(), RoundedCorners(8))
+            if (track.coverArt.isEmpty()) {
+                track_queue_image.setImageDrawable(placeholder)
+            } else {
+                val options = RequestOptions()
+                    .error(placeholder)
+                    .transform(CenterCrop(), RoundedCorners(8))
 
-            Glide.with(activity)
-                .load(track.coverArt)
-                .apply(options)
-                .into(findViewById(R.id.track_queue_image))
+                Glide.with(activity)
+                    .load(track.coverArt)
+                    .apply(options)
+                    .into(findViewById(R.id.track_queue_image))
+            }
         }
     }
 }
