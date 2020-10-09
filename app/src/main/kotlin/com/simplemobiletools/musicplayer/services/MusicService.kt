@@ -580,25 +580,18 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     }
 
     private fun getNewTrackId(): Long {
-        return if (config.isShuffleEnabled) {
-            val cnt = mTracks.size
-            when (cnt) {
-                0 -> -1L
-                1 -> mTracks.first().id
-                else -> {
-                    val random = Random()
-                    val newSongIndex = random.nextInt(cnt)
-                    mTracks[newSongIndex].id
+        return when (mTracks.size) {
+            0 -> -1L
+            1 -> mTracks.first().id
+            else -> {
+                val currentTrackIndex = mTracks.indexOfFirstOrNull { it.id == mCurrTrack?.id }
+                if (currentTrackIndex != null) {
+                    val nextTrack = mTracks[(currentTrackIndex + 1) % mTracks.size]
+                    nextTrack.id
+                } else {
+                    -1L
                 }
             }
-        } else {
-            if (mPlayedTrackIndexes.isEmpty()) {
-                return 0L
-            }
-
-            val lastIndex = mPlayedTrackIndexes[mPlayedTrackIndexes.size - 1]
-            val index = (lastIndex + 1) % Math.max(mTracks.size, 1)
-            mTracks[index].id
         }
     }
 
