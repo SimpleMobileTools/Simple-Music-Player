@@ -119,6 +119,10 @@
             android:theme="@style/TranslucentTheme"
             android:parentActivityName=".activities.MainActivity" />
 
+        <activity
+            android:name=".activities.QueueActivity"
+            android:parentActivityName=".activities.TrackActivity" />
+
         <service
             android:name=".services.MusicService"
             android:exported="false">

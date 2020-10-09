@@ -19,6 +19,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.simplemobiletools.commons.extensions.*
+import com.simplemobiletools.commons.helpers.mydebug
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.extensions.sendIntent
@@ -61,6 +62,9 @@ class TrackActivity : SimpleActivity() {
         }
 
         next_track_holder.background = ColorDrawable(config.backgroundColor)
+        next_track_holder.setOnClickListener {
+            startActivity(Intent(applicationContext, QueueActivity::class.java))
+        }
     }
 
     override fun onResume() {
