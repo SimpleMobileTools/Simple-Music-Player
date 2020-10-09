@@ -59,12 +59,12 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         var mCurrTrack: Track? = null
         var mCurrTrackCover: Bitmap? = null
         var mEqualizer: Equalizer? = null
+        var mTracks = ArrayList<Track>()
         private var mHeadsetPlugReceiver = HeadsetPlugReceiver()
         private var mPlayer: MediaPlayer? = null
         private var mPlayedTrackIndexes = ArrayList<Int>()
         private var mProgressHandler = Handler()
         private var mSleepTimer: CountDownTimer? = null
-        private var mTracks = ArrayList<Track>()
         private var mAudioManager: AudioManager? = null
         private var mCoverArtHeight = 0
         private var mOreoFocusHandler: OreoAudioFocusHandler? = null

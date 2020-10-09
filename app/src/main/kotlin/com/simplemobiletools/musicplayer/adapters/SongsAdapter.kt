@@ -82,17 +82,17 @@ class SongsAdapter(activity: SimpleActivity, val items: ArrayList<ListItem>, rec
 
     private fun getItemWithKey(key: Int) = items.firstOrNull { it.hashCode() == key }
 
-    private fun setupSong(view: View, song: Track) {
+    private fun setupSong(view: View, track: Track) {
         view.apply {
-            song_frame?.isSelected = selectedKeys.contains(song.hashCode())
-            song_title.text = song.title
+            song_frame?.isSelected = selectedKeys.contains(track.hashCode())
+            song_title.text = track.title
 
             arrayOf(song_id, song_title, song_duration).forEach {
                 it.setTextColor(textColor)
             }
 
-            song_id.text = song.trackId.toString()
-            song_duration.text = song.duration.getFormattedDuration()
+            song_id.text = track.trackId.toString()
+            song_duration.text = track.duration.getFormattedDuration()
         }
     }
 

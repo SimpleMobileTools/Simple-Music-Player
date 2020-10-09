@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/track_queue_frame"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="@drawable/selector">
+
+    <RelativeLayout
+        android:id="@+id/track_queue_holder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/medium_margin"
+        android:paddingTop="@dimen/activity_margin"
+        android:paddingEnd="@dimen/activity_margin"
+        android:paddingBottom="@dimen/activity_margin">
+
+        <ImageView
+            android:id="@+id/track_queue_image"
+            android:layout_width="@dimen/song_image_size"
+            android:layout_height="@dimen/song_image_size"
+            android:layout_marginStart="@dimen/small_margin" />
+
+        <com.simplemobiletools.commons.views.MyTextView
+            android:id="@+id/track_queue_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toStartOf="@+id/track_queue_duration"
+            android:layout_toEndOf="@+id/track_queue_image"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:paddingStart="@dimen/normal_margin"
+            android:paddingEnd="@dimen/activity_margin"
+            android:textSize="@dimen/bigger_text_size"
+            tools:text="Track title" />
+
+        <com.simplemobiletools.commons.views.MyTextView
+            android:id="@+id/track_queue_duration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:textSize="@dimen/bigger_text_size"
+            tools:text="3:45" />
+
+    </RelativeLayout>
+</FrameLayout>
