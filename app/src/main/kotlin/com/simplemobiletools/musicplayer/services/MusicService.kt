@@ -144,7 +144,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             PLAYPAUSE -> handlePlayPause()
             NEXT -> handleNext()
             RESET -> handleReset()
-            PLAYPOS -> playTrack(intent)
+            PLAY_TRACK -> playTrack(intent)
             EDIT -> handleEdit(intent)
             FINISH -> handleFinish()
             FINISH_IF_NOT_PLAYING -> finishIfNotPlaying()
@@ -656,9 +656,11 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             setupTrack()
         } else {
             mPlayOnPrepare = true
-            /*val pos = intent.getIntExtra(SONG_POS, 0)
-            setTrack(pos, true)*/
+            val trackId = intent.getLongExtra(TRACK_ID, 0L)
+            setTrack(trackId, false)
+            broadcastTrackChange(mCurrTrack)
         }
+
         mMediaSession?.isActive = true
     }
 

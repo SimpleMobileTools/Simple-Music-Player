@@ -206,7 +206,7 @@ class SongsFragment(context: Context, attributeSet: AttributeSet) : MyViewPagerF
         setupIconDescriptions()
         Intent(activity, MusicService::class.java).apply {
             putExtra(TRACK_POS, pos)
-            action = PLAYPOS
+            //action = PLAYPOS
             activity.startService(this)
         }
     }

@@ -1,11 +1,17 @@
 package com.simplemobiletools.musicplayer.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
+import com.google.gson.Gson
+import com.simplemobiletools.commons.helpers.mydebug
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.adapters.QueueAdapter
 import com.simplemobiletools.musicplayer.adapters.SongsAdapter
+import com.simplemobiletools.musicplayer.helpers.*
+import com.simplemobiletools.musicplayer.helpers.TRACK_POS
 import com.simplemobiletools.musicplayer.models.Events
+import com.simplemobiletools.musicplayer.models.Track
 import com.simplemobiletools.musicplayer.services.MusicService
 import kotlinx.android.synthetic.main.activity_queue.*
 import kotlinx.android.synthetic.main.activity_songs.*
@@ -21,12 +27,7 @@ class QueueActivity : SimpleActivity() {
         setContentView(R.layout.activity_queue)
         bus = EventBus.getDefault()
         bus!!.register(this)
-
-        QueueAdapter(this, MusicService.mTracks, queue_list) {
-
-        }.apply {
-            queue_list.adapter = this
-        }
+        setupAdapter()
     }
 
     override fun onDestroy() {
@@ -39,8 +40,25 @@ class QueueActivity : SimpleActivity() {
         return super.onCreateOptionsMenu(menu)
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    fun queueUpdated(event: Events.QueueUpdated) {
+    private fun setupAdapter() {
+        val adapter = queue_list.adapter
+        if (adapter == null) {
+            QueueAdapter(this, MusicService.mTracks, queue_list) {
+                Intent(this, MusicService::class.java).apply {
+                    action = PLAY_TRACK
+                    putExtra(TRACK_ID, (it as Track).id)
+                    startService(this)
+                }
+            }.apply {
+                queue_list.adapter = this
+            }
+        } else {
+            adapter.notifyDataSetChanged()
+        }
+    }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun trackChangedEvent(event: Events.TrackChanged) {
+        setupAdapter()
     }
 }
