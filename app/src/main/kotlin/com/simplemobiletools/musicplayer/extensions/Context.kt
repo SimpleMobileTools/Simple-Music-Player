@@ -191,8 +191,12 @@ fun Context.getTracksSync(albumId: Int): ArrayList<Track> {
 
     // check if the album art file exists at all
     try {
-        contentResolver.openInputStream(coverUri)
-        coverArt = coverUri.toString()
+        val cursor = contentResolver.query(coverUri, null, null, null, null)
+        cursor?.use {
+            if (cursor.moveToFirst()) {
+                coverArt = coverUri.toString()
+            }
+        }
     } catch (e: Exception) {
     }
 
