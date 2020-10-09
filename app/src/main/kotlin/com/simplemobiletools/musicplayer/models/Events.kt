@@ -4,6 +4,7 @@ import java.util.*
 
 class Events {
     class TrackChanged(val track: Track?)
+    class NextTrackChanged(val track: Track?)
     class TrackStateChanged(val isPlaying: Boolean)
     class PlaylistUpdated(val tracks: ArrayList<Track>)
     class ProgressUpdated(val progress: Int)

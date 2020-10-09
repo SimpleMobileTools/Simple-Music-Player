@@ -33,11 +33,13 @@ import org.greenrobot.eventbus.ThreadMode
 
 class TrackActivity : SimpleActivity() {
     private var bus: EventBus? = null
+    private lateinit var nextTrackPlaceholder: Drawable
 
     override fun onCreate(savedInstanceState: Bundle?) {
         useDynamicTheme = false
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_track)
+        nextTrackPlaceholder = resources.getColoredDrawableWithColor(R.drawable.ic_headset, config.textColor)
         bus = EventBus.getDefault()
         bus!!.register(this)
 
@@ -59,26 +61,6 @@ class TrackActivity : SimpleActivity() {
         }
 
         next_track_holder.background = ColorDrawable(config.backgroundColor)
-        val artist = if (track.artist.trim().isNotEmpty() && track.artist != MediaStore.UNKNOWN_STRING) {
-            "${track.artist} • "
-        } else {
-            ""
-        }
-
-        next_track_label.text = "${getString(R.string.next_track)} $artist${track.title}"
-        next_track_duration.text = track.duration.getFormattedDuration()
-
-        arrayOf(next_track_label, next_track_duration).forEach {
-            it.setTextColor(config.backgroundColor)
-        }
-
-        val options = RequestOptions()
-            .transform(CenterCrop(), RoundedCorners(8))
-
-        Glide.with(this)
-            .load(track.coverArt)
-            .apply(options)
-            .into(findViewById(R.id.next_track_image))
     }
 
     override fun onResume() {
@@ -105,6 +87,26 @@ class TrackActivity : SimpleActivity() {
 
         activity_track_progressbar.max = track.duration
         activity_track_progress_max.text = track.duration.getFormattedDuration()
+    }
+
+    private fun setupNextTrackInfo(track: Track?) {
+        val artist = if (track?.artist?.trim()?.isNotEmpty() == true && track.artist != MediaStore.UNKNOWN_STRING) {
+            "${track.artist} • "
+        } else {
+            ""
+        }
+
+        next_track_label.text = "${getString(R.string.next_track)} $artist${track?.title}"
+        next_track_duration.text = track?.duration?.getFormattedDuration()
+
+        val options = RequestOptions()
+            .error(nextTrackPlaceholder)
+            .transform(CenterCrop(), RoundedCorners(8))
+
+        Glide.with(this)
+            .load(track?.coverArt)
+            .apply(options)
+            .into(findViewById(R.id.next_track_image))
     }
 
     private fun setupButtons() {
@@ -215,5 +217,10 @@ class TrackActivity : SimpleActivity() {
         } else {
             setupTrackInfo(event.track)
         }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun nextTrackChangedEvent(event: Events.NextTrackChanged) {
+        setupNextTrackInfo(event.track!!)
     }
 }

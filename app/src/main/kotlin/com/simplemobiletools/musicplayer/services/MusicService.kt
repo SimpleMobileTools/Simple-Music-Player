@@ -37,6 +37,7 @@ import com.simplemobiletools.musicplayer.activities.MainActivity
 import com.simplemobiletools.musicplayer.databases.SongsDatabase
 import com.simplemobiletools.musicplayer.extensions.*
 import com.simplemobiletools.musicplayer.helpers.*
+import com.simplemobiletools.musicplayer.inlines.indexOfFirstOrNull
 import com.simplemobiletools.musicplayer.models.Events
 import com.simplemobiletools.musicplayer.models.Track
 import com.simplemobiletools.musicplayer.receivers.ControlActionsListener
@@ -757,12 +758,24 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         Handler(Looper.getMainLooper()).post {
             broadcastUpdateWidgetTrack(track)
             EventBus.getDefault().post(Events.TrackChanged(track))
+
+            val currentTrackIndex = mTracks.indexOfFirstOrNull { it.id == track?.id }
+            if (currentTrackIndex != null) {
+                val nextTrack = mTracks[(currentTrackIndex + 1) % mTracks.size]
+                broadcastNextTrackChange(nextTrack)
+            }
         }
     }
 
     private fun broadcastTrackStateChange(isPlaying: Boolean) {
         broadcastUpdateWidgetTrackState(isPlaying)
         EventBus.getDefault().post(Events.TrackStateChanged(isPlaying))
+    }
+
+    private fun broadcastNextTrackChange(track: Track?) {
+        Handler(Looper.getMainLooper()).post {
+            EventBus.getDefault().post(Events.NextTrackChanged(track))
+        }
     }
 
     // do not just return the album cover, but also a boolean to indicate if it a real cover, or just the placeholder
