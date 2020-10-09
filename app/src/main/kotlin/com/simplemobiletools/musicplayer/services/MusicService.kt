@@ -138,7 +138,6 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         when (action) {
             INIT -> handleInit(intent)
             INIT_PATH -> handleInitPath(intent)
-            SETUP -> handleSetup()
             PREVIOUS -> handlePrevious()
             PAUSE -> pauseTrack()
             PLAYPAUSE -> handlePlayPause()
@@ -208,11 +207,6 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         } else {
             updateUI()
         }
-    }
-
-    private fun handleSetup() {
-        mPlayOnPrepare = true
-        setupNextTrack()
     }
 
     private fun handlePrevious() {

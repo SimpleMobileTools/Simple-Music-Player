@@ -21,7 +21,6 @@ val artworkUri = Uri.parse("content://media/external/audio/albumart")
 
 const val INIT = PATH + "INIT"
 const val INIT_PATH = PATH + "INIT_PATH"
-const val SETUP = PATH + "SETUP"
 const val FINISH = PATH + "FINISH"
 const val FINISH_IF_NOT_PLAYING = PATH + "FINISH_IF_NOT_PLAYING"
 const val PREVIOUS = PATH + "PREVIOUS"
