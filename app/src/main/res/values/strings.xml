@@ -18,6 +18,7 @@
     <string name="autoplay_enabled">Autoplay enabled</string>
     <string name="autoplay_disabled">Autoplay disabled</string>
     <string name="sleep_timer">Sleep timer</string>
+    <string name="next_track">Next:</string>
 
     <!-- Playlists -->
     <string name="add_file_to_playlist">Add file to playlist</string>

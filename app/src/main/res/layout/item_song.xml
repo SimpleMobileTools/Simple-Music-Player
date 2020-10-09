@@ -47,7 +47,7 @@
             android:ellipsize="end"
             android:maxLines="2"
             android:paddingStart="@dimen/normal_margin"
-            android:paddingEnd="@dimen/medium_margin"
+            android:paddingEnd="@dimen/activity_margin"
             android:textSize="@dimen/bigger_text_size"
             tools:text="Track title" />
 
@@ -57,7 +57,6 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:paddingEnd="@dimen/small_margin"
             android:textSize="@dimen/bigger_text_size"
             tools:text="3:45" />
 

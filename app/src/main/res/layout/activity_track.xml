@@ -44,7 +44,7 @@
         android:id="@+id/activity_track_progressbar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/activity_margin"
+        android:layout_marginTop="@dimen/medium_margin"
         android:clickable="true"
         android:focusable="true"
         android:paddingTop="@dimen/normal_margin"
@@ -108,7 +108,7 @@
         android:paddingTop="@dimen/small_margin"
         android:paddingBottom="@dimen/small_margin"
         android:src="@drawable/ic_shuffle_vector"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/next_track_holder"
         app:layout_constraintEnd_toStartOf="@+id/activity_track_previous"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/activity_track_artist" />
@@ -122,7 +122,7 @@
         android:paddingTop="@dimen/medium_margin"
         android:paddingBottom="@dimen/medium_margin"
         android:src="@drawable/ic_previous_vector"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/next_track_holder"
         app:layout_constraintEnd_toStartOf="@+id/activity_track_play_pause"
         app:layout_constraintStart_toEndOf="@+id/activity_track_toggle_shuffle"
         app:layout_constraintTop_toBottomOf="@+id/activity_track_artist" />
@@ -136,7 +136,7 @@
         android:paddingTop="@dimen/medium_margin"
         android:paddingBottom="@dimen/medium_margin"
         android:src="@drawable/ic_play_vector"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/next_track_holder"
         app:layout_constraintEnd_toStartOf="@+id/activity_track_next"
         app:layout_constraintStart_toEndOf="@+id/activity_track_previous"
         app:layout_constraintTop_toBottomOf="@+id/activity_track_artist" />
@@ -150,24 +150,76 @@
         android:paddingTop="@dimen/medium_margin"
         android:paddingBottom="@dimen/medium_margin"
         android:src="@drawable/ic_next_vector"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/next_track_holder"
         app:layout_constraintEnd_toStartOf="@+id/activity_track_repeat"
         app:layout_constraintStart_toEndOf="@+id/activity_track_play_pause"
         app:layout_constraintTop_toBottomOf="@+id/activity_track_artist" />
 
     <ImageView
         android:id="@+id/activity_track_repeat"
-        style="@style/MyTransparentButton"
         android:layout_width="0dp"
         android:layout_height="@dimen/normal_icon_size"
+        android:background="?attr/selectableItemBackgroundBorderless"
         android:contentDescription="@string/enable_song_repetition"
         android:paddingTop="@dimen/small_margin"
         android:paddingBottom="@dimen/small_margin"
         android:src="@drawable/ic_repeat_vector"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/next_track_holder"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/activity_track_next"
         app:layout_constraintTop_toBottomOf="@+id/activity_track_artist" />
+
+    <RelativeLayout
+        android:id="@+id/next_track_holder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ImageView
+            android:id="@+id/next_track_divider"
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/divider_grey"
+            android:importantForAccessibility="no" />
+
+        <ImageView
+            android:id="@+id/next_track_image"
+            android:layout_width="@dimen/song_image_size"
+            android:layout_height="@dimen/song_image_size"
+            android:layout_marginStart="@dimen/normal_margin"
+            android:layout_marginTop="@dimen/normal_margin"
+            android:layout_marginEnd="@dimen/medium_margin"
+            android:layout_marginBottom="@dimen/normal_margin" />
+
+        <com.simplemobiletools.commons.views.MyTextView
+            android:id="@+id/next_track_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/next_track_image"
+            android:layout_alignBottom="@+id/next_track_image"
+            android:layout_toStartOf="@+id/next_track_duration"
+            android:layout_toEndOf="@+id/next_track_image"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            android:paddingEnd="@dimen/activity_margin"
+            android:textSize="@dimen/bigger_text_size"
+            tools:text="Next Track: My Track" />
+
+        <com.simplemobiletools.commons.views.MyTextView
+            android:id="@+id/next_track_duration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/next_track_image"
+            android:layout_alignBottom="@+id/next_track_image"
+            android:layout_alignParentEnd="true"
+            android:gravity="center_vertical"
+            android:paddingEnd="@dimen/activity_margin"
+            android:textSize="@dimen/bigger_text_size"
+            tools:text="03:45" />
+
+    </RelativeLayout>
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/activity_track_appbar"

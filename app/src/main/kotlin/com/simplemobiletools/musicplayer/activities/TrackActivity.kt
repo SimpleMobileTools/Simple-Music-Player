@@ -4,13 +4,17 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.Menu
 import android.view.View
 import android.widget.SeekBar
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -53,6 +57,28 @@ class TrackActivity : SimpleActivity() {
             action = INIT
             startService(this)
         }
+
+        next_track_holder.background = ColorDrawable(config.backgroundColor)
+        val artist = if (track.artist.trim().isNotEmpty() && track.artist != MediaStore.UNKNOWN_STRING) {
+            "${track.artist} • "
+        } else {
+            ""
+        }
+
+        next_track_label.text = "${getString(R.string.next_track)} $artist${track.title}"
+        next_track_duration.text = track.duration.getFormattedDuration()
+
+        arrayOf(next_track_label, next_track_duration).forEach {
+            it.setTextColor(config.backgroundColor)
+        }
+
+        val options = RequestOptions()
+            .transform(CenterCrop(), RoundedCorners(8))
+
+        Glide.with(this)
+            .load(track.coverArt)
+            .apply(options)
+            .into(findViewById(R.id.next_track_image))
     }
 
     override fun onResume() {
