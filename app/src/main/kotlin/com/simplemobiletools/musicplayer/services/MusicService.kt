@@ -603,13 +603,13 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
         initMediaPlayerIfNeeded()
 
-        // play the previous song if we are less than 5 secs into the song, else restart
-        // remove the latest song from the list
-        if (mPlayedTrackIndexes.size > 1 && mPlayer!!.currentPosition < 5000) {
-            mPlayedTrackIndexes.removeAt(mPlayedTrackIndexes.size - 1)
-            //setTrack(mPlayedSongIndexes[mPlayedSongIndexes.size - 1], false)
-        } else {
+        // play the previous track if we are less than 5 secs into it, else restart
+        val currentTrackIndex = mTracks.indexOfFirstOrNull { it.id == mCurrTrack?.id } ?: 0
+        if (currentTrackIndex == 0 || mPlayer!!.currentPosition < 5000) {
             restartTrack()
+        } else {
+            val previousTrack = mTracks[currentTrackIndex - 1]
+            setTrack(previousTrack.id, false)
         }
     }
 
@@ -647,8 +647,9 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     }
 
     private fun restartTrack() {
-        /*val newSongIndex = if (mPlayedSongIndexes.isEmpty()) 0 else mPlayedSongIndexes[mPlayedSongIndexes.size - 1]
-        setTrack(newSongIndex, false)*/
+        if (mCurrTrack != null) {
+            setTrack(mCurrTrack!!.id, false)
+        }
     }
 
     private fun playTrack(intent: Intent) {
