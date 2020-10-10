@@ -143,7 +143,6 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             PAUSE -> pauseTrack()
             PLAYPAUSE -> handlePlayPause()
             NEXT -> handleNext()
-            RESET -> handleReset()
             PLAY_TRACK -> playTrack(intent)
             EDIT -> handleEdit(intent)
             FINISH -> handleFinish()
@@ -167,7 +166,6 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
     private fun initService(intent: Intent?) {
         mTracks.clear()
-        mPlayedTrackIndexes = ArrayList()
         mCurrTrack = null
         if (mIsThirdPartyIntent && mIntentUri != null) {
             val path = getRealPathFromURI(mIntentUri!!) ?: ""
@@ -195,7 +193,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             initService(intent)
 
             val wantedTrackId = intent?.getLongExtra(TRACK_ID, -1L) ?: -1L
-            setTrack(wantedTrackId, true)
+            setTrack(wantedTrackId)
         }
     }
 
@@ -227,13 +225,6 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     private fun handleNext() {
         mPlayOnPrepare = true
         setupNextTrack()
-    }
-
-    private fun handleReset() {
-        if (mPlayedTrackIndexes.size - 1 != -1) {
-            mPlayOnPrepare = true
-            //setTrack(mPlayedSongIndexes[mPlayedSongIndexes.size - 1], false)
-        }
     }
 
     private fun handleEdit(intent: Intent) {
@@ -609,7 +600,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             restartTrack()
         } else {
             val previousTrack = mTracks[currentTrackIndex - 1]
-            setTrack(previousTrack.id, false)
+            setTrack(previousTrack.id)
         }
     }
 
@@ -642,13 +633,13 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         if (mIsThirdPartyIntent) {
             setupTrack()
         } else {
-            setTrack(getNewTrackId(), true)
+            setTrack(getNewTrackId())
         }
     }
 
     private fun restartTrack() {
         if (mCurrTrack != null) {
-            setTrack(mCurrTrack!!.id, false)
+            setTrack(mCurrTrack!!.id)
         }
     }
 
@@ -658,14 +649,14 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         } else {
             mPlayOnPrepare = true
             val trackId = intent.getLongExtra(TRACK_ID, 0L)
-            setTrack(trackId, false)
+            setTrack(trackId)
             broadcastTrackChange(mCurrTrack)
         }
 
         mMediaSession?.isActive = true
     }
 
-    private fun setTrack(wantedTrackId: Long, addNewSongToHistory: Boolean) {
+    private fun setTrack(wantedTrackId: Long) {
         if (mTracks.isEmpty()) {
             handleEmptyPlaylist()
             return
@@ -674,13 +665,6 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         initMediaPlayerIfNeeded()
 
         mPlayer!!.reset()
-        /*if (addNewSongToHistory) {
-            mPlayedSongIndexes.add(trackId)
-            if (mPlayedSongIndexes.size >= mSongs.size) {
-                mPlayedSongIndexes.clear()
-            }
-        }*/
-
         mCurrTrack = mTracks.firstOrNull { it.id == wantedTrackId } ?: return
 
         try {

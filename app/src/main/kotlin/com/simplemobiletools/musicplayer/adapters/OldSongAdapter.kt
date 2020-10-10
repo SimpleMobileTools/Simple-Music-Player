@@ -227,9 +227,6 @@ class OldSongAdapter(activity: SimpleActivity, var songs: ArrayList<Track>, val 
                     files.add(FileDirItem(song.path))
                     removeSongs.add(song)
                     activity.tracksDAO.removeSongPath(song.path)
-                    if (song == MusicService.mCurrTrack) {
-                        activity.sendIntent(RESET)
-                    }
                 }
             }
 
