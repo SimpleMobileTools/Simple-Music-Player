@@ -62,7 +62,6 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         var mTracks = ArrayList<Track>()
         private var mHeadsetPlugReceiver = HeadsetPlugReceiver()
         private var mPlayer: MediaPlayer? = null
-        private var mPlayedTrackIndexes = ArrayList<Int>()
         private var mProgressHandler = Handler()
         private var mSleepTimer: CountDownTimer? = null
         private var mAudioManager: AudioManager? = null
@@ -174,7 +173,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
                 mTracks.add(track)
             }
         } else {
-            getSortedTracks()
+            mTracks = getQueuedTracks()
 
             val wantedTrackId = intent?.getLongExtra(TRACK_ID, -1L)
             mCurrTrack = mTracks.firstOrNull { it.id == wantedTrackId }
@@ -246,7 +245,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     private fun handleRefreshList(intent: Intent) {
         mTracks.clear()
         ensureBackgroundThread {
-            getSortedTracks()
+            mTracks = getQueuedTracks()
             EventBus.getDefault().post(Events.PlaylistUpdated(mTracks))
 
             if (intent.getBooleanExtra(CALL_SETUP_AFTER, false)) {
@@ -400,20 +399,6 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             paths.removeAll(storedAllTrackPaths)
             RoomHelper(this).addPathsToPlaylist(paths)
         }
-    }
-
-    private fun getSortedTracks() {
-        if (config.currentPlaylist == ALL_TRACKS_PLAYLIST_ID) {
-            getAllDeviceTracks()
-        }
-
-        mTracks = getQueuedTracks()
-
-        /*Track.sorting = config.sorting
-        try {
-            mTracks.sort()
-        } catch (ignored: Exception) {
-        }*/
     }
 
     private fun setupEqualizer() {
