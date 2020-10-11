@@ -11,6 +11,7 @@
     android:foreground="@drawable/selector"
     android:paddingStart="@dimen/normal_margin"
     android:paddingTop="@dimen/activity_margin"
+    android:paddingEnd="@dimen/medium_margin"
     android:paddingBottom="@dimen/activity_margin">
 
     <ImageView
@@ -43,12 +44,24 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:paddingEnd="@dimen/activity_margin"
+        android:layout_marginEnd="@dimen/medium_margin"
         android:textSize="@dimen/bigger_text_size"
         app:flow_verticalAlign="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/track_queue_drag_handle"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="3:45" />
+
+    <ImageView
+        android:id="@+id/track_queue_drag_handle"
+        android:layout_width="@dimen/song_image_size"
+        android:layout_height="@dimen/song_image_size"
+        android:padding="@dimen/medium_margin"
+        android:src="@drawable/ic_drag_handle_vector"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
