@@ -294,7 +294,7 @@ class SongsFragment(context: Context, attributeSet: AttributeSet) : MyViewPagerF
             return
         }
 
-        val coverToUse = if (MusicService.mCurrTrackCover?.isRecycled == true) {
+        /*val coverToUse = if (MusicService.mCurrTrackCover?.isRecycled == true) {
             resources.getColoredBitmap(R.drawable.ic_headset, config.textColor)
         } else {
             MusicService.mCurrTrackCover
@@ -307,7 +307,7 @@ class SongsFragment(context: Context, attributeSet: AttributeSet) : MyViewPagerF
                 .load(uri)
                 .fit()
                 .placeholder(bitmapDrawable)
-                .into(art_image)
+                .into(art_image)*/
     }
 
     private fun getSongIndex(song: Track) = songs.indexOfFirstOrNull { it == song } ?: 0
