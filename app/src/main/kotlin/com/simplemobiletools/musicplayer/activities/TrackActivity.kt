@@ -94,12 +94,12 @@ class TrackActivity : SimpleActivity() {
 
     private fun setupNextTrackInfo(track: Track?) {
         val artist = if (track?.artist?.trim()?.isNotEmpty() == true && track.artist != MediaStore.UNKNOWN_STRING) {
-            "${track.artist} • "
+            " • ${track.artist}"
         } else {
             ""
         }
 
-        next_track_label.text = "${getString(R.string.next_track)} $artist${track?.title}"
+        next_track_label.text = "${getString(R.string.next_track)} ${track?.title}$artist"
         next_track_duration.text = track?.duration?.getFormattedDuration()
 
         val options = RequestOptions()

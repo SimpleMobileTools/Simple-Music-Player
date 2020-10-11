@@ -7,11 +7,16 @@ import android.graphics.drawable.ColorDrawable
 import android.media.AudioManager
 import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.MenuItemCompat
 import androidx.viewpager.widget.ViewPager
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.request.RequestOptions
 import com.simplemobiletools.commons.dialogs.FilePickerDialog
 import com.simplemobiletools.commons.dialogs.NewAppsIconsDialog
 import com.simplemobiletools.commons.dialogs.RadioGroupDialog
@@ -83,6 +88,7 @@ class MainActivity : SimpleActivity(), MainActivityInterface {
         getCurrentFragment()?.onResume()
         sleep_timer_holder.background = ColorDrawable(config.backgroundColor)
         sleep_timer_stop.applyColorFilter(config.textColor)
+        updateCurrentTrackBar()
         invalidateOptionsMenu()
     }
 
@@ -246,6 +252,37 @@ class MainActivity : SimpleActivity(), MainActivityInterface {
         config.autoplay = !config.autoplay
         invalidateOptionsMenu()
         toast(if (config.autoplay) R.string.autoplay_enabled else R.string.autoplay_disabled)
+    }
+
+    private fun updateCurrentTrackBar() {
+        current_track_holder.background = ColorDrawable(config.backgroundColor)
+        current_track_label.setTextColor(config.textColor)
+        val track = MusicService.mCurrTrack
+        if (track == null) {
+            current_track_holder.beGone()
+            return
+        }
+
+        val artist = if (track.artist.trim().isNotEmpty() && track.artist != MediaStore.UNKNOWN_STRING) {
+            " • ${track.artist}"
+        } else {
+            ""
+        }
+
+        current_track_label.text = "${track?.title}$artist"
+        val currentTrackPlaceholder = resources.getColoredDrawableWithColor(R.drawable.ic_headset, config.textColor)
+        val options = RequestOptions()
+            .error(currentTrackPlaceholder)
+            .transform(CenterCrop(), RoundedCorners(8))
+
+        Glide.with(this)
+            .load(track.coverArt)
+            .apply(options)
+            .into(findViewById(R.id.current_track_image))
+
+        current_track_holder.setOnClickListener {
+
+        }
     }
 
     private fun showSleepTimer() {

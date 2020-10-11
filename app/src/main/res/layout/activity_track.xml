@@ -189,7 +189,7 @@
             android:layout_height="@dimen/song_image_size"
             android:layout_marginStart="@dimen/normal_margin"
             android:layout_marginTop="@dimen/normal_margin"
-            android:layout_marginEnd="@dimen/medium_margin"
+            android:layout_marginEnd="@dimen/normal_margin"
             android:layout_marginBottom="@dimen/normal_margin" />
 
         <com.simplemobiletools.commons.views.MyTextView
