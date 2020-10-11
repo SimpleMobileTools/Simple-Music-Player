@@ -57,11 +57,11 @@ class QueueAdapter(activity: SimpleActivity, val items: ArrayList<Track>, recycl
 
     override fun onActionModeDestroyed() {}
 
-    private fun getItemWithKey(key: Int) = items.firstOrNull { it.hashCode() == key }
+    private fun getItemWithKey(key: Int) = items.firstOrNull { it.id.toInt() == key }
 
     private fun setupView(view: View, track: Track) {
         view.apply {
-            track_queue_frame?.isSelected = selectedKeys.contains(track.id)
+            track_queue_frame?.isSelected = selectedKeys.contains(track.id.toInt())
             track_queue_title.text = track.title
 
             arrayOf(track_queue_title, track_queue_duration).forEach {
