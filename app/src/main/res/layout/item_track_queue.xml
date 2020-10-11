@@ -59,7 +59,6 @@
         android:layout_height="@dimen/song_image_size"
         android:padding="@dimen/medium_margin"
         android:src="@drawable/ic_drag_handle_vector"
-        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
