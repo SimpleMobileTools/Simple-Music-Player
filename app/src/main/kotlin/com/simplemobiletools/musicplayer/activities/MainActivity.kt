@@ -509,6 +509,8 @@ class MainActivity : SimpleActivity(), MainActivityInterface {
         if (wasInitialPlaylistSet) {
             getCurrentFragment()?.songChangedEvent(event.track)
         }
+
+        updateCurrentTrackBar()
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
