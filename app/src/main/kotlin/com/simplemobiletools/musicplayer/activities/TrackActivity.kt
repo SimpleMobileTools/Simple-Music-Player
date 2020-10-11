@@ -149,6 +149,7 @@ class TrackActivity : SimpleActivity() {
         config.isShuffleEnabled = isShuffleEnabled
         toast(if (isShuffleEnabled) R.string.shuffle_enabled else R.string.shuffle_disabled)
         setupShuffleButton()
+        sendIntent(REFRESH_LIST)
     }
 
     private fun setupShuffleButton() {
