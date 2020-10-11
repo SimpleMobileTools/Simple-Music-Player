@@ -147,6 +147,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             FINISH -> handleFinish()
             FINISH_IF_NOT_PLAYING -> finishIfNotPlaying()
             REFRESH_LIST -> handleRefreshList(intent)
+            UPDATE_NEXT_TRACK -> broadcastNextTrackChange()
             SET_PROGRESS -> handleSetProgress(intent)
             SET_EQUALIZER -> handleSetEqualizer(intent)
             SKIP_BACKWARD -> skip(false)

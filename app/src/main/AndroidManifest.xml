@@ -139,6 +139,7 @@
                 <action android:name="com.simplemobiletools.musicplayer.action.EDIT"/>
                 <action android:name="com.simplemobiletools.musicplayer.action.PLAY_TRACK"/>
                 <action android:name="com.simplemobiletools.musicplayer.action.REFRESH_LIST"/>
+                <action android:name="com.simplemobiletools.musicplayer.action.UPDATE_NEXT_TRACK"/>
                 <action android:name="com.simplemobiletools.musicplayer.action.SET_PROGRESS"/>
                 <action android:name="com.simplemobiletools.musicplayer.action.SKIP_BACKWARD"/>
                 <action android:name="com.simplemobiletools.musicplayer.action.SKIP_FORWARD"/>
