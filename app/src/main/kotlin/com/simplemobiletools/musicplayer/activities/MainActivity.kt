@@ -257,10 +257,13 @@ class MainActivity : SimpleActivity(), MainActivityInterface {
     private fun updateCurrentTrackBar() {
         current_track_holder.background = ColorDrawable(config.backgroundColor)
         current_track_label.setTextColor(config.textColor)
+
         val track = MusicService.mCurrTrack
         if (track == null) {
             current_track_holder.beGone()
             return
+        } else {
+            current_track_holder.beVisible()
         }
 
         val artist = if (track.artist.trim().isNotEmpty() && track.artist != MediaStore.UNKNOWN_STRING) {
@@ -269,7 +272,7 @@ class MainActivity : SimpleActivity(), MainActivityInterface {
             ""
         }
 
-        current_track_label.text = "${track?.title}$artist"
+        current_track_label.text = "${track.title}$artist"
         val currentTrackPlaceholder = resources.getColoredDrawableWithColor(R.drawable.ic_headset, config.textColor)
         val options = RequestOptions()
             .error(currentTrackPlaceholder)
@@ -281,7 +284,9 @@ class MainActivity : SimpleActivity(), MainActivityInterface {
             .into(findViewById(R.id.current_track_image))
 
         current_track_holder.setOnClickListener {
-
+            Intent(this, TrackActivity::class.java).apply {
+                startActivity(this)
+            }
         }
     }
 

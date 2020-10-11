@@ -942,6 +942,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     private fun broadcastPlayerStatus() {
         broadcastTrackStateChange(mPlayer?.isPlaying ?: false)
         broadcastTrackChange()
+        broadcastNextTrackChange()
     }
 
     private fun handleMediaButton(mediaButtonEvent: Intent) {

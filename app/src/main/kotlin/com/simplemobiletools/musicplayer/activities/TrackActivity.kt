@@ -50,14 +50,23 @@ class TrackActivity : SimpleActivity() {
         }
 
         val trackType = object : TypeToken<Track>() {}.type
-        val track = Gson().fromJson<Track>(intent.getStringExtra(TRACK), trackType)
+        val track = Gson().fromJson<Track>(intent.getStringExtra(TRACK), trackType) ?: MusicService.mCurrTrack
+        if (track == null) {
+            finish()
+            return
+        }
+
         setupTrackInfo(track)
         setupButtons()
 
-        Intent(this, MusicService::class.java).apply {
-            putExtra(TRACK_ID, track.id)
-            action = INIT
-            startService(this)
+        if (intent.getBooleanExtra(RESTART_PLAYER, false)) {
+            Intent(this, MusicService::class.java).apply {
+                putExtra(TRACK_ID, track.id)
+                action = INIT
+                startService(this)
+            }
+        } else {
+            sendIntent(BROADCAST_STATUS)
         }
 
         next_track_holder.background = ColorDrawable(config.backgroundColor)

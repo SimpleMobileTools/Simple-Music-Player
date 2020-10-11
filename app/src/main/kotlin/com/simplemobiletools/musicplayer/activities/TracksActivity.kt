@@ -11,6 +11,7 @@ import com.simplemobiletools.musicplayer.adapters.SongsAdapter
 import com.simplemobiletools.musicplayer.extensions.getTracks
 import com.simplemobiletools.musicplayer.extensions.resetQueueItems
 import com.simplemobiletools.musicplayer.helpers.ALBUM
+import com.simplemobiletools.musicplayer.helpers.RESTART_PLAYER
 import com.simplemobiletools.musicplayer.helpers.TRACK
 import com.simplemobiletools.musicplayer.helpers.artworkUri
 import com.simplemobiletools.musicplayer.models.Album
@@ -40,6 +41,7 @@ class TracksActivity : SimpleActivity() {
                     resetQueueItems(tracks) {
                         Intent(this, TrackActivity::class.java).apply {
                             putExtra(TRACK, Gson().toJson(it))
+                            putExtra(RESTART_PLAYER, true)
                             startActivity(this)
                         }
                     }

@@ -13,6 +13,7 @@ import com.simplemobiletools.musicplayer.extensions.getTracksSync
 import com.simplemobiletools.musicplayer.extensions.resetQueueItems
 import com.simplemobiletools.musicplayer.helpers.ALBUM
 import com.simplemobiletools.musicplayer.helpers.ARTIST
+import com.simplemobiletools.musicplayer.helpers.RESTART_PLAYER
 import com.simplemobiletools.musicplayer.helpers.TRACK
 import com.simplemobiletools.musicplayer.models.*
 import kotlinx.android.synthetic.main.activity_albums.*
@@ -57,6 +58,7 @@ class AlbumsActivity : SimpleActivity() {
                         resetQueueItems(tracksToAdd) {
                             Intent(this, TrackActivity::class.java).apply {
                                 putExtra(TRACK, Gson().toJson(it))
+                                putExtra(RESTART_PLAYER, true)
                                 startActivity(this)
                             }
                         }
