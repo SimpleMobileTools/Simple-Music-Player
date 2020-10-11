@@ -177,7 +177,6 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
             val wantedTrackId = intent?.getLongExtra(TRACK_ID, -1L)
             mCurrTrack = mTracks.firstOrNull { it.id == wantedTrackId }
-            shuffleTracks()
         }
 
         mWasPlayingAtFocusLost = false
@@ -246,7 +245,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         mTracks.clear()
         ensureBackgroundThread {
             mTracks = getQueuedTracks()
-            EventBus.getDefault().post(Events.PlaylistUpdated(mTracks))
+            EventBus.getDefault().post(Events.QueueUpdated(mTracks))
 
             if (intent.getBooleanExtra(CALL_SETUP_AFTER, false)) {
                 mPlayOnPrepare = false
@@ -325,7 +324,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
     private fun updateUI() {
         if (mPlayer != null) {
-            EventBus.getDefault().post(Events.PlaylistUpdated(mTracks))
+            EventBus.getDefault().post(Events.QueueUpdated(mTracks))
             mCurrTrackCover = getAlbumImage(mCurrTrack).first
             broadcastTrackChange(mCurrTrack)
 
@@ -427,20 +426,22 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             tracks.addAll(wantedTracks)
         }
 
-        return tracks
+        return tryShuffleTracks(tracks)
     }
 
-    private fun shuffleTracks() {
+    private fun tryShuffleTracks(tracks: ArrayList<Track>): ArrayList<Track> {
         if (!config.isShuffleEnabled) {
-            return
+            return tracks
         }
 
-        mTracks.shuffle()
+        tracks.shuffle()
 
         if (mCurrTrack != null) {
-            mTracks.remove(mCurrTrack)
-            mTracks.add(0, mCurrTrack!!)
+            tracks.remove(mCurrTrack)
+            tracks.add(0, mCurrTrack!!)
         }
+
+        return tracks
     }
 
     @SuppressLint("NewApi")
