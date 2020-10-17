@@ -22,7 +22,7 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/main_tabs_holder" />
 
-    <RelativeLayout
+    <com.simplemobiletools.musicplayer.views.CurrentTrackBar
         android:id="@+id/current_track_holder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -58,7 +58,7 @@
             android:textSize="@dimen/bigger_text_size"
             tools:text="My Track" />
 
-    </RelativeLayout>
+    </com.simplemobiletools.musicplayer.views.CurrentTrackBar>
 
     <RelativeLayout
         android:id="@+id/sleep_timer_holder"

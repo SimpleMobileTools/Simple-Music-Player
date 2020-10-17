@@ -7,16 +7,12 @@ import android.graphics.drawable.ColorDrawable
 import android.media.AudioManager
 import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.widget.SearchView
+import androidx.core.content.ContextCompat
 import androidx.core.view.MenuItemCompat
 import androidx.viewpager.widget.ViewPager
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.CenterCrop
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import com.bumptech.glide.request.RequestOptions
 import com.simplemobiletools.commons.dialogs.FilePickerDialog
 import com.simplemobiletools.commons.dialogs.NewAppsIconsDialog
 import com.simplemobiletools.commons.dialogs.RadioGroupDialog
@@ -40,6 +36,7 @@ import com.simplemobiletools.musicplayer.models.Events
 import com.simplemobiletools.musicplayer.models.Playlist
 import com.simplemobiletools.musicplayer.services.MusicService
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main.view.*
 import kotlinx.android.synthetic.main.fragment_songs.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -207,6 +204,12 @@ class MainActivity : SimpleActivity(), MainActivityInterface {
 
         initFragments()
         initializePlayer()
+
+        current_track_holder.setOnClickListener {
+            Intent(this, TrackActivity::class.java).apply {
+                startActivity(this)
+            }
+        }
     }
 
     private fun initFragments() {
@@ -255,39 +258,8 @@ class MainActivity : SimpleActivity(), MainActivityInterface {
     }
 
     private fun updateCurrentTrackBar() {
-        current_track_holder.background = ColorDrawable(config.backgroundColor)
-        current_track_label.setTextColor(config.textColor)
-
-        val track = MusicService.mCurrTrack
-        if (track == null) {
-            current_track_holder.beGone()
-            return
-        } else {
-            current_track_holder.beVisible()
-        }
-
-        val artist = if (track.artist.trim().isNotEmpty() && track.artist != MediaStore.UNKNOWN_STRING) {
-            " • ${track.artist}"
-        } else {
-            ""
-        }
-
-        current_track_label.text = "${track.title}$artist"
-        val currentTrackPlaceholder = resources.getColoredDrawableWithColor(R.drawable.ic_headset, config.textColor)
-        val options = RequestOptions()
-            .error(currentTrackPlaceholder)
-            .transform(CenterCrop(), RoundedCorners(8))
-
-        Glide.with(this)
-            .load(track.coverArt)
-            .apply(options)
-            .into(findViewById(R.id.current_track_image))
-
-        current_track_holder.setOnClickListener {
-            Intent(this, TrackActivity::class.java).apply {
-                startActivity(this)
-            }
-        }
+        current_track_holder.updateColors()
+        current_track_holder.updateCurrentTrack(MusicService.mCurrTrack)
     }
 
     private fun showSleepTimer() {
@@ -510,7 +482,7 @@ class MainActivity : SimpleActivity(), MainActivityInterface {
             getCurrentFragment()?.songChangedEvent(event.track)
         }
 
-        updateCurrentTrackBar()
+        current_track_holder.updateCurrentTrack(event.track)
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
