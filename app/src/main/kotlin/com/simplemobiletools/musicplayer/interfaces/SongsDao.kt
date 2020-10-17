@@ -17,6 +17,9 @@ interface SongsDao {
     @Query("SELECT * FROM tracks WHERE playlist_id = :playlistId")
     fun getTracksFromPlaylist(playlistId: Int): List<Track>
 
+    @Query("SELECT COUNT(*) FROM tracks WHERE playlist_id = :playlistId")
+    fun getTracksCountFromPlaylist(playlistId: Int): Int
+
     @Delete
     fun removeSongsFromPlaylists(songs: List<Track>)
 

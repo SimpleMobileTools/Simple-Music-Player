@@ -155,6 +155,10 @@ class PlaylistsAdapter(activity: SimpleActivity, val playlists: ArrayList<Playli
             playlist_frame?.isSelected = selectedKeys.contains(playlist.id)
             playlist_title.text = playlist.title
             playlist_title.setTextColor(textColor)
+
+            val tracks = resources.getQuantityString(R.plurals.tracks, playlist.trackCnt, playlist.trackCnt)
+            playlist_tracks.text = tracks
+            playlist_tracks.setTextColor(textColor)
         }
     }
 }

@@ -7,6 +7,7 @@ import com.simplemobiletools.musicplayer.activities.SimpleActivity
 import com.simplemobiletools.musicplayer.adapters.PlaylistsAdapter
 import com.simplemobiletools.musicplayer.extensions.playlistChanged
 import com.simplemobiletools.musicplayer.extensions.playlistDAO
+import com.simplemobiletools.musicplayer.extensions.tracksDAO
 import com.simplemobiletools.musicplayer.models.Playlist
 import kotlinx.android.synthetic.main.fragment_playlists.view.*
 
@@ -14,6 +15,10 @@ class PlaylistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPa
     override fun setupFragment(activity: SimpleActivity) {
         ensureBackgroundThread {
             val playlists = activity.playlistDAO.getAll() as ArrayList<Playlist>
+            playlists.forEach {
+                it.trackCnt = activity.tracksDAO.getTracksCountFromPlaylist(it.id)
+            }
+
             activity.runOnUiThread {
                 PlaylistsAdapter(activity, playlists, null, playlists_list) {
                     activity.playlistChanged((it as Playlist).id)
