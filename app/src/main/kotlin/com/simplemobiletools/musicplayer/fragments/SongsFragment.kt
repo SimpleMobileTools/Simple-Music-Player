@@ -10,6 +10,7 @@ import android.os.Environment
 import android.util.AttributeSet
 import android.view.ViewGroup
 import android.widget.SeekBar
+import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.interfaces.RecyclerScrollCallback
 import com.simplemobiletools.commons.views.MyLinearLayoutManager
@@ -26,6 +27,7 @@ import com.simplemobiletools.musicplayer.interfaces.SongListListener
 import com.simplemobiletools.musicplayer.models.Track
 import com.simplemobiletools.musicplayer.services.MusicService
 import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.fragment_artists.view.*
 import kotlinx.android.synthetic.main.fragment_songs.view.*
 import kotlinx.android.synthetic.main.item_navigation.view.*
 import java.util.*
@@ -78,6 +80,10 @@ class SongsFragment(context: Context, attributeSet: AttributeSet) : MyViewPagerF
 
     fun onPause() {
         storeStateVariables()
+    }
+
+    override fun finishActMode() {
+        (songs_list.adapter as? MyRecyclerViewAdapter)?.finishActMode()
     }
 
     private fun storeStateVariables() {

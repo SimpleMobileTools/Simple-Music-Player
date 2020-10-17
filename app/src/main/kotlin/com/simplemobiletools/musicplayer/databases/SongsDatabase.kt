@@ -60,8 +60,8 @@ abstract class SongsDatabase : RoomDatabase() {
         }
 
         private fun addInitialPlaylist(context: Context) {
-            val allSongs = context.resources.getString(R.string.all_songs)
-            val playlist = Playlist(ALL_TRACKS_PLAYLIST_ID, allSongs)
+            val allTracks = context.resources.getString(R.string.all_tracks)
+            val playlist = Playlist(ALL_TRACKS_PLAYLIST_ID, allTracks)
             context.playlistDAO.insert(playlist)
         }
 

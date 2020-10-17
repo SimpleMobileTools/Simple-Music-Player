@@ -6,6 +6,7 @@ import android.content.Intent
 import android.provider.MediaStore.Audio
 import android.util.AttributeSet
 import com.google.gson.Gson
+import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
 import com.simplemobiletools.commons.extensions.getIntValue
 import com.simplemobiletools.commons.extensions.getLongValue
 import com.simplemobiletools.commons.extensions.getStringValue
@@ -33,6 +34,10 @@ class ArtistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
                 artists_list.adapter = this
             }
         }
+    }
+
+    override fun finishActMode() {
+        (artists_list.adapter as? MyRecyclerViewAdapter)?.finishActMode()
     }
 
     private fun getArtists(activity: Activity, callback: (artists: ArrayList<Artist>) -> Unit) {

@@ -35,6 +35,8 @@ import com.simplemobiletools.musicplayer.models.Events
 import com.simplemobiletools.musicplayer.models.Playlist
 import com.simplemobiletools.musicplayer.services.MusicService
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_artists.*
+import kotlinx.android.synthetic.main.fragment_playlists.*
 import kotlinx.android.synthetic.main.fragment_songs.*
 import kotlinx.android.synthetic.main.view_current_track_bar.*
 import org.greenrobot.eventbus.EventBus
@@ -221,6 +223,10 @@ class MainActivity : SimpleActivity(), MainActivityInterface {
 
             override fun onPageSelected(position: Int) {
                 main_tabs_holder.getTabAt(position)?.select()
+                getAllFragments().forEach {
+                    it?.finishActMode()
+                }
+                invalidateOptionsMenu()
             }
         })
 
@@ -477,6 +483,8 @@ class MainActivity : SimpleActivity(), MainActivityInterface {
             startService(this)
         }
     }
+
+    private fun getAllFragments() = arrayListOf(artists_fragment_holder, playlists_fragment_holder)
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun trackChangedEvent(event: Events.TrackChanged) {

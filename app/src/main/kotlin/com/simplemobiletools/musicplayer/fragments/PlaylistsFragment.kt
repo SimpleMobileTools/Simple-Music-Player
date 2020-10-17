@@ -2,6 +2,7 @@ package com.simplemobiletools.musicplayer.fragments
 
 import android.content.Context
 import android.util.AttributeSet
+import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
 import com.simplemobiletools.musicplayer.adapters.PlaylistsAdapter
@@ -27,5 +28,9 @@ class PlaylistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPa
                 }
             }
         }
+    }
+
+    override fun finishActMode() {
+        (playlists_list.adapter as? MyRecyclerViewAdapter)?.finishActMode()
     }
 }
