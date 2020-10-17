@@ -101,6 +101,7 @@ class MainActivity : SimpleActivity(), MainActivityInterface {
     override fun onDestroy() {
         super.onDestroy()
         bus?.unregister(this)
+        config.lastUsedViewPagerPage = viewpager.currentItem
 
         if (isThirdPartyIntent && !isChangingConfigurations) {
             sendIntent(FINISH_IF_NOT_PLAYING)
@@ -240,6 +241,8 @@ class MainActivity : SimpleActivity(), MainActivityInterface {
                 addTab(tab, i, i == 0)
             }
         }
+
+        viewpager.currentItem = config.lastUsedViewPagerPage
     }
 
     private fun getCurrentFragment() = songs_fragment_holder
