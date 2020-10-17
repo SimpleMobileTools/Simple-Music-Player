@@ -11,10 +11,15 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
 import com.simplemobiletools.commons.extensions.getColoredDrawableWithColor
+import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
+import com.simplemobiletools.musicplayer.extensions.addTracksToPlaylist
+import com.simplemobiletools.musicplayer.extensions.getAlbumsSync
+import com.simplemobiletools.musicplayer.extensions.getTracksSync
 import com.simplemobiletools.musicplayer.models.Artist
+import com.simplemobiletools.musicplayer.models.Track
 import kotlinx.android.synthetic.main.item_artist.view.*
 import java.util.*
 
@@ -42,7 +47,15 @@ class ArtistsAdapter(activity: SimpleActivity, val artists: ArrayList<Artist>, r
 
     override fun prepareActionMode(menu: Menu) {}
 
-    override fun actionItemPressed(id: Int) {}
+    override fun actionItemPressed(id: Int) {
+        if (selectedKeys.isEmpty()) {
+            return
+        }
+
+        when (id) {
+            R.id.cab_add_to_playlist -> addToPlaylist()
+        }
+    }
 
     override fun getSelectableItemCount() = artists.size
 
@@ -56,7 +69,26 @@ class ArtistsAdapter(activity: SimpleActivity, val artists: ArrayList<Artist>, r
 
     override fun onActionModeDestroyed() {}
 
-    private fun getItemWithKey(key: Int): Artist? = artists.firstOrNull { it.id == key }
+    private fun addToPlaylist() {
+        ensureBackgroundThread {
+            val tracks = ArrayList<Track>()
+            getSelectedArtists().forEach { artist ->
+                val albums = activity.getAlbumsSync(artist)
+                albums.forEach {
+                    tracks.addAll(activity.getTracksSync(it.id))
+                }
+            }
+
+            activity.runOnUiThread {
+                activity.addTracksToPlaylist(tracks) {
+                    finishActMode()
+                    notifyDataSetChanged()
+                }
+            }
+        }
+    }
+
+    private fun getSelectedArtists(): List<Artist> = artists.filter { selectedKeys.contains(it.id) }.toList()
 
     private fun setupView(view: View, artist: Artist) {
         view.apply {

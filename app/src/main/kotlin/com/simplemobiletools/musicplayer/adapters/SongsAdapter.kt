@@ -96,7 +96,7 @@ class SongsAdapter(activity: SimpleActivity, val items: ArrayList<ListItem>, rec
         }
     }
 
-    private fun getSelectedTracks(): List<Track> = items.filter { it is Track && selectedKeys.contains(it.hashCode()) }.toMutableList() as List<Track>
+    private fun getSelectedTracks(): List<Track> = items.filter { it is Track && selectedKeys.contains(it.hashCode()) }.toList() as List<Track>
 
     private fun setupSong(view: View, track: Track) {
         view.apply {

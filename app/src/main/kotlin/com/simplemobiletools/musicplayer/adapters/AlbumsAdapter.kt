@@ -117,7 +117,7 @@ class AlbumsAdapter(activity: SimpleActivity, val items: ArrayList<ListItem>, re
         }
     }
 
-    private fun getSelectedAlbums(): List<Album> = items.filter { it is Album && selectedKeys.contains(it.hashCode()) }.toMutableList() as List<Album>
+    private fun getSelectedAlbums(): List<Album> = items.filter { it is Album && selectedKeys.contains(it.hashCode()) }.toList() as List<Album>
 
     private fun getSelectedTracks(): ArrayList<Track> = items.filter { it is Track && selectedKeys.contains(it.hashCode()) }.toMutableList() as ArrayList<Track>
 
