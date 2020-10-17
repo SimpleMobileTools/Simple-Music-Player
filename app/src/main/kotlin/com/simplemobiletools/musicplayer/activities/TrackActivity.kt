@@ -109,7 +109,6 @@ class TrackActivity : SimpleActivity() {
         }
 
         next_track_label.text = "${getString(R.string.next_track)} ${track?.title}$artist"
-        next_track_duration.text = track?.duration?.getFormattedDuration()
 
         val options = RequestOptions()
             .error(nextTrackPlaceholder)

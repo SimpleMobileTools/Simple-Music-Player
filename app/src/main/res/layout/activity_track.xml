@@ -198,26 +198,13 @@
             android:layout_height="wrap_content"
             android:layout_alignTop="@+id/next_track_image"
             android:layout_alignBottom="@+id/next_track_image"
-            android:layout_toStartOf="@+id/next_track_duration"
             android:layout_toEndOf="@+id/next_track_image"
             android:ellipsize="end"
             android:gravity="center_vertical"
             android:maxLines="1"
-            android:paddingEnd="@dimen/activity_margin"
+            android:paddingEnd="@dimen/normal_margin"
             android:textSize="@dimen/bigger_text_size"
             tools:text="Next Track: My Track" />
-
-        <com.simplemobiletools.commons.views.MyTextView
-            android:id="@+id/next_track_duration"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/next_track_image"
-            android:layout_alignBottom="@+id/next_track_image"
-            android:layout_alignParentEnd="true"
-            android:gravity="center_vertical"
-            android:paddingEnd="@dimen/activity_margin"
-            android:textSize="@dimen/bigger_text_size"
-            tools:text="03:45" />
 
     </RelativeLayout>
 
