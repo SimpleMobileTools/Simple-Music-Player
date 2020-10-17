@@ -383,7 +383,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
                     tracks.add(track)
                 }
             }
-            RoomHelper(this).addTracksToPlaylist(tracks)
+            tracksDAO.insertAll(tracks)
         } else {
             val ignoredPaths = config.ignoredPaths
             val paths = ArrayList<String>()

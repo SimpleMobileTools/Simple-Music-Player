@@ -7,7 +7,9 @@ import android.provider.MediaStore.Audio
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.extensions.tracksDAO
+import com.simplemobiletools.musicplayer.models.Events
 import com.simplemobiletools.musicplayer.models.Track
+import org.greenrobot.eventbus.EventBus
 
 class RoomHelper(val context: Context) {
     fun addPathToPlaylist(path: String) {
@@ -19,8 +21,9 @@ class RoomHelper(val context: Context) {
         context.tracksDAO.insertAll(tracks)
     }
 
-    fun addTracksToPlaylist(tracks: ArrayList<Track>) {
+    fun insertTracksWithPlaylist(tracks: ArrayList<Track>) {
         context.tracksDAO.insertAll(tracks)
+        EventBus.getDefault().post(Events.PlaylistsUpdated())
     }
 
     fun getTrackFromPath(path: String): Track? {

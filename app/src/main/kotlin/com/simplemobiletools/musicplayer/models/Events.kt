@@ -9,5 +9,6 @@ class Events {
     class QueueUpdated(val tracks: ArrayList<Track>)
     class ProgressUpdated(val progress: Int)
     class SleepTimerChanged(val seconds: Int)
+    class PlaylistsUpdated
     class NoStoragePermission
 }

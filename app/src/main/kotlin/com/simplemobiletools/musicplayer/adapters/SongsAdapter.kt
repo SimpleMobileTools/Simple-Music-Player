@@ -18,7 +18,7 @@ import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
 import com.simplemobiletools.musicplayer.dialogs.NewPlaylistDialog
 import com.simplemobiletools.musicplayer.extensions.playlistDAO
-import com.simplemobiletools.musicplayer.extensions.tracksDAO
+import com.simplemobiletools.musicplayer.helpers.RoomHelper
 import com.simplemobiletools.musicplayer.models.AlbumHeader
 import com.simplemobiletools.musicplayer.models.ListItem
 import com.simplemobiletools.musicplayer.models.Playlist
@@ -104,7 +104,7 @@ class SongsAdapter(activity: SimpleActivity, val items: ArrayList<ListItem>, rec
             }
 
             ensureBackgroundThread {
-                activity.tracksDAO.insertAll(tracks)
+                RoomHelper(activity).insertTracksWithPlaylist(tracks)
 
                 activity.runOnUiThread {
                     finishActMode()

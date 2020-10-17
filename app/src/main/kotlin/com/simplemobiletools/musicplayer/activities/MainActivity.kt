@@ -521,6 +521,11 @@ class MainActivity : SimpleActivity(), MainActivityInterface {
         }
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun playlistsUpdated(event: Events.PlaylistsUpdated) {
+        playlists_fragment_holder?.setupFragment(this)
+    }
+
     override fun getIsSearchOpen() = isSearchOpen
 
     override fun getIsThirdPartyIntent() = isThirdPartyIntent
