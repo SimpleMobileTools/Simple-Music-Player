@@ -12,9 +12,12 @@ import com.simplemobiletools.commons.extensions.beGone
 import com.simplemobiletools.commons.extensions.beVisible
 import com.simplemobiletools.commons.extensions.getColoredDrawableWithColor
 import com.simplemobiletools.commons.extensions.getFormattedDuration
+import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
+import com.simplemobiletools.musicplayer.extensions.addTracksToPlaylist
+import com.simplemobiletools.musicplayer.extensions.getTracksSync
 import com.simplemobiletools.musicplayer.models.Album
 import com.simplemobiletools.musicplayer.models.AlbumSection
 import com.simplemobiletools.musicplayer.models.ListItem
@@ -99,8 +102,24 @@ class AlbumsAdapter(activity: SimpleActivity, val items: ArrayList<ListItem>, re
     override fun onActionModeDestroyed() {}
 
     private fun addToPlaylist() {
+        ensureBackgroundThread {
+            val tracks = getSelectedTracks()
+            getSelectedAlbums().forEach {
+                tracks.addAll(activity.getTracksSync(it.id))
+            }
 
+            activity.runOnUiThread {
+                activity.addTracksToPlaylist(tracks) {
+                    finishActMode()
+                    notifyDataSetChanged()
+                }
+            }
+        }
     }
+
+    private fun getSelectedAlbums(): List<Album> = items.filter { it is Album && selectedKeys.contains(it.hashCode()) }.toMutableList() as List<Album>
+
+    private fun getSelectedTracks(): ArrayList<Track> = items.filter { it is Track && selectedKeys.contains(it.hashCode()) }.toMutableList() as ArrayList<Track>
 
     private fun setupAlbum(view: View, album: Album) {
         view.apply {
