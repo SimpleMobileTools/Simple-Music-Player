@@ -360,7 +360,7 @@ class MainActivity : SimpleActivity(), MainActivityInterface {
     private fun showPlaylists(playlists: ArrayList<Playlist>) {
         val items = arrayListOf<RadioItem>()
         playlists.mapTo(items) { RadioItem(it.id, it.title) }
-        items.add(RadioItem(-1, getString(R.string.create_playlist)))
+        items.add(RadioItem(-1, getString(R.string.create_new_playlist)))
 
         RadioGroupDialog(this, items, config.currentPlaylist) {
             if (it == -1) {

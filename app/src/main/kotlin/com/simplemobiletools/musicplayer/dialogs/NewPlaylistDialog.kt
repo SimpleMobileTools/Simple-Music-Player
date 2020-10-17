@@ -29,7 +29,7 @@ class NewPlaylistDialog(val activity: Activity, var playlist: Playlist? = null, 
                 .setPositiveButton(R.string.ok, null)
                 .setNegativeButton(R.string.cancel, null)
                 .create().apply {
-                    val dialogTitle = if (isNewPlaylist) R.string.create_playlist else R.string.rename_playlist
+                    val dialogTitle = if (isNewPlaylist) R.string.create_new_playlist else R.string.rename_playlist
                     activity.setupDialogStuff(view, this, dialogTitle) {
                         showKeyboard(view.new_playlist_title)
                         getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {

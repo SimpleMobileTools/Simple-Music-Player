@@ -76,7 +76,15 @@ class AlbumsAdapter(activity: SimpleActivity, val items: ArrayList<ListItem>, re
 
     override fun prepareActionMode(menu: Menu) {}
 
-    override fun actionItemPressed(id: Int) {}
+    override fun actionItemPressed(id: Int) {
+        if (selectedKeys.isEmpty()) {
+            return
+        }
+
+        when (id) {
+            R.id.cab_add_to_playlist -> addToPlaylist()
+        }
+    }
 
     override fun getSelectableItemCount() = items.filter { it !is AlbumSection }.size
 
@@ -90,7 +98,9 @@ class AlbumsAdapter(activity: SimpleActivity, val items: ArrayList<ListItem>, re
 
     override fun onActionModeDestroyed() {}
 
-    private fun getItemWithKey(key: Int): ListItem? = items.firstOrNull { it.hashCode() == key }
+    private fun addToPlaylist() {
+
+    }
 
     private fun setupAlbum(view: View, album: Album) {
         view.apply {

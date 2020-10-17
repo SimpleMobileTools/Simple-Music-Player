@@ -24,7 +24,7 @@
     <string name="add_folder_to_playlist">Add folder to playlist</string>
     <string name="manage_playlists">Manage playlists</string>
     <string name="playlists">Playlists</string>
-    <string name="create_playlist">Create playlist</string>
+    <string name="create_new_playlist">Create a new playlist</string>
     <string name="rename_playlist">Rename playlist</string>
     <string name="playlist_name_exists">A playlist with that name already exists</string>
     <string name="remove_playlist">Remove playlist</string>
