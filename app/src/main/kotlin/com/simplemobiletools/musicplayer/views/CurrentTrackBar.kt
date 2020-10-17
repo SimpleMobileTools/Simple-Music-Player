@@ -15,7 +15,7 @@ import com.simplemobiletools.commons.extensions.getColoredDrawableWithColor
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.models.Track
-import kotlinx.android.synthetic.main.activity_main.view.*
+import kotlinx.android.synthetic.main.view_current_track_bar.view.*
 
 class CurrentTrackBar(context: Context, attributeSet: AttributeSet) : RelativeLayout(context, attributeSet) {
     fun updateColors() {

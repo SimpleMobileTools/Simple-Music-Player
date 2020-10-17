@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.simplemobiletools.musicplayer.views.CurrentTrackBar xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/current_track_bar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true">
+
+    <ImageView
+        android:id="@+id/current_track_divider"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/divider_grey"
+        android:importantForAccessibility="no" />
+
+    <ImageView
+        android:id="@+id/current_track_image"
+        android:layout_width="@dimen/song_image_size"
+        android:layout_height="@dimen/song_image_size"
+        android:layout_marginStart="@dimen/normal_margin"
+        android:layout_marginTop="@dimen/normal_margin"
+        android:layout_marginEnd="@dimen/normal_margin"
+        android:layout_marginBottom="@dimen/normal_margin" />
+
+    <com.simplemobiletools.commons.views.MyTextView
+        android:id="@+id/current_track_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/current_track_image"
+        android:layout_alignBottom="@+id/current_track_image"
+        android:layout_toEndOf="@+id/current_track_image"
+        android:ellipsize="end"
+        android:gravity="center_vertical"
+        android:maxLines="1"
+        android:paddingEnd="@dimen/activity_margin"
+        android:textSize="@dimen/bigger_text_size"
+        tools:text="My Track" />
+
+</com.simplemobiletools.musicplayer.views.CurrentTrackBar>

@@ -10,7 +10,6 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.widget.SearchView
-import androidx.core.content.ContextCompat
 import androidx.core.view.MenuItemCompat
 import androidx.viewpager.widget.ViewPager
 import com.simplemobiletools.commons.dialogs.FilePickerDialog
@@ -36,8 +35,8 @@ import com.simplemobiletools.musicplayer.models.Events
 import com.simplemobiletools.musicplayer.models.Playlist
 import com.simplemobiletools.musicplayer.services.MusicService
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_main.view.*
 import kotlinx.android.synthetic.main.fragment_songs.*
+import kotlinx.android.synthetic.main.view_current_track_bar.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -205,7 +204,7 @@ class MainActivity : SimpleActivity(), MainActivityInterface {
         initFragments()
         initializePlayer()
 
-        current_track_holder.setOnClickListener {
+        current_track_bar.setOnClickListener {
             Intent(this, TrackActivity::class.java).apply {
                 startActivity(this)
             }
@@ -258,8 +257,8 @@ class MainActivity : SimpleActivity(), MainActivityInterface {
     }
 
     private fun updateCurrentTrackBar() {
-        current_track_holder.updateColors()
-        current_track_holder.updateCurrentTrack(MusicService.mCurrTrack)
+        current_track_bar.updateColors()
+        current_track_bar.updateCurrentTrack(MusicService.mCurrTrack)
     }
 
     private fun showSleepTimer() {
@@ -482,7 +481,7 @@ class MainActivity : SimpleActivity(), MainActivityInterface {
             getCurrentFragment()?.songChangedEvent(event.track)
         }
 
-        current_track_holder.updateCurrentTrack(event.track)
+        current_track_bar.updateCurrentTrack(event.track)
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
