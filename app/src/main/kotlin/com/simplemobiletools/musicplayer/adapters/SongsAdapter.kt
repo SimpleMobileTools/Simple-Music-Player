@@ -10,12 +10,10 @@ import com.bumptech.glide.request.RequestOptions
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
 import com.simplemobiletools.commons.extensions.getColoredDrawableWithColor
 import com.simplemobiletools.commons.extensions.getFormattedDuration
-import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
-import com.simplemobiletools.musicplayer.dialogs.SelectPlaylistDialog
-import com.simplemobiletools.musicplayer.helpers.RoomHelper
+import com.simplemobiletools.musicplayer.extensions.addTracksToPlaylist
 import com.simplemobiletools.musicplayer.models.AlbumHeader
 import com.simplemobiletools.musicplayer.models.ListItem
 import com.simplemobiletools.musicplayer.models.Track
@@ -92,21 +90,9 @@ class SongsAdapter(activity: SimpleActivity, val items: ArrayList<ListItem>, rec
     override fun onActionModeDestroyed() {}
 
     private fun addToPlaylist() {
-        SelectPlaylistDialog(activity) { playlistId ->
-            val tracks = ArrayList<Track>()
-            getSelectedTracks().forEach {
-                it.playListId = playlistId
-                tracks.add(it)
-            }
-
-            ensureBackgroundThread {
-                RoomHelper(activity).insertTracksWithPlaylist(tracks)
-
-                activity.runOnUiThread {
-                    finishActMode()
-                    notifyDataSetChanged()
-                }
-            }
+        activity.addTracksToPlaylist(getSelectedTracks()) {
+            finishActMode()
+            notifyDataSetChanged()
         }
     }
 
