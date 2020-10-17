@@ -218,7 +218,8 @@ class SongsFragment(context: Context, attributeSet: AttributeSet) : MyViewPagerF
     }
 
     fun songStateChanged(isPlaying: Boolean) {
-        play_pause_btn.setImageDrawable(resources.getDrawable(if (isPlaying) R.drawable.ic_pause_vector else R.drawable.ic_play_vector))
+        val drawableId = if (isPlaying) R.drawable.ic_pause_vector else R.drawable.ic_play_vector
+        play_pause_btn.setImageDrawable(resources.getDrawable(drawableId))
         getSongsAdapter()?.updateSongState(isPlaying)
     }
 

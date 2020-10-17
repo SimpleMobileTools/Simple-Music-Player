@@ -28,6 +28,7 @@
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/current_track_image"
         android:layout_alignBottom="@+id/current_track_image"
+        android:layout_toStartOf="@+id/current_track_play_pause"
         android:layout_toEndOf="@+id/current_track_image"
         android:ellipsize="end"
         android:gravity="center_vertical"
@@ -35,5 +36,18 @@
         android:paddingEnd="@dimen/activity_margin"
         android:textSize="@dimen/bigger_text_size"
         tools:text="My Track" />
+
+    <ImageView
+        android:id="@+id/current_track_play_pause"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignTop="@+id/current_track_image"
+        android:layout_alignBottom="@+id/current_track_image"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="@dimen/medium_margin"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:paddingStart="@dimen/medium_margin"
+        android:paddingEnd="@dimen/medium_margin"
+        android:src="@drawable/ic_pause_vector" />
 
 </com.simplemobiletools.musicplayer.views.CurrentTrackBar>

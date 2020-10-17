@@ -14,6 +14,8 @@ import com.simplemobiletools.commons.extensions.beVisible
 import com.simplemobiletools.commons.extensions.getColoredDrawableWithColor
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.extensions.config
+import com.simplemobiletools.musicplayer.extensions.sendIntent
+import com.simplemobiletools.musicplayer.helpers.PLAYPAUSE
 import com.simplemobiletools.musicplayer.models.Track
 import kotlinx.android.synthetic.main.view_current_track_bar.view.*
 
@@ -21,6 +23,9 @@ class CurrentTrackBar(context: Context, attributeSet: AttributeSet) : RelativeLa
     fun updateColors() {
         background = ColorDrawable(context.config.backgroundColor)
         current_track_label.setTextColor(context.config.textColor)
+        current_track_play_pause.setOnClickListener {
+            context.sendIntent(PLAYPAUSE)
+        }
     }
 
     fun updateCurrentTrack(track: Track?) {
@@ -47,5 +52,11 @@ class CurrentTrackBar(context: Context, attributeSet: AttributeSet) : RelativeLa
             .load(track.coverArt)
             .apply(options)
             .into(findViewById(R.id.current_track_image))
+    }
+
+    fun updateTrackState(isPlaying: Boolean) {
+        val drawableId = if (isPlaying) R.drawable.ic_pause_vector else R.drawable.ic_play_vector
+        val drawable = context.resources.getColoredDrawableWithColor(drawableId, context.config.textColor)
+        current_track_play_pause.setImageDrawable(drawable)
     }
 }

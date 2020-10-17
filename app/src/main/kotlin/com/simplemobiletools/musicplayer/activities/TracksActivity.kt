@@ -93,4 +93,9 @@ class TracksActivity : SimpleActivity() {
     fun trackChangedEvent(event: Events.TrackChanged) {
         current_track_bar.updateCurrentTrack(event.track)
     }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun trackStateChanged(event: Events.TrackStateChanged) {
+        current_track_bar.updateTrackState(event.isPlaying)
+    }
 }

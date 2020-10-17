@@ -487,6 +487,7 @@ class MainActivity : SimpleActivity(), MainActivityInterface {
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun trackStateChanged(event: Events.TrackStateChanged) {
         getCurrentFragment()?.songStateChanged(event.isPlaying)
+        current_track_bar.updateTrackState(event.isPlaying)
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
