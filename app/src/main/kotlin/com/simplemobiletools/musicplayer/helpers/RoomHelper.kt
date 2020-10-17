@@ -6,6 +6,7 @@ import android.provider.MediaStore
 import android.provider.MediaStore.Audio
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.musicplayer.extensions.config
+import com.simplemobiletools.musicplayer.extensions.tracksDAO
 import com.simplemobiletools.musicplayer.models.Track
 
 class RoomHelper(val context: Context) {
@@ -14,12 +15,12 @@ class RoomHelper(val context: Context) {
     }
 
     fun addPathsToPlaylist(paths: ArrayList<String>, playlistId: Int = context.config.currentPlaylist) {
-        val songs = getTracksFromPaths(paths, playlistId)
-        //context.songsDAO.insertAll(songs)
+        val tracks = getTracksFromPaths(paths, playlistId)
+        context.tracksDAO.insertAll(tracks)
     }
 
-    fun addTracksToPlaylist(songs: ArrayList<Track>) {
-        //context.songsDAO.insertAll(songs)
+    fun addTracksToPlaylist(tracks: ArrayList<Track>) {
+        context.tracksDAO.insertAll(tracks)
     }
 
     fun getTrackFromPath(path: String): Track? {

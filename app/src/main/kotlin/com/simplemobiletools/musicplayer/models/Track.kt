@@ -22,7 +22,7 @@ data class Track(
     @ColumnInfo(name = "duration") val duration: Int,
     @ColumnInfo(name = "album") val album: String,
     @ColumnInfo(name = "cover_art") val coverArt: String,
-    @ColumnInfo(name = "playlist_id") val playListId: Int,
+    @ColumnInfo(name = "playlist_id") var playListId: Int,
     @ColumnInfo(name = "track_id") val trackId: Int  // order id within the tracks' album
 ) : Serializable, Comparable<Track>, ListItem() {
 

@@ -8,13 +8,20 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
+import com.simplemobiletools.commons.dialogs.RadioGroupDialog
 import com.simplemobiletools.commons.extensions.getColoredDrawableWithColor
 import com.simplemobiletools.commons.extensions.getFormattedDuration
+import com.simplemobiletools.commons.helpers.ensureBackgroundThread
+import com.simplemobiletools.commons.models.RadioItem
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
+import com.simplemobiletools.musicplayer.dialogs.NewPlaylistDialog
+import com.simplemobiletools.musicplayer.extensions.playlistDAO
+import com.simplemobiletools.musicplayer.extensions.tracksDAO
 import com.simplemobiletools.musicplayer.models.AlbumHeader
 import com.simplemobiletools.musicplayer.models.ListItem
+import com.simplemobiletools.musicplayer.models.Playlist
 import com.simplemobiletools.musicplayer.models.Track
 import kotlinx.android.synthetic.main.item_album_header.view.*
 import kotlinx.android.synthetic.main.item_song.view.*
@@ -66,7 +73,15 @@ class SongsAdapter(activity: SimpleActivity, val items: ArrayList<ListItem>, rec
 
     override fun prepareActionMode(menu: Menu) {}
 
-    override fun actionItemPressed(id: Int) {}
+    override fun actionItemPressed(id: Int) {
+        if (selectedKeys.isEmpty()) {
+            return
+        }
+
+        when (id) {
+            R.id.cab_add_to_playlist -> addToPlaylist()
+        }
+    }
 
     override fun getSelectableItemCount() = items.size - 1
 
@@ -80,7 +95,47 @@ class SongsAdapter(activity: SimpleActivity, val items: ArrayList<ListItem>, rec
 
     override fun onActionModeDestroyed() {}
 
-    private fun getItemWithKey(key: Int) = items.firstOrNull { it.hashCode() == key }
+    private fun addToPlaylist() {
+        selectPlaylist { playlistId ->
+            val tracks = ArrayList<Track>()
+            getSelectedTracks().forEach {
+                it.playListId = playlistId
+                tracks.add(it)
+            }
+
+            ensureBackgroundThread {
+                activity.tracksDAO.insertAll(tracks)
+
+                activity.runOnUiThread {
+                    finishActMode()
+                    notifyDataSetChanged()
+                }
+            }
+        }
+    }
+
+    private fun selectPlaylist(callback: (playlistId: Int) -> Unit) {
+        ensureBackgroundThread {
+            val playlists = activity.playlistDAO.getAll() as ArrayList<Playlist>
+            val items = arrayListOf<RadioItem>()
+            playlists.mapTo(items) { RadioItem(it.id, it.title) }
+            items.add(RadioItem(-1, activity.getString(R.string.create_playlist)))
+
+            activity.runOnUiThread {
+                RadioGroupDialog(activity, items, -2) {
+                    if (it == -1) {
+                        NewPlaylistDialog(activity) {
+                            callback(it)
+                        }
+                    } else {
+                        callback(it as Int)
+                    }
+                }
+            }
+        }
+    }
+
+    private fun getSelectedTracks(): List<Track> = items.filter { it is Track && selectedKeys.contains(it.hashCode()) }.toMutableList() as List<Track>
 
     private fun setupSong(view: View, track: Track) {
         view.apply {
