@@ -230,7 +230,7 @@ class MainActivity : SimpleActivity(), MainActivityInterface {
             }
         )
 
-        val tabLabels = arrayOf("ARTISTS", "PLAYLISTS")
+        val tabLabels = arrayOf(getString(R.string.artists), getString(R.string.playlists))
         main_tabs_holder.apply {
             setTabTextColors(config.backgroundColor.getContrastColor(), getAdjustedPrimaryColor())
             setSelectedTabIndicatorColor(getAdjustedPrimaryColor())
