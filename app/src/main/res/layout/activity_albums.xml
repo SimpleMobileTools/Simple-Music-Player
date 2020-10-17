@@ -12,4 +12,10 @@
         android:clipToPadding="false"
         app:layoutManager="com.simplemobiletools.commons.views.MyLinearLayoutManager" />
 
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/view_current_track_bar"
+        android:layout_alignParentBottom="true" />
+
 </RelativeLayout>

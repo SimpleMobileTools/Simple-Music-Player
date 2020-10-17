@@ -16,13 +16,23 @@ import com.simplemobiletools.musicplayer.helpers.ARTIST
 import com.simplemobiletools.musicplayer.helpers.RESTART_PLAYER
 import com.simplemobiletools.musicplayer.helpers.TRACK
 import com.simplemobiletools.musicplayer.models.*
+import com.simplemobiletools.musicplayer.services.MusicService
 import kotlinx.android.synthetic.main.activity_albums.*
+import kotlinx.android.synthetic.main.view_current_track_bar.*
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 // Artists -> Albums -> Tracks
 class AlbumsActivity : SimpleActivity() {
+    private var bus: EventBus? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_albums)
+
+        bus = EventBus.getDefault()
+        bus!!.register(this)
 
         val artistType = object : TypeToken<Artist>() {}.type
         val artist = Gson().fromJson<Artist>(intent.getStringExtra(ARTIST), artistType)
@@ -68,10 +78,36 @@ class AlbumsActivity : SimpleActivity() {
                 }
             }
         }
+
+        current_track_bar.setOnClickListener {
+            Intent(this, TrackActivity::class.java).apply {
+                startActivity(this)
+            }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        updateCurrentTrackBar()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        bus?.unregister(this)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         updateMenuItemColors(menu)
         return super.onCreateOptionsMenu(menu)
+    }
+
+    private fun updateCurrentTrackBar() {
+        current_track_bar.updateColors()
+        current_track_bar.updateCurrentTrack(MusicService.mCurrTrack)
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun trackChangedEvent(event: Events.TrackChanged) {
+        current_track_bar.updateCurrentTrack(event.track)
     }
 }
