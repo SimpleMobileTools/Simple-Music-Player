@@ -1,38 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/playlist_frame"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="?attr/selectableItemBackground"
     android:clickable="true"
     android:focusable="true"
-    android:foreground="@drawable/selector">
+    android:foreground="@drawable/selector"
+    android:padding="@dimen/activity_margin">
 
-    <RelativeLayout
-        android:id="@+id/playlist_holder"
+    <com.simplemobiletools.commons.views.MyTextView
+        android:id="@+id/playlist_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/activity_margin">
+        android:layout_centerVertical="true"
+        android:paddingLeft="@dimen/medium_margin"
+        android:paddingRight="@dimen/medium_margin"
+        android:textSize="@dimen/bigger_text_size"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="My Playlist" />
 
-        <com.simplemobiletools.commons.views.MyTextView
-            android:id="@+id/playlist_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@+id/playlist_icon"
-            android:paddingLeft="@dimen/medium_margin"
-            android:paddingRight="@dimen/medium_margin"
-            android:text="@string/text_color" />
-
-        <ImageView
-            android:id="@+id/playlist_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:clickable="false"
-            android:src="@drawable/ic_music_note_vector"
-            android:visibility="invisible" />
-
-    </RelativeLayout>
-</FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

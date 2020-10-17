@@ -155,8 +155,6 @@ class PlaylistsAdapter(activity: SimpleActivity, val playlists: ArrayList<Playli
             playlist_frame?.isSelected = selectedKeys.contains(playlist.id)
             playlist_title.text = playlist.title
             playlist_title.setTextColor(textColor)
-            playlist_icon.applyColorFilter(textColor)
-            playlist_icon.beInvisibleIf(playlist.id != context.config.currentPlaylist)
         }
     }
 }
