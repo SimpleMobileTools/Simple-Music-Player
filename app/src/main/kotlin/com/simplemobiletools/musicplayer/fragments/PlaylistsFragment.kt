@@ -1,14 +1,17 @@
 package com.simplemobiletools.musicplayer.fragments
 
 import android.content.Context
+import android.content.Intent
 import android.util.AttributeSet
+import com.google.gson.Gson
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
+import com.simplemobiletools.musicplayer.activities.TracksActivity
 import com.simplemobiletools.musicplayer.adapters.PlaylistsAdapter
-import com.simplemobiletools.musicplayer.extensions.playlistChanged
 import com.simplemobiletools.musicplayer.extensions.playlistDAO
 import com.simplemobiletools.musicplayer.extensions.tracksDAO
+import com.simplemobiletools.musicplayer.helpers.PLAYLIST
 import com.simplemobiletools.musicplayer.models.Playlist
 import kotlinx.android.synthetic.main.fragment_playlists.view.*
 
@@ -22,7 +25,10 @@ class PlaylistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPa
 
             activity.runOnUiThread {
                 PlaylistsAdapter(activity, playlists, null, playlists_list) {
-                    activity.playlistChanged((it as Playlist).id)
+                    Intent(activity, TracksActivity::class.java).apply {
+                        putExtra(PLAYLIST, Gson().toJson(it))
+                        activity.startActivity(this)
+                    }
                 }.apply {
                     playlists_list.adapter = this
                 }

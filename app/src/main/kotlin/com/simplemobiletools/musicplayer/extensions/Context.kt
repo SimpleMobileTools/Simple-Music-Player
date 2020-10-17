@@ -165,14 +165,14 @@ fun Context.getAlbumsSync(artist: Artist): ArrayList<Album> {
     return albums
 }
 
-fun Context.getTracks(albumId: Int, callback: (tracks: ArrayList<Track>) -> Unit) {
+fun Context.getAlbumTracks(albumId: Int, callback: (tracks: ArrayList<Track>) -> Unit) {
     ensureBackgroundThread {
-        val tracks = getTracksSync(albumId)
+        val tracks = getAlbumTracksSync(albumId)
         callback(tracks)
     }
 }
 
-fun Context.getTracksSync(albumId: Int): ArrayList<Track> {
+fun Context.getAlbumTracksSync(albumId: Int): ArrayList<Track> {
     val tracks = ArrayList<Track>()
     val uri = Audio.Media.EXTERNAL_CONTENT_URI
     val projection = arrayOf(

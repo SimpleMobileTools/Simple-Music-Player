@@ -16,6 +16,7 @@ const val RESTART_PLAYER = "RESTART_PLAYER"
 const val ARTIST = "artist"
 const val ALBUM = "album"
 const val TRACK = "track"
+const val PLAYLIST = "playlist"
 
 private const val PATH = "com.simplemobiletools.musicplayer.action."
 val artworkUri = Uri.parse("content://media/external/audio/albumart")

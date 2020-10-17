@@ -17,7 +17,7 @@ import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
 import com.simplemobiletools.musicplayer.extensions.addTracksToPlaylist
 import com.simplemobiletools.musicplayer.extensions.getAlbumsSync
-import com.simplemobiletools.musicplayer.extensions.getTracksSync
+import com.simplemobiletools.musicplayer.extensions.getAlbumTracksSync
 import com.simplemobiletools.musicplayer.models.Artist
 import com.simplemobiletools.musicplayer.models.Track
 import kotlinx.android.synthetic.main.item_artist.view.*
@@ -75,7 +75,7 @@ class ArtistsAdapter(activity: SimpleActivity, val artists: ArrayList<Artist>, r
             getSelectedArtists().forEach { artist ->
                 val albums = activity.getAlbumsSync(artist)
                 albums.forEach {
-                    tracks.addAll(activity.getTracksSync(it.id))
+                    tracks.addAll(activity.getAlbumTracksSync(it.id))
                 }
             }
 

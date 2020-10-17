@@ -17,7 +17,7 @@ import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
 import com.simplemobiletools.musicplayer.extensions.addTracksToPlaylist
-import com.simplemobiletools.musicplayer.extensions.getTracksSync
+import com.simplemobiletools.musicplayer.extensions.getAlbumTracksSync
 import com.simplemobiletools.musicplayer.models.Album
 import com.simplemobiletools.musicplayer.models.AlbumSection
 import com.simplemobiletools.musicplayer.models.ListItem
@@ -105,7 +105,7 @@ class AlbumsAdapter(activity: SimpleActivity, val items: ArrayList<ListItem>, re
         ensureBackgroundThread {
             val tracks = getSelectedTracks()
             getSelectedAlbums().forEach {
-                tracks.addAll(activity.getTracksSync(it.id))
+                tracks.addAll(activity.getAlbumTracksSync(it.id))
             }
 
             activity.runOnUiThread {

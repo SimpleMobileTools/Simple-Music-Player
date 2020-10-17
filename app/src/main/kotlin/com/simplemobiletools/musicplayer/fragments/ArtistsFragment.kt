@@ -16,7 +16,7 @@ import com.simplemobiletools.musicplayer.activities.AlbumsActivity
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
 import com.simplemobiletools.musicplayer.adapters.ArtistsAdapter
 import com.simplemobiletools.musicplayer.extensions.getAlbumsSync
-import com.simplemobiletools.musicplayer.extensions.getTracksSync
+import com.simplemobiletools.musicplayer.extensions.getAlbumTracksSync
 import com.simplemobiletools.musicplayer.helpers.ARTIST
 import com.simplemobiletools.musicplayer.models.Artist
 import kotlinx.android.synthetic.main.fragment_artists.view.*
@@ -94,7 +94,7 @@ class ArtistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
                             artist.albumArtId = albumId
                         }
 
-                        artist.trackCnt += activity.getTracksSync(albumId.toInt()).size
+                        artist.trackCnt += activity.getAlbumTracksSync(albumId.toInt()).size
                     } while (cursor.moveToNext())
                 }
             }

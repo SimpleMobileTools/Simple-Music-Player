@@ -9,7 +9,7 @@ import com.simplemobiletools.commons.extensions.getFormattedDuration
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.adapters.AlbumsAdapter
 import com.simplemobiletools.musicplayer.extensions.getAlbums
-import com.simplemobiletools.musicplayer.extensions.getTracksSync
+import com.simplemobiletools.musicplayer.extensions.getAlbumTracksSync
 import com.simplemobiletools.musicplayer.extensions.resetQueueItems
 import com.simplemobiletools.musicplayer.helpers.ALBUM
 import com.simplemobiletools.musicplayer.helpers.ARTIST
@@ -47,7 +47,7 @@ class AlbumsActivity : SimpleActivity() {
             var trackFullDuration = 0
             val tracksToAdd = ArrayList<Track>()
             albums.forEach {
-                val tracks = getTracksSync(it.id)
+                val tracks = getAlbumTracksSync(it.id)
                 trackFullDuration += tracks.sumBy { it.duration }
                 tracksToAdd.addAll(tracks)
             }

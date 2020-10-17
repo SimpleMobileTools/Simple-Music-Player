@@ -6,18 +6,14 @@ import android.os.Bundle
 import android.view.Menu
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.adapters.SongsAdapter
-import com.simplemobiletools.musicplayer.extensions.getTracks
+import com.simplemobiletools.musicplayer.extensions.getAlbumTracksSync
+import com.simplemobiletools.musicplayer.extensions.getPlaylistSongs
 import com.simplemobiletools.musicplayer.extensions.resetQueueItems
-import com.simplemobiletools.musicplayer.helpers.ALBUM
-import com.simplemobiletools.musicplayer.helpers.RESTART_PLAYER
-import com.simplemobiletools.musicplayer.helpers.TRACK
-import com.simplemobiletools.musicplayer.helpers.artworkUri
-import com.simplemobiletools.musicplayer.models.Album
-import com.simplemobiletools.musicplayer.models.AlbumHeader
-import com.simplemobiletools.musicplayer.models.Events
-import com.simplemobiletools.musicplayer.models.ListItem
+import com.simplemobiletools.musicplayer.helpers.*
+import com.simplemobiletools.musicplayer.models.*
 import com.simplemobiletools.musicplayer.services.MusicService
 import kotlinx.android.synthetic.main.activity_tracks.*
 import kotlinx.android.synthetic.main.view_current_track_bar.*
@@ -36,19 +32,30 @@ class TracksActivity : SimpleActivity() {
         bus = EventBus.getDefault()
         bus!!.register(this)
 
+        val playlistType = object : TypeToken<Playlist>() {}.type
+        val playlist = Gson().fromJson<Playlist>(intent.getStringExtra(PLAYLIST), playlistType)
+
         val albumType = object : TypeToken<Album>() {}.type
         val album = Gson().fromJson<Album>(intent.getStringExtra(ALBUM), albumType)
-        title = album.title
 
-        getTracks(album.id) { tracks ->
-            val items = ArrayList<ListItem>()
-            val coverArt = ContentUris.withAppendedId(artworkUri, album.id.toLong()).toString()
-            val header = AlbumHeader(album.title, coverArt, album.year, tracks.size, tracks.sumBy { it.duration }, album.artist)
-            items.add(header)
-            items.addAll(tracks)
+        title = playlist?.title ?: album.title
+
+        ensureBackgroundThread {
+            val tracks = ArrayList<Track>()
+            val listItems = ArrayList<ListItem>()
+            if (playlist != null) {
+                tracks.addAll(getPlaylistSongs(playlist.id))
+                listItems.addAll(tracks)
+            } else {
+                tracks.addAll(getAlbumTracksSync(album.id))
+                val coverArt = ContentUris.withAppendedId(artworkUri, album.id.toLong()).toString()
+                val header = AlbumHeader(album.title, coverArt, album.year, tracks.size, tracks.sumBy { it.duration }, album.artist)
+                listItems.add(header)
+                listItems.addAll(tracks)
+            }
 
             runOnUiThread {
-                SongsAdapter(this, items, tracks_list) {
+                SongsAdapter(this, listItems, tracks_list) {
                     resetQueueItems(tracks) {
                         Intent(this, TrackActivity::class.java).apply {
                             putExtra(TRACK, Gson().toJson(it))
