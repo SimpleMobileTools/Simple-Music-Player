@@ -329,7 +329,7 @@ class MainActivity : SimpleActivity(), MainActivityInterface {
                     RemovePlaylistDialog(this, playlist) {
                         ensureBackgroundThread {
                             if (it) {
-                                val paths = getPlaylistSongs(config.currentPlaylist).map { it.path }
+                                val paths = getPlaylistTracks(config.currentPlaylist).map { it.path }
                                 val files = paths.map { FileDirItem(it, it.getFilenameFromPath()) } as ArrayList<FileDirItem>
                                 paths.forEach {
                                     tracksDAO.removeSongPath(it)

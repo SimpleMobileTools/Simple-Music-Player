@@ -14,7 +14,7 @@ import com.simplemobiletools.musicplayer.dialogs.NewPlaylistDialog
 import com.simplemobiletools.musicplayer.dialogs.RemovePlaylistDialog
 import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.extensions.deletePlaylists
-import com.simplemobiletools.musicplayer.extensions.getPlaylistSongs
+import com.simplemobiletools.musicplayer.extensions.getPlaylistTracks
 import com.simplemobiletools.musicplayer.extensions.playlistChanged
 import com.simplemobiletools.musicplayer.helpers.ALL_TRACKS_PLAYLIST_ID
 import com.simplemobiletools.musicplayer.interfaces.RefreshPlaylistsListener
@@ -86,7 +86,7 @@ class PlaylistsAdapter(activity: SimpleActivity, val playlists: ArrayList<Playli
     private fun deletePlaylistSongs(ids: ArrayList<Int>, callback: () -> Unit) {
         var cnt = ids.size
         ids.map {
-            val paths = activity.getPlaylistSongs(it).map { it.path }
+            val paths = activity.getPlaylistTracks(it).map { it.path }
             val fileDirItems = paths.map { FileDirItem(it, it.getFilenameFromPath()) } as ArrayList<FileDirItem>
             activity.deleteFiles(fileDirItems) {
                 if (--cnt <= 0) {

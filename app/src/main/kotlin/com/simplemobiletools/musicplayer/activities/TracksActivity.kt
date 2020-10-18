@@ -11,7 +11,7 @@ import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.adapters.SongsAdapter
 import com.simplemobiletools.musicplayer.extensions.getAlbumTracksSync
-import com.simplemobiletools.musicplayer.extensions.getPlaylistSongs
+import com.simplemobiletools.musicplayer.extensions.getPlaylistTracks
 import com.simplemobiletools.musicplayer.extensions.resetQueueItems
 import com.simplemobiletools.musicplayer.helpers.*
 import com.simplemobiletools.musicplayer.models.*
@@ -22,7 +22,7 @@ import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
-// Artists -> Albums -> Songs
+// Artists -> Albums -> Tracks
 class TracksActivity : SimpleActivity() {
     private var bus: EventBus? = null
 
@@ -45,7 +45,7 @@ class TracksActivity : SimpleActivity() {
             val tracks = ArrayList<Track>()
             val listItems = ArrayList<ListItem>()
             if (playlist != null) {
-                val playlistTracks = getPlaylistSongs(playlist.id)
+                val playlistTracks = getPlaylistTracks(playlist.id)
                 playlistTracks.sortWith { o1, o2 -> AlphanumericComparator().compare(o1.title.toLowerCase(), o2.title.toLowerCase()) }
                 tracks.addAll(playlistTracks)
                 listItems.addAll(tracks)

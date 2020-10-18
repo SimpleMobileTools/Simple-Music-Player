@@ -41,11 +41,11 @@ fun Context.sendIntent(action: String) {
 
 val Context.config: Config get() = Config.newInstance(applicationContext)
 
-val Context.playlistDAO: PlaylistsDao get() = getSongsDB().PlaylistsDao()
+val Context.playlistDAO: PlaylistsDao get() = getTracksDB().PlaylistsDao()
 
-val Context.tracksDAO: SongsDao get() = getSongsDB().SongsDao()
+val Context.tracksDAO: SongsDao get() = getTracksDB().SongsDao()
 
-val Context.queueDAO: QueueItemsDao get() = getSongsDB().QueueItemsDao()
+val Context.queueDAO: QueueItemsDao get() = getTracksDB().QueueItemsDao()
 
 fun Context.playlistChanged(newID: Int, callSetup: Boolean = true) {
     config.currentPlaylist = newID
@@ -65,36 +65,36 @@ fun Context.getActionBarHeight(): Int {
     return actionBarSize
 }
 
-fun Context.getSongsDB() = SongsDatabase.getInstance(this)
+fun Context.getTracksDB() = SongsDatabase.getInstance(this)
 
 fun Context.getPlaylistIdWithTitle(title: String) = playlistDAO.getPlaylistWithTitle(title)?.id ?: -1
 
-fun Context.getPlaylistSongs(playlistId: Int): ArrayList<Track> {
-    val validSongs = ArrayList<Track>()
+fun Context.getPlaylistTracks(playlistId: Int): ArrayList<Track> {
+    val validTracks = ArrayList<Track>()
     if (isQPlus()) {
-        validSongs.addAll(tracksDAO.getTracksFromPlaylist(playlistId))
+        validTracks.addAll(tracksDAO.getTracksFromPlaylist(playlistId))
     } else {
-        val invalidSongs = ArrayList<Track>()
-        val songs = tracksDAO.getTracksFromPlaylist(playlistId)
+        val invalidTracks = ArrayList<Track>()
+        val tracks = tracksDAO.getTracksFromPlaylist(playlistId)
         val showFilename = config.showFilename
-        songs.forEach {
+        tracks.forEach {
             it.title = it.getProperTitle(showFilename)
 
             if (File(it.path).exists() || it.path.startsWith("content://")) {
-                validSongs.add(it)
+                validTracks.add(it)
             } else {
-                invalidSongs.add(it)
+                invalidTracks.add(it)
             }
         }
 
-        getSongsDB().runInTransaction {
-            invalidSongs.forEach {
+        getTracksDB().runInTransaction {
+            invalidTracks.forEach {
                 tracksDAO.removeSongPath(it.path)
             }
         }
     }
 
-    return validSongs
+    return validTracks
 }
 
 fun Context.deletePlaylists(playlists: ArrayList<Playlist>) {
