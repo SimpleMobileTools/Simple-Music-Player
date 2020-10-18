@@ -18,10 +18,11 @@ import kotlinx.android.synthetic.main.fragment_playlists.view.*
 class PlaylistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPagerFragment(context, attributeSet) {
     override fun setupFragment(activity: SimpleActivity) {
         ensureBackgroundThread {
-            val playlists = activity.playlistDAO.getAll() as ArrayList<Playlist>
+            var playlists = activity.playlistDAO.getAll() as ArrayList<Playlist>
             playlists.forEach {
                 it.trackCnt = activity.tracksDAO.getTracksCountFromPlaylist(it.id)
             }
+            playlists = playlists.filter { it.trackCnt != 0 }.toMutableList() as ArrayList<Playlist>
 
             activity.runOnUiThread {
                 PlaylistsAdapter(activity, playlists, null, playlists_list) {
