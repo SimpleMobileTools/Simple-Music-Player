@@ -28,10 +28,6 @@ class Config(context: Context) : BaseConfig(context) {
         get() = prefs.getBoolean(AUTOPLAY, true)
         set(autoplay) = prefs.edit().putBoolean(AUTOPLAY, autoplay).apply()
 
-    var showAlbumCover: Boolean
-        get() = prefs.getBoolean(SHOW_ALBUM_COVER, true)
-        set(showAlbumCover) = prefs.edit().putBoolean(SHOW_ALBUM_COVER, showAlbumCover).apply()
-
     // initial playlist tries to load all songs from the device, store unwanted song paths here
     var ignoredPaths: Set<String>
         get() = prefs.getStringSet(IGNORED_PATHS, HashSet<String>())!!

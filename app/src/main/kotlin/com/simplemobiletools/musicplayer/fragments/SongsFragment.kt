@@ -33,7 +33,6 @@ class SongsFragment(context: Context, attributeSet: AttributeSet) : MyViewPagerF
     private val config = context.config
 
     private var storedTextColor = 0
-    private var storedShowAlbumCover = true
 
     private lateinit var activity: SimpleActivity
     private lateinit var activityInterface: MainActivityInterface
@@ -65,7 +64,6 @@ class SongsFragment(context: Context, attributeSet: AttributeSet) : MyViewPagerF
     private fun storeStateVariables() {
         config.apply {
             storedTextColor = textColor
-            storedShowAlbumCover = showAlbumCover
         }
     }
 
@@ -87,23 +85,7 @@ class SongsFragment(context: Context, attributeSet: AttributeSet) : MyViewPagerF
         song_progress_max.setOnClickListener { activity.sendIntent(SKIP_FORWARD) }
 
         initSeekbarChangeListener()
-        setTopArtHeight()
-
-        songs_list.recyclerScrollCallback = object : RecyclerScrollCallback {
-            override fun onScrolled(scrollY: Int) {
-                top_navigation.beVisibleIf(scrollY > topArtHeight && !activityInterface.getIsSearchOpen())
-                val minOverlayTransitionY = actionbarSize - topArtHeight
-                art_holder.translationY = Math.min(0, Math.max(minOverlayTransitionY, -scrollY / 2)).toFloat()
-                song_list_background.translationY = Math.max(0, -scrollY + topArtHeight).toFloat()
-            }
-        }
-
         onResume()
-    }
-
-    private fun setTopArtHeight() {
-        topArtHeight = if (config.showAlbumCover) resources.getDimensionPixelSize(R.dimen.top_art_height) else 0
-        artView!!.setPadding(0, topArtHeight, 0, 0)
     }
 
     fun searchOpened() {
