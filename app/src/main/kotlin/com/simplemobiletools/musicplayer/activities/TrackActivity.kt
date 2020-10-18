@@ -131,6 +131,10 @@ class TrackActivity : SimpleActivity() {
         setupShuffleButton()
         setupTrackRepetitionButton()
         setupSeekbar()
+
+        arrayOf(activity_track_previous, activity_track_play_pause, activity_track_next).forEach {
+            it.applyColorFilter(config.textColor)
+        }
     }
 
     private fun setupTopArt(coverArt: String) {
