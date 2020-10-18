@@ -91,7 +91,6 @@ class SettingsActivity : SimpleActivity() {
         }
     }
 
-
     private fun setupSwapPrevNext() {
         settings_swap_prev_next.isChecked = config.swapPrevNext
         settings_swap_prev_next_holder.setOnClickListener {

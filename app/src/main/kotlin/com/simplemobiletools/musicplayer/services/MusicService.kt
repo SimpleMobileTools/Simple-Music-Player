@@ -78,6 +78,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         private var mMediaSession: MediaSessionCompat? = null
         private var mIsServiceInitialized = false
         private var mPrevAudioFocusState = 0
+        private var mSetProgressOnPrepare = 0
 
         fun getIsPlaying() = mPlayer?.isPlaying == true
     }
@@ -228,6 +229,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             if (currentQueueItem != null) {
                 mCurrTrack = mTracks.firstOrNull { it.id == currentQueueItem.trackId && it.playListId == currentQueueItem.playlistId }
                 mPlayOnPrepare = false
+                mSetProgressOnPrepare = currentQueueItem.lastPosition
                 setTrack(mCurrTrack!!.id)
             }
         }
@@ -264,7 +266,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     }
 
     private fun handleFinish() {
-        EventBus.getDefault().post(Events.ProgressUpdated(0))
+        broadcastTrackProgress(0)
         destroyPlayer()
     }
 
@@ -356,7 +358,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             broadcastTrackChange()
 
             val secs = mPlayer!!.currentPosition / 1000
-            EventBus.getDefault().post(Events.ProgressUpdated(secs))
+            broadcastTrackProgress(secs)
         }
         trackStateChanged(getIsPlaying())
     }
@@ -674,7 +676,12 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         if (mPlayOnPrepare) {
             mp.start()
             requestAudioFocus()
+        } else if (mSetProgressOnPrepare > 0) {
+            mPlayer?.seekTo(mSetProgressOnPrepare)
+            broadcastTrackProgress(mSetProgressOnPrepare / 1000)
+            mSetProgressOnPrepare = 0
         }
+
         trackStateChanged(getIsPlaying())
         setupNotification()
     }
@@ -713,6 +720,10 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
                 EventBus.getDefault().post(Events.NextTrackChanged(nextTrack))
             }
         }
+    }
+
+    private fun broadcastTrackProgress(progress: Int) {
+        EventBus.getDefault().post(Events.ProgressUpdated(progress))
     }
 
     // do not just return the album cover, but also a boolean to indicate if it a real cover, or just the placeholder
@@ -885,7 +896,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             mProgressHandler.post(object : Runnable {
                 override fun run() {
                     val secs = mPlayer!!.currentPosition / 1000
-                    EventBus.getDefault().post(Events.ProgressUpdated(secs))
+                    broadcastTrackProgress(secs)
                     mProgressHandler.removeCallbacksAndMessages(null)
                     mProgressHandler.postDelayed(this, PROGRESS_UPDATE_INTERVAL)
                 }
@@ -930,6 +941,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         broadcastTrackStateChange(mPlayer?.isPlaying ?: false)
         broadcastTrackChange()
         broadcastNextTrackChange()
+        broadcastTrackProgress((mPlayer?.currentPosition ?: 0) / 1000)
     }
 
     private fun handleMediaButton(mediaButtonEvent: Intent) {
