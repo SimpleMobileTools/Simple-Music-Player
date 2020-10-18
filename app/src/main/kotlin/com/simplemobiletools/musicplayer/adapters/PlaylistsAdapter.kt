@@ -8,6 +8,7 @@ import com.simplemobiletools.commons.extensions.deleteFiles
 import com.simplemobiletools.commons.extensions.getFilenameFromPath
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.commons.models.FileDirItem
+import com.simplemobiletools.commons.views.FastScroller
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
@@ -18,13 +19,12 @@ import com.simplemobiletools.musicplayer.extensions.deletePlaylists
 import com.simplemobiletools.musicplayer.extensions.getPlaylistTracks
 import com.simplemobiletools.musicplayer.extensions.playlistChanged
 import com.simplemobiletools.musicplayer.helpers.ALL_TRACKS_PLAYLIST_ID
-import com.simplemobiletools.musicplayer.interfaces.RefreshPlaylistsListener
 import com.simplemobiletools.musicplayer.models.Playlist
 import kotlinx.android.synthetic.main.item_playlist.view.*
 import java.util.*
 
-class PlaylistsAdapter(activity: SimpleActivity, val playlists: ArrayList<Playlist>, val listener: RefreshPlaylistsListener?, recyclerView: MyRecyclerView,
-                       itemClick: (Any) -> Unit) : MyRecyclerViewAdapter(activity, recyclerView, null, itemClick) {
+class PlaylistsAdapter(activity: SimpleActivity, val playlists: ArrayList<Playlist>, recyclerView: MyRecyclerView, fastScroller: FastScroller?,
+                       itemClick: (Any) -> Unit) : MyRecyclerViewAdapter(activity, recyclerView, fastScroller, itemClick) {
 
     init {
         setupDragListener(true)
@@ -123,7 +123,7 @@ class PlaylistsAdapter(activity: SimpleActivity, val playlists: ArrayList<Playli
             activity.deletePlaylists(playlistsToDelete)
             activity.runOnUiThread {
                 if (isDeletingCurrentPlaylist) {
-                    reloadList()
+                    finishActMode()
                 } else {
                     removeSelectedItems(positions)
                 }
@@ -136,14 +136,9 @@ class PlaylistsAdapter(activity: SimpleActivity, val playlists: ArrayList<Playli
     private fun showRenameDialog() {
         NewPlaylistDialog(activity, playlists[getItemKeyPosition(selectedKeys.first())]) {
             activity.runOnUiThread {
-                reloadList()
+                finishActMode()
             }
         }
-    }
-
-    private fun reloadList() {
-        finishActMode()
-        listener?.refreshItems()
     }
 
     private fun setupView(view: View, playlist: Playlist) {

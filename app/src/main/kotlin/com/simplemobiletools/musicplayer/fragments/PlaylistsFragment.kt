@@ -25,7 +25,7 @@ class PlaylistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPa
             playlists = playlists.filter { it.trackCnt != 0 }.toMutableList() as ArrayList<Playlist>
 
             activity.runOnUiThread {
-                PlaylistsAdapter(activity, playlists, null, playlists_list) {
+                val adapter = PlaylistsAdapter(activity, playlists, playlists_list, playlists_fastscroller) {
                     Intent(activity, TracksActivity::class.java).apply {
                         putExtra(PLAYLIST, Gson().toJson(it))
                         activity.startActivity(this)
@@ -33,8 +33,16 @@ class PlaylistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPa
                 }.apply {
                     playlists_list.adapter = this
                 }
+
+                playlists_fastscroller.setViews(playlists_list) {
+                    val playlist = adapter.playlists.getOrNull(it)
+                    playlists_fastscroller.updateBubbleText(playlist?.title ?: "")
+                }
             }
         }
+
+        playlists_fastscroller.updatePrimaryColor()
+        playlists_fastscroller.updateBubbleColors()
     }
 
     override fun finishActMode() {
