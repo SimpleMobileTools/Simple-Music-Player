@@ -3,6 +3,7 @@ package com.simplemobiletools.musicplayer.fragments
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.provider.MediaStore
 import android.provider.MediaStore.Audio
 import android.util.AttributeSet
 import com.google.gson.Gson
@@ -15,8 +16,8 @@ import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.musicplayer.activities.AlbumsActivity
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
 import com.simplemobiletools.musicplayer.adapters.ArtistsAdapter
-import com.simplemobiletools.musicplayer.extensions.getAlbumsSync
 import com.simplemobiletools.musicplayer.extensions.getAlbumTracksSync
+import com.simplemobiletools.musicplayer.extensions.getAlbumsSync
 import com.simplemobiletools.musicplayer.helpers.ARTIST
 import com.simplemobiletools.musicplayer.models.Artist
 import kotlinx.android.synthetic.main.fragment_artists.view.*
@@ -66,6 +67,14 @@ class ArtistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
                 }
             } catch (e: Exception) {
                 activity.showErrorToast(e)
+            }
+
+            // move <unknown> at the bottom
+            val unknown = artists.firstOrNull { it.title == MediaStore.UNKNOWN_STRING }
+            if (unknown != null) {
+                if (artists.remove(unknown)) {
+                    artists.add(unknown)
+                }
             }
 
             activity.runOnUiThread {
