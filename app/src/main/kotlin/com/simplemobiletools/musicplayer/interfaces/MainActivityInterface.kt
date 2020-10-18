@@ -4,6 +4,4 @@ interface MainActivityInterface {
     fun getIsSearchOpen(): Boolean
 
     fun getIsThirdPartyIntent(): Boolean
-
-    fun addFolderToPlaylist()
 }

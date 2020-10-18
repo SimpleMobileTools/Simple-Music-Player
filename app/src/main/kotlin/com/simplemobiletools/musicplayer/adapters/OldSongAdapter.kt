@@ -351,29 +351,6 @@ class OldSongAdapter(activity: SimpleActivity, var songs: ArrayList<Track>, val 
         }
     }
 
-    fun removeCurrentSongFromPlaylist() {
-        if (currentSong != null) {
-            selectedKeys.clear()
-            selectedKeys.add(currentSong!!.path.hashCode())
-            removeFromPlaylist()
-            selectedKeys.clear()
-        }
-    }
-
-    fun deleteCurrentSong() {
-        ConfirmationDialog(activity) {
-            selectedKeys.clear()
-            if (songs.isNotEmpty() && currentSong != null) {
-                selectedKeys.add(currentSong!!.path.hashCode())
-                activity.sendIntent(NEXT)
-                ensureBackgroundThread {
-                    deleteSongs()
-                    selectedKeys.clear()
-                }
-            }
-        }
-    }
-
     private fun initNavigationView() {
         navigationView?.apply {
             shuffle_btn.setOnClickListener { listener.toggleShuffle() }

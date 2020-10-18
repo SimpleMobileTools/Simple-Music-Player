@@ -4,7 +4,8 @@ import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
-import com.simplemobiletools.commons.extensions.*
+import com.simplemobiletools.commons.extensions.deleteFiles
+import com.simplemobiletools.commons.extensions.getFilenameFromPath
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.commons.models.FileDirItem
 import com.simplemobiletools.commons.views.MyRecyclerView
@@ -99,12 +100,7 @@ class PlaylistsAdapter(activity: SimpleActivity, val playlists: ArrayList<Playli
     private fun removePlaylists(ids: ArrayList<Int>) {
         for (key in selectedKeys) {
             val playlist = getItemWithKey(key) ?: continue
-            if (playlist.id == ALL_TRACKS_PLAYLIST_ID) {
-                activity.toast(R.string.all_songs_cannot_be_deleted)
-                selectedKeys.remove(ALL_TRACKS_PLAYLIST_ID)
-                toggleItemSelection(false, getItemKeyPosition(ALL_TRACKS_PLAYLIST_ID))
-                break
-            } else if (playlist.id == activity.config.currentPlaylist) {
+            if (playlist.id == activity.config.currentPlaylist) {
                 activity.playlistChanged(ALL_TRACKS_PLAYLIST_ID)
             }
         }

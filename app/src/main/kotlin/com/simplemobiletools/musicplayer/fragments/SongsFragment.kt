@@ -3,17 +3,13 @@ package com.simplemobiletools.musicplayer.fragments
 import android.content.Context
 import android.content.Intent
 import android.graphics.Paint
-import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.ColorDrawable
-import android.net.Uri
-import android.os.Environment
 import android.util.AttributeSet
 import android.view.ViewGroup
 import android.widget.SeekBar
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.interfaces.RecyclerScrollCallback
-import com.simplemobiletools.commons.views.MyLinearLayoutManager
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
 import com.simplemobiletools.musicplayer.adapters.OldSongAdapter
@@ -21,13 +17,10 @@ import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.extensions.getActionBarHeight
 import com.simplemobiletools.musicplayer.extensions.sendIntent
 import com.simplemobiletools.musicplayer.helpers.*
-import com.simplemobiletools.musicplayer.inlines.indexOfFirstOrNull
 import com.simplemobiletools.musicplayer.interfaces.MainActivityInterface
 import com.simplemobiletools.musicplayer.interfaces.SongListListener
 import com.simplemobiletools.musicplayer.models.Track
 import com.simplemobiletools.musicplayer.services.MusicService
-import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.fragment_artists.view.*
 import kotlinx.android.synthetic.main.fragment_songs.view.*
 import kotlinx.android.synthetic.main.item_navigation.view.*
 import java.util.*
@@ -58,23 +51,6 @@ class SongsFragment(context: Context, attributeSet: AttributeSet) : MyViewPagerF
 
         arrayListOf(art_holder, song_list_background, top_navigation).forEach {
             it.background = ColorDrawable(config.backgroundColor)
-        }
-
-        if (storedTextColor != config.textColor) {
-            updateAlbumCover()
-        }
-
-        if (storedShowAlbumCover != config.showAlbumCover) {
-            setTopArtHeight()
-            songs_list.adapter?.notifyDataSetChanged()
-            if (config.showAlbumCover) {
-                updateAlbumCover()
-            } else {
-                try {
-                    art_image.setImageDrawable(null)
-                } catch (ignored: Exception) {
-                }
-            }
         }
     }
 
@@ -109,8 +85,6 @@ class SongsFragment(context: Context, attributeSet: AttributeSet) : MyViewPagerF
         repeat_btn.setOnClickListener { toggleSongRepetition() }
         song_progress_current.setOnClickListener { activity.sendIntent(SKIP_BACKWARD) }
         song_progress_max.setOnClickListener { activity.sendIntent(SKIP_FORWARD) }
-
-        songs_playlist_empty_placeholder_2.setOnClickListener { activityInterface.addFolderToPlaylist() }
 
         initSeekbarChangeListener()
         setTopArtHeight()
@@ -212,69 +186,8 @@ class SongsFragment(context: Context, attributeSet: AttributeSet) : MyViewPagerF
         setupIconDescriptions()
         Intent(activity, MusicService::class.java).apply {
             putExtra(TRACK_POS, pos)
-            //action = PLAYPOS
             activity.startService(this)
         }
-    }
-
-    fun songChangedEvent(song: Track?) {
-        updateSongInfo(song)
-        markCurrentSong()
-        updateAlbumCover()
-    }
-
-    fun songStateChanged(isPlaying: Boolean) {
-        val drawableId = if (isPlaying) R.drawable.ic_pause_vector else R.drawable.ic_play_vector
-        play_pause_btn.setImageDrawable(resources.getDrawable(drawableId))
-        getSongsAdapter()?.updateSongState(isPlaying)
-    }
-
-    fun songProgressUpdated(seconds: Int) {
-        song_progressbar.progress = seconds
-        getSongsAdapter()?.updateSongProgress(seconds)
-    }
-
-    private fun updateSongInfo(song: Track?) {
-        top_navigation.song_info_title.text = song?.title ?: ""
-        top_navigation.song_info_artist.text = song?.artist ?: ""
-        song_progressbar.max = song?.duration ?: 0
-        song_progressbar.progress = 0
-
-        getSongsAdapter()?.updateSong(song)
-        if (songs.isEmpty() && !activityInterface.getIsThirdPartyIntent()) {
-            activity.toast(R.string.empty_playlist)
-        }
-    }
-
-    fun fillSongsListView(songs: ArrayList<Track>) {
-        this.songs = songs
-        val currAdapter = songs_list.adapter
-        songs_fastscroller.setViews(songs_list) {
-            val item = getSongsAdapter()?.songs?.getOrNull(it)
-            songs_fastscroller.updateBubbleText(item?.getBubbleText() ?: "")
-        }
-
-        if (currAdapter == null) {
-            OldSongAdapter(activity, songs, this, artView!!, songs_list, songs_fastscroller) {
-                songPicked(getSongIndex(it as Track))
-            }.apply {
-                isThirdPartyIntent = activityInterface.getIsThirdPartyIntent()
-                songs_list.adapter = this
-            }
-        } else {
-            val state = (songs_list.layoutManager as MyLinearLayoutManager).onSaveInstanceState()
-            (currAdapter as OldSongAdapter).apply {
-                isThirdPartyIntent = activityInterface.getIsThirdPartyIntent()
-                updateSongs(songs)
-            }
-            (songs_list.layoutManager as MyLinearLayoutManager).onRestoreInstanceState(state)
-        }
-
-        markCurrentSong()
-        songs_list.beVisibleIf(songs.isNotEmpty())
-        art_holder.beVisibleIf(songs_list.isVisible())
-        songs_playlist_placeholder.beVisibleIf(songs.isEmpty())
-        songs_playlist_empty_placeholder_2.beVisibleIf(songs.isEmpty())
     }
 
     private fun markCurrentSong() {
@@ -286,38 +199,6 @@ class SongsFragment(context: Context, attributeSet: AttributeSet) : MyViewPagerF
         val cnt = songs.size - 1
         return (0..cnt).firstOrNull { songs[it] == newSong } ?: -1
     }
-
-    fun getDefaultFilePickerPath(): String {
-        val path = if (songs.isEmpty()) {
-            Environment.getExternalStorageDirectory().toString()
-        } else {
-            songs[0].path
-        }
-        return path
-    }
-
-    private fun updateAlbumCover() {
-        if (!config.showAlbumCover) {
-            return
-        }
-
-        /*val coverToUse = if (MusicService.mCurrTrackCover?.isRecycled == true) {
-            resources.getColoredBitmap(R.drawable.ic_headset, config.textColor)
-        } else {
-            MusicService.mCurrTrackCover
-        }
-
-        // Picasso cannot load bitmaps/drawables directly, so as a workaround load images as placeholders
-        val bitmapDrawable = BitmapDrawable(resources, coverToUse)
-        val uri: Uri? = null
-        Picasso.get()
-                .load(uri)
-                .fit()
-                .placeholder(bitmapDrawable)
-                .into(art_image)*/
-    }
-
-    private fun getSongIndex(song: Track) = songs.indexOfFirstOrNull { it == song } ?: 0
 
     fun getSongsAdapter() = songs_list.adapter as? OldSongAdapter
 

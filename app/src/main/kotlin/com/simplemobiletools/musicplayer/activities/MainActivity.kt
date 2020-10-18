@@ -5,34 +5,33 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.ColorDrawable
 import android.media.AudioManager
-import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.MenuItemCompat
 import androidx.viewpager.widget.ViewPager
-import com.simplemobiletools.commons.dialogs.FilePickerDialog
-import com.simplemobiletools.commons.dialogs.NewAppsIconsDialog
 import com.simplemobiletools.commons.dialogs.RadioGroupDialog
 import com.simplemobiletools.commons.extensions.*
-import com.simplemobiletools.commons.helpers.*
+import com.simplemobiletools.commons.helpers.LICENSE_EVENT_BUS
+import com.simplemobiletools.commons.helpers.LICENSE_PICASSO
+import com.simplemobiletools.commons.helpers.PERMISSION_WRITE_STORAGE
 import com.simplemobiletools.commons.models.FAQItem
-import com.simplemobiletools.commons.models.FileDirItem
 import com.simplemobiletools.commons.models.RadioItem
 import com.simplemobiletools.commons.models.Release
 import com.simplemobiletools.musicplayer.BuildConfig
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.adapters.ViewPagerAdapter
 import com.simplemobiletools.musicplayer.dialogs.ChangeSortingDialog
-import com.simplemobiletools.musicplayer.dialogs.NewPlaylistDialog
-import com.simplemobiletools.musicplayer.dialogs.RemovePlaylistDialog
 import com.simplemobiletools.musicplayer.dialogs.SleepTimerCustomDialog
-import com.simplemobiletools.musicplayer.extensions.*
-import com.simplemobiletools.musicplayer.helpers.*
+import com.simplemobiletools.musicplayer.extensions.config
+import com.simplemobiletools.musicplayer.extensions.sendIntent
+import com.simplemobiletools.musicplayer.helpers.FINISH_IF_NOT_PLAYING
+import com.simplemobiletools.musicplayer.helpers.REFRESH_LIST
+import com.simplemobiletools.musicplayer.helpers.START_SLEEP_TIMER
+import com.simplemobiletools.musicplayer.helpers.STOP_SLEEP_TIMER
 import com.simplemobiletools.musicplayer.interfaces.MainActivityInterface
 import com.simplemobiletools.musicplayer.models.Events
-import com.simplemobiletools.musicplayer.models.Playlist
 import com.simplemobiletools.musicplayer.services.MusicService
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_artists.*
@@ -42,14 +41,10 @@ import kotlinx.android.synthetic.main.view_current_track_bar.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
-import java.io.File
-import java.util.*
 
 class MainActivity : SimpleActivity(), MainActivityInterface {
     private var isThirdPartyIntent = false
     private var isSearchOpen = false
-    private var wasInitialPlaylistSet = false
-    private var lastFilePickerPath = ""
 
     private var searchMenuItem: MenuItem? = null
     private var bus: EventBus? = null
@@ -72,12 +67,6 @@ class MainActivity : SimpleActivity(), MainActivityInterface {
         volumeControlStream = AudioManager.STREAM_MUSIC
         checkWhatsNewDialog()
         checkAppOnSDCard()
-
-        // notify some users about the Dialer, SMS Messenger and Voice Recorder apps
-        if (!config.wasMessengerRecorderShown && config.appRunCount > 35) {
-            NewAppsIconsDialog(this)
-            config.wasMessengerRecorderShown = true
-        }
     }
 
     override fun onResume() {
@@ -114,56 +103,26 @@ class MainActivity : SimpleActivity(), MainActivityInterface {
         menuInflater.inflate(R.menu.menu_main, menu)
         setupSearch(menu)
 
-        val autoplay = menu.findItem(R.id.toggle_autoplay)
-        autoplay.title = getString(if (config.autoplay) R.string.disable_autoplay else R.string.enable_autoplay)
-
         menu.apply {
             findItem(R.id.sort).isVisible = !isThirdPartyIntent
             findItem(R.id.sort).isVisible = !isThirdPartyIntent
-            findItem(R.id.open_playlist).isVisible = !isThirdPartyIntent
-            findItem(R.id.add_folder_to_playlist).isVisible = !isThirdPartyIntent
-            findItem(R.id.add_file_to_playlist).isVisible = !isThirdPartyIntent
-            findItem(R.id.remove_playlist).isVisible = !isThirdPartyIntent
         }
 
         updateMenuItemColors(menu)
         return true
     }
 
-    override fun onPrepareOptionsMenu(menu: Menu): Boolean {
-        val isSongSelected = MusicService.mCurrTrack != null
-        menu.apply {
-            findItem(R.id.remove_current).isVisible = !isThirdPartyIntent && isSongSelected
-            findItem(R.id.delete_current).isVisible = !isThirdPartyIntent && isSongSelected
-        }
-        return true
-    }
+    override fun onPrepareOptionsMenu(menu: Menu) = true
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.sort -> showSortingDialog()
-            R.id.remove_current -> getCurrentFragment()?.getSongsAdapter()?.removeCurrentSongFromPlaylist()
-            R.id.delete_current -> getCurrentFragment()?.getSongsAdapter()?.deleteCurrentSong()
             R.id.sleep_timer -> showSleepTimer()
-            R.id.open_playlist -> openPlaylist()
-            R.id.toggle_autoplay -> toggleAutoplay()
-            R.id.add_folder_to_playlist -> addFolderToPlaylist()
-            R.id.add_file_to_playlist -> addFileToPlaylist()
-            R.id.create_playlist_from_folder -> createPlaylistFromFolder()
-            R.id.remove_playlist -> removePlaylist()
             R.id.settings -> launchSettings()
             R.id.about -> launchAbout()
             else -> return super.onOptionsItemSelected(item)
         }
         return true
-    }
-
-    override fun onNewIntent(intent: Intent) {
-        super.onNewIntent(intent)
-        if (intent.action == Intent.ACTION_VIEW) {
-            setIntent(intent)
-            initThirdPartyIntent()
-        }
     }
 
     private fun setupSearch(menu: Menu) {
@@ -202,10 +161,8 @@ class MainActivity : SimpleActivity(), MainActivityInterface {
     private fun initActivity() {
         bus = EventBus.getDefault()
         bus!!.register(this)
-        sleep_timer_stop.setOnClickListener { stopSleepTimer() }
-
         initFragments()
-        initializePlayer()
+        sleep_timer_stop.setOnClickListener { stopSleepTimer() }
 
         current_track_bar.setOnClickListener {
             Intent(this, TrackActivity::class.java).apply {
@@ -257,12 +214,6 @@ class MainActivity : SimpleActivity(), MainActivityInterface {
         ChangeSortingDialog(this) {
             sendIntent(REFRESH_LIST)
         }
-    }
-
-    private fun toggleAutoplay() {
-        config.autoplay = !config.autoplay
-        invalidateOptionsMenu()
-        toast(if (config.autoplay) R.string.autoplay_enabled else R.string.autoplay_disabled)
     }
 
     private fun updateCurrentTrackBar() {
@@ -319,191 +270,16 @@ class MainActivity : SimpleActivity(), MainActivityInterface {
         sleep_timer_holder.beGone()
     }
 
-    private fun removePlaylist() {
-        if (config.currentPlaylist == ALL_TRACKS_PLAYLIST_ID) {
-            toast(R.string.all_songs_cannot_be_deleted)
-        } else {
-            ensureBackgroundThread {
-                val playlist = playlistDAO.getPlaylistWithId(config.currentPlaylist)
-                runOnUiThread {
-                    RemovePlaylistDialog(this, playlist) {
-                        ensureBackgroundThread {
-                            if (it) {
-                                val paths = getPlaylistTracks(config.currentPlaylist).map { it.path }
-                                val files = paths.map { FileDirItem(it, it.getFilenameFromPath()) } as ArrayList<FileDirItem>
-                                paths.forEach {
-                                    tracksDAO.removeSongPath(it)
-                                }
-                                deleteFiles(files)
-                            }
-
-                            if (playlist != null) {
-                                deletePlaylists(arrayListOf(playlist))
-                            }
-                            playlistChanged(ALL_TRACKS_PLAYLIST_ID)
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    private fun openPlaylist() {
-        ensureBackgroundThread {
-            val playlists = playlistDAO.getAll() as ArrayList<Playlist>
-            runOnUiThread {
-                showPlaylists(playlists)
-            }
-        }
-    }
-
-    private fun showPlaylists(playlists: ArrayList<Playlist>) {
-        val items = arrayListOf<RadioItem>()
-        playlists.mapTo(items) { RadioItem(it.id, it.title) }
-        items.add(RadioItem(-1, getString(R.string.create_new_playlist)))
-
-        RadioGroupDialog(this, items, config.currentPlaylist) {
-            if (it == -1) {
-                NewPlaylistDialog(this) {
-                    wasInitialPlaylistSet = false
-                    MusicService.mCurrTrack = null
-                    playlistChanged(it, false)
-                    invalidateOptionsMenu()
-                }
-            } else {
-                wasInitialPlaylistSet = false
-                playlistChanged(it as Int)
-                invalidateOptionsMenu()
-            }
-        }
-    }
-
-    override fun addFolderToPlaylist() {
-        FilePickerDialog(this, getFilePickerInitialPath(), pickFile = false) {
-            toast(R.string.fetching_songs)
-            ensureBackgroundThread {
-                val folderSongs = getFolderSongs(File(it))
-                RoomHelper(applicationContext).addPathsToPlaylist(folderSongs)
-                sendIntent(REFRESH_LIST)
-            }
-        }
-    }
-
-    private fun getFolderSongs(folder: File): ArrayList<String> {
-        val songFiles = ArrayList<String>()
-        val files = folder.listFiles() ?: return songFiles
-        files.forEach {
-            if (it.isDirectory) {
-                songFiles.addAll(getFolderSongs(it))
-                lastFilePickerPath = it.absolutePath
-            } else if (it.isAudioFast()) {
-                songFiles.add(it.absolutePath)
-            }
-        }
-        return songFiles
-    }
-
-    private fun addFileToPlaylist() {
-        FilePickerDialog(this, getFilePickerInitialPath()) {
-            ensureBackgroundThread {
-                lastFilePickerPath = it
-                if (it.isAudioFast()) {
-                    RoomHelper(applicationContext).addPathToPlaylist(it)
-                    sendIntent(REFRESH_LIST)
-                } else {
-                    toast(R.string.invalid_file_format)
-                }
-            }
-        }
-    }
-
-    private fun createPlaylistFromFolder() {
-        FilePickerDialog(this, getFilePickerInitialPath(), pickFile = false) {
-            ensureBackgroundThread {
-                createPlaylistFrom(it)
-            }
-        }
-    }
-
-    private fun createPlaylistFrom(path: String) {
-        val folderSongs = getFolderSongs(File(path))
-        if (folderSongs.isEmpty()) {
-            toast(R.string.folder_contains_no_audio)
-            return
-        }
-
-        lastFilePickerPath = path
-        val folderName = path.getFilenameFromPath()
-        var playlistName = folderName
-        var curIndex = 1
-        val playlistIdWithTitle = getPlaylistIdWithTitle(folderName)
-        if (playlistIdWithTitle != -1) {
-            while (true) {
-                playlistName = "${folderName}_$curIndex"
-                if (getPlaylistIdWithTitle(playlistName) == -1) {
-                    break
-                }
-
-                curIndex++
-            }
-        }
-
-        val playlist = Playlist(0, playlistName)
-        val newPlaylistId = playlistDAO.insert(playlist).toInt()
-        RoomHelper(applicationContext).addPathsToPlaylist(folderSongs, newPlaylistId)
-        playlistChanged(newPlaylistId)
-    }
-
-    private fun getFilePickerInitialPath(): String {
-        if (lastFilePickerPath.isEmpty()) {
-            lastFilePickerPath = getCurrentFragment()?.getDefaultFilePickerPath() ?: config.internalStoragePath
-        }
-
-        return lastFilePickerPath
-    }
-
-    private fun initializePlayer() {
-        if (isThirdPartyIntent) {
-            initThirdPartyIntent()
-        } else {
-            //sendIntent(INIT)
-        }
-    }
-
-    private fun initThirdPartyIntent() {
-        val realPath = intent.getStringExtra(REAL_FILE_PATH) ?: ""
-        var fileUri = intent.data
-        if (realPath.isNotEmpty()) {
-            fileUri = Uri.fromFile(File(realPath))
-        }
-
-        Intent(this, MusicService::class.java).apply {
-            data = fileUri
-            action = INIT_PATH
-            startService(this)
-        }
-    }
-
     private fun getAllFragments() = arrayListOf(artists_fragment_holder, playlists_fragment_holder)
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun trackChangedEvent(event: Events.TrackChanged) {
-        if (wasInitialPlaylistSet) {
-            getCurrentFragment()?.songChangedEvent(event.track)
-        }
-
         current_track_bar.updateCurrentTrack(event.track)
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun trackStateChanged(event: Events.TrackStateChanged) {
-        getCurrentFragment()?.songStateChanged(event.isPlaying)
         current_track_bar.updateTrackState(event.isPlaying)
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    fun progressUpdated(event: Events.ProgressUpdated) {
-        getCurrentFragment()?.songProgressUpdated(event.progress)
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
