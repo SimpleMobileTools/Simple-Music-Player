@@ -12,6 +12,7 @@ import com.simplemobiletools.commons.extensions.getIntValue
 import com.simplemobiletools.commons.extensions.getLongValue
 import com.simplemobiletools.commons.extensions.getStringValue
 import com.simplemobiletools.commons.extensions.showErrorToast
+import com.simplemobiletools.commons.helpers.AlphanumericComparator
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.musicplayer.activities.AlbumsActivity
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
@@ -68,6 +69,8 @@ class ArtistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
             } catch (e: Exception) {
                 activity.showErrorToast(e)
             }
+
+            artists.sortWith { o1, o2 -> AlphanumericComparator().compare(o1.title.toLowerCase(), o2.title.toLowerCase()) }
 
             // move <unknown> at the bottom
             val unknown = artists.firstOrNull { it.title == MediaStore.UNKNOWN_STRING }

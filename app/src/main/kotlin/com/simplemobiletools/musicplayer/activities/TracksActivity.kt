@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.Menu
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.simplemobiletools.commons.helpers.AlphanumericComparator
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.adapters.SongsAdapter
@@ -44,10 +45,15 @@ class TracksActivity : SimpleActivity() {
             val tracks = ArrayList<Track>()
             val listItems = ArrayList<ListItem>()
             if (playlist != null) {
-                tracks.addAll(getPlaylistSongs(playlist.id))
+                val playlistTracks = getPlaylistSongs(playlist.id)
+                playlistTracks.sortWith { o1, o2 -> AlphanumericComparator().compare(o1.title.toLowerCase(), o2.title.toLowerCase()) }
+                tracks.addAll(playlistTracks)
                 listItems.addAll(tracks)
             } else {
-                tracks.addAll(getAlbumTracksSync(album.id))
+                val albumTracks = getAlbumTracksSync(album.id)
+                albumTracks.sortWith(compareBy({ it.trackId }, { it.title.toLowerCase() }))
+                tracks.addAll(albumTracks)
+
                 val coverArt = ContentUris.withAppendedId(artworkUri, album.id.toLong()).toString()
                 val header = AlbumHeader(album.title, coverArt, album.year, tracks.size, tracks.sumBy { it.duration }, album.artist)
                 listItems.add(header)
