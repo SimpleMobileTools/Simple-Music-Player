@@ -316,7 +316,7 @@ fun Context.addQueueItems(newTracks: List<Track>, callback: () -> Unit) {
         val itemsToInsert = ArrayList<QueueItem>()
         var order = 0
         newTracks.forEach {
-            val queueItem = QueueItem(0, it.id, it.playListId, order++, false, 0)
+            val queueItem = QueueItem(it.id, order++, false, 0)
             itemsToInsert.add(queueItem)
         }
 

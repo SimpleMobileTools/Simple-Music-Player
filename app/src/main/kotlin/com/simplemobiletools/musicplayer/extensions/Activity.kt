@@ -27,7 +27,12 @@ fun Activity.addTracksToPlaylist(tracks: List<Track>, callback: () -> Unit) {
 
 fun Activity.addTracksToQueue(tracks: List<Track>, callback: () -> Unit) {
     addQueueItems(tracks) {
-        MusicService.mTracks.addAll(tracks)
+        tracks.forEach { track ->
+            if (MusicService.mTracks.none { it.id == track.id }) {
+                MusicService.mTracks.add(track)
+            }
+        }
+
         runOnUiThread {
             callback()
         }

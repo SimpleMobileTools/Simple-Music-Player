@@ -31,10 +31,7 @@ import com.simplemobiletools.commons.extensions.getColoredBitmap
 import com.simplemobiletools.commons.extensions.getRealPathFromURI
 import com.simplemobiletools.commons.extensions.hasPermission
 import com.simplemobiletools.commons.extensions.showErrorToast
-import com.simplemobiletools.commons.helpers.PERMISSION_WRITE_STORAGE
-import com.simplemobiletools.commons.helpers.ensureBackgroundThread
-import com.simplemobiletools.commons.helpers.isOreoPlus
-import com.simplemobiletools.commons.helpers.isQPlus
+import com.simplemobiletools.commons.helpers.*
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.MainActivity
 import com.simplemobiletools.musicplayer.databases.SongsDatabase
@@ -43,7 +40,6 @@ import com.simplemobiletools.musicplayer.helpers.*
 import com.simplemobiletools.musicplayer.inlines.indexOfFirstOrNull
 import com.simplemobiletools.musicplayer.models.Events
 import com.simplemobiletools.musicplayer.models.Track
-import com.simplemobiletools.musicplayer.models.TrackSpecifier
 import com.simplemobiletools.musicplayer.receivers.ControlActionsListener
 import com.simplemobiletools.musicplayer.receivers.HeadsetPlugReceiver
 import com.simplemobiletools.musicplayer.receivers.NotificationDismissedReceiver
@@ -227,7 +223,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
             val currentQueueItem = queueDAO.getAll().firstOrNull { it.isCurrent }
             if (currentQueueItem != null) {
-                mCurrTrack = mTracks.firstOrNull { it.id == currentQueueItem.trackId && it.playListId == currentQueueItem.playlistId }
+                mCurrTrack = mTracks.firstOrNull { it.id == currentQueueItem.trackId }
                 mPlayOnPrepare = false
                 mSetProgressOnPrepare = currentQueueItem.lastPosition
                 setTrack(mCurrTrack!!.id)
@@ -399,12 +395,10 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     private fun getQueuedTracks(): ArrayList<Track> {
         val tracks = ArrayList<Track>()
         val allTracks = tracksDAO.getAll()
-        val trackSpecifiers = queueDAO.getAll().map { TrackSpecifier(it.trackId, it.playlistId) }.toMutableList() as ArrayList<TrackSpecifier>
-        val wantedIds = trackSpecifiers.map { it.id }
-        val wantedPlaylistIds = trackSpecifiers.map { it.playlistId }
-        val wantedTracks = allTracks.filter { wantedIds.contains(it.id) && wantedPlaylistIds.contains(it.playListId) }
+        val wantedIds = queueDAO.getAll().map { it.trackId }
+        val wantedTracks = allTracks.filter { wantedIds.contains(it.id) }
         tracks.addAll(wantedTracks)
-        return tracks
+        return tracks.distinctBy { it.id }.toMutableList() as ArrayList<Track>
     }
 
     private fun checkTrackOrder() {
@@ -787,7 +781,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             queueDAO.resetCurrent()
 
             if (mCurrTrack != null) {
-                queueDAO.saveCurrentTrack(mCurrTrack!!.id, position, mCurrTrack!!.playListId)
+                queueDAO.saveCurrentTrack(mCurrTrack!!.id, position)
             }
 
             mTracks.forEachIndexed { index, track ->
