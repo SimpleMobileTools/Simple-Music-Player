@@ -100,11 +100,6 @@
             android:parentActivityName=".activities.MainActivity"/>
 
         <activity
-            android:name=".activities.PlaylistsActivity"
-            android:label="@string/manage_playlists"
-            android:parentActivityName=".activities.SettingsActivity"/>
-
-        <activity
             android:name=".activities.AlbumsActivity"
             android:label="@string/artist"
             android:parentActivityName=".activities.MainActivity"/>

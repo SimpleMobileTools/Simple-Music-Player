@@ -30,7 +30,6 @@ class SettingsActivity : SimpleActivity() {
         setupPurchaseThankYou()
         setupCustomizeColors()
         setupCustomizeWidgetColors()
-        setupManagePlaylists()
         setupUseEnglish()
         setupSwapPrevNext()
         setupEqualizer()
@@ -73,12 +72,6 @@ class SettingsActivity : SimpleActivity() {
             settings_use_english.toggle()
             config.useEnglish = settings_use_english.isChecked
             System.exit(0)
-        }
-    }
-
-    private fun setupManagePlaylists() {
-        settings_manage_playlists_holder.setOnClickListener {
-            startActivity(Intent(this, PlaylistsActivity::class.java))
         }
     }
 
