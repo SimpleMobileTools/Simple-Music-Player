@@ -9,6 +9,7 @@
         android:id="@+id/tracks_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_above="@+id/current_track_bar"
         android:clipToPadding="false"
         app:layoutManager="com.simplemobiletools.commons.views.MyLinearLayoutManager" />
 

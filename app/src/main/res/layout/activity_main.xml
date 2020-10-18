@@ -20,12 +20,13 @@
         android:id="@+id/viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_above="@+id/current_track_bar"
         android:layout_below="@+id/main_tabs_holder" />
 
     <include
+        layout="@layout/view_current_track_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        layout="@layout/view_current_track_bar"
         android:layout_alignParentBottom="true" />
 
     <RelativeLayout
