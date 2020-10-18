@@ -11,14 +11,17 @@ interface QueueItemsDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(queueItems: List<QueueItem>)
 
-    @Query("SELECT * FROM queue_items")
+    @Query("SELECT * FROM queue_items ORDER BY track_order")
     fun getAll(): List<QueueItem>
 
     @Query("UPDATE queue_items SET is_current = 0")
-    fun removeIsCurrent()
+    fun resetCurrent()
 
-    @Query("UPDATE queue_items SET is_current = 1 WHERE track_id = :trackId AND playlist_id = :playlistId")
-    fun setIsCurrent(trackId: Long, playlistId: Int)
+    @Query("UPDATE queue_items SET is_current = 1, last_position = :lastPosition WHERE track_id = :trackId AND playlist_id = :playlistId")
+    fun saveCurrentTrack(trackId: Long, lastPosition: Int, playlistId: Int)
+
+    @Query("UPDATE queue_items SET track_order = :order WHERE track_id = :trackId")
+    fun setOrder(trackId: Long, order: Int)
 
     @Query("DELETE FROM queue_items")
     fun deleteAllItems()

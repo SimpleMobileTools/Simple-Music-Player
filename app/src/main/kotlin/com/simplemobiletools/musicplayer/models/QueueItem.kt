@@ -12,6 +12,5 @@ data class QueueItem(
     @ColumnInfo(name = "playlist_id") var playlistId: Int,
     @ColumnInfo(name = "track_order") var trackOrder: Int,
     @ColumnInfo(name = "is_current") var isCurrent: Boolean,
-    @ColumnInfo(name = "last_position") var lastPosition: Int,
-    @ColumnInfo(name = "was_played") var wasPlayed: Boolean
+    @ColumnInfo(name = "last_position") var lastPosition: Int
 )

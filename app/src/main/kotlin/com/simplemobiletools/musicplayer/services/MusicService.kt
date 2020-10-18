@@ -215,7 +215,14 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
     private fun handleInitQueue() {
         ensureBackgroundThread {
-            mTracks = getQueuedTracks()
+            val unsortedTracks = getQueuedTracks()
+
+            mTracks.clear()
+            queueDAO.getAll().forEach { queueItem ->
+                unsortedTracks.firstOrNull { it.id == queueItem.trackId }?.apply {
+                    mTracks.add(this)
+                }
+            }
 
             val currentQueueItem = queueDAO.getAll().firstOrNull { it.isCurrent }
             if (currentQueueItem != null) {
@@ -764,11 +771,16 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     }
 
     private fun destroyPlayer() {
+        val position = mPlayer?.currentPosition ?: 0
         ensureBackgroundThread {
-            queueDAO.removeIsCurrent()
+            queueDAO.resetCurrent()
 
             if (mCurrTrack != null) {
-                queueDAO.setIsCurrent(mCurrTrack!!.id, mCurrTrack!!.playListId)
+                queueDAO.saveCurrentTrack(mCurrTrack!!.id, position, mCurrTrack!!.playListId)
+            }
+
+            mTracks.forEachIndexed { index, track ->
+                queueDAO.setOrder(track.id, index)
             }
 
             mCurrTrack = null
