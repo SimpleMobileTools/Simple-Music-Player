@@ -26,6 +26,7 @@ import java.util.*
 
 class ArtistsAdapter(activity: SimpleActivity, val artists: ArrayList<Artist>, recyclerView: MyRecyclerView, fastScroller: FastScroller, itemClick: (Any) -> Unit) :
         MyRecyclerViewAdapter(activity, recyclerView, fastScroller, itemClick) {
+
     private val placeholder = resources.getColoredDrawableWithColor(R.drawable.ic_headset_padded, textColor)
 
     init {

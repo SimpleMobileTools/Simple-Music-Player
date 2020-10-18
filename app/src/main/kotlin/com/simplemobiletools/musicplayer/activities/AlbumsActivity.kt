@@ -59,7 +59,7 @@ class AlbumsActivity : SimpleActivity() {
             listItems.addAll(tracksToAdd)
 
             runOnUiThread {
-                AlbumsAdapter(this, listItems, albums_list) {
+                val adapter = AlbumsAdapter(this, listItems, albums_list, albums_fastscroller) {
                     if (it is Album) {
                         Intent(this, TracksActivity::class.java).apply {
                             putExtra(ALBUM, Gson().toJson(it))
@@ -76,6 +76,15 @@ class AlbumsActivity : SimpleActivity() {
                     }
                 }.apply {
                     albums_list.adapter = this
+                }
+
+                albums_fastscroller.setViews(albums_list) {
+                    val item = adapter.items.getOrNull(it)
+                    if (item is Track) {
+                        albums_fastscroller.updateBubbleText(item.title)
+                    } else if (item is Album) {
+                        albums_fastscroller.updateBubbleText(item.title)
+                    }
                 }
             }
         }
