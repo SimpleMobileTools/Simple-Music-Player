@@ -46,7 +46,6 @@ class TracksActivity : SimpleActivity() {
             val listItems = ArrayList<ListItem>()
             if (playlist != null) {
                 val playlistTracks = getPlaylistTracks(playlist.id)
-                playlistTracks.sortWith { o1, o2 -> AlphanumericComparator().compare(o1.title.toLowerCase(), o2.title.toLowerCase()) }
                 tracks.addAll(playlistTracks)
                 listItems.addAll(tracks)
             } else {
