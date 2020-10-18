@@ -5,6 +5,7 @@ import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.musicplayer.dialogs.SelectPlaylistDialog
 import com.simplemobiletools.musicplayer.helpers.RoomHelper
 import com.simplemobiletools.musicplayer.models.Track
+import com.simplemobiletools.musicplayer.services.MusicService
 
 fun Activity.addTracksToPlaylist(tracks: List<Track>, callback: () -> Unit) {
     SelectPlaylistDialog(this) { playlistId ->
@@ -20,6 +21,15 @@ fun Activity.addTracksToPlaylist(tracks: List<Track>, callback: () -> Unit) {
             runOnUiThread {
                 callback()
             }
+        }
+    }
+}
+
+fun Activity.addTracksToQueue(tracks: List<Track>, callback: () -> Unit) {
+    addQueueItems(tracks) {
+        MusicService.mTracks.addAll(tracks)
+        runOnUiThread {
+            callback
         }
     }
 }

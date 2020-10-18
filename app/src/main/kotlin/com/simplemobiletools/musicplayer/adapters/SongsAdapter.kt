@@ -16,10 +16,13 @@ import com.simplemobiletools.commons.views.FastScroller
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
+import com.simplemobiletools.musicplayer.extensions.addQueueItems
 import com.simplemobiletools.musicplayer.extensions.addTracksToPlaylist
+import com.simplemobiletools.musicplayer.extensions.addTracksToQueue
 import com.simplemobiletools.musicplayer.models.AlbumHeader
 import com.simplemobiletools.musicplayer.models.ListItem
 import com.simplemobiletools.musicplayer.models.Track
+import com.simplemobiletools.musicplayer.services.MusicService
 import kotlinx.android.synthetic.main.item_album_header.view.*
 import kotlinx.android.synthetic.main.item_song.view.*
 import java.util.*
@@ -36,7 +39,7 @@ class SongsAdapter(activity: SimpleActivity, val items: ArrayList<ListItem>, rec
         setupDragListener(true)
     }
 
-    override fun getActionMenuId() = R.menu.cab_songs
+    override fun getActionMenuId() = R.menu.cab_tracks
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layout = when (viewType) {
@@ -77,6 +80,7 @@ class SongsAdapter(activity: SimpleActivity, val items: ArrayList<ListItem>, rec
 
         when (id) {
             R.id.cab_add_to_playlist -> addToPlaylist()
+            R.id.cab_add_to_queue -> addToQueue()
         }
     }
 
@@ -96,6 +100,12 @@ class SongsAdapter(activity: SimpleActivity, val items: ArrayList<ListItem>, rec
         activity.addTracksToPlaylist(getSelectedTracks()) {
             finishActMode()
             notifyDataSetChanged()
+        }
+    }
+
+    private fun addToQueue() {
+        activity.addTracksToQueue(getSelectedTracks()) {
+            finishActMode()
         }
     }
 

@@ -304,9 +304,15 @@ fun Context.getAlbumTracksSync(albumId: Int): ArrayList<Track> {
     return tracks
 }
 
-fun Context.resetQueueItems(newTracks: ArrayList<Track>, callback: () -> Unit) {
+fun Context.resetQueueItems(newTracks: List<Track>, callback: () -> Unit) {
     ensureBackgroundThread {
         queueDAO.deleteAllItems()
+        addQueueItems(newTracks, callback)
+    }
+}
+
+fun Context.addQueueItems(newTracks: List<Track>, callback: () -> Unit) {
+    ensureBackgroundThread {
         val itemsToInsert = ArrayList<QueueItem>()
         var order = 0
         newTracks.forEach {
