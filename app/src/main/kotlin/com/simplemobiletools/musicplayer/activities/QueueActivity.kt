@@ -39,7 +39,7 @@ class QueueActivity : SimpleActivity() {
     private fun setupAdapter() {
         val adapter = queue_list.adapter
         if (adapter == null) {
-            QueueAdapter(this, MusicService.mTracks, queue_list) {
+            val queueAdapter = QueueAdapter(this, MusicService.mTracks, queue_list, queue_fastscroller) {
                 Intent(this, MusicService::class.java).apply {
                     action = PLAY_TRACK
                     putExtra(TRACK_ID, (it as Track).id)
@@ -47,6 +47,11 @@ class QueueActivity : SimpleActivity() {
                 }
             }.apply {
                 queue_list.adapter = this
+            }
+
+            queue_fastscroller.setViews(queue_list) {
+                val track = queueAdapter.items.getOrNull(it)
+                queue_fastscroller.updateBubbleText(track?.title ?: "")
             }
         } else {
             adapter.notifyDataSetChanged()

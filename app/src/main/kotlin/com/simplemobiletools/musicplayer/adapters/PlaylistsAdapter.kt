@@ -23,7 +23,7 @@ import com.simplemobiletools.musicplayer.models.Playlist
 import kotlinx.android.synthetic.main.item_playlist.view.*
 import java.util.*
 
-class PlaylistsAdapter(activity: SimpleActivity, val playlists: ArrayList<Playlist>, recyclerView: MyRecyclerView, fastScroller: FastScroller?,
+class PlaylistsAdapter(activity: SimpleActivity, val playlists: ArrayList<Playlist>, recyclerView: MyRecyclerView, fastScroller: FastScroller,
                        itemClick: (Any) -> Unit) : MyRecyclerViewAdapter(activity, recyclerView, fastScroller, itemClick) {
 
     init {
