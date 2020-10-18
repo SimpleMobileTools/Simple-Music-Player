@@ -8,6 +8,8 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
+import com.simplemobiletools.commons.extensions.beGone
+import com.simplemobiletools.commons.extensions.beVisible
 import com.simplemobiletools.commons.extensions.getColoredDrawableWithColor
 import com.simplemobiletools.commons.extensions.getFormattedDuration
 import com.simplemobiletools.commons.views.MyRecyclerView
@@ -21,7 +23,7 @@ import kotlinx.android.synthetic.main.item_album_header.view.*
 import kotlinx.android.synthetic.main.item_song.view.*
 import java.util.*
 
-class SongsAdapter(activity: SimpleActivity, val items: ArrayList<ListItem>, recyclerView: MyRecyclerView, itemClick: (Any) -> Unit) :
+class SongsAdapter(activity: SimpleActivity, val items: ArrayList<ListItem>, recyclerView: MyRecyclerView, val showAlbumCover: Boolean, itemClick: (Any) -> Unit) :
         MyRecyclerViewAdapter(activity, recyclerView, null, itemClick) {
 
     private val ITEM_HEADER = 0
@@ -107,8 +109,24 @@ class SongsAdapter(activity: SimpleActivity, val items: ArrayList<ListItem>, rec
                 it.setTextColor(textColor)
             }
 
-            song_id.text = track.trackId.toString()
             song_duration.text = track.duration.getFormattedDuration()
+
+            if (showAlbumCover) {
+                song_image.beVisible()
+                song_id.beGone()
+                val options = RequestOptions()
+                    .error(placeholder)
+                    .transform(CenterCrop(), RoundedCorners(8))
+
+                Glide.with(activity)
+                    .load(track.coverArt)
+                    .apply(options)
+                    .into(findViewById(R.id.song_image))
+            } else {
+                song_image.beGone()
+                song_id.beVisible()
+                song_id.text = track.trackId.toString()
+            }
         }
     }
 

@@ -60,7 +60,7 @@ class TracksActivity : SimpleActivity() {
             }
 
             runOnUiThread {
-                SongsAdapter(this, listItems, tracks_list) {
+                SongsAdapter(this, listItems, tracks_list, album == null) {
                     resetQueueItems(tracks) {
                         Intent(this, TrackActivity::class.java).apply {
                             putExtra(TRACK, Gson().toJson(it))
