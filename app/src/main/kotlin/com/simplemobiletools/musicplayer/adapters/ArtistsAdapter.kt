@@ -17,6 +17,7 @@ import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
 import com.simplemobiletools.musicplayer.extensions.addTracksToPlaylist
+import com.simplemobiletools.musicplayer.extensions.addTracksToQueue
 import com.simplemobiletools.musicplayer.extensions.getAlbumTracksSync
 import com.simplemobiletools.musicplayer.extensions.getAlbumsSync
 import com.simplemobiletools.musicplayer.models.Artist
@@ -56,6 +57,7 @@ class ArtistsAdapter(activity: SimpleActivity, val artists: ArrayList<Artist>, r
 
         when (id) {
             R.id.cab_add_to_playlist -> addToPlaylist()
+            R.id.cab_add_to_queue -> addToQueue()
         }
     }
 
@@ -73,21 +75,33 @@ class ArtistsAdapter(activity: SimpleActivity, val artists: ArrayList<Artist>, r
 
     private fun addToPlaylist() {
         ensureBackgroundThread {
-            val tracks = ArrayList<Track>()
-            getSelectedArtists().forEach { artist ->
-                val albums = activity.getAlbumsSync(artist)
-                albums.forEach {
-                    tracks.addAll(activity.getAlbumTracksSync(it.id))
-                }
-            }
-
+            val allSelectedTracks = getAllSelectedTracks()
             activity.runOnUiThread {
-                activity.addTracksToPlaylist(tracks) {
+                activity.addTracksToPlaylist(allSelectedTracks) {
                     finishActMode()
                     notifyDataSetChanged()
                 }
             }
         }
+    }
+
+    private fun addToQueue() {
+        ensureBackgroundThread {
+            activity.addTracksToQueue(getAllSelectedTracks()) {
+                finishActMode()
+            }
+        }
+    }
+
+    private fun getAllSelectedTracks(): ArrayList<Track> {
+        val tracks = ArrayList<Track>()
+        getSelectedArtists().forEach { artist ->
+            val albums = activity.getAlbumsSync(artist)
+            albums.forEach {
+                tracks.addAll(activity.getAlbumTracksSync(it.id))
+            }
+        }
+        return tracks
     }
 
     private fun getSelectedArtists(): List<Artist> = artists.filter { selectedKeys.contains(it.id) }.toList()

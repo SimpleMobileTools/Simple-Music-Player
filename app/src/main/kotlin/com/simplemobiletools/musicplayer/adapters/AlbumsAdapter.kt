@@ -106,13 +106,9 @@ class AlbumsAdapter(activity: SimpleActivity, val items: ArrayList<ListItem>, re
 
     private fun addToPlaylist() {
         ensureBackgroundThread {
-            val tracks = getSelectedTracks()
-            getSelectedAlbums().forEach {
-                tracks.addAll(activity.getAlbumTracksSync(it.id))
-            }
-
+            val allSelectedTracks = getAllSelectedTracks()
             activity.runOnUiThread {
-                activity.addTracksToPlaylist(tracks) {
+                activity.addTracksToPlaylist(allSelectedTracks) {
                     finishActMode()
                     notifyDataSetChanged()
                 }
@@ -122,15 +118,18 @@ class AlbumsAdapter(activity: SimpleActivity, val items: ArrayList<ListItem>, re
 
     private fun addToQueue() {
         ensureBackgroundThread {
-            val tracks = getSelectedTracks()
-            getSelectedAlbums().forEach {
-                tracks.addAll(activity.getAlbumTracksSync(it.id))
-            }
-
-            activity.addTracksToQueue(tracks) {
+            activity.addTracksToQueue(getAllSelectedTracks()) {
                 finishActMode()
             }
         }
+    }
+
+    private fun getAllSelectedTracks(): ArrayList<Track> {
+        val tracks = getSelectedTracks()
+        getSelectedAlbums().forEach {
+            tracks.addAll(activity.getAlbumTracksSync(it.id))
+        }
+        return tracks
     }
 
     private fun getSelectedAlbums(): List<Album> = items.filter { it is Album && selectedKeys.contains(it.hashCode()) }.toList() as List<Album>
