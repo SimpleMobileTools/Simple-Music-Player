@@ -18,7 +18,7 @@ class ArtistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
     override fun setupFragment(activity: SimpleActivity) {
         activity.getArtists { artists ->
             activity.runOnUiThread {
-                ArtistsAdapter(activity, artists, artists_list) {
+                val adapter = ArtistsAdapter(activity, artists, artists_list, artists_fastscroller) {
                     Intent(activity, AlbumsActivity::class.java).apply {
                         putExtra(ARTIST, Gson().toJson(it as Artist))
                         activity.startActivity(this)
@@ -26,8 +26,16 @@ class ArtistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
                 }.apply {
                     artists_list.adapter = this
                 }
+
+                artists_fastscroller.setViews(artists_list) {
+                    val artist = adapter.artists.getOrNull(it)
+                    artists_fastscroller.updateBubbleText(artist?.title ?: "")
+                }
             }
         }
+
+        artists_fastscroller.updatePrimaryColor()
+        artists_fastscroller.updateBubbleColors()
     }
 
     override fun finishActMode() {
