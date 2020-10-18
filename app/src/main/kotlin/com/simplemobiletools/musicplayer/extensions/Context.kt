@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.ContentUris
 import android.content.Context
 import android.content.Intent
+import android.provider.MediaStore
 import android.provider.MediaStore.Audio
 import android.util.TypedValue
 import com.simplemobiletools.commons.extensions.getIntValue
@@ -118,6 +119,83 @@ fun Context.broadcastUpdateWidgetTrackState(isPlaying: Boolean) {
         action = TRACK_STATE_CHANGED
         sendBroadcast(this)
     }
+}
+
+fun Context.getArtists(callback: (artists: ArrayList<Artist>) -> Unit) {
+    ensureBackgroundThread {
+        val artists = getArtistsSync()
+        callback(artists)
+    }
+}
+
+fun Context.getArtistsSync(): ArrayList<Artist> {
+    val artists = ArrayList<Artist>()
+    val uri = Audio.Artists.EXTERNAL_CONTENT_URI
+    val projection = arrayOf(
+        Audio.Artists._ID,
+        Audio.Artists.ARTIST
+    )
+
+    try {
+        val cursor = contentResolver.query(uri, projection, null, null, null)
+        cursor?.use {
+            if (cursor.moveToFirst()) {
+                do {
+                    val id = cursor.getIntValue(Audio.Artists._ID)
+                    val title = cursor.getStringValue(Audio.Artists.ARTIST)
+                    var artist = Artist(id, title, 0, 0, 0)
+                    artist = fillArtistExtras(this, artist)
+                    if (artist.albumCnt > 0) {
+                        artists.add(artist)
+                    }
+                } while (cursor.moveToNext())
+            }
+        }
+    } catch (e: Exception) {
+        showErrorToast(e)
+    }
+
+    artists.sortWith { o1, o2 -> AlphanumericComparator().compare(o1.title.toLowerCase(), o2.title.toLowerCase()) }
+
+    // move <unknown> at the bottom
+    val unknown = artists.firstOrNull { it.title == MediaStore.UNKNOWN_STRING }
+    if (unknown != null) {
+        if (artists.remove(unknown)) {
+            artists.add(unknown)
+        }
+    }
+
+    return artists
+}
+
+private fun fillArtistExtras(context: Context, artist: Artist): Artist {
+    val uri = Audio.Albums.EXTERNAL_CONTENT_URI
+    val projection = arrayOf(
+        Audio.Albums._ID)
+
+    val selection = "${Audio.Albums.ARTIST_ID} = ?"
+    val selectionArgs = arrayOf(artist.id.toString())
+
+    artist.albumCnt = context.getAlbumsSync(artist).size
+
+    try {
+        val cursor = context.contentResolver.query(uri, projection, selection, selectionArgs, null)
+        cursor?.use {
+            if (cursor.moveToFirst()) {
+                do {
+                    val albumId = cursor.getLongValue(Audio.Albums._ID)
+                    if (artist.albumArtId == 0L) {
+                        artist.albumArtId = albumId
+                    }
+
+                    artist.trackCnt += context.getAlbumTracksSync(albumId.toInt()).size
+                } while (cursor.moveToNext())
+            }
+        }
+    } catch (e: Exception) {
+    }
+
+    return artist
 }
 
 fun Context.getAlbums(artist: Artist, callback: (artists: ArrayList<Album>) -> Unit) {
