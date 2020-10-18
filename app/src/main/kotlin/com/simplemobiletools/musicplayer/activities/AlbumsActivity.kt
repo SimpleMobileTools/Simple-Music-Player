@@ -105,6 +105,7 @@ class AlbumsActivity : SimpleActivity() {
     private fun updateCurrentTrackBar() {
         current_track_bar.updateColors()
         current_track_bar.updateCurrentTrack(MusicService.mCurrTrack)
+        current_track_bar.updateTrackState(MusicService.getIsPlaying())
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

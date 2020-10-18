@@ -141,6 +141,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         when (action) {
             INIT -> handleInit(intent)
             INIT_PATH -> handleInitPath(intent)
+            INIT_QUEUE -> handleInitQueue()
             PREVIOUS -> handlePrevious()
             PAUSE -> pauseTrack()
             PLAYPAUSE -> handlePlayPause()
@@ -196,6 +197,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             initService(intent)
 
             val wantedTrackId = intent?.getLongExtra(TRACK_ID, -1L) ?: -1L
+            mPlayOnPrepare = true
             setTrack(wantedTrackId)
         }
     }
@@ -208,6 +210,19 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             initTracks()
         } else {
             updateUI()
+        }
+    }
+
+    private fun handleInitQueue() {
+        ensureBackgroundThread {
+            mTracks = getQueuedTracks()
+
+            val currentQueueItem = queueDAO.getAll().firstOrNull { it.isCurrent }
+            if (currentQueueItem != null) {
+                mCurrTrack = mTracks.firstOrNull { it.id == currentQueueItem.trackId && it.playListId == currentQueueItem.playlistId }
+                mPlayOnPrepare = false
+                setTrack(mCurrTrack!!.id)
+            }
         }
     }
 
@@ -257,7 +272,6 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
                 mPlayOnPrepare = false
                 setupNextTrack()
             }
-
         }
     }
 
@@ -750,12 +764,21 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     }
 
     private fun destroyPlayer() {
+        ensureBackgroundThread {
+            queueDAO.removeIsCurrent()
+
+            if (mCurrTrack != null) {
+                queueDAO.setIsCurrent(mCurrTrack!!.id, mCurrTrack!!.playListId)
+            }
+
+            mCurrTrack = null
+        }
+
         mPlayer?.stop()
         mPlayer?.release()
         mPlayer = null
 
         trackStateChanged(false)
-        mCurrTrack = null
         trackChanged()
 
         mEqualizer?.release()

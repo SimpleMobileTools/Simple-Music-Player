@@ -13,9 +13,7 @@ import androidx.core.view.MenuItemCompat
 import androidx.viewpager.widget.ViewPager
 import com.simplemobiletools.commons.dialogs.RadioGroupDialog
 import com.simplemobiletools.commons.extensions.*
-import com.simplemobiletools.commons.helpers.LICENSE_EVENT_BUS
-import com.simplemobiletools.commons.helpers.LICENSE_PICASSO
-import com.simplemobiletools.commons.helpers.PERMISSION_WRITE_STORAGE
+import com.simplemobiletools.commons.helpers.*
 import com.simplemobiletools.commons.models.FAQItem
 import com.simplemobiletools.commons.models.RadioItem
 import com.simplemobiletools.commons.models.Release
@@ -25,11 +23,9 @@ import com.simplemobiletools.musicplayer.adapters.ViewPagerAdapter
 import com.simplemobiletools.musicplayer.dialogs.ChangeSortingDialog
 import com.simplemobiletools.musicplayer.dialogs.SleepTimerCustomDialog
 import com.simplemobiletools.musicplayer.extensions.config
+import com.simplemobiletools.musicplayer.extensions.queueDAO
 import com.simplemobiletools.musicplayer.extensions.sendIntent
-import com.simplemobiletools.musicplayer.helpers.FINISH_IF_NOT_PLAYING
-import com.simplemobiletools.musicplayer.helpers.REFRESH_LIST
-import com.simplemobiletools.musicplayer.helpers.START_SLEEP_TIMER
-import com.simplemobiletools.musicplayer.helpers.STOP_SLEEP_TIMER
+import com.simplemobiletools.musicplayer.helpers.*
 import com.simplemobiletools.musicplayer.interfaces.MainActivityInterface
 import com.simplemobiletools.musicplayer.models.Events
 import com.simplemobiletools.musicplayer.services.MusicService
@@ -169,6 +165,14 @@ class MainActivity : SimpleActivity(), MainActivityInterface {
                 startActivity(this)
             }
         }
+
+        if (MusicService.mCurrTrack == null) {
+            ensureBackgroundThread {
+                if (queueDAO.getAll().isNotEmpty()) {
+                    sendIntent(INIT_QUEUE)
+                }
+            }
+        }
     }
 
     private fun initFragments() {
@@ -219,6 +223,7 @@ class MainActivity : SimpleActivity(), MainActivityInterface {
     private fun updateCurrentTrackBar() {
         current_track_bar.updateColors()
         current_track_bar.updateCurrentTrack(MusicService.mCurrTrack)
+        current_track_bar.updateTrackState(MusicService.getIsPlaying())
     }
 
     private fun showSleepTimer() {

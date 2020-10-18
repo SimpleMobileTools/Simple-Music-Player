@@ -14,6 +14,12 @@ interface QueueItemsDao {
     @Query("SELECT * FROM queue_items")
     fun getAll(): List<QueueItem>
 
+    @Query("UPDATE queue_items SET is_current = 0")
+    fun removeIsCurrent()
+
+    @Query("UPDATE queue_items SET is_current = 1 WHERE track_id = :trackId AND playlist_id = :playlistId")
+    fun setIsCurrent(trackId: Long, playlistId: Int)
+
     @Query("DELETE FROM queue_items")
     fun deleteAllItems()
 }
