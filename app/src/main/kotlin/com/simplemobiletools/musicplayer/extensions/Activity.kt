@@ -29,7 +29,7 @@ fun Activity.addTracksToQueue(tracks: List<Track>, callback: () -> Unit) {
     addQueueItems(tracks) {
         MusicService.mTracks.addAll(tracks)
         runOnUiThread {
-            callback
+            callback()
         }
     }
 }

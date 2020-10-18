@@ -18,6 +18,7 @@ import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
 import com.simplemobiletools.musicplayer.extensions.addTracksToPlaylist
+import com.simplemobiletools.musicplayer.extensions.addTracksToQueue
 import com.simplemobiletools.musicplayer.extensions.getAlbumTracksSync
 import com.simplemobiletools.musicplayer.models.Album
 import com.simplemobiletools.musicplayer.models.AlbumSection
@@ -87,6 +88,7 @@ class AlbumsAdapter(activity: SimpleActivity, val items: ArrayList<ListItem>, re
 
         when (id) {
             R.id.cab_add_to_playlist -> addToPlaylist()
+            R.id.cab_add_to_queue -> addToQueue()
         }
     }
 
@@ -114,6 +116,19 @@ class AlbumsAdapter(activity: SimpleActivity, val items: ArrayList<ListItem>, re
                     finishActMode()
                     notifyDataSetChanged()
                 }
+            }
+        }
+    }
+
+    private fun addToQueue() {
+        ensureBackgroundThread {
+            val tracks = getSelectedTracks()
+            getSelectedAlbums().forEach {
+                tracks.addAll(activity.getAlbumTracksSync(it.id))
+            }
+
+            activity.addTracksToQueue(tracks) {
+                finishActMode()
             }
         }
     }
