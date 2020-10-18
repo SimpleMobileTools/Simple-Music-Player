@@ -9,6 +9,7 @@ import androidx.room.PrimaryKey
 data class QueueItem(
     @PrimaryKey(autoGenerate = true) var id: Int,
     @ColumnInfo(name = "track_id") var trackId: Long,
+    @ColumnInfo(name = "playlist_id") var playlistId: Int,
     @ColumnInfo(name = "track_order") var trackOrder: Int,
     @ColumnInfo(name = "is_playing") var isPlaying: Boolean,
     @ColumnInfo(name = "last_position") var lastPosition: Int,

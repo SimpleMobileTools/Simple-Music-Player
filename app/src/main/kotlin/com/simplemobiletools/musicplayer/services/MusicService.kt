@@ -40,6 +40,7 @@ import com.simplemobiletools.musicplayer.helpers.*
 import com.simplemobiletools.musicplayer.inlines.indexOfFirstOrNull
 import com.simplemobiletools.musicplayer.models.Events
 import com.simplemobiletools.musicplayer.models.Track
+import com.simplemobiletools.musicplayer.models.TrackSpecifier
 import com.simplemobiletools.musicplayer.receivers.ControlActionsListener
 import com.simplemobiletools.musicplayer.receivers.HeadsetPlugReceiver
 import com.simplemobiletools.musicplayer.receivers.NotificationDismissedReceiver
@@ -420,15 +421,15 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         }
     }
 
+    // make sure tracks don't get duplicated in the queue, if they exist in multiple playlists
     private fun getQueuedTracks(): ArrayList<Track> {
         val tracks = ArrayList<Track>()
         val allTracks = tracksDAO.getAll()
-        val queueItemIds = queueDAO.getAll().map { it.trackId }.toMutableList().getChoppedList()
-        queueItemIds.forEach { wantedTrackIds ->
-            val wantedTracks = allTracks.filter { wantedTrackIds.contains(it.id) }
-            tracks.addAll(wantedTracks)
-        }
-
+        val trackSpecifiers = queueDAO.getAll().map { TrackSpecifier(it.trackId, it.playlistId) }.toMutableList() as ArrayList<TrackSpecifier>
+        val wantedIds = trackSpecifiers.map { it.id }
+        val wantedPlaylistIds = trackSpecifiers.map { it.playlistId }
+        val wantedTracks = allTracks.filter { wantedIds.contains(it.id) && wantedPlaylistIds.contains(it.playListId) }
+        tracks.addAll(wantedTracks)
         return tracks
     }
 

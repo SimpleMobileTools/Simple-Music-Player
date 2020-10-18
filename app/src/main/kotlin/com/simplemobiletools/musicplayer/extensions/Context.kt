@@ -230,7 +230,7 @@ fun Context.resetQueueItems(newTracks: ArrayList<Track>, callback: () -> Unit) {
         val itemsToInsert = ArrayList<QueueItem>()
         var order = 0
         newTracks.forEach {
-            val queueItem = QueueItem(0, it.id, order++, false, 0, false)
+            val queueItem = QueueItem(0, it.id, it.playListId, order++, false, 0, false)
             itemsToInsert.add(queueItem)
         }
 
