@@ -27,7 +27,10 @@ import android.util.Size
 import android.view.KeyEvent
 import androidx.core.app.NotificationCompat
 import androidx.media.session.MediaButtonReceiver
-import com.simplemobiletools.commons.extensions.*
+import com.simplemobiletools.commons.extensions.getColoredBitmap
+import com.simplemobiletools.commons.extensions.getRealPathFromURI
+import com.simplemobiletools.commons.extensions.hasPermission
+import com.simplemobiletools.commons.extensions.showErrorToast
 import com.simplemobiletools.commons.helpers.PERMISSION_WRITE_STORAGE
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.commons.helpers.isOreoPlus
@@ -50,7 +53,6 @@ import java.util.*
 
 class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnErrorListener, MediaPlayer.OnCompletionListener, OnAudioFocusChangeListener {
     companion object {
-        private const val MIN_INITIAL_DURATION = 30
         private const val PROGRESS_UPDATE_INTERVAL = 1000L
         private const val MAX_CLICK_DURATION = 700L
         private const val FAST_FORWARD_SKIP_MS = 10000
@@ -351,57 +353,6 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             setOnErrorListener(this@MusicService)
         }
         setupEqualizer()
-    }
-
-    private fun getAllDeviceTracks() {
-        val uri = Audio.Media.EXTERNAL_CONTENT_URI
-        val projection = arrayOf(
-            Audio.Media._ID,
-            Audio.Media.DURATION,
-            Audio.Media.DATA,
-            Audio.Media.ALBUM_ID,
-            Audio.Media.ALBUM,
-            Audio.Media.TITLE,
-            Audio.Media.TRACK,
-            Audio.Media.ARTIST)
-
-        if (isQPlus()) {
-            val showFilename = config.showFilename
-            val tracks = ArrayList<Track>()
-            queryCursor(uri, projection) { cursor ->
-                val duration = cursor.getIntValue(Audio.Media.DURATION) / 1000
-                if (duration > MIN_INITIAL_DURATION) {
-                    val id = cursor.getLongValue(Audio.Media._ID)
-                    val path = ContentUris.withAppendedId(uri, id).toString()
-                    val title = cursor.getStringValue(Audio.Media.TITLE)
-                    val artist = cursor.getStringValue(Audio.Media.ARTIST)
-                    val album = cursor.getStringValue(Audio.Media.ALBUM)
-                    val albumId = cursor.getLongValue(Audio.Media.ALBUM_ID)
-                    val coverArt = ContentUris.withAppendedId(artworkUri, albumId).toString()
-                    val trackId = cursor.getIntValue(Audio.Media.TRACK) % 1000
-                    val track = Track(id, title, artist, path, duration, album, coverArt, ALL_TRACKS_PLAYLIST_ID, trackId)
-                    track.title = track.getProperTitle(showFilename)
-                    tracks.add(track)
-                }
-            }
-            tracksDAO.insertAll(tracks)
-        } else {
-            val ignoredPaths = config.ignoredPaths
-            val paths = ArrayList<String>()
-            queryCursor(uri, projection) { cursor ->
-                val duration = cursor.getIntValue(Audio.Media.DURATION) / 1000
-                if (duration > MIN_INITIAL_DURATION) {
-                    val path = cursor.getStringValue(Audio.Media.DATA)
-                    if (!ignoredPaths.contains(path) && !path.doesThisOrParentHaveNoMedia()) {
-                        paths.add(path)
-                    }
-                }
-            }
-
-            val storedAllTrackPaths = tracksDAO.getTracksFromPlaylist(ALL_TRACKS_PLAYLIST_ID).map { it.path }
-            paths.removeAll(storedAllTrackPaths)
-            RoomHelper(this).addPathsToPlaylist(paths)
-        }
     }
 
     private fun setupEqualizer() {

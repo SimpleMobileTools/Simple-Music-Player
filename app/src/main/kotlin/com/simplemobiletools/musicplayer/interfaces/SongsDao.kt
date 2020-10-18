@@ -6,10 +6,10 @@ import com.simplemobiletools.musicplayer.models.Track
 @Dao
 interface SongsDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(song: Track)
+    fun insert(track: Track)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAll(songs: List<Track>)
+    fun insertAll(tracks: List<Track>)
 
     @Query("SELECT * FROM tracks")
     fun getAll(): List<Track>
