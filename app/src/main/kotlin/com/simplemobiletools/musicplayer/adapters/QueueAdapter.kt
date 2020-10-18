@@ -15,7 +15,6 @@ import com.simplemobiletools.commons.extensions.applyColorFilter
 import com.simplemobiletools.commons.extensions.getAdjustedPrimaryColor
 import com.simplemobiletools.commons.extensions.getColoredDrawableWithColor
 import com.simplemobiletools.commons.extensions.getFormattedDuration
-import com.simplemobiletools.commons.helpers.mydebug
 import com.simplemobiletools.commons.interfaces.ItemMoveCallback
 import com.simplemobiletools.commons.interfaces.ItemTouchHelperContract
 import com.simplemobiletools.commons.interfaces.StartReorderDragListener
@@ -23,7 +22,6 @@ import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
 import com.simplemobiletools.musicplayer.extensions.sendIntent
-import com.simplemobiletools.musicplayer.helpers.REFRESH_LIST
 import com.simplemobiletools.musicplayer.helpers.UPDATE_NEXT_TRACK
 import com.simplemobiletools.musicplayer.models.Track
 import com.simplemobiletools.musicplayer.services.MusicService
@@ -79,8 +77,6 @@ class QueueAdapter(activity: SimpleActivity, val items: ArrayList<Track>, recycl
     override fun onActionModeCreated() {}
 
     override fun onActionModeDestroyed() {}
-
-    private fun getItemWithKey(key: Int) = items.firstOrNull { it.id.toInt() == key }
 
     private fun setupView(view: View, track: Track, holder: ViewHolder) {
         view.apply {
