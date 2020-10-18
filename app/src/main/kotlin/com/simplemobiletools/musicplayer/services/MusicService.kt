@@ -410,11 +410,11 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     private fun checkTrackOrder() {
         if (config.isShuffleEnabled) {
             mTracks.shuffle()
-        }
 
-        if (mCurrTrack != null) {
-            mTracks.remove(mCurrTrack)
-            mTracks.add(0, mCurrTrack!!)
+            if (mCurrTrack != null) {
+                mTracks.remove(mCurrTrack)
+                mTracks.add(0, mCurrTrack!!)
+            }
         }
     }
 
