@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.Menu
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.simplemobiletools.commons.helpers.AlphanumericComparator
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.adapters.SongsAdapter
@@ -60,7 +59,7 @@ class TracksActivity : SimpleActivity() {
             }
 
             runOnUiThread {
-                SongsAdapter(this, listItems, tracks_list, album == null) {
+                val adapter = SongsAdapter(this, listItems, tracks_list, album == null, tracks_fastscroller) {
                     resetQueueItems(tracks) {
                         Intent(this, TrackActivity::class.java).apply {
                             putExtra(TRACK, Gson().toJson(it))
@@ -70,6 +69,15 @@ class TracksActivity : SimpleActivity() {
                     }
                 }.apply {
                     tracks_list.adapter = this
+                }
+
+                tracks_fastscroller.setViews(tracks_list) {
+                    val listItem = adapter.items.getOrNull(it)
+                    if (listItem is Track) {
+                        tracks_fastscroller.updateBubbleText(listItem.title)
+                    } else if (listItem is AlbumHeader) {
+                        tracks_fastscroller.updateBubbleText(listItem.title)
+                    }
                 }
             }
         }
