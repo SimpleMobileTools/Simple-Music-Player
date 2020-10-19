@@ -8,7 +8,7 @@ import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
 import com.simplemobiletools.commons.helpers.AlphanumericComparator
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
-import com.simplemobiletools.musicplayer.activities.TracksActivity
+import com.simplemobiletools.musicplayer.activities.TrackActivity
 import com.simplemobiletools.musicplayer.adapters.TracksAdapter
 import com.simplemobiletools.musicplayer.extensions.getAlbumTracksSync
 import com.simplemobiletools.musicplayer.extensions.getAlbumsSync
@@ -37,7 +37,7 @@ class TracksFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
 
             activity.runOnUiThread {
                 val adapter = TracksAdapter(activity, tracks, tracks_list, tracks_fastscroller) {
-                    Intent(activity, TracksActivity::class.java).apply {
+                    Intent(activity, TrackActivity::class.java).apply {
                         putExtra(TRACK, Gson().toJson(it))
                         putExtra(RESTART_PLAYER, true)
                         activity.startActivity(this)
