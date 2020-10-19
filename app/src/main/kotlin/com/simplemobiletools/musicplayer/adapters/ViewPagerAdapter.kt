@@ -29,9 +29,9 @@ class ViewPagerAdapter(val activity: SimpleActivity) : PagerAdapter() {
     override fun isViewFromObject(view: View, item: Any) = view == item
 
     private fun getFragment(position: Int) = when (position) {
-        0 -> R.layout.fragment_artists
-        1 -> R.layout.fragment_albums
-        2 -> R.layout.fragment_tracks
-        else -> R.layout.fragment_playlists
+        0 -> R.layout.fragment_playlists
+        1 -> R.layout.fragment_artists
+        2 -> R.layout.fragment_albums
+        else -> R.layout.fragment_tracks
     }
 }
