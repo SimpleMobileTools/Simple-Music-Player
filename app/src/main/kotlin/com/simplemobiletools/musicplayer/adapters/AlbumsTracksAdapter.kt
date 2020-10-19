@@ -26,7 +26,7 @@ import com.simplemobiletools.musicplayer.models.ListItem
 import com.simplemobiletools.musicplayer.models.Track
 import kotlinx.android.synthetic.main.item_album.view.*
 import kotlinx.android.synthetic.main.item_section.view.*
-import kotlinx.android.synthetic.main.item_song.view.*
+import kotlinx.android.synthetic.main.item_track.view.*
 import java.util.*
 
 // we show both albums and individual tracks here
@@ -50,7 +50,7 @@ class AlbumsTracksAdapter(activity: SimpleActivity, val items: ArrayList<ListIte
         val layout = when (viewType) {
             ITEM_SECTION -> R.layout.item_section
             ITEM_ALBUM -> R.layout.item_album
-            else -> R.layout.item_song
+            else -> R.layout.item_track
         }
 
         return createViewHolder(layout, parent)
@@ -155,17 +155,17 @@ class AlbumsTracksAdapter(activity: SimpleActivity, val items: ArrayList<ListIte
 
     private fun setupTrack(view: View, track: Track) {
         view.apply {
-            song_frame?.isSelected = selectedKeys.contains(track.hashCode())
-            song_title.text = track.title
-            song_title.setTextColor(textColor)
+            track_frame?.isSelected = selectedKeys.contains(track.hashCode())
+            track_title.text = track.title
+            track_title.setTextColor(textColor)
 
-            song_id.beGone()
-            song_image.beVisible()
-            song_duration.text = track.duration.getFormattedDuration()
-            song_duration.setTextColor(textColor)
+            track_id.beGone()
+            track_image.beVisible()
+            track_duration.text = track.duration.getFormattedDuration()
+            track_duration.setTextColor(textColor)
 
             if (track.coverArt.isEmpty()) {
-                song_image.setImageDrawable(placeholder)
+                track_image.setImageDrawable(placeholder)
             } else {
                 val options = RequestOptions()
                     .error(placeholder)
@@ -174,7 +174,7 @@ class AlbumsTracksAdapter(activity: SimpleActivity, val items: ArrayList<ListIte
                 Glide.with(activity)
                     .load(track.coverArt)
                     .apply(options)
-                    .into(findViewById(R.id.song_image))
+                    .into(findViewById(R.id.track_image))
             }
         }
     }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/song_frame"
+    android:id="@+id/track_frame"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="?attr/selectableItemBackground"
@@ -14,18 +14,18 @@
     android:paddingBottom="@dimen/activity_margin">
 
     <ImageView
-        android:id="@+id/song_image"
+        android:id="@+id/track_image"
         android:layout_width="@dimen/song_image_size"
         android:layout_height="@dimen/song_image_size"
         android:layout_marginStart="@dimen/small_margin"
         android:visibility="gone" />
 
     <com.simplemobiletools.commons.views.MyTextView
-        android:id="@+id/song_id"
+        android:id="@+id/track_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_toEndOf="@+id/song_image"
+        android:layout_toEndOf="@+id/track_image"
         android:ems="2"
         android:gravity="end"
         android:paddingEnd="@dimen/small_margin"
@@ -33,12 +33,12 @@
         tools:text="1" />
 
     <com.simplemobiletools.commons.views.MyTextView
-        android:id="@+id/song_title"
+        android:id="@+id/track_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_toStartOf="@+id/song_duration"
-        android:layout_toEndOf="@+id/song_id"
+        android:layout_toEndOf="@+id/track_id"
         android:ellipsize="end"
         android:maxLines="2"
         android:paddingStart="@dimen/normal_margin"
@@ -47,7 +47,7 @@
         tools:text="Track title" />
 
     <com.simplemobiletools.commons.views.MyTextView
-        android:id="@+id/song_duration"
+        android:id="@+id/track_duration"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"

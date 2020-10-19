@@ -8,7 +8,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.musicplayer.R
-import com.simplemobiletools.musicplayer.adapters.SongsAdapter
+import com.simplemobiletools.musicplayer.adapters.TracksHeaderAdapter
 import com.simplemobiletools.musicplayer.extensions.getAlbumTracksSync
 import com.simplemobiletools.musicplayer.extensions.getPlaylistTracks
 import com.simplemobiletools.musicplayer.extensions.resetQueueItems
@@ -59,7 +59,7 @@ class TracksActivity : SimpleActivity() {
             }
 
             runOnUiThread {
-                val adapter = SongsAdapter(this, listItems, tracks_list, album == null, tracks_fastscroller) {
+                val adapter = TracksHeaderAdapter(this, listItems, tracks_list, album == null, tracks_fastscroller) {
                     resetQueueItems(tracks) {
                         Intent(this, TrackActivity::class.java).apply {
                             putExtra(TRACK, Gson().toJson(it))

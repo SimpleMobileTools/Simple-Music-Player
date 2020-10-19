@@ -22,11 +22,11 @@ import com.simplemobiletools.musicplayer.models.AlbumHeader
 import com.simplemobiletools.musicplayer.models.ListItem
 import com.simplemobiletools.musicplayer.models.Track
 import kotlinx.android.synthetic.main.item_album_header.view.*
-import kotlinx.android.synthetic.main.item_song.view.*
+import kotlinx.android.synthetic.main.item_track.view.*
 import java.util.*
 
-class SongsAdapter(activity: SimpleActivity, val items: ArrayList<ListItem>, recyclerView: MyRecyclerView, val showAlbumCover: Boolean, fastScroller: FastScroller,
-                   itemClick: (Any) -> Unit) : MyRecyclerViewAdapter(activity, recyclerView, fastScroller, itemClick) {
+class TracksHeaderAdapter(activity: SimpleActivity, val items: ArrayList<ListItem>, recyclerView: MyRecyclerView, val showAlbumCover: Boolean, fastScroller: FastScroller,
+                          itemClick: (Any) -> Unit) : MyRecyclerViewAdapter(activity, recyclerView, fastScroller, itemClick) {
 
     private val ITEM_HEADER = 0
     private val ITEM_TRACK = 1
@@ -37,12 +37,12 @@ class SongsAdapter(activity: SimpleActivity, val items: ArrayList<ListItem>, rec
         setupDragListener(true)
     }
 
-    override fun getActionMenuId() = R.menu.cab_tracks
+    override fun getActionMenuId() = R.menu.cab_tracks_header
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layout = when (viewType) {
             ITEM_HEADER -> R.layout.item_album_header
-            else -> R.layout.item_song
+            else -> R.layout.item_track
         }
 
         return createViewHolder(layout, parent)
@@ -54,7 +54,7 @@ class SongsAdapter(activity: SimpleActivity, val items: ArrayList<ListItem>, rec
         holder.bindView(item, allowClicks, allowClicks) { itemView, layoutPosition ->
             when (item) {
                 is AlbumHeader -> setupHeader(itemView, item)
-                else -> setupSong(itemView, item as Track)
+                else -> setupTrack(itemView, item as Track)
             }
         }
         bindViewHolder(holder)
@@ -109,20 +109,20 @@ class SongsAdapter(activity: SimpleActivity, val items: ArrayList<ListItem>, rec
 
     private fun getSelectedTracks(): List<Track> = items.filter { it is Track && selectedKeys.contains(it.hashCode()) }.toList() as List<Track>
 
-    private fun setupSong(view: View, track: Track) {
+    private fun setupTrack(view: View, track: Track) {
         view.apply {
-            song_frame?.isSelected = selectedKeys.contains(track.hashCode())
-            song_title.text = track.title
+            track_frame?.isSelected = selectedKeys.contains(track.hashCode())
+            track_title.text = track.title
 
-            arrayOf(song_id, song_title, song_duration).forEach {
+            arrayOf(track_id, track_title, track_duration).forEach {
                 it.setTextColor(textColor)
             }
 
-            song_duration.text = track.duration.getFormattedDuration()
+            track_duration.text = track.duration.getFormattedDuration()
 
             if (showAlbumCover) {
-                song_image.beVisible()
-                song_id.beGone()
+                track_image.beVisible()
+                track_id.beGone()
                 val options = RequestOptions()
                     .error(placeholder)
                     .transform(CenterCrop(), RoundedCorners(8))
@@ -130,11 +130,11 @@ class SongsAdapter(activity: SimpleActivity, val items: ArrayList<ListItem>, rec
                 Glide.with(activity)
                     .load(track.coverArt)
                     .apply(options)
-                    .into(findViewById(R.id.song_image))
+                    .into(findViewById(R.id.track_image))
             } else {
-                song_image.beGone()
-                song_id.beVisible()
-                song_id.text = track.trackId.toString()
+                track_image.beGone()
+                track_id.beVisible()
+                track_id.text = track.trackId.toString()
             }
         }
     }
@@ -144,7 +144,7 @@ class SongsAdapter(activity: SimpleActivity, val items: ArrayList<ListItem>, rec
             album_title.text = header.title
             album_artist.text = header.artist
 
-            val tracks = resources.getQuantityString(R.plurals.tracks_plural, header.songCnt, header.songCnt)
+            val tracks = resources.getQuantityString(R.plurals.tracks_plural, header.trackCnt, header.trackCnt)
             var year = ""
             if (header.year != 0) {
                 year = "${header.year} • "
