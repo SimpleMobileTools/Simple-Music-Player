@@ -37,7 +37,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_toStartOf="@+id/song_duration"
+        android:layout_toStartOf="@+id/track_duration"
         android:layout_toEndOf="@+id/track_id"
         android:ellipsize="end"
         android:maxLines="2"

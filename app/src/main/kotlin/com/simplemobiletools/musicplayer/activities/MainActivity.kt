@@ -33,8 +33,8 @@ import com.simplemobiletools.musicplayer.models.Events
 import com.simplemobiletools.musicplayer.services.MusicService
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_artists.*
-import kotlinx.android.synthetic.main.fragment_playlists.*
 import kotlinx.android.synthetic.main.fragment_old_songs.*
+import kotlinx.android.synthetic.main.fragment_playlists.*
 import kotlinx.android.synthetic.main.view_current_track_bar.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -200,7 +200,7 @@ class MainActivity : SimpleActivity() {
             }
         )
 
-        val tabLabels = arrayOf(getString(R.string.artists), getString(R.string.albums), getString(R.string.playlists))
+        val tabLabels = arrayOf(getString(R.string.artists), getString(R.string.albums), getString(R.string.tracks), getString(R.string.playlists))
         main_tabs_holder.apply {
             setTabTextColors(config.textColor, getAdjustedPrimaryColor())
             setSelectedTabIndicatorColor(getAdjustedPrimaryColor())
