@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.simplemobiletools.musicplayer.fragments.SongsFragment xmlns:android="http://schemas.android.com/apk/res/android"
+<com.simplemobiletools.musicplayer.fragments.OldSongsFragment xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/songs_fragment_holder"
     android:layout_width="match_parent"
@@ -83,4 +83,4 @@
         android:text="@string/add_folder_to_playlist"
         android:textSize="@dimen/bigger_text_size" />
 
-</com.simplemobiletools.musicplayer.fragments.SongsFragment>
+</com.simplemobiletools.musicplayer.fragments.OldSongsFragment>

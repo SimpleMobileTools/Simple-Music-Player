@@ -25,13 +25,12 @@ import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.extensions.sendIntent
 import com.simplemobiletools.musicplayer.extensions.tracksDAO
 import com.simplemobiletools.musicplayer.helpers.*
-import com.simplemobiletools.musicplayer.interfaces.SongListListener
 import com.simplemobiletools.musicplayer.models.Track
 import com.simplemobiletools.musicplayer.services.MusicService
 import kotlinx.android.synthetic.main.item_navigation.view.*
 import kotlinx.android.synthetic.main.item_old_song.view.*
 
-class OldSongAdapter(activity: SimpleActivity, var songs: ArrayList<Track>, val listener: SongListListener, val transparentView: View,
+class OldSongAdapter(activity: SimpleActivity, var songs: ArrayList<Track>, val transparentView: View,
                      recyclerView: MyRecyclerView, fastScroller: FastScroller, itemClick: (Any) -> Unit) :
         MyRecyclerViewAdapter(activity, recyclerView, fastScroller, itemClick) {
 
@@ -244,9 +243,6 @@ class OldSongAdapter(activity: SimpleActivity, var songs: ArrayList<Track>, val 
             }
 
             songs.removeAll(removeSongs)
-            if (songs.isEmpty()) {
-                listener.refreshItems()
-            }
         }
     }
 
@@ -295,10 +291,6 @@ class OldSongAdapter(activity: SimpleActivity, var songs: ArrayList<Track>, val 
         removeSelectedItems(positions)
         ensureBackgroundThread {
             activity.tracksDAO.removeSongsFromPlaylists(removeSongs)
-
-            if (songs.isEmpty()) {
-                listener.refreshItems()
-            }
         }
     }
 
@@ -353,11 +345,9 @@ class OldSongAdapter(activity: SimpleActivity, var songs: ArrayList<Track>, val 
 
     private fun initNavigationView() {
         navigationView?.apply {
-            shuffle_btn.setOnClickListener { listener.toggleShuffle() }
             previous_btn.setOnClickListener { activity.sendIntent(PREVIOUS) }
             play_pause_btn.setOnClickListener { activity.sendIntent(PLAYPAUSE) }
             next_btn.setOnClickListener { activity.sendIntent(NEXT) }
-            repeat_btn.setOnClickListener { listener.toggleSongRepetition() }
             song_progress_current.setOnClickListener { activity.sendIntent(SKIP_BACKWARD) }
             song_progress_max.setOnClickListener { activity.sendIntent(SKIP_FORWARD) }
 

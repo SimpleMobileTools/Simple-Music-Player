@@ -13,7 +13,10 @@ import androidx.core.view.MenuItemCompat
 import androidx.viewpager.widget.ViewPager
 import com.simplemobiletools.commons.dialogs.RadioGroupDialog
 import com.simplemobiletools.commons.extensions.*
-import com.simplemobiletools.commons.helpers.*
+import com.simplemobiletools.commons.helpers.LICENSE_EVENT_BUS
+import com.simplemobiletools.commons.helpers.LICENSE_PICASSO
+import com.simplemobiletools.commons.helpers.PERMISSION_WRITE_STORAGE
+import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.commons.models.FAQItem
 import com.simplemobiletools.commons.models.RadioItem
 import com.simplemobiletools.commons.models.Release
@@ -26,7 +29,6 @@ import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.extensions.queueDAO
 import com.simplemobiletools.musicplayer.extensions.sendIntent
 import com.simplemobiletools.musicplayer.helpers.*
-import com.simplemobiletools.musicplayer.interfaces.MainActivityInterface
 import com.simplemobiletools.musicplayer.models.Events
 import com.simplemobiletools.musicplayer.services.MusicService
 import kotlinx.android.synthetic.main.activity_main.*
@@ -38,7 +40,7 @@ import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
-class MainActivity : SimpleActivity(), MainActivityInterface {
+class MainActivity : SimpleActivity() {
     private var isThirdPartyIntent = false
     private var isSearchOpen = false
 
@@ -306,10 +308,6 @@ class MainActivity : SimpleActivity(), MainActivityInterface {
     fun playlistsUpdated(event: Events.PlaylistsUpdated) {
         playlists_fragment_holder?.setupFragment(this)
     }
-
-    override fun getIsSearchOpen() = isSearchOpen
-
-    override fun getIsThirdPartyIntent() = isThirdPartyIntent
 
     private fun launchSettings() {
         startActivity(Intent(applicationContext, SettingsActivity::class.java))
