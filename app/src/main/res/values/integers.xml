@@ -1,3 +1,4 @@
 <resources>
     <integer name="default_sorting">2048</integer>
+    <integer name="default_viewpager_page">1</integer>
 </resources>
