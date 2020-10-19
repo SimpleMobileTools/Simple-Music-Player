@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/cab_add_to_playlist"
+        android:title="@string/add_to_playlist"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/cab_add_to_queue"
+        android:title="@string/add_to_queue"
+        app:showAsAction="never" />
+</menu>

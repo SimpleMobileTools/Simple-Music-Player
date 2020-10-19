@@ -17,11 +17,7 @@
     <string name="disable_autoplay">Automatische Wiedergabe deaktivieren</string>
     <string name="autoplay_enabled">Automatische Wiedergabe aktiviert</string>
     <string name="autoplay_disabled">Automatische Wiedergabe deaktiviert</string>
-    <string name="sleep_timer">Sleep timer</string>
-
-    <string name="previous">Vorheriger Titel</string>
-    <string name="playpause">Wiedergabe / Pause</string>
-    <string name="next">Nächster Titel</string>
+    <string name="sleep_timer">Sleep-Timer</string>
 
     <!-- Playlists -->
     <string name="add_file_to_playlist">Datei zu Wiedergabeliste hinzufügen</string>
@@ -48,7 +44,7 @@
     <string name="remove_current_song">Aktuellen Song aus der Wiedergabeliste entfernen</string>
     <string name="show_filename">Dateiname als Songtitel anzeigen</string>
     <string name="title_is_not_available">Wenn Titel nicht verfügbar</string>
-    <string name="show_album_cover">Albumcover im Hauptbildschirm anzeigen</string>
+    <string name="show_album_cover">Album-Cover im Hauptbildschirm anzeigen</string>
 
     <!-- Settings -->
     <string name="equalizer">Equalizer</string>
@@ -60,17 +56,44 @@
 
     <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
     <!-- App title has to have less than 50 characters. If you cannot squeeze it, just remove a part of it -->
-    <string name="app_title">Simple Music Player - A cool player for your songs</string>
+    <string name="app_title">Schlichter Musik-Player - Coole Wiedergabe Deiner Songs</string>
     <!-- Short description has to have less than 80 chars -->
-    <string name="app_short_description">Ein schlichter Musik-Player mit anpassbarem Widget, ganz ohne Werbung.</string>
+    <string name="app_short_description">Ein Musik-Player mit anpassbarem Widget, einer eleganten Oberfläche und ohne Werbung.</string>
     <string name="app_long_description">
-        Ein schlichter Musik-Player, der ganz einfach über die Benachrichtigungsleiste, das Homescreen Widget oder die Tasten an deinem Headset gesteuert werden kann. Du kannst alle Songs nach Titel oder Künstler sortieren und den Equalizer anpassen. Das Filtern nach Künstler oder Album wird noch nicht unterstützt, bleib dran!
-        
-        Die App beinhaltet ein Widget mit anpassbarer Textfarbe, Transparenz und Hintergrundfarbe.
-        
-        Beinhaltet keine Werbung oder unnötige Berechtigungen. Sie ist komplett Open Source, alle verwendeten Farben sind anpassbar.
+        Ein einfacher Musik-Player, der über die Statusleiste, das Startbildschirm-Widget oder über Hardwaretasten Ihres Headsets gesteuert werden kann. Er bietet alle Funktionen wie das Sortieren auf verschiedene Arten sowie das Anpassen des Equalizers. Hören Sie Ihre Lieblings-MP3s, andere Songs oder Podcasts mit diesem kostenlosen und wunderschönen Musik-Player.
 
-        Diese App ist nur eine aus einer größeren Serie von schlichten Apps. Der Rest davon findet sich auf https://www.simplemobiletools.com
+        Er bietet exklusive Extras wie Suchen und Anzeigen von Album-Covers, einen Sleep-Timer und viele andere Einstellungen. Mit diesem eleganten Musik-Player können Sie Wiedergabelisten nach Ihren Wünschen erstellen und verwalten.
+
+        Wiedergabelisten werden vollständig unterstützt. Sie können entweder einzelne Dateien oder ganze Ordner hinzufügen. Wenn Ihnen eine Datei nicht gefällt, können Sie sie entweder einfach aus einer Wiedergabeliste entfernen oder die eigentliche Datei ganz löschen.
+
+        Kommt mit einem praktischen Sleep-Timer, so dass Sie die Zeit des Schliessens der App zuverlässig verzögern können.
+
+        Unterstützt sowohl das Mischen als auch das Wiederholen eines bestimmten Songs sowie das Überspringen und den schnellen Vorlauf.
+
+        Erhältlich in vielen verschiedenen Sprachen, bietet mehrere verschiedene Equalizer.
+
+        Überprüfen Sie einfach die Eigenschaften einer Datei wie Grösse, Dauer, zuletzt geänderte Änderungen usw.
+
+        Ändern Sie die EXIF-Daten der Datei wie den Songtitel und den Interpreten.
+
+        Teilen Sie Dateien schnell mit Ihren Freunden in sozialen Netzwerken, E-Mails oder an einem beliebigen Ort.
+
+        Dieser stilvolle Musik-Player enthält ein Widget mit anpassbarer Textfarbe, Alpha und Hintergrundfarbe für einfachen Zugriff und Kontrolle.
+
+        Unterstützt auch die Wiedergabe einzelner Audiodateien direkt aus anderen Apps.
+
+        Weiter unterstützt die App standardmässig das Materialdesign und Dark-Theme und bietet eine hervorragende Benutzererfahrung für eine einfache Verwendung. Keine Internetverbindung nötig, dadurch mehr Privatsphäre, Sicherheit und Stabilität als andere Apps.
+        
+        Enthält keine Werbungen und benötigt keine unnötigen Berechtigungen. Vollständig OpenSource und bietet anpassbare Farben.
+
+        <b>Schau dir die vollständige Serie der Schlichten Apps hier an:</b>
+        https://www.simplemobiletools.com
+
+        <b>Facebook:</b>
+        https://www.facebook.com/simplemobiletools
+
+        <b>Reddit:</b>
+        https://www.reddit.com/r/SimpleMobileTools
     </string>
 
     <!--

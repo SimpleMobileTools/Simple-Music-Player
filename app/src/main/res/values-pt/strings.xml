@@ -19,10 +19,6 @@
     <string name="autoplay_disabled">Reprodução automática desativada</string>
     <string name="sleep_timer">Temporizador</string>
 
-    <string name="previous">Anterior</string>
-    <string name="playpause">Reproduzir / Pausa</string>
-    <string name="next">Seguinte</string>
-
     <!-- Playlists -->
     <string name="add_file_to_playlist">Adicionar ficheiro à lista de reprodução</string>
     <string name="add_folder_to_playlist">Adicionar pasta à lista de reprodução</string>
@@ -62,15 +58,42 @@
     <!-- App title has to have less than 50 characters. If you cannot squeeze it, just remove a part of it -->
     <string name="app_title">Simple Music Player - Reprodutor de músicas</string>
     <!-- Short description has to have less than 80 chars -->
-    <string name="app_short_description">Um reprodutor de músicas com um widget personalizável.</string>
+    <string name="app_short_description">Reprodutor de músicas simples, com widget e sem anúncios.</string>
     <string name="app_long_description">
-        Um reprodutor de músicas que pode ser controlado através da barra de estado, do widget ou dos botões do seu dispositivo ou auricular. Pode ordenar as faixas por Título ou Artista, bem como ajustar o seu equalizador. Ainda não possui suporte a filtrar por artista ou álbum, mas está planeado. Fique atento!
+        Um reprodutor que pode ser controlado através da barra de estado, do widget ou pelos botões dos seus periféricos. Disponibiliza todas as funções que se esperam de uma aplicação deste tipo tais como ordenação de faixas, equalizador... Escute os seus mp3, outros ficheiros ou podcasts com este belo reprodutor.
 
-        Pode personalizar a cor do texto do widget, bem como a cor e o valor alfa do fundo.
+        Permite a pesquisa de faixas, a exibição da imagem dos álbuns, um temporizador e muito mais. Este elegante reprodutor permite-lhe criar e gerir listas de reprodução ao seu gosto.
+
+        Nas listas de reprodução, pode adicionar ficheiros ou pastas. Se deixar de gostar de uma música, pode remover o ficheiro da lista de reprodução e/ou apagar o ficheiro do armazenamento.
+
+        Disponibiliza um temporizador para que a aplicação se desligue nos termos por si desejados.
+
+        Também consegue baralhar e/ou repetir faixas bem como avanço e recuo rápido.
+
+        Está disponível em diversos idiomas e disponibiliza diversas predefinições para o equalizador.
+
+        Verificação facilitada das propriedades dos ficheiros tais como tamanho, duração, data de modificação...
+
+        Possibilita a edição dos dados EXIF tais como título e artista da faixa.
+
+        Com esta aplicação também consegue partilhar as faixas e as listas de reprodução com os seus amigos nas redes sociais, por e-mail ou outras formas..
+
+        Pode criar um widget personalizado para acesso e controlo facilitado no ecrã.
+
+        Efetue a gestão de ações de aplicações de terceiros para a reprodução de ficheiros e definição dos tons de toque.
+
+        A interface é em material design e tema escuro por definição, mas pode alterar os temas a seu gosto. Não requer o acesso a Internet o que lhe confere mais privacidade, segurança e estabilidade.
 
         Não contém anúncios nem permissões desnecessárias. Disponibiliza um tema escuro e é totalmente \'open source\'.
 
-        Esta aplicação é apenas parte de um conjunto mais vasto de aplicações. Saiba mais em https://www.simplemobiletools.com
+        <b>Consulte o conjunto completo das aplicações Simple Tools:</b>
+        https://www.simplemobiletools.com
+
+        <b>Facebook:</b>
+        https://www.facebook.com/simplemobiletools
+
+        <b>Reddit:</b>
+        https://www.reddit.com/r/SimpleMobileTools
     </string>
 
     <!--

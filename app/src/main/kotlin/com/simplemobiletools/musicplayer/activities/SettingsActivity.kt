@@ -30,9 +30,7 @@ class SettingsActivity : SimpleActivity() {
         setupPurchaseThankYou()
         setupCustomizeColors()
         setupCustomizeWidgetColors()
-        setupManagePlaylists()
         setupUseEnglish()
-        setupShowAlbumCover()
         setupSwapPrevNext()
         setupEqualizer()
         setupReplaceTitle()
@@ -77,21 +75,6 @@ class SettingsActivity : SimpleActivity() {
         }
     }
 
-    private fun setupManagePlaylists() {
-        settings_manage_playlists_holder.setOnClickListener {
-            startActivity(Intent(this, PlaylistsActivity::class.java))
-        }
-    }
-
-    private fun setupShowAlbumCover() {
-        settings_show_album_cover.isChecked = config.showAlbumCover
-        settings_show_album_cover_holder.setOnClickListener {
-            settings_show_album_cover.toggle()
-            config.showAlbumCover = settings_show_album_cover.isChecked
-        }
-    }
-
-
     private fun setupSwapPrevNext() {
         settings_swap_prev_next.isChecked = config.swapPrevNext
         settings_swap_prev_next_holder.setOnClickListener {
@@ -123,9 +106,9 @@ class SettingsActivity : SimpleActivity() {
         settings_show_filename.text = getShowFilenameText()
         settings_show_filename_holder.setOnClickListener {
             val items = arrayListOf(
-                    RadioItem(SHOW_FILENAME_NEVER, getString(R.string.never)),
-                    RadioItem(SHOW_FILENAME_IF_UNAVAILABLE, getString(R.string.title_is_not_available)),
-                    RadioItem(SHOW_FILENAME_ALWAYS, getString(R.string.always)))
+                RadioItem(SHOW_FILENAME_NEVER, getString(R.string.never)),
+                RadioItem(SHOW_FILENAME_IF_UNAVAILABLE, getString(R.string.title_is_not_available)),
+                RadioItem(SHOW_FILENAME_ALWAYS, getString(R.string.always)))
 
             RadioGroupDialog(this@SettingsActivity, items, config.showFilename) {
                 config.showFilename = it as Int

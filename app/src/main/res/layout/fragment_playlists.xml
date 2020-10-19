@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.simplemobiletools.musicplayer.fragments.PlaylistsFragment xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/playlists_fragment_holder"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.simplemobiletools.commons.views.MyRecyclerView
+        android:id="@+id/playlists_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        app:layoutManager="com.simplemobiletools.commons.views.MyLinearLayoutManager" />
+
+    <com.simplemobiletools.commons.views.FastScroller
+        android:id="@+id/playlists_fastscroller"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentEnd="true"
+        android:paddingStart="@dimen/normal_margin">
+
+        <include layout="@layout/fastscroller_handle_vertical" />
+
+    </com.simplemobiletools.commons.views.FastScroller>
+
+</com.simplemobiletools.musicplayer.fragments.PlaylistsFragment>

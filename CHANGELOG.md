@@ -1,6 +1,48 @@
 Changelog
 ==========
 
+Version 5.3.4 *(2020-09-19)*
+----------------------------
+
+ * Adding some translation and UX improvements
+
+Version 5.3.3 *(2020-05-30)*
+----------------------------
+
+ * Use a nicer app icon on older devices
+ * Adding some stability and translation improvements
+
+Version 5.3.2 *(2020-05-16)*
+----------------------------
+
+ * Improved some third party Open File intent handling
+ * Gave the Open Playlist top menu item higher priority than Sort by
+
+Version 5.3.1 *(2020-05-06)*
+----------------------------
+
+ * Rely more on the MediaStore at fetching songs on Android Q+
+ * Added some UI improvements and crashfixes
+
+Version 5.3.0 *(2020-04-19)*
+----------------------------
+
+ * Made the widget nicer and more reliable
+ * Added many UI improvements
+ * Always skip by 10 seconds at pressing the current and max duration
+ * Many other improvements here and there
+
+Version 5.2.7 *(2020-03-28)*
+----------------------------
+
+ * Removed the song divider lines to make the UI cleaner
+ * Some translation and UI improvements
+
+Version 5.2.6 *(2020-03-05)*
+----------------------------
+
+ * Adding some translation improvements
+
 Version 5.2.5 *(2020-02-14)*
 ----------------------------
 

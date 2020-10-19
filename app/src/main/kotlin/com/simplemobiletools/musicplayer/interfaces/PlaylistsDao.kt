@@ -5,7 +5,7 @@ import com.simplemobiletools.musicplayer.models.Playlist
 
 @Dao
 interface PlaylistsDao {
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(playlist: Playlist): Long
 
     @Delete

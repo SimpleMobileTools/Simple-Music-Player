@@ -1,0 +1,2 @@
+ * Improved some third party Open File intent handling
+ * Gave the Open Playlist top menu item higher priority than Sort by

@@ -2,18 +2,18 @@ package com.simplemobiletools.musicplayer.dialogs
 
 import android.content.ContentValues
 import android.content.Context
-import android.provider.MediaStore
+import android.provider.MediaStore.Audio
 import androidx.appcompat.app.AlertDialog
 import com.simplemobiletools.commons.activities.BaseSimpleActivity
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.musicplayer.R
-import com.simplemobiletools.musicplayer.extensions.songsDAO
-import com.simplemobiletools.musicplayer.models.Song
+import com.simplemobiletools.musicplayer.extensions.tracksDAO
+import com.simplemobiletools.musicplayer.models.Track
 import kotlinx.android.synthetic.main.dialog_rename_song.*
 import kotlinx.android.synthetic.main.dialog_rename_song.view.*
 
-class EditDialog(val activity: BaseSimpleActivity, val song: Song, val callback: (Song) -> Unit) {
+class EditDialog(val activity: BaseSimpleActivity, val song: Track, val callback: (Track) -> Unit) {
     init {
         val view = activity.layoutInflater.inflate(R.layout.dialog_rename_song, null).apply {
             song_title.setText(song.title)
@@ -43,7 +43,7 @@ class EditDialog(val activity: BaseSimpleActivity, val song: Song, val callback:
 
                             song.artist = newArtist
                             song.title = newTitle
-                            updateContentResolver(context, song.mediaStoreId, newTitle, newArtist)
+                            updateContentResolver(context, song.id, newTitle, newArtist)
 
                             val oldPath = song.path
                             val newPath = "${oldPath.getParentPath()}/$newFilename.$newFileExtension"
@@ -69,10 +69,10 @@ class EditDialog(val activity: BaseSimpleActivity, val song: Song, val callback:
                 }
     }
 
-    private fun storeEditedSong(song: Song, oldPath: String, newPath: String) {
+    private fun storeEditedSong(song: Track, oldPath: String, newPath: String) {
         ensureBackgroundThread {
             try {
-                activity.songsDAO.updateSongInfo(newPath, song.artist, song.title, oldPath)
+                activity.tracksDAO.updateSongInfo(newPath, song.artist, song.title, oldPath)
             } catch (e: Exception) {
                 activity.showErrorToast(e)
             }
@@ -80,13 +80,13 @@ class EditDialog(val activity: BaseSimpleActivity, val song: Song, val callback:
     }
 
     private fun updateContentResolver(context: Context, songID: Long, newSongTitle: String, newSongArtist: String) {
-        val uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
-        val where = "${MediaStore.Audio.Media._ID} = ?"
+        val uri = Audio.Media.EXTERNAL_CONTENT_URI
+        val where = "${Audio.Media._ID} = ?"
         val args = arrayOf(songID.toString())
 
         val values = ContentValues().apply {
-            put(MediaStore.Audio.Media.TITLE, newSongTitle)
-            put(MediaStore.Audio.Media.ARTIST, newSongArtist)
+            put(Audio.Media.TITLE, newSongTitle)
+            put(Audio.Media.ARTIST, newSongArtist)
         }
         context.contentResolver.update(uri, values, where, args)
     }

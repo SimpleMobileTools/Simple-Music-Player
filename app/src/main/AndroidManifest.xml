@@ -6,12 +6,16 @@
     android:installLocation="auto">
 
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <uses-permission
         android:name="android.permission.USE_FINGERPRINT"
         tools:node="remove"/>
+
+    <uses-feature
+        android:name="android.hardware.faketouch"
+        android:required="false"/>
 
     <application
         android:name=".App"
@@ -19,6 +23,7 @@
         android:enabled="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_launcher_name"
+        android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher"
         android:theme="@style/AppTheme">
 
@@ -95,9 +100,24 @@
             android:parentActivityName=".activities.MainActivity"/>
 
         <activity
-            android:name=".activities.PlaylistsActivity"
-            android:label="@string/manage_playlists"
-            android:parentActivityName=".activities.SettingsActivity"/>
+            android:name=".activities.AlbumsActivity"
+            android:label="@string/artist"
+            android:parentActivityName=".activities.MainActivity"/>
+
+        <activity
+            android:name=".activities.TracksActivity"
+            android:label="@string/artist"
+            android:parentActivityName=".activities.AlbumsActivity"/>
+
+        <activity
+            android:name=".activities.TrackActivity"
+            android:theme="@style/TranslucentTheme"
+            android:parentActivityName=".activities.MainActivity" />
+
+        <activity
+            android:name=".activities.QueueActivity"
+            android:label="@string/track_queue"
+            android:parentActivityName=".activities.TrackActivity" />
 
         <service
             android:name=".services.MusicService"
@@ -105,21 +125,23 @@
             <intent-filter>
                 <action android:name="com.simplemobiletools.musicplayer.action.INIT"/>
                 <action android:name="com.simplemobiletools.musicplayer.action.INIT_PATH"/>
-                <action android:name="com.simplemobiletools.musicplayer.action.SETUP"/>
+                <action android:name="com.simplemobiletools.musicplayer.action.INIT_QUEUE"/>
                 <action android:name="com.simplemobiletools.musicplayer.action.FINISH"/>
+                <action android:name="com.simplemobiletools.musicplayer.action.FINISH_IF_NOT_PLAYING"/>
                 <action android:name="com.simplemobiletools.musicplayer.action.PREVIOUS"/>
                 <action android:name="com.simplemobiletools.musicplayer.action.PAUSE"/>
                 <action android:name="com.simplemobiletools.musicplayer.action.PLAYPAUSE"/>
                 <action android:name="com.simplemobiletools.musicplayer.action.NEXT"/>
-                <action android:name="com.simplemobiletools.musicplayer.action.RESET"/>
                 <action android:name="com.simplemobiletools.musicplayer.action.EDIT"/>
-                <action android:name="com.simplemobiletools.musicplayer.action.PLAYPOS"/>
+                <action android:name="com.simplemobiletools.musicplayer.action.PLAY_TRACK"/>
                 <action android:name="com.simplemobiletools.musicplayer.action.REFRESH_LIST"/>
+                <action android:name="com.simplemobiletools.musicplayer.action.UPDATE_NEXT_TRACK"/>
                 <action android:name="com.simplemobiletools.musicplayer.action.SET_PROGRESS"/>
                 <action android:name="com.simplemobiletools.musicplayer.action.SKIP_BACKWARD"/>
                 <action android:name="com.simplemobiletools.musicplayer.action.SKIP_FORWARD"/>
                 <action android:name="com.simplemobiletools.musicplayer.action.REMOVE_CURRENT_SONG"/>
                 <action android:name="com.simplemobiletools.musicplayer.action.REMOVE_SONG_IDS"/>
+                <action android:name="com.simplemobiletools.musicplayer.action.BROADCAST_STATUS"/>
             </intent-filter>
         </service>
 
@@ -152,6 +174,15 @@
         </receiver>
 
         <receiver android:name=".receivers.ControlActionsListener"/>
+
+        <receiver
+            android:name=".receivers.NotificationDismissedReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.simplemobiletools.musicplayer.action.NOTIFICATION_DISMISSED" />
+            </intent-filter>
+        </receiver>
 
         <provider
             android:name="androidx.core.content.FileProvider"

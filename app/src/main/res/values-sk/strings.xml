@@ -19,10 +19,6 @@
     <string name="autoplay_disabled">Automatické prehrávanie vypnuté</string>
     <string name="sleep_timer">Časovač vypnutia</string>
 
-    <string name="previous">Predošlá</string>
-    <string name="playpause">Hrať / Pauznúť</string>
-    <string name="next">Nasledujúca</string>
-
     <!-- Playlists -->
     <string name="add_file_to_playlist">Pridať súbor do zoznamu skladieb</string>
     <string name="add_folder_to_playlist">Pridať priečinok do zoznamu skladieb</string>
@@ -60,17 +56,44 @@
 
     <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
     <!-- App title has to have less than 50 characters. If you cannot squeeze it, just remove a part of it -->
-    <string name="app_title">Jednoduchý hudobný prehrávač</string>
+    <string name="app_title">Jednoduchý hudobný prehrávač - Pre vaše skladby</string>
     <!-- Short description has to have less than 80 chars -->
-    <string name="app_short_description">Jednoduchý hudobný prehrávač s meniteľným widgetom na plochu.</string>
+    <string name="app_short_description">Jednoduchý hudobný prehrávač s meniteľným widgetom na plochu bez reklám.</string>
     <string name="app_long_description">
-        Hudobný prehrávač jednoducho ovládateľný zo statovej lišty, widgetu na ploche, alebo hardvérovými tlačidlami na slúchadlách. Poskytuje rôzne možnosti zoradenia pesničiek, ako aj rôzne ekvalizéry.
+        Hudobný prehrávač jednoducho ovládateľný zo stavovej lišty, widgetu na ploche, alebo hardvérovými tlačidlami na slúchadlách. Poskytuje všetky očakávané funkcie ako radenie rôznymi spôsobmi a zmena ekvalizéra. Počúvajte vaše obľúbené mp3, iné pesničky alebo podcasty s týmto pekným a bezplatným hudobným prehrávačom.
 
-        Obsahuje škálovateľný widget, kde viete upraviť farbu textu, ako aj priehľadnosť a farbu pozadia.
+        Poskytuje exkluzívne funkcie ako vyhľadávanie, zobrazovanie obrázkov albumov, časovač spánku a veľa rôznych nastavení. Tento elegantný hudobný prehrávač vám tiež umožňuje tvorbu a správu zoznamov skladieb.
+
+        Zoznamy skladieb sú plne podporované. Viete do nich pridať buď jednotlivé súbory, alebo celé priečinky naraz. Ak sa vám niektorá položka nebude páčiť, môžete ju buď odstrániť zo zoznamu, alebo vymazať súbor ako taký.
+
+        K dispozícií je aj spoľahlivý časovač spánku pomocou ktorého viete nastaviť vypnutie apky.
+
+        Podporuje aj miešanie skladieb a opakovanie jedného súboru, ako aj preskakovanie a rýchle presúvanie.
+
+        Je k dispozícií vo veľa rôznych jazykoch, poskytuje niekoľko rôznych ekvalizérov.
+
+        Viete si jednoducho pozrieť vlastnosti súborov ako veľkosť, dĺžka, dátum poslednej úpravy atď.
+
+        Problémom nie je ani úprava EXIF údajov súborov ako sú interpret a názov skladby.
+
+        Rýchlo viete zdieľať súbory s vašimi kamošmi cez sociálne siete, emaily, alebo akokoľvek chcete.
+
+        Tento štýlový hudobný prehrávač má widget s nastaviteľnými farbami, ako aj meniteľnou priehľadnosťou a farbou pozadia pre jednoduchý prístup a kontrolu.
+
+        Správne spravuje požiadavky tretích strán na prehrávanie konkrétnych súborov, apka tak môže byť nápomocná aj pri zmene zvonenia.
+
+        Táto apka je založená na Material dizajne a má prednastavenú tmavú tému, poskytuje výbornú používateľskú skúsenosť pre ľahké používanie. Chýbajúci prístup k internetu garantuje lepšie súkromie, bezpečnosť a stabilitu ako ostatné apky.
 
         Neobsahuje žiadne reklamy a nepotrebné oprávnenia. Je opensource, poskytuje možnosť zmeny farieb.
 
-        Táto aplikácia je iba jednou zo skupiny aplikácií. Ostatné viete nájsť na https://www.simplemobiletools.com
+        <b>Pozrite si celú sadu aplikácií na:</b>
+        https://www.simplemobiletools.com
+
+        <b>Facebook:</b>
+        https://www.facebook.com/simplemobiletools
+
+        <b>Reddit:</b>
+        https://www.reddit.com/r/SimpleMobileTools
     </string>
 
     <!--

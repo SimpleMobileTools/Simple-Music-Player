@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/activity_queue_holder"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.simplemobiletools.commons.views.MyRecyclerView
+        android:id="@+id/queue_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        app:layoutManager="com.simplemobiletools.commons.views.MyLinearLayoutManager" />
+
+    <com.simplemobiletools.commons.views.FastScroller
+        android:id="@+id/queue_fastscroller"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:paddingStart="@dimen/normal_margin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <include layout="@layout/fastscroller_handle_vertical" />
+
+    </com.simplemobiletools.commons.views.FastScroller>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

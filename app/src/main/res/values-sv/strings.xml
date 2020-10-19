@@ -17,11 +17,7 @@
     <string name="disable_autoplay">Inaktivera automatisk uppspelning</string>
     <string name="autoplay_enabled">Automatisk uppspelning har aktiverats</string>
     <string name="autoplay_disabled">Automatisk uppspelning har inaktiverats</string>
-    <string name="sleep_timer">Vilotimer</string>
-
-    <string name="previous">Föregående</string>
-    <string name="playpause">Spela / Pausa</string>
-    <string name="next">Nästa</string>
+    <string name="sleep_timer">Vilotidtagare</string>
 
     <!-- Playlists -->
     <string name="add_file_to_playlist">Lägg till fil i spellista</string>
@@ -55,22 +51,49 @@
     <string name="swap_prev_next">Växla hörlurars föregående- och nästaknappar</string>
 
     <!-- FAQ -->
-    <string name="faq_1_title">How can I fast-forward songs?</string>
-    <string name="faq_1_text">You can click on the current or max duration texts near the seekbar, that will move the song either backward, or forward.</string>
+    <string name="faq_1_title">Hur kan jag snabbspola låtar?</string>
+    <string name="faq_1_text">Du kan klicka på låtens nuvarande tid eller längd nära sökfältet, vilket kommer att spola låten antingen bakåt eller framåt.</string>
 
     <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
     <!-- App title has to have less than 50 characters. If you cannot squeeze it, just remove a part of it -->
     <string name="app_title">Simple Music Player - A cool player for your songs</string>
     <!-- Short description has to have less than 80 chars -->
-    <string name="app_short_description">En ren musikspelare med en anpassningsbar widget.</string>
+    <string name="app_short_description">A clean music player with a customizable widget, stylish interface and no ads.</string>
     <string name="app_long_description">
-        En musikspelare som du enkelt styr från statusfältet, en widget på startskärmen eller knapparna på ditt headset. Du kan ändra Equalizern och sortera låtarna efter Titel eller Artist. Du kan inte filtrera efter artist eller album ännu, men håll ögonen öppna!
+        En musikspelare som du enkelt styr från statusfältet, en gränssnittskomponent på startskärmen eller knapparna på din mikrofonlur. Det har alla förväntade funktioner som sortering på olika sätt samt ändring av Equalizer. Lyssna på din favorit mp3, andra låtar eller podcasts med denna gratis och vackra musikspelare.
 
-        Den har en widget med anpassningsbar textfärg, bakgrundsfärg och bakgrundsgenomskinlighet.
+        Det erbjuder exklusiva extrafunktioner som Sök och visar Albumomslag, en sömntidtagare och många andra inställningar. Denna eleganta musikspelare låter dig skapa och hantera praktiska spellistor som du vill.
+
+        Spellistor stöds fullt ut. Du kan lägga till antingen enskilda filer eller hela mappar. Om du inte gillar en fil kan du antingen bara ta bort den från en spellista eller ta bort den faktiska filen helt.
+
+        Kommer med en praktisk sömntidtagare så att du på ett tillförlitligt sätt kan försena tiden för appens avstängning.
+
+        Stöder både blandning och upprepning av en viss låt samt hoppning och snabbspolning.
+
+        Finns på många olika språk och erbjuder flera olika equalizers.
+
+        Kontrollera enkelt filegenskaper som storlek, längd, senast ändrad o.s.v.
+
+        Ändra EXIF-data för fil som låttitel och artist.
+
+        Dela snabbt filer med dina vänner på sociala nätverk, e-postmeddelanden eller var du än vill.
+
+        Denna eleganta musikspelare innehåller en gränssnittskomponent med anpassningsbar textfärg, alfa och bakgrundsfärgen för enkel åtkomst och styrning.
+
+        Den hanterar riktigt tredjeparts avsikter också för att spela enskilda ljudfiler så att det kan hjälpa till att ställa in ringsignaler också.
+
+        Den levereras som standard med materialdesign och mörkt tema, ger bra användarupplevelse för enkel användning. Bristen på tillgång till internet ger dig mer integritet, säkerhet och stabilitet än andra appar.
 
         Innehåller ingen reklam eller onödiga behörigheter. Den har helt öppen källkod och anpassningsbara färger.
 
-        Denna app är bara en del av en större serie appar. Du hittar resten av dem på https://www.simplemobiletools.com
+        <b>Kolla in hela sviten av Simple Tools här:</b>
+        https://www.simplemobiletools.com
+
+        <b>Facebook:</b>
+        https://www.facebook.com/simplemobiletools
+
+        <b>Reddit:</b>
+        https://www.reddit.com/r/SimpleMobileTools
     </string>
 
     <!--

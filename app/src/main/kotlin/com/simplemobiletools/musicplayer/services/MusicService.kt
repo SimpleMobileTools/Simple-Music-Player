@@ -6,7 +6,6 @@ import android.content.ContentUris
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.database.Cursor
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.media.AudioManager
@@ -20,52 +19,50 @@ import android.os.CountDownTimer
 import android.os.Handler
 import android.os.Looper
 import android.os.PowerManager
-import android.provider.MediaStore
+import android.provider.MediaStore.Audio
 import android.support.v4.media.MediaMetadataCompat
 import android.support.v4.media.session.MediaSessionCompat
 import android.support.v4.media.session.PlaybackStateCompat
+import android.util.Size
 import android.view.KeyEvent
 import androidx.core.app.NotificationCompat
 import androidx.media.session.MediaButtonReceiver
-import com.simplemobiletools.commons.extensions.*
-import com.simplemobiletools.commons.helpers.PERMISSION_WRITE_STORAGE
-import com.simplemobiletools.commons.helpers.ensureBackgroundThread
-import com.simplemobiletools.commons.helpers.isOreoPlus
+import com.simplemobiletools.commons.extensions.getColoredBitmap
+import com.simplemobiletools.commons.extensions.getRealPathFromURI
+import com.simplemobiletools.commons.extensions.hasPermission
+import com.simplemobiletools.commons.extensions.showErrorToast
+import com.simplemobiletools.commons.helpers.*
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.MainActivity
 import com.simplemobiletools.musicplayer.databases.SongsDatabase
-import com.simplemobiletools.musicplayer.extensions.config
-import com.simplemobiletools.musicplayer.extensions.getPlaylistSongs
-import com.simplemobiletools.musicplayer.extensions.sendIntent
-import com.simplemobiletools.musicplayer.extensions.songsDAO
+import com.simplemobiletools.musicplayer.extensions.*
 import com.simplemobiletools.musicplayer.helpers.*
+import com.simplemobiletools.musicplayer.inlines.indexOfFirstOrNull
 import com.simplemobiletools.musicplayer.models.Events
-import com.simplemobiletools.musicplayer.models.Song
+import com.simplemobiletools.musicplayer.models.Track
 import com.simplemobiletools.musicplayer.receivers.ControlActionsListener
 import com.simplemobiletools.musicplayer.receivers.HeadsetPlugReceiver
-import com.squareup.otto.Bus
+import com.simplemobiletools.musicplayer.receivers.NotificationDismissedReceiver
+import org.greenrobot.eventbus.EventBus
 import java.io.File
 import java.util.*
 
-class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnErrorListener, MediaPlayer.OnCompletionListener, AudioManager.OnAudioFocusChangeListener {
+class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnErrorListener, MediaPlayer.OnCompletionListener, OnAudioFocusChangeListener {
     companion object {
-        private const val MIN_INITIAL_DURATION = 30
         private const val PROGRESS_UPDATE_INTERVAL = 1000L
-        private const val MIN_SKIP_LENGTH = 2000
         private const val MAX_CLICK_DURATION = 700L
+        private const val FAST_FORWARD_SKIP_MS = 10000
         private const val NOTIFICATION_CHANNEL = "music_player_channel"
         private const val NOTIFICATION_ID = 78    // just a random number
 
-        var mCurrSong: Song? = null
-        var mCurrSongCover: Bitmap? = null
+        var mCurrTrack: Track? = null
         var mEqualizer: Equalizer? = null
+        var mTracks = ArrayList<Track>()
+        private var mCurrTrackCover: Bitmap? = null
         private var mHeadsetPlugReceiver = HeadsetPlugReceiver()
         private var mPlayer: MediaPlayer? = null
-        private var mPlayedSongIndexes = ArrayList<Int>()
-        private var mBus: Bus? = null
         private var mProgressHandler = Handler()
         private var mSleepTimer: CountDownTimer? = null
-        private var mSongs = ArrayList<Song>()
         private var mAudioManager: AudioManager? = null
         private var mCoverArtHeight = 0
         private var mOreoFocusHandler: OreoAudioFocusHandler? = null
@@ -77,6 +74,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         private var mMediaSession: MediaSessionCompat? = null
         private var mIsServiceInitialized = false
         private var mPrevAudioFocusState = 0
+        private var mSetProgressOnPrepare = 0
 
         fun getIsPlaying() = mPlayer?.isPlaying == true
     }
@@ -98,12 +96,6 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
     override fun onCreate() {
         super.onCreate()
-
-        if (mBus == null) {
-            mBus = BusProvider.instance
-            mBus!!.register(this)
-        }
-
         mCoverArtHeight = resources.getDimension(R.dimen.top_art_height).toInt()
         mMediaSession = MediaSessionCompat(this, "MusicService")
         mMediaSession!!.setFlags(MediaSessionCompat.FLAG_HANDLES_MEDIA_BUTTONS)
@@ -119,8 +111,8 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             mOreoFocusHandler = OreoAudioFocusHandler(applicationContext)
         }
 
-        if (!hasPermission(PERMISSION_WRITE_STORAGE)) {
-            mBus!!.post(Events.NoStoragePermission())
+        if (!isQPlus() && !hasPermission(PERMISSION_WRITE_STORAGE)) {
+            EventBus.getDefault().post(Events.NoStoragePermission())
         }
     }
 
@@ -134,7 +126,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     }
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
-        if (!hasPermission(PERMISSION_WRITE_STORAGE)) {
+        if (!isQPlus() && !hasPermission(PERMISSION_WRITE_STORAGE)) {
             return START_NOT_STICKY
         }
 
@@ -144,26 +136,28 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         }
 
         when (action) {
-            INIT -> handleInit()
+            INIT -> handleInit(intent)
             INIT_PATH -> handleInitPath(intent)
-            SETUP -> handleSetup()
+            INIT_QUEUE -> handleInitQueue()
             PREVIOUS -> handlePrevious()
-            PAUSE -> pauseSong()
+            PAUSE -> pauseTrack()
             PLAYPAUSE -> handlePlayPause()
             NEXT -> handleNext()
-            RESET -> handleReset()
-            PLAYPOS -> playSong(intent)
+            PLAY_TRACK -> playTrack(intent)
             EDIT -> handleEdit(intent)
             FINISH -> handleFinish()
+            FINISH_IF_NOT_PLAYING -> finishIfNotPlaying()
             REFRESH_LIST -> handleRefreshList(intent)
+            UPDATE_NEXT_TRACK -> broadcastNextTrackChange()
             SET_PROGRESS -> handleSetProgress(intent)
             SET_EQUALIZER -> handleSetEqualizer(intent)
             SKIP_BACKWARD -> skip(false)
             SKIP_FORWARD -> skip(true)
-            REMOVE_CURRENT_SONG -> handleRemoveCurrentSong()
-            REMOVE_SONG_IDS -> handleRemoveSongIDS(intent)
+            REMOVE_CURRENT_TRACK -> handleRemoveCurrentTrack()
+            REMOVE_TRACK_IDS -> handleRemoveTrackIds(intent)
             START_SLEEP_TIMER -> startSleepTimer()
             STOP_SLEEP_TIMER -> stopSleepTimer()
+            BROADCAST_STATUS -> broadcastPlayerStatus()
         }
 
         MediaButtonReceiver.handleIntent(mMediaSession!!, intent)
@@ -171,18 +165,21 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         return START_NOT_STICKY
     }
 
-    private fun initService() {
-        mSongs.clear()
-        mPlayedSongIndexes = ArrayList()
-        mCurrSong = null
+    private fun initService(intent: Intent?) {
+        mTracks.clear()
+        mCurrTrack = null
         if (mIsThirdPartyIntent && mIntentUri != null) {
             val path = getRealPathFromURI(mIntentUri!!) ?: ""
-            val song = RoomHelper(this).getSongFromPath(path)
-            if (song != null) {
-                mSongs.add(song)
+            val track = RoomHelper(this).getTrackFromPath(path)
+            if (track != null) {
+                mTracks.add(track)
             }
         } else {
-            getSortedSongs()
+            mTracks = getQueuedTracks()
+
+            val wantedTrackId = intent?.getLongExtra(TRACK_ID, -1L)
+            mCurrTrack = mTracks.firstOrNull { it.id == wantedTrackId }
+            checkTrackOrder()
         }
 
         mWasPlayingAtFocusLost = false
@@ -191,13 +188,14 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         mIsServiceInitialized = true
     }
 
-    private fun handleInit() {
+    private fun handleInit(intent: Intent? = null) {
         mIsThirdPartyIntent = false
         ensureBackgroundThread {
-            if (!mIsServiceInitialized) {
-                initService()
-            }
-            initSongs()
+            initService(intent)
+
+            val wantedTrackId = intent?.getLongExtra(TRACK_ID, -1L) ?: -1L
+            mPlayOnPrepare = true
+            setTrack(wantedTrackId)
         }
     }
 
@@ -205,67 +203,80 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         mIsThirdPartyIntent = true
         if (mIntentUri != intent.data) {
             mIntentUri = intent.data
-            initService()
-            initSongs()
+            initService(intent)
+            initTracks()
         } else {
             updateUI()
         }
     }
 
-    private fun handleSetup() {
-        mPlayOnPrepare = true
-        setupNextSong()
+    private fun handleInitQueue() {
+        ensureBackgroundThread {
+            val unsortedTracks = getQueuedTracks()
+
+            mTracks.clear()
+            queueDAO.getAll().forEach { queueItem ->
+                unsortedTracks.firstOrNull { it.id == queueItem.trackId }?.apply {
+                    mTracks.add(this)
+                }
+            }
+
+            val currentQueueItem = queueDAO.getAll().firstOrNull { it.isCurrent }
+            if (currentQueueItem != null) {
+                mCurrTrack = mTracks.firstOrNull { it.id == currentQueueItem.trackId }
+                mPlayOnPrepare = false
+                mSetProgressOnPrepare = currentQueueItem.lastPosition
+                setTrack(mCurrTrack!!.id)
+            }
+        }
     }
 
     private fun handlePrevious() {
         mPlayOnPrepare = true
-        playPreviousSong()
+        playPreviousTrack()
     }
 
     private fun handlePlayPause() {
         mPlayOnPrepare = true
         if (getIsPlaying()) {
-            pauseSong()
+            pauseTrack()
         } else {
-            resumeSong()
+            resumeTrack()
         }
     }
 
     private fun handleNext() {
         mPlayOnPrepare = true
-        setupNextSong()
-    }
-
-    private fun handleReset() {
-        if (mPlayedSongIndexes.size - 1 != -1) {
-            mPlayOnPrepare = true
-            setSong(mPlayedSongIndexes[mPlayedSongIndexes.size - 1], false)
-        }
+        setupNextTrack()
     }
 
     private fun handleEdit(intent: Intent) {
-        mCurrSong = intent.getSerializableExtra(EDITED_SONG) as Song
-        songChanged(mCurrSong)
+        mCurrTrack = intent.getSerializableExtra(EDITED_TRACK) as Track
+        trackChanged()
+    }
+
+    private fun finishIfNotPlaying() {
+        if (!getIsPlaying()) {
+            handleFinish()
+        }
     }
 
     private fun handleFinish() {
-        mBus!!.post(Events.ProgressUpdated(0))
+        broadcastTrackProgress(0)
         destroyPlayer()
     }
 
     private fun handleRefreshList(intent: Intent) {
-        mSongs.clear()
         ensureBackgroundThread {
-            getSortedSongs()
-            Handler(Looper.getMainLooper()).post {
-                mBus!!.post(Events.PlaylistUpdated(mSongs))
-            }
+            mTracks = getQueuedTracks()
+            checkTrackOrder()
+            EventBus.getDefault().post(Events.QueueUpdated(mTracks))
+            broadcastNextTrackChange()
 
             if (intent.getBooleanExtra(CALL_SETUP_AFTER, false)) {
                 mPlayOnPrepare = false
-                setupNextSong()
+                setupNextTrack()
             }
-
         }
     }
 
@@ -285,24 +296,24 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         }
     }
 
-    private fun handleRemoveCurrentSong() {
-        pauseSong()
-        mCurrSong = null
-        songChanged(null)
+    private fun handleRemoveCurrentTrack() {
+        pauseTrack()
+        mCurrTrack = null
+        trackChanged()
     }
 
-    private fun handleRemoveSongIDS(intent: Intent) {
-        val ids = intent.getIntegerArrayListExtra(SONG_IDS)
-        val songsToRemove = ArrayList<Song>()
-        mSongs.sortedDescending().forEach {
+    private fun handleRemoveTrackIds(intent: Intent) {
+        val ids = intent.getIntegerArrayListExtra(TRACK_IDS)
+        val tracksToRemove = ArrayList<Track>()
+        mTracks.sortedDescending().forEach {
             if (ids.contains(it.path.hashCode())) {
-                songsToRemove.add(it)
+                tracksToRemove.add(it)
             }
         }
-        mSongs.removeAll(songsToRemove)
+        mTracks.removeAll(tracksToRemove)
     }
 
-    private fun setupSong() {
+    private fun setupTrack() {
         if (mIsThirdPartyIntent) {
             initMediaPlayerIfNeeded()
 
@@ -313,41 +324,39 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
                     setOnPreparedListener(null)
                     prepare()
                     start()
-                    requestAudioFocus()
                 }
+                requestAudioFocus()
 
-                val song = mSongs.first()
-                mSongs.clear()
-                mSongs.add(song)
-                mCurrSong = song
+                val track = mTracks.first()
+                mTracks.clear()
+                mTracks.add(track)
+                mCurrTrack = track
                 updateUI()
             } catch (ignored: Exception) {
             }
         } else {
             mPlayOnPrepare = false
-            setupNextSong()
+            setupNextTrack()
         }
     }
 
-    private fun initSongs() {
-        if (mCurrSong == null) {
-            setupSong()
+    private fun initTracks() {
+        if (mCurrTrack == null) {
+            setupTrack()
         }
         updateUI()
     }
 
     private fun updateUI() {
-        Handler(Looper.getMainLooper()).post {
-            if (mPlayer != null) {
-                mBus!!.post(Events.PlaylistUpdated(mSongs))
-                mCurrSongCover = getAlbumImage(mCurrSong).first
-                mBus!!.post(Events.SongChanged(mCurrSong))
+        if (mPlayer != null) {
+            EventBus.getDefault().post(Events.QueueUpdated(mTracks))
+            mCurrTrackCover = getAlbumImage().first
+            broadcastTrackChange()
 
-                val secs = mPlayer!!.currentPosition / 1000
-                mBus!!.post(Events.ProgressUpdated(secs))
-            }
+            val secs = mPlayer!!.currentPosition / 1000
+            broadcastTrackProgress(secs)
         }
-        songStateChanged(getIsPlaying())
+        trackStateChanged(getIsPlaying())
     }
 
     private fun initMediaPlayerIfNeeded() {
@@ -357,55 +366,12 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
         mPlayer = MediaPlayer().apply {
             setWakeMode(applicationContext, PowerManager.PARTIAL_WAKE_LOCK)
-            setAudioStreamType(AudioManager.STREAM_MUSIC)
+            setAudioStreamType(STREAM_MUSIC)
             setOnPreparedListener(this@MusicService)
             setOnCompletionListener(this@MusicService)
             setOnErrorListener(this@MusicService)
         }
         setupEqualizer()
-    }
-
-    private fun getAllDeviceSongs() {
-        val ignoredPaths = config.ignoredPaths
-        val uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
-        val columns = arrayOf(MediaStore.Audio.Media.DURATION, MediaStore.Audio.Media.DATA)
-
-        var cursor: Cursor? = null
-        val paths = ArrayList<String>()
-
-        try {
-            cursor = contentResolver.query(uri, columns, null, null, null)
-            if (cursor != null && cursor.moveToFirst()) {
-                do {
-                    val duration = cursor.getIntValue(MediaStore.Audio.Media.DURATION) / 1000
-                    if (duration > MIN_INITIAL_DURATION) {
-                        val path = cursor.getStringValue(MediaStore.Audio.Media.DATA)
-                        if (!ignoredPaths.contains(path) && !path.doesThisOrParentHaveNoMedia()) {
-                            paths.add(path)
-                        }
-                    }
-                } while (cursor.moveToNext())
-            }
-        } finally {
-            cursor?.close()
-        }
-
-        val storedAllSongPaths = songsDAO.getSongsFromPlaylist(ALL_SONGS_PLAYLIST_ID).map { it.path }
-        paths.removeAll(storedAllSongPaths)
-        RoomHelper(this).addSongsToPlaylist(paths)
-    }
-
-    private fun getSortedSongs() {
-        if (config.currentPlaylist == ALL_SONGS_PLAYLIST_ID) {
-            getAllDeviceSongs()
-        }
-
-        mSongs = getPlaylistSongs(config.currentPlaylist)
-        Song.sorting = config.sorting
-        try {
-            mSongs.sort()
-        } catch (ignored: Exception) {
-        }
     }
 
     private fun setupEqualizer() {
@@ -425,10 +391,31 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         }
     }
 
+    // make sure tracks don't get duplicated in the queue, if they exist in multiple playlists
+    private fun getQueuedTracks(): ArrayList<Track> {
+        val tracks = ArrayList<Track>()
+        val allTracks = tracksDAO.getAll()
+        val wantedIds = queueDAO.getAll().map { it.trackId }
+        val wantedTracks = allTracks.filter { wantedIds.contains(it.id) }
+        tracks.addAll(wantedTracks)
+        return tracks.distinctBy { it.id }.toMutableList() as ArrayList<Track>
+    }
+
+    private fun checkTrackOrder() {
+        if (config.isShuffleEnabled) {
+            mTracks.shuffle()
+
+            if (mCurrTrack != null) {
+                mTracks.remove(mCurrTrack)
+                mTracks.add(0, mCurrTrack!!)
+            }
+        }
+    }
+
     @SuppressLint("NewApi")
     private fun setupNotification() {
-        val title = mCurrSong?.title ?: ""
-        val artist = mCurrSong?.artist ?: ""
+        val title = mCurrTrack?.title ?: ""
+        val artist = mCurrTrack?.artist ?: ""
         val playPauseIcon = if (getIsPlaying()) R.drawable.ic_pause_vector else R.drawable.ic_play_vector
 
         var notifWhen = 0L
@@ -453,30 +440,36 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             }
         }
 
-        if (mCurrSongCover?.isRecycled == true) {
-            mCurrSongCover = resources.getColoredBitmap(R.drawable.ic_headset, config.textColor)
+        if (mCurrTrackCover?.isRecycled == true) {
+            mCurrTrackCover = resources.getColoredBitmap(R.drawable.ic_headset, config.textColor)
         }
 
+        val notificationDismissedIntent = Intent(this, NotificationDismissedReceiver::class.java).apply {
+            action = NOTIFICATION_DISMISSED
+        }
+        val notificationDismissedPendingIntent = PendingIntent.getBroadcast(this, 0, notificationDismissedIntent, PendingIntent.FLAG_CANCEL_CURRENT)
+
         val notification = NotificationCompat.Builder(applicationContext, NOTIFICATION_CHANNEL)
-                .setContentTitle(title)
-                .setContentText(artist)
-                .setSmallIcon(R.drawable.ic_headset_small)
-                .setLargeIcon(mCurrSongCover)
-                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
-                .setPriority(NotificationCompat.PRIORITY_MAX)
-                .setWhen(notifWhen)
-                .setShowWhen(showWhen)
-                .setUsesChronometer(usesChronometer)
-                .setContentIntent(getContentIntent())
-                .setOngoing(ongoing)
-                .setChannelId(NOTIFICATION_CHANNEL)
-                .setCategory(Notification.CATEGORY_SERVICE)
-                .setStyle(androidx.media.app.NotificationCompat.MediaStyle()
-                        .setShowActionsInCompactView(0, 1, 2)
-                        .setMediaSession(mMediaSession?.sessionToken))
-                .addAction(R.drawable.ic_previous_vector, getString(R.string.previous), getIntent(PREVIOUS))
-                .addAction(playPauseIcon, getString(R.string.playpause), getIntent(PLAYPAUSE))
-                .addAction(R.drawable.ic_next_vector, getString(R.string.next), getIntent(NEXT))
+            .setContentTitle(title)
+            .setContentText(artist)
+            .setSmallIcon(R.drawable.ic_headset_small)
+            .setLargeIcon(mCurrTrackCover)
+            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+            .setPriority(NotificationCompat.PRIORITY_MAX)
+            .setWhen(notifWhen)
+            .setShowWhen(showWhen)
+            .setUsesChronometer(usesChronometer)
+            .setContentIntent(getContentIntent())
+            .setOngoing(ongoing)
+            .setChannelId(NOTIFICATION_CHANNEL)
+            .setCategory(Notification.CATEGORY_SERVICE)
+            .setStyle(androidx.media.app.NotificationCompat.MediaStyle()
+                .setShowActionsInCompactView(0, 1, 2)
+                .setMediaSession(mMediaSession?.sessionToken))
+            .setDeleteIntent(notificationDismissedPendingIntent)
+            .addAction(R.drawable.ic_previous_vector, getString(R.string.previous), getIntent(PREVIOUS))
+            .addAction(playPauseIcon, getString(R.string.playpause), getIntent(PLAYPAUSE))
+            .addAction(R.drawable.ic_next_vector, getString(R.string.next), getIntent(NEXT))
 
         startForeground(NOTIFICATION_ID, notification.build())
 
@@ -490,8 +483,8 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         val playbackState = if (getIsPlaying()) PlaybackStateCompat.STATE_PLAYING else PlaybackStateCompat.STATE_PAUSED
         try {
             mMediaSession!!.setPlaybackState(PlaybackStateCompat.Builder()
-                    .setState(playbackState, PLAYBACK_POSITION_UNKNOWN, 1.0f)
-                    .build())
+                .setState(playbackState, PLAYBACK_POSITION_UNKNOWN, 1.0f)
+                .build())
         } catch (ignored: IllegalStateException) {
         }
     }
@@ -520,111 +513,105 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         }
 
         val notification = NotificationCompat.Builder(applicationContext, NOTIFICATION_CHANNEL)
-                .setContentTitle("")
-                .setContentText("")
-                .setSmallIcon(R.drawable.ic_headset_small)
-                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
-                .setPriority(NotificationCompat.PRIORITY_MAX)
-                .setChannelId(NOTIFICATION_CHANNEL)
-                .setCategory(Notification.CATEGORY_SERVICE)
+            .setContentTitle("")
+            .setContentText("")
+            .setSmallIcon(R.drawable.ic_headset_small)
+            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+            .setPriority(NotificationCompat.PRIORITY_MAX)
+            .setChannelId(NOTIFICATION_CHANNEL)
+            .setCategory(Notification.CATEGORY_SERVICE)
 
         startForeground(NOTIFICATION_ID, notification.build())
     }
 
-    private fun getNewSongId(): Int {
-        return if (config.isShuffleEnabled) {
-            val cnt = mSongs.size
-            when (cnt) {
-                0 -> -1
-                1 -> 0
-                else -> {
-                    val random = Random()
-                    var newSongIndex = random.nextInt(cnt)
-                    while (mPlayedSongIndexes.contains(newSongIndex)) {
-                        newSongIndex = random.nextInt(cnt)
-                    }
-                    newSongIndex
+    private fun getNewTrackId(): Long {
+        return when (mTracks.size) {
+            0 -> -1L
+            1 -> mTracks.first().id
+            else -> {
+                val currentTrackIndex = mTracks.indexOfFirstOrNull { it.id == mCurrTrack?.id }
+                if (currentTrackIndex != null) {
+                    val nextTrack = mTracks[(currentTrackIndex + 1) % mTracks.size]
+                    nextTrack.id
+                } else {
+                    -1L
                 }
             }
-        } else {
-            if (mPlayedSongIndexes.isEmpty()) {
-                return 0
-            }
-
-            val lastIndex = mPlayedSongIndexes[mPlayedSongIndexes.size - 1]
-            (lastIndex + 1) % Math.max(mSongs.size, 1)
         }
     }
 
-    private fun playPreviousSong() {
-        if (mSongs.isEmpty()) {
+    private fun playPreviousTrack() {
+        if (mTracks.isEmpty()) {
             handleEmptyPlaylist()
             return
         }
 
         initMediaPlayerIfNeeded()
 
-        // play the previous song if we are less than 5 secs into the song, else restart
-        // remove the latest song from the list
-        if (mPlayedSongIndexes.size > 1 && mPlayer!!.currentPosition < 5000) {
-            mPlayedSongIndexes.removeAt(mPlayedSongIndexes.size - 1)
-            setSong(mPlayedSongIndexes[mPlayedSongIndexes.size - 1], false)
+        // play the previous track if we are less than 5 secs into it, else restart
+        val currentTrackIndex = mTracks.indexOfFirstOrNull { it.id == mCurrTrack?.id } ?: 0
+        if (currentTrackIndex == 0 || mPlayer!!.currentPosition < 5000) {
+            restartTrack()
         } else {
-            restartSong()
+            val previousTrack = mTracks[currentTrackIndex - 1]
+            setTrack(previousTrack.id)
         }
     }
 
-    private fun pauseSong() {
+    private fun pauseTrack() {
         initMediaPlayerIfNeeded()
 
         mPlayer!!.pause()
-        songStateChanged(false)
+        trackStateChanged(false)
     }
 
-    private fun resumeSong() {
-        if (mSongs.isEmpty()) {
+    private fun resumeTrack() {
+        if (mTracks.isEmpty()) {
             handleEmptyPlaylist()
             return
         }
 
         initMediaPlayerIfNeeded()
 
-        if (mCurrSong == null) {
-            setupNextSong()
+        if (mCurrTrack == null) {
+            setupNextTrack()
         } else {
             mPlayer!!.start()
             requestAudioFocus()
         }
 
-        songStateChanged(true)
+        trackStateChanged(true)
     }
 
-    private fun setupNextSong() {
+    private fun setupNextTrack() {
         if (mIsThirdPartyIntent) {
-            setupSong()
+            setupTrack()
         } else {
-            setSong(getNewSongId(), true)
+            setTrack(getNewTrackId())
         }
     }
 
-    private fun restartSong() {
-        val newSongIndex = if (mPlayedSongIndexes.isEmpty()) 0 else mPlayedSongIndexes[mPlayedSongIndexes.size - 1]
-        setSong(newSongIndex, false)
+    private fun restartTrack() {
+        if (mCurrTrack != null) {
+            setTrack(mCurrTrack!!.id)
+        }
     }
 
-    private fun playSong(intent: Intent) {
+    private fun playTrack(intent: Intent) {
         if (mIsThirdPartyIntent) {
-            setupSong()
+            setupTrack()
         } else {
             mPlayOnPrepare = true
-            val pos = intent.getIntExtra(SONG_POS, 0)
-            setSong(pos, true)
+            val trackId = intent.getLongExtra(TRACK_ID, 0L)
+            setTrack(trackId)
+            broadcastTrackChange()
         }
+
         mMediaSession?.isActive = true
     }
 
-    private fun setSong(songIndex: Int, addNewSongToHistory: Boolean) {
-        if (mSongs.isEmpty()) {
+    private fun setTrack(wantedTrackId: Long) {
+        if (mTracks.isEmpty()) {
             handleEmptyPlaylist()
             return
         }
@@ -632,24 +619,17 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         initMediaPlayerIfNeeded()
 
         mPlayer!!.reset()
-        if (addNewSongToHistory) {
-            mPlayedSongIndexes.add(songIndex)
-            if (mPlayedSongIndexes.size >= mSongs.size) {
-                mPlayedSongIndexes.clear()
-            }
-        }
-
-        mCurrSong = mSongs.getOrNull(Math.min(songIndex, mSongs.size - 1)) ?: return
+        mCurrTrack = mTracks.firstOrNull { it.id == wantedTrackId } ?: return
 
         try {
-            val trackUri = if (mCurrSong!!.mediaStoreId == 0L) {
-                Uri.fromFile(File(mCurrSong!!.path))
+            val trackUri = if (mCurrTrack!!.id == 0L) {
+                Uri.fromFile(File(mCurrTrack!!.path))
             } else {
-                ContentUris.withAppendedId(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, mCurrSong!!.mediaStoreId)
+                ContentUris.withAppendedId(Audio.Media.EXTERNAL_CONTENT_URI, mCurrTrack!!.id)
             }
             mPlayer!!.setDataSource(applicationContext, trackUri)
             mPlayer!!.prepareAsync()
-            songChanged(mCurrSong)
+            trackChanged()
         } catch (ignored: Exception) {
         }
     }
@@ -657,9 +637,9 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     private fun handleEmptyPlaylist() {
         mPlayer?.pause()
         abandonAudioFocus()
-        mCurrSong = null
-        songChanged(null)
-        songStateChanged(false)
+        mCurrTrack = null
+        trackChanged()
+        trackStateChanged(false)
 
         if (!mIsServiceInitialized) {
             handleInit()
@@ -673,11 +653,11 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             return
         }
 
-        if (config.repeatSong) {
-            restartSong()
+        if (config.repeatTrack) {
+            restartTrack()
         } else if (mPlayer!!.currentPosition > 0) {
             mPlayer!!.reset()
-            setupNextSong()
+            setupNextTrack()
         }
     }
 
@@ -690,32 +670,63 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         if (mPlayOnPrepare) {
             mp.start()
             requestAudioFocus()
+        } else if (mSetProgressOnPrepare > 0) {
+            mPlayer?.seekTo(mSetProgressOnPrepare)
+            broadcastTrackProgress(mSetProgressOnPrepare / 1000)
+            mSetProgressOnPrepare = 0
         }
-        songStateChanged(getIsPlaying())
+
+        trackStateChanged(getIsPlaying())
         setupNotification()
     }
 
-    private fun songChanged(song: Song?) {
-        val albumImage = getAlbumImage(song)
-        mCurrSongCover = albumImage.first
-        Handler(Looper.getMainLooper()).post {
-            mBus!!.post(Events.SongChanged(song))
-        }
+    private fun trackChanged() {
+        val albumImage = getAlbumImage()
+        mCurrTrackCover = albumImage.first
+        broadcastTrackChange()
 
         val lockScreenImage = if (albumImage.second) albumImage.first else null
         val metadata = MediaMetadataCompat.Builder()
-                .putBitmap(MediaMetadataCompat.METADATA_KEY_ALBUM_ART, lockScreenImage)
-                .build()
+            .putBitmap(MediaMetadataCompat.METADATA_KEY_ALBUM_ART, lockScreenImage)
+            .build()
 
         mMediaSession?.setMetadata(metadata)
     }
 
+    private fun broadcastTrackChange() {
+        Handler(Looper.getMainLooper()).post {
+            broadcastUpdateWidgetTrack(mCurrTrack)
+            EventBus.getDefault().post(Events.TrackChanged(mCurrTrack))
+            broadcastNextTrackChange()
+        }
+    }
+
+    private fun broadcastTrackStateChange(isPlaying: Boolean) {
+        broadcastUpdateWidgetTrackState(isPlaying)
+        EventBus.getDefault().post(Events.TrackStateChanged(isPlaying))
+    }
+
+    private fun broadcastNextTrackChange() {
+        Handler(Looper.getMainLooper()).post {
+            val currentTrackIndex = mTracks.indexOfFirstOrNull { it.id == mCurrTrack?.id }
+            if (currentTrackIndex != null) {
+                val nextTrack = mTracks[(currentTrackIndex + 1) % mTracks.size]
+                EventBus.getDefault().post(Events.NextTrackChanged(nextTrack))
+            }
+        }
+    }
+
+    private fun broadcastTrackProgress(progress: Int) {
+        EventBus.getDefault().post(Events.ProgressUpdated(progress))
+    }
+
     // do not just return the album cover, but also a boolean to indicate if it a real cover, or just the placeholder
-    private fun getAlbumImage(song: Song?): Pair<Bitmap, Boolean> {
-        if (File(song?.path ?: "").exists()) {
+    @SuppressLint("NewApi")
+    private fun getAlbumImage(): Pair<Bitmap, Boolean> {
+        if (File(mCurrTrack?.path ?: "").exists()) {
             try {
                 val mediaMetadataRetriever = MediaMetadataRetriever()
-                mediaMetadataRetriever.setDataSource(song!!.path)
+                mediaMetadataRetriever.setDataSource(mCurrTrack!!.path)
                 val rawArt = mediaMetadataRetriever.embeddedPicture
                 if (rawArt != null) {
                     val options = BitmapFactory.Options()
@@ -731,10 +742,10 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
                     }
                 }
 
-                val songParentDirectory = File(song.path).parent.trimEnd('/')
+                val trackParentDirectory = File(mCurrTrack!!.path).parent.trimEnd('/')
                 val albumArtFiles = arrayListOf("folder.jpg", "albumart.jpg", "cover.jpg")
                 albumArtFiles.forEach {
-                    val albumArtFilePath = "$songParentDirectory/$it"
+                    val albumArtFilePath = "$trackParentDirectory/$it"
                     if (File(albumArtFilePath).exists()) {
                         val bitmap = BitmapFactory.decodeFile(albumArtFilePath)
                         if (bitmap != null) {
@@ -752,19 +763,40 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             }
         }
 
+        if (isQPlus() && mCurrTrack?.path?.startsWith("content://") == true) {
+            try {
+                val size = Size(512, 512)
+                val thumbnail = contentResolver.loadThumbnail(Uri.parse(mCurrTrack!!.path), size, null)
+                return Pair(thumbnail, true)
+            } catch (ignored: Exception) {
+            }
+        }
+
         return Pair(resources.getColoredBitmap(R.drawable.ic_headset, config.textColor), false)
     }
 
     private fun destroyPlayer() {
+        val position = mPlayer?.currentPosition ?: 0
+        ensureBackgroundThread {
+            queueDAO.resetCurrent()
+
+            if (mCurrTrack != null) {
+                queueDAO.saveCurrentTrack(mCurrTrack!!.id, position)
+            }
+
+            mTracks.forEachIndexed { index, track ->
+                queueDAO.setOrder(track.id, index)
+            }
+
+            mCurrTrack = null
+        }
+
         mPlayer?.stop()
         mPlayer?.release()
         mPlayer = null
 
-        if (mBus != null) {
-            songStateChanged(false)
-            songChanged(null)
-            mBus!!.unregister(this)
-        }
+        trackStateChanged(false)
+        trackChanged()
 
         mEqualizer?.release()
 
@@ -779,7 +811,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         if (isOreoPlus()) {
             mOreoFocusHandler?.requestAudioFocus(this)
         } else {
-            mAudioManager?.requestAudioFocus(this, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN)
+            mAudioManager?.requestAudioFocus(this, STREAM_MUSIC, AUDIOFOCUS_GAIN)
         }
     }
 
@@ -803,7 +835,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     private fun audioFocusLost() {
         if (getIsPlaying()) {
             mWasPlayingAtFocusLost = true
-            pauseSong()
+            pauseTrack()
         } else {
             mWasPlayingAtFocusLost = false
         }
@@ -814,7 +846,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             if (mPrevAudioFocusState == AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK) {
                 unduckAudio()
             } else {
-                resumeSong()
+                resumeTrack()
             }
         }
 
@@ -832,20 +864,18 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
     private fun updateProgress(progress: Int) {
         mPlayer!!.seekTo(progress * 1000)
-        resumeSong()
+        resumeTrack()
     }
 
-    private fun songStateChanged(isPlaying: Boolean) {
+    private fun trackStateChanged(isPlaying: Boolean) {
         handleProgressHandler(isPlaying)
         setupNotification()
         mMediaSession?.isActive = isPlaying
-        Handler(Looper.getMainLooper()).post {
-            mBus!!.post(Events.SongStateChanged(isPlaying))
-        }
+        broadcastTrackStateChange(isPlaying)
 
         if (isPlaying) {
             val filter = IntentFilter(Intent.ACTION_HEADSET_PLUG)
-            filter.addAction(AudioManager.ACTION_AUDIO_BECOMING_NOISY)
+            filter.addAction(ACTION_AUDIO_BECOMING_NOISY)
             registerReceiver(mHeadsetPlugReceiver, filter)
         } else {
             try {
@@ -860,7 +890,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             mProgressHandler.post(object : Runnable {
                 override fun run() {
                     val secs = mPlayer!!.currentPosition / 1000
-                    mBus!!.post(Events.ProgressUpdated(secs))
+                    broadcastTrackProgress(secs)
                     mProgressHandler.removeCallbacksAndMessages(null)
                     mProgressHandler.postDelayed(this, PROGRESS_UPDATE_INTERVAL)
                 }
@@ -872,10 +902,9 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
     private fun skip(forward: Boolean) {
         val curr = mPlayer?.currentPosition ?: return
-        val twoPercents = Math.max(mPlayer!!.duration / 50, MIN_SKIP_LENGTH)
-        val newProgress = if (forward) curr + twoPercents else curr - twoPercents
+        val newProgress = if (forward) curr + FAST_FORWARD_SKIP_MS else curr - FAST_FORWARD_SKIP_MS
         mPlayer!!.seekTo(newProgress)
-        resumeSong()
+        resumeTrack()
     }
 
     private fun startSleepTimer() {
@@ -884,11 +913,11 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         mSleepTimer = object : CountDownTimer(millisInFuture, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 val seconds = (millisUntilFinished / 1000).toInt()
-                mBus!!.post(Events.SleepTimerChanged(seconds))
+                EventBus.getDefault().post(Events.SleepTimerChanged(seconds))
             }
 
             override fun onFinish() {
-                mBus!!.post(Events.SleepTimerChanged(0))
+                EventBus.getDefault().post(Events.SleepTimerChanged(0))
                 config.sleepInTS = 0
                 sendIntent(FINISH)
             }
@@ -899,6 +928,14 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     private fun stopSleepTimer() {
         config.sleepInTS = 0
         mSleepTimer?.cancel()
+    }
+
+    // used at updating the widget at create or resize
+    private fun broadcastPlayerStatus() {
+        broadcastTrackStateChange(mPlayer?.isPlaying ?: false)
+        broadcastTrackChange()
+        broadcastNextTrackChange()
+        broadcastTrackProgress((mPlayer?.currentPosition ?: 0) / 1000)
     }
 
     private fun handleMediaButton(mediaButtonEvent: Intent) {

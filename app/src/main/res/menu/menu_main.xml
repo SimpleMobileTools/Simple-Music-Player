@@ -1,67 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-      xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/search"
         android:icon="@drawable/ic_search_vector"
         android:title="@string/search"
         app:actionViewClass="androidx.appcompat.widget.SearchView"
-        app:showAsAction="collapseActionView|ifRoom"/>
+        app:showAsAction="collapseActionView|ifRoom" />
     <item
         android:id="@+id/sort"
         android:icon="@drawable/ic_sort_vector"
         android:title="@string/sort_by"
-        app:showAsAction="ifRoom"/>
-    <item
-        android:id="@+id/toggle_autoplay"
-        android:title="@string/disable_autoplay"
-        app:showAsAction="never"/>
-    <item
-        android:id="@+id/open_playlist"
-        android:icon="@drawable/ic_open_playlist_vector"
-        android:title="@string/open_playlist"
-        app:showAsAction="ifRoom"/>
-    <item
-        android:id="@+id/delete_current"
-        android:title="@string/delete_current_song"
-        app:showAsAction="never"/>
+        app:showAsAction="ifRoom" />
     <item
         android:id="@+id/sleep_timer"
         android:title="@string/sleep_timer"
-        app:showAsAction="never"/>
-    <item
-        android:id="@+id/menu_rotate"
-        android:title="@string/playlists"
-        app:showAsAction="never">
-        <menu>
-            <item
-                android:id="@+id/remove_current"
-                android:title="@string/remove_current_song"
-                app:showAsAction="never"/>
-            <item
-                android:id="@+id/add_folder_to_playlist"
-                android:title="@string/add_folder_to_playlist"
-                app:showAsAction="never"/>
-            <item
-                android:id="@+id/add_file_to_playlist"
-                android:title="@string/add_file_to_playlist"
-                app:showAsAction="never"/>
-            <item
-                android:id="@+id/create_playlist_from_folder"
-                android:title="@string/create_playlist_from_folder"
-                app:showAsAction="never"/>
-            <item
-                android:id="@+id/remove_playlist"
-                android:title="@string/remove_playlist"
-                app:showAsAction="never"/>
-        </menu>
-    </item>
+        app:showAsAction="never" />
     <item
         android:id="@+id/settings"
         android:title="@string/settings"
-        app:showAsAction="never"/>
+        app:showAsAction="never" />
     <item
         android:id="@+id/about"
         android:title="@string/about"
-        app:showAsAction="never"/>
+        app:showAsAction="never" />
 </menu>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/album_frame"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="@drawable/selector">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/album_holder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/normal_margin">
+
+        <ImageView
+            android:id="@+id/album_image"
+            android:layout_width="@dimen/artist_image_size"
+            android:layout_height="@dimen/artist_image_size"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.simplemobiletools.commons.views.MyTextView
+            android:id="@+id/album_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:ellipsize="end"
+            android:gravity="start"
+            android:maxLines="3"
+            android:paddingStart="@dimen/activity_margin"
+            android:text="@string/text_color"
+            android:textSize="@dimen/bigger_text_size"
+            app:layout_constraintBottom_toBottomOf="@+id/album_image"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/album_image"
+            app:layout_constraintTop_toTopOf="@+id/album_image" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

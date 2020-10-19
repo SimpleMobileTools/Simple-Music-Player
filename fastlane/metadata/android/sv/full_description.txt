@@ -1,6 +1,6 @@
-En musikspelare som du enkelt styr från statusfältet, en widget på startskärmen eller knapparna på ditt headset. Du kan ändra Equalizern och sortera låtarna efter Titel eller Artist. Du kan inte filtrera efter artist eller album ännu, men håll ögonen öppna!
+En musikspelare som du enkelt styr från statusfältet, en gränssnittskomponent på startskärmen eller knapparna på din mikrofonlur. Du kan ändra Equalizern och sortera låtarna efter titel eller artist. Du kan inte filtrera efter artist eller album ännu, men håll ögonen öppna!
 
-Den har en widget med anpassningsbar textfärg, bakgrundsfärg och bakgrundsgenomskinlighet.
+Den har en gränssnittskomponent med anpassningsbar textfärg, bakgrundsfärg och bakgrundsgenomskinlighet.
 
 Innehåller ingen reklam eller onödiga behörigheter. Den har helt öppen källkod och anpassningsbara färger.
 

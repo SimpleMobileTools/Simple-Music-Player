@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/settings_scrollview"
     android:layout_width="match_parent"
@@ -29,7 +28,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:paddingStart="@dimen/medium_margin"
-                android:text="@string/purchase_simple_thank_you"/>
+                android:text="@string/purchase_simple_thank_you" />
 
         </RelativeLayout>
 
@@ -50,7 +49,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:paddingStart="@dimen/medium_margin"
-                android:text="@string/customize_colors"/>
+                android:text="@string/customize_colors" />
 
         </RelativeLayout>
 
@@ -71,28 +70,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:paddingStart="@dimen/medium_margin"
-                android:text="@string/customize_widget_colors"/>
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/settings_manage_playlists_holder"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/medium_margin"
-            android:background="?attr/selectableItemBackground"
-            android:paddingLeft="@dimen/normal_margin"
-            android:paddingTop="@dimen/activity_margin"
-            android:paddingRight="@dimen/normal_margin"
-            android:paddingBottom="@dimen/activity_margin">
-
-            <com.simplemobiletools.commons.views.MyTextView
-                android:id="@+id/settings_manage_playlists"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:paddingStart="@dimen/medium_margin"
-                android:text="@string/manage_playlists"/>
+                android:text="@string/customize_widget_colors" />
 
         </RelativeLayout>
 
@@ -115,33 +93,9 @@
                 android:clickable="false"
                 android:paddingStart="@dimen/medium_margin"
                 android:text="@string/use_english_language"
-                app:switchPadding="@dimen/medium_margin"/>
+                app:switchPadding="@dimen/medium_margin" />
 
         </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/settings_show_album_cover_holder"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/medium_margin"
-            android:background="?attr/selectableItemBackground"
-            android:paddingLeft="@dimen/normal_margin"
-            android:paddingTop="@dimen/activity_margin"
-            android:paddingRight="@dimen/normal_margin"
-            android:paddingBottom="@dimen/activity_margin">
-
-            <com.simplemobiletools.commons.views.MySwitchCompat
-                android:id="@+id/settings_show_album_cover"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@null"
-                android:clickable="false"
-                android:paddingStart="@dimen/medium_margin"
-                android:text="@string/show_album_cover"
-                app:switchPadding="@dimen/medium_margin"/>
-
-        </RelativeLayout>
-
 
         <RelativeLayout
             android:id="@+id/settings_swap_prev_next_holder"
@@ -161,7 +115,7 @@
                 android:background="@null"
                 android:clickable="false"
                 android:paddingStart="@dimen/medium_margin"
-                android:text="@string/swap_prev_next"/>
+                android:text="@string/swap_prev_next" />
 
         </RelativeLayout>
 
@@ -184,7 +138,7 @@
                 android:layout_toStartOf="@+id/settings_equalizer"
                 android:paddingLeft="@dimen/medium_margin"
                 android:paddingRight="@dimen/medium_margin"
-                android:text="@string/equalizer"/>
+                android:text="@string/equalizer" />
 
             <com.simplemobiletools.commons.views.MyTextView
                 android:id="@+id/settings_equalizer"
@@ -193,7 +147,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_marginEnd="@dimen/medium_margin"
                 android:background="@null"
-                android:clickable="false"/>
+                android:clickable="false" />
 
         </RelativeLayout>
 
@@ -216,7 +170,7 @@
                 android:layout_toStartOf="@+id/settings_show_filename"
                 android:paddingLeft="@dimen/medium_margin"
                 android:paddingRight="@dimen/medium_margin"
-                android:text="@string/show_filename"/>
+                android:text="@string/show_filename" />
 
             <com.simplemobiletools.commons.views.MyTextView
                 android:id="@+id/settings_show_filename"
@@ -225,7 +179,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_marginEnd="@dimen/small_margin"
                 android:background="@null"
-                android:clickable="false"/>
+                android:clickable="false" />
 
         </RelativeLayout>
     </LinearLayout>

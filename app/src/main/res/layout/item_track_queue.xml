@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/track_queue_frame"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="@drawable/selector"
+    android:paddingStart="@dimen/normal_margin"
+    android:paddingTop="@dimen/activity_margin"
+    android:paddingEnd="@dimen/medium_margin"
+    android:paddingBottom="@dimen/activity_margin">
+
+    <ImageView
+        android:id="@+id/track_queue_image"
+        android:layout_width="@dimen/song_image_size"
+        android:layout_height="@dimen/song_image_size"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.simplemobiletools.commons.views.MyTextView
+        android:id="@+id/track_queue_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:paddingStart="@dimen/normal_margin"
+        android:paddingEnd="@dimen/activity_margin"
+        android:textSize="@dimen/bigger_text_size"
+        app:flow_verticalAlign="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/track_queue_duration"
+        app:layout_constraintStart_toEndOf="@+id/track_queue_image"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Track title" />
+
+    <com.simplemobiletools.commons.views.MyTextView
+        android:id="@+id/track_queue_duration"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="@dimen/medium_margin"
+        android:textSize="@dimen/bigger_text_size"
+        app:flow_verticalAlign="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/track_queue_drag_handle"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="3:45" />
+
+    <ImageView
+        android:id="@+id/track_queue_drag_handle"
+        android:layout_width="@dimen/song_image_size"
+        android:layout_height="@dimen/song_image_size"
+        android:padding="@dimen/medium_margin"
+        android:src="@drawable/ic_drag_handle_vector"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

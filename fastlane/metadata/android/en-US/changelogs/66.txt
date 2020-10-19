@@ -1,0 +1,4 @@
+ * Made the widget nicer and more reliable
+ * Added many UI improvements
+ * Always skip by 10 seconds at pressing the current and max duration
+ * Many other improvements here and there

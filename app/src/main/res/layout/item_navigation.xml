@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_holder"
     android:layout_width="match_parent"
@@ -18,7 +17,7 @@
         android:paddingLeft="@dimen/activity_margin"
         android:paddingRight="@dimen/activity_margin"
         android:textSize="@dimen/big_text_size"
-        tools:text="Song title"/>
+        tools:text="Song title" />
 
     <com.simplemobiletools.commons.views.MyTextView
         android:id="@+id/song_info_artist"
@@ -31,7 +30,7 @@
         android:paddingLeft="@dimen/activity_margin"
         android:paddingRight="@dimen/activity_margin"
         android:textSize="@dimen/bigger_text_size"
-        tools:text="Song artist"/>
+        tools:text="Song artist" />
 
     <LinearLayout
         android:id="@+id/song_info_controls"
@@ -42,58 +41,58 @@
 
         <ImageView
             android:id="@+id/shuffle_btn"
-            android:layout_width="@dimen/button_size"
-            android:layout_height="@dimen/button_size"
+            android:layout_width="@dimen/normal_icon_size"
+            android:layout_height="@dimen/normal_icon_size"
             android:layout_weight="1"
             android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/enable_shuffle"
             android:paddingTop="@dimen/small_margin"
             android:paddingBottom="@dimen/small_margin"
-            android:src="@drawable/ic_shuffle_vector"
-            android:contentDescription="@string/enable_shuffle"/>
+            android:src="@drawable/ic_shuffle_vector" />
 
         <ImageView
             android:id="@+id/previous_btn"
-            android:layout_width="@dimen/button_size"
-            android:layout_height="@dimen/button_size"
+            android:layout_width="@dimen/normal_icon_size"
+            android:layout_height="@dimen/normal_icon_size"
             android:layout_weight="1"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:paddingTop="@dimen/small_margin"
-            android:paddingBottom="@dimen/small_margin"
-            android:src="@drawable/ic_previous_vector"
-            android:contentDescription="@string/previous"/>
+            android:contentDescription="@string/previous"
+            android:paddingTop="@dimen/medium_margin"
+            android:paddingBottom="@dimen/medium_margin"
+            android:src="@drawable/ic_previous_vector" />
 
         <ImageView
             android:id="@+id/play_pause_btn"
-            android:layout_width="@dimen/button_size"
-            android:layout_height="@dimen/button_size"
+            android:layout_width="@dimen/normal_icon_size"
+            android:layout_height="@dimen/normal_icon_size"
             android:layout_weight="1"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:paddingTop="@dimen/small_margin"
-            android:paddingBottom="@dimen/small_margin"
-            android:src="@drawable/ic_play_vector"
-            android:contentDescription="@string/playpause"/>
+            android:contentDescription="@string/playpause"
+            android:paddingTop="@dimen/medium_margin"
+            android:paddingBottom="@dimen/medium_margin"
+            android:src="@drawable/ic_play_vector" />
 
         <ImageView
             android:id="@+id/next_btn"
-            android:layout_width="@dimen/button_size"
-            android:layout_height="@dimen/button_size"
+            android:layout_width="@dimen/normal_icon_size"
+            android:layout_height="@dimen/normal_icon_size"
             android:layout_weight="1"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:paddingTop="@dimen/small_margin"
-            android:paddingBottom="@dimen/small_margin"
-            android:src="@drawable/ic_next_vector"
-            android:contentDescription="@string/next"/>
+            android:contentDescription="@string/next"
+            android:paddingTop="@dimen/medium_margin"
+            android:paddingBottom="@dimen/medium_margin"
+            android:src="@drawable/ic_next_vector" />
 
         <ImageView
             android:id="@+id/repeat_btn"
             style="@style/MyTransparentButton"
-            android:layout_width="@dimen/button_size"
-            android:layout_height="@dimen/button_size"
+            android:layout_width="@dimen/normal_icon_size"
+            android:layout_height="@dimen/normal_icon_size"
             android:layout_weight="1"
+            android:contentDescription="@string/enable_song_repetition"
             android:paddingTop="@dimen/small_margin"
             android:paddingBottom="@dimen/small_margin"
-            android:src="@drawable/ic_repeat_vector"
-            android:contentDescription="@string/enable_song_repetition"/>
+            android:src="@drawable/ic_repeat_vector" />
 
     </LinearLayout>
 
@@ -107,21 +106,21 @@
         android:background="?attr/selectableItemBackgroundBorderless"
         android:gravity="center_vertical"
         android:maxLines="1"
-        android:paddingLeft="@dimen/normal_margin"
-        android:paddingRight="@dimen/medium_margin"
-        tools:text="00:00"/>
+        android:paddingStart="@dimen/normal_margin"
+        android:paddingEnd="@dimen/medium_margin"
+        tools:text="00:00" />
 
     <com.simplemobiletools.commons.views.MySeekBar
         android:id="@+id/song_progressbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/song_info_controls"
-        android:layout_toLeftOf="@+id/song_progress_max"
-        android:layout_toRightOf="@+id/song_progress_current"
+        android:layout_toStartOf="@+id/song_progress_max"
+        android:layout_toEndOf="@+id/song_progress_current"
         android:clickable="true"
         android:focusable="true"
         android:paddingTop="@dimen/normal_margin"
-        android:paddingBottom="@dimen/medium_margin"/>
+        android:paddingBottom="@dimen/medium_margin" />
 
     <com.simplemobiletools.commons.views.MyTextView
         android:id="@+id/song_progress_max"
@@ -130,12 +129,12 @@
         android:layout_below="@+id/song_info_controls"
         android:layout_alignTop="@+id/song_progressbar"
         android:layout_alignBottom="@+id/song_progressbar"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:gravity="center_vertical"
         android:maxLines="1"
-        android:paddingLeft="@dimen/medium_margin"
-        android:paddingRight="@dimen/normal_margin"
-        tools:text="00:00"/>
+        android:paddingStart="@dimen/medium_margin"
+        android:paddingEnd="@dimen/normal_margin"
+        tools:text="00:00" />
 
 </RelativeLayout>

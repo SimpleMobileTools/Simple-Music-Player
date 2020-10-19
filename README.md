@@ -1,5 +1,5 @@
 # Simple Music Player
-<img alt="Logo" src="app/src/main/res/mipmap-xxxhdpi/ic_launcher.png" width="80">
+<img alt="Logo" src="fastlane/metadata/android/en-US/images/icon.png" width="120" />
 
 A clean music player with a customizable widget.
 

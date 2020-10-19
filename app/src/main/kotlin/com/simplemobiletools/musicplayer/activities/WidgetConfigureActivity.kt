@@ -6,11 +6,10 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.widget.RemoteViews
-import android.widget.SeekBar
 import com.simplemobiletools.commons.dialogs.ColorPickerDialog
 import com.simplemobiletools.commons.extensions.adjustAlpha
 import com.simplemobiletools.commons.extensions.applyColorFilter
-import com.simplemobiletools.commons.extensions.setBackgroundColor
+import com.simplemobiletools.commons.extensions.onSeekBarChangeListener
 import com.simplemobiletools.commons.extensions.setFillWithStroke
 import com.simplemobiletools.commons.helpers.IS_CUSTOMIZING_COLORS
 import com.simplemobiletools.musicplayer.R
@@ -18,15 +17,16 @@ import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.helpers.MyWidgetProvider
 import com.simplemobiletools.musicplayer.services.MusicService
 import kotlinx.android.synthetic.main.widget.*
+import kotlinx.android.synthetic.main.widget.view.*
 import kotlinx.android.synthetic.main.widget_config.*
 import kotlinx.android.synthetic.main.widget_controls.*
 
 class WidgetConfigureActivity : SimpleActivity() {
-    private var mBgAlpha = 0.0f
+    private var mBgAlpha = 0f
     private var mWidgetId = 0
     private var mBgColor = 0
-    private var mBgColorWithoutTransparency = 0
     private var mTextColor = 0
+    private var mBgColorWithoutTransparency = 0
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         useDynamicTheme = false
@@ -46,7 +46,7 @@ class WidgetConfigureActivity : SimpleActivity() {
         config_bg_color.setOnClickListener { pickBackgroundColor() }
         config_text_color.setOnClickListener { pickTextColor() }
 
-        val currSong = MusicService.mCurrSong
+        val currSong = MusicService.mCurrTrack
         if (currSong != null) {
             song_info_title.text = currSong.title
             song_info_artist.text = currSong.artist
@@ -55,17 +55,15 @@ class WidgetConfigureActivity : SimpleActivity() {
 
     private fun initVariables() {
         mBgColor = config.widgetBgColor
-        if (mBgColor == 1) {
-            mBgColor = Color.BLACK
-            mBgAlpha = .2f
-        } else {
-            mBgAlpha = Color.alpha(mBgColor) / 255.toFloat()
-        }
+        mBgAlpha = Color.alpha(mBgColor) / 255.toFloat()
 
         mBgColorWithoutTransparency = Color.rgb(Color.red(mBgColor), Color.green(mBgColor), Color.blue(mBgColor))
-        config_bg_seekbar.setOnSeekBarChangeListener(seekbarChangeListener)
         config_bg_seekbar.progress = (mBgAlpha * 100).toInt()
         updateBackgroundColor()
+        config_bg_seekbar.onSeekBarChangeListener {
+            mBgAlpha = it / 100.toFloat()
+            updateBackgroundColor()
+        }
 
         mTextColor = config.widgetTextColor
         updateTextColor()
@@ -73,8 +71,10 @@ class WidgetConfigureActivity : SimpleActivity() {
 
     private fun saveConfig() {
         val appWidgetManager = AppWidgetManager.getInstance(this)
-        val views = RemoteViews(packageName, R.layout.widget)
-        views.setBackgroundColor(R.id.widget_holder, mBgColor)
+        val views = RemoteViews(packageName, R.layout.widget).apply {
+            applyColorFilter(R.id.widget_background, mBgColor)
+        }
+
         appWidgetManager.updateAppWidget(mWidgetId, views)
 
         storeWidgetColors()
@@ -107,7 +107,7 @@ class WidgetConfigureActivity : SimpleActivity() {
 
     private fun updateBackgroundColor() {
         mBgColor = mBgColorWithoutTransparency.adjustAlpha(mBgAlpha)
-        config_player.setBackgroundColor(mBgColor)
+        config_player.widget_background.applyColorFilter(mBgColor)
         config_save.setBackgroundColor(mBgColor)
         config_bg_color.setFillWithStroke(mBgColor, Color.BLACK)
     }
@@ -139,21 +139,6 @@ class WidgetConfigureActivity : SimpleActivity() {
                 mTextColor = color
                 updateTextColor()
             }
-        }
-    }
-
-    private val seekbarChangeListener = object : SeekBar.OnSeekBarChangeListener {
-        override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
-            mBgAlpha = progress.toFloat() / 100.toFloat()
-            updateBackgroundColor()
-        }
-
-        override fun onStartTrackingTouch(seekBar: SeekBar) {
-
-        }
-
-        override fun onStopTrackingTouch(seekBar: SeekBar) {
-
         }
     }
 }
