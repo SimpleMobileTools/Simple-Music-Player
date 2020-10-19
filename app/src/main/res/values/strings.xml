@@ -50,12 +50,13 @@
 
     <!-- Artists -->
     <string name="artists">Artists</string>
-    <plurals name="albums">
+    <string name="albums">Albums</string>
+    <plurals name="albums_plural">
         <item quantity="one">%d Album</item>
         <item quantity="other">%d Albums</item>
     </plurals>
 
-    <plurals name="tracks">
+    <plurals name="tracks_plural">
         <item quantity="one">%d Track</item>
         <item quantity="other">%d Tracks</item>
     </plurals>

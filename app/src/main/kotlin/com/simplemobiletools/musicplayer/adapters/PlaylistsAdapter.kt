@@ -147,7 +147,7 @@ class PlaylistsAdapter(activity: SimpleActivity, val playlists: ArrayList<Playli
             playlist_title.text = playlist.title
             playlist_title.setTextColor(textColor)
 
-            val tracks = resources.getQuantityString(R.plurals.tracks, playlist.trackCnt, playlist.trackCnt)
+            val tracks = resources.getQuantityString(R.plurals.tracks_plural, playlist.trackCnt, playlist.trackCnt)
             playlist_tracks.text = tracks
             playlist_tracks.setTextColor(textColor)
         }

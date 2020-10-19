@@ -22,7 +22,7 @@ import com.simplemobiletools.musicplayer.helpers.PROGRESS
 import com.simplemobiletools.musicplayer.helpers.SET_PROGRESS
 import com.simplemobiletools.musicplayer.models.Track
 import com.simplemobiletools.musicplayer.services.MusicService
-import kotlinx.android.synthetic.main.fragment_songs.view.*
+import kotlinx.android.synthetic.main.fragment_old_songs.view.*
 import kotlinx.android.synthetic.main.item_navigation.view.*
 import java.util.*
 

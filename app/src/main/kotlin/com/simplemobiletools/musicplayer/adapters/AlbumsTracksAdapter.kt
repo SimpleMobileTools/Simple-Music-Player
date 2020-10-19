@@ -30,8 +30,8 @@ import kotlinx.android.synthetic.main.item_song.view.*
 import java.util.*
 
 // we show both albums and individual tracks here
-class AlbumsAdapter(activity: SimpleActivity, val items: ArrayList<ListItem>, recyclerView: MyRecyclerView, fastScroller: FastScroller,
-                    itemClick: (Any) -> Unit) : MyRecyclerViewAdapter(activity, recyclerView, fastScroller, itemClick) {
+class AlbumsTracksAdapter(activity: SimpleActivity, val items: ArrayList<ListItem>, recyclerView: MyRecyclerView, fastScroller: FastScroller,
+                          itemClick: (Any) -> Unit) : MyRecyclerViewAdapter(activity, recyclerView, fastScroller, itemClick) {
 
     private val ITEM_SECTION = 0
     private val ITEM_ALBUM = 1
@@ -44,7 +44,7 @@ class AlbumsAdapter(activity: SimpleActivity, val items: ArrayList<ListItem>, re
         setupDragListener(true)
     }
 
-    override fun getActionMenuId() = R.menu.cab_albums
+    override fun getActionMenuId() = R.menu.cab_albums_tracks
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layout = when (viewType) {

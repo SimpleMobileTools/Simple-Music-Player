@@ -7,7 +7,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.simplemobiletools.commons.extensions.getFormattedDuration
 import com.simplemobiletools.musicplayer.R
-import com.simplemobiletools.musicplayer.adapters.AlbumsAdapter
+import com.simplemobiletools.musicplayer.adapters.AlbumsTracksAdapter
 import com.simplemobiletools.musicplayer.extensions.getAlbumTracksSync
 import com.simplemobiletools.musicplayer.extensions.getAlbums
 import com.simplemobiletools.musicplayer.extensions.resetQueueItems
@@ -40,7 +40,7 @@ class AlbumsActivity : SimpleActivity() {
 
         getAlbums(artist) { albums ->
             val listItems = ArrayList<ListItem>()
-            val albumsSectionLabel = resources.getQuantityString(R.plurals.albums, albums.size, albums.size)
+            val albumsSectionLabel = resources.getQuantityString(R.plurals.albums_plural, albums.size, albums.size)
             listItems.add(AlbumSection(albumsSectionLabel))
             listItems.addAll(albums)
 
@@ -53,13 +53,13 @@ class AlbumsActivity : SimpleActivity() {
                 tracksToAdd.addAll(tracks)
             }
 
-            var tracksSectionLabel = resources.getQuantityString(R.plurals.tracks, tracksToAdd.size, tracksToAdd.size)
+            var tracksSectionLabel = resources.getQuantityString(R.plurals.tracks_plural, tracksToAdd.size, tracksToAdd.size)
             tracksSectionLabel += " • ${trackFullDuration.getFormattedDuration(true)}"
             listItems.add(AlbumSection(tracksSectionLabel))
             listItems.addAll(tracksToAdd)
 
             runOnUiThread {
-                val adapter = AlbumsAdapter(this, listItems, albums_list, albums_fastscroller) {
+                val adapter = AlbumsTracksAdapter(this, listItems, albums_list, albums_fastscroller) {
                     if (it is Album) {
                         Intent(this, TracksActivity::class.java).apply {
                             putExtra(ALBUM, Gson().toJson(it))

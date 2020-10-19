@@ -112,8 +112,8 @@ class ArtistsAdapter(activity: SimpleActivity, val artists: ArrayList<Artist>, r
             artist_title.text = artist.title
             artist_title.setTextColor(textColor)
 
-            val albums = resources.getQuantityString(R.plurals.albums, artist.albumCnt, artist.albumCnt)
-            val tracks = resources.getQuantityString(R.plurals.tracks, artist.trackCnt, artist.trackCnt)
+            val albums = resources.getQuantityString(R.plurals.albums_plural, artist.albumCnt, artist.albumCnt)
+            val tracks = resources.getQuantityString(R.plurals.tracks_plural, artist.trackCnt, artist.trackCnt)
             artist_albums_tracks.text = "$albums, $tracks"
             artist_albums_tracks.setTextColor(textColor)
 
