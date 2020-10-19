@@ -325,3 +325,13 @@ fun Context.addQueueItems(newTracks: List<Track>, callback: () -> Unit) {
         callback()
     }
 }
+
+fun Context.removeQueueItems(tracks: List<Track>, callback: () -> Unit) {
+    ensureBackgroundThread {
+        tracks.forEach {
+            queueDAO.removeQueueItem(it.id)
+            MusicService.mTracks.remove(it)
+            callback()
+        }
+    }
+}

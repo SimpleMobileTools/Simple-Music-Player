@@ -1,5 +1,6 @@
 package com.simplemobiletools.musicplayer.adapters
 
+import android.content.Intent
 import android.view.Menu
 import android.view.MotionEvent
 import android.view.View
@@ -22,7 +23,11 @@ import com.simplemobiletools.commons.views.FastScroller
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
+import com.simplemobiletools.musicplayer.extensions.removeQueueItems
 import com.simplemobiletools.musicplayer.extensions.sendIntent
+import com.simplemobiletools.musicplayer.helpers.FINISH
+import com.simplemobiletools.musicplayer.helpers.PLAY_TRACK
+import com.simplemobiletools.musicplayer.helpers.TRACK_ID
 import com.simplemobiletools.musicplayer.helpers.UPDATE_NEXT_TRACK
 import com.simplemobiletools.musicplayer.models.Track
 import com.simplemobiletools.musicplayer.services.MusicService
@@ -65,7 +70,15 @@ class QueueAdapter(activity: SimpleActivity, val items: ArrayList<Track>, recycl
 
     override fun prepareActionMode(menu: Menu) {}
 
-    override fun actionItemPressed(id: Int) {}
+    override fun actionItemPressed(id: Int) {
+        if (selectedKeys.isEmpty()) {
+            return
+        }
+
+        when (id) {
+            R.id.cab_remove_from_queue -> removeFromQueue()
+        }
+    }
 
     override fun getSelectableItemCount() = items.size
 
@@ -78,6 +91,32 @@ class QueueAdapter(activity: SimpleActivity, val items: ArrayList<Track>, recycl
     override fun onActionModeCreated() {}
 
     override fun onActionModeDestroyed() {}
+
+    private fun removeFromQueue() {
+        val tracks = getSelectedTracks()
+        activity.removeQueueItems(tracks) {
+            activity.runOnUiThread {
+                finishActMode()
+                notifyDataSetChanged()
+
+                if (tracks.contains(MusicService.mCurrTrack)) {
+                    if (MusicService.mTracks.isEmpty()) {
+                        activity.sendIntent(FINISH)
+                        activity.finish()
+                        return@runOnUiThread
+                    }
+
+                    Intent(activity, MusicService::class.java).apply {
+                        action = PLAY_TRACK
+                        putExtra(TRACK_ID, (MusicService.mTracks.first()).id)
+                        activity.startService(this)
+                    }
+                }
+            }
+        }
+    }
+
+    private fun getSelectedTracks(): List<Track> = items.filter { selectedKeys.contains(it.id.toInt()) }.toList()
 
     private fun setupView(view: View, track: Track, holder: ViewHolder) {
         view.apply {

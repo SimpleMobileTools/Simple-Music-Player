@@ -23,6 +23,9 @@ interface QueueItemsDao {
     @Query("UPDATE queue_items SET track_order = :order WHERE track_id = :trackId")
     fun setOrder(trackId: Long, order: Int)
 
+    @Query("DELETE FROM queue_items WHERE track_id = :trackId")
+    fun removeQueueItem(trackId: Long)
+
     @Query("DELETE FROM queue_items")
     fun deleteAllItems()
 }

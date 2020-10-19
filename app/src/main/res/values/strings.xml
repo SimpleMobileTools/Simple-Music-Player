@@ -64,6 +64,7 @@
     <string name="next_track">Next:</string>
     <string name="track_queue">Track queue</string>
     <string name="add_to_queue">Add to queue</string>
+    <string name="remove_from_queue">Remove from queue</string>
 
     <!-- Settings -->
     <string name="equalizer">Equalizer</string>
