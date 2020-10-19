@@ -56,33 +56,33 @@
 
     <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
     <!-- App title has to have less than 50 characters. If you cannot squeeze it, just remove a part of it -->
-    <string name="app_title">Simple Music Player - A cool player for your songs</string>
+    <string name="app_title">Simple Music Player - Reprodutor de músicas</string>
     <!-- Short description has to have less than 80 chars -->
-    <string name="app_short_description">A clean music player with a customizable widget, stylish interface and no ads.</string>
+    <string name="app_short_description">Reprodutor de músicas simples, com widget e sem anúncios.</string>
     <string name="app_long_description">
-        A simple music player easily controllable from the status bar, home screen widget or by hardware buttons on your headset. It provides all expected functions like sorting in various ways as well as changing the Equalizer.  Listen to your favorite mp3, other songs or podcasts with this free beautiful music player.
+        Um reprodutor que pode ser controlado através da barra de estado, do widget ou pelos botões dos seus periféricos. Disponibiliza todas as funções que se esperam de uma aplicação deste tipo tais como ordenação de faixas, equalizador... Escute os seus mp3, outros ficheiros ou podcasts com este belo reprodutor.
 
-        It offers exclusive extras like Search and showing Album Art, a sleep timer and many other settings. This elegant music player allows you creating and managing handy playlists as you desire.
+        Permite a pesquisa de faixas, a exibição da imagem dos álbuns, um temporizador e muito mais. Este elegante reprodutor permite-lhe criar e gerir listas de reprodução ao seu gosto.
 
-        Playlists are fully supported. You can add either individual files, or whole folders. If you won\'t like a file, you can either just remove it from a playlist, or delete the actual file altogether.
+        Nas listas de reprodução, pode adicionar ficheiros ou pastas. Se deixar de gostar de uma música, pode remover o ficheiro da lista de reprodução e/ou apagar o ficheiro do armazenamento.
 
-        Comes with a handy sleep timer so that you can reliably delay the time of the app shutting down.
+        Disponibiliza um temporizador para que a aplicação se desligue nos termos por si desejados.
 
-        Supports both shuffle and repeating a particular song, as well as skipping and fast forwarding.
+        Também consegue baralhar e/ou repetir faixas bem como avanço e recuo rápido.
 
-        Available in many different languages, offers multiple different equalizers.
+        Está disponível em diversos idiomas e disponibiliza diversas predefinições para o equalizador.
 
-        Easily check a file properties like the size, duration, last modified etc.
+        Verificação facilitada das propriedades dos ficheiros tais como tamanho, duração, data de modificação...
 
-        Modify file EXIF data like the song title and artist.
+        Possibilita a edição dos dados EXIF tais como título e artista da faixa.
 
-        Quickly share files with your friends on social networks, emails, or anywhere you would like.
+        Com esta aplicação também consegue partilhar as faixas e as listas de reprodução com os seus amigos nas redes sociais, por e-mail ou outras formas..
 
-        This stylish music player contains a widget with customizable text color, alpha and the color of the background for easy access and control.
+        Pode criar um widget personalizado para acesso e controlo facilitado no ecrã.
 
-        It properly handles third party intents too for playing individual audio files so it can help at setting ringtones too.
+        Efetue a gestão de ações de aplicações de terceiros para a reprodução de ficheiros e definição dos tons de toque.
 
-        It comes with material design and dark theme by default, provides great user experience for easy usage. The lack of internet access gives you more privacy, security and stability than other apps.
+        A interface é em material design e tema escuro por definição, mas pode alterar os temas a seu gosto. Não requer o acesso a Internet o que lhe confere mais privacidade, segurança e estabilidade.
 
         Não contém anúncios nem permissões desnecessárias. Disponibiliza um tema escuro e é totalmente \'open source\'.
 
