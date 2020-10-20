@@ -41,4 +41,13 @@ class ArtistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
     override fun finishActMode() {
         (artists_list.adapter as? MyRecyclerViewAdapter)?.finishActMode()
     }
+
+    override fun onSearchQueryChanged(text: String) {
+    }
+
+    override fun onSearchOpened() {
+    }
+
+    override fun onSearchClosed() {
+    }
 }

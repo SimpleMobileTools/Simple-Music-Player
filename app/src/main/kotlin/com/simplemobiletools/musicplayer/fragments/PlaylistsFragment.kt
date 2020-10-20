@@ -48,4 +48,13 @@ class PlaylistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPa
     override fun finishActMode() {
         (playlists_list.adapter as? MyRecyclerViewAdapter)?.finishActMode()
     }
+
+    override fun onSearchQueryChanged(text: String) {
+    }
+
+    override fun onSearchOpened() {
+    }
+
+    override fun onSearchClosed() {
+    }
 }

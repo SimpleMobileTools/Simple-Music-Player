@@ -9,4 +9,10 @@ abstract class MyViewPagerFragment(context: Context, attributeSet: AttributeSet)
     abstract fun setupFragment(activity: SimpleActivity)
 
     abstract fun finishActMode()
+
+    abstract fun onSearchQueryChanged(text: String)
+
+    abstract fun onSearchOpened()
+
+    abstract fun onSearchClosed()
 }

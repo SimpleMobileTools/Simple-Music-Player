@@ -53,4 +53,13 @@ class AlbumsFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
     override fun finishActMode() {
         (albums_list.adapter as? MyRecyclerViewAdapter)?.finishActMode()
     }
+
+    override fun onSearchQueryChanged(text: String) {
+    }
+
+    override fun onSearchOpened() {
+    }
+
+    override fun onSearchClosed() {
+    }
 }

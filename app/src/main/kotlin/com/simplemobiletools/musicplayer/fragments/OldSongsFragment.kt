@@ -123,4 +123,13 @@ class OldSongsFragment(context: Context, attributeSet: AttributeSet) : MyViewPag
             }
         })
     }
+
+    override fun onSearchQueryChanged(text: String) {
+    }
+
+    override fun onSearchOpened() {
+    }
+
+    override fun onSearchClosed() {
+    }
 }

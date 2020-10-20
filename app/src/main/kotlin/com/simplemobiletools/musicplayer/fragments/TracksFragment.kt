@@ -63,4 +63,13 @@ class TracksFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
     override fun finishActMode() {
         (tracks_list.adapter as? MyRecyclerViewAdapter)?.finishActMode()
     }
+
+    override fun onSearchQueryChanged(text: String) {
+    }
+
+    override fun onSearchOpened() {
+    }
+
+    override fun onSearchClosed() {
+    }
 }
