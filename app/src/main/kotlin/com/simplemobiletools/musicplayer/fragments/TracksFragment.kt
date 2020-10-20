@@ -13,6 +13,7 @@ import com.simplemobiletools.musicplayer.adapters.TracksAdapter
 import com.simplemobiletools.musicplayer.extensions.getAlbumTracksSync
 import com.simplemobiletools.musicplayer.extensions.getAlbumsSync
 import com.simplemobiletools.musicplayer.extensions.getArtistsSync
+import com.simplemobiletools.musicplayer.extensions.resetQueueItems
 import com.simplemobiletools.musicplayer.helpers.RESTART_PLAYER
 import com.simplemobiletools.musicplayer.helpers.TRACK
 import com.simplemobiletools.musicplayer.models.Album
@@ -37,10 +38,12 @@ class TracksFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
 
             activity.runOnUiThread {
                 val adapter = TracksAdapter(activity, tracks, tracks_list, tracks_fastscroller) {
-                    Intent(activity, TrackActivity::class.java).apply {
-                        putExtra(TRACK, Gson().toJson(it))
-                        putExtra(RESTART_PLAYER, true)
-                        activity.startActivity(this)
+                    activity.resetQueueItems(tracks) {
+                        Intent(activity, TrackActivity::class.java).apply {
+                            putExtra(TRACK, Gson().toJson(it))
+                            putExtra(RESTART_PLAYER, true)
+                            activity.startActivity(this)
+                        }
                     }
                 }.apply {
                     tracks_list.adapter = this
