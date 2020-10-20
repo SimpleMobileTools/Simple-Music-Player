@@ -75,12 +75,6 @@ class MainActivity : SimpleActivity() {
         sleep_timer_holder.background = ColorDrawable(config.backgroundColor)
         sleep_timer_stop.applyColorFilter(config.textColor)
         updateCurrentTrackBar()
-        invalidateOptionsMenu()
-    }
-
-    override fun onStop() {
-        super.onStop()
-        searchMenuItem?.collapseActionView()
     }
 
     override fun onDestroy() {

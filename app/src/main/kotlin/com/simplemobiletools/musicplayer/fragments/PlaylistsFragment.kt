@@ -5,6 +5,8 @@ import android.content.Intent
 import android.util.AttributeSet
 import com.google.gson.Gson
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
+import com.simplemobiletools.commons.extensions.beGone
+import com.simplemobiletools.commons.extensions.beVisibleIf
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
 import com.simplemobiletools.musicplayer.activities.TracksActivity
@@ -54,6 +56,7 @@ class PlaylistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPa
     override fun onSearchQueryChanged(text: String) {
         val filtered = playlistsIgnoringSearch.filter { it.title.contains(text, true) }.toMutableList() as ArrayList<Playlist>
         (playlists_list.adapter as? PlaylistsAdapter)?.updateItems(filtered, text)
+        playlists_placeholder.beVisibleIf(filtered.isEmpty())
     }
 
     override fun onSearchOpened() {
@@ -62,5 +65,6 @@ class PlaylistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPa
 
     override fun onSearchClosed() {
         (playlists_list.adapter as? PlaylistsAdapter)?.updateItems(playlistsIgnoringSearch)
+        playlists_placeholder.beGone()
     }
 }
