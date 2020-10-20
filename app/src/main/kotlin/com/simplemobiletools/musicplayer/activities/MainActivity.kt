@@ -181,7 +181,11 @@ class MainActivity : SimpleActivity() {
         viewpager.adapter = ViewPagerAdapter(this)
         viewpager.offscreenPageLimit = 3
         viewpager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
-            override fun onPageScrollStateChanged(state: Int) {}
+            override fun onPageScrollStateChanged(state: Int) {
+                if (isSearchOpen) {
+                    searchMenuItem?.collapseActionView()
+                }
+            }
 
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
 
@@ -190,7 +194,6 @@ class MainActivity : SimpleActivity() {
                 getAllFragments().forEach {
                     it?.finishActMode()
                 }
-                invalidateOptionsMenu()
             }
         })
 
