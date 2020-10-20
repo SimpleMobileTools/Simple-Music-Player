@@ -54,9 +54,6 @@ class OldSongAdapter(activity: SimpleActivity, var songs: ArrayList<Track>, val 
     private var navigationViewHolder: NavigationViewHolder? = null
     private var navigationViewHeight = 0
 
-    var isThirdPartyIntent = false
-    private var adjustedPrimaryColor = activity.getAdjustedPrimaryColor()
-
     init {
         setupDragListener(true)
         positionOffset = LIST_HEADERS_COUNT

@@ -16,6 +16,8 @@ import com.simplemobiletools.musicplayer.models.Playlist
 import kotlinx.android.synthetic.main.fragment_playlists.view.*
 
 class PlaylistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPagerFragment(context, attributeSet) {
+    var playlistsIgnoringSearch = ArrayList<Playlist>()
+
     override fun setupFragment(activity: SimpleActivity) {
         ensureBackgroundThread {
             var playlists = activity.playlistDAO.getAll() as ArrayList<Playlist>
@@ -50,11 +52,15 @@ class PlaylistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPa
     }
 
     override fun onSearchQueryChanged(text: String) {
+        val filtered = playlistsIgnoringSearch.filter { it.title.contains(text, true) }.toMutableList() as ArrayList<Playlist>
+        (playlists_list.adapter as? PlaylistsAdapter)?.updateItems(filtered, text)
     }
 
     override fun onSearchOpened() {
+        playlistsIgnoringSearch = (playlists_list?.adapter as? PlaylistsAdapter)?.playlists ?: ArrayList()
     }
 
     override fun onSearchClosed() {
+        (playlists_list.adapter as? PlaylistsAdapter)?.updateItems(playlistsIgnoringSearch)
     }
 }

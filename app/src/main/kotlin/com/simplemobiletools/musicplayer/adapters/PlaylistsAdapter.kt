@@ -5,7 +5,9 @@ import android.view.View
 import android.view.ViewGroup
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
 import com.simplemobiletools.commons.extensions.deleteFiles
+import com.simplemobiletools.commons.extensions.getAdjustedPrimaryColor
 import com.simplemobiletools.commons.extensions.getFilenameFromPath
+import com.simplemobiletools.commons.extensions.highlightTextPart
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.commons.models.FileDirItem
 import com.simplemobiletools.commons.views.FastScroller
@@ -23,8 +25,10 @@ import com.simplemobiletools.musicplayer.models.Playlist
 import kotlinx.android.synthetic.main.item_playlist.view.*
 import java.util.*
 
-class PlaylistsAdapter(activity: SimpleActivity, val playlists: ArrayList<Playlist>, recyclerView: MyRecyclerView, fastScroller: FastScroller,
+class PlaylistsAdapter(activity: SimpleActivity, var playlists: ArrayList<Playlist>, recyclerView: MyRecyclerView, fastScroller: FastScroller,
                        itemClick: (Any) -> Unit) : MyRecyclerViewAdapter(activity, recyclerView, fastScroller, itemClick) {
+
+    private var textToHighlight = ""
 
     init {
         setupDragListener(true)
@@ -133,6 +137,19 @@ class PlaylistsAdapter(activity: SimpleActivity, val playlists: ArrayList<Playli
 
     private fun getItemWithKey(key: Int): Playlist? = playlists.firstOrNull { it.id == key }
 
+    fun updateItems(newItems: ArrayList<Playlist>, highlightText: String = "") {
+        if (newItems.hashCode() != playlists.hashCode()) {
+            playlists = newItems.clone() as ArrayList<Playlist>
+            textToHighlight = highlightText
+            notifyDataSetChanged()
+            finishActMode()
+        } else if (textToHighlight != highlightText) {
+            textToHighlight = highlightText
+            notifyDataSetChanged()
+        }
+        fastScroller?.measureRecyclerView()
+    }
+
     private fun showRenameDialog() {
         NewPlaylistDialog(activity, playlists[getItemKeyPosition(selectedKeys.first())]) {
             activity.runOnUiThread {
@@ -144,7 +161,7 @@ class PlaylistsAdapter(activity: SimpleActivity, val playlists: ArrayList<Playli
     private fun setupView(view: View, playlist: Playlist) {
         view.apply {
             playlist_frame?.isSelected = selectedKeys.contains(playlist.id)
-            playlist_title.text = playlist.title
+            playlist_title.text = if (textToHighlight.isEmpty()) playlist.title else playlist.title.highlightTextPart(textToHighlight, adjustedPrimaryColor)
             playlist_title.setTextColor(textColor)
 
             val tracks = resources.getQuantityString(R.plurals.tracks_plural, playlist.trackCnt, playlist.trackCnt)

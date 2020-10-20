@@ -28,13 +28,15 @@ import com.simplemobiletools.musicplayer.dialogs.SleepTimerCustomDialog
 import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.extensions.queueDAO
 import com.simplemobiletools.musicplayer.extensions.sendIntent
+import com.simplemobiletools.musicplayer.fragments.MyViewPagerFragment
 import com.simplemobiletools.musicplayer.helpers.*
 import com.simplemobiletools.musicplayer.models.Events
 import com.simplemobiletools.musicplayer.services.MusicService
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_albums.*
 import kotlinx.android.synthetic.main.fragment_artists.*
-import kotlinx.android.synthetic.main.fragment_old_songs.*
 import kotlinx.android.synthetic.main.fragment_playlists.*
+import kotlinx.android.synthetic.main.fragment_tracks.*
 import kotlinx.android.synthetic.main.view_current_track_bar.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -70,16 +72,10 @@ class MainActivity : SimpleActivity() {
     override fun onResume() {
         super.onResume()
         updateTextColors(main_holder)
-        getCurrentFragment()?.onResume()
         sleep_timer_holder.background = ColorDrawable(config.backgroundColor)
         sleep_timer_stop.applyColorFilter(config.textColor)
         updateCurrentTrackBar()
         invalidateOptionsMenu()
-    }
-
-    override fun onPause() {
-        super.onPause()
-        getCurrentFragment()?.onPause()
     }
 
     override fun onStop() {
@@ -134,7 +130,7 @@ class MainActivity : SimpleActivity() {
 
                 override fun onQueryTextChange(newText: String): Boolean {
                     if (isSearchOpen) {
-                        getCurrentFragment()?.searchQueryChanged(newText)
+                        getCurrentFragment().onSearchQueryChanged(newText)
                     }
                     return true
                 }
@@ -143,13 +139,13 @@ class MainActivity : SimpleActivity() {
 
         MenuItemCompat.setOnActionExpandListener(searchMenuItem, object : MenuItemCompat.OnActionExpandListener {
             override fun onMenuItemActionExpand(item: MenuItem?): Boolean {
-                getCurrentFragment()?.searchOpened()
+                getCurrentFragment().onSearchOpened()
                 isSearchOpen = true
                 return true
             }
 
             override fun onMenuItemActionCollapse(item: MenuItem?): Boolean {
-                getCurrentFragment()?.searchClosed()
+                getCurrentFragment().onSearchClosed()
                 isSearchOpen = false
                 return true
             }
@@ -218,7 +214,14 @@ class MainActivity : SimpleActivity() {
         viewpager.currentItem = config.lastUsedViewPagerPage
     }
 
-    private fun getCurrentFragment() = songs_fragment_holder
+    private fun getCurrentFragment(): MyViewPagerFragment {
+        return when (viewpager.currentItem) {
+            0 -> playlists_fragment_holder
+            1 -> artists_fragment_holder
+            2 -> albums_fragment_holder
+            else -> tracks_fragment_holder
+        }
+    }
 
     private fun showSortingDialog() {
         ChangeSortingDialog(this) {
