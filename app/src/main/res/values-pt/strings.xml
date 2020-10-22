@@ -24,7 +24,7 @@
     <string name="add_folder_to_playlist">Adicionar pasta à lista de reprodução</string>
     <string name="manage_playlists">Gerir listas de reprodução</string>
     <string name="playlists">Listas de reprodução</string>
-    <string name="create_playlist">Criar lista de reprodução</string>
+    <string name="create_new_playlist">Criar lista de reprodução</string>
     <string name="rename_playlist">Renomear lista de reprodução</string>
     <string name="playlist_name_exists">Já existe uma lista de reprodução com este nome</string>
     <string name="remove_playlist">Remover lista de reprodução</string>
@@ -45,6 +45,29 @@
     <string name="show_filename">Mostrar nome do ficheiro como título da faixa</string>
     <string name="title_is_not_available">Se não existir título</string>
     <string name="show_album_cover">Mostrar imagem do álbum no ecrã principal</string>
+    <string name="all_tracks">All tracks</string>
+    <string name="add_to_playlist">Add to playlist</string>
+
+    <!-- Artists -->
+    <string name="artists">Artists</string>
+    <string name="albums">Albums</string>
+    <plurals name="albums_plural">
+        <item quantity="one">%d Album</item>
+        <item quantity="other">%d Albums</item>
+    </plurals>
+
+    <string name="tracks">Tracks</string>
+    <plurals name="tracks_plural">
+        <item quantity="one">%d Track</item>
+        <item quantity="other">%d Tracks</item>
+    </plurals>
+
+    <!-- Queue -->
+    <string name="next_track">Next:</string>
+    <string name="track_queue">Track queue</string>
+    <string name="add_to_queue">Add to queue</string>
+    <string name="remove_from_queue">Remove from queue</string>
+    <string name="create_playlist_from_queue">Create playlist from queue</string>
 
     <!-- Settings -->
     <string name="equalizer">Equalizador</string>

@@ -24,7 +24,7 @@
     <string name="add_folder_to_playlist">プレイリストにフォルダを追加</string>
     <string name="manage_playlists">プレイリストを管理</string>
     <string name="playlists">プレイリスト</string>
-    <string name="create_playlist">プレイリストを作成</string>
+    <string name="create_new_playlist">プレイリストを作成</string>
     <string name="rename_playlist">プレイリストの名前を変更</string>
     <string name="playlist_name_exists">その名前のプレイリストは既に存在します</string>
     <string name="remove_playlist">プレイリストを削除</string>
@@ -45,6 +45,29 @@
     <string name="show_filename">ファイル名を曲名として表示</string>
     <string name="title_is_not_available">曲名が使用できない場合</string>
     <string name="show_album_cover">メイン画面にアルバムカバーを表示する</string>
+    <string name="all_tracks">All tracks</string>
+    <string name="add_to_playlist">Add to playlist</string>
+
+    <!-- Artists -->
+    <string name="artists">Artists</string>
+    <string name="albums">Albums</string>
+    <plurals name="albums_plural">
+        <item quantity="one">%d Album</item>
+        <item quantity="other">%d Albums</item>
+    </plurals>
+
+    <string name="tracks">Tracks</string>
+    <plurals name="tracks_plural">
+        <item quantity="one">%d Track</item>
+        <item quantity="other">%d Tracks</item>
+    </plurals>
+
+    <!-- Queue -->
+    <string name="next_track">Next:</string>
+    <string name="track_queue">Track queue</string>
+    <string name="add_to_queue">Add to queue</string>
+    <string name="remove_from_queue">Remove from queue</string>
+    <string name="create_playlist_from_queue">Create playlist from queue</string>
 
     <!-- Settings -->
     <string name="equalizer">イコライザー</string>

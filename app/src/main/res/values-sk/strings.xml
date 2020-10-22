@@ -24,7 +24,7 @@
     <string name="add_folder_to_playlist">Pridať priečinok do zoznamu skladieb</string>
     <string name="manage_playlists">Spravovať zoznamy skladieb</string>
     <string name="playlists">Zoznamy skladieb</string>
-    <string name="create_playlist">Vytvoriť zoznam skladieb</string>
+    <string name="create_new_playlist">Vytvoriť zoznam skladieb</string>
     <string name="rename_playlist">Premenovať zoznam skladieb</string>
     <string name="playlist_name_exists">Zoznam skladieb s týmto názvom už existuje</string>
     <string name="remove_playlist">Odstrániť zoznam skladieb</string>
@@ -45,6 +45,31 @@
     <string name="show_filename">Zobraziť názov súboru namiesto názvu skladby</string>
     <string name="title_is_not_available">Ak názov skladby nie je dostupý</string>
     <string name="show_album_cover">Zobraziť obal albumu na hlavnej obrazovke</string>
+    <string name="all_tracks">Všetky skladby</string>
+    <string name="add_to_playlist">Pridať do zoznamu skladieb</string>
+
+    <!-- Artists -->
+    <string name="artists">Umelci</string>
+    <string name="albums">Albumy</string>
+    <plurals name="albums_plural">
+        <item quantity="one">%d album</item>
+        <item quantity="few">%d albumy</item>
+        <item quantity="other">%d albumov</item>
+    </plurals>
+
+    <string name="tracks">Skladby</string>
+    <plurals name="tracks_plural">
+        <item quantity="one">%d skladba</item>
+        <item quantity="few">%d skladby</item>
+        <item quantity="other">%d skladieb</item>
+    </plurals>
+
+    <!-- Queue -->
+    <string name="next_track">Ďalšia:</string>
+    <string name="track_queue">Poradie skladieb</string>
+    <string name="add_to_queue">Pridať do poradia</string>
+    <string name="remove_from_queue">Odstrániť z poradia</string>
+    <string name="create_playlist_from_queue">Vytvoriť zoznam skladieb z poradia</string>
 
     <!-- Settings -->
     <string name="equalizer">Ekvalizér</string>

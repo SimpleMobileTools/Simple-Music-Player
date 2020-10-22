@@ -24,7 +24,7 @@
     <string name="add_folder_to_playlist">Lägg till mapp i spellista</string>
     <string name="manage_playlists">Hantera spellistor</string>
     <string name="playlists">Spellistor</string>
-    <string name="create_playlist">Skapa spellista</string>
+    <string name="create_new_playlist">Skapa spellista</string>
     <string name="rename_playlist">Byt namn på spellista</string>
     <string name="playlist_name_exists">Det finns redan en spellista med samma namn</string>
     <string name="remove_playlist">Ta bort spellista</string>
@@ -45,6 +45,29 @@
     <string name="show_filename">Ersätt låttitel med filnamn</string>
     <string name="title_is_not_available">Om titeln inte är tillgänglig</string>
     <string name="show_album_cover">Visa skivomslag i huvudvyn</string>
+    <string name="all_tracks">All tracks</string>
+    <string name="add_to_playlist">Add to playlist</string>
+
+    <!-- Artists -->
+    <string name="artists">Artists</string>
+    <string name="albums">Albums</string>
+    <plurals name="albums_plural">
+        <item quantity="one">%d Album</item>
+        <item quantity="other">%d Albums</item>
+    </plurals>
+
+    <string name="tracks">Tracks</string>
+    <plurals name="tracks_plural">
+        <item quantity="one">%d Track</item>
+        <item quantity="other">%d Tracks</item>
+    </plurals>
+
+    <!-- Queue -->
+    <string name="next_track">Next:</string>
+    <string name="track_queue">Track queue</string>
+    <string name="add_to_queue">Add to queue</string>
+    <string name="remove_from_queue">Remove from queue</string>
+    <string name="create_playlist_from_queue">Create playlist from queue</string>
 
     <!-- Settings -->
     <string name="equalizer">Equalizer</string>

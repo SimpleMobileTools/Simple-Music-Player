@@ -24,7 +24,7 @@
     <string name="add_folder_to_playlist">Aggiungi cartella alla scaletta</string>
     <string name="manage_playlists">Gestisci scalette</string>
     <string name="playlists">Scalette</string>
-    <string name="create_playlist">Crea scaletta</string>
+    <string name="create_new_playlist">Crea scaletta</string>
     <string name="rename_playlist">Rinomina scaletta</string>
     <string name="playlist_name_exists">È già esistente una scaletta con lo stesso nome</string>
     <string name="remove_playlist">Rimuovi scaletta</string>
@@ -45,6 +45,29 @@
     <string name="show_filename">Mostra il nome del file come titolo del brano</string>
     <string name="title_is_not_available">Se il titolo non è disponibile</string>
     <string name="show_album_cover">Mostra la copertina dell\'album nella schermata principale</string>
+    <string name="all_tracks">All tracks</string>
+    <string name="add_to_playlist">Add to playlist</string>
+
+    <!-- Artists -->
+    <string name="artists">Artists</string>
+    <string name="albums">Albums</string>
+    <plurals name="albums_plural">
+        <item quantity="one">%d Album</item>
+        <item quantity="other">%d Albums</item>
+    </plurals>
+
+    <string name="tracks">Tracks</string>
+    <plurals name="tracks_plural">
+        <item quantity="one">%d Track</item>
+        <item quantity="other">%d Tracks</item>
+    </plurals>
+
+    <!-- Queue -->
+    <string name="next_track">Next:</string>
+    <string name="track_queue">Track queue</string>
+    <string name="add_to_queue">Add to queue</string>
+    <string name="remove_from_queue">Remove from queue</string>
+    <string name="create_playlist_from_queue">Create playlist from queue</string>
 
     <!-- Settings -->
     <string name="equalizer">Equalizzatore</string>
