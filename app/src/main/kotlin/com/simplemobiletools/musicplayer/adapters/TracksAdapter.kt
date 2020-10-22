@@ -8,23 +8,22 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
-import com.simplemobiletools.commons.extensions.beGone
-import com.simplemobiletools.commons.extensions.beVisible
-import com.simplemobiletools.commons.extensions.getColoredDrawableWithColor
-import com.simplemobiletools.commons.extensions.getFormattedDuration
+import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.views.FastScroller
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
 import com.simplemobiletools.musicplayer.extensions.addTracksToPlaylist
 import com.simplemobiletools.musicplayer.extensions.addTracksToQueue
+import com.simplemobiletools.musicplayer.models.Album
 import com.simplemobiletools.musicplayer.models.Track
 import kotlinx.android.synthetic.main.item_track.view.*
 import java.util.*
 
-class TracksAdapter(activity: SimpleActivity, val tracks: ArrayList<Track>, recyclerView: MyRecyclerView, fastScroller: FastScroller, itemClick: (Any) -> Unit) :
+class TracksAdapter(activity: SimpleActivity, var tracks: ArrayList<Track>, recyclerView: MyRecyclerView, fastScroller: FastScroller, itemClick: (Any) -> Unit) :
         MyRecyclerViewAdapter(activity, recyclerView, fastScroller, itemClick) {
 
+    private var textToHighlight = ""
     private val placeholder = resources.getColoredDrawableWithColor(R.drawable.ic_headset, textColor)
 
     init {
@@ -85,10 +84,23 @@ class TracksAdapter(activity: SimpleActivity, val tracks: ArrayList<Track>, recy
 
     private fun getSelectedTracks(): List<Track> = tracks.filter { selectedKeys.contains(it.hashCode()) }.toList()
 
+    fun updateItems(newItems: ArrayList<Track>, highlightText: String = "") {
+        if (newItems.hashCode() != tracks.hashCode()) {
+            tracks = newItems.clone() as ArrayList<Track>
+            textToHighlight = highlightText
+            notifyDataSetChanged()
+            finishActMode()
+        } else if (textToHighlight != highlightText) {
+            textToHighlight = highlightText
+            notifyDataSetChanged()
+        }
+        fastScroller?.measureRecyclerView()
+    }
+
     private fun setupView(view: View, track: Track) {
         view.apply {
             track_frame?.isSelected = selectedKeys.contains(track.hashCode())
-            track_title.text = track.title
+            track_title.text = if (textToHighlight.isEmpty()) track.title else track.title.highlightTextPart(textToHighlight, adjustedPrimaryColor)
 
             arrayOf(track_id, track_title, track_duration).forEach {
                 it.setTextColor(textColor)

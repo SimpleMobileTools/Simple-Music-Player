@@ -5,6 +5,8 @@ import android.content.Intent
 import android.util.AttributeSet
 import com.google.gson.Gson
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
+import com.simplemobiletools.commons.extensions.beGone
+import com.simplemobiletools.commons.extensions.beVisibleIf
 import com.simplemobiletools.commons.helpers.AlphanumericComparator
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
@@ -22,6 +24,8 @@ import kotlinx.android.synthetic.main.fragment_tracks.view.*
 
 // Artists -> Albums -> Tracks
 class TracksFragment(context: Context, attributeSet: AttributeSet) : MyViewPagerFragment(context, attributeSet) {
+    var tracksIgnoringSearch = ArrayList<Track>()
+
     override fun setupFragment(activity: SimpleActivity) {
         ensureBackgroundThread {
             val albums = ArrayList<Album>()
@@ -65,11 +69,17 @@ class TracksFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
     }
 
     override fun onSearchQueryChanged(text: String) {
+        val filtered = tracksIgnoringSearch.filter { it.title.contains(text, true) }.toMutableList() as ArrayList<Track>
+        (tracks_list.adapter as? TracksAdapter)?.updateItems(filtered, text)
+        tracks_placeholder.beVisibleIf(filtered.isEmpty())
     }
 
     override fun onSearchOpened() {
+        tracksIgnoringSearch = (tracks_list?.adapter as? TracksAdapter)?.tracks ?: ArrayList()
     }
 
     override fun onSearchClosed() {
+        (tracks_list.adapter as? TracksAdapter)?.updateItems(tracksIgnoringSearch)
+        tracks_placeholder.beGone()
     }
 }
