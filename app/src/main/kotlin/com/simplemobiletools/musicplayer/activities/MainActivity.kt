@@ -88,6 +88,7 @@ class MainActivity : SimpleActivity() {
         setupSearch(menu)
 
         menu.apply {
+            findItem(R.id.sleep_timer).isVisible = false
             findItem(R.id.sort).isVisible = false
         }
 
