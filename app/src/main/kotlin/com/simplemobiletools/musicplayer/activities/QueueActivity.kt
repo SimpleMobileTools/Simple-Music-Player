@@ -3,9 +3,13 @@ package com.simplemobiletools.musicplayer.activities
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
+import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.adapters.QueueAdapter
+import com.simplemobiletools.musicplayer.dialogs.NewPlaylistDialog
 import com.simplemobiletools.musicplayer.helpers.PLAY_TRACK
+import com.simplemobiletools.musicplayer.helpers.RoomHelper
 import com.simplemobiletools.musicplayer.helpers.TRACK_ID
 import com.simplemobiletools.musicplayer.models.Events
 import com.simplemobiletools.musicplayer.models.Track
@@ -14,6 +18,7 @@ import kotlinx.android.synthetic.main.activity_queue.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import java.util.*
 
 class QueueActivity : SimpleActivity() {
     private var bus: EventBus? = null
@@ -32,8 +37,17 @@ class QueueActivity : SimpleActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_queue, menu)
         updateMenuItemColors(menu)
         return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.create_playlist_from_queue -> createPlaylistFromQueue()
+            else -> return super.onOptionsItemSelected(item)
+        }
+        return true
     }
 
     private fun setupAdapter() {
@@ -55,6 +69,20 @@ class QueueActivity : SimpleActivity() {
             }
         } else {
             adapter.notifyDataSetChanged()
+        }
+    }
+
+    private fun createPlaylistFromQueue() {
+        NewPlaylistDialog(this) { newPlaylistId ->
+            val tracks = ArrayList<Track>()
+            (queue_list.adapter as? QueueAdapter)?.items?.forEach {
+                it.playListId = newPlaylistId
+                tracks.add(it)
+            }
+
+            ensureBackgroundThread {
+                RoomHelper(this).insertTracksWithPlaylist(tracks)
+            }
         }
     }
 

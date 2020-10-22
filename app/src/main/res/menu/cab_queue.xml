@@ -6,8 +6,4 @@
         android:icon="@drawable/ic_delete_vector"
         android:title="@string/remove_from_queue"
         app:showAsAction="ifRoom" />
-    <item
-        android:id="@+id/cab_create_playlist_from_queue"
-        android:title="@string/create_playlist_from_queue"
-        app:showAsAction="never" />
 </menu>

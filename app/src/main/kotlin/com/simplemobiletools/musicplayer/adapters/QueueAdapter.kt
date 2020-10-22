@@ -16,7 +16,6 @@ import com.simplemobiletools.commons.extensions.applyColorFilter
 import com.simplemobiletools.commons.extensions.getAdjustedPrimaryColor
 import com.simplemobiletools.commons.extensions.getColoredDrawableWithColor
 import com.simplemobiletools.commons.extensions.getFormattedDuration
-import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.commons.interfaces.ItemMoveCallback
 import com.simplemobiletools.commons.interfaces.ItemTouchHelperContract
 import com.simplemobiletools.commons.interfaces.StartReorderDragListener
@@ -24,10 +23,12 @@ import com.simplemobiletools.commons.views.FastScroller
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
-import com.simplemobiletools.musicplayer.dialogs.NewPlaylistDialog
 import com.simplemobiletools.musicplayer.extensions.removeQueueItems
 import com.simplemobiletools.musicplayer.extensions.sendIntent
-import com.simplemobiletools.musicplayer.helpers.*
+import com.simplemobiletools.musicplayer.helpers.FINISH
+import com.simplemobiletools.musicplayer.helpers.PLAY_TRACK
+import com.simplemobiletools.musicplayer.helpers.TRACK_ID
+import com.simplemobiletools.musicplayer.helpers.UPDATE_NEXT_TRACK
 import com.simplemobiletools.musicplayer.models.Track
 import com.simplemobiletools.musicplayer.services.MusicService
 import kotlinx.android.synthetic.main.item_track_queue.view.*
@@ -76,7 +77,6 @@ class QueueAdapter(activity: SimpleActivity, val items: ArrayList<Track>, recycl
 
         when (id) {
             R.id.cab_remove_from_queue -> removeFromQueue()
-            R.id.cab_create_playlist_from_queue -> createPlaylistFromQueue()
         }
     }
 
@@ -111,23 +111,6 @@ class QueueAdapter(activity: SimpleActivity, val items: ArrayList<Track>, recycl
                         putExtra(TRACK_ID, (MusicService.mTracks.first()).id)
                         activity.startService(this)
                     }
-                }
-            }
-        }
-    }
-
-    private fun createPlaylistFromQueue() {
-        NewPlaylistDialog(activity) { newPlaylistId ->
-            val tracks = ArrayList<Track>()
-            getSelectedTracks().forEach {
-                it.playListId = newPlaylistId
-                tracks.add(it)
-            }
-
-            ensureBackgroundThread {
-                RoomHelper(activity).insertTracksWithPlaylist(tracks)
-                activity.runOnUiThread {
-                    finishActMode()
                 }
             }
         }
