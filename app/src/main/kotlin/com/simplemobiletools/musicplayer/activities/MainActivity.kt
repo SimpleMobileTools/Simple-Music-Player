@@ -92,8 +92,7 @@ class MainActivity : SimpleActivity() {
         setupSearch(menu)
 
         menu.apply {
-            findItem(R.id.sort).isVisible = !isThirdPartyIntent
-            findItem(R.id.sort).isVisible = !isThirdPartyIntent
+            findItem(R.id.sort).isVisible = false
         }
 
         updateMenuItemColors(menu)

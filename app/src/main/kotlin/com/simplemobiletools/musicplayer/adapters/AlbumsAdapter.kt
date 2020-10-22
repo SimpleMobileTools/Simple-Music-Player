@@ -19,7 +19,6 @@ import com.simplemobiletools.musicplayer.extensions.addTracksToPlaylist
 import com.simplemobiletools.musicplayer.extensions.addTracksToQueue
 import com.simplemobiletools.musicplayer.extensions.getAlbumTracksSync
 import com.simplemobiletools.musicplayer.models.Album
-import com.simplemobiletools.musicplayer.models.Artist
 import com.simplemobiletools.musicplayer.models.Track
 import kotlinx.android.synthetic.main.item_album.view.*
 import java.util.*
