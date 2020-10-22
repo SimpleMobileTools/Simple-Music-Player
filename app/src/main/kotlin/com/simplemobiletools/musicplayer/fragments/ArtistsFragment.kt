@@ -5,6 +5,8 @@ import android.content.Intent
 import android.util.AttributeSet
 import com.google.gson.Gson
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
+import com.simplemobiletools.commons.extensions.beGone
+import com.simplemobiletools.commons.extensions.beVisibleIf
 import com.simplemobiletools.musicplayer.activities.AlbumsActivity
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
 import com.simplemobiletools.musicplayer.adapters.ArtistsAdapter
@@ -15,6 +17,8 @@ import kotlinx.android.synthetic.main.fragment_artists.view.*
 
 // Artists -> Albums -> Tracks
 class ArtistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPagerFragment(context, attributeSet) {
+    var artistsIgnoringSearch = ArrayList<Artist>()
+
     override fun setupFragment(activity: SimpleActivity) {
         activity.getArtists { artists ->
             activity.runOnUiThread {
@@ -43,11 +47,17 @@ class ArtistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
     }
 
     override fun onSearchQueryChanged(text: String) {
+        val filtered = artistsIgnoringSearch.filter { it.title.contains(text, true) }.toMutableList() as ArrayList<Artist>
+        (artists_list.adapter as? ArtistsAdapter)?.updateItems(filtered, text)
+        artists_placeholder.beVisibleIf(filtered.isEmpty())
     }
 
     override fun onSearchOpened() {
+        artistsIgnoringSearch = (artists_list?.adapter as? ArtistsAdapter)?.artists ?: ArrayList()
     }
 
     override fun onSearchClosed() {
+        (artists_list.adapter as? ArtistsAdapter)?.updateItems(artistsIgnoringSearch)
+        artists_placeholder.beGone()
     }
 }
