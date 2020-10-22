@@ -9,6 +9,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
 import com.simplemobiletools.commons.extensions.getColoredDrawableWithColor
+import com.simplemobiletools.commons.extensions.highlightTextPart
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.commons.views.FastScroller
 import com.simplemobiletools.commons.views.MyRecyclerView
@@ -18,13 +19,15 @@ import com.simplemobiletools.musicplayer.extensions.addTracksToPlaylist
 import com.simplemobiletools.musicplayer.extensions.addTracksToQueue
 import com.simplemobiletools.musicplayer.extensions.getAlbumTracksSync
 import com.simplemobiletools.musicplayer.models.Album
+import com.simplemobiletools.musicplayer.models.Artist
 import com.simplemobiletools.musicplayer.models.Track
 import kotlinx.android.synthetic.main.item_album.view.*
 import java.util.*
 
-class AlbumsAdapter(activity: SimpleActivity, val albums: ArrayList<Album>, recyclerView: MyRecyclerView, fastScroller: FastScroller, itemClick: (Any) -> Unit) :
+class AlbumsAdapter(activity: SimpleActivity, var albums: ArrayList<Album>, recyclerView: MyRecyclerView, fastScroller: FastScroller, itemClick: (Any) -> Unit) :
         MyRecyclerViewAdapter(activity, recyclerView, fastScroller, itemClick) {
 
+    private var textToHighlight = ""
     private val placeholderBig = resources.getColoredDrawableWithColor(R.drawable.ic_headset, textColor)
 
     init {
@@ -100,10 +103,23 @@ class AlbumsAdapter(activity: SimpleActivity, val albums: ArrayList<Album>, recy
 
     private fun getSelectedAlbums(): List<Album> = albums.filter { selectedKeys.contains(it.id) }.toList()
 
+    fun updateItems(newItems: ArrayList<Album>, highlightText: String = "") {
+        if (newItems.hashCode() != albums.hashCode()) {
+            albums = newItems.clone() as ArrayList<Album>
+            textToHighlight = highlightText
+            notifyDataSetChanged()
+            finishActMode()
+        } else if (textToHighlight != highlightText) {
+            textToHighlight = highlightText
+            notifyDataSetChanged()
+        }
+        fastScroller?.measureRecyclerView()
+    }
+
     private fun setupView(view: View, album: Album) {
         view.apply {
             album_frame?.isSelected = selectedKeys.contains(album.id)
-            album_title.text = album.title
+            album_title.text = if (textToHighlight.isEmpty()) album.title else album.title.highlightTextPart(textToHighlight, adjustedPrimaryColor)
             album_title.setTextColor(textColor)
 
             val options = RequestOptions()
