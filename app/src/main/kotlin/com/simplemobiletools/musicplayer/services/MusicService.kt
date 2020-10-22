@@ -31,7 +31,10 @@ import com.simplemobiletools.commons.extensions.getColoredBitmap
 import com.simplemobiletools.commons.extensions.getRealPathFromURI
 import com.simplemobiletools.commons.extensions.hasPermission
 import com.simplemobiletools.commons.extensions.showErrorToast
-import com.simplemobiletools.commons.helpers.*
+import com.simplemobiletools.commons.helpers.PERMISSION_WRITE_STORAGE
+import com.simplemobiletools.commons.helpers.ensureBackgroundThread
+import com.simplemobiletools.commons.helpers.isOreoPlus
+import com.simplemobiletools.commons.helpers.isQPlus
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.MainActivity
 import com.simplemobiletools.musicplayer.databases.SongsDatabase
@@ -263,7 +266,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
     private fun handleFinish() {
         broadcastTrackProgress(0)
-        destroyPlayer()
+        stopSelf()
     }
 
     private fun handleRefreshList(intent: Intent) {
@@ -776,19 +779,21 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     }
 
     private fun destroyPlayer() {
-        val position = mPlayer?.currentPosition ?: 0
-        ensureBackgroundThread {
-            queueDAO.resetCurrent()
+        if (!mIsThirdPartyIntent) {
+            val position = mPlayer?.currentPosition ?: 0
+            ensureBackgroundThread {
+                queueDAO.resetCurrent()
 
-            if (mCurrTrack != null) {
-                queueDAO.saveCurrentTrack(mCurrTrack!!.id, position)
+                if (mCurrTrack != null) {
+                    queueDAO.saveCurrentTrack(mCurrTrack!!.id, position)
+                }
+
+                mTracks.forEachIndexed { index, track ->
+                    queueDAO.setOrder(track.id, index)
+                }
+
+                mCurrTrack = null
             }
-
-            mTracks.forEachIndexed { index, track ->
-                queueDAO.setOrder(track.id, index)
-            }
-
-            mCurrTrack = null
         }
 
         mPlayer?.stop()

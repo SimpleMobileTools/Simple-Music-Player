@@ -44,8 +44,7 @@ class TrackActivity : SimpleActivity() {
         nextTrackPlaceholder = resources.getColoredDrawableWithColor(R.drawable.ic_headset, config.textColor)
         bus = EventBus.getDefault()
         bus!!.register(this)
-
-        isThirdPartyIntent = intent.action == Intent.ACTION_VIEW
+        setupButtons()
 
         (activity_track_appbar.layoutParams as ConstraintLayout.LayoutParams).topMargin = statusBarHeight
         activity_track_holder.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
@@ -53,15 +52,21 @@ class TrackActivity : SimpleActivity() {
             finish()
         }
 
+        isThirdPartyIntent = intent.action == Intent.ACTION_VIEW
+        if (isThirdPartyIntent) {
+            initThirdPartyIntent()
+            return
+        }
+
         val trackType = object : TypeToken<Track>() {}.type
         val track = Gson().fromJson<Track>(intent.getStringExtra(TRACK), trackType) ?: MusicService.mCurrTrack
         if (track == null) {
+            toast(R.string.unknown_error_occurred)
             finish()
             return
         }
 
         setupTrackInfo(track)
-        setupButtons()
 
         if (intent.getBooleanExtra(RESTART_PLAYER, false)) {
             Intent(this, MusicService::class.java).apply {
@@ -73,14 +78,9 @@ class TrackActivity : SimpleActivity() {
             sendIntent(BROADCAST_STATUS)
         }
 
-        if (isThirdPartyIntent) {
-            next_track_holder.beGone()
-        } else {
-            next_track_holder.beVisible()
-            next_track_holder.background = ColorDrawable(config.backgroundColor)
-            next_track_holder.setOnClickListener {
-                startActivity(Intent(applicationContext, QueueActivity::class.java))
-            }
+        next_track_holder.background = ColorDrawable(config.backgroundColor)
+        next_track_holder.setOnClickListener {
+            startActivity(Intent(applicationContext, QueueActivity::class.java))
         }
     }
 
@@ -112,6 +112,16 @@ class TrackActivity : SimpleActivity() {
 
         activity_track_progressbar.max = track.duration
         activity_track_progress_max.text = track.duration.getFormattedDuration()
+    }
+
+    private fun initThirdPartyIntent() {
+        next_track_holder.beGone()
+        val fileUri = intent.data
+        Intent(this, MusicService::class.java).apply {
+            data = fileUri
+            action = INIT_PATH
+            startService(this)
+        }
     }
 
     private fun setupNextTrackInfo(track: Track?) {
