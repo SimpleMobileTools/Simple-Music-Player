@@ -29,7 +29,10 @@ import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.extensions.queueDAO
 import com.simplemobiletools.musicplayer.extensions.sendIntent
 import com.simplemobiletools.musicplayer.fragments.MyViewPagerFragment
-import com.simplemobiletools.musicplayer.helpers.*
+import com.simplemobiletools.musicplayer.helpers.INIT_QUEUE
+import com.simplemobiletools.musicplayer.helpers.REFRESH_LIST
+import com.simplemobiletools.musicplayer.helpers.START_SLEEP_TIMER
+import com.simplemobiletools.musicplayer.helpers.STOP_SLEEP_TIMER
 import com.simplemobiletools.musicplayer.models.Events
 import com.simplemobiletools.musicplayer.services.MusicService
 import kotlinx.android.synthetic.main.activity_main.*
@@ -43,9 +46,7 @@ import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
 class MainActivity : SimpleActivity() {
-    private var isThirdPartyIntent = false
     private var isSearchOpen = false
-
     private var searchMenuItem: MenuItem? = null
     private var bus: EventBus? = null
 
@@ -53,7 +54,6 @@ class MainActivity : SimpleActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         appLaunched(BuildConfig.APPLICATION_ID)
-        isThirdPartyIntent = intent.action == Intent.ACTION_VIEW
 
         handlePermission(PERMISSION_WRITE_STORAGE) {
             if (it) {
@@ -81,10 +81,6 @@ class MainActivity : SimpleActivity() {
         super.onDestroy()
         bus?.unregister(this)
         config.lastUsedViewPagerPage = viewpager.currentItem
-
-        if (isThirdPartyIntent && !isChangingConfigurations) {
-            sendIntent(FINISH_IF_NOT_PLAYING)
-        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
