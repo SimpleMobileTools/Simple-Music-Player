@@ -10,6 +10,7 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
+import com.simplemobiletools.commons.dialogs.ConfirmationDialog
 import com.simplemobiletools.commons.extensions.getColoredDrawableWithColor
 import com.simplemobiletools.commons.extensions.highlightTextPart
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
@@ -17,10 +18,7 @@ import com.simplemobiletools.commons.views.FastScroller
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
-import com.simplemobiletools.musicplayer.extensions.addTracksToPlaylist
-import com.simplemobiletools.musicplayer.extensions.addTracksToQueue
-import com.simplemobiletools.musicplayer.extensions.getAlbumTracksSync
-import com.simplemobiletools.musicplayer.extensions.getAlbumsSync
+import com.simplemobiletools.musicplayer.extensions.*
 import com.simplemobiletools.musicplayer.models.Artist
 import com.simplemobiletools.musicplayer.models.Track
 import kotlinx.android.synthetic.main.item_artist.view.*
@@ -60,6 +58,7 @@ class ArtistsAdapter(activity: SimpleActivity, var artists: ArrayList<Artist>, r
         when (id) {
             R.id.cab_add_to_playlist -> addToPlaylist()
             R.id.cab_add_to_queue -> addToQueue()
+            R.id.cab_delete -> askConfirmDelete()
         }
     }
 
@@ -104,6 +103,39 @@ class ArtistsAdapter(activity: SimpleActivity, var artists: ArrayList<Artist>, r
             }
         }
         return tracks
+    }
+
+    private fun askConfirmDelete() {
+        ConfirmationDialog(activity) {
+            ensureBackgroundThread {
+                val positions = ArrayList<Int>()
+                val selectedArtists = getSelectedArtists()
+                val tracks = ArrayList<Track>()
+                selectedArtists.forEach { artist ->
+                    val position = artists.indexOfFirst { it.id == artist.id }
+                    if (position != -1) {
+                        positions.add(position)
+                    }
+
+                    val albums = activity.getAlbumsSync(artist)
+                    albums.forEach { album ->
+                        tracks.addAll(activity.getAlbumTracksSync(album.id))
+                    }
+                }
+
+                activity.deleteTracks(tracks) {
+                    activity.runOnUiThread {
+                        positions.sortDescending()
+                        removeSelectedItems(positions)
+                        positions.forEach {
+                            artists.removeAt(it)
+                        }
+
+                        finishActMode()
+                    }
+                }
+            }
+        }
     }
 
     private fun getSelectedArtists(): List<Artist> = artists.filter { selectedKeys.contains(it.hashCode()) }.toList()
