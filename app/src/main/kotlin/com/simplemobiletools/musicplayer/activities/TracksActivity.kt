@@ -8,6 +8,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.musicplayer.R
+import com.simplemobiletools.musicplayer.adapters.TracksAdapter
 import com.simplemobiletools.musicplayer.adapters.TracksHeaderAdapter
 import com.simplemobiletools.musicplayer.extensions.getAlbumTracksSync
 import com.simplemobiletools.musicplayer.extensions.getPlaylistTracks
@@ -52,27 +53,32 @@ class TracksActivity : SimpleActivity() {
                 albumTracks.sortWith(compareBy({ it.trackId }, { it.title.toLowerCase() }))
                 tracks.addAll(albumTracks)
 
-                val coverArt = ContentUris.withAppendedId(artworkUri, album.id.toLong()).toString()
+                val coverArt = ContentUris.withAppendedId(artworkUri, album.id).toString()
                 val header = AlbumHeader(album.title, coverArt, album.year, tracks.size, tracks.sumBy { it.duration }, album.artist)
                 listItems.add(header)
                 listItems.addAll(tracks)
             }
 
             runOnUiThread {
-                val adapter = TracksHeaderAdapter(this, listItems, tracks_list, album == null, tracks_fastscroller) {
-                    resetQueueItems(tracks) {
-                        Intent(this, TrackActivity::class.java).apply {
-                            putExtra(TRACK, Gson().toJson(it))
-                            putExtra(RESTART_PLAYER, true)
-                            startActivity(this)
-                        }
+                val adapter = if (playlist != null) {
+                    TracksAdapter(this, tracks, tracks_list, tracks_fastscroller) {
+                        itemClicked(tracks, it as Track)
                     }
-                }.apply {
-                    tracks_list.adapter = this
+                } else {
+                    TracksHeaderAdapter(this, listItems, tracks_list, tracks_fastscroller) {
+                        itemClicked(tracks, it as Track)
+                    }
                 }
 
+                tracks_list.adapter = adapter
+
                 tracks_fastscroller.setViews(tracks_list) {
-                    val listItem = adapter.items.getOrNull(it)
+                    val listItem = when (adapter) {
+                        is TracksAdapter -> adapter.tracks.getOrNull(it)
+                        is TracksHeaderAdapter -> adapter.items.getOrNull(it)
+                        else -> return@setViews
+                    }
+
                     if (listItem is Track) {
                         tracks_fastscroller.updateBubbleText(listItem.title)
                     } else if (listItem is AlbumHeader) {
@@ -108,6 +114,16 @@ class TracksActivity : SimpleActivity() {
         current_track_bar.updateColors()
         current_track_bar.updateCurrentTrack(MusicService.mCurrTrack)
         current_track_bar.updateTrackState(MusicService.getIsPlaying())
+    }
+
+    private fun itemClicked(tracks: ArrayList<Track>, track: Track) {
+        resetQueueItems(tracks) {
+            Intent(this, TrackActivity::class.java).apply {
+                putExtra(TRACK, Gson().toJson(track))
+                putExtra(RESTART_PLAYER, true)
+                startActivity(this)
+            }
+        }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

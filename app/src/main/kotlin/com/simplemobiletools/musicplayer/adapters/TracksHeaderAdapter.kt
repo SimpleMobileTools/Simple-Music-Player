@@ -25,7 +25,7 @@ import kotlinx.android.synthetic.main.item_album_header.view.*
 import kotlinx.android.synthetic.main.item_track.view.*
 import java.util.*
 
-class TracksHeaderAdapter(activity: SimpleActivity, val items: ArrayList<ListItem>, recyclerView: MyRecyclerView, val showAlbumCover: Boolean, fastScroller: FastScroller,
+class TracksHeaderAdapter(activity: SimpleActivity, val items: ArrayList<ListItem>, recyclerView: MyRecyclerView, fastScroller: FastScroller,
                           itemClick: (Any) -> Unit) : MyRecyclerViewAdapter(activity, recyclerView, fastScroller, itemClick) {
 
     private val ITEM_HEADER = 0
@@ -119,23 +119,9 @@ class TracksHeaderAdapter(activity: SimpleActivity, val items: ArrayList<ListIte
             }
 
             track_duration.text = track.duration.getFormattedDuration()
-
-            if (showAlbumCover) {
-                track_image.beVisible()
-                track_id.beGone()
-                val options = RequestOptions()
-                    .error(placeholder)
-                    .transform(CenterCrop(), RoundedCorners(8))
-
-                Glide.with(activity)
-                    .load(track.coverArt)
-                    .apply(options)
-                    .into(findViewById(R.id.track_image))
-            } else {
-                track_image.beGone()
-                track_id.beVisible()
-                track_id.text = track.trackId.toString()
-            }
+            track_id.text = track.trackId.toString()
+            track_image.beGone()
+            track_id.beVisible()
         }
     }
 
