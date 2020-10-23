@@ -12,15 +12,6 @@ import com.simplemobiletools.musicplayer.models.Track
 import org.greenrobot.eventbus.EventBus
 
 class RoomHelper(val context: Context) {
-    fun addPathToPlaylist(path: String) {
-        addPathsToPlaylist(arrayListOf(path))
-    }
-
-    fun addPathsToPlaylist(paths: ArrayList<String>, playlistId: Int = context.config.currentPlaylist) {
-        val tracks = getTracksFromPaths(paths, playlistId)
-        context.tracksDAO.insertAll(tracks)
-    }
-
     fun insertTracksWithPlaylist(tracks: ArrayList<Track>) {
         context.tracksDAO.insertAll(tracks)
         EventBus.getDefault().post(Events.PlaylistsUpdated())
