@@ -23,6 +23,7 @@ import com.simplemobiletools.musicplayer.interfaces.QueueItemsDao
 import com.simplemobiletools.musicplayer.interfaces.SongsDao
 import com.simplemobiletools.musicplayer.models.*
 import com.simplemobiletools.musicplayer.services.MusicService
+import org.greenrobot.eventbus.EventBus
 import java.io.File
 
 @SuppressLint("NewApi")
@@ -347,5 +348,7 @@ fun Context.deleteTracks(tracks: List<Track>, callback: () -> Unit) {
         }
     }
 
+    tracksDAO.removeSongsFromPlaylists(tracks)
+    EventBus.getDefault().post(Events.PlaylistsUpdated())
     callback()
 }
