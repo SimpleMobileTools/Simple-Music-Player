@@ -156,8 +156,6 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             SET_EQUALIZER -> handleSetEqualizer(intent)
             SKIP_BACKWARD -> skip(false)
             SKIP_FORWARD -> skip(true)
-            REMOVE_CURRENT_TRACK -> handleRemoveCurrentTrack()
-            REMOVE_TRACK_IDS -> handleRemoveTrackIds(intent)
             START_SLEEP_TIMER -> startSleepTimer()
             STOP_SLEEP_TIMER -> stopSleepTimer()
             BROADCAST_STATUS -> broadcastPlayerStatus()
@@ -297,12 +295,6 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
                 setPreset(presetID)
             }
         }
-    }
-
-    private fun handleRemoveCurrentTrack() {
-        pauseTrack()
-        mCurrTrack = null
-        trackChanged()
     }
 
     private fun handleRemoveTrackIds(intent: Intent) {
