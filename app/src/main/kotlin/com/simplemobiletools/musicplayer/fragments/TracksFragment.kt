@@ -37,13 +37,6 @@ class TracksFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
             }
             tracks.sortWith { o1, o2 -> AlphanumericComparator().compare(o1.title.toLowerCase(), o2.title.toLowerCase()) }
 
-            if (!context.config.wereCoversUpdated) {
-                tracks.filter { it.coverArt.isNotEmpty() }.forEach {
-                    activity.tracksDAO.updateCoverArt(it.coverArt, it.id)
-                }
-                context.config.wereCoversUpdated = true
-            }
-
             activity.runOnUiThread {
                 tracks_placeholder.beVisibleIf(tracks.isEmpty())
                 val adapter = TracksAdapter(activity, tracks, false, tracks_list, tracks_fastscroller) {
@@ -62,6 +55,13 @@ class TracksFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
                     val track = adapter.tracks.getOrNull(it)
                     tracks_fastscroller.updateBubbleText(track?.title ?: "")
                 }
+            }
+
+            if (!context.config.wereCoversUpdated) {
+                tracks.filter { it.coverArt.isNotEmpty() }.forEach {
+                    activity.tracksDAO.updateCoverArt(it.coverArt, it.id)
+                }
+                context.config.wereCoversUpdated = true
             }
         }
 
