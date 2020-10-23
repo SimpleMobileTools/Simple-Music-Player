@@ -112,16 +112,15 @@ abstract class SongsDatabase : RoomDatabase() {
             }
         }
 
-        // change the primary keys from path + playlist_id to id + playlist_id
+        // change the primary keys from path + playlist_id to media_store_id + playlist_id
         private val MIGRATION_4_5 = object : Migration(4, 5) {
             override fun migrate(database: SupportSQLiteDatabase) {
                 database.apply {
                     execSQL("CREATE TABLE songs_new (media_store_id INTEGER NOT NULL, title TEXT NOT NULL, artist TEXT NOT NULL, path TEXT NOT NULL, duration INTEGER NOT NULL, " +
-                            "album TEXT NOT NULL, playlist_id INTEGER NOT NULL, track_id INTEGER NOT NULL DEFAULT 0, " +
-                            "cover_art TEXT default '' NOT NULL, PRIMARY KEY(media_store_id, playlist_id))")
+                            "album TEXT NOT NULL, cover_art TEXT default '' NOT NULL, playlist_id INTEGER NOT NULL, track_id INTEGER NOT NULL DEFAULT 0, PRIMARY KEY(media_store_id, playlist_id))")
 
-                    execSQL("INSERT OR IGNORE INTO songs_new (media_store_id, title, artist, path, duration, album, playlist_id) " +
-                            "SELECT media_store_id, title, artist, path, duration, album, playlist_id FROM songs")
+                    execSQL("INSERT OR IGNORE INTO songs_new (media_store_id, title, artist, path, duration, album, cover_art, playlist_id, track_id) " +
+                            "SELECT media_store_id, title, artist, path, duration, album, cover_art, playlist_id, track_id FROM songs")
 
                     execSQL("DROP TABLE songs")
                     execSQL("ALTER TABLE songs_new RENAME TO tracks")
