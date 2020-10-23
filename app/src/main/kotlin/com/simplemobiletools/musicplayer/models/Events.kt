@@ -10,5 +10,6 @@ class Events {
     class ProgressUpdated(val progress: Int)
     class SleepTimerChanged(val seconds: Int)
     class PlaylistsUpdated
+    class TrackDeleted
     class NoStoragePermission
 }

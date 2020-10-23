@@ -338,6 +338,6 @@ fun Context.deleteTracks(tracks: List<Track>, callback: () -> Unit) {
     }
 
     tracksDAO.removeSongsFromPlaylists(tracks)
-    EventBus.getDefault().post(Events.PlaylistsUpdated())
+    EventBus.getDefault().post(Events.TrackDeleted())
     callback()
 }

@@ -13,10 +13,7 @@ import androidx.core.view.MenuItemCompat
 import androidx.viewpager.widget.ViewPager
 import com.simplemobiletools.commons.dialogs.RadioGroupDialog
 import com.simplemobiletools.commons.extensions.*
-import com.simplemobiletools.commons.helpers.LICENSE_EVENT_BUS
-import com.simplemobiletools.commons.helpers.LICENSE_PICASSO
-import com.simplemobiletools.commons.helpers.PERMISSION_WRITE_STORAGE
-import com.simplemobiletools.commons.helpers.ensureBackgroundThread
+import com.simplemobiletools.commons.helpers.*
 import com.simplemobiletools.commons.models.FAQItem
 import com.simplemobiletools.commons.models.RadioItem
 import com.simplemobiletools.commons.models.Release
@@ -304,6 +301,13 @@ class MainActivity : SimpleActivity() {
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun playlistsUpdated(event: Events.PlaylistsUpdated) {
         playlists_fragment_holder?.setupFragment(this)
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun trackDeleted(event: Events.TrackDeleted) {
+        getAllFragments().forEach {
+            it.setupFragment(this)
+        }
     }
 
     private fun launchSettings() {
