@@ -545,7 +545,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
         // play the previous track if we are less than 5 secs into it, else restart
         val currentTrackIndex = mTracks.indexOfFirstOrNull { it.id == mCurrTrack?.id } ?: 0
-        if (currentTrackIndex == 0 || mPlayer!!.currentPosition < 5000) {
+        if (currentTrackIndex == 0 || mPlayer!!.currentPosition > 5000) {
             restartTrack()
         } else {
             val previousTrack = mTracks[currentTrackIndex - 1]
