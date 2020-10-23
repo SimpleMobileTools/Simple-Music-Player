@@ -10,7 +10,10 @@ import com.simplemobiletools.commons.extensions.getIntValue
 import com.simplemobiletools.commons.extensions.getLongValue
 import com.simplemobiletools.commons.extensions.getStringValue
 import com.simplemobiletools.commons.extensions.showErrorToast
-import com.simplemobiletools.commons.helpers.*
+import com.simplemobiletools.commons.helpers.AlphanumericComparator
+import com.simplemobiletools.commons.helpers.ensureBackgroundThread
+import com.simplemobiletools.commons.helpers.isOreoPlus
+import com.simplemobiletools.commons.helpers.isQPlus
 import com.simplemobiletools.musicplayer.databases.SongsDatabase
 import com.simplemobiletools.musicplayer.helpers.*
 import com.simplemobiletools.musicplayer.interfaces.PlaylistsDao
@@ -262,8 +265,8 @@ fun Context.removeQueueItems(tracks: List<Track>, callback: () -> Unit) {
         tracks.forEach {
             queueDAO.removeQueueItem(it.id)
             MusicService.mTracks.remove(it)
-            callback()
         }
+        callback()
     }
 }
 
@@ -279,6 +282,7 @@ fun Context.deleteTracks(tracks: List<Track>, callback: () -> Unit) {
         }
     }
 
+    removeQueueItems(tracks) {}
     EventBus.getDefault().post(Events.TrackDeleted())
     callback()
 }
