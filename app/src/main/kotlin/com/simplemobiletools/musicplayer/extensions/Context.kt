@@ -11,10 +11,7 @@ import com.simplemobiletools.commons.extensions.getIntValue
 import com.simplemobiletools.commons.extensions.getLongValue
 import com.simplemobiletools.commons.extensions.getStringValue
 import com.simplemobiletools.commons.extensions.showErrorToast
-import com.simplemobiletools.commons.helpers.AlphanumericComparator
-import com.simplemobiletools.commons.helpers.ensureBackgroundThread
-import com.simplemobiletools.commons.helpers.isOreoPlus
-import com.simplemobiletools.commons.helpers.isQPlus
+import com.simplemobiletools.commons.helpers.*
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.databases.SongsDatabase
 import com.simplemobiletools.musicplayer.helpers.*
@@ -333,11 +330,11 @@ fun Context.deleteTracks(tracks: List<Track>, callback: () -> Unit) {
             val args = arrayOf(track.id.toString())
             val uri = Audio.Media.EXTERNAL_CONTENT_URI
             contentResolver.delete(uri, where, args)
+            tracksDAO.removeTrack(track.id)
         } catch (ignored: Exception) {
         }
     }
 
-    tracksDAO.removeSongsFromPlaylists(tracks)
     EventBus.getDefault().post(Events.TrackDeleted())
     callback()
 }
