@@ -8,14 +8,16 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
+import com.simplemobiletools.commons.dialogs.ConfirmationDialog
 import com.simplemobiletools.commons.extensions.*
+import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.commons.views.FastScroller
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
 import com.simplemobiletools.musicplayer.extensions.addTracksToPlaylist
 import com.simplemobiletools.musicplayer.extensions.addTracksToQueue
-import com.simplemobiletools.musicplayer.models.Album
+import com.simplemobiletools.musicplayer.extensions.deleteTracks
 import com.simplemobiletools.musicplayer.models.Track
 import kotlinx.android.synthetic.main.item_track.view.*
 import java.util.*
@@ -54,6 +56,7 @@ class TracksAdapter(activity: SimpleActivity, var tracks: ArrayList<Track>, recy
         when (id) {
             R.id.cab_add_to_playlist -> addToPlaylist()
             R.id.cab_add_to_queue -> addToQueue()
+            R.id.cab_delete -> askConfirmDelete()
         }
     }
 
@@ -79,6 +82,33 @@ class TracksAdapter(activity: SimpleActivity, var tracks: ArrayList<Track>, recy
     private fun addToQueue() {
         activity.addTracksToQueue(getSelectedTracks()) {
             finishActMode()
+        }
+    }
+
+    private fun askConfirmDelete() {
+        ConfirmationDialog(activity) {
+            ensureBackgroundThread {
+                val positions = ArrayList<Int>()
+                val selectedTracks = getSelectedTracks()
+                selectedTracks.forEach { track ->
+                    val position = tracks.indexOfFirst { it.id == track.id }
+                    if (position != -1) {
+                        positions.add(position)
+                    }
+                }
+
+                activity.deleteTracks(selectedTracks) {
+                    activity.runOnUiThread {
+                        positions.sortDescending()
+                        removeSelectedItems(positions)
+                        positions.forEach {
+                            tracks.removeAt(it)
+                        }
+
+                        finishActMode()
+                    }
+                }
+            }
         }
     }
 

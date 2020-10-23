@@ -335,3 +335,17 @@ fun Context.removeQueueItems(tracks: List<Track>, callback: () -> Unit) {
         }
     }
 }
+
+fun Context.deleteTracks(tracks: List<Track>, callback: () -> Unit) {
+    tracks.forEach { track ->
+        try {
+            val where = "${Audio.Media._ID} = ?"
+            val args = arrayOf(track.id.toString())
+            val uri = Audio.Media.EXTERNAL_CONTENT_URI
+            contentResolver.delete(uri, where, args)
+        } catch (ignored: Exception) {
+        }
+    }
+
+    callback()
+}
