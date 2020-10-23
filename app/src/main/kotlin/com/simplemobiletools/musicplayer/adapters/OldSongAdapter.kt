@@ -26,7 +26,6 @@ import com.simplemobiletools.musicplayer.extensions.tracksDAO
 import com.simplemobiletools.musicplayer.helpers.*
 import com.simplemobiletools.musicplayer.models.Track
 import com.simplemobiletools.musicplayer.services.MusicService
-import kotlinx.android.synthetic.main.item_navigation.view.*
 import kotlinx.android.synthetic.main.item_old_song.view.*
 
 class OldSongAdapter(activity: SimpleActivity, var songs: ArrayList<Track>, val transparentView: View,
@@ -122,20 +121,6 @@ class OldSongAdapter(activity: SimpleActivity, var songs: ArrayList<Track>, val 
     override fun onActionModeCreated() {}
 
     override fun onActionModeDestroyed() {}
-
-    fun searchOpened() {
-        transparentViewHeight = transparentView.height
-        transparentView.layoutParams?.height = 0
-
-        navigationViewHeight = navigationView?.height ?: 0
-        navigationView?.layoutParams?.height = 0
-    }
-
-    fun searchClosed() {
-        transparentView.layoutParams?.height = transparentViewHeight
-        navigationView?.layoutParams?.height = navigationViewHeight
-        notifyDataSetChanged()
-    }
 
     private fun getTransparentViewHolder(): TransparentViewHolder {
         if (transparentViewHolder == null) {
@@ -297,31 +282,6 @@ class OldSongAdapter(activity: SimpleActivity, var songs: ArrayList<Track>, val 
             }
         }
         return selectedSongs
-    }
-
-    fun updateSongs(newSongs: ArrayList<Track>, highlightText: String = "") {
-        val newHashCode = newSongs.hashCode()
-        if (newHashCode != songsHashCode) {
-            songsHashCode = newHashCode
-            textToHighlight = highlightText
-            songs = newSongs
-            currentSongIndex = -1
-            notifyDataSetChanged()
-        } else if (textToHighlight != highlightText) {
-            textToHighlight = highlightText
-            notifyDataSetChanged()
-        }
-        fastScroller?.measureRecyclerView()
-    }
-
-    fun updateSong(song: Track?) {
-        currentSong = song
-        navigationView?.apply {
-            song_info_title.text = song?.title ?: ""
-            song_info_artist.text = song?.artist ?: ""
-            song_progressbar.max = song?.duration ?: 0
-            song_progressbar.progress = 0
-        }
     }
 
     inner class TransparentViewHolder(view: View) : ViewHolder(view)
