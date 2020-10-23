@@ -36,7 +36,7 @@
     <string name="open_playlist">Abrir lista de reproducción</string>
     <string name="all_songs_cannot_be_deleted">La lista de reproducción \"Todas las canciones\" no puede ser eliminada.</string>
     <string name="empty_playlist">La lista de reproducción actual está vacía</string>
-    <string name="fetching_songs">Buscando canciones...</string>
+    <string name="fetching_songs">Buscando canciones…</string>
     <string name="all_songs">Todas las canciones</string>
     <string name="create_playlist_from_folder">Crear nueva lista de reproducción a partir de la carpeta</string>
     <string name="folder_contains_no_audio">Las carpetas seleccionadas no contienen archivos de audio</string>
@@ -47,6 +47,7 @@
     <string name="show_album_cover">Mostrar portada de álbum en la pantalla principal</string>
     <string name="all_tracks">All tracks</string>
     <string name="add_to_playlist">Add to playlist</string>
+    <string name="create_playlist_label">You can create a new playlist by selecting the wanted artists, albums or tracks and using Menu -> Add to playlist.</string>
 
     <!-- Artists -->
     <string name="artists">Artists</string>

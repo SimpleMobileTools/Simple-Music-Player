@@ -30,6 +30,7 @@ class PlaylistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPa
 
             activity.runOnUiThread {
                 playlists_placeholder.beVisibleIf(playlists.isEmpty())
+                playlists_placeholder_2.beVisibleIf(playlists.isEmpty())
                 val adapter = PlaylistsAdapter(activity, playlists, playlists_list, playlists_fastscroller) {
                     Intent(activity, TracksActivity::class.java).apply {
                         putExtra(PLAYLIST, Gson().toJson(it))
@@ -58,6 +59,7 @@ class PlaylistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPa
         val filtered = playlistsIgnoringSearch.filter { it.title.contains(text, true) }.toMutableList() as ArrayList<Playlist>
         (playlists_list.adapter as? PlaylistsAdapter)?.updateItems(filtered, text)
         playlists_placeholder.beVisibleIf(filtered.isEmpty())
+        playlists_placeholder_2.beVisibleIf(filtered.isEmpty())
     }
 
     override fun onSearchOpened() {
@@ -67,5 +69,6 @@ class PlaylistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPa
     override fun onSearchClosed() {
         (playlists_list.adapter as? PlaylistsAdapter)?.updateItems(playlistsIgnoringSearch)
         playlists_placeholder.beGoneIf(playlistsIgnoringSearch.isNotEmpty())
+        playlists_placeholder_2.beGoneIf(playlistsIgnoringSearch.isNotEmpty())
     }
 }

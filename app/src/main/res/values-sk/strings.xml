@@ -47,9 +47,10 @@
     <string name="show_album_cover">Zobraziť obal albumu na hlavnej obrazovke</string>
     <string name="all_tracks">Všetky skladby</string>
     <string name="add_to_playlist">Pridať do zoznamu skladieb</string>
+    <string name="create_playlist_label">Nový zoznam skladieb môžete vytvoriť označením žiadaných interpretov, albumov alebo skladieb a použitím Menu -> Pridať do zoznamu skladieb.</string>
 
     <!-- Artists -->
-    <string name="artists">Umelci</string>
+    <string name="artists">Interpreti</string>
     <string name="albums">Albumy</string>
     <plurals name="albums_plural">
         <item quantity="one">%d album</item>

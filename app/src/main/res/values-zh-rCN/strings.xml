@@ -47,6 +47,7 @@
     <string name="show_album_cover">在主屏幕显示专辑封面</string>
     <string name="all_tracks">All tracks</string>
     <string name="add_to_playlist">Add to playlist</string>
+    <string name="create_playlist_label">You can create a new playlist by selecting the wanted artists, albums or tracks and using Menu -> Add to playlist.</string>
 
     <!-- Artists -->
     <string name="artists">Artists</string>
