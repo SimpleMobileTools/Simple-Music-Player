@@ -794,6 +794,8 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
                 mCurrTrack = null
             }
+        } else {
+            mCurrTrack = null
         }
 
         mPlayer?.stop()
