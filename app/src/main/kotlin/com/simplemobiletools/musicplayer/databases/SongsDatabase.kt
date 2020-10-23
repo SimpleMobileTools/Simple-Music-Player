@@ -108,8 +108,7 @@ abstract class SongsDatabase : RoomDatabase() {
 
         private val MIGRATION_3_4 = object : Migration(3, 4) {
             override fun migrate(database: SupportSQLiteDatabase) {
-                database.execSQL("CREATE TABLE `queue_items` (`track_id` INTEGER NOT NULL, `track_order` INTEGER NOT NULL, `is_current` INTEGER NOT NULL, `last_position` INTEGER NOT NULL)")
-                database.execSQL("CREATE UNIQUE INDEX `index_queue_items_id` ON `queue_items` (`track_id`)")
+                database.execSQL("CREATE TABLE `queue_items` (`track_id` INTEGER NOT NULL PRIMARY KEY, `track_order` INTEGER NOT NULL, `is_current` INTEGER NOT NULL, `last_position` INTEGER NOT NULL)")
             }
         }
 
