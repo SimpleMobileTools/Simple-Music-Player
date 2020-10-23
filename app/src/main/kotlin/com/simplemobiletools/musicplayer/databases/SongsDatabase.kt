@@ -108,9 +108,8 @@ abstract class SongsDatabase : RoomDatabase() {
 
         private val MIGRATION_3_4 = object : Migration(3, 4) {
             override fun migrate(database: SupportSQLiteDatabase) {
-                database.execSQL("CREATE TABLE `queue_items` (`id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, `track_id` INTEGER NOT NULL, " +
-                        "`track_order` INTEGER NOT NULL, `is_playing` INTEGER NOT NULL, `last_position` INTEGER NOT NULL, `was_played` INTEGER NOT NULL)")
-                database.execSQL("CREATE UNIQUE INDEX `index_queue_items_id` ON `queue_items` (`id`)")
+                database.execSQL("CREATE TABLE `queue_items` (`track_id` INTEGER NOT NULL, `track_order` INTEGER NOT NULL, `is_current` INTEGER NOT NULL, `last_position` INTEGER NOT NULL)")
+                database.execSQL("CREATE UNIQUE INDEX `index_queue_items_id` ON `queue_items` (`track_id`)")
             }
         }
 
@@ -122,7 +121,7 @@ abstract class SongsDatabase : RoomDatabase() {
                             "album TEXT NOT NULL, playlist_id INTEGER NOT NULL, track_id INTEGER NOT NULL DEFAULT 0, " +
                             "cover_art TEXT default '' NOT NULL, PRIMARY KEY(media_store_id, playlist_id))")
 
-                    execSQL("INSERT INTO songs_new (media_store_id, title, artist, path, duration, album, playlist_id) " +
+                    execSQL("INSERT OR IGNORE INTO songs_new (media_store_id, title, artist, path, duration, album, playlist_id) " +
                             "SELECT media_store_id, title, artist, path, duration, album, playlist_id FROM songs")
 
                     execSQL("DROP TABLE songs")
