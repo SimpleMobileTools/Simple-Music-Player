@@ -8,6 +8,7 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
+import com.simplemobiletools.commons.dialogs.ConfirmationDialog
 import com.simplemobiletools.commons.extensions.getColoredDrawableWithColor
 import com.simplemobiletools.commons.extensions.highlightTextPart
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
@@ -17,6 +18,7 @@ import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
 import com.simplemobiletools.musicplayer.extensions.addTracksToPlaylist
 import com.simplemobiletools.musicplayer.extensions.addTracksToQueue
+import com.simplemobiletools.musicplayer.extensions.deleteTracks
 import com.simplemobiletools.musicplayer.extensions.getAlbumTracksSync
 import com.simplemobiletools.musicplayer.models.Album
 import com.simplemobiletools.musicplayer.models.Track
@@ -57,6 +59,7 @@ class AlbumsAdapter(activity: SimpleActivity, var albums: ArrayList<Album>, recy
         when (id) {
             R.id.cab_add_to_playlist -> addToPlaylist()
             R.id.cab_add_to_queue -> addToQueue()
+            R.id.cab_delete -> askConfirmDelete()
         }
     }
 
@@ -100,7 +103,37 @@ class AlbumsAdapter(activity: SimpleActivity, var albums: ArrayList<Album>, recy
         return tracks
     }
 
-    private fun getSelectedAlbums(): List<Album> = albums.filter { selectedKeys.contains(it.id) }.toList()
+    private fun askConfirmDelete() {
+        ConfirmationDialog(activity) {
+            ensureBackgroundThread {
+                val positions = ArrayList<Int>()
+                val selectedAlbums = getSelectedAlbums()
+                val tracks = ArrayList<Track>()
+                selectedAlbums.forEach { album ->
+                    val position = albums.indexOfFirst { it.id == album.id }
+                    if (position != -1) {
+                        positions.add(position)
+                    }
+
+                    tracks.addAll(activity.getAlbumTracksSync(album.id))
+                }
+
+                activity.deleteTracks(tracks) {
+                    activity.runOnUiThread {
+                        positions.sortDescending()
+                        removeSelectedItems(positions)
+                        positions.forEach {
+                            albums.removeAt(it)
+                        }
+
+                        finishActMode()
+                    }
+                }
+            }
+        }
+    }
+
+    private fun getSelectedAlbums(): List<Album> = albums.filter { selectedKeys.contains(it.hashCode()) }.toList()
 
     fun updateItems(newItems: ArrayList<Album>, highlightText: String = "") {
         if (newItems.hashCode() != albums.hashCode()) {

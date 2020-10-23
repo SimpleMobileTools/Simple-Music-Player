@@ -106,7 +106,7 @@ class ArtistsAdapter(activity: SimpleActivity, var artists: ArrayList<Artist>, r
         return tracks
     }
 
-    private fun getSelectedArtists(): List<Artist> = artists.filter { selectedKeys.contains(it.id) }.toList()
+    private fun getSelectedArtists(): List<Artist> = artists.filter { selectedKeys.contains(it.hashCode()) }.toList()
 
     fun updateItems(newItems: ArrayList<Artist>, highlightText: String = "") {
         if (newItems.hashCode() != artists.hashCode()) {
