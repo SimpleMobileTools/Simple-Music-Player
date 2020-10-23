@@ -11,8 +11,8 @@ import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.adapters.TracksAdapter
 import com.simplemobiletools.musicplayer.adapters.TracksHeaderAdapter
 import com.simplemobiletools.musicplayer.extensions.getAlbumTracksSync
-import com.simplemobiletools.musicplayer.extensions.getPlaylistTracks
 import com.simplemobiletools.musicplayer.extensions.resetQueueItems
+import com.simplemobiletools.musicplayer.extensions.tracksDAO
 import com.simplemobiletools.musicplayer.helpers.*
 import com.simplemobiletools.musicplayer.models.*
 import com.simplemobiletools.musicplayer.services.MusicService
@@ -45,7 +45,7 @@ class TracksActivity : SimpleActivity() {
             val tracks = ArrayList<Track>()
             val listItems = ArrayList<ListItem>()
             if (playlist != null) {
-                val playlistTracks = getPlaylistTracks(playlist.id)
+                val playlistTracks = tracksDAO.getTracksFromPlaylist(playlist.id)
                 tracks.addAll(playlistTracks)
                 listItems.addAll(tracks)
             } else {

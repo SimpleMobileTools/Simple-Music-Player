@@ -29,10 +29,6 @@ interface SongsDao {
     @Query("DELETE FROM tracks WHERE playlist_id = :playlistId")
     fun removePlaylistSongs(playlistId: Int)
 
-    // this removes the given song from every playlist
-    @Query("DELETE FROM tracks WHERE path = :path")
-    fun removeSongPath(path: String)
-
     @Query("UPDATE tracks SET path = :newPath, artist = :artist, title = :title WHERE path = :oldPath")
     fun updateSongInfo(newPath: String, artist: String, title: String, oldPath: String)
 

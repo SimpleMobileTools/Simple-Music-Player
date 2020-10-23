@@ -10,10 +10,7 @@ import com.simplemobiletools.commons.extensions.getIntValue
 import com.simplemobiletools.commons.extensions.getLongValue
 import com.simplemobiletools.commons.extensions.getStringValue
 import com.simplemobiletools.commons.extensions.showErrorToast
-import com.simplemobiletools.commons.helpers.AlphanumericComparator
-import com.simplemobiletools.commons.helpers.ensureBackgroundThread
-import com.simplemobiletools.commons.helpers.isOreoPlus
-import com.simplemobiletools.commons.helpers.isQPlus
+import com.simplemobiletools.commons.helpers.*
 import com.simplemobiletools.musicplayer.databases.SongsDatabase
 import com.simplemobiletools.musicplayer.helpers.*
 import com.simplemobiletools.musicplayer.interfaces.PlaylistsDao
@@ -22,7 +19,6 @@ import com.simplemobiletools.musicplayer.interfaces.SongsDao
 import com.simplemobiletools.musicplayer.models.*
 import com.simplemobiletools.musicplayer.services.MusicService
 import org.greenrobot.eventbus.EventBus
-import java.io.File
 
 @SuppressLint("NewApi")
 fun Context.sendIntent(action: String) {
@@ -50,34 +46,6 @@ val Context.queueDAO: QueueItemsDao get() = getTracksDB().QueueItemsDao()
 fun Context.getTracksDB() = SongsDatabase.getInstance(this)
 
 fun Context.getPlaylistIdWithTitle(title: String) = playlistDAO.getPlaylistWithTitle(title)?.id ?: -1
-
-fun Context.getPlaylistTracks(playlistId: Int): ArrayList<Track> {
-    val validTracks = ArrayList<Track>()
-    if (isQPlus()) {
-        validTracks.addAll(tracksDAO.getTracksFromPlaylist(playlistId))
-    } else {
-        val invalidTracks = ArrayList<Track>()
-        val tracks = tracksDAO.getTracksFromPlaylist(playlistId)
-        val showFilename = config.showFilename
-        tracks.forEach {
-            it.title = it.getProperTitle(showFilename)
-
-            if (File(it.path).exists() || it.path.startsWith("content://")) {
-                validTracks.add(it)
-            } else {
-                invalidTracks.add(it)
-            }
-        }
-
-        getTracksDB().runInTransaction {
-            invalidTracks.forEach {
-                tracksDAO.removeSongPath(it.path)
-            }
-        }
-    }
-
-    return validTracks
-}
 
 fun Context.deletePlaylists(playlists: ArrayList<Playlist>) {
     playlistDAO.deletePlaylists(playlists)
