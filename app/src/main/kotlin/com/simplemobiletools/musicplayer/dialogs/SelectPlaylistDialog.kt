@@ -23,15 +23,16 @@ class SelectPlaylistDialog(val activity: Activity, val callback: (playlistId: In
             val playlists = activity.playlistDAO.getAll() as ArrayList<Playlist>
             activity.runOnUiThread {
                 initDialog(playlists, view)
+
+                if (playlists.isEmpty()) {
+                    showNewPlaylistDialog()
+                }
             }
         }
 
         view.dialog_select_playlist_new_radio.setOnClickListener {
             view.dialog_select_playlist_new_radio.isChecked = false
-            NewPlaylistDialog(activity) {
-                callback(it)
-                dialog?.dismiss()
-            }
+            showNewPlaylistDialog()
         }
     }
 
@@ -58,5 +59,12 @@ class SelectPlaylistDialog(val activity: Activity, val callback: (playlistId: In
             .create().apply {
                 activity.setupDialogStuff(view, this)
             }
+    }
+
+    private fun showNewPlaylistDialog() {
+        NewPlaylistDialog(activity) {
+            callback(it)
+            dialog?.dismiss()
+        }
     }
 }
