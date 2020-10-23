@@ -3,7 +3,6 @@ package com.simplemobiletools.musicplayer.helpers
 import android.net.Uri
 
 const val PROGRESS = "progress"
-const val CALL_SETUP_AFTER = "call_setup_after"
 const val TRACK_IDS = "track_ids"
 const val EDITED_TRACK = "edited_track"
 const val ALL_TRACKS_PLAYLIST_ID = 1

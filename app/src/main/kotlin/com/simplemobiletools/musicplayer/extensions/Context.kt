@@ -6,13 +6,14 @@ import android.content.Context
 import android.content.Intent
 import android.provider.MediaStore
 import android.provider.MediaStore.Audio
-import android.util.TypedValue
 import com.simplemobiletools.commons.extensions.getIntValue
 import com.simplemobiletools.commons.extensions.getLongValue
 import com.simplemobiletools.commons.extensions.getStringValue
 import com.simplemobiletools.commons.extensions.showErrorToast
-import com.simplemobiletools.commons.helpers.*
-import com.simplemobiletools.musicplayer.R
+import com.simplemobiletools.commons.helpers.AlphanumericComparator
+import com.simplemobiletools.commons.helpers.ensureBackgroundThread
+import com.simplemobiletools.commons.helpers.isOreoPlus
+import com.simplemobiletools.commons.helpers.isQPlus
 import com.simplemobiletools.musicplayer.databases.SongsDatabase
 import com.simplemobiletools.musicplayer.helpers.*
 import com.simplemobiletools.musicplayer.interfaces.PlaylistsDao
@@ -45,24 +46,6 @@ val Context.playlistDAO: PlaylistsDao get() = getTracksDB().PlaylistsDao()
 val Context.tracksDAO: SongsDao get() = getTracksDB().SongsDao()
 
 val Context.queueDAO: QueueItemsDao get() = getTracksDB().QueueItemsDao()
-
-fun Context.playlistChanged(newID: Int, callSetup: Boolean = true) {
-    config.currentPlaylist = newID
-    sendIntent(PAUSE)
-    Intent(this, MusicService::class.java).apply {
-        putExtra(CALL_SETUP_AFTER, callSetup)
-        action = REFRESH_LIST
-        startService(this)
-    }
-}
-
-fun Context.getActionBarHeight(): Int {
-    val textSizeAttr = intArrayOf(R.attr.actionBarSize)
-    val attrs = obtainStyledAttributes(TypedValue().data, textSizeAttr)
-    val actionBarSize = attrs.getDimensionPixelSize(0, -1)
-    attrs.recycle()
-    return actionBarSize
-}
 
 fun Context.getTracksDB() = SongsDatabase.getInstance(this)
 
@@ -241,13 +224,6 @@ fun Context.getAlbumsSync(artist: Artist): ArrayList<Album> {
 
     albums.sortWith { o1, o2 -> AlphanumericComparator().compare(o1.title.toLowerCase(), o2.title.toLowerCase()) }
     return albums
-}
-
-fun Context.getAlbumTracks(albumId: Long, callback: (tracks: ArrayList<Track>) -> Unit) {
-    ensureBackgroundThread {
-        val tracks = getAlbumTracksSync(albumId)
-        callback(tracks)
-    }
 }
 
 fun Context.getAlbumTracksSync(albumId: Long): ArrayList<Track> {

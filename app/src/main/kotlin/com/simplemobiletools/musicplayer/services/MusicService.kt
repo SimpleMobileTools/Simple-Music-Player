@@ -150,7 +150,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             EDIT -> handleEdit(intent)
             FINISH -> handleFinish()
             FINISH_IF_NOT_PLAYING -> finishIfNotPlaying()
-            REFRESH_LIST -> handleRefreshList(intent)
+            REFRESH_LIST -> handleRefreshList()
             UPDATE_NEXT_TRACK -> broadcastNextTrackChange()
             SET_PROGRESS -> handleSetProgress(intent)
             SET_EQUALIZER -> handleSetEqualizer(intent)
@@ -267,17 +267,12 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         stopSelf()
     }
 
-    private fun handleRefreshList(intent: Intent) {
+    private fun handleRefreshList() {
         ensureBackgroundThread {
             mTracks = getQueuedTracks()
             checkTrackOrder()
             EventBus.getDefault().post(Events.QueueUpdated(mTracks))
             broadcastNextTrackChange()
-
-            if (intent.getBooleanExtra(CALL_SETUP_AFTER, false)) {
-                mPlayOnPrepare = false
-                setupNextTrack()
-            }
         }
     }
 
@@ -295,17 +290,6 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
                 setPreset(presetID)
             }
         }
-    }
-
-    private fun handleRemoveTrackIds(intent: Intent) {
-        val ids = intent.getIntegerArrayListExtra(TRACK_IDS)
-        val tracksToRemove = ArrayList<Track>()
-        mTracks.sortedDescending().forEach {
-            if (ids.contains(it.path.hashCode())) {
-                tracksToRemove.add(it)
-            }
-        }
-        mTracks.removeAll(tracksToRemove)
     }
 
     private fun setupTrack() {
@@ -555,7 +539,6 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
     private fun pauseTrack() {
         initMediaPlayerIfNeeded()
-
         mPlayer!!.pause()
         trackStateChanged(false)
     }
