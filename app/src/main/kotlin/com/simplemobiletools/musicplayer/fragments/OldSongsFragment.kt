@@ -37,7 +37,6 @@ class OldSongsFragment(context: Context, attributeSet: AttributeSet) : MyViewPag
     private lateinit var activity: SimpleActivity
 
     fun onResume() {
-        getSongsAdapter()?.updateColors()
         songs_playlist_empty_placeholder_2.setTextColor(activity.getAdjustedPrimaryColor())
         songs_playlist_empty_placeholder_2.paintFlags = songs_playlist_empty_placeholder_2.paintFlags or Paint.UNDERLINE_TEXT_FLAG
 

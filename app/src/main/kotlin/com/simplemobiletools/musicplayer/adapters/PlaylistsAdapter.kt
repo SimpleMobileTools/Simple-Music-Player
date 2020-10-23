@@ -5,7 +5,6 @@ import android.view.View
 import android.view.ViewGroup
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
 import com.simplemobiletools.commons.extensions.deleteFiles
-import com.simplemobiletools.commons.extensions.getAdjustedPrimaryColor
 import com.simplemobiletools.commons.extensions.getFilenameFromPath
 import com.simplemobiletools.commons.extensions.highlightTextPart
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
@@ -16,11 +15,8 @@ import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
 import com.simplemobiletools.musicplayer.dialogs.NewPlaylistDialog
 import com.simplemobiletools.musicplayer.dialogs.RemovePlaylistDialog
-import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.extensions.deletePlaylists
 import com.simplemobiletools.musicplayer.extensions.getPlaylistTracks
-import com.simplemobiletools.musicplayer.extensions.playlistChanged
-import com.simplemobiletools.musicplayer.helpers.ALL_TRACKS_PLAYLIST_ID
 import com.simplemobiletools.musicplayer.models.Playlist
 import kotlinx.android.synthetic.main.item_playlist.view.*
 import java.util.*
@@ -79,11 +75,11 @@ class PlaylistsAdapter(activity: SimpleActivity, var playlists: ArrayList<Playli
             if (it) {
                 ensureBackgroundThread {
                     deletePlaylistSongs(ids) {
-                        removePlaylists(ids)
+                        removePlaylists()
                     }
                 }
             } else {
-                removePlaylists(ids)
+                removePlaylists()
             }
         }
     }
@@ -101,14 +97,7 @@ class PlaylistsAdapter(activity: SimpleActivity, var playlists: ArrayList<Playli
         }
     }
 
-    private fun removePlaylists(ids: ArrayList<Int>) {
-        for (key in selectedKeys) {
-            val playlist = getItemWithKey(key) ?: continue
-            if (playlist.id == activity.config.currentPlaylist) {
-                activity.playlistChanged(ALL_TRACKS_PLAYLIST_ID)
-            }
-        }
-
+    private fun removePlaylists() {
         val playlistsToDelete = ArrayList<Playlist>(selectedKeys.size)
         val positions = ArrayList<Int>()
         for (key in selectedKeys) {
@@ -123,14 +112,9 @@ class PlaylistsAdapter(activity: SimpleActivity, var playlists: ArrayList<Playli
         playlists.removeAll(playlistsToDelete)
 
         ensureBackgroundThread {
-            val isDeletingCurrentPlaylist = ids.contains(activity.config.currentPlaylist)
             activity.deletePlaylists(playlistsToDelete)
             activity.runOnUiThread {
-                if (isDeletingCurrentPlaylist) {
-                    finishActMode()
-                } else {
-                    removeSelectedItems(positions)
-                }
+                removeSelectedItems(positions)
             }
         }
     }
