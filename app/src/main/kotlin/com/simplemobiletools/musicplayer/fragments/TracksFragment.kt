@@ -12,10 +12,7 @@ import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
 import com.simplemobiletools.musicplayer.activities.TrackActivity
 import com.simplemobiletools.musicplayer.adapters.TracksAdapter
-import com.simplemobiletools.musicplayer.extensions.getAlbumTracksSync
-import com.simplemobiletools.musicplayer.extensions.getAlbumsSync
-import com.simplemobiletools.musicplayer.extensions.getArtistsSync
-import com.simplemobiletools.musicplayer.extensions.resetQueueItems
+import com.simplemobiletools.musicplayer.extensions.*
 import com.simplemobiletools.musicplayer.helpers.RESTART_PLAYER
 import com.simplemobiletools.musicplayer.helpers.TRACK
 import com.simplemobiletools.musicplayer.models.Album
@@ -39,6 +36,13 @@ class TracksFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
                 tracks.addAll(activity.getAlbumTracksSync(it.id))
             }
             tracks.sortWith { o1, o2 -> AlphanumericComparator().compare(o1.title.toLowerCase(), o2.title.toLowerCase()) }
+
+            if (!context.config.wereCoversUpdated) {
+                tracks.filter { it.coverArt.isNotEmpty() }.forEach {
+                    activity.tracksDAO.updateCoverArt(it.coverArt, it.id)
+                }
+                context.config.wereCoversUpdated = true
+            }
 
             activity.runOnUiThread {
                 tracks_placeholder.beVisibleIf(tracks.isEmpty())

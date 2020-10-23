@@ -10,6 +10,7 @@ const val ALL_TRACKS_PLAYLIST_ID = 1
 const val START_SLEEP_TIMER = "start_sleep_timer"
 const val STOP_SLEEP_TIMER = "stop_sleep_timer"
 const val TRACK_ID = "track_id"
+const val WERE_COVERS_UPDATED = "were_covers_updated"
 const val RESTART_PLAYER = "RESTART_PLAYER"
 
 const val ARTIST = "artist"

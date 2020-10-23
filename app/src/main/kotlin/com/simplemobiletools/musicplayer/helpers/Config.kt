@@ -54,4 +54,9 @@ class Config(context: Context) : BaseConfig(context) {
     var sleepInTS: Long
         get() = prefs.getLong(SLEEP_IN_TS, 0)
         set(sleepInTS) = prefs.edit().putLong(SLEEP_IN_TS, sleepInTS).apply()
+
+    // update the way cover art is stored from version 5.4.0, do it only at upgrading from an older version
+    var wereCoversUpdated: Boolean
+        get() = prefs.getBoolean(WERE_COVERS_UPDATED, false)
+        set(wereCoversUpdated) = prefs.edit().putBoolean(WERE_COVERS_UPDATED, wereCoversUpdated).apply()
 }
