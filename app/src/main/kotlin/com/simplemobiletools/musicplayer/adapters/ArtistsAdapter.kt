@@ -67,9 +67,9 @@ class ArtistsAdapter(activity: SimpleActivity, var artists: ArrayList<Artist>, r
 
     override fun getIsItemSelectable(position: Int) = true
 
-    override fun getItemSelectionKey(position: Int) = artists.getOrNull(position)?.id
+    override fun getItemSelectionKey(position: Int) = artists.getOrNull(position)?.hashCode()
 
-    override fun getItemKeyPosition(key: Int) = artists.indexOfFirst { it.id == key }
+    override fun getItemKeyPosition(key: Int) = artists.indexOfFirst { it.hashCode() == key }
 
     override fun onActionModeCreated() {}
 
@@ -123,7 +123,7 @@ class ArtistsAdapter(activity: SimpleActivity, var artists: ArrayList<Artist>, r
 
     private fun setupView(view: View, artist: Artist) {
         view.apply {
-            artist_frame?.isSelected = selectedKeys.contains(artist.id)
+            artist_frame?.isSelected = selectedKeys.contains(artist.hashCode())
             artist_title.text = if (textToHighlight.isEmpty()) artist.title else artist.title.highlightTextPart(textToHighlight, adjustedPrimaryColor)
             artist_title.setTextColor(textColor)
 

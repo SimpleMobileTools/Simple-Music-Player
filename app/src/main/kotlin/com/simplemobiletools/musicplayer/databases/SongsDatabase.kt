@@ -7,7 +7,10 @@ import androidx.room.RoomDatabase
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.simplemobiletools.musicplayer.R
-import com.simplemobiletools.musicplayer.extensions.*
+import com.simplemobiletools.musicplayer.extensions.getAlbumTracksSync
+import com.simplemobiletools.musicplayer.extensions.getAlbumsSync
+import com.simplemobiletools.musicplayer.extensions.getArtistsSync
+import com.simplemobiletools.musicplayer.extensions.playlistDAO
 import com.simplemobiletools.musicplayer.helpers.ALL_TRACKS_PLAYLIST_ID
 import com.simplemobiletools.musicplayer.helpers.RoomHelper
 import com.simplemobiletools.musicplayer.interfaces.PlaylistsDao

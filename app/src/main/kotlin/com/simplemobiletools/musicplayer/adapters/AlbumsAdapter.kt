@@ -64,9 +64,9 @@ class AlbumsAdapter(activity: SimpleActivity, var albums: ArrayList<Album>, recy
 
     override fun getIsItemSelectable(position: Int) = true
 
-    override fun getItemSelectionKey(position: Int) = albums.getOrNull(position)?.id
+    override fun getItemSelectionKey(position: Int) = albums.getOrNull(position)?.hashCode()
 
-    override fun getItemKeyPosition(key: Int) = albums.indexOfFirst { it.id == key }
+    override fun getItemKeyPosition(key: Int) = albums.indexOfFirst { it.hashCode() == key }
 
     override fun onActionModeCreated() {}
 
@@ -117,7 +117,7 @@ class AlbumsAdapter(activity: SimpleActivity, var albums: ArrayList<Album>, recy
 
     private fun setupView(view: View, album: Album) {
         view.apply {
-            album_frame?.isSelected = selectedKeys.contains(album.id)
+            album_frame?.isSelected = selectedKeys.contains(album.hashCode())
             album_title.text = if (textToHighlight.isEmpty()) album.title else album.title.highlightTextPart(textToHighlight, adjustedPrimaryColor)
             album_title.setTextColor(textColor)
 

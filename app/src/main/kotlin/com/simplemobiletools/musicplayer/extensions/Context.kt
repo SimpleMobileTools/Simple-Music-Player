@@ -141,7 +141,7 @@ fun Context.getArtistsSync(): ArrayList<Artist> {
         cursor?.use {
             if (cursor.moveToFirst()) {
                 do {
-                    val id = cursor.getIntValue(Audio.Artists._ID)
+                    val id = cursor.getLongValue(Audio.Artists._ID)
                     val title = cursor.getStringValue(Audio.Artists.ARTIST)
                     var artist = Artist(id, title, 0, 0, 0)
                     artist = fillArtistExtras(this, artist)
@@ -188,7 +188,7 @@ private fun fillArtistExtras(context: Context, artist: Artist): Artist {
                         artist.albumArtId = albumId
                     }
 
-                    artist.trackCnt += context.getAlbumTracksSync(albumId.toInt()).size
+                    artist.trackCnt += context.getAlbumTracksSync(albumId).size
                 } while (cursor.moveToNext())
             }
         }
@@ -227,7 +227,7 @@ fun Context.getAlbumsSync(artist: Artist): ArrayList<Album> {
         cursor?.use {
             if (cursor.moveToFirst()) {
                 do {
-                    val id = cursor.getIntValue(Audio.Albums._ID)
+                    val id = cursor.getLongValue(Audio.Albums._ID)
                     val artistName = cursor.getStringValue(Audio.Albums.ARTIST)
                     val title = cursor.getStringValue(Audio.Albums.ALBUM)
                     val coverArt = ContentUris.withAppendedId(artworkUri, id.toLong()).toString()
@@ -245,14 +245,14 @@ fun Context.getAlbumsSync(artist: Artist): ArrayList<Album> {
     return albums
 }
 
-fun Context.getAlbumTracks(albumId: Int, callback: (tracks: ArrayList<Track>) -> Unit) {
+fun Context.getAlbumTracks(albumId: Long, callback: (tracks: ArrayList<Track>) -> Unit) {
     ensureBackgroundThread {
         val tracks = getAlbumTracksSync(albumId)
         callback(tracks)
     }
 }
 
-fun Context.getAlbumTracksSync(albumId: Int): ArrayList<Track> {
+fun Context.getAlbumTracksSync(albumId: Long): ArrayList<Track> {
     val tracks = ArrayList<Track>()
     val uri = Audio.Media.EXTERNAL_CONTENT_URI
     val projection = arrayOf(
@@ -266,7 +266,7 @@ fun Context.getAlbumTracksSync(albumId: Int): ArrayList<Track> {
 
     val selection = "${Audio.Albums.ALBUM_ID} = ?"
     val selectionArgs = arrayOf(albumId.toString())
-    val coverUri = ContentUris.withAppendedId(artworkUri, albumId.toLong())
+    val coverUri = ContentUris.withAppendedId(artworkUri, albumId)
     var coverArt = ""
 
     // check if the album art file exists at all
