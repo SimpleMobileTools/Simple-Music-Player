@@ -42,7 +42,7 @@ class TracksFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
 
             activity.runOnUiThread {
                 tracks_placeholder.beVisibleIf(tracks.isEmpty())
-                val adapter = TracksAdapter(activity, tracks, tracks_list, tracks_fastscroller) {
+                val adapter = TracksAdapter(activity, tracks, false, tracks_list, tracks_fastscroller) {
                     activity.resetQueueItems(tracks) {
                         Intent(activity, TrackActivity::class.java).apply {
                             putExtra(TRACK, Gson().toJson(it))

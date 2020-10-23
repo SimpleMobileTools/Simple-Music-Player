@@ -22,8 +22,8 @@ import com.simplemobiletools.musicplayer.models.Track
 import kotlinx.android.synthetic.main.item_track.view.*
 import java.util.*
 
-class TracksAdapter(activity: SimpleActivity, var tracks: ArrayList<Track>, recyclerView: MyRecyclerView, fastScroller: FastScroller, itemClick: (Any) -> Unit) :
-        MyRecyclerViewAdapter(activity, recyclerView, fastScroller, itemClick) {
+class TracksAdapter(activity: SimpleActivity, var tracks: ArrayList<Track>, val isPlaylistContent: Boolean, recyclerView: MyRecyclerView,
+                    fastScroller: FastScroller, itemClick: (Any) -> Unit) : MyRecyclerViewAdapter(activity, recyclerView, fastScroller, itemClick) {
 
     private var textToHighlight = ""
     private val placeholder = resources.getColoredDrawableWithColor(R.drawable.ic_headset, textColor)
@@ -46,7 +46,11 @@ class TracksAdapter(activity: SimpleActivity, var tracks: ArrayList<Track>, recy
 
     override fun getItemCount() = tracks.size
 
-    override fun prepareActionMode(menu: Menu) {}
+    override fun prepareActionMode(menu: Menu) {
+        menu.apply {
+            findItem(R.id.cab_remove_from_playlist).isVisible = isPlaylistContent
+        }
+    }
 
     override fun actionItemPressed(id: Int) {
         if (selectedKeys.isEmpty()) {
@@ -56,6 +60,7 @@ class TracksAdapter(activity: SimpleActivity, var tracks: ArrayList<Track>, recy
         when (id) {
             R.id.cab_add_to_playlist -> addToPlaylist()
             R.id.cab_add_to_queue -> addToQueue()
+            R.id.cab_remove_from_playlist -> removeFromPlaylist()
             R.id.cab_delete -> askConfirmDelete()
         }
     }
@@ -83,6 +88,10 @@ class TracksAdapter(activity: SimpleActivity, var tracks: ArrayList<Track>, recy
         activity.addTracksToQueue(getSelectedTracks()) {
             finishActMode()
         }
+    }
+
+    private fun removeFromPlaylist() {
+
     }
 
     private fun askConfirmDelete() {

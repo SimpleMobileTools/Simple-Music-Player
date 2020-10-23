@@ -61,7 +61,7 @@ class TracksActivity : SimpleActivity() {
 
             runOnUiThread {
                 val adapter = if (playlist != null) {
-                    TracksAdapter(this, tracks, tracks_list, tracks_fastscroller) {
+                    TracksAdapter(this, tracks, true, tracks_list, tracks_fastscroller) {
                         itemClicked(tracks, it as Track)
                     }
                 } else {
