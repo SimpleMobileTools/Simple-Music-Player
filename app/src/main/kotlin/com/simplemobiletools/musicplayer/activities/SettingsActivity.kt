@@ -84,7 +84,12 @@ class SettingsActivity : SimpleActivity() {
     }
 
     private fun setupEqualizer() {
-        val equalizer = MusicService.mEqualizer ?: return
+        val equalizer = MusicService.mEqualizer
+        if (equalizer == null) {
+            settings_equalizer_holder.beGone()
+            return
+        }
+
         val items = arrayListOf<RadioItem>()
         try {
             (0 until equalizer.numberOfPresets).mapTo(items) { RadioItem(it, equalizer.getPresetName(it.toShort())) }
