@@ -84,22 +84,27 @@ class QueueAdapter(activity: SimpleActivity, val items: ArrayList<Track>, recycl
 
     override fun getIsItemSelectable(position: Int) = true
 
-    override fun getItemSelectionKey(position: Int) = items.getOrNull(position)?.id?.toInt()
+    override fun getItemSelectionKey(position: Int) = items.getOrNull(position)?.hashCode()
 
-    override fun getItemKeyPosition(key: Int) = items.indexOfFirst { it.id.toInt() == key }
+    override fun getItemKeyPosition(key: Int) = items.indexOfFirst { it.hashCode() == key }
 
     override fun onActionModeCreated() {}
 
     override fun onActionModeDestroyed() {}
 
     private fun removeFromQueue() {
-        val tracks = getSelectedTracks()
-        activity.removeQueueItems(tracks) {
-            activity.runOnUiThread {
-                finishActMode()
-                notifyDataSetChanged()
+        val positions = ArrayList<Int>()
+        val selectedTracks = getSelectedTracks()
+        selectedTracks.forEach { track ->
+            val position = items.indexOfFirst { it.id == track.id }
+            if (position != -1) {
+                positions.add(position)
+            }
+        }
 
-                if (tracks.contains(MusicService.mCurrTrack)) {
+        activity.removeQueueItems(selectedTracks) {
+            activity.runOnUiThread {
+                if (selectedTracks.contains(MusicService.mCurrTrack)) {
                     if (MusicService.mTracks.isEmpty()) {
                         activity.sendIntent(FINISH)
                         activity.finish()
@@ -112,15 +117,18 @@ class QueueAdapter(activity: SimpleActivity, val items: ArrayList<Track>, recycl
                         activity.startService(this)
                     }
                 }
+
+                positions.sortDescending()
+                removeSelectedItems(positions)
             }
         }
     }
 
-    private fun getSelectedTracks(): List<Track> = items.filter { selectedKeys.contains(it.id.toInt()) }.toList()
+    private fun getSelectedTracks(): List<Track> = items.filter { selectedKeys.contains(it.hashCode()) }.toList()
 
     private fun setupView(view: View, track: Track, holder: ViewHolder) {
         view.apply {
-            track_queue_frame?.isSelected = selectedKeys.contains(track.id.toInt())
+            track_queue_frame?.isSelected = selectedKeys.contains(track.hashCode())
             track_queue_title.text = track.title
 
             arrayOf(track_queue_title, track_queue_duration).forEach {

@@ -130,8 +130,6 @@ class ArtistsAdapter(activity: SimpleActivity, var artists: ArrayList<Artist>, r
                         positions.forEach {
                             artists.removeAt(it)
                         }
-
-                        finishActMode()
                     }
                 }
             }

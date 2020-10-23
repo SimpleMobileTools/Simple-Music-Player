@@ -112,8 +112,6 @@ class TracksAdapter(activity: SimpleActivity, var tracks: ArrayList<Track>, val 
                 positions.forEach {
                     tracks.removeAt(it)
                 }
-
-                finishActMode()
             }
         }
     }

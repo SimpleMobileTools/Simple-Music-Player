@@ -154,8 +154,6 @@ class AlbumsTracksAdapter(activity: SimpleActivity, val items: ArrayList<ListIte
                         positions.forEach {
                             items.removeAt(it)
                         }
-
-                        finishActMode()
                     }
                 }
             }

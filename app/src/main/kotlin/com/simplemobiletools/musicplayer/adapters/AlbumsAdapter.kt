@@ -125,8 +125,6 @@ class AlbumsAdapter(activity: SimpleActivity, var albums: ArrayList<Album>, recy
                         positions.forEach {
                             albums.removeAt(it)
                         }
-
-                        finishActMode()
                     }
                 }
             }
