@@ -1,0 +1,4 @@
+ * Fully redesigned the app for better user experience
+ * Tracks can be split between playlists, artists, albums
+ * Queue can be easily customized by drag and dropping
+ * This is just the initial implementation, many improvements will come soon

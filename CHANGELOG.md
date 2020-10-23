@@ -1,6 +1,14 @@
 Changelog
 ==========
 
+Version 5.4.0 *(2020-10-23)*
+----------------------------
+
+ * Fully redesigned the app for better user experience
+ * Tracks can be split between playlists, artists, albums
+ * Queue can be easily customized by drag and dropping
+ * This is just the initial implementation, many improvements will come soon
+
 Version 5.3.4 *(2020-09-19)*
 ----------------------------
 
