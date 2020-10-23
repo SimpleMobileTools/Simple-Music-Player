@@ -5,7 +5,7 @@ import android.content.Intent
 import android.util.AttributeSet
 import com.google.gson.Gson
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
-import com.simplemobiletools.commons.extensions.beGone
+import com.simplemobiletools.commons.extensions.beGoneIf
 import com.simplemobiletools.commons.extensions.beVisibleIf
 import com.simplemobiletools.commons.helpers.AlphanumericComparator
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
@@ -34,6 +34,7 @@ class AlbumsFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
             albums.sortWith { o1, o2 -> AlphanumericComparator().compare(o1.title.toLowerCase(), o2.title.toLowerCase()) }
 
             activity.runOnUiThread {
+                albums_placeholder.beVisibleIf(albums.isEmpty())
                 val adapter = AlbumsAdapter(activity, albums, albums_list, albums_fastscroller) {
                     Intent(activity, TracksActivity::class.java).apply {
                         putExtra(ALBUM, Gson().toJson(it))
@@ -70,6 +71,6 @@ class AlbumsFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
 
     override fun onSearchClosed() {
         (albums_list.adapter as? AlbumsAdapter)?.updateItems(albumsIgnoringSearch)
-        albums_placeholder.beGone()
+        albums_placeholder.beGoneIf(albumsIgnoringSearch.isNotEmpty())
     }
 }

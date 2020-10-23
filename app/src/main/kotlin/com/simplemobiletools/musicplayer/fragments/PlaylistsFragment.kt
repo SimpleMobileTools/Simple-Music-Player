@@ -5,7 +5,7 @@ import android.content.Intent
 import android.util.AttributeSet
 import com.google.gson.Gson
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
-import com.simplemobiletools.commons.extensions.beGone
+import com.simplemobiletools.commons.extensions.beGoneIf
 import com.simplemobiletools.commons.extensions.beVisibleIf
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
@@ -29,6 +29,7 @@ class PlaylistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPa
             playlists = playlists.filter { it.trackCnt != 0 }.toMutableList() as ArrayList<Playlist>
 
             activity.runOnUiThread {
+                playlists_placeholder.beVisibleIf(playlists.isEmpty())
                 val adapter = PlaylistsAdapter(activity, playlists, playlists_list, playlists_fastscroller) {
                     Intent(activity, TracksActivity::class.java).apply {
                         putExtra(PLAYLIST, Gson().toJson(it))
@@ -65,6 +66,6 @@ class PlaylistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPa
 
     override fun onSearchClosed() {
         (playlists_list.adapter as? PlaylistsAdapter)?.updateItems(playlistsIgnoringSearch)
-        playlists_placeholder.beGone()
+        playlists_placeholder.beGoneIf(playlistsIgnoringSearch.isNotEmpty())
     }
 }

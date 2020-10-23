@@ -5,7 +5,7 @@ import android.content.Intent
 import android.util.AttributeSet
 import com.google.gson.Gson
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
-import com.simplemobiletools.commons.extensions.beGone
+import com.simplemobiletools.commons.extensions.beGoneIf
 import com.simplemobiletools.commons.extensions.beVisibleIf
 import com.simplemobiletools.musicplayer.activities.AlbumsActivity
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
@@ -22,6 +22,7 @@ class ArtistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
     override fun setupFragment(activity: SimpleActivity) {
         activity.getArtists { artists ->
             activity.runOnUiThread {
+                artists_placeholder.beVisibleIf(artists.isEmpty())
                 val adapter = ArtistsAdapter(activity, artists, artists_list, artists_fastscroller) {
                     Intent(activity, AlbumsActivity::class.java).apply {
                         putExtra(ARTIST, Gson().toJson(it as Artist))
@@ -58,6 +59,6 @@ class ArtistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
 
     override fun onSearchClosed() {
         (artists_list.adapter as? ArtistsAdapter)?.updateItems(artistsIgnoringSearch)
-        artists_placeholder.beGone()
+        artists_placeholder.beGoneIf(artistsIgnoringSearch.isNotEmpty())
     }
 }

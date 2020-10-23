@@ -5,7 +5,7 @@ import android.content.Intent
 import android.util.AttributeSet
 import com.google.gson.Gson
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
-import com.simplemobiletools.commons.extensions.beGone
+import com.simplemobiletools.commons.extensions.beGoneIf
 import com.simplemobiletools.commons.extensions.beVisibleIf
 import com.simplemobiletools.commons.helpers.AlphanumericComparator
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
@@ -41,6 +41,7 @@ class TracksFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
             tracks.sortWith { o1, o2 -> AlphanumericComparator().compare(o1.title.toLowerCase(), o2.title.toLowerCase()) }
 
             activity.runOnUiThread {
+                tracks_placeholder.beVisibleIf(tracks.isEmpty())
                 val adapter = TracksAdapter(activity, tracks, tracks_list, tracks_fastscroller) {
                     activity.resetQueueItems(tracks) {
                         Intent(activity, TrackActivity::class.java).apply {
@@ -80,6 +81,6 @@ class TracksFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
 
     override fun onSearchClosed() {
         (tracks_list.adapter as? TracksAdapter)?.updateItems(tracksIgnoringSearch)
-        tracks_placeholder.beGone()
+        tracks_placeholder.beGoneIf(tracksIgnoringSearch.isNotEmpty())
     }
 }
