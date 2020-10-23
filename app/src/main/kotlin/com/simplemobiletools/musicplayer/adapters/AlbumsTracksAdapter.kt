@@ -8,6 +8,7 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
+import com.simplemobiletools.commons.dialogs.ConfirmationDialog
 import com.simplemobiletools.commons.extensions.beGone
 import com.simplemobiletools.commons.extensions.beVisible
 import com.simplemobiletools.commons.extensions.getColoredDrawableWithColor
@@ -19,6 +20,7 @@ import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
 import com.simplemobiletools.musicplayer.extensions.addTracksToPlaylist
 import com.simplemobiletools.musicplayer.extensions.addTracksToQueue
+import com.simplemobiletools.musicplayer.extensions.deleteTracks
 import com.simplemobiletools.musicplayer.extensions.getAlbumTracksSync
 import com.simplemobiletools.musicplayer.models.Album
 import com.simplemobiletools.musicplayer.models.AlbumSection
@@ -89,6 +91,7 @@ class AlbumsTracksAdapter(activity: SimpleActivity, val items: ArrayList<ListIte
         when (id) {
             R.id.cab_add_to_playlist -> addToPlaylist()
             R.id.cab_add_to_queue -> addToQueue()
+            R.id.cab_delete -> askConfirmDelete()
         }
     }
 
@@ -120,6 +123,41 @@ class AlbumsTracksAdapter(activity: SimpleActivity, val items: ArrayList<ListIte
         ensureBackgroundThread {
             activity.addTracksToQueue(getAllSelectedTracks()) {
                 finishActMode()
+            }
+        }
+    }
+
+    private fun askConfirmDelete() {
+        ConfirmationDialog(activity) {
+            ensureBackgroundThread {
+                val positions = ArrayList<Int>()
+                val selectedTracks = getSelectedTracks()
+                selectedTracks.forEach { track ->
+                    val position = items.indexOfFirst { it is Track && it.id == track.id }
+                    if (position != -1) {
+                        positions.add(position)
+                    }
+                }
+
+                getSelectedAlbums().forEach { album ->
+                    val position = items.indexOfFirst { it is Album && it.id == album.id }
+                    if (position != -1) {
+                        positions.add(position)
+                    }
+                    selectedTracks.addAll(activity.getAlbumTracksSync(album.id))
+                }
+
+                activity.deleteTracks(selectedTracks) {
+                    activity.runOnUiThread {
+                        positions.sortDescending()
+                        removeSelectedItems(positions)
+                        positions.forEach {
+                            items.removeAt(it)
+                        }
+
+                        finishActMode()
+                    }
+                }
             }
         }
     }
