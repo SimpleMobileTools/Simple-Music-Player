@@ -45,30 +45,30 @@
     <string name="show_filename">Bestandsnaam als titel gebruiken</string>
     <string name="title_is_not_available">Als titel niet beschikbaar is</string>
     <string name="show_album_cover">Albumhoes in hoofdscherm weergeven</string>
-    <string name="all_tracks">All tracks</string>
-    <string name="add_to_playlist">Add to playlist</string>
-    <string name="create_playlist_label">You can create a new playlist by selecting the wanted artists, albums or tracks and using Menu -> Add to playlist.</string>
+    <string name="all_tracks">Alle nummers</string>
+    <string name="add_to_playlist">Naar afspeellijst</string>
+    <string name="create_playlist_label">Maak een nieuwe afspeellijst aan via Menu -> Naar afspeellijst na het kiezen van artiesten, albums of nummers.</string>
 
     <!-- Artists -->
-    <string name="artists">Artists</string>
+    <string name="artists">Artiesten</string>
     <string name="albums">Albums</string>
     <plurals name="albums_plural">
-        <item quantity="one">%d Album</item>
-        <item quantity="other">%d Albums</item>
+        <item quantity="one">%d album</item>
+        <item quantity="other">%d albums</item>
     </plurals>
 
-    <string name="tracks">Tracks</string>
+    <string name="tracks">Nummers</string>
     <plurals name="tracks_plural">
-        <item quantity="one">%d Track</item>
-        <item quantity="other">%d Tracks</item>
+        <item quantity="one">%d nummer</item>
+        <item quantity="other">%d nummers</item>
     </plurals>
 
     <!-- Queue -->
-    <string name="next_track">Next:</string>
-    <string name="track_queue">Track queue</string>
-    <string name="add_to_queue">Add to queue</string>
-    <string name="remove_from_queue">Remove from queue</string>
-    <string name="create_playlist_from_queue">Create playlist from queue</string>
+    <string name="next_track">Volgende:</string>
+    <string name="track_queue">Wachtrij</string>
+    <string name="add_to_queue">Aan wachtrij toevoegen</string>
+    <string name="remove_from_queue">Uit wachtrij verwijderen</string>
+    <string name="create_playlist_from_queue">Wachtrij naar afspeellijst</string>
 
     <!-- Settings -->
     <string name="equalizer">Equalizer</string>
