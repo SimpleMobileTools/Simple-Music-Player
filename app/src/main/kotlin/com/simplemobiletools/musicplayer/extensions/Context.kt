@@ -231,7 +231,7 @@ fun Context.getAlbumsSync(artist: Artist): ArrayList<Album> {
                     val id = cursor.getLongValue(Audio.Albums._ID)
                     val artistName = cursor.getStringValue(Audio.Albums.ARTIST)
                     val title = cursor.getStringValue(Audio.Albums.ALBUM)
-                    val coverArt = ContentUris.withAppendedId(artworkUri, id.toLong()).toString()
+                    val coverArt = ContentUris.withAppendedId(artworkUri, id).toString()
                     val year = cursor.getIntValue(Audio.Albums.FIRST_YEAR)
                     val album = Album(id, artistName, title, coverArt, year)
                     albums.add(album)
@@ -268,18 +268,7 @@ fun Context.getAlbumTracksSync(albumId: Long): ArrayList<Track> {
     val selection = "${Audio.Albums.ALBUM_ID} = ?"
     val selectionArgs = arrayOf(albumId.toString())
     val coverUri = ContentUris.withAppendedId(artworkUri, albumId)
-    var coverArt = ""
-
-    // check if the album art file exists at all
-    try {
-        val cursor = contentResolver.query(coverUri, null, null, null, null)
-        cursor?.use {
-            if (cursor.moveToFirst()) {
-                coverArt = coverUri.toString()
-            }
-        }
-    } catch (e: Exception) {
-    }
+    val coverArt = coverUri.toString()
 
     try {
         val cursor = contentResolver.query(uri, projection, selection, selectionArgs, null)
