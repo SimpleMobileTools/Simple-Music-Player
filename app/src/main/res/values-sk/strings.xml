@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Jednoduchý hudobný prehrávač</string>
     <string name="app_launcher_name">Hudobný prehrávač</string>
-    <string name="playlist_empty">Vás zoznam skladieb je prázdny</string>
+    <string name="playlist_empty">Vás playlist je prázdny</string>
     <string name="rename_song">Premenovať pesničku</string>
     <string name="rename_song_error">Počas premenúvania došlo k chybe</string>
     <string name="rename_song_empty">Prosím vyplňte všetky polia</string>
@@ -20,34 +20,34 @@
     <string name="sleep_timer">Časovač vypnutia</string>
 
     <!-- Playlists -->
-    <string name="add_file_to_playlist">Pridať súbor do zoznamu skladieb</string>
-    <string name="add_folder_to_playlist">Pridať priečinok do zoznamu skladieb</string>
-    <string name="manage_playlists">Spravovať zoznamy skladieb</string>
-    <string name="playlists">Zoznamy skladieb</string>
-    <string name="create_new_playlist">Vytvoriť zoznam skladieb</string>
-    <string name="rename_playlist">Premenovať zoznam skladieb</string>
-    <string name="playlist_name_exists">Zoznam skladieb s týmto názvom už existuje</string>
-    <string name="remove_playlist">Odstrániť zoznam skladieb</string>
-    <string name="remove_playlist_description">Toto iba odstráni vybrané zoznamy skladieb, nie samotné súbory.</string>
-    <string name="remove_playlist_description_placeholder">Toto iba odstráni zoznam skladieb \"%s\", nie samotné súbory..</string>
-    <string name="remove_from_playlist">Odstrániť zo zoznamu skladieb</string>
-    <string name="remove_from_playlist_description">Toto iba odstráni skladby zo zoznamu skladieb \"%s\", samotné súbory nebudú vymazané.</string>
+    <string name="add_file_to_playlist">Pridať súbor do playlistu</string>
+    <string name="add_folder_to_playlist">Pridať priečinok do playlistu</string>
+    <string name="manage_playlists">Spravovať playlisty</string>
+    <string name="playlists">Playlisty</string>
+    <string name="create_new_playlist">Vytvoriť playlist</string>
+    <string name="rename_playlist">Premenovať playlist</string>
+    <string name="playlist_name_exists">Playlist s týmto názvom už existuje</string>
+    <string name="remove_playlist">Odstrániť playlist</string>
+    <string name="remove_playlist_description">Toto iba odstráni vybrané playlisty, nie samotné súbory.</string>
+    <string name="remove_playlist_description_placeholder">Toto iba odstráni playlisty \"%s\", nie samotné súbory..</string>
+    <string name="remove_from_playlist">Odstrániť z playlistu</string>
+    <string name="remove_from_playlist_description">Toto iba odstráni skladby z playlistov \"%s\", samotné súbory nebudú vymazané.</string>
     <string name="delete_the_files_too">Odstrániť aj súbory</string>
-    <string name="open_playlist">Otvoriť zoznam skladieb</string>
-    <string name="all_songs_cannot_be_deleted">Zoznam skladieb \'Všetky skladby\' nemôže byť vymazaný</string>
-    <string name="empty_playlist">Súčasný zoznam skladieb je prázdny</string>
+    <string name="open_playlist">Otvoriť playlist</string>
+    <string name="all_songs_cannot_be_deleted">Playlist \'Všetky skladby\' nemôže byť vymazaný</string>
+    <string name="empty_playlist">Súčasný playlist je prázdny</string>
     <string name="fetching_songs">Pridávajú sa skladby…</string>
     <string name="all_songs">Všetky skladby</string>
-    <string name="create_playlist_from_folder">Vytvoriť nový zoznam skladieb z priečinka</string>
+    <string name="create_playlist_from_folder">Vytvoriť nový playlist z priečinka</string>
     <string name="folder_contains_no_audio">Zvolený priečinok neobsahuje žiadne audio súbory</string>
     <string name="delete_current_song">Vymazať súčasnú skladbu</string>
-    <string name="remove_current_song">Odstrániť súčasnú skladbu zo zoznamu skladieb</string>
+    <string name="remove_current_song">Odstrániť súčasnú skladbu z playlistu</string>
     <string name="show_filename">Zobraziť názov súboru namiesto názvu skladby</string>
     <string name="title_is_not_available">Ak názov skladby nie je dostupý</string>
     <string name="show_album_cover">Zobraziť obal albumu na hlavnej obrazovke</string>
     <string name="all_tracks">Všetky skladby</string>
-    <string name="add_to_playlist">Pridať do zoznamu skladieb</string>
-    <string name="create_playlist_label">Nový zoznam skladieb môžete vytvoriť označením žiadaných interpretov, albumov alebo skladieb a použitím Menu -> Pridať do zoznamu skladieb.</string>
+    <string name="add_to_playlist">Pridať do playlistu</string>
+    <string name="create_playlist_label">Nový playlist môžete vytvoriť označením žiadaných interpretov, albumov alebo skladieb a použitím Menu -> Pridať do playlistu.</string>
 
     <!-- Artists -->
     <string name="artists">Interpreti</string>
@@ -70,7 +70,7 @@
     <string name="track_queue">Poradie skladieb</string>
     <string name="add_to_queue">Pridať do poradia</string>
     <string name="remove_from_queue">Odstrániť z poradia</string>
-    <string name="create_playlist_from_queue">Vytvoriť zoznam skladieb z poradia</string>
+    <string name="create_playlist_from_queue">Vytvoriť playlist z poradia</string>
 
     <!-- Settings -->
     <string name="equalizer">Ekvalizér</string>
@@ -88,7 +88,7 @@
     <string name="app_long_description">
         Hudobný prehrávač jednoducho ovládateľný zo stavovej lišty, widgetu na ploche, alebo hardvérovými tlačidlami na slúchadlách. Poskytuje všetky očakávané funkcie ako radenie rôznymi spôsobmi a zmena ekvalizéra. Počúvajte vaše obľúbené mp3, iné pesničky alebo podcasty s týmto pekným a bezplatným hudobným prehrávačom.
 
-        Poskytuje exkluzívne funkcie ako vyhľadávanie, zobrazovanie obrázkov albumov, časovač spánku a veľa rôznych nastavení. Tento elegantný hudobný prehrávač vám tiež umožňuje tvorbu a správu zoznamov skladieb.
+        Poskytuje exkluzívne funkcie ako vyhľadávanie, zobrazovanie obrázkov albumov, časovač spánku a veľa rôznych nastavení. Tento elegantný hudobný prehrávač vám tiež umožňuje tvorbu a správu playlistov.
 
         Zoznamy skladieb sú plne podporované. Viete do nich pridať buď jednotlivé súbory, alebo celé priečinky naraz. Ak sa vám niektorá položka nebude páčiť, môžete ju buď odstrániť zo zoznamu, alebo vymazať súbor ako taký.
 
