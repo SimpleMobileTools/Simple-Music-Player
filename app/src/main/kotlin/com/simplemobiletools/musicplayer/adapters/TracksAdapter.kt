@@ -18,8 +18,11 @@ import com.simplemobiletools.musicplayer.activities.SimpleActivity
 import com.simplemobiletools.musicplayer.extensions.addTracksToPlaylist
 import com.simplemobiletools.musicplayer.extensions.addTracksToQueue
 import com.simplemobiletools.musicplayer.extensions.deleteTracks
+import com.simplemobiletools.musicplayer.extensions.tracksDAO
+import com.simplemobiletools.musicplayer.models.Events
 import com.simplemobiletools.musicplayer.models.Track
 import kotlinx.android.synthetic.main.item_track.view.*
+import org.greenrobot.eventbus.EventBus
 import java.util.*
 
 class TracksAdapter(activity: SimpleActivity, var tracks: ArrayList<Track>, val isPlaylistContent: Boolean, recyclerView: MyRecyclerView,
@@ -91,7 +94,28 @@ class TracksAdapter(activity: SimpleActivity, var tracks: ArrayList<Track>, val 
     }
 
     private fun removeFromPlaylist() {
+        ensureBackgroundThread {
+            val positions = ArrayList<Int>()
+            val selectedTracks = getSelectedTracks()
+            selectedTracks.forEach { track ->
+                val position = tracks.indexOfFirst { it.id == track.id }
+                if (position != -1) {
+                    positions.add(position)
+                }
+            }
 
+            activity.tracksDAO.removeSongsFromPlaylists(selectedTracks)
+            EventBus.getDefault().post(Events.PlaylistsUpdated())
+            activity.runOnUiThread {
+                positions.sortDescending()
+                removeSelectedItems(positions)
+                positions.forEach {
+                    tracks.removeAt(it)
+                }
+
+                finishActMode()
+            }
+        }
     }
 
     private fun askConfirmDelete() {
