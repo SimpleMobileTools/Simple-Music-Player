@@ -224,7 +224,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
             val currentQueueItem = queueDAO.getAll().firstOrNull { it.isCurrent }
             if (currentQueueItem != null) {
-                mCurrTrack = mTracks.firstOrNull { it.id == currentQueueItem.trackId }
+                mCurrTrack = mTracks.firstOrNull { it.id == currentQueueItem.trackId } ?: return@ensureBackgroundThread
                 mPlayOnPrepare = false
                 mSetProgressOnPrepare = currentQueueItem.lastPosition
                 setTrack(mCurrTrack!!.id)

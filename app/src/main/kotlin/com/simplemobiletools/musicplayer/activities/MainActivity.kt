@@ -123,7 +123,7 @@ class MainActivity : SimpleActivity() {
 
                 override fun onQueryTextChange(newText: String): Boolean {
                     if (isSearchOpen) {
-                        getCurrentFragment().onSearchQueryChanged(newText)
+                        getCurrentFragment()?.onSearchQueryChanged(newText)
                     }
                     return true
                 }
@@ -132,13 +132,13 @@ class MainActivity : SimpleActivity() {
 
         MenuItemCompat.setOnActionExpandListener(searchMenuItem, object : MenuItemCompat.OnActionExpandListener {
             override fun onMenuItemActionExpand(item: MenuItem?): Boolean {
-                getCurrentFragment().onSearchOpened()
+                getCurrentFragment()?.onSearchOpened()
                 isSearchOpen = true
                 return true
             }
 
             override fun onMenuItemActionCollapse(item: MenuItem?): Boolean {
-                getCurrentFragment().onSearchClosed()
+                getCurrentFragment()?.onSearchClosed()
                 isSearchOpen = false
                 return true
             }
@@ -207,7 +207,7 @@ class MainActivity : SimpleActivity() {
         viewpager.currentItem = config.lastUsedViewPagerPage
     }
 
-    private fun getCurrentFragment(): MyViewPagerFragment {
+    private fun getCurrentFragment(): MyViewPagerFragment? {
         return when (viewpager.currentItem) {
             0 -> playlists_fragment_holder
             1 -> artists_fragment_holder
