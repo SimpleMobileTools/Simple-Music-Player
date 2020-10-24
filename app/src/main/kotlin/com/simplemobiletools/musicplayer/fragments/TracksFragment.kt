@@ -14,6 +14,7 @@ import com.simplemobiletools.musicplayer.adapters.TracksAdapter
 import com.simplemobiletools.musicplayer.dialogs.ChangeSortingDialog
 import com.simplemobiletools.musicplayer.extensions.*
 import com.simplemobiletools.musicplayer.helpers.RESTART_PLAYER
+import com.simplemobiletools.musicplayer.helpers.RoomHelper
 import com.simplemobiletools.musicplayer.helpers.TAB_TRACKS
 import com.simplemobiletools.musicplayer.helpers.TRACK
 import com.simplemobiletools.musicplayer.models.Album
@@ -64,6 +65,10 @@ class TracksFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
                 tracks.filter { it.coverArt.isNotEmpty() }.forEach {
                     activity.tracksDAO.updateCoverArt(it.coverArt, it.mediaStoreId)
                 }
+
+                val allTracks = context.getAllInitialTracks()
+                RoomHelper(context).insertTracksWithPlaylist(allTracks)
+
                 context.config.wereCoversUpdated = true
             }
         }

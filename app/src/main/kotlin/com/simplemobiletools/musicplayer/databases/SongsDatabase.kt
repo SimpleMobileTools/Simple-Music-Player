@@ -7,9 +7,7 @@ import androidx.room.RoomDatabase
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.simplemobiletools.musicplayer.R
-import com.simplemobiletools.musicplayer.extensions.getAlbumTracksSync
-import com.simplemobiletools.musicplayer.extensions.getAlbumsSync
-import com.simplemobiletools.musicplayer.extensions.getArtistsSync
+import com.simplemobiletools.musicplayer.extensions.getAllInitialTracks
 import com.simplemobiletools.musicplayer.extensions.playlistDAO
 import com.simplemobiletools.musicplayer.helpers.ALL_TRACKS_PLAYLIST_ID
 import com.simplemobiletools.musicplayer.helpers.RoomHelper
@@ -68,17 +66,7 @@ abstract class SongsDatabase : RoomDatabase() {
             val allTracksLabel = context.resources.getString(R.string.all_tracks)
             val playlist = Playlist(ALL_TRACKS_PLAYLIST_ID, allTracksLabel)
             context.playlistDAO.insert(playlist)
-
-            val allTracks = ArrayList<Track>()
-            context.getArtistsSync().forEach { artist ->
-                context.getAlbumsSync(artist).forEach { album ->
-                    context.getAlbumTracksSync(album.id).forEach {
-                        it.playListId = ALL_TRACKS_PLAYLIST_ID
-                        allTracks.add(it)
-                    }
-                }
-            }
-
+            val allTracks = context.getAllInitialTracks()
             RoomHelper(context).insertTracksWithPlaylist(allTracks)
         }
 

@@ -273,3 +273,16 @@ fun Context.deleteTracks(tracks: List<Track>, callback: () -> Unit) {
     EventBus.getDefault().post(Events.TrackDeleted())
     callback()
 }
+
+fun Context.getAllInitialTracks(): ArrayList<Track> {
+    val allTracks = ArrayList<Track>()
+    getArtistsSync().forEach { artist ->
+        getAlbumsSync(artist).forEach { album ->
+            getAlbumTracksSync(album.id).forEach {
+                it.playListId = ALL_TRACKS_PLAYLIST_ID
+                allTracks.add(it)
+            }
+        }
+    }
+    return allTracks
+}
