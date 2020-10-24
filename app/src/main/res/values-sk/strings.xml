@@ -52,7 +52,7 @@
     <!-- Sorting -->
     <string name="track_count">Počet skladieb</string>
     <string name="album_count">Počet albumov</string>
-    <string name="artist_title">Meno interpreta</string>
+    <string name="artist_name">Meno interpreta</string>
     <string name="year">Rok</string>
 
     <!-- Artists -->

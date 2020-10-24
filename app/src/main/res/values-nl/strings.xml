@@ -50,9 +50,9 @@
     <string name="create_playlist_label">Maak een nieuwe afspeellijst aan via Menu -> Naar afspeellijst na het kiezen van artiesten, albums of nummers.</string>
 
     <!-- Sorting -->
-    <string name="track_count">Track count</string>
-    <string name="album_count">Album count</string>
-    <string name="artist_title">Artist title</string>
+    <string name="track_count">Track Count</string>
+    <string name="album_count">Album Count</string>
+    <string name="artist_name">Artist Name</string>
     <string name="year">Year</string>
 
     <!-- Artists -->
