@@ -213,7 +213,7 @@ fun Context.getAlbumTracksSync(albumId: Long): ArrayList<Track> {
                     val path = ""
                     val artist = cursor.getStringValue(Audio.Media.ARTIST)
                     val album = cursor.getStringValue(Audio.Media.ALBUM)
-                    val track = Track(id, title, artist, path, duration, album, coverArt, 0, trackId)
+                    val track = Track(0, id, title, artist, path, duration, album, coverArt, 0, trackId)
                     tracks.add(track)
                 } while (cursor.moveToNext())
             }
@@ -237,7 +237,7 @@ fun Context.addQueueItems(newTracks: List<Track>, callback: () -> Unit) {
         val itemsToInsert = ArrayList<QueueItem>()
         var order = 0
         newTracks.forEach {
-            val queueItem = QueueItem(it.id, order++, false, 0)
+            val queueItem = QueueItem(it.mediaStoreId, order++, false, 0)
             itemsToInsert.add(queueItem)
         }
 
@@ -250,7 +250,7 @@ fun Context.addQueueItems(newTracks: List<Track>, callback: () -> Unit) {
 fun Context.removeQueueItems(tracks: List<Track>, callback: () -> Unit) {
     ensureBackgroundThread {
         tracks.forEach {
-            queueDAO.removeQueueItem(it.id)
+            queueDAO.removeQueueItem(it.mediaStoreId)
             MusicService.mTracks.remove(it)
         }
         callback()
@@ -261,10 +261,10 @@ fun Context.deleteTracks(tracks: List<Track>, callback: () -> Unit) {
     tracks.forEach { track ->
         try {
             val where = "${Audio.Media._ID} = ?"
-            val args = arrayOf(track.id.toString())
+            val args = arrayOf(track.mediaStoreId.toString())
             val uri = Audio.Media.EXTERNAL_CONTENT_URI
             contentResolver.delete(uri, where, args)
-            tracksDAO.removeTrack(track.id)
+            tracksDAO.removeTrack(track.mediaStoreId)
         } catch (ignored: Exception) {
         }
     }

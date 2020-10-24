@@ -22,7 +22,7 @@ import com.simplemobiletools.musicplayer.models.Track
 import com.simplemobiletools.musicplayer.objects.MyExecutor
 import java.util.concurrent.Executors
 
-@Database(entities = [(Track::class), (Playlist::class), QueueItem::class], version = 5)
+@Database(entities = [(Track::class), (Playlist::class), QueueItem::class], version = 6)
 abstract class SongsDatabase : RoomDatabase() {
 
     abstract fun SongsDao(): SongsDao
@@ -52,6 +52,7 @@ abstract class SongsDatabase : RoomDatabase() {
                             .addMigrations(MIGRATION_2_3)
                             .addMigrations(MIGRATION_3_4)
                             .addMigrations(MIGRATION_4_5)
+                            .addMigrations(MIGRATION_5_6)
                             .build()
                     }
                 }
@@ -124,6 +125,24 @@ abstract class SongsDatabase : RoomDatabase() {
 
                     execSQL("DROP TABLE songs")
                     execSQL("ALTER TABLE songs_new RENAME TO tracks")
+                }
+            }
+        }
+
+        // adding an autoincrementing "id" field, replace primary keys with indices
+        private val MIGRATION_5_6 = object : Migration(5, 6) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.apply {
+                    execSQL("CREATE TABLE tracks_new (`id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, `media_store_id` INTEGER NOT NULL, `title` TEXT NOT NULL, `artist` TEXT NOT NULL, `path` TEXT NOT NULL, `duration` INTEGER NOT NULL, " +
+                            "`album` TEXT NOT NULL, `cover_art` TEXT default '' NOT NULL, `playlist_id` INTEGER NOT NULL, `track_id` INTEGER NOT NULL DEFAULT 0)")
+
+                    execSQL("INSERT OR IGNORE INTO tracks_new (media_store_id, title, artist, path, duration, album, cover_art, playlist_id, track_id) " +
+                            "SELECT media_store_id, title, artist, path, duration, album, cover_art, playlist_id, track_id FROM songs")
+
+                    execSQL("DROP TABLE tracks")
+                    execSQL("ALTER TABLE tracks_new RENAME TO tracks")
+
+                    execSQL("CREATE UNIQUE INDEX IF NOT EXISTS `index_tracks_id` ON `tracks` (`media_store_id`, `playlist_id`)")
                 }
             }
         }

@@ -3,6 +3,8 @@ package com.simplemobiletools.musicplayer.models
 import android.provider.MediaStore
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.Index
+import androidx.room.PrimaryKey
 import com.simplemobiletools.commons.extensions.getFilenameFromPath
 import com.simplemobiletools.commons.extensions.getFormattedDuration
 import com.simplemobiletools.commons.helpers.AlphanumericComparator
@@ -13,9 +15,10 @@ import com.simplemobiletools.musicplayer.helpers.SHOW_FILENAME_IF_UNAVAILABLE
 import com.simplemobiletools.musicplayer.helpers.SHOW_FILENAME_NEVER
 import java.io.Serializable
 
-@Entity(tableName = "tracks", primaryKeys = ["media_store_id", "playlist_id"])
+@Entity(tableName = "tracks", indices = [Index(value = ["media_store_id", "playlist_id"], unique = true)])
 data class Track(
-    @ColumnInfo(name = "media_store_id") val id: Long,
+    @PrimaryKey(autoGenerate = true) val id: Long,
+    @ColumnInfo(name = "media_store_id") val mediaStoreId: Long,
     @ColumnInfo(name = "title") var title: String,
     @ColumnInfo(name = "artist") var artist: String,
     @ColumnInfo(name = "path") var path: String,

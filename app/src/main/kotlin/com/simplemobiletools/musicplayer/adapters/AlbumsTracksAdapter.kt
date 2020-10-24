@@ -133,7 +133,7 @@ class AlbumsTracksAdapter(activity: SimpleActivity, val items: ArrayList<ListIte
                 val positions = ArrayList<Int>()
                 val selectedTracks = getSelectedTracks()
                 selectedTracks.forEach { track ->
-                    val position = items.indexOfFirst { it is Track && it.id == track.id }
+                    val position = items.indexOfFirst { it is Track && it.mediaStoreId == track.mediaStoreId }
                     if (position != -1) {
                         positions.add(position)
                     }

@@ -96,7 +96,7 @@ class QueueAdapter(activity: SimpleActivity, val items: ArrayList<Track>, recycl
         val positions = ArrayList<Int>()
         val selectedTracks = getSelectedTracks()
         selectedTracks.forEach { track ->
-            val position = items.indexOfFirst { it.id == track.id }
+            val position = items.indexOfFirst { it.mediaStoreId == track.mediaStoreId }
             if (position != -1) {
                 positions.add(position)
             }
@@ -113,7 +113,7 @@ class QueueAdapter(activity: SimpleActivity, val items: ArrayList<Track>, recycl
 
                     Intent(activity, MusicService::class.java).apply {
                         action = PLAY_TRACK
-                        putExtra(TRACK_ID, (MusicService.mTracks.first()).id)
+                        putExtra(TRACK_ID, (MusicService.mTracks.first()).mediaStoreId)
                         activity.startService(this)
                     }
                 }

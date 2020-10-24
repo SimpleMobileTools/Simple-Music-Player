@@ -179,7 +179,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             mTracks = getQueuedTracks()
 
             val wantedTrackId = intent?.getLongExtra(TRACK_ID, -1L)
-            mCurrTrack = mTracks.firstOrNull { it.id == wantedTrackId }
+            mCurrTrack = mTracks.firstOrNull { it.mediaStoreId == wantedTrackId }
             checkTrackOrder()
         }
 
@@ -217,17 +217,17 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
             mTracks.clear()
             queueDAO.getAll().forEach { queueItem ->
-                unsortedTracks.firstOrNull { it.id == queueItem.trackId }?.apply {
+                unsortedTracks.firstOrNull { it.mediaStoreId == queueItem.trackId }?.apply {
                     mTracks.add(this)
                 }
             }
 
             val currentQueueItem = queueDAO.getAll().firstOrNull { it.isCurrent }
             if (currentQueueItem != null) {
-                mCurrTrack = mTracks.firstOrNull { it.id == currentQueueItem.trackId } ?: return@ensureBackgroundThread
+                mCurrTrack = mTracks.firstOrNull { it.mediaStoreId == currentQueueItem.trackId } ?: return@ensureBackgroundThread
                 mPlayOnPrepare = false
                 mSetProgressOnPrepare = currentQueueItem.lastPosition
-                setTrack(mCurrTrack!!.id)
+                setTrack(mCurrTrack!!.mediaStoreId)
             }
         }
     }
@@ -375,9 +375,9 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         val tracks = ArrayList<Track>()
         val allTracks = tracksDAO.getAll()
         val wantedIds = queueDAO.getAll().map { it.trackId }
-        val wantedTracks = allTracks.filter { wantedIds.contains(it.id) }
+        val wantedTracks = allTracks.filter { wantedIds.contains(it.mediaStoreId) }
         tracks.addAll(wantedTracks)
-        return tracks.distinctBy { it.id }.toMutableList() as ArrayList<Track>
+        return tracks.distinctBy { it.mediaStoreId }.toMutableList() as ArrayList<Track>
     }
 
     private fun checkTrackOrder() {
@@ -506,12 +506,12 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     private fun getNewTrackId(): Long {
         return when (mTracks.size) {
             0 -> -1L
-            1 -> mTracks.first().id
+            1 -> mTracks.first().mediaStoreId
             else -> {
-                val currentTrackIndex = mTracks.indexOfFirstOrNull { it.id == mCurrTrack?.id }
+                val currentTrackIndex = mTracks.indexOfFirstOrNull { it.mediaStoreId == mCurrTrack?.mediaStoreId }
                 if (currentTrackIndex != null) {
                     val nextTrack = mTracks[(currentTrackIndex + 1) % mTracks.size]
-                    nextTrack.id
+                    nextTrack.mediaStoreId
                 } else {
                     -1L
                 }
@@ -528,12 +528,12 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         initMediaPlayerIfNeeded()
 
         // play the previous track if we are less than 5 secs into it, else restart
-        val currentTrackIndex = mTracks.indexOfFirstOrNull { it.id == mCurrTrack?.id } ?: 0
+        val currentTrackIndex = mTracks.indexOfFirstOrNull { it.mediaStoreId == mCurrTrack?.mediaStoreId } ?: 0
         if (currentTrackIndex == 0 || mPlayer!!.currentPosition > 5000) {
             restartTrack()
         } else {
             val previousTrack = mTracks[currentTrackIndex - 1]
-            setTrack(previousTrack.id)
+            setTrack(previousTrack.mediaStoreId)
         }
     }
 
@@ -571,7 +571,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
     private fun restartTrack() {
         if (mCurrTrack != null) {
-            setTrack(mCurrTrack!!.id)
+            setTrack(mCurrTrack!!.mediaStoreId)
         }
     }
 
@@ -597,13 +597,13 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         initMediaPlayerIfNeeded()
 
         mPlayer!!.reset()
-        mCurrTrack = mTracks.firstOrNull { it.id == wantedTrackId } ?: return
+        mCurrTrack = mTracks.firstOrNull { it.mediaStoreId == wantedTrackId } ?: return
 
         try {
-            val trackUri = if (mCurrTrack!!.id == 0L) {
+            val trackUri = if (mCurrTrack!!.mediaStoreId == 0L) {
                 Uri.fromFile(File(mCurrTrack!!.path))
             } else {
-                ContentUris.withAppendedId(Audio.Media.EXTERNAL_CONTENT_URI, mCurrTrack!!.id)
+                ContentUris.withAppendedId(Audio.Media.EXTERNAL_CONTENT_URI, mCurrTrack!!.mediaStoreId)
             }
             mPlayer!!.setDataSource(applicationContext, trackUri)
             mPlayer!!.prepareAsync()
@@ -686,7 +686,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
     private fun broadcastNextTrackChange() {
         Handler(Looper.getMainLooper()).post {
-            val currentTrackIndex = mTracks.indexOfFirstOrNull { it.id == mCurrTrack?.id }
+            val currentTrackIndex = mTracks.indexOfFirstOrNull { it.mediaStoreId == mCurrTrack?.mediaStoreId }
             if (currentTrackIndex != null) {
                 val nextTrack = mTracks[(currentTrackIndex + 1) % mTracks.size]
                 EventBus.getDefault().post(Events.NextTrackChanged(nextTrack))
@@ -760,11 +760,11 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
                 queueDAO.resetCurrent()
 
                 if (mCurrTrack != null) {
-                    queueDAO.saveCurrentTrack(mCurrTrack!!.id, position)
+                    queueDAO.saveCurrentTrack(mCurrTrack!!.mediaStoreId, position)
                 }
 
                 mTracks.forEachIndexed { index, track ->
-                    queueDAO.setOrder(track.id, index)
+                    queueDAO.setOrder(track.mediaStoreId, index)
                 }
 
                 mCurrTrack = null

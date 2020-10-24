@@ -43,7 +43,7 @@ class EditDialog(val activity: BaseSimpleActivity, val song: Track, val callback
 
                             song.artist = newArtist
                             song.title = newTitle
-                            updateContentResolver(context, song.id, newTitle, newArtist)
+                            updateContentResolver(context, song.mediaStoreId, newTitle, newArtist)
 
                             val oldPath = song.path
                             val newPath = "${oldPath.getParentPath()}/$newFilename.$newFileExtension"

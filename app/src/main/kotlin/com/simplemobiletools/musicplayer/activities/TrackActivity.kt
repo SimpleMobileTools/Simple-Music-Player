@@ -69,7 +69,7 @@ class TrackActivity : SimpleActivity() {
 
         if (intent.getBooleanExtra(RESTART_PLAYER, false)) {
             Intent(this, MusicService::class.java).apply {
-                putExtra(TRACK_ID, track.id)
+                putExtra(TRACK_ID, track.mediaStoreId)
                 action = INIT
                 startService(this)
             }

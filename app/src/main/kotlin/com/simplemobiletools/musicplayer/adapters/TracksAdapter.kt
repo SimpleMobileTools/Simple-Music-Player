@@ -98,7 +98,7 @@ class TracksAdapter(activity: SimpleActivity, var tracks: ArrayList<Track>, val 
             val positions = ArrayList<Int>()
             val selectedTracks = getSelectedTracks()
             selectedTracks.forEach { track ->
-                val position = tracks.indexOfFirst { it.id == track.id }
+                val position = tracks.indexOfFirst { it.mediaStoreId == track.mediaStoreId }
                 if (position != -1) {
                     positions.add(position)
                 }
@@ -122,7 +122,7 @@ class TracksAdapter(activity: SimpleActivity, var tracks: ArrayList<Track>, val 
                 val positions = ArrayList<Int>()
                 val selectedTracks = getSelectedTracks()
                 selectedTracks.forEach { track ->
-                    val position = tracks.indexOfFirst { it.id == track.id }
+                    val position = tracks.indexOfFirst { it.mediaStoreId == track.mediaStoreId }
                     if (position != -1) {
                         positions.add(position)
                     }

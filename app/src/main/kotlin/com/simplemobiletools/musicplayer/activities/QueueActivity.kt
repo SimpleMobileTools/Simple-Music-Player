@@ -56,7 +56,7 @@ class QueueActivity : SimpleActivity() {
             val queueAdapter = QueueAdapter(this, MusicService.mTracks, queue_list, queue_fastscroller) {
                 Intent(this, MusicService::class.java).apply {
                     action = PLAY_TRACK
-                    putExtra(TRACK_ID, (it as Track).id)
+                    putExtra(TRACK_ID, (it as Track).mediaStoreId)
                     startService(this)
                 }
             }.apply {

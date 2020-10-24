@@ -62,7 +62,7 @@ class TracksFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
 
             if (!context.config.wereCoversUpdated) {
                 tracks.filter { it.coverArt.isNotEmpty() }.forEach {
-                    activity.tracksDAO.updateCoverArt(it.coverArt, it.id)
+                    activity.tracksDAO.updateCoverArt(it.coverArt, it.mediaStoreId)
                 }
                 context.config.wereCoversUpdated = true
             }
