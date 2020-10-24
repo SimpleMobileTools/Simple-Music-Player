@@ -87,4 +87,7 @@ class TracksFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
         (tracks_list.adapter as? TracksAdapter)?.updateItems(tracksIgnoringSearch)
         tracks_placeholder.beGoneIf(tracksIgnoringSearch.isNotEmpty())
     }
+
+    override fun onSortOpen(activity: SimpleActivity) {
+    }
 }

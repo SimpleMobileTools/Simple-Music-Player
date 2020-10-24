@@ -71,4 +71,7 @@ class PlaylistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPa
         playlists_placeholder.beGoneIf(playlistsIgnoringSearch.isNotEmpty())
         playlists_placeholder_2.beGoneIf(playlistsIgnoringSearch.isNotEmpty())
     }
+
+    override fun onSortOpen(activity: SimpleActivity) {
+    }
 }

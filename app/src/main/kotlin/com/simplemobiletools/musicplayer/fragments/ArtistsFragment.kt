@@ -61,4 +61,7 @@ class ArtistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
         (artists_list.adapter as? ArtistsAdapter)?.updateItems(artistsIgnoringSearch)
         artists_placeholder.beGoneIf(artistsIgnoringSearch.isNotEmpty())
     }
+
+    override fun onSortOpen(activity: SimpleActivity) {
+    }
 }

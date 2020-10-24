@@ -73,4 +73,7 @@ class AlbumsFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
         (albums_list.adapter as? AlbumsAdapter)?.updateItems(albumsIgnoringSearch)
         albums_placeholder.beGoneIf(albumsIgnoringSearch.isNotEmpty())
     }
+
+    override fun onSortOpen(activity: SimpleActivity) {
+    }
 }

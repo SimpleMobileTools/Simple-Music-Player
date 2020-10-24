@@ -23,14 +23,12 @@ import com.simplemobiletools.commons.models.Release
 import com.simplemobiletools.musicplayer.BuildConfig
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.adapters.ViewPagerAdapter
-import com.simplemobiletools.musicplayer.dialogs.ChangeSortingDialog
 import com.simplemobiletools.musicplayer.dialogs.SleepTimerCustomDialog
 import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.extensions.queueDAO
 import com.simplemobiletools.musicplayer.extensions.sendIntent
 import com.simplemobiletools.musicplayer.fragments.MyViewPagerFragment
 import com.simplemobiletools.musicplayer.helpers.INIT_QUEUE
-import com.simplemobiletools.musicplayer.helpers.REFRESH_LIST
 import com.simplemobiletools.musicplayer.helpers.START_SLEEP_TIMER
 import com.simplemobiletools.musicplayer.helpers.STOP_SLEEP_TIMER
 import com.simplemobiletools.musicplayer.models.Events
@@ -92,7 +90,6 @@ class MainActivity : SimpleActivity() {
 
         menu.apply {
             findItem(R.id.sleep_timer).isVisible = false
-            findItem(R.id.sort).isVisible = false
         }
 
         updateMenuItemColors(menu)
@@ -217,9 +214,7 @@ class MainActivity : SimpleActivity() {
     }
 
     private fun showSortingDialog() {
-        ChangeSortingDialog(this) {
-            sendIntent(REFRESH_LIST)
-        }
+        getCurrentFragment()?.onSortOpen(this)
     }
 
     private fun updateCurrentTrackBar() {
