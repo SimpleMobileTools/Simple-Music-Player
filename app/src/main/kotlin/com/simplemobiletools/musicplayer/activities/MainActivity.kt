@@ -11,6 +11,7 @@ import android.view.MenuItem
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.MenuItemCompat
 import androidx.viewpager.widget.ViewPager
+import com.simplemobiletools.commons.dialogs.FilePickerDialog
 import com.simplemobiletools.commons.dialogs.RadioGroupDialog
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.LICENSE_EVENT_BUS
@@ -42,6 +43,7 @@ import kotlinx.android.synthetic.main.view_current_track_bar.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import java.io.File
 
 class MainActivity : SimpleActivity() {
     private var isSearchOpen = false
@@ -96,12 +98,19 @@ class MainActivity : SimpleActivity() {
         return true
     }
 
-    override fun onPrepareOptionsMenu(menu: Menu) = true
+    override fun onPrepareOptionsMenu(menu: Menu): Boolean {
+        menu.apply {
+            findItem(R.id.create_playlist_from_folder).isVisible = getCurrentFragment() == playlists_fragment_holder
+        }
+
+        return true
+    }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.sort -> showSortingDialog()
             R.id.sleep_timer -> showSleepTimer()
+            R.id.create_playlist_from_folder -> createPlaylistFromFolder()
             R.id.settings -> launchSettings()
             R.id.about -> launchAbout()
             else -> return super.onOptionsItemSelected(item)
@@ -221,6 +230,32 @@ class MainActivity : SimpleActivity() {
         current_track_bar.updateColors()
         current_track_bar.updateCurrentTrack(MusicService.mCurrTrack)
         current_track_bar.updateTrackState(MusicService.getIsPlaying())
+    }
+
+    private fun createPlaylistFromFolder() {
+        FilePickerDialog(this, pickFile = false) {
+            ensureBackgroundThread {
+                createPlaylistFrom(it)
+            }
+        }
+    }
+
+    private fun createPlaylistFrom(path: String) {
+        val folderSongs = getFolderSongs(File(path))
+
+    }
+
+    private fun getFolderSongs(folder: File): ArrayList<String> {
+        val songFiles = ArrayList<String>()
+        val files = folder.listFiles() ?: return songFiles
+        files.forEach {
+            if (it.isDirectory) {
+                songFiles.addAll(getFolderSongs(it))
+            } else if (it.isAudioFast()) {
+                songFiles.add(it.absolutePath)
+            }
+        }
+        return songFiles
     }
 
     private fun showSleepTimer() {
