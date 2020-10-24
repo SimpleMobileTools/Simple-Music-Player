@@ -49,7 +49,7 @@ class AlbumsFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
 
                 albums_fastscroller.setViews(albums_list) {
                     val album = adapter.albums.getOrNull(it)
-                    albums_fastscroller.updateBubbleText(album?.title ?: "")
+                    albums_fastscroller.updateBubbleText(album?.getBubbleText() ?: "")
                 }
             }
         }

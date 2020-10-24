@@ -30,4 +30,9 @@ data class Playlist(
 
         return result
     }
+
+    fun getBubbleText() = when {
+        sorting and PLAYER_SORT_BY_TITLE != 0 -> title
+        else -> trackCnt.toString()
+    }
 }

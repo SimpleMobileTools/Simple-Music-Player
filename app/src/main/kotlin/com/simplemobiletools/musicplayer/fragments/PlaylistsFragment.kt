@@ -47,7 +47,7 @@ class PlaylistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPa
 
                 playlists_fastscroller.setViews(playlists_list) {
                     val playlist = adapter.playlists.getOrNull(it)
-                    playlists_fastscroller.updateBubbleText(playlist?.title ?: "")
+                    playlists_fastscroller.updateBubbleText(playlist?.getBubbleText() ?: "")
                 }
             }
         }

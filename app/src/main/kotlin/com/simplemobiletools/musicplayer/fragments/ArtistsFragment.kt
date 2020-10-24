@@ -40,7 +40,7 @@ class ArtistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
 
                 artists_fastscroller.setViews(artists_list) {
                     val artist = adapter.artists.getOrNull(it)
-                    artists_fastscroller.updateBubbleText(artist?.title ?: "")
+                    artists_fastscroller.updateBubbleText(artist?.getBubbleText() ?: "")
                 }
             }
         }

@@ -36,4 +36,10 @@ data class Album(val id: Long, val artist: String, val title: String, val coverA
 
         return result
     }
+
+    fun getBubbleText() = when {
+        sorting and PLAYER_SORT_BY_TITLE != 0 -> title
+        sorting and PLAYER_SORT_BY_ARTIST_TITLE != 0 -> artist
+        else -> year.toString()
+    }
 }

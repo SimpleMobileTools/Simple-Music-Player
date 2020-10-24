@@ -5,7 +5,8 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import com.simplemobiletools.commons.extensions.getFilenameFromPath
 import com.simplemobiletools.commons.extensions.getFormattedDuration
-import com.simplemobiletools.commons.helpers.*
+import com.simplemobiletools.commons.helpers.AlphanumericComparator
+import com.simplemobiletools.commons.helpers.SORT_DESCENDING
 import com.simplemobiletools.musicplayer.helpers.PLAYER_SORT_BY_ARTIST_TITLE
 import com.simplemobiletools.musicplayer.helpers.PLAYER_SORT_BY_TITLE
 import com.simplemobiletools.musicplayer.helpers.SHOW_FILENAME_IF_UNAVAILABLE
@@ -57,9 +58,8 @@ data class Track(
     }
 
     fun getBubbleText() = when {
-        sorting and SORT_BY_TITLE != 0 -> title
-        sorting and SORT_BY_ARTIST != 0 -> artist
-        sorting and SORT_BY_PATH != 0 -> path
+        sorting and PLAYER_SORT_BY_TITLE != 0 -> title
+        sorting and PLAYER_SORT_BY_ARTIST_TITLE != 0 -> artist
         else -> duration.getFormattedDuration()
     }
 

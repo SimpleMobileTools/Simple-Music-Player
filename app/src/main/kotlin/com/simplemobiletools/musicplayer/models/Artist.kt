@@ -30,4 +30,10 @@ data class Artist(val id: Long, val title: String, var albumCnt: Int, var trackC
 
         return result
     }
+
+    fun getBubbleText() = when {
+        sorting and PLAYER_SORT_BY_TITLE != 0 -> title
+        sorting and PLAYER_SORT_BY_ALBUM_COUNT != 0 -> albumCnt.toString()
+        else -> trackCnt.toString()
+    }
 }
