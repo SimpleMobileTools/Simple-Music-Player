@@ -66,10 +66,13 @@ class TracksFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
                     activity.tracksDAO.updateCoverArt(it.coverArt, it.mediaStoreId)
                 }
 
+                context.config.wereCoversUpdated = true
+            }
+
+            if (!context.config.wereInitialTracksFetched) {
                 val allTracks = context.getAllInitialTracks()
                 RoomHelper(context).insertTracksWithPlaylist(allTracks)
-
-                context.config.wereCoversUpdated = true
+                context.config.wereInitialTracksFetched = true
             }
         }
 

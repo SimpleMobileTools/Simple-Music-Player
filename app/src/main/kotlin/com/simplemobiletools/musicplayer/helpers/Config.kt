@@ -60,6 +60,10 @@ class Config(context: Context) : BaseConfig(context) {
         get() = prefs.getBoolean(WERE_COVERS_UPDATED, false)
         set(wereCoversUpdated) = prefs.edit().putBoolean(WERE_COVERS_UPDATED, wereCoversUpdated).apply()
 
+    var wereInitialTracksFetched: Boolean
+        get() = prefs.getBoolean(WERE_INITIAL_TRACKS_FETCHED, false)
+        set(wereInitialTracksFetched) = prefs.edit().putBoolean(WERE_INITIAL_TRACKS_FETCHED, wereInitialTracksFetched).apply()
+
     var playlistSorting: Int
         get() = prefs.getInt(PLAYLIST_SORTING, PLAYER_SORT_BY_TITLE)
         set(playlistSorting) = prefs.edit().putInt(PLAYLIST_SORTING, playlistSorting).apply()
