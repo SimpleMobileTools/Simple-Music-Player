@@ -15,15 +15,15 @@ data class Album(val id: Long, val artist: String, val title: String, val coverA
         var result = when {
             sorting and PLAYER_SORT_BY_TITLE != 0 -> {
                 when {
-                    title == MediaStore.UNKNOWN_STRING -> 1
-                    other.title == MediaStore.UNKNOWN_STRING -> -1
+                    title == MediaStore.UNKNOWN_STRING && other.title != MediaStore.UNKNOWN_STRING -> 1
+                    title != MediaStore.UNKNOWN_STRING && other.title == MediaStore.UNKNOWN_STRING -> -1
                     else -> AlphanumericComparator().compare(title.toLowerCase(), other.title.toLowerCase())
                 }
             }
             sorting and PLAYER_SORT_BY_ARTIST_TITLE != 0 -> {
                 when {
-                    artist == MediaStore.UNKNOWN_STRING -> 1
-                    other.artist == MediaStore.UNKNOWN_STRING -> -1
+                    artist == MediaStore.UNKNOWN_STRING && other.artist != MediaStore.UNKNOWN_STRING -> 1
+                    artist != MediaStore.UNKNOWN_STRING && other.artist == MediaStore.UNKNOWN_STRING -> -1
                     else -> AlphanumericComparator().compare(artist.toLowerCase(), other.artist.toLowerCase())
                 }
             }

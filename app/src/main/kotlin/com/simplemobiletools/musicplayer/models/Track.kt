@@ -5,10 +5,9 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import com.simplemobiletools.commons.extensions.getFilenameFromPath
 import com.simplemobiletools.commons.extensions.getFormattedDuration
-import com.simplemobiletools.commons.helpers.SORT_BY_ARTIST
-import com.simplemobiletools.commons.helpers.SORT_BY_PATH
-import com.simplemobiletools.commons.helpers.SORT_BY_TITLE
-import com.simplemobiletools.commons.helpers.SORT_DESCENDING
+import com.simplemobiletools.commons.helpers.*
+import com.simplemobiletools.musicplayer.helpers.PLAYER_SORT_BY_ARTIST_TITLE
+import com.simplemobiletools.musicplayer.helpers.PLAYER_SORT_BY_TITLE
 import com.simplemobiletools.musicplayer.helpers.SHOW_FILENAME_IF_UNAVAILABLE
 import com.simplemobiletools.musicplayer.helpers.SHOW_FILENAME_NEVER
 import java.io.Serializable
@@ -33,30 +32,21 @@ data class Track(
 
     override fun compareTo(other: Track): Int {
         var res = when {
-            sorting and SORT_BY_TITLE != 0 -> {
-                if (title == MediaStore.UNKNOWN_STRING && other.title != MediaStore.UNKNOWN_STRING) {
-                    1
-                } else if (title != MediaStore.UNKNOWN_STRING && other.title == MediaStore.UNKNOWN_STRING) {
-                    -1
-                } else {
-                    title.toLowerCase().compareTo(other.title.toLowerCase())
+            sorting and PLAYER_SORT_BY_TITLE != 0 -> {
+                when {
+                    title == MediaStore.UNKNOWN_STRING && other.title != MediaStore.UNKNOWN_STRING -> 1
+                    title != MediaStore.UNKNOWN_STRING && other.title == MediaStore.UNKNOWN_STRING -> -1
+                    else -> AlphanumericComparator().compare(title.toLowerCase(), other.title.toLowerCase())
                 }
             }
-            sorting and SORT_BY_ARTIST != 0 -> {
-                if (artist == MediaStore.UNKNOWN_STRING && other.artist != MediaStore.UNKNOWN_STRING) {
-                    1
-                } else if (artist != MediaStore.UNKNOWN_STRING && other.artist == MediaStore.UNKNOWN_STRING) {
-                    -1
-                } else {
-                    artist.toLowerCase().compareTo(other.artist.toLowerCase())
+            sorting and PLAYER_SORT_BY_ARTIST_TITLE != 0 -> {
+                when {
+                    artist == MediaStore.UNKNOWN_STRING && artist != MediaStore.UNKNOWN_STRING -> 1
+                    artist != MediaStore.UNKNOWN_STRING && artist == MediaStore.UNKNOWN_STRING -> -1
+                    else -> AlphanumericComparator().compare(artist.toLowerCase(), other.artist.toLowerCase())
                 }
             }
-            sorting and SORT_BY_PATH != 0 -> path.toLowerCase().compareTo(other.path.toLowerCase())
-            else -> when {
-                duration == other.duration -> 0
-                duration > other.duration -> 1
-                else -> -1
-            }
+            else -> duration.compareTo(other.duration)
         }
 
         if (sorting and SORT_DESCENDING != 0) {

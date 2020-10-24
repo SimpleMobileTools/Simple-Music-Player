@@ -57,7 +57,8 @@ class ChangeSortingDialog(val activity: Activity, val tabIndex: Int, val callbac
             }
             TAB_TRACKS -> {
                 radioItems.add(RadioItem(0, activity.getString(R.string.title), PLAYER_SORT_BY_TITLE))
-                radioItems.add(RadioItem(1, activity.getString(R.string.duration), PLAYER_SORT_BY_DURATION))
+                radioItems.add(RadioItem(1, activity.getString(R.string.artist), PLAYER_SORT_BY_ARTIST_TITLE))
+                radioItems.add(RadioItem(2, activity.getString(R.string.duration), PLAYER_SORT_BY_DURATION))
             }
         }
 

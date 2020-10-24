@@ -15,8 +15,8 @@ data class Artist(val id: Long, val title: String, var albumCnt: Int, var trackC
         var result = when {
             sorting and PLAYER_SORT_BY_TITLE != 0 -> {
                 when {
-                    title == MediaStore.UNKNOWN_STRING -> 1
-                    other.title == MediaStore.UNKNOWN_STRING -> -1
+                    title == MediaStore.UNKNOWN_STRING && other.title != MediaStore.UNKNOWN_STRING -> 1
+                    title != MediaStore.UNKNOWN_STRING && other.title == MediaStore.UNKNOWN_STRING -> -1
                     else -> AlphanumericComparator().compare(title.toLowerCase(), other.title.toLowerCase())
                 }
             }
