@@ -62,3 +62,14 @@ const val LOWER_ALPHA = 0.5f
 const val SHOW_FILENAME_NEVER = 1
 const val SHOW_FILENAME_IF_UNAVAILABLE = 2
 const val SHOW_FILENAME_ALWAYS = 3
+
+const val TAB_PLAYLISTS = 0
+const val TAB_ARTISTS = 1
+const val TAB_ALBUMS = 2
+const val TAB_TRACKS = 3
+
+// use custom sorting constants, there are too many app specific ones
+const val PLAYER_SORT_BY_TITLE = 1
+const val PLAYER_SORT_BY_TRACK_COUNT = 2
+
+const val PLAYLIST_SORTING = "playlist_sorting"

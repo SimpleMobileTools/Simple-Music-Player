@@ -11,9 +11,12 @@ import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
 import com.simplemobiletools.musicplayer.activities.TracksActivity
 import com.simplemobiletools.musicplayer.adapters.PlaylistsAdapter
+import com.simplemobiletools.musicplayer.dialogs.ChangeSortingDialog
+import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.extensions.playlistDAO
 import com.simplemobiletools.musicplayer.extensions.tracksDAO
 import com.simplemobiletools.musicplayer.helpers.PLAYLIST
+import com.simplemobiletools.musicplayer.helpers.TAB_PLAYLISTS
 import com.simplemobiletools.musicplayer.models.Playlist
 import kotlinx.android.synthetic.main.fragment_playlists.view.*
 
@@ -27,6 +30,8 @@ class PlaylistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPa
                 it.trackCnt = activity.tracksDAO.getTracksCountFromPlaylist(it.id)
             }
             playlists = playlists.filter { it.trackCnt != 0 }.toMutableList() as ArrayList<Playlist>
+            Playlist.sorting = activity.config.playlistSorting
+            playlists.sort()
 
             activity.runOnUiThread {
                 playlists_placeholder.beVisibleIf(playlists.isEmpty())
@@ -73,5 +78,12 @@ class PlaylistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPa
     }
 
     override fun onSortOpen(activity: SimpleActivity) {
+        ChangeSortingDialog(activity, TAB_PLAYLISTS) {
+            val adapter = playlists_list.adapter as? PlaylistsAdapter ?: return@ChangeSortingDialog
+            val playlists = adapter.playlists
+            Playlist.sorting = activity.config.playlistSorting
+            playlists.sort()
+            adapter.updateItems(playlists, forceUpdate = true)
+        }
     }
 }

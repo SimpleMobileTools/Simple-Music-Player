@@ -121,8 +121,8 @@ class PlaylistsAdapter(activity: SimpleActivity, var playlists: ArrayList<Playli
 
     private fun getItemWithKey(key: Int): Playlist? = playlists.firstOrNull { it.id == key }
 
-    fun updateItems(newItems: ArrayList<Playlist>, highlightText: String = "") {
-        if (newItems.hashCode() != playlists.hashCode()) {
+    fun updateItems(newItems: ArrayList<Playlist>, highlightText: String = "", forceUpdate: Boolean = false) {
+        if (forceUpdate || newItems.hashCode() != playlists.hashCode()) {
             playlists = newItems.clone() as ArrayList<Playlist>
             textToHighlight = highlightText
             notifyDataSetChanged()

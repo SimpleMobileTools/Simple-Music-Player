@@ -2,6 +2,8 @@ package com.simplemobiletools.musicplayer.helpers
 
 import android.content.Context
 import com.simplemobiletools.commons.helpers.BaseConfig
+import com.simplemobiletools.commons.helpers.SORT_ORDER
+import com.simplemobiletools.musicplayer.R
 
 class Config(context: Context) : BaseConfig(context) {
     companion object {
@@ -59,4 +61,8 @@ class Config(context: Context) : BaseConfig(context) {
     var wereCoversUpdated: Boolean
         get() = prefs.getBoolean(WERE_COVERS_UPDATED, false)
         set(wereCoversUpdated) = prefs.edit().putBoolean(WERE_COVERS_UPDATED, wereCoversUpdated).apply()
+
+    var playlistSorting: Int
+        get() = prefs.getInt(PLAYLIST_SORTING, PLAYER_SORT_BY_TITLE)
+        set(playlistSorting) = prefs.edit().putInt(PLAYLIST_SORTING, playlistSorting).apply()
 }
