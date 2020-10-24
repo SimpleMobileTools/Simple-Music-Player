@@ -21,7 +21,7 @@ import kotlinx.android.synthetic.main.fragment_tracks.view.*
 
 // Artists -> Albums -> Tracks
 class TracksFragment(context: Context, attributeSet: AttributeSet) : MyViewPagerFragment(context, attributeSet) {
-    var tracksIgnoringSearch = ArrayList<Track>()
+    private var tracksIgnoringSearch = ArrayList<Track>()
 
     override fun setupFragment(activity: SimpleActivity) {
         ensureBackgroundThread {

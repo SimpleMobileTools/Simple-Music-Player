@@ -7,20 +7,22 @@ import com.google.gson.Gson
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
 import com.simplemobiletools.commons.extensions.beGoneIf
 import com.simplemobiletools.commons.extensions.beVisibleIf
-import com.simplemobiletools.commons.helpers.AlphanumericComparator
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
 import com.simplemobiletools.musicplayer.activities.TracksActivity
 import com.simplemobiletools.musicplayer.adapters.AlbumsAdapter
+import com.simplemobiletools.musicplayer.dialogs.ChangeSortingDialog
+import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.extensions.getAlbumsSync
 import com.simplemobiletools.musicplayer.extensions.getArtistsSync
 import com.simplemobiletools.musicplayer.helpers.ALBUM
+import com.simplemobiletools.musicplayer.helpers.TAB_ALBUMS
 import com.simplemobiletools.musicplayer.models.Album
 import kotlinx.android.synthetic.main.fragment_albums.view.*
 
 // Artists -> Albums -> Tracks
 class AlbumsFragment(context: Context, attributeSet: AttributeSet) : MyViewPagerFragment(context, attributeSet) {
-    var albumsIgnoringSearch = ArrayList<Album>()
+    private var albumsIgnoringSearch = ArrayList<Album>()
 
     override fun setupFragment(activity: SimpleActivity) {
         ensureBackgroundThread {
@@ -31,7 +33,8 @@ class AlbumsFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
                 albums.addAll(activity.getAlbumsSync(artist))
             }
 
-            albums.sortWith { o1, o2 -> AlphanumericComparator().compare(o1.title.toLowerCase(), o2.title.toLowerCase()) }
+            Album.sorting = activity.config.albumSorting
+            albums.sort()
 
             activity.runOnUiThread {
                 albums_placeholder.beVisibleIf(albums.isEmpty())
@@ -75,5 +78,12 @@ class AlbumsFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
     }
 
     override fun onSortOpen(activity: SimpleActivity) {
+        ChangeSortingDialog(activity, TAB_ALBUMS) {
+            val adapter = albums_list.adapter as? AlbumsAdapter ?: return@ChangeSortingDialog
+            val albums = adapter.albums
+            Album.sorting = activity.config.albumSorting
+            albums.sort()
+            adapter.updateItems(albums, forceUpdate = true)
+        }
     }
 }

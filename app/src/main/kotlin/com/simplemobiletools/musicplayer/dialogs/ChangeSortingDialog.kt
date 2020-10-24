@@ -22,7 +22,9 @@ class ChangeSortingDialog(val activity: Activity, val tabIndex: Int, val callbac
     init {
         currSorting = when (tabIndex) {
             TAB_PLAYLISTS -> config.playlistSorting
-            else -> config.artistSorting
+            TAB_ARTISTS -> config.artistSorting
+            TAB_ALBUMS -> config.albumSorting
+            else -> config.trackSorting
         }
 
         setupSortRadio()

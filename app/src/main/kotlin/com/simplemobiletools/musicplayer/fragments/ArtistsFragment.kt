@@ -20,7 +20,7 @@ import kotlinx.android.synthetic.main.fragment_artists.view.*
 
 // Artists -> Albums -> Tracks
 class ArtistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPagerFragment(context, attributeSet) {
-    var artistsIgnoringSearch = ArrayList<Artist>()
+    private var artistsIgnoringSearch = ArrayList<Artist>()
 
     override fun setupFragment(activity: SimpleActivity) {
         activity.getArtists { artists ->

@@ -21,7 +21,7 @@ import com.simplemobiletools.musicplayer.models.Playlist
 import kotlinx.android.synthetic.main.fragment_playlists.view.*
 
 class PlaylistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPagerFragment(context, attributeSet) {
-    var playlistsIgnoringSearch = ArrayList<Playlist>()
+    private var playlistsIgnoringSearch = ArrayList<Playlist>()
 
     override fun setupFragment(activity: SimpleActivity) {
         ensureBackgroundThread {
