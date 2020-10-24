@@ -138,8 +138,8 @@ class ArtistsAdapter(activity: SimpleActivity, var artists: ArrayList<Artist>, r
 
     private fun getSelectedArtists(): List<Artist> = artists.filter { selectedKeys.contains(it.hashCode()) }.toList()
 
-    fun updateItems(newItems: ArrayList<Artist>, highlightText: String = "") {
-        if (newItems.hashCode() != artists.hashCode()) {
+    fun updateItems(newItems: ArrayList<Artist>, highlightText: String = "", forceUpdate: Boolean = false) {
+        if (forceUpdate || newItems.hashCode() != artists.hashCode()) {
             artists = newItems.clone() as ArrayList<Artist>
             textToHighlight = highlightText
             notifyDataSetChanged()

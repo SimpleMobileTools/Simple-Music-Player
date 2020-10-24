@@ -11,16 +11,20 @@ import com.simplemobiletools.commons.models.RadioItem
 import com.simplemobiletools.commons.views.MyCompatRadioButton
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.extensions.config
-import com.simplemobiletools.musicplayer.helpers.PLAYER_SORT_BY_TITLE
-import com.simplemobiletools.musicplayer.helpers.PLAYER_SORT_BY_TRACK_COUNT
+import com.simplemobiletools.musicplayer.helpers.*
 import kotlinx.android.synthetic.main.dialog_change_sorting.view.*
 
 class ChangeSortingDialog(val activity: Activity, val tabIndex: Int, val callback: () -> Unit) {
+    private val config = activity.config
     private var currSorting = 0
     var view: View = activity.layoutInflater.inflate(R.layout.dialog_change_sorting, null)
 
     init {
-        currSorting = activity.config.playlistSorting
+        currSorting = when (tabIndex) {
+            TAB_PLAYLISTS -> config.playlistSorting
+            else -> config.artistSorting
+        }
+
         setupSortRadio()
         setupOrderRadio()
 
@@ -33,10 +37,13 @@ class ChangeSortingDialog(val activity: Activity, val tabIndex: Int, val callbac
     }
 
     private fun setupSortRadio() {
-        val radioItems = arrayListOf(
-            RadioItem(0, activity.getString(R.string.title), PLAYER_SORT_BY_TITLE),
-            RadioItem(1, activity.getString(R.string.track_count), PLAYER_SORT_BY_TRACK_COUNT)
-        )
+        val radioItems = ArrayList<RadioItem>()
+        when (tabIndex) {
+            TAB_PLAYLISTS -> {
+                radioItems.add(RadioItem(0, activity.getString(R.string.title), PLAYER_SORT_BY_TITLE))
+                radioItems.add(RadioItem(1, activity.getString(R.string.track_count), PLAYER_SORT_BY_TRACK_COUNT))
+            }
+        }
 
         radioItems.forEach { radioItem ->
             activity.layoutInflater.inflate(R.layout.small_radio_button, null).apply {
@@ -71,7 +78,13 @@ class ChangeSortingDialog(val activity: Activity, val tabIndex: Int, val callbac
         }
 
         if (currSorting != sorting) {
-            activity.config.playlistSorting = sorting
+            when (tabIndex) {
+                TAB_PLAYLISTS -> config.playlistSorting = sorting
+                TAB_ARTISTS -> config.artistSorting = sorting
+                TAB_ALBUMS -> config.albumSorting = sorting
+                TAB_TRACKS -> config.trackSorting = sorting
+            }
+
             callback()
         }
     }

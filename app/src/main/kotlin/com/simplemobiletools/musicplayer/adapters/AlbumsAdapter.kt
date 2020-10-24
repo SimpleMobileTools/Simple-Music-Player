@@ -133,8 +133,8 @@ class AlbumsAdapter(activity: SimpleActivity, var albums: ArrayList<Album>, recy
 
     private fun getSelectedAlbums(): List<Album> = albums.filter { selectedKeys.contains(it.hashCode()) }.toList()
 
-    fun updateItems(newItems: ArrayList<Album>, highlightText: String = "") {
-        if (newItems.hashCode() != albums.hashCode()) {
+    fun updateItems(newItems: ArrayList<Album>, highlightText: String = "", forceUpdate: Boolean = false) {
+        if (forceUpdate || newItems.hashCode() != albums.hashCode()) {
             albums = newItems.clone() as ArrayList<Album>
             textToHighlight = highlightText
             notifyDataSetChanged()

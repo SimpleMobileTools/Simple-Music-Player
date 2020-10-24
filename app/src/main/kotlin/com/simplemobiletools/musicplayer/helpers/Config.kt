@@ -2,8 +2,6 @@ package com.simplemobiletools.musicplayer.helpers
 
 import android.content.Context
 import com.simplemobiletools.commons.helpers.BaseConfig
-import com.simplemobiletools.commons.helpers.SORT_ORDER
-import com.simplemobiletools.musicplayer.R
 
 class Config(context: Context) : BaseConfig(context) {
     companion object {
@@ -65,4 +63,16 @@ class Config(context: Context) : BaseConfig(context) {
     var playlistSorting: Int
         get() = prefs.getInt(PLAYLIST_SORTING, PLAYER_SORT_BY_TITLE)
         set(playlistSorting) = prefs.edit().putInt(PLAYLIST_SORTING, playlistSorting).apply()
+
+    var artistSorting: Int
+        get() = prefs.getInt(ARTIST_SORTING, PLAYER_SORT_BY_TITLE)
+        set(artistSorting) = prefs.edit().putInt(ARTIST_SORTING, artistSorting).apply()
+
+    var albumSorting: Int
+        get() = prefs.getInt(ALBUM_SORTING, PLAYER_SORT_BY_TITLE)
+        set(albumSorting) = prefs.edit().putInt(ALBUM_SORTING, albumSorting).apply()
+
+    var trackSorting: Int
+        get() = prefs.getInt(TRACK_SORTING, PLAYER_SORT_BY_TITLE)
+        set(trackSorting) = prefs.edit().putInt(TRACK_SORTING, trackSorting).apply()
 }

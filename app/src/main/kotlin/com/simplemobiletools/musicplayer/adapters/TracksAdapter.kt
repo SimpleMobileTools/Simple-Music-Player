@@ -145,8 +145,8 @@ class TracksAdapter(activity: SimpleActivity, var tracks: ArrayList<Track>, val 
 
     private fun getSelectedTracks(): List<Track> = tracks.filter { selectedKeys.contains(it.hashCode()) }.toList()
 
-    fun updateItems(newItems: ArrayList<Track>, highlightText: String = "") {
-        if (newItems.hashCode() != tracks.hashCode()) {
+    fun updateItems(newItems: ArrayList<Track>, highlightText: String = "", forceUpdate: Boolean = false) {
+        if (forceUpdate || newItems.hashCode() != tracks.hashCode()) {
             tracks = newItems.clone() as ArrayList<Track>
             textToHighlight = highlightText
             notifyDataSetChanged()
