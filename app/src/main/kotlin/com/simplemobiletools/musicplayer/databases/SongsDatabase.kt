@@ -137,7 +137,7 @@ abstract class SongsDatabase : RoomDatabase() {
                             "`album` TEXT NOT NULL, `cover_art` TEXT default '' NOT NULL, `playlist_id` INTEGER NOT NULL, `track_id` INTEGER NOT NULL DEFAULT 0)")
 
                     execSQL("INSERT OR IGNORE INTO tracks_new (media_store_id, title, artist, path, duration, album, cover_art, playlist_id, track_id) " +
-                            "SELECT media_store_id, title, artist, path, duration, album, cover_art, playlist_id, track_id FROM songs")
+                            "SELECT media_store_id, title, artist, path, duration, album, cover_art, playlist_id, track_id FROM tracks")
 
                     execSQL("DROP TABLE tracks")
                     execSQL("ALTER TABLE tracks_new RENAME TO tracks")
