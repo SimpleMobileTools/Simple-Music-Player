@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.content.ContentUris
 import android.content.Context
 import android.content.Intent
-import android.provider.MediaStore
 import android.provider.MediaStore.Audio
 import com.simplemobiletools.commons.extensions.getIntValue
 import com.simplemobiletools.commons.extensions.getLongValue
@@ -105,16 +104,6 @@ fun Context.getArtistsSync(): ArrayList<Artist> {
         }
     } catch (e: Exception) {
         showErrorToast(e)
-    }
-
-    artists.sortWith { o1, o2 -> AlphanumericComparator().compare(o1.title.toLowerCase(), o2.title.toLowerCase()) }
-
-    // move <unknown> at the bottom
-    val unknown = artists.firstOrNull { it.title == MediaStore.UNKNOWN_STRING }
-    if (unknown != null) {
-        if (artists.remove(unknown)) {
-            artists.add(unknown)
-        }
     }
 
     return artists

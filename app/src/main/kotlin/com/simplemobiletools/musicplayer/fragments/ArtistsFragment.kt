@@ -10,8 +10,11 @@ import com.simplemobiletools.commons.extensions.beVisibleIf
 import com.simplemobiletools.musicplayer.activities.AlbumsActivity
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
 import com.simplemobiletools.musicplayer.adapters.ArtistsAdapter
+import com.simplemobiletools.musicplayer.dialogs.ChangeSortingDialog
+import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.extensions.getArtists
 import com.simplemobiletools.musicplayer.helpers.ARTIST
+import com.simplemobiletools.musicplayer.helpers.TAB_ARTISTS
 import com.simplemobiletools.musicplayer.models.Artist
 import kotlinx.android.synthetic.main.fragment_artists.view.*
 
@@ -21,6 +24,9 @@ class ArtistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
 
     override fun setupFragment(activity: SimpleActivity) {
         activity.getArtists { artists ->
+            Artist.sorting = activity.config.artistSorting
+            artists.sort()
+
             activity.runOnUiThread {
                 artists_placeholder.beVisibleIf(artists.isEmpty())
                 val adapter = ArtistsAdapter(activity, artists, artists_list, artists_fastscroller) {
@@ -63,5 +69,12 @@ class ArtistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
     }
 
     override fun onSortOpen(activity: SimpleActivity) {
+        ChangeSortingDialog(activity, TAB_ARTISTS) {
+            val adapter = artists_list.adapter as? ArtistsAdapter ?: return@ChangeSortingDialog
+            val artists = adapter.artists
+            Artist.sorting = activity.config.artistSorting
+            artists.sort()
+            adapter.updateItems(artists, forceUpdate = true)
+        }
     }
 }

@@ -43,6 +43,20 @@ class ChangeSortingDialog(val activity: Activity, val tabIndex: Int, val callbac
                 radioItems.add(RadioItem(0, activity.getString(R.string.title), PLAYER_SORT_BY_TITLE))
                 radioItems.add(RadioItem(1, activity.getString(R.string.track_count), PLAYER_SORT_BY_TRACK_COUNT))
             }
+            TAB_ARTISTS -> {
+                radioItems.add(RadioItem(0, activity.getString(R.string.title), PLAYER_SORT_BY_TITLE))
+                radioItems.add(RadioItem(1, activity.getString(R.string.album_count), PLAYER_SORT_BY_ALBUM_COUNT))
+                radioItems.add(RadioItem(2, activity.getString(R.string.track_count), PLAYER_SORT_BY_TRACK_COUNT))
+            }
+            TAB_ALBUMS -> {
+                radioItems.add(RadioItem(0, activity.getString(R.string.title), PLAYER_SORT_BY_TITLE))
+                radioItems.add(RadioItem(1, activity.getString(R.string.artist_name), PLAYER_SORT_BY_ARTIST_TITLE))
+                radioItems.add(RadioItem(2, activity.getString(R.string.year), PLAYER_SORT_BY_YEAR))
+            }
+            TAB_TRACKS -> {
+                radioItems.add(RadioItem(0, activity.getString(R.string.title), PLAYER_SORT_BY_TITLE))
+                radioItems.add(RadioItem(1, activity.getString(R.string.duration), PLAYER_SORT_BY_DURATION))
+            }
         }
 
         radioItems.forEach { radioItem ->
