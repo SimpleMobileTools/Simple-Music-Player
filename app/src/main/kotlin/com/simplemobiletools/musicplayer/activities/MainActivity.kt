@@ -24,15 +24,15 @@ import com.simplemobiletools.commons.models.Release
 import com.simplemobiletools.musicplayer.BuildConfig
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.adapters.ViewPagerAdapter
+import com.simplemobiletools.musicplayer.dialogs.NewPlaylistDialog
 import com.simplemobiletools.musicplayer.dialogs.SleepTimerCustomDialog
-import com.simplemobiletools.musicplayer.extensions.config
-import com.simplemobiletools.musicplayer.extensions.queueDAO
-import com.simplemobiletools.musicplayer.extensions.sendIntent
+import com.simplemobiletools.musicplayer.extensions.*
 import com.simplemobiletools.musicplayer.fragments.MyViewPagerFragment
 import com.simplemobiletools.musicplayer.helpers.INIT_QUEUE
 import com.simplemobiletools.musicplayer.helpers.START_SLEEP_TIMER
 import com.simplemobiletools.musicplayer.helpers.STOP_SLEEP_TIMER
 import com.simplemobiletools.musicplayer.models.Events
+import com.simplemobiletools.musicplayer.models.Track
 import com.simplemobiletools.musicplayer.services.MusicService
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_albums.*
@@ -242,21 +242,45 @@ class MainActivity : SimpleActivity() {
     }
 
     private fun createPlaylistFrom(path: String) {
-        val folderSongs = getFolderSongs(File(path))
+        val folderSongs = getFolderTracks(File(path))
+        val allTracks = tracksDAO.getAll()
+        val wantedTracks = ArrayList<Track>()
 
-    }
-
-    private fun getFolderSongs(folder: File): ArrayList<String> {
-        val songFiles = ArrayList<String>()
-        val files = folder.listFiles() ?: return songFiles
-        files.forEach {
-            if (it.isDirectory) {
-                songFiles.addAll(getFolderSongs(it))
-            } else if (it.isAudioFast()) {
-                songFiles.add(it.absolutePath)
+        folderSongs.forEach { trackPath ->
+            val mediaStoreId = getMediaStoreIdFromPath(trackPath)
+            if (mediaStoreId != 0L) {
+                allTracks.firstOrNull { it.mediaStoreId == mediaStoreId }?.apply {
+                    wantedTracks.add(this)
+                }
             }
         }
-        return songFiles
+
+        runOnUiThread {
+            NewPlaylistDialog(this) { playlistId ->
+                wantedTracks.forEach {
+                    it.id = 0
+                    it.playListId = playlistId
+                }
+
+                ensureBackgroundThread {
+                    tracksDAO.insertAll(wantedTracks)
+                    EventBus.getDefault().post(Events.PlaylistsUpdated())
+                }
+            }
+        }
+    }
+
+    private fun getFolderTracks(folder: File): ArrayList<String> {
+        val trackFiles = ArrayList<String>()
+        val files = folder.listFiles() ?: return trackFiles
+        files.forEach {
+            if (it.isDirectory) {
+                trackFiles.addAll(getFolderTracks(it))
+            } else if (it.isAudioFast()) {
+                trackFiles.add(it.absolutePath)
+            }
+        }
+        return trackFiles
     }
 
     private fun showSleepTimer() {

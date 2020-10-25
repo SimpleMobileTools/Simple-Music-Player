@@ -4,11 +4,9 @@ import android.annotation.SuppressLint
 import android.content.ContentUris
 import android.content.Context
 import android.content.Intent
+import android.provider.MediaStore
 import android.provider.MediaStore.Audio
-import com.simplemobiletools.commons.extensions.getIntValue
-import com.simplemobiletools.commons.extensions.getLongValue
-import com.simplemobiletools.commons.extensions.getStringValue
-import com.simplemobiletools.commons.extensions.showErrorToast
+import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.commons.helpers.isOreoPlus
 import com.simplemobiletools.commons.helpers.isQPlus
@@ -285,4 +283,27 @@ fun Context.getAllInitialTracks(): ArrayList<Track> {
         }
     }
     return allTracks
+}
+
+fun Context.getMediaStoreIdFromPath(path: String): Long {
+    var id = 0L
+    val projection = arrayOf(
+        Audio.Media._ID
+    )
+
+    val uri = getFileUri(path)
+    val selection = "${MediaStore.MediaColumns.DATA} = ?"
+    val selectionArgs = arrayOf(path)
+
+    try {
+        val cursor = contentResolver.query(uri, projection, selection, selectionArgs, null)
+        cursor?.use {
+            if (cursor.moveToFirst()) {
+                id = cursor.getLongValue(Audio.Media._ID)
+            }
+        }
+    } catch (ignored: Exception) {
+    }
+
+    return id
 }

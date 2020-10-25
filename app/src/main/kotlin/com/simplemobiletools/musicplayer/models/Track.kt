@@ -17,7 +17,7 @@ import java.io.Serializable
 
 @Entity(tableName = "tracks", indices = [Index(value = ["media_store_id", "playlist_id"], unique = true)])
 data class Track(
-    @PrimaryKey(autoGenerate = true) val id: Long,
+    @PrimaryKey(autoGenerate = true) var id: Long,
     @ColumnInfo(name = "media_store_id") val mediaStoreId: Long,
     @ColumnInfo(name = "title") var title: String,
     @ColumnInfo(name = "artist") var artist: String,
