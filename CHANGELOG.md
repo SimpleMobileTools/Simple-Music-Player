@@ -1,6 +1,12 @@
 Changelog
 ==========
 
+Version 5.4.1 *(2020-10-25)*
+----------------------------
+
+ * Allow manually adding files and folders to playlists
+ * Add sorting to every tab
+
 Version 5.4.0 *(2020-10-23)*
 ----------------------------
 
