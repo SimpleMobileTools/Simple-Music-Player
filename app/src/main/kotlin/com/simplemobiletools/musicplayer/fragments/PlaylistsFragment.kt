@@ -29,6 +29,7 @@ class PlaylistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPa
     private var playlistsIgnoringSearch = ArrayList<Playlist>()
 
     override fun setupFragment(activity: SimpleActivity) {
+        playlists_placeholder.setTextColor(activity.config.textColor)
         playlists_placeholder_2.setTextColor(activity.getAdjustedPrimaryColor())
         playlists_placeholder_2.underlineText()
         playlists_placeholder_2.setOnClickListener {

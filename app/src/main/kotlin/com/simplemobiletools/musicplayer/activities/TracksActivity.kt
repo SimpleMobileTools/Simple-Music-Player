@@ -47,6 +47,7 @@ class TracksActivity : SimpleActivity() {
 
         title = playlist?.title ?: album.title
 
+        tracks_placeholder.setTextColor(config.textColor)
         tracks_placeholder_2.setTextColor(getAdjustedPrimaryColor())
         tracks_placeholder_2.underlineText()
         tracks_placeholder_2.setOnClickListener {
