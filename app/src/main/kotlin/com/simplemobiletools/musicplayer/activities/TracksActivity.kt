@@ -143,16 +143,17 @@ class TracksActivity : SimpleActivity() {
     }
 
     private fun addFileToPlaylist() {
-        FilePickerDialog(this, lastFilePickerPath) {
+        FilePickerDialog(this, lastFilePickerPath) { path ->
             ensureBackgroundThread {
-                lastFilePickerPath = it
-                if (it.isAudioFast()) {
-                    val mediaStoreId = getMediaStoreIdFromPath(it)
+                lastFilePickerPath = path
+                if (path.isAudioFast()) {
+                    val mediaStoreId = getMediaStoreIdFromPath(path)
                     if (mediaStoreId == 0L) {
                         toast(R.string.unknown_error_occurred)
                     } else {
                         val track = tracksDAO.getTrackWithMediaStoreId(mediaStoreId)
                         if (track != null) {
+                            track.id = 0
                             track.playListId = playlist!!.id
                             tracksDAO.insert(track)
                             refreshPlaylist()
