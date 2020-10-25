@@ -32,7 +32,6 @@ import com.simplemobiletools.musicplayer.helpers.INIT_QUEUE
 import com.simplemobiletools.musicplayer.helpers.START_SLEEP_TIMER
 import com.simplemobiletools.musicplayer.helpers.STOP_SLEEP_TIMER
 import com.simplemobiletools.musicplayer.models.Events
-import com.simplemobiletools.musicplayer.models.Track
 import com.simplemobiletools.musicplayer.services.MusicService
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_albums.*
@@ -43,7 +42,6 @@ import kotlinx.android.synthetic.main.view_current_track_bar.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
-import java.io.File
 
 class MainActivity : SimpleActivity() {
     private var isSearchOpen = false
@@ -242,45 +240,19 @@ class MainActivity : SimpleActivity() {
     }
 
     private fun createPlaylistFrom(path: String) {
-        val folderSongs = getFolderTracks(File(path))
-        val allTracks = tracksDAO.getAll()
-        val wantedTracks = ArrayList<Track>()
-
-        folderSongs.forEach { trackPath ->
-            val mediaStoreId = getMediaStoreIdFromPath(trackPath)
-            if (mediaStoreId != 0L) {
-                allTracks.firstOrNull { it.mediaStoreId == mediaStoreId }?.apply {
-                    wantedTracks.add(this)
-                }
-            }
-        }
-
+        val tracks = getFolderTracks(path)
         runOnUiThread {
             NewPlaylistDialog(this) { playlistId ->
-                wantedTracks.forEach {
-                    it.id = 0
+                tracks.forEach {
                     it.playListId = playlistId
                 }
 
                 ensureBackgroundThread {
-                    tracksDAO.insertAll(wantedTracks)
+                    tracksDAO.insertAll(tracks)
                     EventBus.getDefault().post(Events.PlaylistsUpdated())
                 }
             }
         }
-    }
-
-    private fun getFolderTracks(folder: File): ArrayList<String> {
-        val trackFiles = ArrayList<String>()
-        val files = folder.listFiles() ?: return trackFiles
-        files.forEach {
-            if (it.isDirectory) {
-                trackFiles.addAll(getFolderTracks(it))
-            } else if (it.isAudioFast()) {
-                trackFiles.add(it.absolutePath)
-            }
-        }
-        return trackFiles
     }
 
     private fun showSleepTimer() {

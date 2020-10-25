@@ -18,6 +18,7 @@ import com.simplemobiletools.musicplayer.interfaces.SongsDao
 import com.simplemobiletools.musicplayer.models.*
 import com.simplemobiletools.musicplayer.services.MusicService
 import org.greenrobot.eventbus.EventBus
+import java.io.File
 
 @SuppressLint("NewApi")
 fun Context.sendIntent(action: String) {
@@ -306,4 +307,34 @@ fun Context.getMediaStoreIdFromPath(path: String): Long {
     }
 
     return id
+}
+
+fun Context.getFolderTracks(path: String): ArrayList<Track> {
+    val folderTracks = getFolderTrackPaths(File(path))
+    val allTracks = tracksDAO.getAll()
+    val wantedTracks = ArrayList<Track>()
+
+    folderTracks.forEach { trackPath ->
+        val mediaStoreId = getMediaStoreIdFromPath(trackPath)
+        if (mediaStoreId != 0L) {
+            allTracks.firstOrNull { it.mediaStoreId == mediaStoreId }?.apply {
+                id = 0
+                wantedTracks.add(this)
+            }
+        }
+    }
+    return wantedTracks
+}
+
+private fun getFolderTrackPaths(folder: File): ArrayList<String> {
+    val trackFiles = ArrayList<String>()
+    val files = folder.listFiles() ?: return trackFiles
+    files.forEach {
+        if (it.isDirectory) {
+            trackFiles.addAll(getFolderTrackPaths(it))
+        } else if (it.isAudioFast()) {
+            trackFiles.add(it.absolutePath)
+        }
+    }
+    return trackFiles
 }
