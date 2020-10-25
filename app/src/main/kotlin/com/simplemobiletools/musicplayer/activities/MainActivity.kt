@@ -99,6 +99,7 @@ class MainActivity : SimpleActivity() {
 
     override fun onPrepareOptionsMenu(menu: Menu): Boolean {
         menu.apply {
+            findItem(R.id.create_new_playlist).isVisible = getCurrentFragment() == playlists_fragment_holder
             findItem(R.id.create_playlist_from_folder).isVisible = getCurrentFragment() == playlists_fragment_holder
         }
 
@@ -109,6 +110,7 @@ class MainActivity : SimpleActivity() {
         when (item.itemId) {
             R.id.sort -> showSortingDialog()
             R.id.sleep_timer -> showSleepTimer()
+            R.id.create_new_playlist -> createNewPlaylist()
             R.id.create_playlist_from_folder -> createPlaylistFromFolder()
             R.id.settings -> launchSettings()
             R.id.about -> launchAbout()
@@ -229,6 +231,12 @@ class MainActivity : SimpleActivity() {
         current_track_bar.updateColors()
         current_track_bar.updateCurrentTrack(MusicService.mCurrTrack)
         current_track_bar.updateTrackState(MusicService.getIsPlaying())
+    }
+
+    private fun createNewPlaylist() {
+        NewPlaylistDialog(this) {
+            EventBus.getDefault().post(Events.PlaylistsUpdated())
+        }
     }
 
     private fun createPlaylistFromFolder() {

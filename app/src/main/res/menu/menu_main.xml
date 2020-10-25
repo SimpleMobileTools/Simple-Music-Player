@@ -13,6 +13,10 @@
         android:title="@string/sort_by"
         app:showAsAction="ifRoom" />
     <item
+        android:id="@+id/create_new_playlist"
+        android:title="@string/create_new_playlist"
+        app:showAsAction="never" />
+    <item
         android:id="@+id/create_playlist_from_folder"
         android:title="@string/create_playlist_from_folder"
         app:showAsAction="never" />
