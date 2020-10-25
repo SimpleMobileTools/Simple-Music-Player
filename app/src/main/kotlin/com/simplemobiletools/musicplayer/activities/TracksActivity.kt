@@ -4,13 +4,16 @@ import android.content.ContentUris
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.simplemobiletools.commons.dialogs.FilePickerDialog
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.adapters.TracksAdapter
 import com.simplemobiletools.musicplayer.adapters.TracksHeaderAdapter
 import com.simplemobiletools.musicplayer.extensions.getAlbumTracksSync
+import com.simplemobiletools.musicplayer.extensions.getFolderTracks
 import com.simplemobiletools.musicplayer.extensions.resetQueueItems
 import com.simplemobiletools.musicplayer.extensions.tracksDAO
 import com.simplemobiletools.musicplayer.helpers.*
@@ -25,6 +28,7 @@ import org.greenrobot.eventbus.ThreadMode
 // Artists -> Albums -> Tracks
 class TracksActivity : SimpleActivity() {
     private var bus: EventBus? = null
+    private var playlist: Playlist? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,7 +38,10 @@ class TracksActivity : SimpleActivity() {
         bus!!.register(this)
 
         val playlistType = object : TypeToken<Playlist>() {}.type
-        val playlist = Gson().fromJson<Playlist>(intent.getStringExtra(PLAYLIST), playlistType)
+        playlist = Gson().fromJson<Playlist>(intent.getStringExtra(PLAYLIST), playlistType)
+        if (playlist != null) {
+            invalidateOptionsMenu()
+        }
 
         val albumType = object : TypeToken<Album>() {}.type
         val album = Gson().fromJson<Album>(intent.getStringExtra(ALBUM), albumType)
@@ -45,7 +52,7 @@ class TracksActivity : SimpleActivity() {
             val tracks = ArrayList<Track>()
             val listItems = ArrayList<ListItem>()
             if (playlist != null) {
-                val playlistTracks = tracksDAO.getTracksFromPlaylist(playlist.id)
+                val playlistTracks = tracksDAO.getTracksFromPlaylist(playlist!!.id)
                 tracks.addAll(playlistTracks)
                 listItems.addAll(tracks)
             } else {
@@ -62,11 +69,11 @@ class TracksActivity : SimpleActivity() {
             runOnUiThread {
                 val adapter = if (playlist != null) {
                     TracksAdapter(this, tracks, true, tracks_list, tracks_fastscroller) {
-                        itemClicked(tracks, it as Track)
+                        itemClicked(it as Track)
                     }
                 } else {
                     TracksHeaderAdapter(this, listItems, tracks_list, tracks_fastscroller) {
-                        itemClicked(tracks, it as Track)
+                        itemClicked(it as Track)
                     }
                 }
 
@@ -106,8 +113,41 @@ class TracksActivity : SimpleActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_playlist, menu)
+
+        menu.apply {
+            findItem(R.id.add_folder_to_playlist).isVisible = playlist != null
+        }
+
         updateMenuItemColors(menu)
         return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.add_folder_to_playlist -> addFolderToPlaylist()
+            else -> return super.onOptionsItemSelected(item)
+        }
+        return true
+    }
+
+    private fun addFolderToPlaylist() {
+        FilePickerDialog(this, pickFile = false) {
+            ensureBackgroundThread {
+                val tracks = getFolderTracks(it)
+                tracks.forEach {
+                    it.playListId = playlist!!.id
+                }
+
+                tracksDAO.insertAll(tracks)
+                EventBus.getDefault().post(Events.PlaylistsUpdated())
+
+                val newTracks = tracksDAO.getTracksFromPlaylist(playlist!!.id).toMutableList() as ArrayList<Track>
+                runOnUiThread {
+                    (tracks_list.adapter as? TracksAdapter)?.updateItems(newTracks)
+                }
+            }
+        }
     }
 
     private fun updateCurrentTrackBar() {
@@ -116,7 +156,14 @@ class TracksActivity : SimpleActivity() {
         current_track_bar.updateTrackState(MusicService.getIsPlaying())
     }
 
-    private fun itemClicked(tracks: ArrayList<Track>, track: Track) {
+    private fun itemClicked(track: Track) {
+        val tracks = if (playlist != null) {
+            (tracks_list.adapter as? TracksAdapter)?.tracks?.toMutableList() as? ArrayList<Track> ?: ArrayList()
+        } else {
+            (tracks_list.adapter as? TracksHeaderAdapter)?.items?.filterIsInstance<Track>()?.toMutableList() as? ArrayList<Track>
+                ?: ArrayList()
+        }
+
         resetQueueItems(tracks) {
             Intent(this, TrackActivity::class.java).apply {
                 putExtra(TRACK, Gson().toJson(track))
