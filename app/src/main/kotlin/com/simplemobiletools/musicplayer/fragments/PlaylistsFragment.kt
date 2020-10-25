@@ -25,11 +25,11 @@ class PlaylistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPa
 
     override fun setupFragment(activity: SimpleActivity) {
         ensureBackgroundThread {
-            var playlists = activity.playlistDAO.getAll() as ArrayList<Playlist>
+            val playlists = activity.playlistDAO.getAll() as ArrayList<Playlist>
             playlists.forEach {
                 it.trackCnt = activity.tracksDAO.getTracksCountFromPlaylist(it.id)
             }
-            playlists = playlists.filter { it.trackCnt != 0 }.toMutableList() as ArrayList<Playlist>
+
             Playlist.sorting = activity.config.playlistSorting
             playlists.sort()
 
