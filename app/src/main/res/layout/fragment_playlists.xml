@@ -5,37 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <com.simplemobiletools.commons.views.MyTextView
-        android:id="@+id/playlists_placeholder"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:alpha="0.8"
-        android:gravity="center"
-        android:paddingStart="@dimen/activity_margin"
-        android:paddingTop="@dimen/activity_margin"
-        android:paddingEnd="@dimen/activity_margin"
-        android:text="@string/no_items_found"
-        android:textSize="@dimen/bigger_text_size"
-        android:textStyle="italic"
-        android:visibility="gone" />
-
-    <com.simplemobiletools.commons.views.MyTextView
-        android:id="@+id/playlists_placeholder_2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:alpha="0.8"
-        android:gravity="center"
-        android:paddingStart="@dimen/activity_margin"
-        android:paddingTop="@dimen/activity_margin"
-        android:layout_below="@+id/playlists_placeholder"
-        android:paddingEnd="@dimen/activity_margin"
-        android:text="@string/create_playlist_label"
-        android:textSize="@dimen/bigger_text_size"
-        android:textStyle="italic"
-        android:visibility="gone" />
-
     <com.simplemobiletools.commons.views.MyRecyclerView
         android:id="@+id/playlists_list"
         android:layout_width="match_parent"
@@ -53,5 +22,33 @@
         <include layout="@layout/fastscroller_handle_vertical" />
 
     </com.simplemobiletools.commons.views.FastScroller>
+
+    <com.simplemobiletools.commons.views.MyTextView
+        android:id="@+id/playlists_placeholder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:alpha="0.8"
+        android:gravity="center"
+        android:paddingStart="@dimen/activity_margin"
+        android:paddingTop="@dimen/activity_margin"
+        android:paddingEnd="@dimen/activity_margin"
+        android:text="@string/no_items_found"
+        android:textSize="@dimen/bigger_text_size"
+        android:textStyle="italic"
+        android:visibility="gone" />
+
+    <com.simplemobiletools.commons.views.MyTextView
+        android:id="@+id/playlists_placeholder_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/playlists_placeholder"
+        android:layout_centerHorizontal="true"
+        android:background="?attr/selectableItemBackground"
+        android:gravity="center"
+        android:padding="@dimen/activity_margin"
+        android:text="@string/create_new_playlist"
+        android:textSize="@dimen/bigger_text_size"
+        android:visibility="gone" />
 
 </com.simplemobiletools.musicplayer.fragments.PlaylistsFragment>

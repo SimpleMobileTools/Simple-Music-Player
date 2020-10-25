@@ -64,7 +64,6 @@ class TracksActivity : SimpleActivity() {
                 val playlistTracks = tracksDAO.getTracksFromPlaylist(playlist!!.id)
                 tracks_placeholder.beVisibleIf(playlistTracks.isEmpty())
                 tracks_placeholder_2.beVisibleIf(playlistTracks.isEmpty())
-                tracks_list.beVisibleIf(playlistTracks.isNotEmpty())
 
                 tracks.addAll(playlistTracks)
                 listItems.addAll(tracks)
@@ -161,7 +160,6 @@ class TracksActivity : SimpleActivity() {
 
                     tracks_placeholder.beVisibleIf(newTracks.isEmpty())
                     tracks_placeholder_2.beVisibleIf(newTracks.isEmpty())
-                    tracks_list.beVisibleIf(newTracks.isNotEmpty())
                 }
             }
         }

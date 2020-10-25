@@ -7,23 +7,36 @@ import com.google.gson.Gson
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
 import com.simplemobiletools.commons.extensions.beGoneIf
 import com.simplemobiletools.commons.extensions.beVisibleIf
+import com.simplemobiletools.commons.extensions.getAdjustedPrimaryColor
+import com.simplemobiletools.commons.extensions.underlineText
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
 import com.simplemobiletools.musicplayer.activities.TracksActivity
 import com.simplemobiletools.musicplayer.adapters.PlaylistsAdapter
 import com.simplemobiletools.musicplayer.dialogs.ChangeSortingDialog
+import com.simplemobiletools.musicplayer.dialogs.NewPlaylistDialog
 import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.extensions.playlistDAO
 import com.simplemobiletools.musicplayer.extensions.tracksDAO
 import com.simplemobiletools.musicplayer.helpers.PLAYLIST
 import com.simplemobiletools.musicplayer.helpers.TAB_PLAYLISTS
+import com.simplemobiletools.musicplayer.models.Events
 import com.simplemobiletools.musicplayer.models.Playlist
 import kotlinx.android.synthetic.main.fragment_playlists.view.*
+import org.greenrobot.eventbus.EventBus
 
 class PlaylistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPagerFragment(context, attributeSet) {
     private var playlistsIgnoringSearch = ArrayList<Playlist>()
 
     override fun setupFragment(activity: SimpleActivity) {
+        playlists_placeholder_2.setTextColor(activity.getAdjustedPrimaryColor())
+        playlists_placeholder_2.underlineText()
+        playlists_placeholder_2.setOnClickListener {
+            NewPlaylistDialog(activity) {
+                EventBus.getDefault().post(Events.PlaylistsUpdated())
+            }
+        }
+
         ensureBackgroundThread {
             val playlists = activity.playlistDAO.getAll() as ArrayList<Playlist>
             playlists.forEach {
