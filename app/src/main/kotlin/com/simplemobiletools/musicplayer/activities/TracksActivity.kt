@@ -8,6 +8,9 @@ import android.view.MenuItem
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.simplemobiletools.commons.dialogs.FilePickerDialog
+import com.simplemobiletools.commons.extensions.beVisibleIf
+import com.simplemobiletools.commons.extensions.getAdjustedPrimaryColor
+import com.simplemobiletools.commons.extensions.underlineText
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.adapters.TracksAdapter
@@ -48,11 +51,21 @@ class TracksActivity : SimpleActivity() {
 
         title = playlist?.title ?: album.title
 
+        tracks_placeholder_2.setTextColor(getAdjustedPrimaryColor())
+        tracks_placeholder_2.underlineText()
+        tracks_placeholder_2.setOnClickListener {
+            addFolderToPlaylist()
+        }
+
         ensureBackgroundThread {
             val tracks = ArrayList<Track>()
             val listItems = ArrayList<ListItem>()
             if (playlist != null) {
                 val playlistTracks = tracksDAO.getTracksFromPlaylist(playlist!!.id)
+                tracks_placeholder.beVisibleIf(playlistTracks.isEmpty())
+                tracks_placeholder_2.beVisibleIf(playlistTracks.isEmpty())
+                tracks_list.beVisibleIf(playlistTracks.isNotEmpty())
+
                 tracks.addAll(playlistTracks)
                 listItems.addAll(tracks)
             } else {
@@ -145,6 +158,10 @@ class TracksActivity : SimpleActivity() {
                 val newTracks = tracksDAO.getTracksFromPlaylist(playlist!!.id).toMutableList() as ArrayList<Track>
                 runOnUiThread {
                     (tracks_list.adapter as? TracksAdapter)?.updateItems(newTracks)
+
+                    tracks_placeholder.beVisibleIf(newTracks.isEmpty())
+                    tracks_placeholder_2.beVisibleIf(newTracks.isEmpty())
+                    tracks_list.beVisibleIf(newTracks.isNotEmpty())
                 }
             }
         }
