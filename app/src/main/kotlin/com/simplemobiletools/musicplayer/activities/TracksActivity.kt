@@ -8,17 +8,12 @@ import android.view.MenuItem
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.simplemobiletools.commons.dialogs.FilePickerDialog
-import com.simplemobiletools.commons.extensions.beVisibleIf
-import com.simplemobiletools.commons.extensions.getAdjustedPrimaryColor
-import com.simplemobiletools.commons.extensions.underlineText
+import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.adapters.TracksAdapter
 import com.simplemobiletools.musicplayer.adapters.TracksHeaderAdapter
-import com.simplemobiletools.musicplayer.extensions.getAlbumTracksSync
-import com.simplemobiletools.musicplayer.extensions.getFolderTracks
-import com.simplemobiletools.musicplayer.extensions.resetQueueItems
-import com.simplemobiletools.musicplayer.extensions.tracksDAO
+import com.simplemobiletools.musicplayer.extensions.*
 import com.simplemobiletools.musicplayer.helpers.*
 import com.simplemobiletools.musicplayer.models.*
 import com.simplemobiletools.musicplayer.services.MusicService
@@ -32,6 +27,7 @@ import org.greenrobot.eventbus.ThreadMode
 class TracksActivity : SimpleActivity() {
     private var bus: EventBus? = null
     private var playlist: Playlist? = null
+    private var lastFilePickerPath = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -128,6 +124,7 @@ class TracksActivity : SimpleActivity() {
         menuInflater.inflate(R.menu.menu_playlist, menu)
 
         menu.apply {
+            findItem(R.id.add_file_to_playlist).isVisible = playlist != null
             findItem(R.id.add_folder_to_playlist).isVisible = playlist != null
         }
 
@@ -137,10 +134,34 @@ class TracksActivity : SimpleActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
+            R.id.add_file_to_playlist -> addFileToPlaylist()
             R.id.add_folder_to_playlist -> addFolderToPlaylist()
             else -> return super.onOptionsItemSelected(item)
         }
         return true
+    }
+
+    private fun addFileToPlaylist() {
+        FilePickerDialog(this, lastFilePickerPath) {
+            ensureBackgroundThread {
+                lastFilePickerPath = it
+                if (it.isAudioFast()) {
+                    val mediaStoreId = getMediaStoreIdFromPath(it)
+                    if (mediaStoreId == 0L) {
+                        toast(R.string.unknown_error_occurred)
+                    } else {
+                        val track = tracksDAO.getTrackWithMediaStoreId(mediaStoreId)
+                        if (track != null) {
+                            track.playListId = playlist!!.id
+                            tracksDAO.insert(track)
+                            refreshPlaylist()
+                        }
+                    }
+                } else {
+                    toast(R.string.invalid_file_format)
+                }
+            }
+        }
     }
 
     private fun addFolderToPlaylist() {
@@ -152,16 +173,20 @@ class TracksActivity : SimpleActivity() {
                 }
 
                 tracksDAO.insertAll(tracks)
-                EventBus.getDefault().post(Events.PlaylistsUpdated())
-
-                val newTracks = tracksDAO.getTracksFromPlaylist(playlist!!.id).toMutableList() as ArrayList<Track>
-                runOnUiThread {
-                    (tracks_list.adapter as? TracksAdapter)?.updateItems(newTracks)
-
-                    tracks_placeholder.beVisibleIf(newTracks.isEmpty())
-                    tracks_placeholder_2.beVisibleIf(newTracks.isEmpty())
-                }
+                refreshPlaylist()
             }
+        }
+    }
+
+    private fun refreshPlaylist() {
+        EventBus.getDefault().post(Events.PlaylistsUpdated())
+
+        val newTracks = tracksDAO.getTracksFromPlaylist(playlist!!.id).toMutableList() as ArrayList<Track>
+        runOnUiThread {
+            (tracks_list.adapter as? TracksAdapter)?.updateItems(newTracks)
+
+            tracks_placeholder.beVisibleIf(newTracks.isEmpty())
+            tracks_placeholder_2.beVisibleIf(newTracks.isEmpty())
         }
     }
 

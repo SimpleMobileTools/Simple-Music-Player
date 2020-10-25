@@ -20,6 +20,9 @@ interface SongsDao {
     @Query("SELECT COUNT(*) FROM tracks WHERE playlist_id = :playlistId")
     fun getTracksCountFromPlaylist(playlistId: Int): Int
 
+    @Query("SELECT * FROM tracks WHERE media_store_id = :mediaStoreId")
+    fun getTrackWithMediaStoreId(mediaStoreId: Long): Track?
+
     @Delete
     fun removeSongsFromPlaylists(songs: List<Track>)
 
