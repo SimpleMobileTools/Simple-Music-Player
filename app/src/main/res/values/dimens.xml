@@ -4,6 +4,5 @@
     <dimen name="song_image_size">40dp</dimen>
     <dimen name="artist_image_size">80dp</dimen>
     <dimen name="album_image_size">160dp</dimen>
-    <dimen name="top_art_shadow">100dp</dimen>
     <dimen name="bottom_bar_height">50dp</dimen>
 </resources>

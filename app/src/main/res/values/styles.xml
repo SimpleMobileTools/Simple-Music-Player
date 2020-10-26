@@ -2,6 +2,4 @@
 
     <style name="AppTheme" parent="AppTheme.Base" />
 
-    <style name="TranslucentTheme" parent="Theme.AppCompat.NoActionBar" />
-
 </resources>

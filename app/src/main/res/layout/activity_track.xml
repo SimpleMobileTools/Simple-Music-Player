@@ -19,7 +19,7 @@
     <ImageView
         android:id="@+id/activity_track_top_shadow"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/top_art_shadow"
+        android:layout_height="@dimen/top_shadow_height"
         android:background="@drawable/gradient_background_flipped"
         android:contentDescription="@null"
         app:layout_constraintStart_toStartOf="parent"
