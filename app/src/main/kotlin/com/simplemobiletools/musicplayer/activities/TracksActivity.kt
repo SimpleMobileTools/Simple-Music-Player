@@ -59,8 +59,10 @@ class TracksActivity : SimpleActivity() {
             val listItems = ArrayList<ListItem>()
             if (playlist != null) {
                 val playlistTracks = tracksDAO.getTracksFromPlaylist(playlist!!.id)
-                tracks_placeholder.beVisibleIf(playlistTracks.isEmpty())
-                tracks_placeholder_2.beVisibleIf(playlistTracks.isEmpty())
+                runOnUiThread {
+                    tracks_placeholder.beVisibleIf(playlistTracks.isEmpty())
+                    tracks_placeholder_2.beVisibleIf(playlistTracks.isEmpty())
+                }
 
                 tracks.addAll(playlistTracks)
                 listItems.addAll(tracks)
