@@ -1,6 +1,13 @@
 Changelog
 ==========
 
+Version 5.4.2 *(2020-10-28)*
+----------------------------
+
+ * Readding the sleep timer
+ * Properly handle unknown artists, list them as <unknown>
+ * Added a couple other UX, stability and translation improvements
+
 Version 5.4.1 *(2020-10-25)*
 ----------------------------
 
