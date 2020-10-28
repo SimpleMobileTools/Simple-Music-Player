@@ -91,7 +91,7 @@ fun Context.getArtistsSync(): ArrayList<Artist> {
             if (cursor.moveToFirst()) {
                 do {
                     val id = cursor.getLongValue(Audio.Artists._ID)
-                    val title = cursor.getStringValue(Audio.Artists.ARTIST)
+                    val title = cursor.getStringValue(Audio.Artists.ARTIST) ?: MediaStore.UNKNOWN_STRING
                     var artist = Artist(id, title, 0, 0, 0)
                     artist = fillArtistExtras(this, artist)
                     if (artist.albumCnt > 0) {
@@ -167,7 +167,7 @@ fun Context.getAlbumsSync(artist: Artist): ArrayList<Album> {
             if (cursor.moveToFirst()) {
                 do {
                     val id = cursor.getLongValue(Audio.Albums._ID)
-                    val artistName = cursor.getStringValue(Audio.Albums.ARTIST)
+                    val artistName = cursor.getStringValue(Audio.Albums.ARTIST) ?: MediaStore.UNKNOWN_STRING
                     val title = cursor.getStringValue(Audio.Albums.ALBUM)
                     val coverArt = ContentUris.withAppendedId(artworkUri, id).toString()
                     val year = cursor.getIntValue(Audio.Albums.FIRST_YEAR)
@@ -210,7 +210,7 @@ fun Context.getAlbumTracksSync(albumId: Long): ArrayList<Track> {
                     val duration = cursor.getIntValue(Audio.Media.DURATION) / 1000
                     val trackId = cursor.getIntValue(Audio.Media.TRACK) % 1000
                     val path = ""
-                    val artist = cursor.getStringValue(Audio.Media.ARTIST)
+                    val artist = cursor.getStringValue(Audio.Media.ARTIST) ?: MediaStore.UNKNOWN_STRING
                     val album = cursor.getStringValue(Audio.Media.ALBUM)
                     val track = Track(0, id, title, artist, path, duration, album, coverArt, 0, trackId)
                     tracks.add(track)
