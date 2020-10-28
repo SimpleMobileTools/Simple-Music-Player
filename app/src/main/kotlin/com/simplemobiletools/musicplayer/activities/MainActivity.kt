@@ -88,11 +88,6 @@ class MainActivity : SimpleActivity() {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
         setupSearch(menu)
-
-        menu.apply {
-            findItem(R.id.sleep_timer).isVisible = false
-        }
-
         updateMenuItemColors(menu)
         return true
     }
@@ -331,8 +326,8 @@ class MainActivity : SimpleActivity() {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun sleepTimerChanged(event: Events.SleepTimerChanged) {
-        sleep_timer_holder.beVisible()
         sleep_timer_value.text = event.seconds.getFormattedDuration()
+        sleep_timer_holder.beVisible()
 
         if (event.seconds == 0) {
             finish()
