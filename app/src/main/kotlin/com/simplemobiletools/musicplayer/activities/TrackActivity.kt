@@ -99,11 +99,6 @@ class TrackActivity : SimpleActivity() {
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        updateMenuItemColors(menu)
-        return super.onCreateOptionsMenu(menu)
-    }
-
     private fun setupTrackInfo(track: Track) {
         setupTopArt(track.coverArt)
         activity_track_title.text = track.title

@@ -757,14 +757,17 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         if (!mIsThirdPartyIntent) {
             val position = mPlayer?.currentPosition ?: 0
             ensureBackgroundThread {
-                queueDAO.resetCurrent()
+                try {
+                    queueDAO.resetCurrent()
 
-                if (mCurrTrack != null) {
-                    queueDAO.saveCurrentTrack(mCurrTrack!!.mediaStoreId, position)
-                }
+                    if (mCurrTrack != null) {
+                        queueDAO.saveCurrentTrack(mCurrTrack!!.mediaStoreId, position)
+                    }
 
-                mTracks.forEachIndexed { index, track ->
-                    queueDAO.setOrder(track.mediaStoreId, index)
+                    mTracks.forEachIndexed { index, track ->
+                        queueDAO.setOrder(track.mediaStoreId, index)
+                    }
+                } catch (ignored: Exception) {
                 }
 
                 mCurrTrack = null
