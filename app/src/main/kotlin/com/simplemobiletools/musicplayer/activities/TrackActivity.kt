@@ -37,7 +37,7 @@ class TrackActivity : SimpleActivity() {
     private lateinit var nextTrackPlaceholder: Drawable
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        useDynamicTheme = false
+        showTransparentTop = true
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_track)
         nextTrackPlaceholder = resources.getColoredDrawableWithColor(R.drawable.ic_headset, config.textColor)
@@ -85,8 +85,6 @@ class TrackActivity : SimpleActivity() {
 
     override fun onResume() {
         super.onResume()
-        window.statusBarColor = Color.TRANSPARENT
-        activity_track_holder.setBackgroundColor(config.backgroundColor)
         updateTextColors(activity_track_holder)
     }
 
