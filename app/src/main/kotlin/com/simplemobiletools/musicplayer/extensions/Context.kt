@@ -315,10 +315,18 @@ fun Context.getFolderTracks(path: String): ArrayList<Track> {
     val wantedTracks = ArrayList<Track>()
 
     folderTracks.forEach { trackPath ->
+        var trackAdded = false
         val mediaStoreId = getMediaStoreIdFromPath(trackPath)
         if (mediaStoreId != 0L) {
             allTracks.firstOrNull { it.mediaStoreId == mediaStoreId }?.apply {
                 id = 0
+                wantedTracks.add(this)
+                trackAdded = true
+            }
+        }
+
+        if (!trackAdded) {
+            RoomHelper(this).getTrackFromPath(trackPath)?.apply {
                 wantedTracks.add(this)
             }
         }
