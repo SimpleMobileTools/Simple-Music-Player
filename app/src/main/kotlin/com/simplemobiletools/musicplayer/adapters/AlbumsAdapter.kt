@@ -123,7 +123,9 @@ class AlbumsAdapter(activity: SimpleActivity, var albums: ArrayList<Album>, recy
                         positions.sortDescending()
                         removeSelectedItems(positions)
                         positions.forEach {
-                            albums.removeAt(it)
+                            if (albums.size > it) {
+                                albums.removeAt(it)
+                            }
                         }
                     }
                 }

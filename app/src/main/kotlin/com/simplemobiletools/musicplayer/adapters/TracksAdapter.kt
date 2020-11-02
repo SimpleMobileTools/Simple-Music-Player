@@ -133,7 +133,9 @@ class TracksAdapter(activity: SimpleActivity, var tracks: ArrayList<Track>, val 
                         positions.sortDescending()
                         removeSelectedItems(positions)
                         positions.forEach {
-                            tracks.removeAt(it)
+                            if (tracks.size > it) {
+                                tracks.removeAt(it)
+                            }
                         }
 
                         finishActMode()

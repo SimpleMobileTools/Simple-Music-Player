@@ -128,7 +128,9 @@ class ArtistsAdapter(activity: SimpleActivity, var artists: ArrayList<Artist>, r
                         positions.sortDescending()
                         removeSelectedItems(positions)
                         positions.forEach {
-                            artists.removeAt(it)
+                            if (artists.size > it) {
+                                artists.removeAt(it)
+                            }
                         }
                     }
                 }
