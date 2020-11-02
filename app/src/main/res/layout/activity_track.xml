@@ -11,6 +11,7 @@
         android:id="@+id/activity_track_image"
         android:layout_width="match_parent"
         android:layout_height="@dimen/top_art_height"
+        android:adjustViewBounds="true"
         android:contentDescription="@string/album"
         android:src="@drawable/ic_headset"
         app:layout_constraintStart_toStartOf="parent"

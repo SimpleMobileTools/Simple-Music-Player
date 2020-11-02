@@ -2,20 +2,22 @@ package com.simplemobiletools.musicplayer.activities
 
 import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.provider.MediaStore
-import android.view.Menu
 import android.view.View
 import android.widget.SeekBar
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.request.target.Target
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.simplemobiletools.commons.extensions.*
@@ -154,12 +156,13 @@ class TrackActivity : SimpleActivity() {
 
     private fun setupTopArt(coverArt: String) {
         val drawable = resources.getDrawable(R.drawable.ic_headset)
-        val wantedHeight = resources.getDimension(R.dimen.top_art_height).toInt()
+        var wantedHeight = resources.getDimension(R.dimen.top_art_height).toInt()
+        wantedHeight = Math.min(wantedHeight, realScreenSize.y / 2)
+
         val placeholder = getResizedDrawable(drawable, wantedHeight)
         placeholder.applyColorFilter(config.textColor)
 
         val wantedWidth = realScreenSize.x
-
         val options = RequestOptions()
             .error(placeholder)
             .centerCrop()
@@ -167,6 +170,17 @@ class TrackActivity : SimpleActivity() {
         Glide.with(this)
             .load(coverArt)
             .apply(options)
+            .listener(object : RequestListener<Drawable> {
+                override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean) = false
+
+                override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
+                    val coverHeight = resource?.intrinsicHeight ?: 0
+                    if (coverHeight > 0 && activity_track_image.height != coverHeight) {
+                        activity_track_image.layoutParams.height = coverHeight
+                    }
+                    return false
+                }
+            })
             .override(wantedWidth, wantedHeight)
             .into(findViewById(R.id.activity_track_image))
     }
