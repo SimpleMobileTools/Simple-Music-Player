@@ -29,6 +29,7 @@ class ArtistsAdapter(activity: SimpleActivity, var artists: ArrayList<Artist>, r
 
     private var textToHighlight = ""
     private val placeholder = resources.getColoredDrawableWithColor(R.drawable.ic_headset_padded, textColor)
+    private val cornerRadius = resources.getDimension(R.dimen.rounded_corner_radius_small).toInt()
 
     init {
         setupDragListener(true)
@@ -169,7 +170,7 @@ class ArtistsAdapter(activity: SimpleActivity, var artists: ArrayList<Artist>, r
 
             val options = RequestOptions()
                 .error(placeholder)
-                .transform(CenterCrop(), RoundedCorners(16))
+                .transform(CenterCrop(), RoundedCorners(cornerRadius))
 
             Glide.with(activity)
                 .load(albumArtUri)

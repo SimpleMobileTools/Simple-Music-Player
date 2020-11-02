@@ -41,6 +41,7 @@ class AlbumsTracksAdapter(activity: SimpleActivity, val items: ArrayList<ListIte
 
     private val placeholder = resources.getColoredDrawableWithColor(R.drawable.ic_headset_padded, textColor)
     private val placeholderBig = resources.getColoredDrawableWithColor(R.drawable.ic_headset, textColor)
+    private val cornerRadius = resources.getDimension(R.dimen.rounded_corner_radius_small).toInt()
 
     init {
         setupDragListener(true)
@@ -180,7 +181,7 @@ class AlbumsTracksAdapter(activity: SimpleActivity, val items: ArrayList<ListIte
 
             val options = RequestOptions()
                 .error(placeholderBig)
-                .transform(CenterCrop(), RoundedCorners(16))
+                .transform(CenterCrop(), RoundedCorners(cornerRadius))
 
             Glide.with(activity)
                 .load(album.coverArt)
@@ -205,7 +206,7 @@ class AlbumsTracksAdapter(activity: SimpleActivity, val items: ArrayList<ListIte
             } else {
                 val options = RequestOptions()
                     .error(placeholder)
-                    .transform(CenterCrop(), RoundedCorners(8))
+                    .transform(CenterCrop(), RoundedCorners(cornerRadius))
 
                 Glide.with(activity)
                     .load(track.coverArt)

@@ -35,6 +35,7 @@ class TracksHeaderAdapter(activity: SimpleActivity, val items: ArrayList<ListIte
     private val ITEM_TRACK = 1
 
     private val placeholder = resources.getColoredDrawableWithColor(R.drawable.ic_headset, textColor)
+    private val cornerRadius = resources.getDimension(R.dimen.rounded_corner_radius_big).toInt()
 
     init {
         setupDragListener(true)
@@ -173,7 +174,7 @@ class TracksHeaderAdapter(activity: SimpleActivity, val items: ArrayList<ListIte
 
             val options = RequestOptions()
                 .error(placeholder)
-                .transform(CenterCrop(), RoundedCorners(16))
+                .transform(CenterCrop(), RoundedCorners(cornerRadius))
 
             Glide.with(activity)
                 .load(header.coverArt)

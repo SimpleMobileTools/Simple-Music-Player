@@ -30,6 +30,7 @@ class AlbumsAdapter(activity: SimpleActivity, var albums: ArrayList<Album>, recy
 
     private var textToHighlight = ""
     private val placeholderBig = resources.getColoredDrawableWithColor(R.drawable.ic_headset, textColor)
+    private val cornerRadius = resources.getDimension(R.dimen.rounded_corner_radius_small).toInt()
 
     init {
         setupDragListener(true)
@@ -156,7 +157,7 @@ class AlbumsAdapter(activity: SimpleActivity, var albums: ArrayList<Album>, recy
 
             val options = RequestOptions()
                 .error(placeholderBig)
-                .transform(CenterCrop(), RoundedCorners(16))
+                .transform(CenterCrop(), RoundedCorners(cornerRadius))
 
             Glide.with(activity)
                 .load(album.coverArt)

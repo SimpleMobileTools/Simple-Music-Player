@@ -43,10 +43,11 @@ class CurrentTrackBar(context: Context, attributeSet: AttributeSet) : RelativeLa
         }
 
         current_track_label.text = "${track.title}$artist"
+        val cornerRadius = resources.getDimension(R.dimen.rounded_corner_radius_small).toInt()
         val currentTrackPlaceholder = resources.getColoredDrawableWithColor(R.drawable.ic_headset, context.config.textColor)
         val options = RequestOptions()
             .error(currentTrackPlaceholder)
-            .transform(CenterCrop(), RoundedCorners(8))
+            .transform(CenterCrop(), RoundedCorners(cornerRadius))
 
         Glide.with(this)
             .load(track.coverArt)

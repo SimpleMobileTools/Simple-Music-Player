@@ -30,6 +30,7 @@ class TracksAdapter(activity: SimpleActivity, var tracks: ArrayList<Track>, val 
 
     private var textToHighlight = ""
     private val placeholder = resources.getColoredDrawableWithColor(R.drawable.ic_headset, textColor)
+    private val cornerRadius = resources.getDimension(R.dimen.rounded_corner_radius_small).toInt()
 
     init {
         setupDragListener(true)
@@ -172,7 +173,7 @@ class TracksAdapter(activity: SimpleActivity, var tracks: ArrayList<Track>, val 
             track_duration.text = track.duration.getFormattedDuration()
             val options = RequestOptions()
                 .error(placeholder)
-                .transform(CenterCrop(), RoundedCorners(8))
+                .transform(CenterCrop(), RoundedCorners(cornerRadius))
 
             Glide.with(activity)
                 .load(track.coverArt)

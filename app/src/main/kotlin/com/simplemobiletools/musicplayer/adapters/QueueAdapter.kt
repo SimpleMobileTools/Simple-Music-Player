@@ -40,6 +40,7 @@ class QueueAdapter(activity: SimpleActivity, val items: ArrayList<Track>, recycl
     private val placeholder = resources.getColoredDrawableWithColor(R.drawable.ic_headset, textColor)
     private var touchHelper: ItemTouchHelper? = null
     private var startReorderDragListener: StartReorderDragListener
+    private val cornerRadius = resources.getDimension(R.dimen.rounded_corner_radius_small).toInt()
 
     init {
         setupDragListener(true)
@@ -150,7 +151,7 @@ class QueueAdapter(activity: SimpleActivity, val items: ArrayList<Track>, recycl
             } else {
                 val options = RequestOptions()
                     .error(placeholder)
-                    .transform(CenterCrop(), RoundedCorners(8))
+                    .transform(CenterCrop(), RoundedCorners(cornerRadius))
 
                 Glide.with(activity)
                     .load(track.coverArt)

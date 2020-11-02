@@ -127,9 +127,10 @@ class TrackActivity : SimpleActivity() {
 
         next_track_label.text = "${getString(R.string.next_track)} ${track?.title}$artist"
 
+        val cornerRadius = resources.getDimension(R.dimen.rounded_corner_radius_small).toInt()
         val options = RequestOptions()
             .error(nextTrackPlaceholder)
-            .transform(CenterCrop(), RoundedCorners(8))
+            .transform(CenterCrop(), RoundedCorners(cornerRadius))
 
         Glide.with(this)
             .load(track?.coverArt)
