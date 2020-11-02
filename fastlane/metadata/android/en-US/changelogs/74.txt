@@ -1,0 +1,2 @@
+ * Properly handle adding files or folders into playlists
+ * Some UI, translation and stability improvements

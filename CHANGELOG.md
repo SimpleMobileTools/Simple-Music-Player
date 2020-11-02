@@ -1,6 +1,12 @@
 Changelog
 ==========
 
+Version 5.4.3 *(2020-11-02)*
+----------------------------
+
+ * Properly handle adding files or folders into playlists
+ * Some UI, translation and stability improvements
+
 Version 5.4.2 *(2020-10-28)*
 ----------------------------
 
