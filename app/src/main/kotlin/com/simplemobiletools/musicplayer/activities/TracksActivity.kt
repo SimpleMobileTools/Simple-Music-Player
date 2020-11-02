@@ -153,7 +153,11 @@ class TracksActivity : SimpleActivity() {
                     if (mediaStoreId == 0L) {
                         toast(R.string.unknown_error_occurred)
                     } else {
-                        val track = tracksDAO.getTrackWithMediaStoreId(mediaStoreId)
+                        var track = tracksDAO.getTrackWithMediaStoreId(mediaStoreId)
+                        if (track == null) {
+                            track = RoomHelper(this).getTrackFromPath(path)
+                        }
+
                         if (track != null) {
                             track.id = 0
                             track.playListId = playlist!!.id
