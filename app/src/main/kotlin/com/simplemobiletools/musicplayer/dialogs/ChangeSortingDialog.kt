@@ -14,16 +14,17 @@ import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.helpers.*
 import kotlinx.android.synthetic.main.dialog_change_sorting.view.*
 
-class ChangeSortingDialog(val activity: Activity, val tabIndex: Int, val callback: () -> Unit) {
+class ChangeSortingDialog(val activity: Activity, val location: Int, val callback: () -> Unit) {
     private val config = activity.config
     private var currSorting = 0
     var view: View = activity.layoutInflater.inflate(R.layout.dialog_change_sorting, null)
 
     init {
-        currSorting = when (tabIndex) {
+        currSorting = when (location) {
             TAB_PLAYLISTS -> config.playlistSorting
             TAB_ARTISTS -> config.artistSorting
             TAB_ALBUMS -> config.albumSorting
+            ACTIVITY_PLAYLIST -> config.playlistTracksSorting
             else -> config.trackSorting
         }
 
@@ -40,7 +41,7 @@ class ChangeSortingDialog(val activity: Activity, val tabIndex: Int, val callbac
 
     private fun setupSortRadio() {
         val radioItems = ArrayList<RadioItem>()
-        when (tabIndex) {
+        when (location) {
             TAB_PLAYLISTS -> {
                 radioItems.add(RadioItem(0, activity.getString(R.string.title), PLAYER_SORT_BY_TITLE))
                 radioItems.add(RadioItem(1, activity.getString(R.string.track_count), PLAYER_SORT_BY_TRACK_COUNT))
@@ -55,7 +56,7 @@ class ChangeSortingDialog(val activity: Activity, val tabIndex: Int, val callbac
                 radioItems.add(RadioItem(1, activity.getString(R.string.artist_name), PLAYER_SORT_BY_ARTIST_TITLE))
                 radioItems.add(RadioItem(2, activity.getString(R.string.year), PLAYER_SORT_BY_YEAR))
             }
-            TAB_TRACKS -> {
+            TAB_TRACKS, ACTIVITY_PLAYLIST -> {
                 radioItems.add(RadioItem(0, activity.getString(R.string.title), PLAYER_SORT_BY_TITLE))
                 radioItems.add(RadioItem(1, activity.getString(R.string.artist), PLAYER_SORT_BY_ARTIST_TITLE))
                 radioItems.add(RadioItem(2, activity.getString(R.string.duration), PLAYER_SORT_BY_DURATION))
@@ -95,11 +96,12 @@ class ChangeSortingDialog(val activity: Activity, val tabIndex: Int, val callbac
         }
 
         if (currSorting != sorting) {
-            when (tabIndex) {
+            when (location) {
                 TAB_PLAYLISTS -> config.playlistSorting = sorting
                 TAB_ARTISTS -> config.artistSorting = sorting
                 TAB_ALBUMS -> config.albumSorting = sorting
                 TAB_TRACKS -> config.trackSorting = sorting
+                ACTIVITY_PLAYLIST -> config.playlistTracksSorting = sorting
             }
 
             callback()

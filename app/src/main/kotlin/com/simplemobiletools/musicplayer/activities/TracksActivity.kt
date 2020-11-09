@@ -13,6 +13,7 @@ import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.adapters.TracksAdapter
 import com.simplemobiletools.musicplayer.adapters.TracksHeaderAdapter
+import com.simplemobiletools.musicplayer.dialogs.ChangeSortingDialog
 import com.simplemobiletools.musicplayer.extensions.*
 import com.simplemobiletools.musicplayer.helpers.*
 import com.simplemobiletools.musicplayer.models.*
@@ -127,6 +128,7 @@ class TracksActivity : SimpleActivity() {
         menuInflater.inflate(R.menu.menu_playlist, menu)
 
         menu.apply {
+            findItem(R.id.sort).isVisible = playlist != null
             findItem(R.id.add_file_to_playlist).isVisible = playlist != null
             findItem(R.id.add_folder_to_playlist).isVisible = playlist != null
         }
@@ -137,11 +139,22 @@ class TracksActivity : SimpleActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
+            R.id.sort -> showSortingDialog()
             R.id.add_file_to_playlist -> addFileToPlaylist()
             R.id.add_folder_to_playlist -> addFolderToPlaylist()
             else -> return super.onOptionsItemSelected(item)
         }
         return true
+    }
+
+    private fun showSortingDialog() {
+        ChangeSortingDialog(this, ACTIVITY_PLAYLIST) {
+            val adapter = tracks_list.adapter as? TracksAdapter ?: return@ChangeSortingDialog
+            val tracks = adapter.tracks
+            Track.sorting = config.playlistTracksSorting
+            tracks.sort()
+            adapter.updateItems(tracks, forceUpdate = true)
+        }
     }
 
     private fun addFileToPlaylist() {

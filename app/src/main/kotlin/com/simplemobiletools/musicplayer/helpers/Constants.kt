@@ -68,6 +68,7 @@ const val TAB_PLAYLISTS = 0
 const val TAB_ARTISTS = 1
 const val TAB_ALBUMS = 2
 const val TAB_TRACKS = 3
+const val ACTIVITY_PLAYLIST = 4
 
 // use custom sorting constants, there are too many app specific ones
 const val PLAYER_SORT_BY_TITLE = 1
@@ -78,6 +79,7 @@ const val PLAYER_SORT_BY_DURATION = 16
 const val PLAYER_SORT_BY_ARTIST_TITLE = 32
 
 const val PLAYLIST_SORTING = "playlist_sorting"
+const val PLAYLIST_TRACKS_SORTING = "playlist_tracks_sorting"
 const val ARTIST_SORTING = "artist_sorting"
 const val ALBUM_SORTING = "album_sorting"
 const val TRACK_SORTING = "track_sorting"
