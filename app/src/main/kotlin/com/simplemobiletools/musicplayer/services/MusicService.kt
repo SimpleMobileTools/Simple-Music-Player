@@ -596,7 +596,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
         initMediaPlayerIfNeeded()
 
-        mPlayer!!.reset()
+        mPlayer?.reset() ?: return
         mCurrTrack = mTracks.firstOrNull { it.mediaStoreId == wantedTrackId } ?: return
 
         try {

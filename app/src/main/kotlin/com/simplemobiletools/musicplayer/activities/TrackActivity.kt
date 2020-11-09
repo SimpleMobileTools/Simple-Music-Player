@@ -73,7 +73,11 @@ class TrackActivity : SimpleActivity() {
             Intent(this, MusicService::class.java).apply {
                 putExtra(TRACK_ID, track.mediaStoreId)
                 action = INIT
-                startService(this)
+                try {
+                    startService(this)
+                } catch (e: Exception) {
+                    showErrorToast(e)
+                }
             }
         } else {
             sendIntent(BROADCAST_STATUS)
