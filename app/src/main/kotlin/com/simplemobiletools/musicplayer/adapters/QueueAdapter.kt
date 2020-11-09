@@ -23,6 +23,7 @@ import com.simplemobiletools.commons.views.FastScroller
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
+import com.simplemobiletools.musicplayer.extensions.addTracksToPlaylist
 import com.simplemobiletools.musicplayer.extensions.removeQueueItems
 import com.simplemobiletools.musicplayer.extensions.sendIntent
 import com.simplemobiletools.musicplayer.helpers.FINISH
@@ -77,6 +78,7 @@ class QueueAdapter(activity: SimpleActivity, val items: ArrayList<Track>, recycl
 
         when (id) {
             R.id.cab_remove_from_queue -> removeFromQueue()
+            R.id.cab_add_to_playlist -> addToPlaylist()
         }
     }
 
@@ -121,6 +123,13 @@ class QueueAdapter(activity: SimpleActivity, val items: ArrayList<Track>, recycl
                 positions.sortDescending()
                 removeSelectedItems(positions)
             }
+        }
+    }
+
+    private fun addToPlaylist() {
+        activity.addTracksToPlaylist(getSelectedTracks()) {
+            finishActMode()
+            notifyDataSetChanged()
         }
     }
 
