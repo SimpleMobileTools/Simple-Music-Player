@@ -38,19 +38,18 @@ class QueueAdapter(activity: SimpleActivity, val items: ArrayList<Track>, recycl
         MyRecyclerViewAdapter(activity, recyclerView, fastScroller, itemClick), ItemTouchHelperContract {
 
     private val placeholder = resources.getColoredDrawableWithColor(R.drawable.ic_headset, textColor)
-    private var touchHelper: ItemTouchHelper? = null
     private var startReorderDragListener: StartReorderDragListener
     private val cornerRadius = resources.getDimension(R.dimen.rounded_corner_radius_small).toInt()
 
     init {
         setupDragListener(true)
 
-        touchHelper = ItemTouchHelper(ItemMoveCallback(this))
-        touchHelper!!.attachToRecyclerView(recyclerView)
+        val touchHelper = ItemTouchHelper(ItemMoveCallback(this))
+        touchHelper.attachToRecyclerView(recyclerView)
 
         startReorderDragListener = object : StartReorderDragListener {
             override fun requestDrag(viewHolder: RecyclerView.ViewHolder) {
-                touchHelper?.startDrag(viewHolder)
+                touchHelper.startDrag(viewHolder)
             }
         }
     }
