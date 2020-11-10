@@ -11,6 +11,7 @@ fun Activity.addTracksToPlaylist(tracks: List<Track>, callback: () -> Unit) {
     SelectPlaylistDialog(this) { playlistId ->
         val tracksToAdd = ArrayList<Track>()
         tracks.forEach {
+            it.id = 0
             it.playListId = playlistId
             tracksToAdd.add(it)
         }
