@@ -1,6 +1,13 @@
 Changelog
 ==========
 
+Version 5.4.4 *(2020-11-10)*
+----------------------------
+
+ * Allow sorting playlist tracks
+ * Allow adding queued tracks to playlists
+ * Fixed some issues with adding files or folders to playlists
+
 Version 5.4.3 *(2020-11-02)*
 ----------------------------
 

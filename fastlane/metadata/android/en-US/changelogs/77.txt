@@ -1,0 +1,3 @@
+ * Allow sorting playlist tracks
+ * Allow adding queued tracks to playlists
+ * Fixed some issues with adding files or folders to playlists
