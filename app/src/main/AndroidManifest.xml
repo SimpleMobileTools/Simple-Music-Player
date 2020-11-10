@@ -17,6 +17,10 @@
         android:name="android.hardware.faketouch"
         android:required="false"/>
 
+    <uses-feature
+        android:name="android.hardware.screen.portrait"
+        android:required="false" />
+
     <application
         android:name=".App"
         android:allowBackup="true"
