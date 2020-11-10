@@ -309,10 +309,11 @@ fun Context.getMediaStoreIdFromPath(path: String): Long {
     return id
 }
 
-fun Context.getFolderTracks(path: String): ArrayList<Track> {
+fun Context.getFolderTracks(path: String, rescanWrongPaths: Boolean, callback: (tracks: ArrayList<Track>) -> Unit) {
     val folderTracks = getFolderTrackPaths(File(path))
     val allTracks = tracksDAO.getAll()
     val wantedTracks = ArrayList<Track>()
+    val wrongPaths = ArrayList<String>()    // rescan paths that are not present in the MediaStore
 
     folderTracks.forEach { trackPath ->
         var trackAdded = false
@@ -326,12 +327,24 @@ fun Context.getFolderTracks(path: String): ArrayList<Track> {
         }
 
         if (!trackAdded) {
-            RoomHelper(this).getTrackFromPath(trackPath)?.apply {
-                wantedTracks.add(this)
+            val track = RoomHelper(this).getTrackFromPath(trackPath)
+            if (track != null && track.mediaStoreId != 0L) {
+                wantedTracks.add(track)
+            } else {
+                wrongPaths.add(trackPath)
             }
         }
     }
-    return wantedTracks
+
+    if (wrongPaths.isEmpty() || !rescanWrongPaths) {
+        callback(wantedTracks)
+    } else {
+        rescanPaths(wrongPaths) {
+            getFolderTracks(path, false) { tracks ->
+                callback(tracks)
+            }
+        }
+    }
 }
 
 private fun getFolderTrackPaths(folder: File): ArrayList<String> {

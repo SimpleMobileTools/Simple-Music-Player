@@ -162,22 +162,7 @@ class TracksActivity : SimpleActivity() {
             ensureBackgroundThread {
                 lastFilePickerPath = path
                 if (path.isAudioFast()) {
-                    val mediaStoreId = getMediaStoreIdFromPath(path)
-                    if (mediaStoreId == 0L) {
-                        toast(R.string.unknown_error_occurred)
-                    } else {
-                        var track = tracksDAO.getTrackWithMediaStoreId(mediaStoreId)
-                        if (track == null) {
-                            track = RoomHelper(this).getTrackFromPath(path)
-                        }
-
-                        if (track != null) {
-                            track.id = 0
-                            track.playListId = playlist!!.id
-                            tracksDAO.insert(track)
-                            refreshPlaylist()
-                        }
-                    }
+                    addTrackFromPath(path, true)
                 } else {
                     toast(R.string.invalid_file_format)
                 }
@@ -185,16 +170,42 @@ class TracksActivity : SimpleActivity() {
         }
     }
 
+    private fun addTrackFromPath(path: String, rescanWrongPath: Boolean) {
+        val mediaStoreId = getMediaStoreIdFromPath(path)
+        if (mediaStoreId == 0L) {
+            if (rescanWrongPath) {
+                rescanPaths(arrayListOf(path)) {
+                    addTrackFromPath(path, false)
+                }
+            } else {
+                toast(R.string.unknown_error_occurred)
+            }
+        } else {
+            var track = tracksDAO.getTrackWithMediaStoreId(mediaStoreId)
+            if (track == null) {
+                track = RoomHelper(this).getTrackFromPath(path)
+            }
+
+            if (track != null) {
+                track.id = 0
+                track.playListId = playlist!!.id
+                tracksDAO.insert(track)
+                refreshPlaylist()
+            }
+        }
+    }
+
     private fun addFolderToPlaylist() {
         FilePickerDialog(this, pickFile = false) {
             ensureBackgroundThread {
-                val tracks = getFolderTracks(it)
-                tracks.forEach {
-                    it.playListId = playlist!!.id
-                }
+                getFolderTracks(it, true) { tracks ->
+                    tracks.forEach {
+                        it.playListId = playlist!!.id
+                    }
 
-                tracksDAO.insertAll(tracks)
-                refreshPlaylist()
+                    tracksDAO.insertAll(tracks)
+                    refreshPlaylist()
+                }
             }
         }
     }
