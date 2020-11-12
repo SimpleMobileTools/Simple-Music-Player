@@ -51,8 +51,8 @@
 
     <!-- Sorting -->
     <string name="track_count">Nombre de pistes</string>
-    <string name="album_count">Nombre d'albums</string>
-    <string name="artist_name">Nom de l'artiste</string>
+    <string name="album_count">Nombre d\'albums</string>
+    <string name="artist_name">Nom de l\'artiste</string>
     <string name="year">Année</string>
 
     <!-- Artists -->
