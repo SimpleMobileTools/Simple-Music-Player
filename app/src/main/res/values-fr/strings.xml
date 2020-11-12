@@ -36,7 +36,7 @@
     <string name="open_playlist">Ouvrir la liste de lecture</string>
     <string name="all_songs_cannot_be_deleted">La liste de lecture de toutes les chansons ne peut pas être supprimée.</string>
     <string name="empty_playlist">La liste de lecture actuelle est vide</string>
-    <string name="fetching_songs">Fetching songs…</string>
+    <string name="fetching_songs">Récupération des pistes…</string>
     <string name="all_songs">Tous les titres</string>
     <string name="create_playlist_from_folder">Créer une nouvelle liste de lecture à partir du dossier</string>
     <string name="folder_contains_no_audio">Le dossier sélectionné ne contient aucun fichier audio</string>
@@ -45,36 +45,36 @@
     <string name="show_filename">Afficher le nom de fichier comme titre de chanson</string>
     <string name="title_is_not_available">Si le titre n\'est pas disponible</string>
     <string name="show_album_cover">Afficher la pochette de l\'album sur l\'écran principal</string>
-    <string name="all_tracks">All tracks</string>
-    <string name="add_to_playlist">Add to playlist</string>
-    <string name="create_playlist_label">You can create a new playlist by selecting the wanted artists, albums or tracks and using Menu -> Add to playlist.</string>
+    <string name="all_tracks">Toutes les pistes</string>
+    <string name="add_to_playlist">Ajouter à la liste de lecture</string>
+    <string name="create_playlist_label">Vous pouvez créer une nouvelle liste de lecture en sélectionnant les artistes, albums ou pistes désirés et en utilisant Menu ->  Ajouter à la liste de lecture</string>
 
     <!-- Sorting -->
-    <string name="track_count">Track Count</string>
-    <string name="album_count">Album Count</string>
-    <string name="artist_name">Artist Name</string>
-    <string name="year">Year</string>
+    <string name="track_count">Nombre de pistes</string>
+    <string name="album_count">Nombre d\'albums</string>
+    <string name="artist_name">Nom de l\'artiste</string>
+    <string name="year">Année</string>
 
     <!-- Artists -->
-    <string name="artists">Artists</string>
+    <string name="artists">Artistes</string>
     <string name="albums">Albums</string>
     <plurals name="albums_plural">
         <item quantity="one">%d Album</item>
         <item quantity="other">%d Albums</item>
     </plurals>
 
-    <string name="tracks">Tracks</string>
+    <string name="tracks">Piste</string>
     <plurals name="tracks_plural">
-        <item quantity="one">%d Track</item>
-        <item quantity="other">%d Tracks</item>
+        <item quantity="one">%d Piste</item>
+        <item quantity="other">%d Pistes</item>
     </plurals>
 
     <!-- Queue -->
-    <string name="next_track">Next:</string>
-    <string name="track_queue">Track queue</string>
-    <string name="add_to_queue">Add to queue</string>
-    <string name="remove_from_queue">Remove from queue</string>
-    <string name="create_playlist_from_queue">Create playlist from queue</string>
+    <string name="next_track">Suivant:</string>
+    <string name="track_queue">File des pistes</string>
+    <string name="add_to_queue">Ajouter à la file</string>
+    <string name="remove_from_queue">Supprimer de la file</string>
+    <string name="create_playlist_from_queue">Créer une liste de lecture depuis la file</string>
 
     <!-- Settings -->
     <string name="equalizer">Égaliseur</string>
@@ -86,9 +86,9 @@
 
     <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
     <!-- App title has to have less than 50 characters. If you cannot squeeze it, just remove a part of it -->
-    <string name="app_title">Simple Music Player - A cool player for your songs</string>
+    <string name="app_title">Simple Music Player - Lecteur de musiques</string>
     <!-- Short description has to have less than 80 chars -->
-    <string name="app_short_description">A clean music player with a customizable widget, stylish interface and no ads.</string>
+    <string name="app_short_description">Un lecteur de musiques propres, personnalisable et sans publicités.</string>
     <string name="app_long_description">
         A simple music player easily controllable from the status bar, home screen widget or by hardware buttons on your headset. It provides all expected functions like sorting in various ways as well as changing the Equalizer.  Listen to your favorite mp3, other songs or podcasts with this free beautiful music player.
 
