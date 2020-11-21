@@ -45,36 +45,36 @@
     <string name="show_filename">Mostrar nome do ficheiro como título da faixa</string>
     <string name="title_is_not_available">Se não existir título</string>
     <string name="show_album_cover">Mostrar imagem do álbum no ecrã principal</string>
-    <string name="all_tracks">All tracks</string>
-    <string name="add_to_playlist">Add to playlist</string>
-    <string name="create_playlist_label">You can create a new playlist by selecting the wanted artists, albums or tracks and using Menu -> Add to playlist.</string>
+    <string name="all_tracks">Todas as faixas</string>
+    <string name="add_to_playlist">Adicionar à lista de reprodução</string>
+    <string name="create_playlist_label">Pode criar listas de reprodução com em Menu -> Adiiconar à lista de reprodução.</string>
 
     <!-- Sorting -->
-    <string name="track_count">Track Count</string>
-    <string name="album_count">Album Count</string>
-    <string name="artist_name">Artist Name</string>
-    <string name="year">Year</string>
+    <string name="track_count">Número de faixas</string>
+    <string name="album_count">Número de álbuns</string>
+    <string name="artist_name">Nome do artista</string>
+    <string name="year">ano</string>
 
     <!-- Artists -->
-    <string name="artists">Artists</string>
-    <string name="albums">Albums</string>
+    <string name="artists">Artistas</string>
+    <string name="albums">Álbuns</string>
     <plurals name="albums_plural">
-        <item quantity="one">%d Album</item>
-        <item quantity="other">%d Albums</item>
+        <item quantity="one">%d álbum</item>
+        <item quantity="other">%d álbuns</item>
     </plurals>
 
-    <string name="tracks">Tracks</string>
+    <string name="tracks">Faixas</string>
     <plurals name="tracks_plural">
-        <item quantity="one">%d Track</item>
-        <item quantity="other">%d Tracks</item>
+        <item quantity="one">%d faixa</item>
+        <item quantity="other">%d faixas</item>
     </plurals>
 
     <!-- Queue -->
-    <string name="next_track">Next:</string>
-    <string name="track_queue">Track queue</string>
-    <string name="add_to_queue">Add to queue</string>
-    <string name="remove_from_queue">Remove from queue</string>
-    <string name="create_playlist_from_queue">Create playlist from queue</string>
+    <string name="next_track">Seguinte:</string>
+    <string name="track_queue">Fila de reprodução</string>
+    <string name="add_to_queue">Adiiconar à fila de reprodução</string>
+    <string name="remove_from_queue">Remover da fila de reprodução</string>
+    <string name="create_playlist_from_queue">Criar lista de reprodução a partir da fila</string>
 
     <!-- Settings -->
     <string name="equalizer">Equalizador</string>
