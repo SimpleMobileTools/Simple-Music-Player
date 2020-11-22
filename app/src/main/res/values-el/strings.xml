@@ -45,36 +45,36 @@
     <string name="show_filename">Εμφάνιση ονόματος αρχείου ως τίτλος τραγουδιού</string>
     <string name="title_is_not_available">Εάν ο τίτλος δεν είναι διαθέσιμος</string>
     <string name="show_album_cover">Εμφάνιση εξώφυλλου άλμπουμ στην κύρια οθόνη</string>
-    <string name="all_tracks">All tracks</string>
-    <string name="add_to_playlist">Add to playlist</string>
-    <string name="create_playlist_label">You can create a new playlist by selecting the wanted artists, albums or tracks and using Menu -> Add to playlist.</string>
+    <string name="all_tracks">Όλα τα κομμάτια</string>
+    <string name="add_to_playlist">Προσθήκη στη λίστα</string>
+    <string name="create_playlist_label">Μπορείτε να δημιουργήσετε μια νέα λίστα επιλέγοντας τους επιθυμητούς καλλιτέχνες, άλμπουμ ή κομμάτια και απο το μενού -> Προσθήκη στη λίστα αναπαραγωγής.</string>
 
     <!-- Sorting -->
-    <string name="track_count">Track Count</string>
-    <string name="album_count">Album Count</string>
-    <string name="artist_name">Artist Name</string>
-    <string name="year">Year</string>
+    <string name="track_count">Αριθμός κομματιών</string>
+    <string name="album_count">Αριθμός άλμπουμ</string>
+    <string name="artist_name">Αριθμός καλλιτεχνών</string>
+    <string name="year">Έτος</string>
 
     <!-- Artists -->
-    <string name="artists">Artists</string>
-    <string name="albums">Albums</string>
+    <string name="artists">Καλλιτέχνες</string>
+    <string name="albums">Άλμπουμ</string>
     <plurals name="albums_plural">
-        <item quantity="one">%d Album</item>
-        <item quantity="other">%d Albums</item>
+        <item quantity="one">%d Άλμπουμ</item>
+        <item quantity="other">%d Άλμπουμ</item>
     </plurals>
 
-    <string name="tracks">Tracks</string>
+    <string name="tracks">Κομμάτια</string>
     <plurals name="tracks_plural">
-        <item quantity="one">%d Track</item>
-        <item quantity="other">%d Tracks</item>
+        <item quantity="one">%d Κομμάτι</item>
+        <item quantity="other">%d Κομμάτια</item>
     </plurals>
 
     <!-- Queue -->
-    <string name="next_track">Next:</string>
-    <string name="track_queue">Track queue</string>
-    <string name="add_to_queue">Add to queue</string>
-    <string name="remove_from_queue">Remove from queue</string>
-    <string name="create_playlist_from_queue">Create playlist from queue</string>
+    <string name="next_track">Επόμενο:</string>
+    <string name="track_queue">Αναμονή ουράς</string>
+    <string name="add_to_queue">Προσθήκη στην ουρά</string>
+    <string name="remove_from_queue">Κατάργηση από την ουρά</string>
+    <string name="create_playlist_from_queue">Δημιουργία λίστας από την ουρά</string>
 
     <!-- Settings -->
     <string name="equalizer">Ισοσταθμιστής</string>
