@@ -86,9 +86,9 @@
 
     <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
     <!-- App title has to have less than 50 characters. If you cannot squeeze it, just remove a part of it -->
-    <string name="app_title">Reproductor de Música Simple - Un buen reproductor de canciones</string>
+    <string name="app_title">Reproductor de Música Simple - Un buen reproductor</string>
     <!-- Short description has to have less than 80 chars -->
-    <string name="app_short_description">Un reproductor de música limpio con widget personalizable, buena interáz y sin anuncios.</string>
+    <string name="app_short_description">Reproductor de música con widget personalizable, buena interfaz y sin anuncios.</string>
     <string name="app_long_description">
         Un reproductor de música simple fácilmente controlable desde la barra de estado, widget en la pantalla principal o con los botónes de tus audífonos. Provee todas las funciones esperadas como ordenar de diferentes formas como modificar el Ecualizador.  Escucha tus mp3 favoritos, otras canciones o podcasts con este reproductor hermoso y gratuito.
 
