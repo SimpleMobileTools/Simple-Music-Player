@@ -45,36 +45,36 @@
     <string name="show_filename">Şarkı başlığı olarak dosya adını göster</string>
     <string name="title_is_not_available">Başlık yoksa</string>
     <string name="show_album_cover">Ana ekranda albüm kapağını göster</string>
-    <string name="all_tracks">All tracks</string>
-    <string name="add_to_playlist">Add to playlist</string>
-    <string name="create_playlist_label">You can create a new playlist by selecting the wanted artists, albums or tracks and using Menu -> Add to playlist.</string>
+    <string name="all_tracks">Tüm parçalar</string>
+    <string name="add_to_playlist">Çalma listesine ekle</string>
+    <string name="create_playlist_label">İstediğiniz sanatçıları, albümleri veya parçaları seçerek ve Menü -> Çalma listesine ekle\'yi kullanarak yeni bir çalma listesi oluşturabilirsiniz.</string>
 
     <!-- Sorting -->
-    <string name="track_count">Track Count</string>
-    <string name="album_count">Album Count</string>
-    <string name="artist_name">Artist Name</string>
-    <string name="year">Year</string>
+    <string name="track_count">Parça Sayısı</string>
+    <string name="album_count">Albüm Sayısı</string>
+    <string name="artist_name">Sanatçı Adı</string>
+    <string name="year">Yıl</string>
 
     <!-- Artists -->
-    <string name="artists">Artists</string>
-    <string name="albums">Albums</string>
+    <string name="artists">Sanatçılar</string>
+    <string name="albums">Albümler</string>
     <plurals name="albums_plural">
-        <item quantity="one">%d Album</item>
-        <item quantity="other">%d Albums</item>
+        <item quantity="one">%d Albüm</item>
+        <item quantity="other">%d Albüm</item>
     </plurals>
 
-    <string name="tracks">Tracks</string>
+    <string name="tracks">Parçalar</string>
     <plurals name="tracks_plural">
-        <item quantity="one">%d Track</item>
-        <item quantity="other">%d Tracks</item>
+        <item quantity="one">%d Parça</item>
+        <item quantity="other">%d Parça</item>
     </plurals>
 
     <!-- Queue -->
-    <string name="next_track">Next:</string>
-    <string name="track_queue">Track queue</string>
-    <string name="add_to_queue">Add to queue</string>
-    <string name="remove_from_queue">Remove from queue</string>
-    <string name="create_playlist_from_queue">Create playlist from queue</string>
+    <string name="next_track">Sonraki:</string>
+    <string name="track_queue">Parça kuyruğu</string>
+    <string name="add_to_queue">Kuyruğa ekle</string>
+    <string name="remove_from_queue">Kuyruktan kaldır</string>
+    <string name="create_playlist_from_queue">Kuyruktan çalma listesi oluştur</string>
 
     <!-- Settings -->
     <string name="equalizer">Ekolayzır</string>
@@ -86,33 +86,33 @@
 
     <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
     <!-- App title has to have less than 50 characters. If you cannot squeeze it, just remove a part of it -->
-    <string name="app_title">Simple Music Player - A cool player for your songs</string>
+    <string name="app_title">Şarkılarınız için harika bir oynatıcı</string>
     <!-- Short description has to have less than 80 chars -->
-    <string name="app_short_description">A clean music player with a customizable widget, stylish interface and no ads.</string>
+    <string name="app_short_description">Özelleştirilebilir widget\'a, şık arayüze sahip reklamsız temiz müzik çalar.</string>
     <string name="app_long_description">
-        A simple music player easily controllable from the status bar, home screen widget or by hardware buttons on your headset. It provides all expected functions like sorting in various ways as well as changing the Equalizer.  Listen to your favorite mp3, other songs or podcasts with this free beautiful music player.
+        Durum çubuğundan, ana ekran widget\'ından veya kulaklığınızdaki donanım düğmelerinden kolayca kontrol edilebilen basit bir müzik çalar. Ekolayzırı değiştirmenin yanı sıra çeşitli şekillerde sıralama gibi beklenen tüm işlevleri sağlar. Bu ücretsiz ve güzel müzik çalarla en sevdiğiniz mp3\'leri, diğer şarkıları veya podcast\'leri dinleyin.
 
-        It offers exclusive extras like Search and showing Album Art, a sleep timer and many other settings. This elegant music player allows you creating and managing handy playlists as you desire.
+        Arama ve Albüm Resmini gösterme, uyku zamanlayıcısı ve diğer birçok ayar gibi özel ekstralar sunar. Bu zarif müzik çalar, istediğiniz gibi kullanışlı çalma listeleri oluşturmanıza ve yönetmenize olanak tanır.
 
-        Playlists are fully supported. You can add either individual files, or whole folders. If you won\'t like a file, you can either just remove it from a playlist, or delete the actual file altogether.
+        Çalma listeleri tam olarak desteklenmektedir. Tek tek dosyaları veya tüm klasörleri ekleyebilirsiniz. Bir dosyayı beğenmezseniz, onu bir çalma listesinden kaldırabilir veya asıl dosyayı tamamen silebilirsiniz.
 
-        Comes with a handy sleep timer so that you can reliably delay the time of the app shutting down.
+        Kullanışlı bir uyku zamanlayıcısı ile birlikte gelir, böylece uygulamanın kapanma süresini güvenilir bir şekilde geciktirebilirsiniz.
 
-        Supports both shuffle and repeating a particular song, as well as skipping and fast forwarding.
+        Hem karıştırmayı hem de belirli bir şarkıyı tekrarlamayı, ayrıca atlama ve hızlı ileri sarmayı destekler.
 
-        Available in many different languages, offers multiple different equalizers.
+        Birçok farklı dilde mevcuttur, birden fazla farklı ekolayzır sunar.
 
-        Easily check a file properties like the size, duration, last modified etc.
+        Boyut, süre, son değiştirilme vb. gibi dosya özelliklerini kolayca kontrol edin.
 
-        Modify file EXIF data like the song title and artist.
+        Şarkı adı ve sanatçı gibi dosya EXIF verilerini değiştirin.
 
-        Quickly share files with your friends on social networks, emails, or anywhere you would like.
+        Sosyal ağlarda, e-postalarda veya istediğiniz herhangi bir yerde arkadaşlarınızla hızla dosya paylaşın.
 
-        This stylish music player contains a widget with customizable text color, alpha and the color of the background for easy access and control.
+        Bu şık müzik çalar, kolay erişim ve kontrol için özelleştirilebilir metin rengi, alfa ve arka plan rengine sahip bir widget içerir.
 
-        It properly handles third party intents too for playing individual audio files so it can help at setting ringtones too.
+        Tek tek ses dosyalarını oynatmak için üçüncü taraf amaçlarını da düzgün bir şekilde işler, böylece zil seslerinin ayarlanmasına da yardımcı olabilir.
 
-        It comes with material design and dark theme by default, provides great user experience for easy usage. The lack of internet access gives you more privacy, security and stability than other apps.
+        Varsayılan olarak materyal tasarım ve koyu tema ile birlikte gelir, kolay kullanım için harika bir kullanıcı deneyimi sağlar. İnternet erişiminin olmaması size diğer uygulamalardan daha fazla gizlilik, güvenlik ve istikrar sağlar.
 
         Reklam veya gereksiz izinler içermez. Tamamen açık kaynaktır, özelleştirilebilir renkler sağlar.
 
