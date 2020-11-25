@@ -45,36 +45,36 @@
     <string name="show_filename">Mostrar los nombres de los archivos como títulos de las canciones</string>
     <string name="title_is_not_available">Si el título no está disponible</string>
     <string name="show_album_cover">Mostrar portada de álbum en la pantalla principal</string>
-    <string name="all_tracks">All tracks</string>
-    <string name="add_to_playlist">Add to playlist</string>
-    <string name="create_playlist_label">You can create a new playlist by selecting the wanted artists, albums or tracks and using Menu -> Add to playlist.</string>
+    <string name="all_tracks">Todas las canciones</string>
+    <string name="add_to_playlist">Añadir a lista de reproducción</string>
+    <string name="create_playlist_label">Puedes crear una nueva lista de reproducción seleccionando los artistas deseados, álbumes o canciones y seleccionando Menú -> Añadir a lista de reproducción.</string>
 
     <!-- Sorting -->
-    <string name="track_count">Track Count</string>
-    <string name="album_count">Album Count</string>
-    <string name="artist_name">Artist Name</string>
-    <string name="year">Year</string>
+    <string name="track_count">Conteo de canciones</string>
+    <string name="album_count">Conteo de álbumes</string>
+    <string name="artist_name">Nombre de artista</string>
+    <string name="year">Año</string>
 
     <!-- Artists -->
-    <string name="artists">Artists</string>
-    <string name="albums">Albums</string>
+    <string name="artists">Artistas</string>
+    <string name="albums">Álbumes</string>
     <plurals name="albums_plural">
-        <item quantity="one">%d Album</item>
-        <item quantity="other">%d Albums</item>
+        <item quantity="one">%d Álbum</item>
+        <item quantity="other">%d Álbumes</item>
     </plurals>
 
-    <string name="tracks">Tracks</string>
+    <string name="tracks">Canciones</string>
     <plurals name="tracks_plural">
-        <item quantity="one">%d Track</item>
-        <item quantity="other">%d Tracks</item>
+        <item quantity="one">%d Canción</item>
+        <item quantity="other">%d Canciones</item>
     </plurals>
 
     <!-- Queue -->
-    <string name="next_track">Next:</string>
-    <string name="track_queue">Track queue</string>
-    <string name="add_to_queue">Add to queue</string>
-    <string name="remove_from_queue">Remove from queue</string>
-    <string name="create_playlist_from_queue">Create playlist from queue</string>
+    <string name="next_track">Siguiente:</string>
+    <string name="track_queue">Cola de canciones</string>
+    <string name="add_to_queue">Añadir a la cola</string>
+    <string name="remove_from_queue">Quitar de la cola</string>
+    <string name="create_playlist_from_queue">Crear lista de reproducción de la cola</string>
 
     <!-- Settings -->
     <string name="equalizer">Ecualizador</string>
@@ -86,37 +86,37 @@
 
     <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
     <!-- App title has to have less than 50 characters. If you cannot squeeze it, just remove a part of it -->
-    <string name="app_title">Simple Music Player - A cool player for your songs</string>
+    <string name="app_title">Reproductor de Música Simple - Un buen reproductor</string>
     <!-- Short description has to have less than 80 chars -->
-    <string name="app_short_description">A clean music player with a customizable widget, stylish interface and no ads.</string>
+    <string name="app_short_description">Reproductor de música con widget personalizable, buena interfaz y sin anuncios.</string>
     <string name="app_long_description">
-        A simple music player easily controllable from the status bar, home screen widget or by hardware buttons on your headset. It provides all expected functions like sorting in various ways as well as changing the Equalizer.  Listen to your favorite mp3, other songs or podcasts with this free beautiful music player.
+        Un reproductor de música simple fácilmente controlable desde la barra de estado, widget en la pantalla principal o con los botónes de tus audífonos. Provee todas las funciones esperadas como ordenar de diferentes formas como modificar el Ecualizador.  Escucha tus mp3 favoritos, otras canciones o podcasts con este reproductor hermoso y gratuito.
 
-        It offers exclusive extras like Search and showing Album Art, a sleep timer and many other settings. This elegant music player allows you creating and managing handy playlists as you desire.
+        Ofrece extras exclusivos como Buscar y mostrar Carátula de álbum, un temporizador para dormir y otros ajustes varios. Este elegante reproductor te permite crear y administrar prácticas listas de reproducción como desees.
 
-        Playlists are fully supported. You can add either individual files, or whole folders. If you won\'t like a file, you can either just remove it from a playlist, or delete the actual file altogether.
+        Las listas de reproducción son completamente soportadas. También puedes añadir archivos individuales, o carpetas completas. Si no te gusta una cación, puedes solo removerla de la lista de reproduccion, o también eliminar el archivo real.
 
-        Comes with a handy sleep timer so that you can reliably delay the time of the app shutting down.
+        Incluye un prácico temporizador para dormir, así que puedes programar el tiempo para que la aplicaicón se detenga sola con confianza.
 
-        Supports both shuffle and repeating a particular song, as well as skipping and fast forwarding.
+        Soporta modo aleatorio y repetir una canción en particular, como saltar una canción y adelantar la misma.
 
-        Available in many different languages, offers multiple different equalizers.
+        Disponible en diferentes lenguajes, ofrece diferentes ecualizadores.
 
-        Easily check a file properties like the size, duration, last modified etc.
+        Mira fácilmente las propiedades de un archivo como el tamaño, duración, última modificación, etc.
 
-        Modify file EXIF data like the song title and artist.
+        Modifica la información EXIF del archivo como el título de la canción y artista.
 
-        Quickly share files with your friends on social networks, emails, or anywhere you would like.
+        Comparte rápidamente las canciones con tus amigos en redes sociales, correo electrónico o cualquier lugar que quieras.
 
-        This stylish music player contains a widget with customizable text color, alpha and the color of the background for easy access and control.
+        Este reproductor con estilo contiene un widget con color de texto, transparencia y color del fondo personalizables para fácil acceso y control.
 
-        It properly handles third party intents too for playing individual audio files so it can help at setting ringtones too.
+        También maneja apropiadamente actividades de aplicaciones externas para reproducir archivos de audio individuales, así que también ayuda a establecer tonos de llamada.
 
-        It comes with material design and dark theme by default, provides great user experience for easy usage. The lack of internet access gives you more privacy, security and stability than other apps.
+        Incluye diseño material y tema obscuro por defecto, provee una gran experiencia de usuario para uso sencillo. La falta del acceso a internet te da más privacidad, seguridad y estabilidad que otras aplicaciones.
 
         No contiene anuncios o permisos innecesarios. Es completamente de código abierto, provee colores personalizables.
 
-        <b>Check out the full suite of Simple Tools here:</b>
+        <b>Mira la suite completa de herramientas Simples aquí:</b>
         https://www.simplemobiletools.com
 
         <b>Facebook:</b>
