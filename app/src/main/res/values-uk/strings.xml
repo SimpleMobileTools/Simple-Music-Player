@@ -45,15 +45,15 @@
     <string name="show_filename">Показувати ім\'я файлу як назву композиції</string>
     <string name="title_is_not_available">Якщо назва недоступна</string>
     <string name="show_album_cover">Показувати обгортку альбома на головному екрані</string>
-    <string name="all_tracks">All tracks</string>
-    <string name="add_to_playlist">Add to playlist</string>
+    <string name="all_tracks">Усі композиції</string>
+    <string name="add_to_playlist">Додати до плейлисту</string>
     <string name="create_playlist_label">You can create a new playlist by selecting the wanted artists, albums or tracks and using Menu -> Add to playlist.</string>
 
     <!-- Sorting -->
     <string name="track_count">Track Count</string>
     <string name="album_count">Album Count</string>
     <string name="artist_name">Artist Name</string>
-    <string name="year">Year</string>
+    <string name="year">Рік</string>
 
     <!-- Artists -->
     <string name="artists">Artists</string>
@@ -70,11 +70,11 @@
     </plurals>
 
     <!-- Queue -->
-    <string name="next_track">Next:</string>
-    <string name="track_queue">Track queue</string>
-    <string name="add_to_queue">Add to queue</string>
-    <string name="remove_from_queue">Remove from queue</string>
-    <string name="create_playlist_from_queue">Create playlist from queue</string>
+    <string name="next_track">Наступна:</string>
+    <string name="track_queue">Черга композицій</string>
+    <string name="add_to_queue">Додати до черги</string>
+    <string name="remove_from_queue">Вилучити з черги</string>
+    <string name="create_playlist_from_queue">Створити плейліст із черги</string>
 
     <!-- Settings -->
     <string name="equalizer">Еквалайзер</string>
@@ -104,7 +104,7 @@
 
         Easily check a file properties like the size, duration, last modified etc.
 
-        Modify file EXIF data like the song title and artist.
+        Модифікуйте EXIF дані файлу наприклад назву композиції та виконавця.
 
         Quickly share files with your friends on social networks, emails, or anywhere you would like.
 
