@@ -59,14 +59,16 @@
     <string name="artists">Исполнители</string>
     <string name="albums">Альбомы</string>
     <plurals name="albums_plural">
-        <item quantity="one">%d Альбом</item>
-        <item quantity="other">%d Albums</item>
+        <item quantity="one">%d Album</item>
+        <item quantity="few">%d Альбома</item>        
+        <item quantity="other">%d Альбомов</item>
     </plurals>
 
     <string name="tracks">Композиции</string>
     <plurals name="tracks_plural">
-        <item quantity="one">%d Композиция</item>
-        <item quantity="other">%d Tracks</item>
+        <item quantity="one">%d Track</item>
+        <item quantity="few">%d Композиции</item>
+        <item quantity="other">%d Композиций</item>
     </plurals>
 
     <!-- Queue -->
