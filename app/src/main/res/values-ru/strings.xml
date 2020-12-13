@@ -45,26 +45,26 @@
     <string name="show_filename">Имя файла вместо названия композиции</string>
     <string name="title_is_not_available">Если название недоступно</string>
     <string name="show_album_cover">Показывать обложку альбома на главном экране</string>
-    <string name="all_tracks">All tracks</string>
-    <string name="add_to_playlist">Add to playlist</string>
+    <string name="all_tracks">Все композиции</string>
+    <string name="add_to_playlist">Добавить в плейлист</string>
     <string name="create_playlist_label">You can create a new playlist by selecting the wanted artists, albums or tracks and using Menu -> Add to playlist.</string>
 
     <!-- Sorting -->
     <string name="track_count">Track Count</string>
     <string name="album_count">Album Count</string>
     <string name="artist_name">Artist Name</string>
-    <string name="year">Year</string>
+    <string name="year">Год</string>
 
     <!-- Artists -->
-    <string name="artists">Artists</string>
-    <string name="albums">Albums</string>
+    <string name="artists">Исполнители</string>
+    <string name="albums">Альбомы</string>
     <plurals name="albums_plural">
         <item quantity="one">%d Album</item>
         <item quantity="few">%d Альбома</item>        
         <item quantity="other">%d Альбомов</item>
     </plurals>
 
-    <string name="tracks">Tracks</string>
+    <string name="tracks">Композиции</string>
     <plurals name="tracks_plural">
         <item quantity="one">%d Track</item>
         <item quantity="few">%d Композиции</item>
@@ -72,11 +72,11 @@
     </plurals>
 
     <!-- Queue -->
-    <string name="next_track">Next:</string>
-    <string name="track_queue">Track queue</string>
-    <string name="add_to_queue">Add to queue</string>
-    <string name="remove_from_queue">Remove from queue</string>
-    <string name="create_playlist_from_queue">Create playlist from queue</string>
+    <string name="next_track">Следующее:</string>
+    <string name="track_queue">Очередь композиций</string>
+    <string name="add_to_queue">Добавить в очередь</string>
+    <string name="remove_from_queue">Добавить в очередь</string>
+    <string name="create_playlist_from_queue">Создать плейлист из очереди</string>
 
     <!-- Settings -->
     <string name="equalizer">Эквалайзер</string>
@@ -96,7 +96,7 @@
 
         It offers exclusive extras like Search and showing Album Art, a sleep timer and many other settings. This elegant music player allows you creating and managing handy playlists as you desire.
 
-        Playlists are fully supported. You can add either individual files, or whole folders. If you won\'t like a file, you can either just remove it from a playlist, or delete the actual file altogether.
+        Полная поддержка плейлистов. You can add either individual files, or whole folders. If you won\'t like a file, you can either just remove it from a playlist, or delete the actual file altogether.
 
         Comes with a handy sleep timer so that you can reliably delay the time of the app shutting down.
 
@@ -104,9 +104,9 @@
 
         Available in many different languages, offers multiple different equalizers.
 
-        Easily check a file properties like the size, duration, last modified etc.
+        Легко проверяйте свойства файла, такие как размер, продолжительность, последнее изменение и т.д
 
-        Modify file EXIF data like the song title and artist.
+        Модифицируйте EXIF данные файла например название песни и исполнителя.
 
         Quickly share files with your friends on social networks, emails, or anywhere you would like.
 
