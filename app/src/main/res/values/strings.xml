@@ -57,6 +57,11 @@
 
     <!-- Artists -->
     <string name="artists">Artists</string>
+    <plurals name="artists_plural">
+        <item quantity="one">%d Artist</item>
+        <item quantity="other">%d Artists</item>
+    </plurals>
+
     <string name="albums">Albums</string>
     <plurals name="albums_plural">
         <item quantity="one">%d Album</item>
