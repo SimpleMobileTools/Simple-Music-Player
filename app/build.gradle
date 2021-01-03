@@ -58,14 +58,14 @@ android {
 }
 
 dependencies {
-    implementation 'com.simplemobiletools:commons:5.31.29'
+    implementation 'com.simplemobiletools:commons:5.32.22'
     implementation 'org.greenrobot:eventbus:3.2.0'
-    implementation 'androidx.media:media:1.2.0'
+    implementation 'androidx.media:media:1.2.1'
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'com.google.android.material:material:1.2.1'
 
-    kapt "androidx.room:room-compiler:2.2.5"
-    implementation "androidx.room:room-runtime:2.2.5"
-    annotationProcessor "androidx.room:room-compiler:2.2.5"
+    kapt "androidx.room:room-compiler:2.2.6"
+    implementation "androidx.room:room-runtime:2.2.6"
+    annotationProcessor "androidx.room:room-compiler:2.2.6"
 }
