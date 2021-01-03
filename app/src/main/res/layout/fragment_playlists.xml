@@ -38,7 +38,7 @@
         android:textStyle="italic"
         android:visibility="gone" />
 
-    <com.simplemobiletools.commons.views.MyTextView
+    <TextView
         android:id="@+id/playlists_placeholder_2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
