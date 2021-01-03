@@ -70,6 +70,7 @@ class TrackActivity : SimpleActivity() {
         setupTrackInfo(track)
 
         if (intent.getBooleanExtra(RESTART_PLAYER, false)) {
+            intent.removeExtra(RESTART_PLAYER)
             Intent(this, MusicService::class.java).apply {
                 putExtra(TRACK_ID, track.mediaStoreId)
                 action = INIT
