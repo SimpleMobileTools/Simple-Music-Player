@@ -44,15 +44,16 @@ class SettingsActivity : SimpleActivity() {
     }
 
     private fun setupPurchaseThankYou() {
-        settings_purchase_thank_you_holder.beVisibleIf(!isThankYouInstalled())
+        settings_purchase_thank_you_holder.beGoneIf(isOrWasThankYouInstalled())
         settings_purchase_thank_you_holder.setOnClickListener {
             launchPurchaseThankYouIntent()
         }
     }
 
     private fun setupCustomizeColors() {
+        settings_customize_colors_label.text = getCustomizeColorsString()
         settings_customize_colors_holder.setOnClickListener {
-            startCustomizationActivity()
+            handleCustomizeColorsClick()
         }
     }
 
