@@ -1,6 +1,14 @@
 Changelog
 ==========
 
+Version 5.5.0 *(2021-01-03)*
+----------------------------
+
+ * Properly update the cover art at the notification and lock screen
+ * Do not reset the song at rotating the mobile
+ * Requite Simple Thank You for color customization
+ * Some stability and translation improvements
+
 Version 5.4.4 *(2020-11-10)*
 ----------------------------
 
