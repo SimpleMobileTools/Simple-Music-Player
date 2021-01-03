@@ -19,6 +19,7 @@ import android.os.CountDownTimer
 import android.os.Handler
 import android.os.Looper
 import android.os.PowerManager
+import android.provider.MediaStore
 import android.provider.MediaStore.Audio
 import android.support.v4.media.MediaMetadataCompat
 import android.support.v4.media.session.MediaSessionCompat
@@ -31,10 +32,7 @@ import com.simplemobiletools.commons.extensions.getColoredBitmap
 import com.simplemobiletools.commons.extensions.getRealPathFromURI
 import com.simplemobiletools.commons.extensions.hasPermission
 import com.simplemobiletools.commons.extensions.showErrorToast
-import com.simplemobiletools.commons.helpers.PERMISSION_WRITE_STORAGE
-import com.simplemobiletools.commons.helpers.ensureBackgroundThread
-import com.simplemobiletools.commons.helpers.isOreoPlus
-import com.simplemobiletools.commons.helpers.isQPlus
+import com.simplemobiletools.commons.helpers.*
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.MainActivity
 import com.simplemobiletools.musicplayer.databases.SongsDatabase
@@ -741,12 +739,22 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             }
         }
 
-        if (isQPlus() && mCurrTrack?.path?.startsWith("content://") == true) {
-            try {
-                val size = Size(512, 512)
-                val thumbnail = contentResolver.loadThumbnail(Uri.parse(mCurrTrack!!.path), size, null)
-                return Pair(thumbnail, true)
-            } catch (ignored: Exception) {
+        if (isQPlus()) {
+            if (mCurrTrack?.coverArt?.startsWith("content://") == true) {
+                try {
+                    val thumbnail = MediaStore.Images.Media.getBitmap(contentResolver, Uri.parse(mCurrTrack!!.coverArt))
+                    return Pair(thumbnail, true)
+                } catch (ignored: Exception) {
+                }
+            }
+
+            if (mCurrTrack?.path?.startsWith("content://") == true) {
+                try {
+                    val size = Size(512, 512)
+                    val thumbnail = contentResolver.loadThumbnail(Uri.parse(mCurrTrack!!.path), size, null)
+                    return Pair(thumbnail, true)
+                } catch (ignored: Exception) {
+                }
             }
         }
 
