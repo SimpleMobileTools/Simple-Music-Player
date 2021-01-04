@@ -59,14 +59,14 @@
     <string name="artists">アーティスト</string>
     <string name="albums">アルバム</string>
     <plurals name="albums_plural">
-        <item quantity="one">%件のアルバム</item>
-        <item quantity="other">%件のアルバム</item>
+        <item quantity="one">%d 件のアルバム</item>
+        <item quantity="other">%d 件のアルバム</item>
     </plurals>
 
     <string name="tracks">トラック</string>
     <plurals name="tracks_plural">
-        <item quantity="one">%件のトラック</item>
-        <item quantity="other">%件のトラック</item>
+        <item quantity="one">%d 件のトラック</item>
+        <item quantity="other">%d 件のトラック</item>
     </plurals>
 
     <!-- Queue -->
