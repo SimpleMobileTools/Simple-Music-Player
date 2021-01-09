@@ -45,39 +45,39 @@
     <string name="show_filename">Ersätt låttitel med filnamn</string>
     <string name="title_is_not_available">Om titeln inte är tillgänglig</string>
     <string name="show_album_cover">Visa skivomslag i huvudvyn</string>
-    <string name="all_tracks">All tracks</string>
-    <string name="add_to_playlist">Add to playlist</string>
-    <string name="create_playlist_label">You can create a new playlist by selecting the wanted artists, albums or tracks and using Menu -> Add to playlist.</string>
+    <string name="all_tracks">Alla spår</string>
+    <string name="add_to_playlist">Lägg till i spellista</string>
+    <string name="create_playlist_label">Du kan skapa en ny spellista genom att välja önskade artister, album eller spår och använda Meny -> Lägg till i spellista.</string>
 
     <!-- Sorting -->
-    <string name="track_count">Track Count</string>
-    <string name="album_count">Album Count</string>
-    <string name="artist_name">Artist Name</string>
-    <string name="year">Year</string>
+    <string name="track_count">Spårantal</string>
+    <string name="album_count">Albumantal</string>
+    <string name="artist_name">Artistnamn</string>
+    <string name="year">År</string>
 
     <!-- Artists -->
-    <string name="artists">Artists</string>
-    <string name="albums">Albums</string>
+    <string name="artists">Artister</string>
+    <string name="albums">Album</string>
     <plurals name="albums_plural">
-        <item quantity="one">%d Album</item>
-        <item quantity="other">%d Albums</item>
+        <item quantity="one">%d album</item>
+        <item quantity="other">%d album</item>
     </plurals>
 
-    <string name="tracks">Tracks</string>
+    <string name="tracks">Spår</string>
     <plurals name="tracks_plural">
-        <item quantity="one">%d Track</item>
-        <item quantity="other">%d Tracks</item>
+        <item quantity="one">%d spår</item>
+        <item quantity="other">%d spår</item>
     </plurals>
 
     <!-- Queue -->
-    <string name="next_track">Next:</string>
-    <string name="track_queue">Track queue</string>
-    <string name="add_to_queue">Add to queue</string>
-    <string name="remove_from_queue">Remove from queue</string>
-    <string name="create_playlist_from_queue">Create playlist from queue</string>
+    <string name="next_track">Nästa:</string>
+    <string name="track_queue">Spårkö</string>
+    <string name="add_to_queue">Lägg till i kö</string>
+    <string name="remove_from_queue">Ta bort från kö</string>
+    <string name="create_playlist_from_queue">Skapa spellista från kö</string>
 
     <!-- Settings -->
-    <string name="equalizer">Equalizer</string>
+    <string name="equalizer">Frekvenskorrigerare</string>
     <string name="swap_prev_next">Växla hörlurars föregående- och nästaknappar</string>
 
     <!-- FAQ -->
@@ -90,7 +90,7 @@
     <!-- Short description has to have less than 80 chars -->
     <string name="app_short_description">A clean music player with a customizable widget, stylish interface and no ads.</string>
     <string name="app_long_description">
-        En musikspelare som du enkelt styr från statusfältet, en gränssnittskomponent på startskärmen eller knapparna på din mikrofonlur. Det har alla förväntade funktioner som sortering på olika sätt samt ändring av Equalizer. Lyssna på din favorit mp3, andra låtar eller podcasts med denna gratis och vackra musikspelare.
+        En musikspelare som du enkelt styr från statusfältet, en gränssnittskomponent på startskärmen eller knapparna på din mikrofonlur. Det har alla förväntade funktioner som sortering på olika sätt samt ändring av frekvenskorrigerare. Lyssna på din favorit mp3, andra låtar eller podcasts med denna gratis och vackra musikspelare.
 
         Det erbjuder exklusiva extrafunktioner som Sök och visar Albumomslag, en sömntidtagare och många andra inställningar. Denna eleganta musikspelare låter dig skapa och hantera praktiska spellistor som du vill.
 
@@ -100,7 +100,7 @@
 
         Stöder både blandning och upprepning av en viss låt samt hoppning och snabbspolning.
 
-        Finns på många olika språk och erbjuder flera olika equalizers.
+        Finns på många olika språk och erbjuder flera olika frekvenskorrigerare.
 
         Kontrollera enkelt filegenskaper som storlek, längd, senast ändrad o.s.v.
 
