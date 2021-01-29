@@ -282,12 +282,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     }
 
     private fun handleSetEqualizer(intent: Intent) {
-        if (intent.extras?.containsKey(EQUALIZER) == true) {
-            val presetID = intent.extras?.getInt(EQUALIZER) ?: 0
-            if (mEqualizer != null) {
-                setPreset(presetID)
-            }
-        }
+
     }
 
     private fun setupTrack() {
@@ -352,20 +347,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     }
 
     private fun setupEqualizer() {
-        try {
-            mEqualizer = Equalizer(1, mPlayer!!.audioSessionId)
-        } catch (e: Exception) {
-            showErrorToast(e)
-            mEqualizer?.enabled = true
-            setPreset(config.equalizer)
-        }
-    }
 
-    private fun setPreset(id: Int) {
-        try {
-            mEqualizer?.usePreset(id.toShort())
-        } catch (ignored: IllegalArgumentException) {
-        }
     }
 
     // make sure tracks don't get duplicated in the queue, if they exist in multiple playlists
@@ -790,8 +772,6 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
         trackStateChanged(false)
         trackChanged()
-
-        mEqualizer?.release()
 
         stopForeground(true)
         stopSelf()

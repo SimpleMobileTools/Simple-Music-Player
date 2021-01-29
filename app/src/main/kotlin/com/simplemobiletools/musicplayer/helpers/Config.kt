@@ -12,14 +12,6 @@ class Config(context: Context) : BaseConfig(context) {
         get() = prefs.getBoolean(SHUFFLE, true)
         set(shuffle) = prefs.edit().putBoolean(SHUFFLE, shuffle).apply()
 
-    var equalizer: Int
-        get() = prefs.getInt(EQUALIZER, 0)
-        set(equalizer) = prefs.edit().putInt(EQUALIZER, equalizer).apply()
-
-    var currentPlaylist: Int
-        get() = prefs.getInt(CURRENT_PLAYLIST, ALL_TRACKS_PLAYLIST_ID)
-        set(currentPlaylist) = prefs.edit().putInt(CURRENT_PLAYLIST, currentPlaylist).apply()
-
     var repeatTrack: Boolean
         get() = prefs.getBoolean(REPEAT_TRACK, false)
         set(repeat) = prefs.edit().putBoolean(REPEAT_TRACK, repeat).apply()
@@ -27,17 +19,6 @@ class Config(context: Context) : BaseConfig(context) {
     var autoplay: Boolean
         get() = prefs.getBoolean(AUTOPLAY, true)
         set(autoplay) = prefs.edit().putBoolean(AUTOPLAY, autoplay).apply()
-
-    // initial playlist tries to load all songs from the device, store unwanted song paths here
-    var ignoredPaths: Set<String>
-        get() = prefs.getStringSet(IGNORED_PATHS, HashSet<String>())!!
-        set(ignoredPaths) = prefs.edit().putStringSet(IGNORED_PATHS, ignoredPaths).apply()
-
-    fun addIgnoredPaths(paths: ArrayList<String>) {
-        val currIgnoredPaths = HashSet<String>(ignoredPaths)
-        currIgnoredPaths.addAll(paths)
-        ignoredPaths = currIgnoredPaths
-    }
 
     var showFilename: Int
         get() = prefs.getInt(SHOW_FILENAME, SHOW_FILENAME_IF_UNAVAILABLE)

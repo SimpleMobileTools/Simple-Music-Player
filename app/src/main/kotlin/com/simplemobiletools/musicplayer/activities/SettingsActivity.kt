@@ -14,7 +14,6 @@ import com.simplemobiletools.musicplayer.helpers.REFRESH_LIST
 import com.simplemobiletools.musicplayer.helpers.SHOW_FILENAME_ALWAYS
 import com.simplemobiletools.musicplayer.helpers.SHOW_FILENAME_IF_UNAVAILABLE
 import com.simplemobiletools.musicplayer.helpers.SHOW_FILENAME_NEVER
-import com.simplemobiletools.musicplayer.services.MusicService
 import kotlinx.android.synthetic.main.activity_settings.*
 import java.util.*
 
@@ -85,26 +84,8 @@ class SettingsActivity : SimpleActivity() {
     }
 
     private fun setupEqualizer() {
-        val equalizer = MusicService.mEqualizer
-        if (equalizer == null) {
-            settings_equalizer_holder.beGone()
-            return
-        }
-
-        val items = arrayListOf<RadioItem>()
-        try {
-            (0 until equalizer.numberOfPresets).mapTo(items) { RadioItem(it, equalizer.getPresetName(it.toShort())) }
-        } catch (e: Exception) {
-            settings_equalizer_holder.beGone()
-            return
-        }
-
-        settings_equalizer.text = items[config.equalizer].title
         settings_equalizer_holder.setOnClickListener {
-            RadioGroupDialog(this@SettingsActivity, items, config.equalizer) {
-                config.equalizer = it as Int
-                settings_equalizer.text = items[it].title
-            }
+            startActivity(Intent(applicationContext, EqualizerActivity::class.java))
         }
     }
 

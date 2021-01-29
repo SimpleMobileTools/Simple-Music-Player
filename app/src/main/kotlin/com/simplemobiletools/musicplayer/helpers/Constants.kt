@@ -3,7 +3,6 @@ package com.simplemobiletools.musicplayer.helpers
 import android.net.Uri
 
 const val PROGRESS = "progress"
-const val TRACK_IDS = "track_ids"
 const val EDITED_TRACK = "edited_track"
 const val ALL_TRACKS_PLAYLIST_ID = 1
 const val START_SLEEP_TIMER = "start_sleep_timer"
@@ -48,10 +47,8 @@ const val TRACK_STATE_CHANGED = "TRACK_STATE_CHANGED"
 
 // shared preferences
 const val SHUFFLE = "shuffle"
-const val EQUALIZER = "equalizer"
 const val REPEAT_TRACK = "repeat_track"
 const val AUTOPLAY = "autoplay"
-const val IGNORED_PATHS = "ignored_paths"
 const val CURRENT_PLAYLIST = "current_playlist"
 const val SHOW_FILENAME = "show_filename"
 const val SWAP_PREV_NEXT = "swap_prev_next"

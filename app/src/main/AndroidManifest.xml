@@ -82,6 +82,11 @@
             android:parentActivityName=".activities.MainActivity"/>
 
         <activity
+            android:name=".activities.EqualizerActivity"
+            android:label="@string/equalizer"
+            android:parentActivityName=".activities.SettingsActivity"/>
+
+        <activity
             android:name=".activities.AlbumsActivity"
             android:label="@string/artist"
             android:parentActivityName=".activities.MainActivity"/>
