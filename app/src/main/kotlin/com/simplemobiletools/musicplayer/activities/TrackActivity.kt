@@ -119,7 +119,12 @@ class TrackActivity : SimpleActivity() {
         Intent(this, MusicService::class.java).apply {
             data = fileUri
             action = INIT_PATH
-            startService(this)
+
+            try {
+                startService(this)
+            } catch (e: Exception) {
+                showErrorToast(e)
+            }
         }
     }
 
