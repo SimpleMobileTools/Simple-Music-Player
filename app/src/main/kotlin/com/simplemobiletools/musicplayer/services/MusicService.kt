@@ -57,7 +57,6 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         private const val NOTIFICATION_ID = 78    // just a random number
 
         var mCurrTrack: Track? = null
-        var mEqualizer: Equalizer? = null
         var mTracks = ArrayList<Track>()
         private var mCurrTrackCover: Bitmap? = null
         private var mHeadsetPlugReceiver = HeadsetPlugReceiver()

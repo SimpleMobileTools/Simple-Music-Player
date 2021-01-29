@@ -31,7 +31,6 @@ class SettingsActivity : SimpleActivity() {
         setupCustomizeWidgetColors()
         setupUseEnglish()
         setupSwapPrevNext()
-        setupEqualizer()
         setupReplaceTitle()
         updateTextColors(settings_scrollview)
         invalidateOptionsMenu()
@@ -80,12 +79,6 @@ class SettingsActivity : SimpleActivity() {
         settings_swap_prev_next_holder.setOnClickListener {
             settings_swap_prev_next.toggle()
             config.swapPrevNext = settings_swap_prev_next.isChecked
-        }
-    }
-
-    private fun setupEqualizer() {
-        settings_equalizer_holder.setOnClickListener {
-            startActivity(Intent(applicationContext, EqualizerActivity::class.java))
         }
     }
 

@@ -25,6 +25,10 @@
         android:title="@string/sleep_timer"
         app:showAsAction="never" />
     <item
+        android:id="@+id/equalizer"
+        android:title="@string/equalizer"
+        app:showAsAction="never" />
+    <item
         android:id="@+id/settings"
         android:title="@string/settings"
         app:showAsAction="never" />

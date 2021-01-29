@@ -84,7 +84,7 @@
         <activity
             android:name=".activities.EqualizerActivity"
             android:label="@string/equalizer"
-            android:parentActivityName=".activities.SettingsActivity"/>
+            android:parentActivityName=".activities.MainActivity"/>
 
         <activity
             android:name=".activities.AlbumsActivity"

@@ -107,6 +107,7 @@ class MainActivity : SimpleActivity() {
             R.id.sleep_timer -> showSleepTimer()
             R.id.create_new_playlist -> createNewPlaylist()
             R.id.create_playlist_from_folder -> createPlaylistFromFolder()
+            R.id.equalizer -> launchEqualizer()
             R.id.settings -> launchSettings()
             R.id.about -> launchAbout()
             else -> return super.onOptionsItemSelected(item)
@@ -345,6 +346,10 @@ class MainActivity : SimpleActivity() {
         getAllFragments().forEach {
             it.setupFragment(this)
         }
+    }
+
+    private fun launchEqualizer() {
+        startActivity(Intent(applicationContext, EqualizerActivity::class.java))
     }
 
     private fun launchSettings() {
