@@ -1,0 +1,133 @@
+<resources>
+    <string name="app_name">Simple Music Player</string>
+    <string name="app_launcher_name">Musiikkisoitin</string>
+    <string name="playlist_empty">Soittolistasi on tyhjä</string>
+    <string name="rename_song">Nimeä kappale uudelleen</string>
+    <string name="rename_song_error">Nimeämisen aikana tapahtui virhe</string>
+    <string name="rename_song_empty">Täytä kaikki kentät</string>
+    <string name="enable_song_repetition">Toista nykyinen kappale</string>
+    <string name="disable_song_repetition">Lopeta nykyisen kappaleen toistaminen</string>
+    <string name="song_repetition_enabled">Nykyisen kappaleen toisto on käytössä</string>
+    <string name="song_repetition_disabled">Nykyisen kappaleen toisto on poistettu käytöstä</string>
+    <string name="enable_shuffle">Ota satunnaistoisto käyttöön</string>
+    <string name="disable_shuffle">Poista satunnaistoisto käytöstä</string>
+    <string name="shuffle_enabled">Satunnaistoisto käytössä</string>
+    <string name="shuffle_disabled">Satunnaistoisto poistettu käytöstä</string>
+    <string name="enable_autoplay">Ota automaattinen toisto käyttöön</string>
+    <string name="disable_autoplay">Poista automaattinen toisto käytöstä</string>
+    <string name="autoplay_enabled">Automaattinen toisto käytössä</string>
+    <string name="autoplay_disabled">Automaattinen toisto poistettu käytöstä</string>
+    <string name="sleep_timer">Uniajastin</string>
+
+    <!-- Playlists -->
+    <string name="add_file_to_playlist">Lisää tiedosto soittolistaan</string>
+    <string name="add_folder_to_playlist">Lisää kansio soittolistaan</string>
+    <string name="manage_playlists">Hallitse soittolistoja</string>
+    <string name="playlists">Soittolistat</string>
+    <string name="create_new_playlist">Luo uusi soittolista</string>
+    <string name="rename_playlist">Nimeä soittolista uudelleen</string>
+    <string name="playlist_name_exists">Samanniminen soittolista on jo olemassa</string>
+    <string name="remove_playlist">Poista soittolista</string>
+    <string name="remove_playlist_description">Tämä poistaa vain valitut soittolistat, ei varsinaisia tiedostoja.</string>
+    <string name="remove_playlist_description_placeholder">Tämä poistaa vain soittolistan \"%s\", ei varsinaisia tiedostoja.</string>
+    <string name="remove_from_playlist">Poista soittolistalta</string>
+    <string name="remove_from_playlist_description">Tämä poistaa vain kohteet soittolistalta \"%s\", todellisia tiedostoja ei poisteta.</string>
+    <string name="delete_the_files_too">Poista myös tiedostot</string>
+    <string name="open_playlist">Avaa soittolista</string>
+    <string name="all_songs_cannot_be_deleted">\'Kaikki kappaleet\' soittolistaa ei voi poistaa</string>
+    <string name="empty_playlist">Nykyinen soittolista on tyhjä</string>
+    <string name="fetching_songs">Haetaan kappaleita…</string>
+    <string name="all_songs">Kaikki kappaleet</string>
+    <string name="create_playlist_from_folder">Luo uusi soittolista kansiosta</string>
+    <string name="folder_contains_no_audio">Valittu kansio ei sisällä äänitiedostoja</string>
+    <string name="delete_current_song">Poista nykyinen kappale</string>
+    <string name="remove_current_song">Poista nykyinen kappale soittolistalta</string>
+    <string name="show_filename">Näytä tiedostonimi kappaleen otsikkona</string>
+    <string name="title_is_not_available">Jos kappaleen nimeä ei ole saatavana</string>
+    <string name="show_album_cover">Show album cover on the main screen</string>
+    <string name="all_tracks">Kaikki kappaleet</string>
+    <string name="add_to_playlist">Lisää soittolistaan</string>
+    <string name="create_playlist_label">Voit luoda uuden soittolistan valitsemalla haluamasi artistit, albumit tai kappaleet ja valitsemalla Valikko -> Lisää soittolistaan.</string>
+
+    <!-- Sorting -->
+    <string name="track_count">Kappalemäärä</string>
+    <string name="album_count">Albumien määrä</string>
+    <string name="artist_name">Artistin Nimi</string>
+    <string name="year">Vuosi</string>
+
+    <!-- Artists -->
+    <string name="artists">Artistit</string>
+    <string name="albums">Albumit</string>
+    <plurals name="albums_plural">
+        <item quantity="one">%d Albumi</item>
+        <item quantity="other">%d Albumia</item>
+    </plurals>
+
+    <string name="tracks">Kappaleet</string>
+    <plurals name="tracks_plural">
+        <item quantity="one">%d Kappale</item>
+        <item quantity="other">%d Kappaletta</item>
+    </plurals>
+
+    <!-- Queue -->
+    <string name="next_track">Seuraava:</string>
+    <string name="track_queue">Kappalejono</string>
+    <string name="add_to_queue">Lisää jonoon</string>
+    <string name="remove_from_queue">Poista jonosta</string>
+    <string name="create_playlist_from_queue">Luo soittolista jonosta</string>
+
+    <!-- Settings -->
+    <string name="equalizer">Taajuuskorjain</string>
+    <string name="swap_prev_next">Vaihda edellinen/seuraava kuulokepainikkeet</string>
+
+    <!-- FAQ -->
+    <string name="faq_1_title">Kuinka kappaleita voi kelata eteenpäin?</string>
+    <string name="faq_1_text">Voit napsauttaa hakupalkin lähellä olevia nykyisiä tai enimmäiskestoisia tekstejä, jotka siirtävät kappaleen joko taaksepäin tai eteenpäin.</string>
+
+    <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
+    <!-- App title has to have less than 50 characters. If you cannot squeeze it, just remove a part of it -->
+    <string name="app_title">Simple Music Player - A cool player for your songs</string>
+    <!-- Short description has to have less than 80 chars -->
+    <string name="app_short_description">A clean music player with a customizable widget, stylish interface and no ads.</string>
+    <string name="app_long_description">
+        A simple music player easily controllable from the status bar, home screen widget or by hardware buttons on your headset. It provides all expected functions like sorting in various ways as well as changing the Equalizer.  Listen to your favorite mp3, other songs or podcasts with this free beautiful music player.
+
+        It offers exclusive extras like Search and showing Album Art, a sleep timer and many other settings. This elegant music player allows you creating and managing handy playlists as you desire.
+
+        Playlists are fully supported. You can add either individual files, or whole folders. If you won\'t like a file, you can either just remove it from a playlist, or delete the actual file altogether.
+
+        Comes with a handy sleep timer so that you can reliably delay the time of the app shutting down.
+
+        Supports both shuffle and repeating a particular song, as well as skipping and fast forwarding.
+
+        Available in many different languages, offers multiple different equalizers.
+
+        Easily check a file properties like the size, duration, last modified etc.
+
+        Modify file EXIF data like the song title and artist.
+
+        Quickly share files with your friends on social networks, emails, or anywhere you would like.
+
+        This stylish music player contains a widget with customizable text color, alpha and the color of the background for easy access and control.
+
+        It properly handles third party intents too for playing individual audio files so it can help at setting ringtones too.
+
+        It comes with material design and dark theme by default, provides great user experience for easy usage. The lack of internet access gives you more privacy, security and stability than other apps.
+
+        Contains no ads or unnecessary permissions. It is fully opensource, provides customizable colors.
+
+        <b>Check out the full suite of Simple Tools here:</b>
+        https://www.simplemobiletools.com
+
+        <b>Facebook:</b>
+        https://www.facebook.com/simplemobiletools
+
+        <b>Reddit:</b>
+        https://www.reddit.com/r/SimpleMobileTools
+    </string>
+
+    <!--
+        Haven't found some strings? There's more at
+        https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
+    -->
+</resources>
