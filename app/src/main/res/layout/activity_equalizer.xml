@@ -24,7 +24,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <com.simplemobiletools.commons.views.MyTextView
-                android:id="@+id/equalizer_label_15"
+                android:id="@+id/equalizer_label_top"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
@@ -42,7 +42,7 @@
                 android:textSize="@dimen/normal_text_size" />
 
             <com.simplemobiletools.commons.views.MyTextView
-                android:id="@+id/equalizer_label_minus_15"
+                android:id="@+id/equalizer_label_bottom"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
@@ -56,7 +56,6 @@
             android:id="@+id/equalizer_60"
             android:layout_width="0dp"
             android:layout_height="@dimen/equalizer_seekbar_height"
-            android:max="30"
             android:paddingStart="@dimen/activity_margin"
             android:paddingEnd="@dimen/activity_margin"
             app:layout_constraintEnd_toStartOf="@+id/equalizer_230"
@@ -68,7 +67,6 @@
             android:id="@+id/equalizer_230"
             android:layout_width="0dp"
             android:layout_height="@dimen/equalizer_seekbar_height"
-            android:max="30"
             android:padding="@dimen/activity_margin"
             app:layout_constraintEnd_toStartOf="@+id/equalizer_960"
             app:layout_constraintHorizontal_bias="0.5"
@@ -79,7 +77,6 @@
             android:id="@+id/equalizer_960"
             android:layout_width="0dp"
             android:layout_height="@dimen/equalizer_seekbar_height"
-            android:max="30"
             android:padding="@dimen/activity_margin"
             app:layout_constraintEnd_toStartOf="@+id/equalizer_3600"
             app:layout_constraintHorizontal_bias="0.5"
@@ -90,7 +87,6 @@
             android:id="@+id/equalizer_3600"
             android:layout_width="0dp"
             android:layout_height="@dimen/equalizer_seekbar_height"
-            android:max="30"
             android:padding="@dimen/activity_margin"
             app:layout_constraintEnd_toStartOf="@+id/equalizer_14000"
             app:layout_constraintHorizontal_bias="0.5"
@@ -101,7 +97,6 @@
             android:id="@+id/equalizer_14000"
             android:layout_width="0dp"
             android:layout_height="@dimen/equalizer_seekbar_height"
-            android:max="30"
             android:padding="@dimen/activity_margin"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"

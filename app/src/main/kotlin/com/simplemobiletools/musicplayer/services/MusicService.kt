@@ -12,7 +12,6 @@ import android.media.AudioManager
 import android.media.AudioManager.*
 import android.media.MediaMetadataRetriever
 import android.media.MediaPlayer
-import android.media.audiofx.Equalizer
 import android.media.session.PlaybackState.PLAYBACK_POSITION_UNKNOWN
 import android.net.Uri
 import android.os.CountDownTimer
@@ -31,7 +30,6 @@ import androidx.media.session.MediaButtonReceiver
 import com.simplemobiletools.commons.extensions.getColoredBitmap
 import com.simplemobiletools.commons.extensions.getRealPathFromURI
 import com.simplemobiletools.commons.extensions.hasPermission
-import com.simplemobiletools.commons.extensions.showErrorToast
 import com.simplemobiletools.commons.helpers.*
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.MainActivity
