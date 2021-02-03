@@ -5,6 +5,7 @@ import android.media.MediaPlayer
 import android.media.audiofx.Equalizer
 import android.os.Bundle
 import android.view.Menu
+import com.simplemobiletools.commons.extensions.onSeekBarChangeListener
 import com.simplemobiletools.commons.extensions.updateTextColors
 import com.simplemobiletools.musicplayer.R
 import kotlinx.android.synthetic.main.activity_equalizer.*
@@ -45,6 +46,10 @@ class EqualizerActivity : SimpleActivity() {
             layoutInflater.inflate(R.layout.equalizer_band, equalizer_bands_holder, false).apply {
                 equalizer_bands_holder.addView(this)
                 this.equalizer_band_label.text = formatted
+                this.equalizer_band_seek_bar.max = range[1] - range[0]
+                this.equalizer_band_seek_bar.onSeekBarChangeListener {
+                    val newValue = it + range[0]
+                }
             }
         }
     }
