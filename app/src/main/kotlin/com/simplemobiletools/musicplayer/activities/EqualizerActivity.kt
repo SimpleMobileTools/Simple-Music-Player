@@ -8,6 +8,7 @@ import android.view.Menu
 import com.simplemobiletools.commons.extensions.updateTextColors
 import com.simplemobiletools.musicplayer.R
 import kotlinx.android.synthetic.main.activity_equalizer.*
+import kotlinx.android.synthetic.main.equalizer_band.view.*
 import java.text.DecimalFormat
 
 class EqualizerActivity : SimpleActivity() {
@@ -27,13 +28,24 @@ class EqualizerActivity : SimpleActivity() {
     private fun initMediaPlayer() {
         val player = MediaPlayer()
         val equalizer = Equalizer(0, player.audioSessionId)
-        equalizer_label_bottom.text = (equalizer.bandLevelRange[0] / 100).toString()
-        equalizer_label_top.text = "+${equalizer.bandLevelRange[1] / 100}"
+        val minValue = equalizer.bandLevelRange[0] / 100
+        val maxValue = equalizer.bandLevelRange[1] / 100
+        equalizer_label_top.text = "+$maxValue"
+        equalizer_label_bottom.text = minValue.toString()
+        equalizer_label_0.text = (minValue + maxValue).toString()
+
+        equalizer_bands_holder.removeAllViews()
 
         val bands = equalizer.numberOfBands
         for (i in 0 until bands) {
             val frequency = equalizer.getCenterFreq(i.toShort()) / 1000
             val formatted = formatFrequency(frequency)
+            val range = equalizer.getBandFreqRange(i.toShort())
+
+            layoutInflater.inflate(R.layout.equalizer_band, equalizer_bands_holder, false).apply {
+                equalizer_bands_holder.addView(this)
+                this.equalizer_band_label.text = formatted
+            }
         }
     }
 
