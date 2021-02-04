@@ -9,17 +9,16 @@
         android:id="@+id/equalizer_band_seek_bar"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/equalizer_seekbar_height"
+        android:layout_centerHorizontal="true"
         android:padding="@dimen/activity_margin" />
 
     <com.simplemobiletools.commons.views.MyTextView
         android:id="@+id/equalizer_band_label"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/equalizer_band_seek_bar"
-        android:layout_alignStart="@+id/equalizer_band_seek_bar"
-        android:layout_alignEnd="@+id/equalizer_band_seek_bar"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/medium_margin"
-        android:gravity="center_horizontal"
         android:textSize="@dimen/normal_text_size" />
 
 </RelativeLayout>
