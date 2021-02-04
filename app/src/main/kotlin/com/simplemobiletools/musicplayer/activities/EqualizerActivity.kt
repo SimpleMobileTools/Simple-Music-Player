@@ -121,15 +121,17 @@ class EqualizerActivity : SimpleActivity() {
             equalizer_preset.text = getString(R.string.custom)
 
             for (band in 0 until equalizer.numberOfBands) {
+                val minValue = equalizer.bandLevelRange[0]
                 val progress = if (bands.containsKey(band.toShort())) {
                     bands[band.toShort()]
                 } else {
-                    val minValue = equalizer.bandLevelRange[0]
                     val maxValue = equalizer.bandLevelRange[1]
                     (maxValue - minValue) / 2
                 }
 
                 bandSeekBars[band].progress = progress!!.toInt()
+                val newValue = progress + minValue
+                equalizer.setBandLevel(band.toShort(), newValue.toShort())
             }
         } else {
             val presetName = equalizer.getPresetName(presetId.toShort())

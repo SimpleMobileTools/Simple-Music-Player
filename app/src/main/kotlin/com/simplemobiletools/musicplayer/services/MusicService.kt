@@ -12,6 +12,7 @@ import android.media.AudioManager
 import android.media.AudioManager.*
 import android.media.MediaMetadataRetriever
 import android.media.MediaPlayer
+import android.media.audiofx.Equalizer
 import android.media.session.PlaybackState.PLAYBACK_POSITION_UNKNOWN
 import android.net.Uri
 import android.os.CountDownTimer
@@ -27,6 +28,8 @@ import android.util.Size
 import android.view.KeyEvent
 import androidx.core.app.NotificationCompat
 import androidx.media.session.MediaButtonReceiver
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.simplemobiletools.commons.extensions.getColoredBitmap
 import com.simplemobiletools.commons.extensions.getRealPathFromURI
 import com.simplemobiletools.commons.extensions.hasPermission
@@ -148,7 +151,6 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             REFRESH_LIST -> handleRefreshList()
             UPDATE_NEXT_TRACK -> broadcastNextTrackChange()
             SET_PROGRESS -> handleSetProgress(intent)
-            SET_EQUALIZER -> handleSetEqualizer(intent)
             SKIP_BACKWARD -> skip(false)
             SKIP_FORWARD -> skip(true)
             START_SLEEP_TIMER -> startSleepTimer()
@@ -278,10 +280,6 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         }
     }
 
-    private fun handleSetEqualizer(intent: Intent) {
-
-    }
-
     private fun setupTrack() {
         if (mIsThirdPartyIntent) {
             initMediaPlayerIfNeeded()
@@ -344,7 +342,20 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     }
 
     private fun setupEqualizer() {
-
+        val preset = config.equalizerPreset
+        val equalizer = Equalizer(0, mPlayer!!.audioSessionId)
+        equalizer.enabled = true
+        if (preset != EQUALIZER_PRESET_CUSTOM) {
+            equalizer.usePreset(preset.toShort())
+        } else {
+            val minValue = equalizer.bandLevelRange[0]
+            val bandType = object : TypeToken<HashMap<Short, Int>>() {}.type
+            val equalizerBands = Gson().fromJson<HashMap<Short, Int>>(config.equalizerBands, bandType) ?: HashMap()
+            for ((key, value) in equalizerBands) {
+                val newValue = value + minValue
+                equalizer.setBandLevel(key, newValue.toShort())
+            }
+        }
     }
 
     // make sure tracks don't get duplicated in the queue, if they exist in multiple playlists
