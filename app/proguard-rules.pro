@@ -20,7 +20,3 @@
 -keepnames class okhttp3.internal.publicsuffix.PublicSuffixDatabase
 -dontwarn org.codehaus.mojo.animal_sniffer.*
 -dontwarn okhttp3.internal.platform.ConscryptPlatform
-
--keep class com.simplemobiletools.musicplayer.models.* {
-    <fields>;
-}

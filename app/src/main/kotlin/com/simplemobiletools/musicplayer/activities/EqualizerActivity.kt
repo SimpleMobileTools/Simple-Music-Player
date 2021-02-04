@@ -5,6 +5,8 @@ import android.media.MediaPlayer
 import android.media.audiofx.Equalizer
 import android.os.Bundle
 import android.view.Menu
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.simplemobiletools.commons.dialogs.RadioGroupDialog
 import com.simplemobiletools.commons.extensions.onSeekBarChangeListener
 import com.simplemobiletools.commons.extensions.updateTextColors
@@ -18,7 +20,7 @@ import kotlinx.android.synthetic.main.equalizer_band.view.*
 import java.text.DecimalFormat
 
 class EqualizerActivity : SimpleActivity() {
-    private val bandsMap = HashMap<Short, Int>()
+    private var bands = HashMap<Short, Int>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,33 +46,43 @@ class EqualizerActivity : SimpleActivity() {
     private fun setupBands(equalizer: Equalizer) {
         val minValue = equalizer.bandLevelRange[0]
         val maxValue = equalizer.bandLevelRange[1]
+        val middle = (maxValue - minValue) / 2
         equalizer_label_top.text = "+${maxValue / 100}"
         equalizer_label_bottom.text = "${minValue / 100}"
         equalizer_label_0.text = (minValue + maxValue).toString()
 
         equalizer_bands_holder.removeAllViews()
 
-        val bands = equalizer.numberOfBands
-        for (band in 0 until bands) {
-            bandsMap[band.toShort()] = 0
+        val bandsCnt = equalizer.numberOfBands
+        val bandType = object : TypeToken<HashMap<Short, Int>>() {}.type
+        bands = Gson().fromJson<HashMap<Short, Int>>(config.equalizerBands, bandType) ?: HashMap()
+
+        for (band in 0 until bandsCnt) {
             val frequency = equalizer.getCenterFreq(band.toShort()) / 1000
             val formatted = formatFrequency(frequency)
+            val defaultValue = if (bands.containsKey(band.toShort())) {
+                bands[band.toShort()]
+            } else {
+                middle
+            }
 
             layoutInflater.inflate(R.layout.equalizer_band, equalizer_bands_holder, false).apply {
                 equalizer_bands_holder.addView(this)
                 this.equalizer_band_label.text = formatted
                 this.equalizer_band_label.setTextColor(config.textColor)
                 this.equalizer_band_seek_bar.max = maxValue - minValue
+                this.equalizer_band_seek_bar.progress = defaultValue!!.toInt()
 
                 this.equalizer_band_seek_bar.onSeekBarChangeListener {
                     val newValue = it + minValue
                     equalizer.setBandLevel(band.toShort(), newValue.toShort())
-                    bandsMap[band.toShort()] = newValue
+                    bands[band.toShort()] = newValue
                 }
 
                 // classic onStopTrackingTouch doesn't work with the VerticalSeekBar, so use a custom solution
                 this.equalizer_band_seek_bar.seekBarStopListener = { value ->
-
+                    bands[band.toShort()] = value
+                    config.equalizerBands = Gson().toJson(bands)
                 }
             }
         }

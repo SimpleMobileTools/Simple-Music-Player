@@ -56,6 +56,7 @@ const val SWAP_PREV_NEXT = "swap_prev_next"
 const val LAST_SLEEP_TIMER_SECONDS = "last_sleep_timer_seconds"
 const val SLEEP_IN_TS = "sleep_in_ts"
 const val EQUALIZER_PRESET = "EQUALIZER_PRESET"
+const val EQUALIZER_BANDS = "EQUALIZER_BANDS"
 
 const val LOWER_ALPHA = 0.5f
 
