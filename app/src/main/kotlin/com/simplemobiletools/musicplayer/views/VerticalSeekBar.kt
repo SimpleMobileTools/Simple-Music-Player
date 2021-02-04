@@ -32,6 +32,10 @@ class VerticalSeekBar : AppCompatSeekBar {
         super.onDraw(canvas)
     }
 
+    fun measureView() {
+        onSizeChanged(width, height, 0, 0)
+    }
+
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent): Boolean {
         when (event.action) {

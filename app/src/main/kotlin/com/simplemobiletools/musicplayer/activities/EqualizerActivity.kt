@@ -15,12 +15,15 @@ import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.helpers.EQUALIZER_PRESET_CUSTOM
 import com.simplemobiletools.musicplayer.services.MusicService
+import com.simplemobiletools.musicplayer.views.VerticalSeekBar
 import kotlinx.android.synthetic.main.activity_equalizer.*
 import kotlinx.android.synthetic.main.equalizer_band.view.*
 import java.text.DecimalFormat
+import java.util.*
 
 class EqualizerActivity : SimpleActivity() {
     private var bands = HashMap<Short, Int>()
+    private var bandSeekBars = ArrayList<VerticalSeekBar>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,11 +49,11 @@ class EqualizerActivity : SimpleActivity() {
     private fun setupBands(equalizer: Equalizer) {
         val minValue = equalizer.bandLevelRange[0]
         val maxValue = equalizer.bandLevelRange[1]
-        val middle = (maxValue - minValue) / 2
         equalizer_label_top.text = "+${maxValue / 100}"
         equalizer_label_bottom.text = "${minValue / 100}"
         equalizer_label_0.text = (minValue + maxValue).toString()
 
+        bandSeekBars.clear()
         equalizer_bands_holder.removeAllViews()
 
         val bandsCnt = equalizer.numberOfBands
@@ -60,48 +63,31 @@ class EqualizerActivity : SimpleActivity() {
         for (band in 0 until bandsCnt) {
             val frequency = equalizer.getCenterFreq(band.toShort()) / 1000
             val formatted = formatFrequency(frequency)
-            val defaultValue = if (bands.containsKey(band.toShort())) {
-                bands[band.toShort()]
-            } else {
-                middle
-            }
 
             layoutInflater.inflate(R.layout.equalizer_band, equalizer_bands_holder, false).apply {
                 equalizer_bands_holder.addView(this)
+                bandSeekBars.add(this.equalizer_band_seek_bar)
                 this.equalizer_band_label.text = formatted
                 this.equalizer_band_label.setTextColor(config.textColor)
                 this.equalizer_band_seek_bar.max = maxValue - minValue
-                this.equalizer_band_seek_bar.progress = defaultValue!!.toInt()
 
-                this.equalizer_band_seek_bar.onSeekBarChangeListener {
-                    val newValue = it + minValue
+                this.equalizer_band_seek_bar.onSeekBarChangeListener { progress, fromUser ->
+                    val newValue = progress + minValue
                     equalizer.setBandLevel(band.toShort(), newValue.toShort())
                     bands[band.toShort()] = newValue
                 }
 
                 // classic onStopTrackingTouch doesn't work with the VerticalSeekBar, so use a custom solution
                 this.equalizer_band_seek_bar.seekBarStopListener = { value ->
-                    bands[band.toShort()] = value
                     config.equalizerBands = Gson().toJson(bands)
+                    bands[band.toShort()] = value
                 }
             }
         }
     }
 
     private fun setupPresets(equalizer: Equalizer) {
-        val storedPreset = config.equalizerPreset
-        if (storedPreset == EQUALIZER_PRESET_CUSTOM) {
-            equalizer_preset.text = getString(R.string.custom)
-        } else {
-            val presetName = equalizer.getPresetName(storedPreset.toShort())
-            if (presetName.isEmpty()) {
-                config.equalizerPreset = EQUALIZER_PRESET_CUSTOM
-                equalizer_preset.text = getString(R.string.custom)
-            } else {
-                equalizer_preset.text = presetName
-            }
-        }
-
+        presetChanged(config.equalizerPreset, equalizer)
         equalizer_preset.setOnClickListener {
             val items = arrayListOf<RadioItem>()
             (0 until equalizer.numberOfPresets).mapTo(items) {
@@ -109,10 +95,45 @@ class EqualizerActivity : SimpleActivity() {
             }
 
             items.add(RadioItem(EQUALIZER_PRESET_CUSTOM, getString(R.string.custom)))
-
             RadioGroupDialog(this, items, config.equalizerPreset) { presetId ->
                 config.equalizerPreset = presetId as Int
-                equalizer_preset.text = items.firstOrNull { it.value == presetId }?.title
+                presetChanged(presetId, equalizer)
+            }
+        }
+    }
+
+    private fun presetChanged(presetId: Int, equalizer: Equalizer) {
+        if (presetId == EQUALIZER_PRESET_CUSTOM) {
+            equalizer_preset.text = getString(R.string.custom)
+
+            for (band in 0 until equalizer.numberOfBands) {
+                val progress = if (bands.containsKey(band.toShort())) {
+                    bands[band.toShort()]
+                } else {
+                    val minValue = equalizer.bandLevelRange[0]
+                    val maxValue = equalizer.bandLevelRange[1]
+                    (maxValue - minValue) / 2
+                }
+
+                bandSeekBars[band].progress = progress!!.toInt()
+                bandSeekBars[band].measureView()
+            }
+        } else {
+            val presetName = equalizer.getPresetName(presetId.toShort())
+            if (presetName.isEmpty()) {
+                config.equalizerPreset = EQUALIZER_PRESET_CUSTOM
+                equalizer_preset.text = getString(R.string.custom)
+            } else {
+                equalizer_preset.text = presetName
+            }
+
+            equalizer.usePreset(presetId.toShort())
+
+            val lowestBandLevel = equalizer.bandLevelRange?.get(0)
+            for (band in 0 until equalizer.numberOfBands) {
+                val level = equalizer.getBandLevel(band.toShort()).minus(lowestBandLevel!!)
+                bandSeekBars[band].progress = level
+                bandSeekBars[band].measureView()
             }
         }
     }

@@ -60,8 +60,8 @@ class WidgetConfigureActivity : SimpleActivity() {
         mBgColorWithoutTransparency = Color.rgb(Color.red(mBgColor), Color.green(mBgColor), Color.blue(mBgColor))
         config_bg_seekbar.progress = (mBgAlpha * 100).toInt()
         updateBackgroundColor()
-        config_bg_seekbar.onSeekBarChangeListener {
-            mBgAlpha = it / 100.toFloat()
+        config_bg_seekbar.onSeekBarChangeListener { progress, fromUser ->
+            mBgAlpha = progress / 100.toFloat()
             updateBackgroundColor()
         }
 
