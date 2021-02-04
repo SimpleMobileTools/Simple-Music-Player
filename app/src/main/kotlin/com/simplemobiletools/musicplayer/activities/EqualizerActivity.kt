@@ -83,8 +83,8 @@ class EqualizerActivity : SimpleActivity() {
                     override fun onStartTrackingTouch(seekBar: SeekBar) {}
 
                     override fun onStopTrackingTouch(seekBar: SeekBar) {
-                        config.equalizerBands = Gson().toJson(bands)
                         bands[band.toShort()] = this@apply.equalizer_band_seek_bar.progress
+                        config.equalizerBands = Gson().toJson(bands)
                     }
                 })
             }
