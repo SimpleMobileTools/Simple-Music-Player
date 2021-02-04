@@ -8,6 +8,7 @@ import android.view.Menu
 import com.simplemobiletools.commons.extensions.onSeekBarChangeListener
 import com.simplemobiletools.commons.extensions.updateTextColors
 import com.simplemobiletools.musicplayer.R
+import com.simplemobiletools.musicplayer.services.MusicService
 import kotlinx.android.synthetic.main.activity_equalizer.*
 import kotlinx.android.synthetic.main.equalizer_band.view.*
 import java.text.DecimalFormat
@@ -27,28 +28,29 @@ class EqualizerActivity : SimpleActivity() {
 
     @SuppressLint("SetTextI18n")
     private fun initMediaPlayer() {
-        val player = MediaPlayer()
+        val player = MusicService.mPlayer ?: MediaPlayer()
         val equalizer = Equalizer(0, player.audioSessionId)
-        val minValue = equalizer.bandLevelRange[0] / 100
-        val maxValue = equalizer.bandLevelRange[1] / 100
-        equalizer_label_top.text = "+$maxValue"
-        equalizer_label_bottom.text = minValue.toString()
+        equalizer.enabled = true
+        val minValue = equalizer.bandLevelRange[0]
+        val maxValue = equalizer.bandLevelRange[1]
+        equalizer_label_top.text = "+${maxValue / 100}"
+        equalizer_label_bottom.text = "${minValue / 100}"
         equalizer_label_0.text = (minValue + maxValue).toString()
 
         equalizer_bands_holder.removeAllViews()
 
         val bands = equalizer.numberOfBands
-        for (i in 0 until bands) {
-            val frequency = equalizer.getCenterFreq(i.toShort()) / 1000
+        for (band in 0 until bands) {
+            val frequency = equalizer.getCenterFreq(band.toShort()) / 1000
             val formatted = formatFrequency(frequency)
-            val range = equalizer.getBandFreqRange(i.toShort())
 
             layoutInflater.inflate(R.layout.equalizer_band, equalizer_bands_holder, false).apply {
                 equalizer_bands_holder.addView(this)
                 this.equalizer_band_label.text = formatted
-                this.equalizer_band_seek_bar.max = range[1] - range[0]
+                this.equalizer_band_seek_bar.max = maxValue - minValue
                 this.equalizer_band_seek_bar.onSeekBarChangeListener {
-                    val newValue = it + range[0]
+                    val newValue = it + minValue
+                    equalizer.setBandLevel(band.toShort(), newValue.toShort())
                 }
             }
         }

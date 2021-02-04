@@ -56,9 +56,9 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
         var mCurrTrack: Track? = null
         var mTracks = ArrayList<Track>()
+        var mPlayer: MediaPlayer? = null
         private var mCurrTrackCover: Bitmap? = null
         private var mHeadsetPlugReceiver = HeadsetPlugReceiver()
-        private var mPlayer: MediaPlayer? = null
         private var mProgressHandler = Handler()
         private var mSleepTimer: CountDownTimer? = null
         private var mAudioManager: AudioManager? = null
