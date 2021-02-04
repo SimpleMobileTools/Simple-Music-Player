@@ -14,6 +14,8 @@ class VerticalSeekBar : AppCompatSeekBar {
 
     constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(context, attrs, defStyle)
 
+    var seekBarStopListener: ((progress: Int) -> Unit)? = null
+
     override fun onSizeChanged(width: Int, height: Int, oldWidth: Int, oldHeight: Int) {
         super.onSizeChanged(height, width, oldHeight, oldWidth)
     }
@@ -37,9 +39,14 @@ class VerticalSeekBar : AppCompatSeekBar {
                 progress = max - (max * event.y / height).toInt()
                 onSizeChanged(width, height, 0, 0)
             }
-            MotionEvent.ACTION_CANCEL -> {
+        }
+
+        when (event.action) {
+            MotionEvent.ACTION_CANCEL, MotionEvent.ACTION_UP -> {
+                seekBarStopListener?.invoke(progress)
             }
         }
+
         return true
     }
 }

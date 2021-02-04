@@ -18,6 +18,8 @@ import kotlinx.android.synthetic.main.equalizer_band.view.*
 import java.text.DecimalFormat
 
 class EqualizerActivity : SimpleActivity() {
+    private val bandsMap = HashMap<Short, Int>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_equalizer)
@@ -35,6 +37,11 @@ class EqualizerActivity : SimpleActivity() {
         val player = MusicService.mPlayer ?: MediaPlayer()
         val equalizer = Equalizer(0, player.audioSessionId)
         equalizer.enabled = true
+        setupBands(equalizer)
+        setupPresets(equalizer)
+    }
+
+    private fun setupBands(equalizer: Equalizer) {
         val minValue = equalizer.bandLevelRange[0]
         val maxValue = equalizer.bandLevelRange[1]
         equalizer_label_top.text = "+${maxValue / 100}"
@@ -45,6 +52,7 @@ class EqualizerActivity : SimpleActivity() {
 
         val bands = equalizer.numberOfBands
         for (band in 0 until bands) {
+            bandsMap[band.toShort()] = 0
             val frequency = equalizer.getCenterFreq(band.toShort()) / 1000
             val formatted = formatFrequency(frequency)
 
@@ -53,14 +61,19 @@ class EqualizerActivity : SimpleActivity() {
                 this.equalizer_band_label.text = formatted
                 this.equalizer_band_label.setTextColor(config.textColor)
                 this.equalizer_band_seek_bar.max = maxValue - minValue
+
                 this.equalizer_band_seek_bar.onSeekBarChangeListener {
                     val newValue = it + minValue
                     equalizer.setBandLevel(band.toShort(), newValue.toShort())
+                    bandsMap[band.toShort()] = newValue
+                }
+
+                // classic onStopTrackingTouch doesn't work with the VerticalSeekBar, so use a custom solution
+                this.equalizer_band_seek_bar.seekBarStopListener = { value ->
+
                 }
             }
         }
-
-        setupPresets(equalizer)
     }
 
     private fun setupPresets(equalizer: Equalizer) {
