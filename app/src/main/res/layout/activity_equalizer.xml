@@ -14,19 +14,24 @@
 
         <RelativeLayout
             android:id="@+id/equalizer_db_labels_holder"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/equalizer_seekbar_height"
-            android:paddingTop="@dimen/medium_margin"
-            android:paddingBottom="@dimen/medium_margin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <com.simplemobiletools.commons.views.MyTextView
-                android:id="@+id/equalizer_label_top"
+                android:id="@+id/equalizer_label_margin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="4" />
+
+            <com.simplemobiletools.commons.views.MyTextView
+                android:id="@+id/equalizer_label_left"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
+                android:layout_marginStart="@dimen/medium_margin"
+                android:layout_toEndOf="@+id/equalizer_label_margin"
                 android:textSize="@dimen/normal_text_size"
                 tools:text="+15" />
 
@@ -34,17 +39,20 @@
                 android:id="@+id/equalizer_label_0"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:paddingBottom="@dimen/medium_margin"
+                android:layout_centerHorizontal="true"
+                android:layout_toStartOf="@+id/equalizer_label_right"
+                android:layout_toEndOf="@+id/equalizer_label_left"
+                android:gravity="center_horizontal"
                 android:textSize="@dimen/normal_text_size"
                 tools:text="0" />
 
             <com.simplemobiletools.commons.views.MyTextView
-                android:id="@+id/equalizer_label_bottom"
+                android:id="@+id/equalizer_label_right"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="@dimen/activity_margin"
                 android:textSize="@dimen/normal_text_size"
                 tools:text="-15" />
 
@@ -52,12 +60,11 @@
 
         <LinearLayout
             android:id="@+id/equalizer_bands_holder"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/equalizer_db_labels_holder"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/equalizer_db_labels_holder" />
 
         <com.simplemobiletools.commons.views.MyTextView
             android:id="@+id/equalizer_preset"

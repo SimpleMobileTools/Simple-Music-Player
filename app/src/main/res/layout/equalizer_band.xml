@@ -1,24 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/equalizer_band_holder"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_weight="1">
+    android:layout_marginTop="@dimen/small_margin"
+    android:layout_marginBottom="@dimen/small_margin">
 
-    <com.simplemobiletools.musicplayer.views.VerticalSeekBar
+    <com.simplemobiletools.commons.views.MySeekBar
         android:id="@+id/equalizer_band_seek_bar"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/equalizer_seekbar_height"
-        android:layout_centerHorizontal="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toEndOf="@+id/equalizer_band_label"
         android:padding="@dimen/activity_margin" />
 
     <com.simplemobiletools.commons.views.MyTextView
         android:id="@+id/equalizer_band_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/equalizer_band_seek_bar"
-        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
         android:layout_marginTop="@dimen/medium_margin"
-        android:textSize="@dimen/normal_text_size" />
+        android:ems="4"
+        android:gravity="center_horizontal"
+        android:textSize="@dimen/normal_text_size"
+        tools:text="60 Hz" />
 
 </RelativeLayout>

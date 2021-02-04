@@ -5,17 +5,17 @@ import android.media.MediaPlayer
 import android.media.audiofx.Equalizer
 import android.os.Bundle
 import android.view.Menu
+import android.widget.SeekBar
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.simplemobiletools.commons.dialogs.RadioGroupDialog
-import com.simplemobiletools.commons.extensions.onSeekBarChangeListener
 import com.simplemobiletools.commons.extensions.updateTextColors
 import com.simplemobiletools.commons.models.RadioItem
+import com.simplemobiletools.commons.views.MySeekBar
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.helpers.EQUALIZER_PRESET_CUSTOM
 import com.simplemobiletools.musicplayer.services.MusicService
-import com.simplemobiletools.musicplayer.views.VerticalSeekBar
 import kotlinx.android.synthetic.main.activity_equalizer.*
 import kotlinx.android.synthetic.main.equalizer_band.view.*
 import java.text.DecimalFormat
@@ -23,7 +23,7 @@ import java.util.*
 
 class EqualizerActivity : SimpleActivity() {
     private var bands = HashMap<Short, Int>()
-    private var bandSeekBars = ArrayList<VerticalSeekBar>()
+    private var bandSeekBars = ArrayList<MySeekBar>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,8 +49,8 @@ class EqualizerActivity : SimpleActivity() {
     private fun setupBands(equalizer: Equalizer) {
         val minValue = equalizer.bandLevelRange[0]
         val maxValue = equalizer.bandLevelRange[1]
-        equalizer_label_top.text = "+${maxValue / 100}"
-        equalizer_label_bottom.text = "${minValue / 100}"
+        equalizer_label_right.text = "+${maxValue / 100}"
+        equalizer_label_left.text = "${minValue / 100}"
         equalizer_label_0.text = (minValue + maxValue).toString()
 
         bandSeekBars.clear()
@@ -71,17 +71,22 @@ class EqualizerActivity : SimpleActivity() {
                 this.equalizer_band_label.setTextColor(config.textColor)
                 this.equalizer_band_seek_bar.max = maxValue - minValue
 
-                this.equalizer_band_seek_bar.onSeekBarChangeListener { progress, fromUser ->
-                    val newValue = progress + minValue
-                    equalizer.setBandLevel(band.toShort(), newValue.toShort())
-                    bands[band.toShort()] = newValue
-                }
+                this.equalizer_band_seek_bar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+                    override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
+                        if (fromUser) {
+                            val newValue = progress + minValue
+                            equalizer.setBandLevel(band.toShort(), newValue.toShort())
+                            bands[band.toShort()] = newValue
+                        }
+                    }
 
-                // classic onStopTrackingTouch doesn't work with the VerticalSeekBar, so use a custom solution
-                this.equalizer_band_seek_bar.seekBarStopListener = { value ->
-                    config.equalizerBands = Gson().toJson(bands)
-                    bands[band.toShort()] = value
-                }
+                    override fun onStartTrackingTouch(seekBar: SeekBar) {}
+
+                    override fun onStopTrackingTouch(seekBar: SeekBar) {
+                        config.equalizerBands = Gson().toJson(bands)
+                        bands[band.toShort()] = this@apply.equalizer_band_seek_bar.progress
+                    }
+                })
             }
         }
     }
@@ -116,7 +121,6 @@ class EqualizerActivity : SimpleActivity() {
                 }
 
                 bandSeekBars[band].progress = progress!!.toInt()
-                bandSeekBars[band].measureView()
             }
         } else {
             val presetName = equalizer.getPresetName(presetId.toShort())
@@ -133,7 +137,6 @@ class EqualizerActivity : SimpleActivity() {
             for (band in 0 until equalizer.numberOfBands) {
                 val level = equalizer.getBandLevel(band.toShort()).minus(lowestBandLevel!!)
                 bandSeekBars[band].progress = level
-                bandSeekBars[band].measureView()
             }
         }
     }
