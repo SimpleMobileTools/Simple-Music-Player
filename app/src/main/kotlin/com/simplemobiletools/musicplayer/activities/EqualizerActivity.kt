@@ -5,9 +5,13 @@ import android.media.MediaPlayer
 import android.media.audiofx.Equalizer
 import android.os.Bundle
 import android.view.Menu
+import com.simplemobiletools.commons.dialogs.RadioGroupDialog
 import com.simplemobiletools.commons.extensions.onSeekBarChangeListener
 import com.simplemobiletools.commons.extensions.updateTextColors
+import com.simplemobiletools.commons.models.RadioItem
 import com.simplemobiletools.musicplayer.R
+import com.simplemobiletools.musicplayer.extensions.config
+import com.simplemobiletools.musicplayer.helpers.EQUALIZER_PRESET_CUSTOM
 import com.simplemobiletools.musicplayer.services.MusicService
 import kotlinx.android.synthetic.main.activity_equalizer.*
 import kotlinx.android.synthetic.main.equalizer_band.view.*
@@ -47,11 +51,43 @@ class EqualizerActivity : SimpleActivity() {
             layoutInflater.inflate(R.layout.equalizer_band, equalizer_bands_holder, false).apply {
                 equalizer_bands_holder.addView(this)
                 this.equalizer_band_label.text = formatted
+                this.equalizer_band_label.setTextColor(config.textColor)
                 this.equalizer_band_seek_bar.max = maxValue - minValue
                 this.equalizer_band_seek_bar.onSeekBarChangeListener {
                     val newValue = it + minValue
                     equalizer.setBandLevel(band.toShort(), newValue.toShort())
                 }
+            }
+        }
+
+        setupPresets(equalizer)
+    }
+
+    private fun setupPresets(equalizer: Equalizer) {
+        val storedPreset = config.equalizerPreset
+        if (storedPreset == EQUALIZER_PRESET_CUSTOM) {
+            equalizer_preset.text = getString(R.string.custom)
+        } else {
+            val presetName = equalizer.getPresetName(storedPreset.toShort())
+            if (presetName.isEmpty()) {
+                config.equalizerPreset = EQUALIZER_PRESET_CUSTOM
+                equalizer_preset.text = getString(R.string.custom)
+            } else {
+                equalizer_preset.text = presetName
+            }
+        }
+
+        equalizer_preset.setOnClickListener {
+            val items = arrayListOf<RadioItem>()
+            (0 until equalizer.numberOfPresets).mapTo(items) {
+                RadioItem(it, equalizer.getPresetName(it.toShort()))
+            }
+
+            items.add(RadioItem(EQUALIZER_PRESET_CUSTOM, getString(R.string.custom)))
+
+            RadioGroupDialog(this, items, config.equalizerPreset) { presetId ->
+                config.equalizerPreset = presetId as Int
+                equalizer_preset.text = items.firstOrNull { it.value == presetId }?.title
             }
         }
     }

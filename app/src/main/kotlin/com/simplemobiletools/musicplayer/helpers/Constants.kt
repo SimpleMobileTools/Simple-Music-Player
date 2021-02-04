@@ -11,6 +11,7 @@ const val TRACK_ID = "track_id"
 const val WERE_COVERS_UPDATED = "were_covers_updated"
 const val WERE_INITIAL_TRACKS_FETCHED = "were_initial_tracks_fetched"
 const val RESTART_PLAYER = "RESTART_PLAYER"
+const val EQUALIZER_PRESET_CUSTOM = -1
 
 const val ARTIST = "artist"
 const val ALBUM = "album"
@@ -54,6 +55,7 @@ const val SHOW_FILENAME = "show_filename"
 const val SWAP_PREV_NEXT = "swap_prev_next"
 const val LAST_SLEEP_TIMER_SECONDS = "last_sleep_timer_seconds"
 const val SLEEP_IN_TS = "sleep_in_ts"
+const val EQUALIZER_PRESET = "EQUALIZER_PRESET"
 
 const val LOWER_ALPHA = 0.5f
 

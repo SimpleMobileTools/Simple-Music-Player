@@ -64,4 +64,8 @@ class Config(context: Context) : BaseConfig(context) {
     var trackSorting: Int
         get() = prefs.getInt(TRACK_SORTING, PLAYER_SORT_BY_TITLE)
         set(trackSorting) = prefs.edit().putInt(TRACK_SORTING, trackSorting).apply()
+
+    var equalizerPreset: Int
+        get() = prefs.getInt(EQUALIZER_PRESET, 0)
+        set(equalizerPreset) = prefs.edit().putInt(EQUALIZER_PRESET, equalizerPreset).apply()
 }

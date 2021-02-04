@@ -59,5 +59,20 @@
             app:layout_constraintStart_toEndOf="@+id/equalizer_db_labels_holder"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <com.simplemobiletools.commons.views.MyTextView
+            android:id="@+id/equalizer_preset"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/normal_margin"
+            android:background="@drawable/button_background"
+            android:paddingStart="@dimen/activity_margin"
+            android:paddingTop="@dimen/normal_margin"
+            android:paddingEnd="@dimen/activity_margin"
+            android:paddingBottom="@dimen/normal_margin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/equalizer_bands_holder"
+            tools:text="@string/custom" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
