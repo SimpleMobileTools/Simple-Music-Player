@@ -56,11 +56,10 @@ class EqualizerActivity : SimpleActivity() {
         bandSeekBars.clear()
         equalizer_bands_holder.removeAllViews()
 
-        val bandsCnt = equalizer.numberOfBands
         val bandType = object : TypeToken<HashMap<Short, Int>>() {}.type
         bands = Gson().fromJson<HashMap<Short, Int>>(config.equalizerBands, bandType) ?: HashMap()
 
-        for (band in 0 until bandsCnt) {
+        for (band in 0 until equalizer.numberOfBands) {
             val frequency = equalizer.getCenterFreq(band.toShort()) / 1000
             val formatted = formatFrequency(frequency)
 
@@ -80,7 +79,9 @@ class EqualizerActivity : SimpleActivity() {
                         }
                     }
 
-                    override fun onStartTrackingTouch(seekBar: SeekBar) {}
+                    override fun onStartTrackingTouch(seekBar: SeekBar) {
+                        draggingStarted(equalizer)
+                    }
 
                     override fun onStopTrackingTouch(seekBar: SeekBar) {
                         bands[band.toShort()] = this@apply.equalizer_band_seek_bar.progress
@@ -88,6 +89,14 @@ class EqualizerActivity : SimpleActivity() {
                     }
                 })
             }
+        }
+    }
+
+    private fun draggingStarted(equalizer: Equalizer) {
+        equalizer_preset.text = getString(R.string.custom)
+        config.equalizerPreset = EQUALIZER_PRESET_CUSTOM
+        for (band in 0 until equalizer.numberOfBands) {
+            bands[band.toShort()] = bandSeekBars[band].progress
         }
     }
 
