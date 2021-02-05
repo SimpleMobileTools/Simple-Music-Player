@@ -18,6 +18,7 @@
     <string name="autoplay_enabled">Активовано автоматичне відтворення</string>
     <string name="autoplay_disabled">Припинено автоматичне відтворення</string>
     <string name="sleep_timer">Sleep timer</string>
+    <string name="volume">Volume</string>
 
     <!-- Playlists -->
     <string name="add_file_to_playlist">Додати файл до списку відтворення</string>

@@ -18,6 +18,7 @@
     <string name="autoplay_enabled">已启用自动播放</string>
     <string name="autoplay_disabled">已禁用自动播放</string>
     <string name="sleep_timer">睡眠定时器</string>
+    <string name="volume">Volume</string>
 
     <!-- Playlists -->
     <string name="add_file_to_playlist">添加文件至播放列表</string>

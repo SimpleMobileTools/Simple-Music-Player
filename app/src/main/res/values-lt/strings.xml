@@ -18,6 +18,7 @@
     <string name="autoplay_enabled">Automatinis grojimas įjungtas</string>
     <string name="autoplay_disabled">Automatinis grojimas išjungtas</string>
     <string name="sleep_timer">Sleep timer</string>
+    <string name="volume">Volume</string>
 
     <!-- Playlists -->
     <string name="add_file_to_playlist">Pridėti bylą į grojaraštį</string>

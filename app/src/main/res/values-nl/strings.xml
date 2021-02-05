@@ -18,6 +18,7 @@
     <string name="autoplay_enabled">Autoplay ingeschakeld</string>
     <string name="autoplay_disabled">Autoplay uitgeschakeld</string>
     <string name="sleep_timer">Slaaptimer</string>
+    <string name="volume">Volume</string>
 
     <!-- Playlists -->
     <string name="add_file_to_playlist">Bestand toevoegen aan afspeellijst</string>

@@ -18,6 +18,7 @@
     <string name="autoplay_enabled">Automatska reprodukcija omogućena</string>
     <string name="autoplay_disabled">Automatska reprodukcija onemogućena</string>
     <string name="sleep_timer">Sleep timer</string>
+    <string name="volume">Volume</string>
 
     <!-- Playlists -->
     <string name="add_file_to_playlist">Dodajte datoteku na popis za reprodukciju</string>

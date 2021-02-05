@@ -18,6 +18,7 @@
     <string name="autoplay_enabled">Автоматическое воспроизведение включено</string>
     <string name="autoplay_disabled">Автоматическое воспроизведение выключено</string>
     <string name="sleep_timer">Таймер сна</string>
+    <string name="volume">Volume</string>
 
     <!-- Playlists -->
     <string name="add_file_to_playlist">Добавить файл в плейлист</string>

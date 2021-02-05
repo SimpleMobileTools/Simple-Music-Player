@@ -18,6 +18,7 @@
     <string name="autoplay_enabled">オートプレイ有効</string>
     <string name="autoplay_disabled">オートプレイ無効</string>
     <string name="sleep_timer">スリープタイマー</string>
+    <string name="volume">Volume</string>
 
     <!-- Playlists -->
     <string name="add_file_to_playlist">プレイリストにファイルを追加</string>
