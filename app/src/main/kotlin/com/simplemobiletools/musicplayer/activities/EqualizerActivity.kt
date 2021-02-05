@@ -79,8 +79,8 @@ class EqualizerActivity : SimpleActivity() {
 
                             val newValue = newProgress + minValue
                             try {
-                                if (equalizer.getBandLevel(band.toShort()) != newValue.toShort()) {
-                                    equalizer.setBandLevel(band.toShort(), newValue.toShort())
+                                if ((MusicService.mEqualizer ?: equalizer).getBandLevel(band.toShort()) != newValue.toShort()) {
+                                    (MusicService.mEqualizer ?: equalizer).setBandLevel(band.toShort(), newValue.toShort())
                                     bands[band.toShort()] = newValue.toInt()
                                 }
                             } catch (e: Exception) {
@@ -151,10 +151,10 @@ class EqualizerActivity : SimpleActivity() {
 
                 bandSeekBars[band].progress = progress!!.toInt()
                 val newValue = progress + minValue
-                equalizer.setBandLevel(band.toShort(), newValue.toShort())
+                (MusicService.mEqualizer ?: equalizer).setBandLevel(band.toShort(), newValue.toShort())
             }
         } else {
-            val presetName = equalizer.getPresetName(presetId.toShort())
+            val presetName = (MusicService.mEqualizer ?: equalizer).getPresetName(presetId.toShort())
             if (presetName.isEmpty()) {
                 config.equalizerPreset = EQUALIZER_PRESET_CUSTOM
                 equalizer_preset.text = getString(R.string.custom)
@@ -162,11 +162,11 @@ class EqualizerActivity : SimpleActivity() {
                 equalizer_preset.text = presetName
             }
 
-            equalizer.usePreset(presetId.toShort())
+            (MusicService.mEqualizer ?: equalizer).usePreset(presetId.toShort())
 
-            val lowestBandLevel = equalizer.bandLevelRange?.get(0)
-            for (band in 0 until equalizer.numberOfBands) {
-                val level = equalizer.getBandLevel(band.toShort()).minus(lowestBandLevel!!)
+            val lowestBandLevel = (MusicService.mEqualizer ?: equalizer).bandLevelRange?.get(0)
+            for (band in 0 until (MusicService.mEqualizer ?: equalizer).numberOfBands) {
+                val level = (MusicService.mEqualizer ?: equalizer).getBandLevel(band.toShort()).minus(lowestBandLevel!!)
                 bandSeekBars[band].progress = level
             }
         }

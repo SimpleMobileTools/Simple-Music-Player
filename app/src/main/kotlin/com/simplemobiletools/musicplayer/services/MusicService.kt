@@ -123,6 +123,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         destroyPlayer()
         SongsDatabase.destroyInstance()
         mMediaSession?.isActive = false
+        mEqualizer?.release()
         mSleepTimer?.cancel()
         config.sleepInTS = 0L
     }
