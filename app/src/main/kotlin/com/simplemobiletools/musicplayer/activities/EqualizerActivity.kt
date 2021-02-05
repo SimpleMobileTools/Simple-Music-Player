@@ -9,6 +9,7 @@ import android.widget.SeekBar
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.simplemobiletools.commons.dialogs.RadioGroupDialog
+import com.simplemobiletools.commons.extensions.showErrorToast
 import com.simplemobiletools.commons.extensions.updateTextColors
 import com.simplemobiletools.commons.models.RadioItem
 import com.simplemobiletools.commons.views.MySeekBar
@@ -40,7 +41,7 @@ class EqualizerActivity : SimpleActivity() {
     @SuppressLint("SetTextI18n")
     private fun initMediaPlayer() {
         val player = MusicService.mPlayer ?: MediaPlayer()
-        val equalizer = Equalizer(0, player.audioSessionId)
+        val equalizer = MusicService.mEqualizer ?: Equalizer(0, player.audioSessionId)
         equalizer.enabled = true
         setupBands(equalizer)
         setupPresets(equalizer)
@@ -73,9 +74,17 @@ class EqualizerActivity : SimpleActivity() {
                 this.equalizer_band_seek_bar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
                     override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
                         if (fromUser) {
-                            val newValue = progress + minValue
-                            equalizer.setBandLevel(band.toShort(), newValue.toShort())
-                            bands[band.toShort()] = newValue
+                            val newProgress = Math.round(progress / 100.0) * 100
+                            this@apply.equalizer_band_seek_bar.progress = newProgress.toInt()
+
+                            val newValue = newProgress + minValue
+                            try {
+                                if (equalizer.getBandLevel(band.toShort()) != newValue.toShort()) {
+                                    equalizer.setBandLevel(band.toShort(), newValue.toShort())
+                                    bands[band.toShort()] = newValue.toInt()
+                                }
+                            } catch (e: Exception) {
+                            }
                         }
                     }
 
@@ -101,7 +110,13 @@ class EqualizerActivity : SimpleActivity() {
     }
 
     private fun setupPresets(equalizer: Equalizer) {
-        presetChanged(config.equalizerPreset, equalizer)
+        try {
+            presetChanged(config.equalizerPreset, equalizer)
+        } catch (e: Exception) {
+            showErrorToast(e)
+            config.equalizerPreset = EQUALIZER_PRESET_CUSTOM
+        }
+
         equalizer_preset.setOnClickListener {
             val items = arrayListOf<RadioItem>()
             (0 until equalizer.numberOfPresets).mapTo(items) {
@@ -110,8 +125,13 @@ class EqualizerActivity : SimpleActivity() {
 
             items.add(RadioItem(EQUALIZER_PRESET_CUSTOM, getString(R.string.custom)))
             RadioGroupDialog(this, items, config.equalizerPreset) { presetId ->
-                config.equalizerPreset = presetId as Int
-                presetChanged(presetId, equalizer)
+                try {
+                    config.equalizerPreset = presetId as Int
+                    presetChanged(presetId, equalizer)
+                } catch (e: Exception) {
+                    showErrorToast(e)
+                    config.equalizerPreset = EQUALIZER_PRESET_CUSTOM
+                }
             }
         }
     }

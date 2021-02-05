@@ -60,6 +60,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         var mCurrTrack: Track? = null
         var mTracks = ArrayList<Track>()
         var mPlayer: MediaPlayer? = null
+        var mEqualizer: Equalizer? = null
         private var mCurrTrackCover: Bitmap? = null
         private var mHeadsetPlugReceiver = HeadsetPlugReceiver()
         private var mProgressHandler = Handler()
@@ -140,6 +141,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             INIT -> handleInit(intent)
             INIT_PATH -> handleInitPath(intent)
             INIT_QUEUE -> handleInitQueue()
+            INIT_EQUALIZER -> setupEqualizer()
             PREVIOUS -> handlePrevious()
             PAUSE -> pauseTrack()
             PLAYPAUSE -> handlePlayPause()
@@ -342,19 +344,29 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     }
 
     private fun setupEqualizer() {
-        val preset = config.equalizerPreset
-        val equalizer = Equalizer(0, mPlayer!!.audioSessionId)
-        equalizer.enabled = true
-        if (preset != EQUALIZER_PRESET_CUSTOM) {
-            equalizer.usePreset(preset.toShort())
-        } else {
-            val minValue = equalizer.bandLevelRange[0]
-            val bandType = object : TypeToken<HashMap<Short, Int>>() {}.type
-            val equalizerBands = Gson().fromJson<HashMap<Short, Int>>(config.equalizerBands, bandType) ?: HashMap()
-            for ((key, value) in equalizerBands) {
-                val newValue = value + minValue
-                equalizer.setBandLevel(key, newValue.toShort())
+        if (mPlayer == null) {
+            return
+        }
+
+        try {
+            val preset = config.equalizerPreset
+            mEqualizer = Equalizer(0, mPlayer!!.audioSessionId)
+            mEqualizer!!.enabled = true
+            if (preset != EQUALIZER_PRESET_CUSTOM) {
+                mEqualizer!!.usePreset(preset.toShort())
+            } else {
+                val minValue = mEqualizer!!.bandLevelRange[0]
+                val bandType = object : TypeToken<HashMap<Short, Int>>() {}.type
+                val equalizerBands = Gson().fromJson<HashMap<Short, Int>>(config.equalizerBands, bandType) ?: HashMap()
+
+                for ((key, value) in equalizerBands) {
+                    val newValue = value + minValue
+                    if (mEqualizer!!.getBandLevel(key) != newValue.toShort()) {
+                        mEqualizer!!.setBandLevel(key, newValue.toShort())
+                    }
+                }
             }
+        } catch (e: Exception) {
         }
     }
 
@@ -546,6 +558,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             requestAudioFocus()
         }
 
+        setupEqualizer()
         trackStateChanged(true)
     }
 
