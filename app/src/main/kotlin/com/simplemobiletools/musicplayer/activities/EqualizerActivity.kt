@@ -29,7 +29,6 @@ class EqualizerActivity : SimpleActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_equalizer)
-        updateTextColors(equalizer_holder)
         initMediaPlayer()
     }
 
@@ -45,6 +44,7 @@ class EqualizerActivity : SimpleActivity() {
         equalizer.enabled = true
         setupBands(equalizer)
         setupPresets(equalizer)
+        updateTextColors(equalizer_holder)
     }
 
     private fun setupBands(equalizer: Equalizer) {
