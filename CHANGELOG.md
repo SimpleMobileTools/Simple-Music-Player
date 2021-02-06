@@ -1,6 +1,13 @@
 Changelog
 ==========
 
+Version 5.5.2 *(2021-02-06)*
+----------------------------
+
+ * Added a White theme with special handling
+ * Added an initial implementation of a more advanced equalizer
+ * Some stability and translation improvements
+
 Version 5.5.1 *(2021-01-04)*
 ----------------------------
 
