@@ -104,7 +104,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         mMediaSession!!.setCallback(object : MediaSessionCompat.Callback() {
             override fun onMediaButtonEvent(mediaButtonEvent: Intent): Boolean {
                 handleMediaButton(mediaButtonEvent)
-                return super.onMediaButtonEvent(mediaButtonEvent)
+                return true
             }
         })
 
@@ -939,7 +939,10 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             val event = mediaButtonEvent.getParcelableExtra<KeyEvent>(Intent.EXTRA_KEY_EVENT)
             if (event.action == KeyEvent.ACTION_UP) {
                 when (event.keyCode) {
-                    KeyEvent.KEYCODE_MEDIA_PLAY, KeyEvent.KEYCODE_MEDIA_PAUSE -> handlePlayPause()
+                    KeyEvent.KEYCODE_MEDIA_PLAY -> resumeTrack()
+                    KeyEvent.KEYCODE_MEDIA_PAUSE -> pauseTrack()
+                    KeyEvent.KEYCODE_MEDIA_STOP -> pauseTrack()
+                    KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE -> handlePlayPause()
                     KeyEvent.KEYCODE_MEDIA_PREVIOUS -> if (swapPrevNext) handleNext() else handlePrevious()
                     KeyEvent.KEYCODE_MEDIA_NEXT -> if (swapPrevNext) handlePrevious() else handleNext()
                     KeyEvent.KEYCODE_HEADSETHOOK -> {
