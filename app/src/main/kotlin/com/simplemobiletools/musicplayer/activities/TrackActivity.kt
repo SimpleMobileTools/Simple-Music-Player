@@ -129,26 +129,6 @@ class TrackActivity : SimpleActivity() {
         }
     }
 
-    private fun setupNextTrackInfo(track: Track?) {
-        val artist = if (track?.artist?.trim()?.isNotEmpty() == true && track.artist != MediaStore.UNKNOWN_STRING) {
-            " • ${track.artist}"
-        } else {
-            ""
-        }
-
-        next_track_label.text = "${getString(R.string.next_track)} ${track?.title}$artist"
-
-        val cornerRadius = resources.getDimension(R.dimen.rounded_corner_radius_small).toInt()
-        val options = RequestOptions()
-            .error(nextTrackPlaceholder)
-            .transform(CenterCrop(), RoundedCorners(cornerRadius))
-
-        Glide.with(this)
-            .load(track?.coverArt)
-            .apply(options)
-            .into(next_track_image)
-    }
-
     private fun setupButtons() {
         activity_track_toggle_shuffle.setOnClickListener { toggleShuffle() }
         activity_track_previous.setOnClickListener { sendIntent(PREVIOUS) }
@@ -163,6 +143,44 @@ class TrackActivity : SimpleActivity() {
 
         arrayOf(activity_track_previous, activity_track_play_pause, activity_track_next).forEach {
             it.applyColorFilter(config.textColor)
+        }
+    }
+
+    private fun setupNextTrackInfo(track: Track?) {
+        val artist = if (track?.artist?.trim()?.isNotEmpty() == true && track.artist != MediaStore.UNKNOWN_STRING) {
+            " • ${track.artist}"
+        } else {
+            ""
+        }
+
+        next_track_label.text = "${getString(R.string.next_track)} ${track?.title}$artist"
+
+        ensureBackgroundThread {
+            val cornerRadius = resources.getDimension(R.dimen.rounded_corner_radius_small).toInt()
+            val wantedSize = resources.getDimension(R.dimen.song_image_size).toInt()
+            val options = RequestOptions()
+                .transform(CenterCrop(), RoundedCorners(cornerRadius))
+
+            try {
+                // change cover image manually only once loaded successfully to avoid blinking at fails and placeholders
+                Glide.with(this)
+                    .load(track?.coverArt)
+                    .apply(options)
+                    .listener(object : RequestListener<Drawable> {
+                        override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
+                            next_track_image.setImageDrawable(nextTrackPlaceholder)
+                            return true
+                        }
+
+                        override fun onResourceReady(resource: Drawable, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
+                            next_track_image.setImageDrawable(resource)
+                            return false
+                        }
+                    })
+                    .into(wantedSize, wantedSize)
+                    .get()
+            } catch (e: Exception) {
+            }
         }
     }
 
