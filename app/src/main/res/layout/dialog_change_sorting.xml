@@ -34,17 +34,17 @@
                 android:id="@+id/sorting_dialog_radio_ascending"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="@dimen/medium_margin"
-                android:paddingBottom="@dimen/medium_margin"
-                android:text="@string/ascending" />
+                android:padding="@dimen/medium_margin"
+                android:text="@string/ascending"
+                android:textSize="@dimen/normal_text_size" />
 
             <com.simplemobiletools.commons.views.MyCompatRadioButton
                 android:id="@+id/sorting_dialog_radio_descending"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="@dimen/medium_margin"
-                android:paddingBottom="@dimen/medium_margin"
-                android:text="@string/descending" />
+                android:padding="@dimen/medium_margin"
+                android:text="@string/descending"
+                android:textSize="@dimen/normal_text_size" />
         </RadioGroup>
     </LinearLayout>
 </ScrollView>
