@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.RelativeLayout
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.MenuItemCompat
 import androidx.viewpager.widget.ViewPager
@@ -235,6 +236,7 @@ class MainActivity : SimpleActivity() {
         current_track_bar.updateColors()
         current_track_bar.updateCurrentTrack(MusicService.mCurrTrack)
         current_track_bar.updateTrackState(MusicService.getIsPlaying())
+        checkSleepTimerPosition()
     }
 
     private fun createNewPlaylist() {
@@ -308,6 +310,7 @@ class MainActivity : SimpleActivity() {
     }
 
     private fun startSleepTimer() {
+        checkSleepTimerPosition()
         sleep_timer_holder.beVisible()
         sendIntent(START_SLEEP_TIMER)
     }
@@ -315,6 +318,14 @@ class MainActivity : SimpleActivity() {
     private fun stopSleepTimer() {
         sendIntent(STOP_SLEEP_TIMER)
         sleep_timer_holder.beGone()
+    }
+
+    private fun checkSleepTimerPosition() {
+        if (current_track_bar.isVisible()) {
+            (sleep_timer_holder.layoutParams as RelativeLayout.LayoutParams).removeRule(RelativeLayout.ALIGN_PARENT_BOTTOM)
+        } else {
+            (sleep_timer_holder.layoutParams as RelativeLayout.LayoutParams).addRule(RelativeLayout.ALIGN_PARENT_BOTTOM)
+        }
     }
 
     private fun getAllFragments() = arrayListOf(artists_fragment_holder, playlists_fragment_holder)
