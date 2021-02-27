@@ -29,18 +29,24 @@ class ArtistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
 
             activity.runOnUiThread {
                 artists_placeholder.beVisibleIf(artists.isEmpty())
-                val adapter = ArtistsAdapter(activity, artists, artists_list, artists_fastscroller) {
-                    Intent(activity, AlbumsActivity::class.java).apply {
-                        putExtra(ARTIST, Gson().toJson(it as Artist))
-                        activity.startActivity(this)
+                val adapter = artists_list.adapter
+                if (adapter == null) {
+                    ArtistsAdapter(activity, artists, artists_list, artists_fastscroller) {
+                        Intent(activity, AlbumsActivity::class.java).apply {
+                            putExtra(ARTIST, Gson().toJson(it as Artist))
+                            activity.startActivity(this)
+                        }
+                    }.apply {
+                        artists_list.adapter = this
                     }
-                }.apply {
-                    artists_list.adapter = this
-                }
 
-                artists_fastscroller.setViews(artists_list) {
-                    val artist = adapter.artists.getOrNull(it)
-                    artists_fastscroller.updateBubbleText(artist?.getBubbleText() ?: "")
+                    artists_list.scheduleLayoutAnimation()
+                    artists_fastscroller.setViews(artists_list) {
+                        val artist = (artists_list.adapter as ArtistsAdapter).artists.getOrNull(it)
+                        artists_fastscroller.updateBubbleText(artist?.getBubbleText() ?: "")
+                    }
+                } else {
+                    (adapter as ArtistsAdapter).updateItems(artists)
                 }
             }
         }

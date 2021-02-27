@@ -38,18 +38,24 @@ class AlbumsFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
 
             activity.runOnUiThread {
                 albums_placeholder.beVisibleIf(albums.isEmpty())
-                val adapter = AlbumsAdapter(activity, albums, albums_list, albums_fastscroller) {
-                    Intent(activity, TracksActivity::class.java).apply {
-                        putExtra(ALBUM, Gson().toJson(it))
-                        activity.startActivity(this)
+                val adapter = albums_list.adapter
+                if (adapter == null) {
+                    AlbumsAdapter(activity, albums, albums_list, albums_fastscroller) {
+                        Intent(activity, TracksActivity::class.java).apply {
+                            putExtra(ALBUM, Gson().toJson(it))
+                            activity.startActivity(this)
+                        }
+                    }.apply {
+                        albums_list.adapter = this
                     }
-                }.apply {
-                    albums_list.adapter = this
-                }
 
-                albums_fastscroller.setViews(albums_list) {
-                    val album = adapter.albums.getOrNull(it)
-                    albums_fastscroller.updateBubbleText(album?.getBubbleText() ?: "")
+                    albums_list.scheduleLayoutAnimation()
+                    albums_fastscroller.setViews(albums_list) {
+                        val album = (albums_list.adapter as AlbumsAdapter).albums.getOrNull(it)
+                        albums_fastscroller.updateBubbleText(album?.getBubbleText() ?: "")
+                    }
+                } else {
+                    (adapter as AlbumsAdapter).updateItems(albums)
                 }
             }
         }

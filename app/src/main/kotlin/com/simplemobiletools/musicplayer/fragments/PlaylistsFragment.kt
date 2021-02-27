@@ -7,7 +7,6 @@ import com.google.gson.Gson
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
 import com.simplemobiletools.commons.extensions.beGoneIf
 import com.simplemobiletools.commons.extensions.beVisibleIf
-import com.simplemobiletools.commons.extensions.getAdjustedPrimaryColor
 import com.simplemobiletools.commons.extensions.underlineText
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
@@ -48,18 +47,24 @@ class PlaylistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPa
             activity.runOnUiThread {
                 playlists_placeholder.beVisibleIf(playlists.isEmpty())
                 playlists_placeholder_2.beVisibleIf(playlists.isEmpty())
-                val adapter = PlaylistsAdapter(activity, playlists, playlists_list, playlists_fastscroller) {
-                    Intent(activity, TracksActivity::class.java).apply {
-                        putExtra(PLAYLIST, Gson().toJson(it))
-                        activity.startActivity(this)
+                val adapter = playlists_list.adapter
+                if (adapter == null) {
+                    PlaylistsAdapter(activity, playlists, playlists_list, playlists_fastscroller) {
+                        Intent(activity, TracksActivity::class.java).apply {
+                            putExtra(PLAYLIST, Gson().toJson(it))
+                            activity.startActivity(this)
+                        }
+                    }.apply {
+                        playlists_list.adapter = this
                     }
-                }.apply {
-                    playlists_list.adapter = this
-                }
 
-                playlists_fastscroller.setViews(playlists_list) {
-                    val playlist = adapter.playlists.getOrNull(it)
-                    playlists_fastscroller.updateBubbleText(playlist?.getBubbleText() ?: "")
+                    playlists_list.scheduleLayoutAnimation()
+                    playlists_fastscroller.setViews(playlists_list) {
+                        val playlist = (playlists_list.adapter as PlaylistsAdapter).playlists.getOrNull(it)
+                        playlists_fastscroller.updateBubbleText(playlist?.getBubbleText() ?: "")
+                    }
+                } else {
+                    (adapter as PlaylistsAdapter).updateItems(playlists)
                 }
             }
         }

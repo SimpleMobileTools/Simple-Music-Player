@@ -55,9 +55,9 @@ class TracksFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
                         }
                     }.apply {
                         tracks_list.adapter = this
-                        tracks_list.scheduleLayoutAnimation()
                     }
 
+                    tracks_list.scheduleLayoutAnimation()
                     tracks_fastscroller.setViews(tracks_list) {
                         val track = (tracks_list.adapter as TracksAdapter).tracks.getOrNull(it)
                         tracks_fastscroller.updateBubbleText(track?.getBubbleText() ?: "")
