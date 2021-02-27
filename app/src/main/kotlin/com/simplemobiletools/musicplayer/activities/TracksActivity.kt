@@ -90,6 +90,7 @@ class TracksActivity : SimpleActivity() {
                 }
 
                 tracks_list.adapter = adapter
+                tracks_list.scheduleLayoutAnimation()
 
                 tracks_fastscroller.setViews(tracks_list) {
                     val listItem = when (adapter) {

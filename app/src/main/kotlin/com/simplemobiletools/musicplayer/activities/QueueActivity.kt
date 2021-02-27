@@ -63,6 +63,7 @@ class QueueActivity : SimpleActivity() {
                 queue_list.adapter = this
             }
 
+            queue_list.scheduleLayoutAnimation()
             queue_fastscroller.setViews(queue_list) {
                 val track = queueAdapter.items.getOrNull(it)
                 queue_fastscroller.updateBubbleText(track?.title ?: "")

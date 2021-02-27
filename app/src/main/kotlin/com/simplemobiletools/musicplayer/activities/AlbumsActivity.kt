@@ -78,6 +78,7 @@ class AlbumsActivity : SimpleActivity() {
                     albums_list.adapter = this
                 }
 
+                albums_list.scheduleLayoutAnimation()
                 albums_fastscroller.setViews(albums_list) {
                     val item = adapter.items.getOrNull(it)
                     if (item is Track) {
