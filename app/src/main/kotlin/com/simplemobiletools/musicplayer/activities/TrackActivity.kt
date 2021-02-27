@@ -53,6 +53,7 @@ class TrackActivity : SimpleActivity() {
         bus = EventBus.getDefault()
         bus!!.register(this)
         setupButtons()
+        setupFlingListener()
 
         (activity_track_appbar.layoutParams as ConstraintLayout.LayoutParams).topMargin = statusBarHeight
         activity_track_holder.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
@@ -95,8 +96,6 @@ class TrackActivity : SimpleActivity() {
         next_track_holder.setOnClickListener {
             startActivity(Intent(applicationContext, QueueActivity::class.java))
         }
-
-        setupFlingListener()
     }
 
     override fun onResume() {
