@@ -1,5 +1,6 @@
 package com.simplemobiletools.musicplayer.activities
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.*
 import android.graphics.drawable.BitmapDrawable
@@ -7,9 +8,12 @@ import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.provider.MediaStore
+import android.view.GestureDetector
+import android.view.MotionEvent
 import android.view.View
 import android.widget.SeekBar
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.GestureDetectorCompat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
@@ -35,6 +39,8 @@ import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
 class TrackActivity : SimpleActivity() {
+    private val SWIPE_DOWN_THRESHOLD = 100
+
     private var isThirdPartyIntent = false
     private var bus: EventBus? = null
     private lateinit var nextTrackPlaceholder: Drawable
@@ -89,6 +95,8 @@ class TrackActivity : SimpleActivity() {
         next_track_holder.setOnClickListener {
             startActivity(Intent(applicationContext, QueueActivity::class.java))
         }
+
+        setupFlingListener()
     }
 
     override fun onResume() {
@@ -220,6 +228,26 @@ class TrackActivity : SimpleActivity() {
                     .get()
             } catch (e: Exception) {
             }
+        }
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    private fun setupFlingListener() {
+        val flingListener = object : GestureDetector.SimpleOnGestureListener() {
+            override fun onFling(e1: MotionEvent, e2: MotionEvent, velocityX: Float, velocityY: Float): Boolean {
+                if (velocityY > 0 && velocityY > velocityX && e2.y - e1.y > SWIPE_DOWN_THRESHOLD) {
+                    finish()
+                    activity_track_top_shadow.animate().alpha(0f).start()
+                    overridePendingTransition(0, R.anim.slide_down)
+                }
+                return super.onFling(e1, e2, velocityX, velocityY)
+            }
+        }
+
+        val gestureDetector = GestureDetectorCompat(this, flingListener)
+        activity_track_holder.setOnTouchListener { v, event ->
+            gestureDetector.onTouchEvent(event)
+            true
         }
     }
 
