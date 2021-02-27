@@ -43,21 +43,27 @@ class TracksFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
 
             activity.runOnUiThread {
                 tracks_placeholder.beVisibleIf(tracks.isEmpty())
-                val adapter = TracksAdapter(activity, tracks, false, tracks_list, tracks_fastscroller) {
-                    activity.resetQueueItems(tracks) {
-                        Intent(activity, TrackActivity::class.java).apply {
-                            putExtra(TRACK, Gson().toJson(it))
-                            putExtra(RESTART_PLAYER, true)
-                            activity.startActivity(this)
+                val adapter = tracks_list.adapter
+                if (adapter == null) {
+                    TracksAdapter(activity, tracks, false, tracks_list, tracks_fastscroller) {
+                        activity.resetQueueItems(tracks) {
+                            Intent(activity, TrackActivity::class.java).apply {
+                                putExtra(TRACK, Gson().toJson(it))
+                                putExtra(RESTART_PLAYER, true)
+                                activity.startActivity(this)
+                            }
                         }
+                    }.apply {
+                        tracks_list.adapter = this
+                        tracks_list.scheduleLayoutAnimation()
                     }
-                }.apply {
-                    tracks_list.adapter = this
-                }
 
-                tracks_fastscroller.setViews(tracks_list) {
-                    val track = adapter.tracks.getOrNull(it)
-                    tracks_fastscroller.updateBubbleText(track?.getBubbleText() ?: "")
+                    tracks_fastscroller.setViews(tracks_list) {
+                        val track = (tracks_list.adapter as TracksAdapter).tracks.getOrNull(it)
+                        tracks_fastscroller.updateBubbleText(track?.getBubbleText() ?: "")
+                    }
+                } else {
+                    (adapter as TracksAdapter).updateItems(tracks)
                 }
             }
 
