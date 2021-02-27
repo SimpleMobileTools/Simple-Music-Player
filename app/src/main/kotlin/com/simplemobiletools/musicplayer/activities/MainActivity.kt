@@ -82,6 +82,11 @@ class MainActivity : SimpleActivity() {
         sleep_timer_stop.applyColorFilter(config.textColor)
         updateCurrentTrackBar()
 
+        main_tabs_holder.apply {
+            setTabTextColors(config.textColor, getAdjustedPrimaryColor())
+            setSelectedTabIndicatorColor(getAdjustedPrimaryColor())
+        }
+
         // equalizer can sometimes reset on app start/resume, no idea why. Lets just wait a bit and reenable it
         Handler().postDelayed({
             sendIntent(INIT_EQUALIZER)
@@ -206,8 +211,6 @@ class MainActivity : SimpleActivity() {
 
         val tabLabels = arrayOf(getString(R.string.playlists), getString(R.string.artists), getString(R.string.albums), getString(R.string.tracks))
         main_tabs_holder.apply {
-            setTabTextColors(config.textColor, getAdjustedPrimaryColor())
-            setSelectedTabIndicatorColor(getAdjustedPrimaryColor())
             removeAllTabs()
 
             for (i in tabLabels.indices) {
@@ -328,7 +331,7 @@ class MainActivity : SimpleActivity() {
         }
     }
 
-    private fun getAllFragments() = arrayListOf(artists_fragment_holder, playlists_fragment_holder)
+    private fun getAllFragments() = arrayListOf(playlists_fragment_holder, artists_fragment_holder, albums_fragment_holder, tracks_fragment_holder)
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun trackChangedEvent(event: Events.TrackChanged) {
