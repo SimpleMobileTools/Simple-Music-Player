@@ -109,9 +109,7 @@ fun Context.getArtistsSync(): ArrayList<Artist> {
 
 private fun fillArtistExtras(context: Context, artist: Artist): Artist {
     val uri = Audio.Albums.EXTERNAL_CONTENT_URI
-    val projection = arrayOf(
-        Audio.Albums._ID)
-
+    val projection = arrayOf(Audio.Albums._ID)
     val selection = "${Audio.Albums.ARTIST_ID} = ?"
     val selectionArgs = arrayOf(artist.id.toString())
 
