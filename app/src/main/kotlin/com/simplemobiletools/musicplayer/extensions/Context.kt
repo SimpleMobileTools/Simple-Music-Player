@@ -115,7 +115,7 @@ private fun fillArtistExtras(context: Context, artist: Artist): Artist {
     val selection = "${Audio.Albums.ARTIST_ID} = ?"
     val selectionArgs = arrayOf(artist.id.toString())
 
-    artist.albumCnt = context.getAlbumsSync(artist).size
+    artist.albumCnt = context.getAlbumsCount(artist)
 
     try {
         val cursor = context.contentResolver.query(uri, projection, selection, selectionArgs, null)
@@ -183,6 +183,29 @@ fun Context.getAlbumsSync(artist: Artist): ArrayList<Album> {
     return albums
 }
 
+fun Context.getAlbumsCount(artist: Artist): Int {
+    val uri = Audio.Albums.EXTERNAL_CONTENT_URI
+    val projection = arrayOf(Audio.Albums._ID)
+    var selection = "${Audio.Albums.ARTIST} = ?"
+    var selectionArgs = arrayOf(artist.title)
+
+    if (isQPlus()) {
+        selection = "${Audio.Albums.ARTIST_ID} = ?"
+        selectionArgs = arrayOf(artist.id.toString())
+    }
+
+    try {
+        val cursor = contentResolver.query(uri, projection, selection, selectionArgs, null)
+        cursor?.use {
+            return cursor.count
+        }
+    } catch (e: Exception) {
+        showErrorToast(e)
+    }
+
+    return 0
+}
+
 fun Context.getAlbumTracksSync(albumId: Long): ArrayList<Track> {
     val tracks = ArrayList<Track>()
     val uri = Audio.Media.EXTERNAL_CONTENT_URI
@@ -226,11 +249,12 @@ fun Context.getAlbumTracksSync(albumId: Long): ArrayList<Track> {
 
 fun Context.getAlbumTracksCount(albumId: Long): Int {
     val uri = Audio.Media.EXTERNAL_CONTENT_URI
+    val projection = arrayOf(Audio.Media._ID)
     val selection = "${Audio.Albums.ALBUM_ID} = ?"
     val selectionArgs = arrayOf(albumId.toString())
 
     try {
-        val cursor = contentResolver.query(uri, null, selection, selectionArgs, null)
+        val cursor = contentResolver.query(uri, projection, selection, selectionArgs, null)
         cursor?.use {
             return cursor.count
         }
