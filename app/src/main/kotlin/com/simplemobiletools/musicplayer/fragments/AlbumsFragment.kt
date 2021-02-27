@@ -53,9 +53,6 @@ class AlbumsFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
                 }
             }
         }
-
-        albums_fastscroller.updatePrimaryColor()
-        albums_fastscroller.updateBubbleColors()
     }
 
     override fun finishActMode() {
@@ -85,5 +82,10 @@ class AlbumsFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
             albums.sort()
             adapter.updateItems(albums, forceUpdate = true)
         }
+    }
+
+    override fun setupColors(textColor: Int, adjustedPrimaryColor: Int) {
+        albums_fastscroller.updatePrimaryColor()
+        albums_fastscroller.updateBubbleColors()
     }
 }

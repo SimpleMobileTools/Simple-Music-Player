@@ -75,9 +75,6 @@ class TracksFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
                 context.config.wereInitialTracksFetched = true
             }
         }
-
-        tracks_fastscroller.updatePrimaryColor()
-        tracks_fastscroller.updateBubbleColors()
     }
 
     override fun finishActMode() {
@@ -107,5 +104,10 @@ class TracksFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
             tracks.sort()
             adapter.updateItems(tracks, forceUpdate = true)
         }
+    }
+
+    override fun setupColors(textColor: Int, adjustedPrimaryColor: Int) {
+        tracks_fastscroller.updatePrimaryColor()
+        tracks_fastscroller.updateBubbleColors()
     }
 }

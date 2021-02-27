@@ -29,8 +29,6 @@ class PlaylistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPa
     private var playlistsIgnoringSearch = ArrayList<Playlist>()
 
     override fun setupFragment(activity: SimpleActivity) {
-        playlists_placeholder.setTextColor(activity.config.textColor)
-        playlists_placeholder_2.setTextColor(activity.getAdjustedPrimaryColor())
         playlists_placeholder_2.underlineText()
         playlists_placeholder_2.setOnClickListener {
             NewPlaylistDialog(activity) {
@@ -65,9 +63,6 @@ class PlaylistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPa
                 }
             }
         }
-
-        playlists_fastscroller.updatePrimaryColor()
-        playlists_fastscroller.updateBubbleColors()
     }
 
     override fun finishActMode() {
@@ -99,5 +94,13 @@ class PlaylistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPa
             playlists.sort()
             adapter.updateItems(playlists, forceUpdate = true)
         }
+    }
+
+    override fun setupColors(textColor: Int, adjustedPrimaryColor: Int) {
+        playlists_placeholder.setTextColor(textColor)
+        playlists_placeholder_2.setTextColor(adjustedPrimaryColor)
+
+        playlists_fastscroller.updatePrimaryColor()
+        playlists_fastscroller.updateBubbleColors()
     }
 }

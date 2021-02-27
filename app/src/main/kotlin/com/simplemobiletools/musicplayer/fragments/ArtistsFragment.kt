@@ -44,9 +44,6 @@ class ArtistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
                 }
             }
         }
-
-        artists_fastscroller.updatePrimaryColor()
-        artists_fastscroller.updateBubbleColors()
     }
 
     override fun finishActMode() {
@@ -76,5 +73,10 @@ class ArtistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
             artists.sort()
             adapter.updateItems(artists, forceUpdate = true)
         }
+    }
+
+    override fun setupColors(textColor: Int, adjustedPrimaryColor: Int) {
+        artists_fastscroller.updatePrimaryColor()
+        artists_fastscroller.updateBubbleColors()
     }
 }

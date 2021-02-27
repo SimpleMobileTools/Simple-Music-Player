@@ -82,9 +82,14 @@ class MainActivity : SimpleActivity() {
         sleep_timer_stop.applyColorFilter(config.textColor)
         updateCurrentTrackBar()
 
+        val adjustedPrimaryColor = getAdjustedPrimaryColor()
         main_tabs_holder.apply {
-            setTabTextColors(config.textColor, getAdjustedPrimaryColor())
-            setSelectedTabIndicatorColor(getAdjustedPrimaryColor())
+            setTabTextColors(config.textColor, adjustedPrimaryColor)
+            setSelectedTabIndicatorColor(adjustedPrimaryColor)
+        }
+
+        getAllFragments().forEach {
+            it?.setupColors(config.textColor, adjustedPrimaryColor)
         }
 
         // equalizer can sometimes reset on app start/resume, no idea why. Lets just wait a bit and reenable it

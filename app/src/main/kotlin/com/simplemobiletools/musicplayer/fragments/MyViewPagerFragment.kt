@@ -17,4 +17,6 @@ abstract class MyViewPagerFragment(context: Context, attributeSet: AttributeSet)
     abstract fun onSearchClosed()
 
     abstract fun onSortOpen(activity: SimpleActivity)
+
+    abstract fun setupColors(textColor: Int, adjustedPrimaryColor: Int)
 }
