@@ -127,7 +127,7 @@ private fun fillArtistExtras(context: Context, artist: Artist): Artist {
                         artist.albumArtId = albumId
                     }
 
-                    artist.trackCnt += context.getAlbumTracksSync(albumId).size
+                    artist.trackCnt += context.getAlbumTracksCount(albumId)
                 } while (cursor.moveToNext())
             }
         }
@@ -222,6 +222,23 @@ fun Context.getAlbumTracksSync(albumId: Long): ArrayList<Track> {
     }
 
     return tracks
+}
+
+fun Context.getAlbumTracksCount(albumId: Long): Int {
+    val uri = Audio.Media.EXTERNAL_CONTENT_URI
+    val selection = "${Audio.Albums.ALBUM_ID} = ?"
+    val selectionArgs = arrayOf(albumId.toString())
+
+    try {
+        val cursor = contentResolver.query(uri, null, selection, selectionArgs, null)
+        cursor?.use {
+            return cursor.count
+        }
+    } catch (e: Exception) {
+        showErrorToast(e)
+    }
+
+    return 0
 }
 
 fun Context.resetQueueItems(newTracks: List<Track>, callback: () -> Unit) {
