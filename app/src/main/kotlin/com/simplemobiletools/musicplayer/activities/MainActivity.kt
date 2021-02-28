@@ -94,7 +94,9 @@ class MainActivity : SimpleActivity() {
 
         // equalizer can sometimes reset on app start/resume, no idea why. Lets just wait a bit and reenable it
         Handler().postDelayed({
-            sendIntent(INIT_EQUALIZER)
+            if (MusicService.mPlayer != null && MusicService.mCurrTrack != null) {
+                sendIntent(INIT_EQUALIZER)
+            }
         }, 2000)
     }
 
