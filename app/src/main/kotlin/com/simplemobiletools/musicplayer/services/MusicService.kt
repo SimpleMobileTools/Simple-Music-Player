@@ -134,7 +134,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         }
 
         val action = intent.action
-        if (isOreoPlus() && action != NEXT && action != PREVIOUS && action != PLAYPAUSE) {
+        if (isOreoPlus() && action != NEXT && action != PREVIOUS && action != PLAYPAUSE && action != INIT_EQUALIZER) {
             setupFakeNotification()
         }
 
@@ -162,7 +162,11 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         }
 
         MediaButtonReceiver.handleIntent(mMediaSession!!, intent)
-        setupNotification()
+
+        if (action != INIT_EQUALIZER) {
+            setupNotification()
+        }
+
         return START_NOT_STICKY
     }
 
