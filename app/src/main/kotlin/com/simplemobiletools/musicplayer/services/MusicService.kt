@@ -216,13 +216,14 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             val unsortedTracks = getQueuedTracks()
 
             mTracks.clear()
-            queueDAO.getAll().forEach { queueItem ->
+            val queuedItems = queueDAO.getAll()
+            queuedItems.forEach { queueItem ->
                 unsortedTracks.firstOrNull { it.mediaStoreId == queueItem.trackId }?.apply {
                     mTracks.add(this)
                 }
             }
 
-            val currentQueueItem = queueDAO.getAll().firstOrNull { it.isCurrent }
+            val currentQueueItem = queuedItems.firstOrNull { it.isCurrent } ?: queuedItems.firstOrNull()
             if (currentQueueItem != null) {
                 mCurrTrack = mTracks.firstOrNull { it.mediaStoreId == currentQueueItem.trackId } ?: return@ensureBackgroundThread
                 mPlayOnPrepare = false
