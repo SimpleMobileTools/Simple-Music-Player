@@ -47,6 +47,7 @@ import com.simplemobiletools.musicplayer.receivers.HeadsetPlugReceiver
 import com.simplemobiletools.musicplayer.receivers.NotificationDismissedReceiver
 import org.greenrobot.eventbus.EventBus
 import java.io.File
+import java.io.IOException
 import java.util.*
 
 class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnErrorListener, MediaPlayer.OnCompletionListener, OnAudioFocusChangeListener {
@@ -601,7 +602,6 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         }
 
         initMediaPlayerIfNeeded()
-
         mPlayer?.reset() ?: return
         mCurrTrack = mTracks.firstOrNull { it.mediaStoreId == wantedTrackId } ?: return
 
@@ -614,6 +614,14 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             mPlayer!!.setDataSource(applicationContext, trackUri)
             mPlayer!!.prepareAsync()
             trackChanged()
+        } catch (e: IOException) {
+            if (mCurrTrack != null) {
+                val trackToDelete = mCurrTrack
+                ensureBackgroundThread {
+                    tracksDAO.removeTrack(trackToDelete!!.mediaStoreId)
+                }
+            }
+            setupNextTrack()
         } catch (ignored: Exception) {
         }
     }
