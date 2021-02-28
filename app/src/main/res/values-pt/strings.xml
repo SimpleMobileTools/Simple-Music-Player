@@ -48,13 +48,13 @@
     <string name="show_album_cover">Mostrar imagem do álbum no ecrã principal</string>
     <string name="all_tracks">Todas as faixas</string>
     <string name="add_to_playlist">Adicionar à lista de reprodução</string>
-    <string name="create_playlist_label">Pode criar listas de reprodução com em Menu -> Adiiconar à lista de reprodução.</string>
+    <string name="create_playlist_label">Pode criar listas de reprodução em Menu -> Adicionar à lista de reprodução.</string>
 
     <!-- Sorting -->
     <string name="track_count">Número de faixas</string>
     <string name="album_count">Número de álbuns</string>
     <string name="artist_name">Nome do artista</string>
-    <string name="year">ano</string>
+    <string name="year">Ano</string>
 
     <!-- Artists -->
     <string name="artists">Artistas</string>
