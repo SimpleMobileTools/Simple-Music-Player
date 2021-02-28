@@ -319,13 +319,13 @@ class MainActivity : SimpleActivity() {
 
     private fun startSleepTimer() {
         checkSleepTimerPosition()
-        sleep_timer_holder.beVisible()
+        sleep_timer_holder.fadeIn()
         sendIntent(START_SLEEP_TIMER)
     }
 
     private fun stopSleepTimer() {
         sendIntent(STOP_SLEEP_TIMER)
-        sleep_timer_holder.beGone()
+        sleep_timer_holder.fadeOut()
     }
 
     private fun checkSleepTimerPosition() {

@@ -25,6 +25,7 @@ import com.bumptech.glide.request.target.Target
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.simplemobiletools.commons.extensions.*
+import com.simplemobiletools.commons.helpers.MEDIUM_ALPHA
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.extensions.config
@@ -262,7 +263,7 @@ class TrackActivity : SimpleActivity() {
         val isShuffleEnabled = config.isShuffleEnabled
         activity_track_toggle_shuffle.apply {
             applyColorFilter(if (isShuffleEnabled) getAdjustedPrimaryColor() else config.textColor)
-            alpha = if (isShuffleEnabled) 1f else LOWER_ALPHA
+            alpha = if (isShuffleEnabled) 1f else MEDIUM_ALPHA
             contentDescription = getString(if (isShuffleEnabled) R.string.disable_shuffle else R.string.enable_shuffle)
         }
     }
@@ -278,7 +279,7 @@ class TrackActivity : SimpleActivity() {
         val repeatTrack = config.repeatTrack
         activity_track_repeat.apply {
             applyColorFilter(if (repeatTrack) getAdjustedPrimaryColor() else config.textColor)
-            alpha = if (repeatTrack) 1f else LOWER_ALPHA
+            alpha = if (repeatTrack) 1f else MEDIUM_ALPHA
             contentDescription = getString(if (repeatTrack) R.string.disable_song_repetition else R.string.enable_song_repetition)
         }
     }

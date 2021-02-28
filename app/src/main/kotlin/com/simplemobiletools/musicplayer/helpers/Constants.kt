@@ -59,8 +59,6 @@ const val SLEEP_IN_TS = "sleep_in_ts"
 const val EQUALIZER_PRESET = "EQUALIZER_PRESET"
 const val EQUALIZER_BANDS = "EQUALIZER_BANDS"
 
-const val LOWER_ALPHA = 0.5f
-
 const val SHOW_FILENAME_NEVER = 1
 const val SHOW_FILENAME_IF_UNAVAILABLE = 2
 const val SHOW_FILENAME_ALWAYS = 3
