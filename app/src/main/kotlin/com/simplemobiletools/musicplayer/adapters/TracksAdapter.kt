@@ -1,5 +1,7 @@
 package com.simplemobiletools.musicplayer.adapters
 
+import android.content.ContentUris
+import android.provider.MediaStore
 import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
@@ -98,11 +100,18 @@ class TracksAdapter(activity: SimpleActivity, var tracks: ArrayList<Track>, val 
 
     private fun showProperties() {
         val selectedTracks = getSelectedTracks()
-        if (selectedTracks.size <= 1) {
-            PropertiesDialog(activity, selectedTracks.first().path, false)
+        val selectedPaths = selectedTracks.map { track ->
+            if (track.path.isNotEmpty()) {
+                track.path
+            } else {
+                ContentUris.withAppendedId(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, track.mediaStoreId).toString()
+            }
+        }
+
+        if (selectedPaths.size <= 1) {
+            PropertiesDialog(activity, selectedPaths.first(), false)
         } else {
-            val paths = selectedTracks.map { it.path }
-            PropertiesDialog(activity, paths, false)
+            PropertiesDialog(activity, selectedPaths, false)
         }
     }
 
