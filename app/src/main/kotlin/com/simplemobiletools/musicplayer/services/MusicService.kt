@@ -680,6 +680,13 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             EventBus.getDefault().post(Events.TrackChanged(mCurrTrack))
             broadcastNextTrackChange()
         }
+
+        ensureBackgroundThread {
+            if (mCurrTrack != null) {
+                queueDAO.resetCurrent()
+                queueDAO.saveCurrentTrack(mCurrTrack!!.mediaStoreId, 0)
+            }
+        }
     }
 
     private fun broadcastTrackStateChange(isPlaying: Boolean) {
