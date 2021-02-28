@@ -9,6 +9,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
 import com.simplemobiletools.commons.dialogs.ConfirmationDialog
+import com.simplemobiletools.commons.dialogs.PropertiesDialog
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.commons.views.FastScroller
@@ -64,6 +65,7 @@ class TracksAdapter(activity: SimpleActivity, var tracks: ArrayList<Track>, val 
         when (id) {
             R.id.cab_add_to_playlist -> addToPlaylist()
             R.id.cab_add_to_queue -> addToQueue()
+            R.id.cab_properties -> showProperties()
             R.id.cab_remove_from_playlist -> removeFromPlaylist()
             R.id.cab_delete -> askConfirmDelete()
         }
@@ -91,6 +93,16 @@ class TracksAdapter(activity: SimpleActivity, var tracks: ArrayList<Track>, val 
     private fun addToQueue() {
         activity.addTracksToQueue(getSelectedTracks()) {
             finishActMode()
+        }
+    }
+
+    private fun showProperties() {
+        val selectedTracks = getSelectedTracks()
+        if (selectedTracks.size <= 1) {
+            PropertiesDialog(activity, selectedTracks.first().path, false)
+        } else {
+            val paths = selectedTracks.map { it.path }
+            PropertiesDialog(activity, paths, false)
         }
     }
 

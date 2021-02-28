@@ -210,6 +210,7 @@ fun Context.getAlbumTracksSync(albumId: Long): ArrayList<Track> {
     val projection = arrayOf(
         Audio.Media._ID,
         Audio.Media.DURATION,
+        Audio.Media.DATA,
         Audio.Media.TITLE,
         Audio.Media.ARTIST,
         Audio.Media.ALBUM,
@@ -230,7 +231,7 @@ fun Context.getAlbumTracksSync(albumId: Long): ArrayList<Track> {
                     val title = cursor.getStringValue(Audio.Media.TITLE)
                     val duration = cursor.getIntValue(Audio.Media.DURATION) / 1000
                     val trackId = cursor.getIntValue(Audio.Media.TRACK) % 1000
-                    val path = ""
+                    val path = cursor.getStringValue(Audio.Media.DATA)
                     val artist = cursor.getStringValue(Audio.Media.ARTIST) ?: MediaStore.UNKNOWN_STRING
                     val album = cursor.getStringValue(Audio.Media.ALBUM)
                     val track = Track(0, id, title, artist, path, duration, album, coverArt, 0, trackId)

@@ -12,6 +12,11 @@
         android:title="@string/delete"
         app:showAsAction="ifRoom" />
     <item
+        android:id="@+id/cab_properties"
+        android:icon="@drawable/ic_info"
+        android:title="@string/properties"
+        app:showAsAction="ifRoom"/>
+    <item
         android:id="@+id/cab_add_to_playlist"
         android:title="@string/add_to_playlist"
         app:showAsAction="never" />
