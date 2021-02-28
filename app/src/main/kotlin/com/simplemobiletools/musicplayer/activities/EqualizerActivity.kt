@@ -42,7 +42,9 @@ class EqualizerActivity : SimpleActivity() {
         val player = MusicService.mPlayer ?: MediaPlayer()
         val equalizer = MusicService.mEqualizer ?: Equalizer(0, player.audioSessionId)
         try {
-            equalizer.enabled = true
+            if (!equalizer.enabled) {
+                equalizer.enabled = true
+            }
         } catch (e: IllegalStateException) {
         }
 

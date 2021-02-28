@@ -353,7 +353,10 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         try {
             val preset = config.equalizerPreset
             mEqualizer = Equalizer(0, mPlayer!!.audioSessionId)
-            mEqualizer!!.enabled = true
+            if (!mEqualizer!!.enabled) {
+                mEqualizer!!.enabled = true
+            }
+
             if (preset != EQUALIZER_PRESET_CUSTOM) {
                 mEqualizer!!.usePreset(preset.toShort())
             } else {
