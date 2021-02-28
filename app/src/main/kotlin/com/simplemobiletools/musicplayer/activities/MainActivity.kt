@@ -6,7 +6,6 @@ import android.content.Intent
 import android.graphics.drawable.ColorDrawable
 import android.media.AudioManager
 import android.os.Bundle
-import android.os.Handler
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.RelativeLayout
@@ -30,7 +29,6 @@ import com.simplemobiletools.musicplayer.dialogs.NewPlaylistDialog
 import com.simplemobiletools.musicplayer.dialogs.SleepTimerCustomDialog
 import com.simplemobiletools.musicplayer.extensions.*
 import com.simplemobiletools.musicplayer.fragments.MyViewPagerFragment
-import com.simplemobiletools.musicplayer.helpers.INIT_EQUALIZER
 import com.simplemobiletools.musicplayer.helpers.INIT_QUEUE
 import com.simplemobiletools.musicplayer.helpers.START_SLEEP_TIMER
 import com.simplemobiletools.musicplayer.helpers.STOP_SLEEP_TIMER
@@ -63,7 +61,6 @@ class MainActivity : SimpleActivity() {
         handlePermission(PERMISSION_WRITE_STORAGE) {
             if (it) {
                 initActivity()
-                sendIntent(INIT_EQUALIZER)
             } else {
                 toast(R.string.no_storage_permissions)
                 finish()
@@ -91,13 +88,6 @@ class MainActivity : SimpleActivity() {
         getAllFragments().forEach {
             it?.setupColors(config.textColor, adjustedPrimaryColor)
         }
-
-        // equalizer can sometimes reset on app start/resume, no idea why. Lets just wait a bit and reenable it
-        Handler().postDelayed({
-            if (MusicService.mPlayer != null && MusicService.mCurrTrack != null) {
-                sendIntent(INIT_EQUALIZER)
-            }
-        }, 2000)
     }
 
     override fun onDestroy() {

@@ -138,7 +138,6 @@
                 <action android:name="com.simplemobiletools.musicplayer.action.INIT"/>
                 <action android:name="com.simplemobiletools.musicplayer.action.INIT_PATH"/>
                 <action android:name="com.simplemobiletools.musicplayer.action.INIT_QUEUE"/>
-                <action android:name="com.simplemobiletools.musicplayer.action.INIT_EQUALIZER"/>
                 <action android:name="com.simplemobiletools.musicplayer.action.FINISH"/>
                 <action android:name="com.simplemobiletools.musicplayer.action.FINISH_IF_NOT_PLAYING"/>
                 <action android:name="com.simplemobiletools.musicplayer.action.PREVIOUS"/>
