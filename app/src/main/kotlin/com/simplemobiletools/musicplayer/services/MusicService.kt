@@ -895,8 +895,10 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         if (isPlaying) {
             mProgressHandler.post(object : Runnable {
                 override fun run() {
-                    val secs = mPlayer!!.currentPosition / 1000
-                    broadcastTrackProgress(secs)
+                    if (mPlayer?.isPlaying == true) {
+                        val secs = mPlayer!!.currentPosition / 1000
+                        broadcastTrackProgress(secs)
+                    }
                     mProgressHandler.removeCallbacksAndMessages(null)
                     mProgressHandler.postDelayed(this, PROGRESS_UPDATE_INTERVAL)
                 }
