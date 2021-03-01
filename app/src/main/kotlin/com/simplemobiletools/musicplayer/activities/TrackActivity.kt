@@ -120,6 +120,16 @@ class TrackActivity : SimpleActivity() {
         activity_track_title.text = track.title
         activity_track_artist.text = track.artist
 
+        activity_track_title.setOnLongClickListener {
+            copyToClipboard(activity_track_title.value)
+            true
+        }
+
+        activity_track_artist.setOnLongClickListener {
+            copyToClipboard(activity_track_artist.value)
+            true
+        }
+
         activity_track_progressbar.max = track.duration
         activity_track_progress_max.text = track.duration.getFormattedDuration()
     }
