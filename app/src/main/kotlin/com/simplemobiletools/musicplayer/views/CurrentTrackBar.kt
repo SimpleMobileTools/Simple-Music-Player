@@ -1,15 +1,21 @@
 package com.simplemobiletools.musicplayer.views
 
 import android.content.Context
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffColorFilter
 import android.graphics.drawable.ColorDrawable
 import android.provider.MediaStore
 import android.util.AttributeSet
 import android.widget.RelativeLayout
+import com.airbnb.lottie.LottieProperty
+import com.airbnb.lottie.model.KeyPath
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
-import com.simplemobiletools.commons.extensions.*
+import com.simplemobiletools.commons.extensions.fadeIn
+import com.simplemobiletools.commons.extensions.fadeOut
+import com.simplemobiletools.commons.extensions.getColoredDrawableWithColor
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.extensions.sendIntent
@@ -54,8 +60,22 @@ class CurrentTrackBar(context: Context, attributeSet: AttributeSet) : RelativeLa
     }
 
     fun updateTrackState(isPlaying: Boolean) {
-        val drawableId = if (isPlaying) R.drawable.ic_pause_vector else R.drawable.ic_play_vector
-        val drawable = context.resources.getColoredDrawableWithColor(drawableId, context.config.textColor)
-        current_track_play_pause.setImageDrawable(drawable)
+        val wasNull = current_track_play_pause.tag == null
+        if (current_track_play_pause.tag != isPlaying) {
+            current_track_play_pause.speed = if (isPlaying) 2.5f else -2.5f
+
+            if (wasNull) {
+                current_track_play_pause.progress = if (isPlaying) 1f else 0f
+            } else {
+                current_track_play_pause.playAnimation()
+            }
+
+            current_track_play_pause.addValueCallback(
+                KeyPath("**"),
+                LottieProperty.COLOR_FILTER,
+                { PorterDuffColorFilter(context.config.textColor, PorterDuff.Mode.SRC_IN) }
+            )
+            current_track_play_pause.tag = isPlaying
+        }
     }
 }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.simplemobiletools.musicplayer.views.CurrentTrackBar xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/current_track_bar"
     android:layout_width="match_parent"
@@ -37,17 +38,20 @@
         android:textSize="@dimen/bigger_text_size"
         tools:text="My Track" />
 
-    <ImageView
+    <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/current_track_play_pause"
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/smaller_icon_size"
         android:layout_height="match_parent"
         android:layout_alignTop="@+id/current_track_image"
         android:layout_alignBottom="@+id/current_track_image"
         android:layout_alignParentEnd="true"
-        android:layout_marginEnd="@dimen/medium_margin"
+        android:layout_marginEnd="@dimen/normal_margin"
         android:background="?attr/selectableItemBackgroundBorderless"
-        android:paddingStart="@dimen/medium_margin"
-        android:paddingEnd="@dimen/medium_margin"
-        android:src="@drawable/ic_pause_vector" />
+        android:paddingStart="@dimen/smaller_margin"
+        android:paddingEnd="@dimen/smaller_margin"
+        android:scaleType="fitCenter"
+        app:lottie_autoPlay="false"
+        app:lottie_loop="false"
+        app:lottie_rawRes="@raw/playpause" />
 
 </com.simplemobiletools.musicplayer.views.CurrentTrackBar>
