@@ -1,14 +1,10 @@
 package com.simplemobiletools.musicplayer.views
 
 import android.content.Context
-import android.graphics.PorterDuff
-import android.graphics.PorterDuffColorFilter
 import android.graphics.drawable.ColorDrawable
 import android.provider.MediaStore
 import android.util.AttributeSet
 import android.widget.RelativeLayout
-import com.airbnb.lottie.LottieProperty
-import com.airbnb.lottie.model.KeyPath
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
@@ -19,6 +15,7 @@ import com.simplemobiletools.commons.extensions.getColoredDrawableWithColor
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.extensions.sendIntent
+import com.simplemobiletools.musicplayer.extensions.updatePlayPauseIcon
 import com.simplemobiletools.musicplayer.helpers.PLAYPAUSE
 import com.simplemobiletools.musicplayer.models.Track
 import kotlinx.android.synthetic.main.view_current_track_bar.view.*
@@ -60,22 +57,6 @@ class CurrentTrackBar(context: Context, attributeSet: AttributeSet) : RelativeLa
     }
 
     fun updateTrackState(isPlaying: Boolean) {
-        val wasNull = current_track_play_pause.tag == null
-        if (current_track_play_pause.tag != isPlaying) {
-            current_track_play_pause.speed = if (isPlaying) 2.5f else -2.5f
-
-            if (wasNull) {
-                current_track_play_pause.progress = if (isPlaying) 1f else 0f
-            } else {
-                current_track_play_pause.playAnimation()
-            }
-
-            current_track_play_pause.addValueCallback(
-                KeyPath("**"),
-                LottieProperty.COLOR_FILTER,
-                { PorterDuffColorFilter(context.config.textColor, PorterDuff.Mode.SRC_IN) }
-            )
-            current_track_play_pause.tag = isPlaying
-        }
+        current_track_play_pause.updatePlayPauseIcon(isPlaying, context.config.textColor)
     }
 }

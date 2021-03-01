@@ -14,8 +14,6 @@ import android.view.View
 import android.widget.SeekBar
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.GestureDetectorCompat
-import com.airbnb.lottie.LottieProperty
-import com.airbnb.lottie.model.KeyPath
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
@@ -32,6 +30,7 @@ import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.extensions.sendIntent
+import com.simplemobiletools.musicplayer.extensions.updatePlayPauseIcon
 import com.simplemobiletools.musicplayer.helpers.*
 import com.simplemobiletools.musicplayer.models.Events
 import com.simplemobiletools.musicplayer.models.Track
@@ -328,23 +327,7 @@ class TrackActivity : SimpleActivity() {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun trackStateChanged(event: Events.TrackStateChanged) {
-        val wasNull = activity_track_play_pause.tag == null
-        if (activity_track_play_pause.tag != event.isPlaying) {
-            activity_track_play_pause.speed = if (event.isPlaying) 2.5f else -2.5f
-
-            if (wasNull) {
-                activity_track_play_pause.progress = if (event.isPlaying) 1f else 0f
-            } else {
-                activity_track_play_pause.playAnimation()
-            }
-
-            activity_track_play_pause.addValueCallback(
-                KeyPath("**"),
-                LottieProperty.COLOR_FILTER,
-                { PorterDuffColorFilter(config.textColor, PorterDuff.Mode.SRC_IN) }
-            )
-            activity_track_play_pause.tag = event.isPlaying
-        }
+        activity_track_play_pause.updatePlayPauseIcon(event.isPlaying, config.textColor)
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
