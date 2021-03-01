@@ -86,6 +86,7 @@ class TrackActivity : SimpleActivity() {
                 action = INIT
                 try {
                     startService(this)
+                    activity_track_play_pause.updatePlayPauseIcon(true, config.textColor)
                 } catch (e: Exception) {
                     showErrorToast(e)
                 }
