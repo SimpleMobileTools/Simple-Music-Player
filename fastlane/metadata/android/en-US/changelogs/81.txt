@@ -1,0 +1,6 @@
+ * Allow viewing selected file properties
+ * Allow selecting an accent color at Black & White theme too
+ * Allow copying the currently playing artist and title by long pressing
+ * Fixed some glitches with the music player getting stuck
+ * Fixed some issues with headset clicks not being recognized
+ * Many UI, performance, stability and translation improvements
