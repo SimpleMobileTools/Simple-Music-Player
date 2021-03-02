@@ -188,7 +188,9 @@ class TrackActivity : SimpleActivity() {
                     .apply(options)
                     .listener(object : RequestListener<Drawable> {
                         override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
-                            next_track_image.setImageDrawable(nextTrackPlaceholder)
+                            runOnUiThread {
+                                next_track_image.setImageDrawable(nextTrackPlaceholder)
+                            }
                             return true
                         }
 
