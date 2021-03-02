@@ -68,6 +68,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         private var mSleepTimer: CountDownTimer? = null
         private var mAudioManager: AudioManager? = null
         private var mCoverArtHeight = 0
+        private var mRetriedTrackCount = 0
         private var mOreoFocusHandler: OreoAudioFocusHandler? = null
 
         private var mWasPlayingAtFocusLost = false
@@ -621,7 +622,11 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
                     tracksDAO.removeTrack(trackToDelete!!.mediaStoreId)
                 }
             }
-            setupNextTrack()
+
+            if (mRetriedTrackCount < 3) {
+                mRetriedTrackCount++
+                setupNextTrack()
+            }
         } catch (ignored: Exception) {
         }
     }
@@ -659,6 +664,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     }
 
     override fun onPrepared(mp: MediaPlayer) {
+        mRetriedTrackCount = 0
         if (mPlayOnPrepare) {
             mp.start()
             requestAudioFocus()
