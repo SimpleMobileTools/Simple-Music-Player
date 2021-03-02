@@ -693,8 +693,8 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         }
 
         ensureBackgroundThread {
+            queueDAO.resetCurrent()
             if (mCurrTrack != null) {
-                queueDAO.resetCurrent()
                 queueDAO.saveCurrentTrack(mCurrTrack!!.mediaStoreId, 0)
             }
         }
