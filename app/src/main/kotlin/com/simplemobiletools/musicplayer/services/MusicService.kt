@@ -123,12 +123,12 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     override fun onDestroy() {
         super.onDestroy()
         destroyPlayer()
-        SongsDatabase.destroyInstance()
         mMediaSession?.isActive = false
         mEqualizer?.release()
         mEqualizer = null
         mSleepTimer?.cancel()
         config.sleepInTS = 0L
+        SongsDatabase.destroyInstance()
     }
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
@@ -700,7 +700,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
         ensureBackgroundThread {
             queueDAO.resetCurrent()
-            if (mCurrTrack != null) {
+            if (mCurrTrack != null && mPlayer != null) {
                 queueDAO.saveCurrentTrack(mCurrTrack!!.mediaStoreId, 0)
             }
         }
