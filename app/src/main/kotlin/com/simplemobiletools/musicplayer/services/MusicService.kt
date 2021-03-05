@@ -63,6 +63,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         var mPlayer: MediaPlayer? = null
         var mEqualizer: Equalizer? = null
         private var mCurrTrackCover: Bitmap? = null
+        private var mHeadsetPlaceholder: Bitmap? = null
         private var mHeadsetPlugReceiver = HeadsetPlugReceiver()
         private var mProgressHandler = Handler()
         private var mSleepTimer: CountDownTimer? = null
@@ -787,7 +788,11 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             }
         }
 
-        return Pair(resources.getColoredBitmap(R.drawable.ic_headset, config.textColor), false)
+        if (mHeadsetPlaceholder == null) {
+            mHeadsetPlaceholder = resources.getColoredBitmap(R.drawable.ic_headset, config.textColor)
+        }
+
+        return Pair(mHeadsetPlaceholder!!, false)
     }
 
     private fun destroyPlayer() {
