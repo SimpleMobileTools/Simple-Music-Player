@@ -325,7 +325,7 @@ class TrackActivity : SimpleActivity(), PlaybackSpeedListener {
 
     private fun showPlaybackSpeedPicker() {
         val fragment = PlaybackSpeedFragment()
-        fragment.show(supportFragmentManager, fragment::class.java.simpleName)
+        fragment.show(supportFragmentManager, PlaybackSpeedFragment::class.java.simpleName)
         fragment.setListener(this)
     }
 

@@ -9,8 +9,11 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.simplemobiletools.commons.extensions.applyColorFilter
 import com.simplemobiletools.commons.extensions.onSeekBarChangeListener
 import com.simplemobiletools.commons.extensions.updateTextColors
+import com.simplemobiletools.commons.views.MySeekBar
+import com.simplemobiletools.commons.views.MyTextView
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.extensions.config
+import com.simplemobiletools.musicplayer.helpers.Config
 import com.simplemobiletools.musicplayer.interfaces.PlaybackSpeedListener
 import kotlinx.android.synthetic.main.fragment_playback_speed.view.*
 
@@ -32,43 +35,48 @@ class PlaybackSpeedFragment : BottomSheetDialogFragment() {
             context!!.updateTextColors(playback_speed_holder)
             playback_speed_slow.applyColorFilter(config.textColor)
             playback_speed_fast.applyColorFilter(config.textColor)
-
-            val formattedValue = formatPlaybackSpeed(config.playbackSpeed)
-            playback_speed_label.text = "${formattedValue}x"
-
-            val maxProgress = (MAX_PLAYBACK_SPEED * 100 + MIN_PLAYBACK_SPEED * 100).toInt()
-            val halfProgress = maxProgress / 2
-            playback_speed_seekbar.max = maxProgress
-
-            val playbackSpeedProgress = config.playbackSpeedProgress
-            if (playbackSpeedProgress == -1) {
-                config.playbackSpeedProgress = halfProgress
-            }
-            playback_speed_seekbar.progress = config.playbackSpeedProgress
-
-            var lastUpdatedProgress = config.playbackSpeedProgress
-            var lastUpdatedFormattedValue = formattedValue
-
-            playback_speed_seekbar.onSeekBarChangeListener { progress ->
-                val playbackSpeed = getPlaybackSpeed(progress, halfProgress)
-
-                val stepMultiplier = 1 / STEP
-                val rounded = Math.round(playbackSpeed * stepMultiplier) / stepMultiplier
-                if (rounded.toString() != lastUpdatedFormattedValue) {
-                    lastUpdatedProgress = progress
-                    lastUpdatedFormattedValue = rounded.toString()
-                    config.playbackSpeed = rounded
-                    config.playbackSpeedProgress = progress
-
-                    playback_speed_label.text = "${formatPlaybackSpeed(rounded)}x"
-                    listener?.updatePlaybackSpeed(rounded)
-                } else {
-                    playback_speed_seekbar.progress = lastUpdatedProgress
-                }
-            }
+            playback_speed_slow.setOnClickListener { reduceSpeed() }
+            playback_speed_fast.setOnClickListener { increaseSpeed() }
+            initSeekbar(playback_speed_seekbar, playback_speed_label, config)
         }
 
         return view
+    }
+
+    private fun initSeekbar(seekbar: MySeekBar, speedLabel: MyTextView, config: Config) {
+        val formattedValue = formatPlaybackSpeed(config.playbackSpeed)
+        speedLabel.text = "${formattedValue}x"
+
+        val maxProgress = (MAX_PLAYBACK_SPEED * 100 + MIN_PLAYBACK_SPEED * 100).toInt()
+        val halfProgress = maxProgress / 2
+        seekbar.max = maxProgress
+
+        val playbackSpeedProgress = config.playbackSpeedProgress
+        if (playbackSpeedProgress == -1) {
+            config.playbackSpeedProgress = halfProgress
+        }
+        seekbar.progress = config.playbackSpeedProgress
+
+        var lastUpdatedProgress = config.playbackSpeedProgress
+        var lastUpdatedFormattedValue = formattedValue
+
+        seekbar.onSeekBarChangeListener { progress ->
+            val playbackSpeed = getPlaybackSpeed(progress, halfProgress)
+
+            val stepMultiplier = 1 / STEP
+            val rounded = Math.round(playbackSpeed * stepMultiplier) / stepMultiplier
+            if (rounded.toString() != lastUpdatedFormattedValue) {
+                lastUpdatedProgress = progress
+                lastUpdatedFormattedValue = rounded.toString()
+                config.playbackSpeed = rounded
+                config.playbackSpeedProgress = progress
+
+                speedLabel.text = "${formatPlaybackSpeed(rounded)}x"
+                listener?.updatePlaybackSpeed(rounded)
+            } else {
+                seekbar.progress = lastUpdatedProgress
+            }
+        }
     }
 
     private fun getPlaybackSpeed(progress: Int, halfProgress: Int): Float {
@@ -87,6 +95,14 @@ class PlaybackSpeedFragment : BottomSheetDialogFragment() {
         }
         playbackSpeed = Math.min(Math.max(playbackSpeed, MIN_PLAYBACK_SPEED), MAX_PLAYBACK_SPEED)
         return playbackSpeed
+    }
+
+    private fun reduceSpeed() {
+
+    }
+
+    private fun increaseSpeed() {
+
     }
 
     private fun formatPlaybackSpeed(value: Float) = String.format("%.2f", value)

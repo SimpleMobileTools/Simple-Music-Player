@@ -21,6 +21,7 @@
         android:layout_height="@dimen/smaller_icon_size"
         android:layout_below="@+id/playback_speed_title"
         android:layout_alignStart="@+id/playback_speed_seekbar"
+        android:background="?attr/selectableItemBackgroundBorderless"
         android:src="@drawable/ic_playback_speed_slow_vector" />
 
     <com.simplemobiletools.commons.views.MyTextView
@@ -39,6 +40,7 @@
         android:layout_height="@dimen/smaller_icon_size"
         android:layout_below="@+id/playback_speed_title"
         android:layout_alignEnd="@+id/playback_speed_seekbar"
+        android:background="?attr/selectableItemBackgroundBorderless"
         android:src="@drawable/ic_playback_speed_vector" />
 
     <com.simplemobiletools.commons.views.MySeekBar
