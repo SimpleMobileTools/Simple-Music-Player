@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.fragment_playback_speed.view.*
 
 class PlaybackSpeedFragment : BottomSheetDialogFragment() {
     private val MIN_PLAYBACK_SPEED = 0.25f
-    private val MAX_PLAYBACK_SPEED = 4f
+    private val MAX_PLAYBACK_SPEED = 3f
     private val STEP = 0.05f
 
     private var listener: PlaybackSpeedListener? = null
@@ -50,21 +50,7 @@ class PlaybackSpeedFragment : BottomSheetDialogFragment() {
             var lastUpdatedFormattedValue = formattedValue
 
             playback_speed_seekbar.onSeekBarChangeListener { progress ->
-                var playbackSpeed = when {
-                    progress < halfProgress -> {
-                        val lowerProgressPercent = progress / halfProgress.toFloat()
-                        val lowerProgress = (1 - MIN_PLAYBACK_SPEED) * lowerProgressPercent + MIN_PLAYBACK_SPEED
-                        lowerProgress
-                    }
-                    progress > halfProgress -> {
-                        val upperProgressPercent = progress / halfProgress.toFloat() - 1
-                        val upperDiff = MAX_PLAYBACK_SPEED - 1
-                        upperDiff * upperProgressPercent + 1
-                    }
-                    else -> 1f
-                }
-
-                playbackSpeed = Math.min(Math.max(playbackSpeed, MIN_PLAYBACK_SPEED), MAX_PLAYBACK_SPEED)
+                val playbackSpeed = getPlaybackSpeed(progress, halfProgress)
 
                 val stepMultiplier = 1 / STEP
                 val rounded = Math.round(playbackSpeed * stepMultiplier) / stepMultiplier
@@ -83,6 +69,24 @@ class PlaybackSpeedFragment : BottomSheetDialogFragment() {
         }
 
         return view
+    }
+
+    private fun getPlaybackSpeed(progress: Int, halfProgress: Int): Float {
+        var playbackSpeed = when {
+            progress < halfProgress -> {
+                val lowerProgressPercent = progress / halfProgress.toFloat()
+                val lowerProgress = (1 - MIN_PLAYBACK_SPEED) * lowerProgressPercent + MIN_PLAYBACK_SPEED
+                lowerProgress
+            }
+            progress > halfProgress -> {
+                val upperProgressPercent = progress / halfProgress.toFloat() - 1
+                val upperDiff = MAX_PLAYBACK_SPEED - 1
+                upperDiff * upperProgressPercent + 1
+            }
+            else -> 1f
+        }
+        playbackSpeed = Math.min(Math.max(playbackSpeed, MIN_PLAYBACK_SPEED), MAX_PLAYBACK_SPEED)
+        return playbackSpeed
     }
 
     private fun formatPlaybackSpeed(value: Float) = String.format("%.2f", value)
