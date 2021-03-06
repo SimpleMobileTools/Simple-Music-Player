@@ -29,7 +29,6 @@ import com.simplemobiletools.commons.helpers.MEDIUM_ALPHA
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.extensions.config
-import com.simplemobiletools.musicplayer.extensions.formatPlaybackSpeed
 import com.simplemobiletools.musicplayer.extensions.sendIntent
 import com.simplemobiletools.musicplayer.extensions.updatePlayPauseIcon
 import com.simplemobiletools.musicplayer.fragments.PlaybackSpeedFragment
@@ -42,6 +41,7 @@ import kotlinx.android.synthetic.main.activity_track.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import java.text.DecimalFormat
 
 class TrackActivity : SimpleActivity(), PlaybackSpeedListener {
     private val SWIPE_DOWN_THRESHOLD = 100
@@ -304,7 +304,7 @@ class TrackActivity : SimpleActivity(), PlaybackSpeedListener {
     }
 
     private fun setupSeekbar() {
-        updatePlaybackSpeed(config.playbackSpeed, config.playbackSpeed.formatPlaybackSpeed())
+        updatePlaybackSpeed(config.playbackSpeed)
         activity_track_progressbar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
                 val formattedProgress = progress.getFormattedDuration()
@@ -329,8 +329,8 @@ class TrackActivity : SimpleActivity(), PlaybackSpeedListener {
         fragment.setListener(this)
     }
 
-    override fun updatePlaybackSpeed(speed: Float, formatted: String) {
-        activity_track_speed.text = formatted
+    override fun updatePlaybackSpeed(speed: Float) {
+        activity_track_speed.text = "${DecimalFormat("#.##").format(speed)}x"
     }
 
     private fun getResizedDrawable(drawable: Drawable, wantedHeight: Int): Drawable {
