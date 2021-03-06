@@ -67,7 +67,7 @@ class PlaybackSpeedFragment : BottomSheetDialogFragment() {
                 config.playbackSpeedProgress = progress
 
                 val formatted = rounded.formatPlaybackSpeed()
-                playback_speed_label.text = "${formatted}x"
+                playback_speed_label.text = formatted
 
                 listener?.updatePlaybackSpeed(playbackSpeed, formatted)
             }

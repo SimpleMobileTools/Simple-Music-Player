@@ -330,7 +330,7 @@ class TrackActivity : SimpleActivity(), PlaybackSpeedListener {
     }
 
     override fun updatePlaybackSpeed(speed: Float, formatted: String) {
-        activity_track_speed.text = "${formatted}x"
+        activity_track_speed.text = formatted
     }
 
     private fun getResizedDrawable(drawable: Drawable, wantedHeight: Int): Drawable {
