@@ -97,11 +97,27 @@ class PlaybackSpeedFragment : BottomSheetDialogFragment() {
     }
 
     private fun reduceSpeed() {
-
+        var currentProgress = seekBar?.progress ?: return
+        val currentSpeed = context!!.config.playbackSpeed
+        while (currentProgress > 0) {
+            val newSpeed = getPlaybackSpeed(--currentProgress)
+            if (newSpeed != currentSpeed) {
+                seekBar!!.progress = currentProgress
+                break
+            }
+        }
     }
 
     private fun increaseSpeed() {
-
+        var currentProgress = seekBar?.progress ?: return
+        val currentSpeed = context!!.config.playbackSpeed
+        while (currentProgress < MAX_PROGRESS) {
+            val newSpeed = getPlaybackSpeed(++currentProgress)
+            if (newSpeed != currentSpeed) {
+                seekBar!!.progress = currentProgress
+                break
+            }
+        }
     }
 
     private fun formatPlaybackSpeed(value: Float) = String.format("%.2f", value)
