@@ -29,6 +29,7 @@ import com.simplemobiletools.commons.helpers.MEDIUM_ALPHA
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.extensions.config
+import com.simplemobiletools.musicplayer.extensions.formatPlaybackSpeed
 import com.simplemobiletools.musicplayer.extensions.sendIntent
 import com.simplemobiletools.musicplayer.extensions.updatePlayPauseIcon
 import com.simplemobiletools.musicplayer.fragments.PlaybackSpeedFragment
@@ -107,6 +108,7 @@ class TrackActivity : SimpleActivity(), PlaybackSpeedListener {
         super.onResume()
         updateTextColors(activity_track_holder)
         activity_track_speed.compoundDrawables.firstOrNull()?.applyColorFilter(config.textColor)
+        updatePlaybackSpeed(config.playbackSpeed, config.playbackSpeed.formatPlaybackSpeed())
     }
 
     override fun onDestroy() {
@@ -168,8 +170,6 @@ class TrackActivity : SimpleActivity(), PlaybackSpeedListener {
         arrayOf(activity_track_previous, activity_track_play_pause, activity_track_next).forEach {
             it.applyColorFilter(config.textColor)
         }
-
-        activity_track_speed.text = "1x"
     }
 
     private fun setupNextTrackInfo(track: Track?) {
@@ -329,8 +329,8 @@ class TrackActivity : SimpleActivity(), PlaybackSpeedListener {
         fragment.setListener(this)
     }
 
-    override fun updatePlaybackSpeed(speed: Float) {
-
+    override fun updatePlaybackSpeed(speed: Float, formatted: String) {
+        activity_track_speed.text = "${formatted}x"
     }
 
     private fun getResizedDrawable(drawable: Drawable, wantedHeight: Int): Drawable {

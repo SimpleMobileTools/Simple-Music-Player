@@ -11,10 +11,15 @@ import com.simplemobiletools.commons.extensions.onSeekBarChangeListener
 import com.simplemobiletools.commons.extensions.updateTextColors
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.extensions.config
+import com.simplemobiletools.musicplayer.extensions.formatPlaybackSpeed
 import com.simplemobiletools.musicplayer.interfaces.PlaybackSpeedListener
 import kotlinx.android.synthetic.main.fragment_playback_speed.view.*
 
 class PlaybackSpeedFragment : BottomSheetDialogFragment() {
+    private val MIN_PLAYBACK_SPEED = 0.25f
+    private val MAX_PLAYBACK_SPEED = 4f
+    private val STEP = 0.05f
+
     private var listener: PlaybackSpeedListener? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -30,8 +35,31 @@ class PlaybackSpeedFragment : BottomSheetDialogFragment() {
             playback_speed_fast.applyColorFilter(config.textColor)
             playback_speed_label.text = "1.00x"
 
-            playback_speed_seekbar.onSeekBarChangeListener {
-                listener?.updatePlaybackSpeed(it.toFloat())
+            val maxProgress = (MAX_PLAYBACK_SPEED * 100 + MIN_PLAYBACK_SPEED * 100).toInt()
+            val halfProgress = maxProgress / 2
+            playback_speed_seekbar.max = maxProgress
+
+            playback_speed_seekbar.onSeekBarChangeListener { progress ->
+                val playbackSpeed = when {
+                    progress < halfProgress -> {
+                        val lowerProgressPercent = progress / halfProgress.toFloat()
+                        val lowerProgress = (1 - MIN_PLAYBACK_SPEED) * lowerProgressPercent + MIN_PLAYBACK_SPEED
+                        lowerProgress
+                    }
+                    progress > halfProgress -> {
+                        val upperProgressPercent = progress / halfProgress.toFloat() - 1
+                        val upperDiff = MAX_PLAYBACK_SPEED - 1
+                        upperDiff * upperProgressPercent + 1
+                    }
+                    else -> 1f
+                }
+
+                val stepMultiplier = 1 / STEP
+                val rounded = Math.round(playbackSpeed * stepMultiplier) / stepMultiplier
+                val formatted = rounded.formatPlaybackSpeed()
+                playback_speed_label.text = "${formatted}x"
+
+                listener?.updatePlaybackSpeed(playbackSpeed, formatted)
             }
         }
 
