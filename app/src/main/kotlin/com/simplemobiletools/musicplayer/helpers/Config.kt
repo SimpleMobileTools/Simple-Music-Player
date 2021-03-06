@@ -76,4 +76,8 @@ class Config(context: Context) : BaseConfig(context) {
     var playbackSpeed: Float
         get() = prefs.getFloat(PLAYBACK_SPEED, 1f)
         set(playbackSpeed) = prefs.edit().putFloat(PLAYBACK_SPEED, playbackSpeed).apply()
+
+    var playbackSpeedProgress: Int
+        get() = prefs.getInt(PLAYBACK_SPEED_PROGRESS, -1)
+        set(playbackSpeedProgress) = prefs.edit().putInt(PLAYBACK_SPEED_PROGRESS, playbackSpeedProgress).apply()
 }

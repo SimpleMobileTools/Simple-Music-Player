@@ -39,6 +39,12 @@ class PlaybackSpeedFragment : BottomSheetDialogFragment() {
             val halfProgress = maxProgress / 2
             playback_speed_seekbar.max = maxProgress
 
+            val playbackSpeedProgress = config.playbackSpeedProgress
+            if (playbackSpeedProgress == -1) {
+                config.playbackSpeedProgress = halfProgress
+            }
+            playback_speed_seekbar.progress = config.playbackSpeedProgress
+
             playback_speed_seekbar.onSeekBarChangeListener { progress ->
                 val playbackSpeed = when {
                     progress < halfProgress -> {
@@ -57,6 +63,8 @@ class PlaybackSpeedFragment : BottomSheetDialogFragment() {
                 val stepMultiplier = 1 / STEP
                 val rounded = Math.round(playbackSpeed * stepMultiplier) / stepMultiplier
                 config.playbackSpeed = rounded
+                config.playbackSpeedProgress = progress
+
                 val formatted = rounded.formatPlaybackSpeed()
                 playback_speed_label.text = "${formatted}x"
 
