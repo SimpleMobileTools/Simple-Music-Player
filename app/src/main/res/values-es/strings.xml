@@ -19,6 +19,7 @@
     <string name="autoplay_disabled">Reproducción automática desactivada</string>
     <string name="sleep_timer">Temporizador para dormir</string>
     <string name="volume">Volume</string>
+    <string name="playback_speed">Playback speed</string>
 
     <!-- Playlists -->
     <string name="add_file_to_playlist">Añadir archivo a lista de reproducción</string>

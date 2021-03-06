@@ -19,6 +19,7 @@
     <string name="autoplay_disabled">자동재생 비 활성화됨</string>
     <string name="sleep_timer">Sleep timer</string>
     <string name="volume">Volume</string>
+    <string name="playback_speed">Playback speed</string>
 
     <!-- Playlists -->
     <string name="add_file_to_playlist">재생목록에 파일 추가</string>

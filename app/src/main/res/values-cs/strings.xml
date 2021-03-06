@@ -19,6 +19,7 @@
     <string name="autoplay_disabled">Automatické přehrávání vypnuto</string>
     <string name="sleep_timer">Časovač vypnutí</string>
     <string name="volume">Volume</string>
+    <string name="playback_speed">Playback speed</string>
 
     <!-- Playlists -->
     <string name="add_file_to_playlist">Přidat soubor do seznamu skladeb</string>

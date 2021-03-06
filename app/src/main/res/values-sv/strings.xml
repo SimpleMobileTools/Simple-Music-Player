@@ -19,6 +19,7 @@
     <string name="autoplay_disabled">Automatisk uppspelning har inaktiverats</string>
     <string name="sleep_timer">Vilotidtagare</string>
     <string name="volume">Volume</string>
+    <string name="playback_speed">Playback speed</string>
 
     <!-- Playlists -->
     <string name="add_file_to_playlist">Lägg till fil i spellista</string>
