@@ -31,7 +31,9 @@ import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.extensions.sendIntent
 import com.simplemobiletools.musicplayer.extensions.updatePlayPauseIcon
+import com.simplemobiletools.musicplayer.fragments.PlaybackSpeedFragment
 import com.simplemobiletools.musicplayer.helpers.*
+import com.simplemobiletools.musicplayer.interfaces.PlaybackSpeedListener
 import com.simplemobiletools.musicplayer.models.Events
 import com.simplemobiletools.musicplayer.models.Track
 import com.simplemobiletools.musicplayer.services.MusicService
@@ -40,7 +42,7 @@ import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
-class TrackActivity : SimpleActivity() {
+class TrackActivity : SimpleActivity(), PlaybackSpeedListener {
     private val SWIPE_DOWN_THRESHOLD = 100
 
     private var isThirdPartyIntent = false
@@ -104,6 +106,7 @@ class TrackActivity : SimpleActivity() {
     override fun onResume() {
         super.onResume()
         updateTextColors(activity_track_holder)
+        activity_track_speed.compoundDrawables.firstOrNull()?.applyColorFilter(config.textColor)
     }
 
     override fun onDestroy() {
@@ -156,6 +159,7 @@ class TrackActivity : SimpleActivity() {
         activity_track_next.setOnClickListener { sendIntent(NEXT) }
         activity_track_progress_current.setOnClickListener { sendIntent(SKIP_BACKWARD) }
         activity_track_progress_max.setOnClickListener { sendIntent(SKIP_FORWARD) }
+        activity_track_speed.setOnClickListener { showPlaybackSpeedPicker() }
         activity_track_repeat.setOnClickListener { toggleTrackRepetition() }
         setupShuffleButton()
         setupTrackRepetitionButton()
@@ -164,6 +168,8 @@ class TrackActivity : SimpleActivity() {
         arrayOf(activity_track_previous, activity_track_play_pause, activity_track_next).forEach {
             it.applyColorFilter(config.textColor)
         }
+
+        activity_track_speed.text = "1x"
     }
 
     private fun setupNextTrackInfo(track: Track?) {
@@ -315,6 +321,16 @@ class TrackActivity : SimpleActivity() {
                 }
             }
         })
+    }
+
+    private fun showPlaybackSpeedPicker() {
+        val fragment = PlaybackSpeedFragment()
+        fragment.show(supportFragmentManager, fragment::class.java.simpleName)
+        fragment.setListener(this)
+    }
+
+    override fun updatePlaybackSpeed(speed: Float) {
+
     }
 
     private fun getResizedDrawable(drawable: Drawable, wantedHeight: Int): Drawable {

@@ -37,7 +37,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:gravity="center_vertical"
             android:maxLines="1"
             android:paddingStart="@dimen/normal_margin"
             android:paddingTop="@dimen/normal_margin"
@@ -63,11 +62,25 @@
             app:layout_constraintTop_toBottomOf="@+id/activity_track_image" />
 
         <com.simplemobiletools.commons.views.MyTextView
+            android:id="@+id/activity_track_speed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:drawableLeft="@drawable/ic_playback_speed_vector"
+            android:maxLines="1"
+            android:paddingTop="@dimen/normal_margin"
+            android:paddingBottom="@dimen/normal_margin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/activity_track_progressbar"
+            tools:ignore="RtlHardcoded"
+            tools:text="1x" />
+
+        <com.simplemobiletools.commons.views.MyTextView
             android:id="@+id/activity_track_progress_max"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:gravity="center_vertical"
             android:maxLines="1"
             android:paddingStart="@dimen/medium_margin"
             android:paddingTop="@dimen/normal_margin"

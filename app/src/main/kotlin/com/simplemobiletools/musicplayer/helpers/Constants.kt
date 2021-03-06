@@ -56,6 +56,7 @@ const val LAST_SLEEP_TIMER_SECONDS = "last_sleep_timer_seconds"
 const val SLEEP_IN_TS = "sleep_in_ts"
 const val EQUALIZER_PRESET = "EQUALIZER_PRESET"
 const val EQUALIZER_BANDS = "EQUALIZER_BANDS"
+const val PLAYBACK_SPEED = "PLAYBACK_SPEED"
 
 const val SHOW_FILENAME_NEVER = 1
 const val SHOW_FILENAME_IF_UNAVAILABLE = 2
