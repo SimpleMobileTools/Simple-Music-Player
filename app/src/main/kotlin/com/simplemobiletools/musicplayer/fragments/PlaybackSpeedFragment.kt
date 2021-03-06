@@ -33,7 +33,7 @@ class PlaybackSpeedFragment : BottomSheetDialogFragment() {
             context!!.updateTextColors(playback_speed_holder)
             playback_speed_slow.applyColorFilter(config.textColor)
             playback_speed_fast.applyColorFilter(config.textColor)
-            playback_speed_label.text = "1.00x"
+            playback_speed_label.text = config.playbackSpeed.formatPlaybackSpeed()
 
             val maxProgress = (MAX_PLAYBACK_SPEED * 100 + MIN_PLAYBACK_SPEED * 100).toInt()
             val halfProgress = maxProgress / 2
@@ -56,6 +56,7 @@ class PlaybackSpeedFragment : BottomSheetDialogFragment() {
 
                 val stepMultiplier = 1 / STEP
                 val rounded = Math.round(playbackSpeed * stepMultiplier) / stepMultiplier
+                config.playbackSpeed = rounded
                 val formatted = rounded.formatPlaybackSpeed()
                 playback_speed_label.text = "${formatted}x"
 

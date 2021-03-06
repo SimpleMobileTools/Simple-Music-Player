@@ -108,7 +108,6 @@ class TrackActivity : SimpleActivity(), PlaybackSpeedListener {
         super.onResume()
         updateTextColors(activity_track_holder)
         activity_track_speed.compoundDrawables.firstOrNull()?.applyColorFilter(config.textColor)
-        updatePlaybackSpeed(config.playbackSpeed, config.playbackSpeed.formatPlaybackSpeed())
     }
 
     override fun onDestroy() {
@@ -305,6 +304,7 @@ class TrackActivity : SimpleActivity(), PlaybackSpeedListener {
     }
 
     private fun setupSeekbar() {
+        updatePlaybackSpeed(config.playbackSpeed, config.playbackSpeed.formatPlaybackSpeed())
         activity_track_progressbar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
                 val formattedProgress = progress.getFormattedDuration()
