@@ -38,22 +38,22 @@
         android:paddingEnd="@dimen/medium_margin"
         android:paddingBottom="@dimen/normal_margin"
         android:text="00:00"
-        app:layout_constraintBottom_toBottomOf="@+id/activity_track_progressbar"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/activity_track_image"
-        app:layout_constraintTop_toTopOf="@+id/activity_track_progressbar" />
+        app:layout_constraintTop_toBottomOf="@+id/activity_track_progressbar" />
 
     <com.simplemobiletools.commons.views.MySeekBar
         android:id="@+id/activity_track_progressbar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/activity_margin"
         android:layout_marginTop="@dimen/medium_margin"
+        android:layout_marginEnd="@dimen/activity_margin"
         android:clickable="true"
         android:focusable="true"
         android:paddingTop="@dimen/normal_margin"
         android:paddingBottom="@dimen/medium_margin"
-        app:layout_constraintEnd_toStartOf="@+id/activity_track_progress_max"
-        app:layout_constraintStart_toEndOf="@+id/activity_track_progress_current"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/activity_track_image" />
 
     <com.simplemobiletools.commons.views.MyTextView
@@ -68,10 +68,8 @@
         android:paddingEnd="@dimen/normal_margin"
         android:paddingBottom="@dimen/normal_margin"
         android:text="00:00"
-        app:layout_constraintBottom_toBottomOf="@+id/activity_track_progressbar"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/activity_track_image"
-        app:layout_constraintTop_toTopOf="@+id/activity_track_progressbar" />
+        app:layout_constraintTop_toBottomOf="@+id/activity_track_progressbar" />
 
     <com.simplemobiletools.commons.views.MyTextView
         android:id="@+id/activity_track_title"
@@ -85,7 +83,7 @@
         android:textSize="@dimen/extra_big_text_size"
         app:layout_constraintBottom_toTopOf="@+id/activity_track_artist"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/activity_track_progressbar"
+        app:layout_constraintTop_toBottomOf="@+id/activity_track_progress_current"
         tools:text="Track title" />
 
     <com.simplemobiletools.commons.views.MyTextView
