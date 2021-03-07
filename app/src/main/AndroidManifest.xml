@@ -151,6 +151,7 @@
                 <action android:name="com.simplemobiletools.musicplayer.action.SET_PROGRESS"/>
                 <action android:name="com.simplemobiletools.musicplayer.action.SKIP_BACKWARD"/>
                 <action android:name="com.simplemobiletools.musicplayer.action.SKIP_FORWARD"/>
+                <action android:name="com.simplemobiletools.musicplayer.action.SET_PLAYBACK_SPEED"/>
                 <action android:name="com.simplemobiletools.musicplayer.action.BROADCAST_STATUS"/>
             </intent-filter>
         </service>

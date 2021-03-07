@@ -162,6 +162,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             START_SLEEP_TIMER -> startSleepTimer()
             STOP_SLEEP_TIMER -> stopSleepTimer()
             BROADCAST_STATUS -> broadcastPlayerStatus()
+            SET_PLAYBACK_SPEED -> setPlaybackSpeed()
         }
 
         MediaButtonReceiver.handleIntent(mMediaSession!!, intent)
@@ -568,6 +569,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
         setupEqualizer()
         trackStateChanged(true)
+        setPlaybackSpeed()
     }
 
     private fun setupNextTrack() {
@@ -690,6 +692,15 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             .build()
 
         mMediaSession?.setMetadata(metadata)
+    }
+
+    @SuppressLint("NewApi")
+    private fun setPlaybackSpeed() {
+        if (isMarshmallowPlus()) {
+            if (mPlayer!!.isPlaying) {
+                mPlayer!!.playbackParams = mPlayer!!.playbackParams.setSpeed(config.playbackSpeed)
+            }
+        }
     }
 
     private fun broadcastTrackChange() {
