@@ -27,6 +27,7 @@ import com.google.gson.reflect.TypeToken
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.MEDIUM_ALPHA
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
+import com.simplemobiletools.commons.helpers.isMarshmallowPlus
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.extensions.sendIntent
@@ -160,8 +161,9 @@ class TrackActivity : SimpleActivity(), PlaybackSpeedListener {
         activity_track_next.setOnClickListener { sendIntent(NEXT) }
         activity_track_progress_current.setOnClickListener { sendIntent(SKIP_BACKWARD) }
         activity_track_progress_max.setOnClickListener { sendIntent(SKIP_FORWARD) }
-        activity_track_speed.setOnClickListener { showPlaybackSpeedPicker() }
         activity_track_repeat.setOnClickListener { toggleTrackRepetition() }
+        activity_track_speed.setOnClickListener { showPlaybackSpeedPicker() }
+        activity_track_speed.beVisibleIf(isMarshmallowPlus())
         setupShuffleButton()
         setupTrackRepetitionButton()
         setupSeekbar()
