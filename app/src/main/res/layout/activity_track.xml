@@ -61,20 +61,40 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/activity_track_image" />
 
+        <ImageView
+            android:id="@+id/activity_track_speed_icon"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:scaleType="fitEnd"
+            android:src="@drawable/ic_playback_speed_vector"
+            app:layout_constraintBottom_toBottomOf="@+id/activity_track_speed"
+            app:layout_constraintEnd_toStartOf="@+id/activity_track_speed"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/activity_track_progressbar" />
+
         <com.simplemobiletools.commons.views.MyTextView
             android:id="@+id/activity_track_speed"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:drawableLeft="@drawable/ic_playback_speed_vector"
-            android:maxLines="1"
+            android:gravity="start"
             android:paddingTop="@dimen/normal_margin"
             android:paddingBottom="@dimen/normal_margin"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/activity_track_speed_icon"
             app:layout_constraintTop_toBottomOf="@+id/activity_track_progressbar"
             tools:ignore="RtlHardcoded"
             tools:text="1x" />
+
+        <ImageView
+            android:id="@+id/activity_track_speed_click_area"
+            android:layout_width="@dimen/bottom_bar_height"
+            android:layout_height="@dimen/bottom_bar_height"
+            android:layout_marginStart="@dimen/activity_margin"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/activity_track_progressbar" />
 
         <com.simplemobiletools.commons.views.MyTextView
             android:id="@+id/activity_track_progress_max"

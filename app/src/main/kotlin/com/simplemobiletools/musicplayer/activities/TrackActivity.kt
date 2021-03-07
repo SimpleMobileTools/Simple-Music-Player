@@ -12,7 +12,6 @@ import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
 import android.widget.SeekBar
-import androidx.appcompat.content.res.AppCompatResources
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.GestureDetectorCompat
 import com.bumptech.glide.Glide
@@ -109,7 +108,6 @@ class TrackActivity : SimpleActivity(), PlaybackSpeedListener {
     override fun onResume() {
         super.onResume()
         updateTextColors(activity_track_holder)
-        activity_track_speed.compoundDrawables.firstOrNull()?.applyColorFilter(config.textColor)
     }
 
     override fun onDestroy() {
@@ -163,11 +161,15 @@ class TrackActivity : SimpleActivity(), PlaybackSpeedListener {
         activity_track_progress_current.setOnClickListener { sendIntent(SKIP_BACKWARD) }
         activity_track_progress_max.setOnClickListener { sendIntent(SKIP_FORWARD) }
         activity_track_repeat.setOnClickListener { toggleTrackRepetition() }
-        activity_track_speed.setOnClickListener { showPlaybackSpeedPicker() }
-        activity_track_speed.beVisibleIf(isMarshmallowPlus())
+        activity_track_speed_click_area.setOnClickListener { showPlaybackSpeedPicker() }
         setupShuffleButton()
         setupTrackRepetitionButton()
         setupSeekbar()
+
+        // constraintlayout with textview wrap_content is broken, so we need to use a more complicated way of drawing speed related things
+        arrayOf(activity_track_speed_icon, activity_track_speed, activity_track_speed_click_area).forEach {
+            it.beVisibleIf(isMarshmallowPlus())
+        }
 
         arrayOf(activity_track_previous, activity_track_play_pause, activity_track_next).forEach {
             it.applyColorFilter(config.textColor)
@@ -308,6 +310,7 @@ class TrackActivity : SimpleActivity(), PlaybackSpeedListener {
 
     private fun setupSeekbar() {
         if (isMarshmallowPlus()) {
+            activity_track_speed_icon.applyColorFilter(config.textColor)
             updatePlaybackSpeed(config.playbackSpeed)
         }
 
@@ -341,10 +344,9 @@ class TrackActivity : SimpleActivity(), PlaybackSpeedListener {
             activity_track_speed.tag = isSlow
 
             val drawableId = if (isSlow) R.drawable.ic_playback_speed_slow_vector else R.drawable.ic_playback_speed_vector
-            val drawable = AppCompatResources.getDrawable(this, drawableId)
-            drawable!!.applyColorFilter(config.textColor)
-            activity_track_speed.setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null)
+            activity_track_speed_icon.setImageDrawable(resources.getDrawable(drawableId))
         }
+
         activity_track_speed.text = "${DecimalFormat("#.##").format(speed)}x"
         sendIntent(SET_PLAYBACK_SPEED)
     }
