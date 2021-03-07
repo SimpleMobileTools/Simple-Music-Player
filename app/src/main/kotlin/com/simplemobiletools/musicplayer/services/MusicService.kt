@@ -726,6 +726,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     }
 
     private fun broadcastNextTrackChange() {
+        setPlaybackSpeed()
         Handler(Looper.getMainLooper()).post {
             val currentTrackIndex = mTracks.indexOfFirstOrNull { it.mediaStoreId == mCurrTrack?.mediaStoreId }
             if (currentTrackIndex != null) {
