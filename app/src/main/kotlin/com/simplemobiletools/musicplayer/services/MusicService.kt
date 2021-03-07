@@ -697,7 +697,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
     @SuppressLint("NewApi")
     private fun setPlaybackSpeed() {
-        if (isMarshmallowPlus()) {
+        if (isMarshmallowPlus() && mPlayer != null) {
             mPlaybackSpeed = config.playbackSpeed
             if (mPlayer!!.isPlaying) {
                 mPlayer!!.playbackParams = mPlayer!!.playbackParams.setSpeed(config.playbackSpeed)
