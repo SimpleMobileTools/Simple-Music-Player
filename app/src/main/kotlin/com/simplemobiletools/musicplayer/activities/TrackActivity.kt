@@ -12,6 +12,7 @@ import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
 import android.widget.SeekBar
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.GestureDetectorCompat
 import com.bumptech.glide.Glide
@@ -46,6 +47,7 @@ import java.text.DecimalFormat
 
 class TrackActivity : SimpleActivity(), PlaybackSpeedListener {
     private val SWIPE_DOWN_THRESHOLD = 100
+    private val SLOW_PLAYBACK_TAG = 1
 
     private var isThirdPartyIntent = false
     private var bus: EventBus? = null
@@ -306,7 +308,10 @@ class TrackActivity : SimpleActivity(), PlaybackSpeedListener {
     }
 
     private fun setupSeekbar() {
-        updatePlaybackSpeed(config.playbackSpeed)
+        if (isMarshmallowPlus()) {
+            updatePlaybackSpeed(config.playbackSpeed)
+        }
+
         activity_track_progressbar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
                 val formattedProgress = progress.getFormattedDuration()
@@ -332,6 +337,14 @@ class TrackActivity : SimpleActivity(), PlaybackSpeedListener {
     }
 
     override fun updatePlaybackSpeed(speed: Float) {
+        val isSlow = speed < 1f
+        if (isSlow != activity_track_speed.tag as? Boolean) {
+            activity_track_speed.tag = isSlow
+
+            val drawableId = if (isSlow) R.drawable.ic_playback_speed_slow_vector else R.drawable.ic_playback_speed_vector
+            val drawable = AppCompatResources.getDrawable(this, drawableId)
+            activity_track_speed.setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null)
+        }
         activity_track_speed.text = "${DecimalFormat("#.##").format(speed)}x"
         sendIntent(SET_PLAYBACK_SPEED)
     }
