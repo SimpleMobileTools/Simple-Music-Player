@@ -1,6 +1,12 @@
 Changelog
 ==========
 
+Version 5.6.2 *(2021-03-07)*
+----------------------------
+
+ * Allow changing the playback speed
+ * Some stability and translation improvements
+
 Version 5.6.1 *(2021-03-02)*
 ----------------------------
 

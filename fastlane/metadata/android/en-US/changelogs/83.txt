@@ -1,0 +1,2 @@
+ * Allow changing the playback speed
+ * Some stability and translation improvements
