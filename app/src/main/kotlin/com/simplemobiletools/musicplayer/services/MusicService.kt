@@ -70,6 +70,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         private var mAudioManager: AudioManager? = null
         private var mCoverArtHeight = 0
         private var mRetriedTrackCount = 0
+        private var mPlaybackSpeed = 1f
         private var mOreoFocusHandler: OreoAudioFocusHandler? = null
 
         private var mWasPlayingAtFocusLost = false
@@ -697,6 +698,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     @SuppressLint("NewApi")
     private fun setPlaybackSpeed() {
         if (isMarshmallowPlus()) {
+            mPlaybackSpeed = config.playbackSpeed
             if (mPlayer!!.isPlaying) {
                 mPlayer!!.playbackParams = mPlayer!!.playbackParams.setSpeed(config.playbackSpeed)
             }
@@ -930,7 +932,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
                         broadcastTrackProgress(secs)
                     }
                     mProgressHandler.removeCallbacksAndMessages(null)
-                    mProgressHandler.postDelayed(this, PROGRESS_UPDATE_INTERVAL)
+                    mProgressHandler.postDelayed(this, (PROGRESS_UPDATE_INTERVAL / mPlaybackSpeed).toLong())
                 }
             })
         } else {
