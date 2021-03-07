@@ -47,7 +47,6 @@ import java.text.DecimalFormat
 
 class TrackActivity : SimpleActivity(), PlaybackSpeedListener {
     private val SWIPE_DOWN_THRESHOLD = 100
-    private val SLOW_PLAYBACK_TAG = 1
 
     private var isThirdPartyIntent = false
     private var bus: EventBus? = null
