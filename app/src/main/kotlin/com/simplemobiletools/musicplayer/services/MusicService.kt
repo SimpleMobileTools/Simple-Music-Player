@@ -700,7 +700,10 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         if (isMarshmallowPlus() && mPlayer != null) {
             mPlaybackSpeed = config.playbackSpeed
             if (mPlayer!!.isPlaying) {
-                mPlayer!!.playbackParams = mPlayer!!.playbackParams.setSpeed(config.playbackSpeed)
+                try {
+                    mPlayer!!.playbackParams = mPlayer!!.playbackParams.setSpeed(config.playbackSpeed)
+                } catch (ignored: Exception) {
+                }
             }
         }
     }
