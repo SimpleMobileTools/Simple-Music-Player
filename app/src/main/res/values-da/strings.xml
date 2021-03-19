@@ -1,0 +1,100 @@
+<resources>
+    <string name="app_name">Simpel Musikafspiller</string>
+    <string name="app_launcher_name">Musikafspiller</string>
+    <string name="playlist_empty">Din afspilningsliste er tom</string>
+    <string name="rename_song">Omdøb sang</string>
+    <string name="rename_song_error">En fejl opstod under omdøbningen</string>
+    <string name="rename_song_empty">Udfyld venligst alle felter</string>
+    <string name="enable_song_repetition">Gentag den valgte sang</string>
+    <string name="disable_song_repetition">Stop gentagelse af den valgte sang</string>
+    <string name="song_repetition_enabled">Gentagelse af den valgte sang er aktiveret</string>
+    <string name="song_repetition_disabled">Gentagelse af den valgte sang er deaktiveret</string>
+    <string name="enable_shuffle">Aktiver tilfældig rækkefølge</string>
+    <string name="disable_shuffle">Deaktiver tilfældig rækkefølge</string>
+    <string name="shuffle_enabled">Tilfældig rækkefølge aktiveret</string>
+    <string name="shuffle_disabled">Tilfældig rækkefølge deaktiveret</string>
+    <string name="enable_autoplay">Aktiver automatisk afspilning</string>
+    <string name="disable_autoplay">Deaktiver automatisk afspilning</string>
+    <string name="autoplay_enabled">Automatisk afspilning aktiveret</string>
+    <string name="autoplay_disabled">Automatisk afspilning deaktiveret</string>
+    <string name="volume">Volume</string>
+    <string name="playback_speed">Afspilningshastighed</string>
+    <string name="sleep_timer">Sleep timer</string>
+    
+        <!-- Playlists -->
+    <string name="add_file_to_playlist">Tilføj fil til afspilningsliste</string>
+    <string name="add_folder_to_playlist">Tilgøj mappe til afspilningsliste</string>
+    <string name="manage_playlists">Rediger afspilningslister</string>
+    <string name="playlists">Afspilningslister</string>
+    <string name="create_new_playlist">Opret ny afspilningsliste</string>
+    <string name="rename_playlist">Omdøb afspilningsliste</string>
+    <string name="playlist_name_exists">En afspilningsliste med det navn findes allerede</string>
+    <string name="remove_playlist">Fjern afspilningsliste</string>
+    <string name="remove_playlist_description">Dette vil kun fjerne de valgte afspilningslister, ikke de aktuelle filer.</string>
+    <string name="remove_playlist_description_placeholder">Dette vil kun fjerne afspilningsliste \"%s\", ikke de aktuelle filer.</string>
+    <string name="remove_from_playlist">Fjern fra afspilningsliste</string>
+    <string name="remove_from_playlist_description">Dette vil kun fjerne elementerne fra afspilningsliste \"%s\", de aktuelle filer vil ikke blive slettet.</string>
+    <string name="delete_the_files_too">Slet også filerne</string>
+    <string name="open_playlist">Åbn afspilningsliste</string>
+    <string name="all_songs_cannot_be_deleted">Afspilningslisten \'Alle sange\' kan ikke slettes</string>
+    <string name="empty_playlist">Den valgte afspilningsliste er tom</string>
+    <string name="fetching_songs">Henter sange…</string>
+    <string name="all_songs">Alle sange</string>
+    <string name="create_playlist_from_folder">Opret ny afspilningsliste fra mappe</string>
+    <string name="folder_contains_no_audio">Den valgte mappe indeholder ingen musikfiler</string>
+    <string name="delete_current_song">Slet valgte sang</string>
+    <string name="remove_current_song">Fjern valgte sang fra afspilningsliste</string>
+    <string name="show_filename">Vis filnavn som sangtitel</string>
+    <string name="title_is_not_available">Hvis titel ikke er tilgængelig</string>
+    <string name="show_album_cover">Vis album cover på hovedskærmen</string>
+    <string name="all_tracks">Alle spor</string>
+    <string name="add_to_playlist">Tilføj til afspilningsliste</string>
+    <string name="create_playlist_label">Du kan oprette en ny afspilningsliste ved at vælge den ønskede kunstnere, albummer eller spor via Menu -> Tilføj til afspilningsliste."</string>
+    
+    <!-- Sorting -->
+    <string name="track_count">Antal spor</string>
+    <string name="album_count">Antal albummer</string>
+    <string name="artist_name">Kunstnernavn</string>
+    <string name="year">År</string>
+    
+    <!-- Artists -->
+    <string name="artists">Kunstnere</string>
+    <string name="albums">Albummer</string>
+    <plurals name="albums_plural">
+        <item quantity="one">%d Album</item>
+        <item quantity="other">%d Albummer</item>
+    </plurals>
+    
+    <string name="tracks">Spor</string>
+    <plurals name="tracks_plural">
+        <item quantity="one">%d Spor</item>
+        <item quantity="other">%d Spor</item>
+    </plurals>
+    
+    <!-- Queue -->
+    <string name="next_track">Næste:</string>
+    <string name="track_queue">Afspilningskø</string>
+    <string name="add_to_queue">Tilføj til afspilningskø</string>
+    <string name="remove_from_queue">Fjern fra afspilningskø</string>
+    <string name="create_playlist_from_queue">Opret afspilningsliste fra afspilningskø</string>
+    
+    <!-- Settings -->
+    <string name="equalizer">Equalizer</string>
+    <string name="swap_prev_next">Ombyt forrige/næste hovedtelefonknapper</string>
+    
+    <!-- FAQ -->
+    <string name="faq_1_title">Hvordan kan jeg spole frem i sange?</string>
+
+    <string name="faq_1_text">"Du kan klikke på de to tidsangivelser (aktuel spilletid og total varighed af nummeret) nær søgefeltet, der bevæger sangen enten bagud eller fremad."</string>
+    <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
+    <!-- App title has to have less than 50 characters. If you cannot squeeze it, just remove a part of it -->
+    <string name="app_title">Simpel Musikafspiller - En cool afspiller til dine sange</string>
+    <!-- Short description has to have less than 80 chars -->
+    <string name="app_short_description">"En enkel musikafspiller med en tilpasselig widget, stilfuld grænseflade og ingen annoncer."</string>
+    <string name="app_long_description">"          En simpel musikafspiller, der let kan styres fra statuslinjen, startskærmwidget eller med hardwareknapper på dit headset. Det giver alle forventede funktioner som sortering på forskellige måder, samt en equalizer. Lyt til dine mp3 sange eller podcasts med denne gratis, smukke musikafspiller.          Den tilbyder mulighed for at søge, og viser album-billeder, har en sleep-timer og mange andre indstillinger. Denne elegante musikafspiller giver dig mulighed for at oprette og administrere praktiske afspilningslister, som du ønsker.          Afspilningslister understøttes fuldt ud. Du kan tilføje enten individuelle filer eller hele mapper. Hvis du ikke kan lide en sang, kan du enten bare fjerne den fra en afspilningsliste eller helt slette filen.           Har en praktisk sleep timer, så du indstille tiden for lukning af appen.           Understøtter både vilkårlig rækkefølge og gentagelse af en bestemt sang, såvel som at springe over og spole hurtigt frem.           Fås på mange forskellige sprog og tilbyder flere forskellige equalizers.           Se nemt filegenskaber som størrelse, varighed, sidst ændret osv.           Rediger fil EXIF-data som sangtitel og kunstner.           Del hurtigt filer med dine venner på sociale netværk, e-mails, eller hvor du vil.           Denne stilfulde musikafspiller indeholder en widget med redigerbar tekstfarve, alfa og baggrundsfarven, for nem adgang og kontrol.           Den kan også hjælpe med at indstille ringetoner.           Den leveres med Material Design og mørkt tema som standard, og giver god brugeroplevelse. Manglen på internetadgang giver dig mere privatliv, sikkerhed og stabilitet end andre apps.     Indeholder ingen annoncer eller unødvendige tilladelser. Den er helt igennem OpenSource, og du kan selv bestemme farverne.           <b> Se hele pakken med enkle værktøjer her: </b>          https://www.simplemobiletools.com          <b> Facebook: </b>          https://www.facebook.com/simplemobiletools          <b> Reddit : </b>          https://www.reddit.com/r/SimpleMobileTools"</string>
+    
+    <!--
+        Haven't found some strings? There's more at
+        https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
+    -->
+</resources>
