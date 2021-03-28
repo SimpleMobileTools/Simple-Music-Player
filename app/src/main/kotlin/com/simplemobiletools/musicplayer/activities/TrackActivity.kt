@@ -68,6 +68,10 @@ class TrackActivity : SimpleActivity(), PlaybackSpeedListener {
         }
 
         isThirdPartyIntent = intent.action == Intent.ACTION_VIEW
+        arrayOf(activity_track_toggle_shuffle, activity_track_previous, activity_track_next, activity_track_repeat).forEach {
+            it.beInvisibleIf(isThirdPartyIntent)
+        }
+
         if (isThirdPartyIntent) {
             initThirdPartyIntent()
             return
