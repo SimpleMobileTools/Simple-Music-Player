@@ -20,6 +20,7 @@
     <string name="sleep_timer">睡眠定時器</string>
     <string name="volume">Volume</string>
     <string name="playback_speed">Playback speed</string>
+    <string name="loading_files">Loading files…</string>
 
     <!-- Playlists -->
     <string name="add_file_to_playlist">添加檔案到播放清單</string>

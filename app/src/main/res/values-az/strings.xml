@@ -20,6 +20,7 @@
     <string name="sleep_timer">Sleep timer</string>
     <string name="volume">Volume</string>
     <string name="playback_speed">Playback speed</string>
+    <string name="loading_files">Loading files…</string>
 
     <!-- Playlists -->
     <string name="add_file_to_playlist">Alboma fayl əlavə et</string>
