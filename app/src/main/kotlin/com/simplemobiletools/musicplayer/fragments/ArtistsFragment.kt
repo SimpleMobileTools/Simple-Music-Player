@@ -7,6 +7,7 @@ import com.google.gson.Gson
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
 import com.simplemobiletools.commons.extensions.beGoneIf
 import com.simplemobiletools.commons.extensions.beVisibleIf
+import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.AlbumsActivity
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
 import com.simplemobiletools.musicplayer.adapters.ArtistsAdapter
@@ -28,7 +29,9 @@ class ArtistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
             artists.sort()
 
             activity.runOnUiThread {
+                artists_placeholder.text = context.getString(R.string.no_items_found)
                 artists_placeholder.beVisibleIf(artists.isEmpty())
+
                 val adapter = artists_list.adapter
                 if (adapter == null) {
                     ArtistsAdapter(activity, artists, artists_list, artists_fastscroller) {

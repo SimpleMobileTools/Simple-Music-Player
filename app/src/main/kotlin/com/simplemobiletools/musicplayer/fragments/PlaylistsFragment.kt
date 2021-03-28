@@ -9,6 +9,7 @@ import com.simplemobiletools.commons.extensions.beGoneIf
 import com.simplemobiletools.commons.extensions.beVisibleIf
 import com.simplemobiletools.commons.extensions.underlineText
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
+import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
 import com.simplemobiletools.musicplayer.activities.TracksActivity
 import com.simplemobiletools.musicplayer.adapters.PlaylistsAdapter
@@ -45,6 +46,7 @@ class PlaylistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPa
             playlists.sort()
 
             activity.runOnUiThread {
+                playlists_placeholder.text = context.getString(R.string.no_items_found)
                 playlists_placeholder.beVisibleIf(playlists.isEmpty())
                 playlists_placeholder_2.beVisibleIf(playlists.isEmpty())
                 val adapter = playlists_list.adapter

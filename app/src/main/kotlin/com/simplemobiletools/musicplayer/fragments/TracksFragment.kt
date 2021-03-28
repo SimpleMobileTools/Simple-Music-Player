@@ -8,6 +8,7 @@ import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
 import com.simplemobiletools.commons.extensions.beGoneIf
 import com.simplemobiletools.commons.extensions.beVisibleIf
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
+import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
 import com.simplemobiletools.musicplayer.activities.TrackActivity
 import com.simplemobiletools.musicplayer.adapters.TracksAdapter
@@ -42,6 +43,7 @@ class TracksFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
             tracks.sort()
 
             activity.runOnUiThread {
+                tracks_placeholder.text = context.getString(R.string.no_items_found)
                 tracks_placeholder.beVisibleIf(tracks.isEmpty())
                 val adapter = tracks_list.adapter
                 if (adapter == null) {

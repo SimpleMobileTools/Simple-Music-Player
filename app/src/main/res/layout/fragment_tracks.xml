@@ -15,10 +15,9 @@
         android:paddingStart="@dimen/activity_margin"
         android:paddingTop="@dimen/activity_margin"
         android:paddingEnd="@dimen/activity_margin"
-        android:text="@string/no_items_found"
+        android:text="@string/loading_files"
         android:textSize="@dimen/bigger_text_size"
-        android:textStyle="italic"
-        android:visibility="gone" />
+        android:textStyle="italic" />
 
     <com.simplemobiletools.commons.views.MyRecyclerView
         android:id="@+id/tracks_list"
