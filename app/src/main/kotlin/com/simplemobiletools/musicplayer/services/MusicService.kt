@@ -30,9 +30,7 @@ import androidx.core.app.NotificationCompat
 import androidx.media.session.MediaButtonReceiver
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.simplemobiletools.commons.extensions.getColoredBitmap
-import com.simplemobiletools.commons.extensions.getRealPathFromURI
-import com.simplemobiletools.commons.extensions.hasPermission
+import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.*
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.MainActivity
@@ -178,6 +176,19 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             val path = getRealPathFromURI(mIntentUri!!) ?: ""
             val track = RoomHelper(this).getTrackFromPath(path)
             if (track != null) {
+                if (track.title.isEmpty()) {
+                    track.title = mIntentUri?.toString()?.getFilenameFromPath() ?: ""
+                }
+
+                if (track.duration == 0) {
+                    try {
+                        val retriever = MediaMetadataRetriever()
+                        retriever.setDataSource(this, mIntentUri)
+                        track.duration = Math.round(retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)!!.toInt() / 1000f)
+                    } catch (ignored: Exception) {
+                    }
+                }
+
                 mTracks.add(track)
             }
         } else {

@@ -22,7 +22,7 @@ data class Track(
     @ColumnInfo(name = "title") var title: String,
     @ColumnInfo(name = "artist") var artist: String,
     @ColumnInfo(name = "path") var path: String,
-    @ColumnInfo(name = "duration") val duration: Int,
+    @ColumnInfo(name = "duration") var duration: Int,
     @ColumnInfo(name = "album") val album: String,
     @ColumnInfo(name = "cover_art") val coverArt: String,
     @ColumnInfo(name = "playlist_id") var playListId: Int,
