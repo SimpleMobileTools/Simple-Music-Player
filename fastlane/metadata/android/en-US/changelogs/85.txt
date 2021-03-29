@@ -1,0 +1,3 @@
+ * Adding some third party intent handling related improvements
+ * Show a placeholder while loading files
+ * Some UI, translation and stability improvements

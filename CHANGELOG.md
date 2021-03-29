@@ -1,6 +1,13 @@
 Changelog
 ==========
 
+Version 5.6.4 *(2021-03-29)*
+----------------------------
+
+ * Adding some third party intent handling related improvements
+ * Show a placeholder while loading files
+ * Some UI, translation and stability improvements
+
 Version 5.6.3 *(2021-03-08)*
 ----------------------------
 
