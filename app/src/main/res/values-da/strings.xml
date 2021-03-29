@@ -19,7 +19,7 @@
     <string name="autoplay_disabled">Automatisk afspilning deaktiveret</string>
     <string name="volume">Volume</string>
     <string name="playback_speed">Afspilningshastighed</string>
-    <string name="loading_files">Loading files…</string>
+    <string name="loading_files">Indlæser filer…</string>
     <string name="sleep_timer">Sleep timer</string>
     
         <!-- Playlists -->
