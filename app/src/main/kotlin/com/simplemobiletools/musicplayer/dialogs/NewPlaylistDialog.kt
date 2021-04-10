@@ -13,12 +13,12 @@ import com.simplemobiletools.musicplayer.extensions.playlistDAO
 import com.simplemobiletools.musicplayer.models.Playlist
 import kotlinx.android.synthetic.main.dialog_new_playlist.view.*
 
-class NewPlaylistDialog(val activity: Activity, var playlist: Playlist? = null, val callback: (playlistId: Int) -> Unit) {
+class NewPlaylistDialog(val activity: Activity, defaultName: String = "", var playlist: Playlist? = null, val callback: (playlistId: Int) -> Unit) {
     var isNewPlaylist = playlist == null
 
     init {
         if (playlist == null) {
-            playlist = Playlist(0, "")
+            playlist = Playlist(0, defaultName)
         }
 
         val view = activity.layoutInflater.inflate(R.layout.dialog_new_playlist, null).apply {

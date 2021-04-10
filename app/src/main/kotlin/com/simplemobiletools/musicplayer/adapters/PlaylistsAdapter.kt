@@ -142,7 +142,8 @@ class PlaylistsAdapter(activity: SimpleActivity, var playlists: ArrayList<Playli
     }
 
     private fun showRenameDialog() {
-        NewPlaylistDialog(activity, playlists[getItemKeyPosition(selectedKeys.first())]) {
+        val list = playlists[getItemKeyPosition(selectedKeys.first())]
+        NewPlaylistDialog(activity, list.title, list) {
             activity.runOnUiThread {
                 finishActMode()
             }

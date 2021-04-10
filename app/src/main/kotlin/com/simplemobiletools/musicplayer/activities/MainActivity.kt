@@ -43,6 +43,7 @@ import kotlinx.android.synthetic.main.view_current_track_bar.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import java.io.File
 
 class MainActivity : SimpleActivity() {
     private var isSearchOpen = false
@@ -117,7 +118,7 @@ class MainActivity : SimpleActivity() {
             R.id.sort -> showSortingDialog()
             R.id.sleep_timer -> showSleepTimer()
             R.id.create_new_playlist -> createNewPlaylist()
-            R.id.create_playlist_from_folder -> createPlaylistFromFolder()
+            R.id.create_playlist_from_folder -> createPlaylistsFromFolder()
             R.id.equalizer -> launchEqualizer()
             R.id.settings -> launchSettings()
             R.id.about -> launchAbout()
@@ -245,17 +246,22 @@ class MainActivity : SimpleActivity() {
         }
     }
 
-    private fun createPlaylistFromFolder() {
+    private fun createPlaylistsFromFolder() {
         FilePickerDialog(this, pickFile = false) {
-            createPlaylistFrom(it)
+            val folders = File(it).listFiles { f -> f.isDirectory }
+            if (folders != null && folders.isNotEmpty())
+                folders.forEach { f -> createPlaylistFrom(f.absolutePath) }
+            else createPlaylistFrom(it)
         }
     }
 
     private fun createPlaylistFrom(path: String) {
         ensureBackgroundThread {
+            val name = path.reversed().split("/")[0].reversed()
             getFolderTracks(path, true) { tracks ->
                 runOnUiThread {
-                    NewPlaylistDialog(this) { playlistId ->
+                    NewPlaylistDialog(this, name)
+                    { playlistId ->
                         tracks.forEach {
                             it.playListId = playlistId
                         }
