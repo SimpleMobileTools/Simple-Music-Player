@@ -53,10 +53,6 @@ class MainActivity : SimpleActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         appLaunched(BuildConfig.APPLICATION_ID)
-        if (config.appRunCount < 3) {
-            config.wereCoversUpdated = true
-            config.wereInitialTracksFetched = true
-        }
 
         handlePermission(PERMISSION_WRITE_STORAGE) {
             if (it) {
