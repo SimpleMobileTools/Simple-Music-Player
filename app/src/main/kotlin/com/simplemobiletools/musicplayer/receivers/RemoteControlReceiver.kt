@@ -42,7 +42,7 @@ class RemoteControlReceiver : BroadcastReceiver() {
             val swapPrevNext = context.config.swapPrevNext
             val intentNext = if (swapPrevNext) PREVIOUS else NEXT
             val intentPrevious = if (swapPrevNext) NEXT else PREVIOUS
-            val event = intent.getParcelableExtra<KeyEvent>(Intent.EXTRA_KEY_EVENT)
+            val event = intent.getParcelableExtra<KeyEvent>(Intent.EXTRA_KEY_EVENT) ?: return
             if (event.action == KeyEvent.ACTION_UP) {
                 when (event.keyCode) {
                     KeyEvent.KEYCODE_MEDIA_PLAY, KeyEvent.KEYCODE_MEDIA_PAUSE -> context.sendIntent(PLAYPAUSE)

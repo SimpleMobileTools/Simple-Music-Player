@@ -764,15 +764,18 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
                 val rawArt = mediaMetadataRetriever.embeddedPicture
                 if (rawArt != null) {
                     val options = BitmapFactory.Options()
-                    val bitmap = BitmapFactory.decodeByteArray(rawArt, 0, rawArt.size, options)
-                    if (bitmap != null) {
-                        val resultBitmap = if (bitmap.height > mCoverArtHeight * 2) {
-                            val ratio = bitmap.width / bitmap.height.toFloat()
-                            Bitmap.createScaledBitmap(bitmap, (mCoverArtHeight * ratio).toInt(), mCoverArtHeight, false)
-                        } else {
-                            bitmap
+                    try {
+                        val bitmap = BitmapFactory.decodeByteArray(rawArt, 0, rawArt.size, options)
+                        if (bitmap != null) {
+                            val resultBitmap = if (bitmap.height > mCoverArtHeight * 2) {
+                                val ratio = bitmap.width / bitmap.height.toFloat()
+                                Bitmap.createScaledBitmap(bitmap, (mCoverArtHeight * ratio).toInt(), mCoverArtHeight, false)
+                            } else {
+                                bitmap
+                            }
+                            return Pair(resultBitmap, true)
                         }
-                        return Pair(resultBitmap, true)
+                    } catch (ignored: Exception) {
                     }
                 }
 
