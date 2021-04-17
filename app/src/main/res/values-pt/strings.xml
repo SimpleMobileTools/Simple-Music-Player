@@ -19,8 +19,8 @@
     <string name="autoplay_disabled">Reprodução automática desativada</string>
     <string name="sleep_timer">Temporizador</string>
     <string name="volume">Volume</string>
-    <string name="playback_speed">Playback speed</string>
-    <string name="loading_files">Loading files…</string>
+    <string name="playback_speed">Velocidade de reprodução</string>
+    <string name="loading_files">A carregar ficheiros…</string>
 
     <!-- Playlists -->
     <string name="add_file_to_playlist">Adicionar ficheiro à lista de reprodução</string>
