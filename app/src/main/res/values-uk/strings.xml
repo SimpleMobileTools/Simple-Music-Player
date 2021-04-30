@@ -17,10 +17,10 @@
     <string name="disable_autoplay">Припинити автоматичне відтворення</string>
     <string name="autoplay_enabled">Активовано автоматичне відтворення</string>
     <string name="autoplay_disabled">Припинено автоматичне відтворення</string>
-    <string name="sleep_timer">Sleep timer</string>
-    <string name="volume">Volume</string>
-    <string name="playback_speed">Playback speed</string>
-    <string name="loading_files">Loading files…</string>
+    <string name="sleep_timer">Таймер сну</string>
+    <string name="volume">Гучність</string>
+    <string name="playback_speed">Швидкість відтворення</string>
+    <string name="loading_files">Завантаження файлів…</string>
 
     <!-- Playlists -->
     <string name="add_file_to_playlist">Додати файл до списку відтворення</string>
@@ -50,26 +50,28 @@
     <string name="show_album_cover">Показувати обгортку альбома на головному екрані</string>
     <string name="all_tracks">Усі композиції</string>
     <string name="add_to_playlist">Додати до плейлисту</string>
-    <string name="create_playlist_label">You can create a new playlist by selecting the wanted artists, albums or tracks and using Menu -> Add to playlist.</string>
+    <string name="create_playlist_label">Ви можете створити новий список відтворення, вибравши потрібних виконавців, альбоми або композиції використовуючи Меню -> Додати до плейлисту.</string>
 
     <!-- Sorting -->
-    <string name="track_count">Track Count</string>
-    <string name="album_count">Album Count</string>
-    <string name="artist_name">Artist Name</string>
+    <string name="track_count">Кількість композицій</string>
+    <string name="album_count">Кількість альбомів</string>
+    <string name="artist_name">Ім\'я виконавця</string>
     <string name="year">Рік</string>
 
     <!-- Artists -->
-    <string name="artists">Artists</string>
-    <string name="albums">Albums</string>
+    <string name="artists">Виконавці</string>
+    <string name="albums">Альбоми</string>
     <plurals name="albums_plural">
-        <item quantity="one">%d Album</item>
-        <item quantity="other">%d Albums</item>
+        <item quantity="one">%d Альбом</item>
+        <item quantity="few">%d Альбома</item>
+        <item quantity="other">%d Альбомів</item>
     </plurals>
 
-    <string name="tracks">Tracks</string>
+    <string name="tracks">Композиції</string>
     <plurals name="tracks_plural">
-        <item quantity="one">%d Track</item>
-        <item quantity="other">%d Tracks</item>
+        <item quantity="one">%d Композиція</item>
+        <item quantity="few">%d Композиції</item>
+        <item quantity="other">%d Композицій</item>
     </plurals>
 
     <!-- Queue -->
@@ -89,37 +91,37 @@
 
     <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
     <!-- App title has to have less than 50 characters. If you cannot squeeze it, just remove a part of it -->
-    <string name="app_title">Simple Music Player - A cool player for your songs</string>
+    <string name="app_title">Simple Music Player - Крутий плеєр для пісень</string>
     <!-- Short description has to have less than 80 chars -->
-    <string name="app_short_description">A clean music player with a customizable widget, stylish interface and no ads.</string>
+    <string name="app_short_description">Чистий музичний плеєр з настроюваним віджетом. Стильний інтерфейс, без реклами.</string>
     <string name="app_long_description">
-        A simple music player easily controllable from the status bar, home screen widget or by hardware buttons on your headset. It provides all expected functions like sorting in various ways as well as changing the Equalizer.  Listen to your favorite mp3, other songs or podcasts with this free beautiful music player.
+        Додатком легко керувати з статус бару, віджету на робочому столі або кнопок на гарнітурі. Він надає всі стандартні функції, такі як сортування різними способами, а також еквалайзер. Слухайте свої улюблені mp3, пісні або підкасти з цим красивим музичним плеєром.
 
-        It offers exclusive extras like Search and showing Album Art, a sleep timer and many other settings. This elegant music player allows you creating and managing handy playlists as you desire.
+        Він пропонує ексклюзивні додаткові функції, такі як пошук і відображення обкладинок альбомів, таймер сну та багато інших налаштувань. Цей елегантний музичний програвач дозволяє створювати зручні списки відтворення та керувати ними на свій розсуд.
 
-        Playlists are fully supported. You can add either individual files, or whole folders. If you won\'t like a file, you can either just remove it from a playlist, or delete the actual file altogether.
+        Повна підтримка списків відтворення, можна додавати окремі файли або цілі теки. Якщо вам не сподобається файл в списку відтворення, ви зможете видалити його зі списку або видалити сам файл.
 
-        Comes with a handy sleep timer so that you can reliably delay the time of the app shutting down.
+        Надійний таймер сну допоможе відкласти вимикання пристрою.
 
-        Supports both shuffle and repeating a particular song, as well as skipping and fast forwarding.
+        Підтримує відтворення у випадковому порядку та повтор певної пісні, а також пропуск і прискорене перемотування вперед.
 
-        Available in many different languages, offers multiple different equalizers.
+        Доступний на багатьох мовах, пропонується декілька різних еквалайзерів.
 
-        Easily check a file properties like the size, duration, last modified etc.
+        Легко перевіряйте властивості файлу, такі як розмір, тривалість, остання зміна і т.д.
 
         Модифікуйте EXIF дані файлу наприклад назву композиції та виконавця.
 
-        Quickly share files with your friends on social networks, emails, or anywhere you would like.
+        Швидко обмінюйтеся файлами з друзями в соціальних мережах, по електронній пошті і т.д.
 
-        This stylish music player contains a widget with customizable text color, alpha and the color of the background for easy access and control.
+        Цей стильний музичний програвач містить віджет з настроюваним кольором тексту, альфа-каналом і кольором фону для легкого доступу та управління.
 
-        It properly handles third party intents too for playing individual audio files so it can help at setting ringtones too.
+        До того ж додаток правильно обробляє сторонні "наміри" (intents) для відтворення окремих аудіофайлів, тому він також може допомогти при встановленні мелодії дзвінка.
 
-        It comes with material design and dark theme by default, provides great user experience for easy usage. The lack of internet access gives you more privacy, security and stability than other apps.
+        За замовчуванням він має матеріальний дизайн і темну тему, що забезпечує гарний користувальницький досвід і простоту використання. Відсутність у додатка доступу в інтернет дає вам більше конфіденційності, безпеки і стабільності, ніж з іншими програмами.
 
         Цей додаток не буде показувати рекламу, потрібні лише найнеобхідніші дозволи. Додаток має повністю відкритий програмний код, кольори оформлення можна легко налаштувати.
 
-        <b>Check out the full suite of Simple Tools here:</b>
+        <b>Ознайомтеся з повним набором додатків Simple Tools тут:</b>
         https://www.simplemobiletools.com
 
         <b>Facebook:</b>
