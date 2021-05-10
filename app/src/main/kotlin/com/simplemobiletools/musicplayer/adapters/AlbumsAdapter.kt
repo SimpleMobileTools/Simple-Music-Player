@@ -16,17 +16,14 @@ import com.simplemobiletools.commons.views.FastScroller
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
-import com.simplemobiletools.musicplayer.extensions.addTracksToPlaylist
-import com.simplemobiletools.musicplayer.extensions.addTracksToQueue
-import com.simplemobiletools.musicplayer.extensions.deleteTracks
-import com.simplemobiletools.musicplayer.extensions.getAlbumTracksSync
+import com.simplemobiletools.musicplayer.extensions.*
 import com.simplemobiletools.musicplayer.models.Album
 import com.simplemobiletools.musicplayer.models.Track
 import kotlinx.android.synthetic.main.item_album.view.*
 import java.util.*
 
 class AlbumsAdapter(activity: SimpleActivity, var albums: ArrayList<Album>, recyclerView: MyRecyclerView, fastScroller: FastScroller, itemClick: (Any) -> Unit) :
-        MyRecyclerViewAdapter(activity, recyclerView, fastScroller, itemClick) {
+    MyRecyclerViewAdapter(activity, recyclerView, fastScroller, itemClick) {
 
     private var textToHighlight = ""
     private val placeholderBig = resources.getColoredDrawableWithColor(R.drawable.ic_headset, textColor)
@@ -117,6 +114,8 @@ class AlbumsAdapter(activity: SimpleActivity, var albums: ArrayList<Album>, recy
                     }
 
                     tracks.addAll(activity.getAlbumTracksSync(album.id))
+
+                    activity.albumsDAO.deleteAlbum(album.id)
                 }
 
                 activity.deleteTracks(tracks) {
