@@ -26,6 +26,7 @@ class ArtistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
     private var artistsIgnoringSearch = ArrayList<Artist>()
 
     override fun setupFragment(activity: SimpleActivity) {
+        Artist.sorting = context.config.artistSorting
         ensureBackgroundThread {
             val cachedArtists = activity.artistDAO.getAll() as ArrayList<Artist>
             activity.runOnUiThread {
@@ -41,7 +42,6 @@ class ArtistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
     }
 
     private fun gotArtists(activity: SimpleActivity, artists: ArrayList<Artist>, isFromCache: Boolean) {
-        Artist.sorting = context.config.artistSorting
         artists.sort()
 
         activity.runOnUiThread {
@@ -66,7 +66,7 @@ class ArtistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
                 }
             } else {
                 val oldItems = (adapter as ArtistsAdapter).artists
-                if (oldItems.hashCode() != artists.hashCode()) {
+                if (oldItems.sortedBy { it.id }.hashCode() != artists.sortedBy { it.id }.hashCode()) {
                     adapter.updateItems(artists)
 
                     ensureBackgroundThread {

@@ -13,9 +13,7 @@ import com.simplemobiletools.musicplayer.activities.SimpleActivity
 import com.simplemobiletools.musicplayer.activities.TracksActivity
 import com.simplemobiletools.musicplayer.adapters.AlbumsAdapter
 import com.simplemobiletools.musicplayer.dialogs.ChangeSortingDialog
-import com.simplemobiletools.musicplayer.extensions.config
-import com.simplemobiletools.musicplayer.extensions.getAlbumsSync
-import com.simplemobiletools.musicplayer.extensions.getArtistsSync
+import com.simplemobiletools.musicplayer.extensions.*
 import com.simplemobiletools.musicplayer.helpers.ALBUM
 import com.simplemobiletools.musicplayer.helpers.TAB_ALBUMS
 import com.simplemobiletools.musicplayer.models.Album
@@ -26,38 +24,73 @@ class AlbumsFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
     private var albumsIgnoringSearch = ArrayList<Album>()
 
     override fun setupFragment(activity: SimpleActivity) {
+        Album.sorting = context.config.albumSorting
         ensureBackgroundThread {
-            val albums = ArrayList<Album>()
-
-            val artists = context.getArtistsSync()
-            artists.forEach { artist ->
-                albums.addAll(context.getAlbumsSync(artist))
-            }
-
-            Album.sorting = context.config.albumSorting
-            albums.sort()
-
+            val cachedAlbums = activity.albumsDAO.getAll() as ArrayList<Album>
             activity.runOnUiThread {
-                albums_placeholder.text = context.getString(R.string.no_items_found)
-                albums_placeholder.beVisibleIf(albums.isEmpty())
-                val adapter = albums_list.adapter
-                if (adapter == null) {
-                    AlbumsAdapter(activity, albums, albums_list, albums_fastscroller) {
-                        Intent(activity, TracksActivity::class.java).apply {
-                            putExtra(ALBUM, Gson().toJson(it))
-                            activity.startActivity(this)
-                        }
-                    }.apply {
-                        albums_list.adapter = this
+                gotAlbums(activity, cachedAlbums, true)
+
+                ensureBackgroundThread {
+                    val albums = ArrayList<Album>()
+
+                    val artists = context.getArtistsSync()
+                    artists.forEach { artist ->
+                        albums.addAll(context.getAlbumsSync(artist))
                     }
 
-                    albums_list.scheduleLayoutAnimation()
-                    albums_fastscroller.setViews(albums_list) {
-                        val album = (albums_list.adapter as AlbumsAdapter).albums.getOrNull(it)
-                        albums_fastscroller.updateBubbleText(album?.getBubbleText() ?: "")
+                    gotAlbums(activity, albums, false)
+                }
+            }
+        }
+    }
+
+    private fun gotAlbums(activity: SimpleActivity, albums: ArrayList<Album>, isFromCache: Boolean) {
+        albums.sort()
+
+        activity.runOnUiThread {
+            albums_placeholder.text = context.getString(R.string.no_items_found)
+            albums_placeholder.beVisibleIf(albums.isEmpty())
+            val adapter = albums_list.adapter
+            if (adapter == null) {
+                AlbumsAdapter(activity, albums, albums_list, albums_fastscroller) {
+                    Intent(activity, TracksActivity::class.java).apply {
+                        putExtra(ALBUM, Gson().toJson(it))
+                        activity.startActivity(this)
                     }
-                } else {
-                    (adapter as AlbumsAdapter).updateItems(albums)
+                }.apply {
+                    albums_list.adapter = this
+                }
+
+                albums_list.scheduleLayoutAnimation()
+                albums_fastscroller.setViews(albums_list) {
+                    val album = (albums_list.adapter as AlbumsAdapter).albums.getOrNull(it)
+                    albums_fastscroller.updateBubbleText(album?.getBubbleText() ?: "")
+                }
+            } else {
+                val oldItems = (adapter as AlbumsAdapter).albums
+                if (oldItems.sortedBy { it.id }.hashCode() != albums.sortedBy { it.id }.hashCode()) {
+                    adapter.updateItems(albums)
+
+                    ensureBackgroundThread {
+                        albums.forEach {
+                            context.albumsDAO.insert(it)
+                        }
+
+                        // remove deleted albums from cache
+                        if (!isFromCache) {
+                            val newIds = albums.map { it.id }
+                            val idsToRemove = arrayListOf<Long>()
+                            oldItems.forEach { album ->
+                                if (!newIds.contains(album.id)) {
+                                    idsToRemove.add(album.id)
+                                }
+                            }
+
+                            idsToRemove.forEach {
+                                activity.albumsDAO.deleteAlbum(it)
+                            }
+                        }
+                    }
                 }
             }
         }

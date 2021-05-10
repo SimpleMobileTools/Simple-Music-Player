@@ -12,10 +12,7 @@ import com.simplemobiletools.commons.helpers.isOreoPlus
 import com.simplemobiletools.commons.helpers.isQPlus
 import com.simplemobiletools.musicplayer.databases.SongsDatabase
 import com.simplemobiletools.musicplayer.helpers.*
-import com.simplemobiletools.musicplayer.interfaces.ArtistsDao
-import com.simplemobiletools.musicplayer.interfaces.PlaylistsDao
-import com.simplemobiletools.musicplayer.interfaces.QueueItemsDao
-import com.simplemobiletools.musicplayer.interfaces.SongsDao
+import com.simplemobiletools.musicplayer.interfaces.*
 import com.simplemobiletools.musicplayer.models.*
 import com.simplemobiletools.musicplayer.services.MusicService
 import org.greenrobot.eventbus.EventBus
@@ -45,6 +42,8 @@ val Context.tracksDAO: SongsDao get() = getTracksDB().SongsDao()
 val Context.queueDAO: QueueItemsDao get() = getTracksDB().QueueItemsDao()
 
 val Context.artistDAO: ArtistsDao get() = getTracksDB().ArtistsDao()
+
+val Context.albumsDAO: AlbumsDao get() = getTracksDB().AlbumsDao()
 
 fun Context.getTracksDB() = SongsDatabase.getInstance(this)
 
