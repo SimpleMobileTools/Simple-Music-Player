@@ -14,4 +14,9 @@
         android:id="@+id/cab_add_to_queue"
         android:title="@string/add_to_queue"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/cab_select_all"
+        android:icon="@drawable/ic_select_all_vector"
+        android:title="@string/select_all"
+        app:showAsAction="ifRoom" />
 </menu>

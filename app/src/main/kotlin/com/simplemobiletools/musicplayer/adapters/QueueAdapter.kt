@@ -36,7 +36,7 @@ import kotlinx.android.synthetic.main.item_track_queue.view.*
 import java.util.*
 
 class QueueAdapter(activity: SimpleActivity, val items: ArrayList<Track>, recyclerView: MyRecyclerView, fastScroller: FastScroller, itemClick: (Any) -> Unit) :
-        MyRecyclerViewAdapter(activity, recyclerView, fastScroller, itemClick), ItemTouchHelperContract {
+    MyRecyclerViewAdapter(activity, recyclerView, fastScroller, itemClick), ItemTouchHelperContract {
 
     private val placeholder = resources.getColoredDrawableWithColor(R.drawable.ic_headset, textColor)
     private var startReorderDragListener: StartReorderDragListener
@@ -79,6 +79,7 @@ class QueueAdapter(activity: SimpleActivity, val items: ArrayList<Track>, recycl
         when (id) {
             R.id.cab_remove_from_queue -> removeFromQueue()
             R.id.cab_add_to_playlist -> addToPlaylist()
+            R.id.cab_select_all -> selectAll()
         }
     }
 

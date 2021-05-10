@@ -8,7 +8,6 @@ import com.simplemobiletools.commons.extensions.deleteFiles
 import com.simplemobiletools.commons.extensions.getFilenameFromPath
 import com.simplemobiletools.commons.extensions.highlightTextPart
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
-import com.simplemobiletools.commons.helpers.mydebug
 import com.simplemobiletools.commons.models.FileDirItem
 import com.simplemobiletools.commons.views.FastScroller
 import com.simplemobiletools.commons.views.MyRecyclerView
@@ -57,6 +56,7 @@ class PlaylistsAdapter(activity: SimpleActivity, var playlists: ArrayList<Playli
         when (id) {
             R.id.cab_delete -> askConfirmDelete()
             R.id.cab_rename -> showRenameDialog()
+            R.id.cab_select_all -> selectAll()
         }
     }
 

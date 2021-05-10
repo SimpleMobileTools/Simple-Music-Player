@@ -84,6 +84,7 @@ class TracksHeaderAdapter(activity: SimpleActivity, val items: ArrayList<ListIte
             R.id.cab_add_to_playlist -> addToPlaylist()
             R.id.cab_add_to_queue -> addToQueue()
             R.id.cab_delete -> askConfirmDelete()
+            R.id.cab_select_all -> selectAll()
         }
     }
 

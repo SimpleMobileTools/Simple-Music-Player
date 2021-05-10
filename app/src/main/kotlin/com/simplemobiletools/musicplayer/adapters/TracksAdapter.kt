@@ -70,6 +70,7 @@ class TracksAdapter(activity: SimpleActivity, var tracks: ArrayList<Track>, val 
             R.id.cab_properties -> showProperties()
             R.id.cab_remove_from_playlist -> removeFromPlaylist()
             R.id.cab_delete -> askConfirmDelete()
+            R.id.cab_select_all -> selectAll()
         }
     }
 
