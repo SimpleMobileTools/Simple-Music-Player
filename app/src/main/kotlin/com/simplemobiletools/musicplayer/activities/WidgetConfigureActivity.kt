@@ -50,6 +50,9 @@ class WidgetConfigureActivity : SimpleActivity() {
         if (currSong != null) {
             song_info_title.text = currSong.title
             song_info_artist.text = currSong.artist
+        } else {
+            song_info_title.text = getString(R.string.artist)
+            song_info_artist.text = getString(R.string.song_title)
         }
     }
 
