@@ -29,6 +29,7 @@ class MyWidgetProvider : AppWidgetProvider() {
             val views = getRemoteViews(appWidgetManager, context, it)
             updateColors(context, views)
             setupButtons(context, views)
+            updateSongInfo(views, MusicService.mCurrTrack)
             updatePlayPauseButton(context, views, MusicService.getIsPlaying())
             appWidgetManager.updateAppWidget(it, views)
         }
