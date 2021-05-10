@@ -775,6 +775,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
                             }
                             return Pair(resultBitmap, true)
                         }
+                    } catch (ignored: OutOfMemoryError) {
                     } catch (ignored: Exception) {
                     }
                 }
