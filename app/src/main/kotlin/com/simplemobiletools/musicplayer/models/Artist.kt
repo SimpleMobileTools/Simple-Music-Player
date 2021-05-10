@@ -1,12 +1,22 @@
 package com.simplemobiletools.musicplayer.models
 
 import android.provider.MediaStore
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.Index
+import androidx.room.PrimaryKey
 import com.simplemobiletools.commons.helpers.AlphanumericComparator
 import com.simplemobiletools.commons.helpers.SORT_DESCENDING
 import com.simplemobiletools.musicplayer.helpers.PLAYER_SORT_BY_ALBUM_COUNT
 import com.simplemobiletools.musicplayer.helpers.PLAYER_SORT_BY_TITLE
 
-data class Artist(val id: Long, val title: String, var albumCnt: Int, var trackCnt: Int, var albumArtId: Long) : Comparable<Artist> {
+@Entity(tableName = "artists", indices = [(Index(value = ["id"], unique = true))])
+data class Artist(
+    @PrimaryKey(autoGenerate = true) val id: Long,
+    @ColumnInfo(name = "title") val title: String,
+    @ColumnInfo(name = "album_cnt") var albumCnt: Int,
+    @ColumnInfo(name = "track_cnt") var trackCnt: Int,
+    @ColumnInfo(name = "album_art_id") var albumArtId: Long) : Comparable<Artist> {
     companion object {
         var sorting = 0
     }
