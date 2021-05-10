@@ -11,18 +11,12 @@ import com.simplemobiletools.musicplayer.extensions.getAllInitialTracks
 import com.simplemobiletools.musicplayer.extensions.playlistDAO
 import com.simplemobiletools.musicplayer.helpers.ALL_TRACKS_PLAYLIST_ID
 import com.simplemobiletools.musicplayer.helpers.RoomHelper
-import com.simplemobiletools.musicplayer.interfaces.ArtistsDao
-import com.simplemobiletools.musicplayer.interfaces.PlaylistsDao
-import com.simplemobiletools.musicplayer.interfaces.QueueItemsDao
-import com.simplemobiletools.musicplayer.interfaces.SongsDao
-import com.simplemobiletools.musicplayer.models.Artist
-import com.simplemobiletools.musicplayer.models.Playlist
-import com.simplemobiletools.musicplayer.models.QueueItem
-import com.simplemobiletools.musicplayer.models.Track
+import com.simplemobiletools.musicplayer.interfaces.*
+import com.simplemobiletools.musicplayer.models.*
 import com.simplemobiletools.musicplayer.objects.MyExecutor
 import java.util.concurrent.Executors
 
-@Database(entities = [Track::class, Playlist::class, QueueItem::class, Artist::class], version = 7)
+@Database(entities = [Track::class, Playlist::class, QueueItem::class, Artist::class, Album::class], version = 7)
 abstract class SongsDatabase : RoomDatabase() {
 
     abstract fun SongsDao(): SongsDao
@@ -32,6 +26,8 @@ abstract class SongsDatabase : RoomDatabase() {
     abstract fun QueueItemsDao(): QueueItemsDao
 
     abstract fun ArtistsDao(): ArtistsDao
+
+    abstract fun AlbumsDao(): AlbumsDao
 
     companion object {
         private var db: SongsDatabase? = null
@@ -145,6 +141,9 @@ abstract class SongsDatabase : RoomDatabase() {
                 database.apply {
                     execSQL("CREATE TABLE `artists` (`id` INTEGER NOT NULL PRIMARY KEY, `title` TEXT NOT NULL, `album_cnt` INTEGER NOT NULL, `track_cnt` INTEGER NOT NULL, `album_art_id` INTEGER NOT NULL)")
                     execSQL("CREATE UNIQUE INDEX IF NOT EXISTS `index_artists_id` ON `artists` (`id`)")
+
+                    execSQL("CREATE TABLE `albums` (`id` INTEGER NOT NULL PRIMARY KEY, `artist` TEXT NOT NULL, `title` TEXT NOT NULL, `cover_art` TEXT NOT NULL, `year` INTEGER NOT NULL)")
+                    execSQL("CREATE UNIQUE INDEX IF NOT EXISTS `index_albums_id` ON `albums` (`id`)")
                 }
             }
         }
