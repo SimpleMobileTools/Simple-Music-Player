@@ -7,12 +7,10 @@ import android.graphics.Color
 import android.os.Bundle
 import android.widget.RemoteViews
 import com.simplemobiletools.commons.dialogs.ColorPickerDialog
-import com.simplemobiletools.commons.extensions.adjustAlpha
-import com.simplemobiletools.commons.extensions.applyColorFilter
-import com.simplemobiletools.commons.extensions.onSeekBarChangeListener
-import com.simplemobiletools.commons.extensions.setFillWithStroke
+import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.IS_CUSTOMIZING_COLORS
 import com.simplemobiletools.musicplayer.R
+import com.simplemobiletools.musicplayer.dialogs.WidgetLockedDialog
 import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.helpers.MyWidgetProvider
 import com.simplemobiletools.musicplayer.services.MusicService
@@ -27,6 +25,7 @@ class WidgetConfigureActivity : SimpleActivity() {
     private var mBgColor = 0
     private var mTextColor = 0
     private var mBgColorWithoutTransparency = 0
+    private var mWidgetLockedDialog: WidgetLockedDialog? = null
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         useDynamicTheme = false
@@ -53,6 +52,21 @@ class WidgetConfigureActivity : SimpleActivity() {
         } else {
             song_info_title.text = getString(R.string.artist)
             song_info_artist.text = getString(R.string.song_title)
+        }
+
+        if (!isCustomizingColors && !isOrWasThankYouInstalled()) {
+            mWidgetLockedDialog = WidgetLockedDialog(this) {
+                if (!isOrWasThankYouInstalled()) {
+                    finish()
+                }
+            }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (mWidgetLockedDialog != null && isOrWasThankYouInstalled()) {
+            mWidgetLockedDialog?.dismissDialog()
         }
     }
 

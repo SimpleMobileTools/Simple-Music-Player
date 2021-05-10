@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/widget_locked_holder"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/activity_margin">
+
+    <ImageView
+        android:id="@+id/widget_locked_image"
+        android:layout_width="@dimen/min_row_height"
+        android:layout_height="@dimen/min_row_height"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/ic_lock_vector" />
+
+    <com.simplemobiletools.commons.views.MyTextView
+        android:id="@+id/widget_locked_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/widget_locked_image"
+        android:gravity="center"
+        android:lineSpacingExtra="1sp"
+        android:paddingTop="@dimen/normal_margin"
+        android:textSize="@dimen/bigger_text_size" />
+
+</RelativeLayout>
