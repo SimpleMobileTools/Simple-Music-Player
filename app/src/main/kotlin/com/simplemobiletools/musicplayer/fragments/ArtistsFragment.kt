@@ -29,18 +29,18 @@ class ArtistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
         ensureBackgroundThread {
             val cachedArtists = activity.artistDAO.getAll() as ArrayList<Artist>
             activity.runOnUiThread {
-                gotArtists(activity, cachedArtists)
+                gotArtists(activity, cachedArtists, true)
 
                 ensureBackgroundThread {
                     activity.getArtists { artists ->
-                        gotArtists(activity, artists)
+                        gotArtists(activity, artists, false)
                     }
                 }
             }
         }
     }
 
-    private fun gotArtists(activity: SimpleActivity, artists: ArrayList<Artist>) {
+    private fun gotArtists(activity: SimpleActivity, artists: ArrayList<Artist>, isFromCache: Boolean) {
         Artist.sorting = context.config.artistSorting
         artists.sort()
 
@@ -65,13 +65,28 @@ class ArtistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
                     artists_fastscroller.updateBubbleText(artist?.getBubbleText() ?: "")
                 }
             } else {
-                val currentItems = (adapter as ArtistsAdapter).artists.hashCode()
-                if (currentItems.hashCode() != artists.hashCode()) {
+                val oldItems = (adapter as ArtistsAdapter).artists
+                if (oldItems.hashCode() != artists.hashCode()) {
                     adapter.updateItems(artists)
 
                     ensureBackgroundThread {
                         artists.forEach {
                             context.artistDAO.insert(it)
+                        }
+
+                        // remove deleted artists from cache
+                        if (!isFromCache) {
+                            val newIds = artists.map { it.id }
+                            val idsToRemove = arrayListOf<Long>()
+                            oldItems.forEach { artist ->
+                                if (!newIds.contains(artist.id)) {
+                                    idsToRemove.add(artist.id)
+                                }
+                            }
+
+                            idsToRemove.forEach {
+                                activity.artistDAO.deleteArtist(it)
+                            }
                         }
                     }
                 }

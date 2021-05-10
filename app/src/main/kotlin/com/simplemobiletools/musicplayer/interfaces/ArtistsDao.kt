@@ -13,4 +13,7 @@ interface ArtistsDao {
 
     @Query("SELECT * FROM artists")
     fun getAll(): List<Artist>
+
+    @Query("DELETE FROM artists WHERE id = :id")
+    fun deleteArtist(id: Long)
 }

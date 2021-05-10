@@ -25,7 +25,7 @@ import kotlinx.android.synthetic.main.item_artist.view.*
 import java.util.*
 
 class ArtistsAdapter(activity: SimpleActivity, var artists: ArrayList<Artist>, recyclerView: MyRecyclerView, fastScroller: FastScroller, itemClick: (Any) -> Unit) :
-        MyRecyclerViewAdapter(activity, recyclerView, fastScroller, itemClick) {
+    MyRecyclerViewAdapter(activity, recyclerView, fastScroller, itemClick) {
 
     private var textToHighlight = ""
     private val placeholder = resources.getColoredDrawableWithColor(R.drawable.ic_headset_padded, textColor)
@@ -122,6 +122,8 @@ class ArtistsAdapter(activity: SimpleActivity, var artists: ArrayList<Artist>, r
                     albums.forEach { album ->
                         tracks.addAll(activity.getAlbumTracksSync(album.id))
                     }
+
+                    activity.artistDAO.deleteArtist(artist.id)
                 }
 
                 activity.deleteTracks(tracks) {
