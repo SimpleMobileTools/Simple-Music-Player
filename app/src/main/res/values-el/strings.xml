@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Απλός Music Player</string>
     <string name="app_launcher_name">Music Player</string>
-    <string name="playlist_empty">Η λίστα αναπαραγωγής σας είναι κενή</string>
+    <string name="playlist_empty">Η λίστα αναπ/γής σας είναι κενή</string>
     <string name="rename_song">Μετονομασία τραγουδιού</string>
     <string name="rename_song_error">Παρουσιάστηκε σφάλμα κατά τη μετονομασία</string>
     <string name="rename_song_empty">Συμπληρώστε όλα τα πεδία</string>
@@ -19,8 +19,8 @@
     <string name="autoplay_disabled">Αυτόματη εκτέλεση Ανενεργή</string>
     <string name="sleep_timer">Χρονοδιακόπτης</string>
     <string name="volume">Ένταση</string>
-    <string name="playback_speed">Playback speed</string>
-    <string name="loading_files">Loading files…</string>
+    <string name="playback_speed">Ταχύτητα Αναπ/γής</string>
+    <string name="loading_files">Φόρτωση αρχείων…</string>
 
     <!-- Playlists -->
     <string name="add_file_to_playlist">Προσθήκη αρχείου στη λίστα</string>
