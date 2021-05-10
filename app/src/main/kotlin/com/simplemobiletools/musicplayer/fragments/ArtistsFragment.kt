@@ -7,11 +7,13 @@ import com.google.gson.Gson
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
 import com.simplemobiletools.commons.extensions.beGoneIf
 import com.simplemobiletools.commons.extensions.beVisibleIf
+import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.AlbumsActivity
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
 import com.simplemobiletools.musicplayer.adapters.ArtistsAdapter
 import com.simplemobiletools.musicplayer.dialogs.ChangeSortingDialog
+import com.simplemobiletools.musicplayer.extensions.artistDAO
 import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.extensions.getArtists
 import com.simplemobiletools.musicplayer.helpers.ARTIST
@@ -24,32 +26,54 @@ class ArtistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
     private var artistsIgnoringSearch = ArrayList<Artist>()
 
     override fun setupFragment(activity: SimpleActivity) {
-        activity.getArtists { artists ->
-            Artist.sorting = activity.config.artistSorting
-            artists.sort()
-
+        ensureBackgroundThread {
+            val cachedArtists = activity.artistDAO.getAll() as ArrayList<Artist>
             activity.runOnUiThread {
-                artists_placeholder.text = context.getString(R.string.no_items_found)
-                artists_placeholder.beVisibleIf(artists.isEmpty())
+                gotArtists(activity, cachedArtists)
 
-                val adapter = artists_list.adapter
-                if (adapter == null) {
-                    ArtistsAdapter(activity, artists, artists_list, artists_fastscroller) {
-                        Intent(activity, AlbumsActivity::class.java).apply {
-                            putExtra(ARTIST, Gson().toJson(it as Artist))
-                            activity.startActivity(this)
+                ensureBackgroundThread {
+                    activity.getArtists { artists ->
+                        gotArtists(activity, artists)
+                    }
+                }
+            }
+        }
+    }
+
+    private fun gotArtists(activity: SimpleActivity, artists: ArrayList<Artist>) {
+        Artist.sorting = context.config.artistSorting
+        artists.sort()
+
+        activity.runOnUiThread {
+            artists_placeholder.text = context.getString(R.string.no_items_found)
+            artists_placeholder.beVisibleIf(artists.isEmpty())
+
+            val adapter = artists_list.adapter
+            if (adapter == null) {
+                ArtistsAdapter(activity, artists, artists_list, artists_fastscroller) {
+                    Intent(activity, AlbumsActivity::class.java).apply {
+                        putExtra(ARTIST, Gson().toJson(it as Artist))
+                        activity.startActivity(this)
+                    }
+                }.apply {
+                    artists_list.adapter = this
+                }
+
+                artists_list.scheduleLayoutAnimation()
+                artists_fastscroller.setViews(artists_list) {
+                    val artist = (artists_list.adapter as ArtistsAdapter).artists.getOrNull(it)
+                    artists_fastscroller.updateBubbleText(artist?.getBubbleText() ?: "")
+                }
+            } else {
+                val currentItems = (adapter as ArtistsAdapter).artists.hashCode()
+                if (currentItems.hashCode() != artists.hashCode()) {
+                    adapter.updateItems(artists)
+
+                    ensureBackgroundThread {
+                        artists.forEach {
+                            context.artistDAO.insert(it)
                         }
-                    }.apply {
-                        artists_list.adapter = this
                     }
-
-                    artists_list.scheduleLayoutAnimation()
-                    artists_fastscroller.setViews(artists_list) {
-                        val artist = (artists_list.adapter as ArtistsAdapter).artists.getOrNull(it)
-                        artists_fastscroller.updateBubbleText(artist?.getBubbleText() ?: "")
-                    }
-                } else {
-                    (adapter as ArtistsAdapter).updateItems(artists)
                 }
             }
         }

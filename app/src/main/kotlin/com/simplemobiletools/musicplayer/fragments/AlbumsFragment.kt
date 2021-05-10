@@ -29,12 +29,12 @@ class AlbumsFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
         ensureBackgroundThread {
             val albums = ArrayList<Album>()
 
-            val artists = activity.getArtistsSync()
+            val artists = context.getArtistsSync()
             artists.forEach { artist ->
-                albums.addAll(activity.getAlbumsSync(artist))
+                albums.addAll(context.getAlbumsSync(artist))
             }
 
-            Album.sorting = activity.config.albumSorting
+            Album.sorting = context.config.albumSorting
             albums.sort()
 
             activity.runOnUiThread {
