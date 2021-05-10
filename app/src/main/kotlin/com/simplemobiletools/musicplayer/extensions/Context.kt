@@ -87,23 +87,14 @@ fun Context.getArtistsSync(): ArrayList<Artist> {
         Audio.Artists.ARTIST
     )
 
-    try {
-        val cursor = contentResolver.query(uri, projection, null, null, null)
-        cursor?.use {
-            if (cursor.moveToFirst()) {
-                do {
-                    val id = cursor.getLongValue(Audio.Artists._ID)
-                    val title = cursor.getStringValue(Audio.Artists.ARTIST) ?: MediaStore.UNKNOWN_STRING
-                    var artist = Artist(id, title, 0, 0, 0)
-                    artist = fillArtistExtras(this, artist)
-                    if (artist.albumCnt > 0) {
-                        artists.add(artist)
-                    }
-                } while (cursor.moveToNext())
-            }
+    queryCursor(uri, projection, showErrors = true) { cursor ->
+        val id = cursor.getLongValue(Audio.Artists._ID)
+        val title = cursor.getStringValue(Audio.Artists.ARTIST) ?: MediaStore.UNKNOWN_STRING
+        var artist = Artist(id, title, 0, 0, 0)
+        artist = fillArtistExtras(this, artist)
+        if (artist.albumCnt > 0) {
+            artists.add(artist)
         }
-    } catch (e: Exception) {
-        showErrorToast(e)
     }
 
     return artists
@@ -117,21 +108,13 @@ private fun fillArtistExtras(context: Context, artist: Artist): Artist {
 
     artist.albumCnt = context.getAlbumsCount(artist)
 
-    try {
-        val cursor = context.contentResolver.query(uri, projection, selection, selectionArgs, null)
-        cursor?.use {
-            if (cursor.moveToFirst()) {
-                do {
-                    val albumId = cursor.getLongValue(Audio.Albums._ID)
-                    if (artist.albumArtId == 0L) {
-                        artist.albumArtId = albumId
-                    }
-
-                    artist.trackCnt += context.getAlbumTracksCount(albumId)
-                } while (cursor.moveToNext())
-            }
+    context.queryCursor(uri, projection, selection, selectionArgs) { cursor ->
+        val albumId = cursor.getLongValue(Audio.Albums._ID)
+        if (artist.albumArtId == 0L) {
+            artist.albumArtId = albumId
         }
-    } catch (e: Exception) {
+
+        artist.trackCnt += context.getAlbumTracksCount(albumId)
     }
 
     return artist
@@ -161,23 +144,14 @@ fun Context.getAlbumsSync(artist: Artist): ArrayList<Album> {
         selectionArgs = arrayOf(artist.id.toString())
     }
 
-    try {
-        val cursor = contentResolver.query(uri, projection, selection, selectionArgs, null)
-        cursor?.use {
-            if (cursor.moveToFirst()) {
-                do {
-                    val id = cursor.getLongValue(Audio.Albums._ID)
-                    val artistName = cursor.getStringValue(Audio.Albums.ARTIST) ?: MediaStore.UNKNOWN_STRING
-                    val title = cursor.getStringValue(Audio.Albums.ALBUM)
-                    val coverArt = ContentUris.withAppendedId(artworkUri, id).toString()
-                    val year = cursor.getIntValue(Audio.Albums.FIRST_YEAR)
-                    val album = Album(id, artistName, title, coverArt, year)
-                    albums.add(album)
-                } while (cursor.moveToNext())
-            }
-        }
-    } catch (e: Exception) {
-        showErrorToast(e)
+    queryCursor(uri, projection, selection, selectionArgs, showErrors = true) { cursor ->
+        val id = cursor.getLongValue(Audio.Albums._ID)
+        val artistName = cursor.getStringValue(Audio.Albums.ARTIST) ?: MediaStore.UNKNOWN_STRING
+        val title = cursor.getStringValue(Audio.Albums.ALBUM)
+        val coverArt = ContentUris.withAppendedId(artworkUri, id).toString()
+        val year = cursor.getIntValue(Audio.Albums.FIRST_YEAR)
+        val album = Album(id, artistName, title, coverArt, year)
+        albums.add(album)
     }
 
     return albums
@@ -224,25 +198,16 @@ fun Context.getAlbumTracksSync(albumId: Long): ArrayList<Track> {
     val coverUri = ContentUris.withAppendedId(artworkUri, albumId)
     val coverArt = coverUri.toString()
 
-    try {
-        val cursor = contentResolver.query(uri, projection, selection, selectionArgs, null)
-        cursor?.use {
-            if (cursor.moveToFirst()) {
-                do {
-                    val id = cursor.getLongValue(Audio.Media._ID)
-                    val title = cursor.getStringValue(Audio.Media.TITLE)
-                    val duration = cursor.getIntValue(Audio.Media.DURATION) / 1000
-                    val trackId = cursor.getIntValue(Audio.Media.TRACK) % 1000
-                    val path = cursor.getStringValue(Audio.Media.DATA)
-                    val artist = cursor.getStringValue(Audio.Media.ARTIST) ?: MediaStore.UNKNOWN_STRING
-                    val album = cursor.getStringValue(Audio.Media.ALBUM)
-                    val track = Track(0, id, title, artist, path, duration, album, coverArt, 0, trackId)
-                    tracks.add(track)
-                } while (cursor.moveToNext())
-            }
-        }
-    } catch (e: Exception) {
-        showErrorToast(e)
+    queryCursor(uri, projection, selection, selectionArgs, showErrors = true) { cursor ->
+        val id = cursor.getLongValue(Audio.Media._ID)
+        val title = cursor.getStringValue(Audio.Media.TITLE)
+        val duration = cursor.getIntValue(Audio.Media.DURATION) / 1000
+        val trackId = cursor.getIntValue(Audio.Media.TRACK) % 1000
+        val path = cursor.getStringValue(Audio.Media.DATA)
+        val artist = cursor.getStringValue(Audio.Media.ARTIST) ?: MediaStore.UNKNOWN_STRING
+        val album = cursor.getStringValue(Audio.Media.ALBUM)
+        val track = Track(0, id, title, artist, path, duration, album, coverArt, 0, trackId)
+        tracks.add(track)
     }
 
     return tracks
