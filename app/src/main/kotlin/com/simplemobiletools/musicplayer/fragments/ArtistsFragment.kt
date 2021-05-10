@@ -46,7 +46,7 @@ class ArtistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
 
         activity.runOnUiThread {
             artists_placeholder.text = context.getString(R.string.no_items_found)
-            artists_placeholder.beVisibleIf(artists.isEmpty())
+            artists_placeholder.beVisibleIf(artists.isEmpty() && !isFromCache)
 
             val adapter = artists_list.adapter
             if (adapter == null) {

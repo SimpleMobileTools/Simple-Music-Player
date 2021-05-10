@@ -49,7 +49,8 @@ class AlbumsFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
 
         activity.runOnUiThread {
             albums_placeholder.text = context.getString(R.string.no_items_found)
-            albums_placeholder.beVisibleIf(albums.isEmpty())
+            albums_placeholder.beVisibleIf(albums.isEmpty() && !isFromCache)
+
             val adapter = albums_list.adapter
             if (adapter == null) {
                 AlbumsAdapter(activity, albums, albums_list, albums_fastscroller) {
