@@ -1,6 +1,13 @@
 Changelog
 ==========
 
+Version 5.7.0 *(2021-05-11)*
+----------------------------
+
+ * Cache artists and albums for quicker loading
+ * Some widget reliability improvements
+ * Adding some translation and stability improvements
+
 Version 5.6.5 *(2021-04-15)*
 ----------------------------
 
