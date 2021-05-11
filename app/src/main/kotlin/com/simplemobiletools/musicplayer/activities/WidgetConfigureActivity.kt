@@ -87,7 +87,7 @@ class WidgetConfigureActivity : SimpleActivity() {
     }
 
     private fun saveConfig() {
-        val appWidgetManager = AppWidgetManager.getInstance(this)
+        val appWidgetManager = AppWidgetManager.getInstance(this) ?: return
         val views = RemoteViews(packageName, R.layout.widget).apply {
             applyColorFilter(R.id.widget_background, mBgColor)
         }

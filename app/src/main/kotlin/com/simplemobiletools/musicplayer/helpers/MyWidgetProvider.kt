@@ -24,7 +24,7 @@ class MyWidgetProvider : AppWidgetProvider() {
     }
 
     private fun performUpdate(context: Context) {
-        val appWidgetManager = AppWidgetManager.getInstance(context)
+        val appWidgetManager = AppWidgetManager.getInstance(context) ?: return
         appWidgetManager.getAppWidgetIds(getComponentName(context)).forEach {
             val views = getRemoteViews(appWidgetManager, context, it)
             updateColors(context, views)
@@ -70,7 +70,7 @@ class MyWidgetProvider : AppWidgetProvider() {
 
     private fun songChanged(context: Context, intent: Intent) {
         val song = intent.getSerializableExtra(NEW_TRACK) as? Track ?: return
-        val appWidgetManager = AppWidgetManager.getInstance(context)
+        val appWidgetManager = AppWidgetManager.getInstance(context) ?: return
         appWidgetManager.getAppWidgetIds(getComponentName(context)).forEach {
             val views = getRemoteViews(appWidgetManager, context, it)
             updateSongInfo(views, song)
@@ -85,7 +85,7 @@ class MyWidgetProvider : AppWidgetProvider() {
 
     private fun songStateChanged(context: Context, intent: Intent) {
         val isPlaying = intent.getBooleanExtra(IS_PLAYING, false)
-        val appWidgetManager = AppWidgetManager.getInstance(context)
+        val appWidgetManager = AppWidgetManager.getInstance(context) ?: return
         appWidgetManager.getAppWidgetIds(getComponentName(context)).forEach {
             val views = getRemoteViews(appWidgetManager, context, it)
             updatePlayPauseButton(context, views, isPlaying)
