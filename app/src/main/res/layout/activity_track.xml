@@ -112,13 +112,12 @@
 
         <com.simplemobiletools.musicplayer.views.MarqueeTextView
             android:id="@+id/activity_track_title"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:width="800dp"
             android:fadingEdge="horizontal"
             android:scrollHorizontally="true"
             android:gravity="center"
-
             android:paddingStart="@dimen/activity_margin"
             android:paddingEnd="@dimen/activity_margin"
             android:textSize="@dimen/extra_big_text_size"
@@ -128,19 +127,21 @@
             app:layout_constraintTop_toBottomOf="@+id/activity_track_progress_current"
             tools:text="Track title"/>
 
-        <com.simplemobiletools.commons.views.MyTextView
+        <com.simplemobiletools.musicplayer.views.MarqueeTextView
             android:id="@+id/activity_track_artist"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:alpha="0.8"
-            android:ellipsize="end"
+            android:width="800dp"
+            android:fadingEdge="horizontal"
+            android:scrollHorizontally="true"
             android:gravity="center"
-            android:maxLines="1"
+            android:alpha="0.8"
             android:paddingStart="@dimen/activity_margin"
             android:paddingEnd="@dimen/activity_margin"
             android:textSize="@dimen/actionbar_text_size"
             app:layout_constraintBottom_toTopOf="@+id/activity_track_toggle_shuffle"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/activity_track_title"
             tools:text="Track artist" />
 
