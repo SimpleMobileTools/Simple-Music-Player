@@ -110,20 +110,23 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/activity_track_progressbar" />
 
-        <com.simplemobiletools.commons.views.MyTextView
+        <com.simplemobiletools.musicplayer.views.MarqueeTextView
             android:id="@+id/activity_track_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ellipsize="end"
+            android:width="800dp"
+            android:fadingEdge="horizontal"
+            android:scrollHorizontally="true"
             android:gravity="center"
-            android:maxLines="1"
+
             android:paddingStart="@dimen/activity_margin"
             android:paddingEnd="@dimen/activity_margin"
             android:textSize="@dimen/extra_big_text_size"
             app:layout_constraintBottom_toTopOf="@+id/activity_track_artist"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/activity_track_progress_current"
-            tools:text="Track title" />
+            tools:text="Track title"/>
 
         <com.simplemobiletools.commons.views.MyTextView
             android:id="@+id/activity_track_artist"
