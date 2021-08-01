@@ -1,0 +1,136 @@
+<resources>
+    <string name="app_name">Pemain Muzik Ringkas</string>
+    <string name="app_launcher_name">Pemain Muzik</string>
+    <string name="playlist_empty">Senarai main anda kosong</string>
+    <string name="rename_song">Namakan semula lagu</string>
+    <string name="rename_song_error">Ralat berlaku semasa proses penamaan</string>
+    <string name="rename_song_empty">Sila isi semua bidang</string>
+    <string name="enable_song_repetition">Ulangi lagu semasa</string>
+    <string name="disable_song_repetition">Henti mengulangi lagu semasa</string>
+    <string name="song_repetition_enabled">Ulangan lagu semasa diaktifkan</string>
+    <string name="song_repetition_disabled">Ulangan lagu semasa dilumpuhkan</string>
+    <string name="enable_shuffle">Dayakan rombakan</string>
+    <string name="disable_shuffle">Lumpuhkan rombakan</string>
+    <string name="shuffle_enabled">Rombakan diaktifkan</string>
+    <string name="shuffle_disabled">Rombakan dilumpuhkan</string>
+    <string name="enable_autoplay">Dayakan main automatik</string>
+    <string name="disable_autoplay">Lumpuhkan main automatik</string>
+    <string name="autoplay_enabled">Main automatik diaktifkan</string>
+    <string name="autoplay_disabled">Main automatik dilumpuhkan</string>
+    <string name="sleep_timer">Pemasa tidur</string>
+    <string name="volume">Kelantangan</string>
+    <string name="playback_speed">Kelajuan main balik</string>
+    <string name="loading_files">Memuatkan fail…</string>
+
+    <!-- Playlists -->
+    <string name="add_file_to_playlist">Tambah fail ke senarai</string>
+    <string name="add_folder_to_playlist">Tambah folder ke senarai</string>
+    <string name="manage_playlists">Urus senarai main</string>
+    <string name="playlists">SenaraiMain</string>
+    <string name="create_new_playlist">Buat senarai main baru</string>
+    <string name="rename_playlist">Namakan semula senarai main</string>
+    <string name="playlist_name_exists">Senarai main dengan nama itu sudah ada</string>
+    <string name="remove_playlist">Alih keluar senarai</string>
+    <string name="remove_playlist_description">Ini hanya akan membuang senarai main yang dipilih, bukan fail sebenar.</string>
+    <string name="remove_playlist_description_placeholder">Ini hanya akan membuang senarai main \"%s\", bukan fail sebenar.</string>
+    <string name="remove_from_playlist">Alih keluar dari senarai</string>
+    <string name="remove_from_playlist_description">Ini hanya akan membuang item dari senarai main \"%s\", fail sebenar tidak akan dihapuskan.</string>
+    <string name="delete_the_files_too">Padamkan fail juga</string>
+    <string name="open_playlist">Buka senarai main</string>
+    <string name="all_songs_cannot_be_deleted">\'Semua lagu\' senarai main tidak dapat dipadamkan</string>
+    <string name="empty_playlist">Senarai main semasa kosong</string>
+    <string name="fetching_songs">Mengambil lagu...</string>
+    <string name="all_songs">Semua lagu</string>
+    <string name="create_playlist_from_folder">Buat senarai main baru dari folder</string>
+    <string name="folder_contains_no_audio">Folder yang dipilih tidak mengandungi fail audio</string>
+    <string name="delete_current_song">Padamkan lagu semasa</string>
+    <string name="remove_current_song">Alih keluar lagu semasa dari senarai main</string>
+    <string name="show_filename">Tunjukkan nama fail sebagai tajuk lagu</string>
+    <string name="title_is_not_available">Sekiranya tajuk tidak tersedia</string>
+    <string name="show_album_cover">Tunjukkan kulit album di skrin utama</string>
+    <string name="all_tracks">Semua trek</string>
+    <string name="add_to_playlist">Tambahkan ke senarai main</string>
+    <string name="create_playlist_label">Anda boleh buat senarai main baru dengan pilih artis, album atau trek yang dikehendaki dan klik Menu -> Tambahkan ke senarai main.</string>
+
+    <!-- Sorting -->
+    <string name="track_count">Kiraan Trek</string>
+    <string name="album_count">Kiraan Album</string>
+    <string name="artist_name">Nama Artis</string>
+    <string name="year">Tahun</string>
+
+    <!-- Artists -->
+    <string name="artists">Artis</string>
+    <string name="albums">Album</string>
+    <plurals name="albums_plural">
+        <item quantity="one">%d Album</item>
+        <item quantity="other">%d Album</item>
+    </plurals>
+
+    <string name="tracks">Trek</string>
+    <plurals name="tracks_plural">
+        <item quantity="one">%d Trek</item>
+        <item quantity="other">%d Trek</item>
+    </plurals>
+
+    <!-- Queue -->
+    <string name="next_track">Seterusnya:</string>
+    <string name="track_queue">Barisan trek</string>
+    <string name="add_to_queue">Tambahkan ke Barisan</string>
+    <string name="remove_from_queue">Alih keluar dari Barisan</string>
+    <string name="create_playlist_from_queue">Buat senarai main dari barisan</string>
+
+    <!-- Settings -->
+    <string name="equalizer">Equalizer</string>
+    <string name="swap_prev_next">Tukar butang fon kepala sebelumnya/seterusnya</string>
+
+    <!-- FAQ -->
+    <string name="faq_1_title">Bagaimana saya boleh meneruskan lagu?</string>
+    <string name="faq_1_text">Anda boleh mengklik pada teks semasa atau maksimum yang berada di dekat bar carian, yang akan menggerakkan lagu itu ke belakang atau ke hadapan.</string>
+
+    <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
+    <!-- App title has to have less than 50 characters. If you cannot squeeze it, just remove a part of it -->
+    <string name="app_title">Pemain Muzik Ringkas</string>
+    <!-- Short description has to have less than 80 chars -->
+    <string name="app_short_description">Pemain muzik dengan widget yang dapat disesuaikan, bergaya, tanpa iklan.</string>
+    <string name="app_long_description">
+        Pemain muzik sederhana yang mudah dikawal dari bar status, widget skrin utama atau butang perkakasan pada alat dengar anda. Ini menyediakan semua fungsi yang diharapkan seperti menyusun dalam pelbagai cara serta mengubah Equalizer. Dengarkan mp3 kegemaran anda, lagu atau podcast lain dengan pemain muzik cantik percuma ini.
+
+        Ia menawarkan tambahan eksklusif seperti Cari dan menunjukkan Art Album, pemasa tidur(sleep timer) dan banyak tetapan lain. Pemain muzik yang elegan ini membolehkan anda membuat dan mengurus senarai main berguna seperti yang anda mahukan.
+
+        Senarai main disokong sepenuhnya. Anda boleh menambah fail individu, atau keseluruhan folder. Sekiranya anda tidak menyukai fail, anda boleh menghapusnya dari senarai main, atau memadam fail sebenar sama sekali.
+
+        Dilengkapi dengan pemasa tidur yang praktikal sehingga anda dapat menunda masa aplikasi dimatikan dengan pasti.
+
+        Menyokong pengacakan dan pengulangan lagu tertentu, serta melangkau dan meneruskan cepat.
+
+        Terdapat dalam pelbagai bahasa, menawarkan banyak penyamaan yang berbeza.
+
+        Periksa sifat fail dengan mudah seperti ukuran, tempoh, terakhir diubahsuai dll.
+
+        Ubah suai data EXIF ​​seperti tajuk lagu dan artis.
+
+        Kongsi fail dengan rakan anda dengan cepat di rangkaian sosial, e-mel, atau di mana sahaja yang anda mahukan.
+
+        Pemain muzik bergaya ini mengandungi widget dengan warna teks yang disesuaikan, alfa dan warna latar untuk akses dan kawalan yang mudah.
+
+        Ia dengan betul menangani maksud pihak ketiga juga untuk memainkan fail audio individu sehingga dapat membantu mengatur nada dering juga.
+
+        Ia dilengkapi dengan reka bentuk bahan dan tema gelap secara lalai, memberikan pengalaman pengguna yang hebat untuk penggunaan yang mudah. Kekurangan akses internet memberi anda lebih banyak privasi, keselamatan dan kestabilan daripada aplikasi lain.
+
+        Tidak mengandungi iklan atau kebenaran yang tidak perlu. Ia sepenuhnya terbuka, memberikan warna yang dapat disesuaikan.
+
+        <b>Lihat set lengkap Alat Mudah di sini:</b>
+        https://www.simplemobiletools.com
+
+        <b>Facebook:</b>
+        https://www.facebook.com/simplemobiletools
+
+        <b>Reddit:</b>
+        https://www.reddit.com/r/SimpleMobileTools
+    </string>
+
+    <!--
+        Haven't found some strings? There's more at
+        https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
+    -->
+</resources>
