@@ -8,7 +8,7 @@
     <string name="rename_song_empty">لطفا همه موارد را پر کنید</string>
     <string name="enable_song_repetition">تکرار آهنگ فعلی</string>
     <string name="disable_song_repetition">توقف تکرار آهنگ فعلی</string>
-    <string name="song_repetition_enabled">تکرار آهنگ فعلی فعال است</string>
+    <string name="song_repetition_enabled">تکرار آهنگ فعلی فعال شد</string>
     <string name="song_repetition_disabled">تکرار آهنگ فعلی غیرفعال شد</string>
     <string name="enable_shuffle">فعال کردن پخش تصادفی</string>
     <string name="disable_shuffle">غیر فعال کردن پخش تصادفی</string>
@@ -22,6 +22,9 @@
     <string name="volume">Volume</string>
     <string name="playback_speed">Playback speed</string>
     <string name="loading_files">Loading files…</string>
+
+
+    <!-- Playlists -->
     <string name="add_file_to_playlist">افزودن فایل به لیست علاقه مندی ها</string>
     <string name="add_folder_to_playlist">افزودن فولدر به لیست علاقه مندی ها</string>
     <string name="manage_playlists">مدیریت لیست پخش</string>
@@ -50,23 +53,47 @@
     <string name="all_tracks">همه آهنگ ها</string>
     <string name="add_to_playlist">افزودن به لیست پخش</string>
     <string name="create_playlist_label">با انتخاب هنرمندان ، آلبوم ها یا آهنگ های موردنظر و استفاده از منو -> افزودن به لیست پخش ، می توانید یک لیست پخش جدید ایجاد کنید.</string>
+
+    <!-- Sorting -->
     <string name="track_count">تعداد آهنگ</string>
     <string name="album_count">تعداد آلبوم ها</string>
     <string name="artist_name">نام خواننده</string>
     <string name="year">سال</string>
+
+    <!-- Artists -->
     <string name="artists">هنرمندان</string>
     <string name="albums">آلبوم ها</string>
+    <plurals name="albums_plural">
+        <item quantity="one">%d آلبوم</item>
+        <item quantity="other">%d آلبوم</item>
+    </plurals>
+
+
     <string name="tracks">آهنگ ها</string>
-    <string name="next_track">بعد:</string>
+    <plurals name="tracks_plural">
+        <item quantity="one">%d آهنگ</item>
+        <item quantity="other">%d آهنگ</item>
+    </plurals>
+
+    <!-- Queue -->
+    <string name="next_track">بعدی: </string>
     <string name="track_queue">صف آهنگ</string>
     <string name="add_to_queue">افزودن به صف</string>
     <string name="remove_from_queue">حذف از صف</string>
     <string name="create_playlist_from_queue">ایجاد لیست پخش از صف</string>
+
+    <!-- Settings -->
     <string name="equalizer">اکولایزر</string>
     <string name="swap_prev_next">تغییر دکمه های قبلی و بعدی هدفون</string>
+
+    <!-- FAQ -->
     <string name="faq_1_title">چطور می توانم آهنگ ها را سریع ارسال کنم؟</string>
     <string name="faq_1_text">می توانید بر روی متون فعلی یا حداکثر مدت زمان نزدیک نوار جستجو کلیک کنید ، که آهنگ را به عقب یا جلو منتقل می کند.</string>
+
+    <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
+    <!-- App title has to have less than 50 characters. If you cannot squeeze it, just remove a part of it -->
     <string name="app_title">پخش کننده موسیقی ساده - یک پخش کننده جالب برای آهنگ های شما</string>
+    <!-- Short description has to have less than 80 chars -->
     <string name="app_short_description">پخش کننده موسیقی تمیز با ویجت قابل تنظیم ، رابط کاربری شیک و بدون تبلیغات.</string>
     <string name="app_long_description">
        پخش کننده موسیقی ساده از نوار وضعیت ، ویجت صفحه اصلی یا دکمه های سخت افزاری روی هدست شما به راحتی قابل کنترل است. تمام توابع مورد انتظار مانند مرتب سازی به روش های مختلف و همچنین تغییر اکولایزر را ارائه می دهد. با این پخش کننده موسیقی زیبا و رایگان mp3 ، آهنگ ها یا پادکست های مورد علاقه خود را گوش دهید.
@@ -104,4 +131,8 @@
         <b> Reddit: </b>
         https://www.reddit.com/r/SimpleMobileTools
     </string>
+    <!--
+       Haven't found some strings? There's more at
+       https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
+   -->
 </resources>
