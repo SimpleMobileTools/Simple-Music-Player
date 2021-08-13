@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">پخش کننده موسیقی</string>
+    <string name="app_launcher_name">پخش کننده موسیقی</string>
+    <string name="playlist_empty">لیست پخش شما خالی است</string>
+    <string name="rename_song">تغییر نام آهنگ</string>
+    <string name="rename_song_error">هنگام تغییر نام خطایی روی داد</string>
+    <string name="rename_song_empty">لطفا همه موارد را پر کنید</string>
+    <string name="enable_song_repetition">تکرار آهنگ فعلی</string>
+    <string name="disable_song_repetition">توقف تکرار آهنگ فعلی</string>
+    <string name="song_repetition_enabled">تکرار آهنگ فعلی فعال است</string>
+    <string name="song_repetition_disabled">تکرار آهنگ فعلی غیرفعال شد</string>
+    <string name="enable_shuffle">فعال کردن پخش تصادفی</string>
+    <string name="disable_shuffle">غیر فعال کردن پخش تصادفی</string>
+    <string name="shuffle_enabled">پخش تصادفی فعال شد</string>
+    <string name="shuffle_disabled">پخش تصادفی غیر فعال شد</string>
+    <string name="enable_autoplay">فعال کردن پخش خودکار</string>
+    <string name="disable_autoplay">غیر فعال کردن پخش خودکار</string>
+    <string name="autoplay_enabled">پخش خودکار فعال شد</string>
+    <string name="autoplay_disabled">پخش خودکار غیر فعال شد</string>
+    <string name="sleep_timer">تایمر خواب</string>
+    <string name="volume">Volume</string>
+    <string name="playback_speed">Playback speed</string>
+    <string name="loading_files">Loading files…</string>
+    <string name="add_file_to_playlist">افزودن فایل به لیست علاقه مندی ها</string>
+    <string name="add_folder_to_playlist">افزودن فولدر به لیست علاقه مندی ها</string>
+    <string name="manage_playlists">مدیریت لیست پخش</string>
+    <string name="playlists">لیست پخش</string>
+    <string name="create_new_playlist">ایجاد لیست پخش جدید</string>
+    <string name="rename_playlist">تغییر نام لیست پخش</string>
+    <string name="playlist_name_exists">لیست پخش با این  نام از قبل موجود است</string>
+    <string name="remove_playlist">حذف لیست پخش</string>
+    <string name="remove_playlist_description">با این کار فقط لیست های پخش انتخاب شده حذف می شوند ، نه فایل های واقعی.</string>
+    <string name="remove_playlist_description_placeholder">This will only remove playlist \"%s\", not the actual files.</string>
+    <string name="remove_from_playlist">حذف از لیست پخش</string>
+    <string name="remove_from_playlist_description">با این کار فقط موارد از لیست پخش \"٪ s\" حذف می شوند ، فایل های واقعی حذف نمی شوند.</string>
+    <string name="delete_the_files_too">فایلها را نیز حذف کنید</string>
+    <string name="open_playlist">باز کردن لیست پخش</string>
+    <string name="all_songs_cannot_be_deleted">لیست پخش \"همه آهنگ ها\" حذف نمی شود</string>
+    <string name="empty_playlist">لیست پخش کنونی خالی است</string>
+    <string name="fetching_songs">در حال واکشی آهنگ ها…</string>
+    <string name="all_songs">همه آهنگها</string>
+    <string name="create_playlist_from_folder">ایجاد لیست پخش جدید از پوشه</string>
+    <string name="folder_contains_no_audio">پوشه انتخاب شده حاوی هیچ فایل صوتی نیست</string>
+    <string name="delete_current_song">حذف آهنگ فعلی</string>
+    <string name="remove_current_song">حذف آهنگ فعلی از لیست پخش</string>
+    <string name="show_filename">نمایش نام فایل به عنوان عنوان آهنگ</string>
+    <string name="title_is_not_available">اگر عنوان در دسترس نیست</string>
+    <string name="show_album_cover">جلد آلبوم را روی صفحه اصلی نمایش دهید</string>
+    <string name="all_tracks">همه آهنگ ها</string>
+    <string name="add_to_playlist">افزودن به لیست پخش</string>
+    <string name="create_playlist_label">با انتخاب هنرمندان ، آلبوم ها یا آهنگ های موردنظر و استفاده از منو -> افزودن به لیست پخش ، می توانید یک لیست پخش جدید ایجاد کنید.</string>
+    <string name="track_count">تعداد آهنگ</string>
+    <string name="album_count">تعداد آلبوم ها</string>
+    <string name="artist_name">نام خواننده</string>
+    <string name="year">سال</string>
+    <string name="artists">هنرمندان</string>
+    <string name="albums">آلبوم ها</string>
+    <string name="tracks">آهنگ ها</string>
+    <string name="next_track">بعد:</string>
+    <string name="track_queue">صف آهنگ</string>
+    <string name="add_to_queue">افزودن به صف</string>
+    <string name="remove_from_queue">حذف از صف</string>
+    <string name="create_playlist_from_queue">ایجاد لیست پخش از صف</string>
+    <string name="equalizer">اکولایزر</string>
+    <string name="swap_prev_next">تغییر دکمه های قبلی و بعدی هدفون</string>
+    <string name="faq_1_title">چطور می توانم آهنگ ها را سریع ارسال کنم؟</string>
+    <string name="faq_1_text">می توانید بر روی متون فعلی یا حداکثر مدت زمان نزدیک نوار جستجو کلیک کنید ، که آهنگ را به عقب یا جلو منتقل می کند.</string>
+    <string name="app_title">پخش کننده موسیقی ساده - یک پخش کننده جالب برای آهنگ های شما</string>
+    <string name="app_short_description">پخش کننده موسیقی تمیز با ویجت قابل تنظیم ، رابط کاربری شیک و بدون تبلیغات.</string>
+    <string name="app_long_description">
+       پخش کننده موسیقی ساده از نوار وضعیت ، ویجت صفحه اصلی یا دکمه های سخت افزاری روی هدست شما به راحتی قابل کنترل است. تمام توابع مورد انتظار مانند مرتب سازی به روش های مختلف و همچنین تغییر اکولایزر را ارائه می دهد. با این پخش کننده موسیقی زیبا و رایگان mp3 ، آهنگ ها یا پادکست های مورد علاقه خود را گوش دهید.
+
+        این برنامه موارد اضافی منحصر به فردی مانند جستجو و نمایش آلبوم ، ساعت سنج و تنظیمات دیگر را ارائه می دهد. این پخش کننده موسیقی زیبا به شما این امکان را می دهد تا لیست های پخش دستی را به دلخواه ایجاد و مدیریت کنید.
+
+        لیست پخش به طور کامل پشتیبانی می شود. می توانید فایل های جداگانه یا فولدرهای کامل را اضافه کنید. اگر فایلی را دوست ندارید ، می توانید آن را از لیست پخش حذف کرده یا فایل واقعی را به طور کلی حذف کنید.
+
+        دارای یک تایمر خواب مفید است تا بتوانید زمان خاموش شدن برنامه را به طور موثری به تأخیر بیندازید.
+
+        از هر دو آهنگ مختلط و تکرار شده ، و همچنین پرش و ارسال سریع پشتیبانی می کند.
+
+        موجود در بسیاری از زبان های مختلف ، ارائه اکولایزرهای مختلف مختلف.
+
+        به راحتی ویژگی های فایل مانند اندازه ، مدت زمان ، آخرین تغییر و غیره را بررسی کنید.
+
+        تغییر داده های فایل EXIF ​​مانند عنوان آهنگ و هنرمند.
+
+        به سرعت فایل ها را در شبکه های اجتماعی ، ایمیل ها یا هرجایی که دوست دارید با دوستان خود به اشتراک بگذارید.
+
+        این پخش کننده موسیقی شیک دارای یک ویجت با رنگ متن قابل تنظیم ، آلفا و رنگ پس زمینه برای دسترسی آسان و کنترل است.
+
+        این برنامه به درستی اهداف شخص ثالث را برای پخش فایل های صوتی جداگانه نیز مدیریت می کند ، بنابراین می تواند در تنظیم آهنگ های زنگ نیز کمک کند.
+
+        به طور پیش فرض با طراحی متریال و تم تیره ارائه می شود و تجربه کاربری عالی را برای استفاده آسان فراهم می کند. عدم دسترسی به اینترنت به شما حریم خصوصی ، امنیت و ثبات بیشتری نسبت به سایر برنامه ها می دهد.
+
+        بدون تبلیغات و مجوزهای غیر ضروری. این کاملاً منبع باز است ، رنگهای قابل تنظیم را ارائه می دهد.
+
+        <b> مجموعه کامل ابزارهای ساده را اینجا ببینید: </b>
+        https://www.simplemobiletools.com
+
+        <b> فیس بوک: </b>
+        https://www.facebook.com/simplemobiletools
+
+        <b> Reddit: </b>
+        https://www.reddit.com/r/SimpleMobileTools
+    </string>
+</resources>
