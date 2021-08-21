@@ -6,9 +6,7 @@
     <string name="rename_song_error">Algo fallou ao renomear</string>
     <string name="rename_song_empty">Por favor complete todos os campos</string>
     <string name="enable_song_repetition">Repetir a canción actual</string>
-    <string name="disable_song_repetition">Non repetir a canción actual</string>
     <string name="song_repetition_enabled">Repetición canción actual activada</string>
-    <string name="song_repetition_disabled">Repetición canción actual desactivada</string>
     <string name="repeat_playlist">Repeat playlist</string>
     <string name="repeat_playlist_enabled">Playlist repetition enabled</string>
     <string name="enable_stop_playback_after_current_song">Stop playback after current song</string>

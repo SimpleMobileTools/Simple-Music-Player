@@ -6,9 +6,7 @@
     <string name="rename_song_error">Ralat berlaku semasa proses penamaan</string>
     <string name="rename_song_empty">Sila isi semua bidang</string>
     <string name="enable_song_repetition">Ulangi lagu semasa</string>
-    <string name="disable_song_repetition">Henti mengulangi lagu semasa</string>
     <string name="song_repetition_enabled">Ulangan lagu semasa diaktifkan</string>
-    <string name="song_repetition_disabled">Ulangan lagu semasa dilumpuhkan</string>
     <string name="repeat_playlist">Repeat playlist</string>
     <string name="repeat_playlist_enabled">Playlist repetition enabled</string>
     <string name="enable_stop_playback_after_current_song">Stop playback after current song</string>
