@@ -285,7 +285,8 @@ class TrackActivity : SimpleActivity(), PlaybackSpeedListener {
     private fun toggleShuffle() {
         val isShuffleEnabled = !config.isShuffleEnabled
         config.isShuffleEnabled = isShuffleEnabled
-        toast(if (isShuffleEnabled) R.string.shuffle_enabled else R.string.shuffle_disabled)
+        val snackbarMessageRes = if (isShuffleEnabled) R.string.shuffle_enabled else R.string.shuffle_disabled
+        Snackbar.make(this, activity_track_Scrollview, getString(snackbarMessageRes), LENGTH_SHORT).show()
         setupShuffleButton()
         sendIntent(REFRESH_LIST)
     }
@@ -303,7 +304,8 @@ class TrackActivity : SimpleActivity(), PlaybackSpeedListener {
         val newPlaybackSetting = config.playbackSetting.nextPlaybackOption
         config.playbackSetting = newPlaybackSetting
 
-        toast(newPlaybackSetting.actionCompletedStringRes)
+        val snackbarMessage = getString(newPlaybackSetting.actionCompletedStringRes)
+        Snackbar.make(this, activity_track_Scrollview, snackbarMessage, LENGTH_SHORT).show()
 
         setupPlaybackSettingButton()
     }
