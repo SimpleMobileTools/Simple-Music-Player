@@ -5,12 +5,9 @@
     <string name="rename_song">Byt namn på låt</string>
     <string name="rename_song_error">Ett fel uppstod under namnbytet</string>
     <string name="rename_song_empty">Du måste fylla i alla fält</string>
-    <string name="enable_song_repetition">Repetera nuvarande låt</string>
-    <string name="song_repetition_enabled">Repetering av nuvarande låt är aktiverad</string>
+    <string name="repeat_song">Repetera nuvarande låt</string>
     <string name="repeat_playlist">Repeat playlist</string>
-    <string name="repeat_playlist_enabled">Playlist repetition enabled</string>
-    <string name="enable_stop_playback_after_current_song">Stop playback after current song</string>
-    <string name="stop_playback_after_current_song_enabled">Stop playback after current song enabled</string>
+    <string name="stop_playback_after_current_song">Stop playback after current song</string>
     <string name="enable_shuffle">Aktivera blanda</string>
     <string name="disable_shuffle">Inaktivera blanda</string>
     <string name="shuffle_enabled">Blanda är nu aktiverad</string>

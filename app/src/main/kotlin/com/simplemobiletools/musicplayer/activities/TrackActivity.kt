@@ -304,7 +304,7 @@ class TrackActivity : SimpleActivity(), PlaybackSpeedListener {
         val newPlaybackSetting = config.playbackSetting.nextPlaybackOption
         config.playbackSetting = newPlaybackSetting
 
-        val snackbarMessage = getString(newPlaybackSetting.actionCompletedStringRes)
+        val snackbarMessage = getString(newPlaybackSetting.descriptionStringRes)
         Snackbar.make(this, activity_track_Scrollview, snackbarMessage, LENGTH_SHORT).show()
 
         setupPlaybackSettingButton()
@@ -314,7 +314,7 @@ class TrackActivity : SimpleActivity(), PlaybackSpeedListener {
         val playbackSetting = config.playbackSetting
         activity_track_playback_setting.apply {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                tooltipText = getString(playbackSetting.tooltipStringRes)
+                tooltipText = getString(playbackSetting.descriptionStringRes)
             }
             contentDescription = getString(playbackSetting.contentDescriptionStringRes)
             setImageResource(playbackSetting.iconRes)

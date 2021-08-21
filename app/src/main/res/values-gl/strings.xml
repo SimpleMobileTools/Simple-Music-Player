@@ -5,12 +5,9 @@
     <string name="rename_song">Renomear canción</string>
     <string name="rename_song_error">Algo fallou ao renomear</string>
     <string name="rename_song_empty">Por favor complete todos os campos</string>
-    <string name="enable_song_repetition">Repetir a canción actual</string>
-    <string name="song_repetition_enabled">Repetición canción actual activada</string>
+    <string name="repeat_song">Repetir a canción actual</string>
     <string name="repeat_playlist">Repeat playlist</string>
-    <string name="repeat_playlist_enabled">Playlist repetition enabled</string>
-    <string name="enable_stop_playback_after_current_song">Stop playback after current song</string>
-    <string name="stop_playback_after_current_song_enabled">Stop playback after current song enabled</string>
+    <string name="stop_playback_after_current_song">Stop playback after current song</string>
     <string name="enable_shuffle">Activa Modo aleatorio</string>
     <string name="disable_shuffle">Desactiva Modo aleatorio</string>
     <string name="shuffle_enabled">Modo aleatorio activado</string>

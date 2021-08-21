@@ -5,12 +5,9 @@
     <string name="rename_song">Pervardinti dainą</string>
     <string name="rename_song_error">Įvyko klaida pervardinant</string>
     <string name="rename_song_empty">Prašome užpildyti visus laukelius</string>
-    <string name="enable_song_repetition">Pakartoti dabartinę dainą</string>
-    <string name="song_repetition_enabled">Dabartinės dainos kartojimas įjungtas</string>
+    <string name="repeat_song">Pakartoti dabartinę dainą</string>
     <string name="repeat_playlist">Repeat playlist</string>
-    <string name="repeat_playlist_enabled">Playlist repetition enabled</string>
-    <string name="enable_stop_playback_after_current_song">Stop playback after current song</string>
-    <string name="stop_playback_after_current_song_enabled">Stop playback after current song enabled</string>
+    <string name="stop_playback_after_current_song">Stop playback after current song</string>
     <string name="enable_shuffle">Įjungti grojimą atsitiktine tvarka</string>
     <string name="disable_shuffle">Išjungti grojimą atsitiktine tvarka</string>
     <string name="shuffle_enabled">Grojimas atsitiktine tvarka įjungtas</string>

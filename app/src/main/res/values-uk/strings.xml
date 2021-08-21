@@ -5,12 +5,9 @@
     <string name="rename_song">Перейменувати пісню</string>
     <string name="rename_song_error">Трапилася помилка під час перейменування</string>
     <string name="rename_song_empty">Будь ласка, заповніть всі поля</string>
-    <string name="enable_song_repetition">Повторити поточну пісню</string>
-    <string name="song_repetition_enabled">Активовано повторення поточної пісні</string>
+    <string name="repeat_song">Повторювати поточну пісню</string>
     <string name="repeat_playlist">Повторювати список</string>
-    <string name="repeat_playlist_enabled">Повторення списку увімкнено</string>
-    <string name="enable_stop_playback_after_current_song">Зупинити відтворення після поточної пісні</string>
-    <string name="stop_playback_after_current_song_enabled">Зупинку відтворення після поточної пісні увімкнено</string>
+    <string name="stop_playback_after_current_song">Зупинити відтворення після поточної пісні</string>
     <string name="enable_shuffle">Відтворювати пісні довільно</string>
     <string name="disable_shuffle">Відтворювати за списком</string>
     <string name="shuffle_enabled">Активовано довільне відтворення</string>

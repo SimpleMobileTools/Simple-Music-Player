@@ -5,12 +5,9 @@
     <string name="rename_song">Preimenuj pjesmu</string>
     <string name="rename_song_error">Došlo je do pogreške prilikom preimenovanja</string>
     <string name="rename_song_empty">Ispunite sva polja</string>
-    <string name="enable_song_repetition">Ponovi trenutnu pjesmu</string>
-    <string name="song_repetition_enabled">Ponavljanje trenutne pjesme omogućeno</string>
+    <string name="repeat_song">Ponovi trenutnu pjesmu</string>
     <string name="repeat_playlist">Repeat playlist</string>
-    <string name="repeat_playlist_enabled">Playlist repetition enabled</string>
-    <string name="enable_stop_playback_after_current_song">Stop playback after current song</string>
-    <string name="stop_playback_after_current_song_enabled">Stop playback after current song enabled</string>
+    <string name="stop_playback_after_current_song">Stop playback after current song</string>
     <string name="enable_shuffle">Omogući slučajnu reprodukciju</string>
     <string name="disable_shuffle">Onemogući slučajnu reprodukciju</string>
     <string name="shuffle_enabled">Omogućena je slučajna reprodukcija</string>

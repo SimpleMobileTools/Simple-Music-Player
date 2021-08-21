@@ -89,7 +89,7 @@
             android:layout_width="@dimen/normal_icon_size"
             android:layout_height="@dimen/normal_icon_size"
             android:layout_weight="1"
-            android:contentDescription="@string/enable_song_repetition"
+            android:contentDescription="@string/repeat_song"
             android:paddingTop="@dimen/small_margin"
             android:paddingBottom="@dimen/small_margin"
             android:src="@drawable/ic_repeat_playlist_vector" />

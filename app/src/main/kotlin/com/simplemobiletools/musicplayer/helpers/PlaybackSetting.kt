@@ -6,28 +6,23 @@ import com.simplemobiletools.musicplayer.R
 
 enum class PlaybackSetting(
     @DrawableRes val iconRes: Int,
-    @StringRes val actionCompletedStringRes: Int,
-    @StringRes val tooltipStringRes: Int,
-    @StringRes val contentDescriptionStringRes: Int
+    @StringRes val descriptionStringRes: Int
 ) {
     REPEAT_PLAYLIST(
         iconRes = R.drawable.ic_repeat_playlist_vector,
-        actionCompletedStringRes = R.string.repeat_playlist_enabled,
-        tooltipStringRes = R.string.repeat_playlist,
-        contentDescriptionStringRes = R.string.enable_song_repetition
+        descriptionStringRes = R.string.repeat_playlist
     ),
     REPEAT_SONG(
         iconRes = R.drawable.ic_repeat_one_song_vector,
-        actionCompletedStringRes = R.string.song_repetition_enabled,
-        tooltipStringRes = R.string.enable_song_repetition,
-        contentDescriptionStringRes = R.string.enable_stop_playback_after_current_song
+        descriptionStringRes = R.string.repeat_song
     ),
     STOP_AFTER_CURRENT_SONG(
         iconRes = R.drawable.ic_play_one_song_vector,
-        actionCompletedStringRes = R.string.stop_playback_after_current_song_enabled,
-        tooltipStringRes = R.string.enable_stop_playback_after_current_song,
-        contentDescriptionStringRes = R.string.repeat_playlist
+        descriptionStringRes = R.string.stop_playback_after_current_song
     );
+
+    val contentDescriptionStringRes: Int
+        @StringRes get() = nextPlaybackOption.descriptionStringRes
 
     val nextPlaybackOption: PlaybackSetting
         get() = when (this) {

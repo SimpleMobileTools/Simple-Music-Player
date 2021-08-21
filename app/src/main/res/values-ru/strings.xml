@@ -5,12 +5,9 @@
     <string name="rename_song">Переименовать композицию</string>
     <string name="rename_song_error">Во время переименования произошла ошибка</string>
     <string name="rename_song_empty">Пожалуйста, заполните все поля</string>
-    <string name="enable_song_repetition">Повторять текущую композицию</string>
-    <string name="song_repetition_enabled">Повтор текущей композиции включён</string>
+    <string name="repeat_song">Повторять текущую композицию</string>
     <string name="repeat_playlist">Повторять список</string>
-    <string name="repeat_playlist_enabled">Повтор списка включён</string>
-    <string name="enable_stop_playback_after_current_song">Остановить воспроизведение после текущей композиции</string>
-    <string name="stop_playback_after_current_song_enabled">Остановка воспроизведения после текущей композиции включена</string>
+    <string name="stop_playback_after_current_song">Остановить воспроизведение после текущей композиции</string>
     <string name="enable_shuffle">Играть в случайном порядке</string>
     <string name="disable_shuffle">Играть подряд</string>
     <string name="shuffle_enabled">Воспроизведение в случайном порядке включено</string>
