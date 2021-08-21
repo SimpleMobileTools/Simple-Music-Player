@@ -12,10 +12,6 @@
     <string name="disable_shuffle">Відтворювати за списком</string>
     <string name="shuffle_enabled">Активовано довільне відтворення</string>
     <string name="shuffle_disabled">Припинено довільне відтворення</string>
-    <string name="enable_autoplay">Відтворювати автоматично</string>
-    <string name="disable_autoplay">Припинити автоматичне відтворення</string>
-    <string name="autoplay_enabled">Активовано автоматичне відтворення</string>
-    <string name="autoplay_disabled">Припинено автоматичне відтворення</string>
     <string name="sleep_timer">Таймер сну</string>
     <string name="volume">Гучність</string>
     <string name="playback_speed">Швидкість відтворення</string>

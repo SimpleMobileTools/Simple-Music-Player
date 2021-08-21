@@ -12,10 +12,6 @@
     <string name="disable_shuffle">Désactiver la lecture aléatoire</string>
     <string name="shuffle_enabled">Lecture aléatoire activée</string>
     <string name="shuffle_disabled">Lecture aléatoire désactivée</string>
-    <string name="enable_autoplay">Activer la lecture automatique</string>
-    <string name="disable_autoplay">Désactiver la lecture automatique</string>
-    <string name="autoplay_enabled">Lecture automatique activée</string>
-    <string name="autoplay_disabled">Lecture automatique désactivée</string>
     <string name="sleep_timer">Sleep timer</string>
     <string name="volume">Volume</string>
     <string name="playback_speed">Playback speed</string>

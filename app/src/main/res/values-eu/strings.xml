@@ -12,10 +12,6 @@
     <string name="disable_shuffle">Nahastea ezgaitu</string>
     <string name="shuffle_enabled">Nahastea gaituta</string>
     <string name="shuffle_disabled">Nahastea ezgaituta</string>
-    <string name="enable_autoplay">Erreprodukzio automatikoa gaitu</string>
-    <string name="disable_autoplay">Erreprodukzio automatikoa ezgaitu</string>
-    <string name="autoplay_enabled">Erreprodukzio automatikoa gaituta</string>
-    <string name="autoplay_disabled">Erreprodukzio automatikoa ezgaituta</string>
     <string name="sleep_timer">Sleep timer</string>
     <string name="volume">Volume</string>
     <string name="playback_speed">Playback speed</string>

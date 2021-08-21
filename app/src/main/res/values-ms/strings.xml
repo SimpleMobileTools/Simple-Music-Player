@@ -12,10 +12,6 @@
     <string name="disable_shuffle">Lumpuhkan rombakan</string>
     <string name="shuffle_enabled">Rombakan diaktifkan</string>
     <string name="shuffle_disabled">Rombakan dilumpuhkan</string>
-    <string name="enable_autoplay">Dayakan main automatik</string>
-    <string name="disable_autoplay">Lumpuhkan main automatik</string>
-    <string name="autoplay_enabled">Main automatik diaktifkan</string>
-    <string name="autoplay_disabled">Main automatik dilumpuhkan</string>
     <string name="sleep_timer">Pemasa tidur</string>
     <string name="volume">Kelantangan</string>
     <string name="playback_speed">Kelajuan main balik</string>

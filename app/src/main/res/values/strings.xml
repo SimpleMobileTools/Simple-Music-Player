@@ -12,10 +12,6 @@
     <string name="disable_shuffle">Disable shuffle</string>
     <string name="shuffle_enabled">Shuffle enabled</string>
     <string name="shuffle_disabled">Shuffle disabled</string>
-    <string name="enable_autoplay">Enable autoplay</string>
-    <string name="disable_autoplay">Disable autoplay</string>
-    <string name="autoplay_enabled">Autoplay enabled</string>
-    <string name="autoplay_disabled">Autoplay disabled</string>
     <string name="sleep_timer">Sleep timer</string>
     <string name="volume">Volume</string>
     <string name="playback_speed">Playback speed</string>

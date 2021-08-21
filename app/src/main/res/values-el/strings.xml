@@ -12,10 +12,6 @@
     <string name="disable_shuffle">Απενεργοποίηση τυχαίας σειράς</string>
     <string name="shuffle_enabled">Τυχαία σειρά Ενεργή</string>
     <string name="shuffle_disabled">Τυχαία σειρά Ανενεργή</string>
-    <string name="enable_autoplay">Ενεργοποίηση αυτόματης εκτέλεσης</string>
-    <string name="disable_autoplay">Απενεργοποίηση αυτόματης εκτέλεσης</string>
-    <string name="autoplay_enabled">Αυτόματη εκτέλεση Ενεργή</string>
-    <string name="autoplay_disabled">Αυτόματη εκτέλεση Ανενεργή</string>
     <string name="sleep_timer">Χρονοδιακόπτης</string>
     <string name="volume">Ένταση</string>
     <string name="playback_speed">Ταχύτητα Αναπ/γής</string>

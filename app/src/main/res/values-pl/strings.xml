@@ -12,10 +12,6 @@
     <string name="disable_shuffle">Wyłącz kolejność losową</string>
     <string name="shuffle_enabled">Kolejność losowa włączona</string>
     <string name="shuffle_disabled">Kolejność losowa wyłączona</string>
-    <string name="enable_autoplay">Włącz autoodtwarzanie</string>
-    <string name="disable_autoplay">Wyłącz autoodtwarzanie</string>
-    <string name="autoplay_enabled">Autoodtwarzanie włączone</string>
-    <string name="autoplay_disabled">Autoodtwarzanie wyłączone</string>
     <string name="sleep_timer">Wyłącznik czasowy</string>
     <string name="volume">Volume</string>
     <string name="playback_speed">Playback speed</string>

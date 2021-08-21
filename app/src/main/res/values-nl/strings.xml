@@ -12,10 +12,6 @@
     <string name="disable_shuffle">Shuffle uitschakelen</string>
     <string name="shuffle_enabled">Shuffle ingeschakeld</string>
     <string name="shuffle_disabled">Shuffle uitgeschakeld</string>
-    <string name="enable_autoplay">Autoplay inschakelen</string>
-    <string name="disable_autoplay">Autoplay uitschakelen</string>
-    <string name="autoplay_enabled">Autoplay ingeschakeld</string>
-    <string name="autoplay_disabled">Autoplay uitgeschakeld</string>
     <string name="sleep_timer">Slaaptimer</string>
     <string name="volume">Volume</string>
     <string name="playback_speed">Afspeelsnelheid</string>

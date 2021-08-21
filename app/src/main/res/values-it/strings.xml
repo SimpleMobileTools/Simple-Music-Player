@@ -12,10 +12,6 @@
     <string name="disable_shuffle">Disabilita riproduzione casuale</string>
     <string name="shuffle_enabled">Riproduzione casuale abilitata</string>
     <string name="shuffle_disabled">Riproduzione casuale disabilitata</string>
-    <string name="enable_autoplay">Abilita riproduzione automatica</string>
-    <string name="disable_autoplay">Disabilita riproduzione automatica</string>
-    <string name="autoplay_enabled">Riproduzione automatica abilitata</string>
-    <string name="autoplay_disabled">Riproduzione automatica disabilitata</string>
     <string name="sleep_timer">Timer di spegnimento</string>
     <string name="volume">Volume</string>
     <string name="playback_speed">Velocità di riproduzione</string>

@@ -12,10 +12,6 @@
     <string name="disable_shuffle">Desactiva Modo aleatorio</string>
     <string name="shuffle_enabled">Modo aleatorio activado</string>
     <string name="shuffle_disabled">Modo aleatorio desactivado</string>
-    <string name="enable_autoplay">Activa Autoreprodución</string>
-    <string name="disable_autoplay">Desactiva Autoreprodución</string>
-    <string name="autoplay_enabled">Autoreprodución activada</string>
-    <string name="autoplay_disabled">Autoreprodución desactivada</string>
     <string name="sleep_timer">Temporizador</string>
     <string name="volume">Volume</string>
     <string name="playback_speed">Playback speed</string>

@@ -12,10 +12,6 @@
     <string name="disable_shuffle">Играть подряд</string>
     <string name="shuffle_enabled">Воспроизведение в случайном порядке включено</string>
     <string name="shuffle_disabled">Воспроизведение в случайном порядке выключено</string>
-    <string name="enable_autoplay">Играть автоматически</string>
-    <string name="disable_autoplay">Играть вручную</string>
-    <string name="autoplay_enabled">Автоматическое воспроизведение включено</string>
-    <string name="autoplay_disabled">Автоматическое воспроизведение выключено</string>
     <string name="sleep_timer">Таймер сна</string>
     <string name="volume">Громкость</string>
     <string name="playback_speed">Скорость воспроизведения</string>

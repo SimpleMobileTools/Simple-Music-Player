@@ -12,10 +12,6 @@
     <string name="disable_shuffle">Véletlenszerű lejátszás letitása</string>
     <string name="shuffle_enabled">Véletlenszerű lejátszás engedélyezve</string>
     <string name="shuffle_disabled">Véletlenszerű lejátszás letiltva</string>
-    <string name="enable_autoplay">Automatikus lejátszás engedélyezése</string>
-    <string name="disable_autoplay">Automatikus lejátszás letiltása</string>
-    <string name="autoplay_enabled">Automatikus lejátszás engedélyezve</string>
-    <string name="autoplay_disabled">Automatikus lejátszás letiltva</string>
     <string name="sleep_timer">Sleep timer</string>
     <string name="volume">Volume</string>
     <string name="playback_speed">Playback speed</string>

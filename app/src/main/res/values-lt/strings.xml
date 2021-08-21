@@ -12,10 +12,6 @@
     <string name="disable_shuffle">Išjungti grojimą atsitiktine tvarka</string>
     <string name="shuffle_enabled">Grojimas atsitiktine tvarka įjungtas</string>
     <string name="shuffle_disabled">Grojimas atsitiktine tvarka išjungtas</string>
-    <string name="enable_autoplay">Įjungti automatinį grojimą</string>
-    <string name="disable_autoplay">Išjungti automatinį grojimą</string>
-    <string name="autoplay_enabled">Automatinis grojimas įjungtas</string>
-    <string name="autoplay_disabled">Automatinis grojimas išjungtas</string>
     <string name="sleep_timer">Sleep timer</string>
     <string name="volume">Volume</string>
     <string name="playback_speed">Playback speed</string>

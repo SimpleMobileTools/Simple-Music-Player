@@ -12,10 +12,6 @@
     <string name="disable_shuffle">셔플 비 활성화</string>
     <string name="shuffle_enabled">셔플 활성화됨</string>
     <string name="shuffle_disabled">셔플 비 활성화됨</string>
-    <string name="enable_autoplay">자동재생 활성화</string>
-    <string name="disable_autoplay">자동재생 비 활성화</string>
-    <string name="autoplay_enabled">자동재생 활성화됨</string>
-    <string name="autoplay_disabled">자동재생 비 활성화됨</string>
     <string name="sleep_timer">Sleep timer</string>
     <string name="volume">Volume</string>
     <string name="playback_speed">Playback speed</string>

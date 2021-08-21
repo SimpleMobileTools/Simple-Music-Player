@@ -12,10 +12,6 @@
     <string name="disable_shuffle">Karıştırmayı devre dışı bırak</string>
     <string name="shuffle_enabled">Karıştırma etkin</string>
     <string name="shuffle_disabled">Karıştırma devre dışı</string>
-    <string name="enable_autoplay">Otomatik çalmayı etkinleştir</string>
-    <string name="disable_autoplay">Otomatik çalmayı devre dışı bırak</string>
-    <string name="autoplay_enabled">Otomatik çalma etkin</string>
-    <string name="autoplay_disabled">Otomatik çalma devre dışı</string>
     <string name="sleep_timer">Uyku zamanlayıcısı</string>
     <string name="volume">Volume</string>
     <string name="playback_speed">Playback speed</string>

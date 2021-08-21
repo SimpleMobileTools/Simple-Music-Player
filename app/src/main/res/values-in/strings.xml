@@ -12,10 +12,6 @@
     <string name="disable_shuffle">Nonaktifkan acak</string>
     <string name="shuffle_enabled">Acak diaktifkan</string>
     <string name="shuffle_disabled">Acak dinonaktifkan</string>
-    <string name="enable_autoplay">Aktifkan putar otomatis</string>
-    <string name="disable_autoplay">Nonaktifkan putar otomatis</string>
-    <string name="autoplay_enabled">Putar otomatis diaktifkan</string>
-    <string name="autoplay_disabled">Putar otomatis dinonaktifkan</string>
     <string name="sleep_timer">Sleep timer</string>
     <string name="volume">Volume</string>
     <string name="playback_speed">Playback speed</string>

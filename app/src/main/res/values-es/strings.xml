@@ -12,10 +12,6 @@
     <string name="disable_shuffle">Desactivar aleatorio</string>
     <string name="shuffle_enabled">Reproducción aleatoria activada</string>
     <string name="shuffle_disabled">Reproducción aleatoria desactivada</string>
-    <string name="enable_autoplay">Activar reproducción automática</string>
-    <string name="disable_autoplay">Desactivar reproducción automática</string>
-    <string name="autoplay_enabled">Reproducción automática enabled</string>
-    <string name="autoplay_disabled">Reproducción automática desactivada</string>
     <string name="sleep_timer">Temporizador para dormir</string>
     <string name="volume">Volume</string>
     <string name="playback_speed">Playback speed</string>

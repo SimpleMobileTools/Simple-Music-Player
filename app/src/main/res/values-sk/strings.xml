@@ -12,10 +12,6 @@
     <string name="disable_shuffle">Vypnúť miešanie pesničiek</string>
     <string name="shuffle_enabled">Miešanie zapnuté</string>
     <string name="shuffle_disabled">Miešanie vypnuté</string>
-    <string name="enable_autoplay">Zapnúť automatické prehrávanie</string>
-    <string name="disable_autoplay">Vypnúť automatické prehrávanie</string>
-    <string name="autoplay_enabled">Automatické prehrávanie zapnuté</string>
-    <string name="autoplay_disabled">Automatické prehrávanie vypnuté</string>
     <string name="sleep_timer">Časovač vypnutia</string>
     <string name="volume">Hlasitosť</string>
     <string name="playback_speed">Rýchlosť prehrávania</string>

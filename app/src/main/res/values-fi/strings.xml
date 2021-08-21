@@ -12,10 +12,6 @@
     <string name="disable_shuffle">Poista satunnaistoisto käytöstä</string>
     <string name="shuffle_enabled">Satunnaistoisto käytössä</string>
     <string name="shuffle_disabled">Satunnaistoisto poistettu käytöstä</string>
-    <string name="enable_autoplay">Ota automaattinen toisto käyttöön</string>
-    <string name="disable_autoplay">Poista automaattinen toisto käytöstä</string>
-    <string name="autoplay_enabled">Automaattinen toisto käytössä</string>
-    <string name="autoplay_disabled">Automaattinen toisto poistettu käytöstä</string>
     <string name="sleep_timer">Uniajastin</string>
     <string name="volume">Volume</string>
     <string name="playback_speed">Playback speed</string>

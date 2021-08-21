@@ -13,10 +13,6 @@
     <string name="disable_shuffle">غیر فعال کردن پخش تصادفی</string>
     <string name="shuffle_enabled">پخش تصادفی فعال شد</string>
     <string name="shuffle_disabled">پخش تصادفی غیر فعال شد</string>
-    <string name="enable_autoplay">فعال کردن پخش خودکار</string>
-    <string name="disable_autoplay">غیر فعال کردن پخش خودکار</string>
-    <string name="autoplay_enabled">پخش خودکار فعال شد</string>
-    <string name="autoplay_disabled">پخش خودکار غیر فعال شد</string>
     <string name="sleep_timer">تایمر خواب</string>
     <string name="volume">Volume</string>
     <string name="playback_speed">Playback speed</string>

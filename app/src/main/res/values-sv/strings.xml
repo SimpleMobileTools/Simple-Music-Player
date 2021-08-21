@@ -12,10 +12,6 @@
     <string name="disable_shuffle">Inaktivera blanda</string>
     <string name="shuffle_enabled">Blanda är nu aktiverad</string>
     <string name="shuffle_disabled">Blanda är nu inaktiverad</string>
-    <string name="enable_autoplay">Aktivera automatisk uppspelning</string>
-    <string name="disable_autoplay">Inaktivera automatisk uppspelning</string>
-    <string name="autoplay_enabled">Automatisk uppspelning har aktiverats</string>
-    <string name="autoplay_disabled">Automatisk uppspelning har inaktiverats</string>
     <string name="sleep_timer">Vilotidtagare</string>
     <string name="volume">Volume</string>
     <string name="playback_speed">Playback speed</string>

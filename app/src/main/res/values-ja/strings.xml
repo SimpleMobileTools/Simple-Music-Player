@@ -12,10 +12,6 @@
     <string name="disable_shuffle">シャッフルを無効にする</string>
     <string name="shuffle_enabled">シャッフル有効</string>
     <string name="shuffle_disabled">シャッフル無効</string>
-    <string name="enable_autoplay">オートプレイを有効にする</string>
-    <string name="disable_autoplay">オートプレイを無効にする</string>
-    <string name="autoplay_enabled">オートプレイ有効</string>
-    <string name="autoplay_disabled">オートプレイ無効</string>
     <string name="sleep_timer">スリープタイマー</string>
     <string name="volume">Volume</string>
     <string name="playback_speed">Playback speed</string>
