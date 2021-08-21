@@ -297,6 +297,9 @@ class TrackActivity : SimpleActivity(), PlaybackSpeedListener {
             applyColorFilter(if (isShuffleEnabled) getAdjustedPrimaryColor() else config.textColor)
             alpha = if (isShuffleEnabled) 1f else MEDIUM_ALPHA
             contentDescription = getString(if (isShuffleEnabled) R.string.disable_shuffle else R.string.enable_shuffle)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                tooltipText = getString(if (isShuffleEnabled) R.string.shuffle_enabled else R.string.shuffle_disabled)
+            }
         }
     }
 
