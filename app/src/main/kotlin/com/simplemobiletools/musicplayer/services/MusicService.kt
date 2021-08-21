@@ -665,11 +665,25 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             return
         }
 
-        if (config.repeatTrack) {
-            restartTrack()
-        } else if (mPlayer!!.currentPosition > 0) {
-            mPlayer!!.reset()
-            setupNextTrack()
+        when (config.playbackSetting) {
+            PlaybackSetting.REPEAT_SONG -> {
+                restartTrack()
+            }
+            PlaybackSetting.STOP_AFTER_CURRENT_SONG -> {
+                mPlayer?.seekTo(0)
+                broadcastTrackProgress(0)
+
+                mPlayer!!.reset()
+
+                mPlayOnPrepare = false
+                setupNextTrack()
+            }
+            PlaybackSetting.REPEAT_PLAYLIST -> {
+                if (mPlayer!!.currentPosition > 0) {
+                    mPlayer!!.reset()
+                    setupNextTrack()
+                }
+            }
         }
     }
 

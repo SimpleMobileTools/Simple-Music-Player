@@ -9,6 +9,10 @@
     <string name="disable_song_repetition">停止重复当前歌曲</string>
     <string name="song_repetition_enabled">已启用当前歌曲重复</string>
     <string name="song_repetition_disabled">已禁用当前歌曲重复</string>
+    <string name="repeat_playlist">Repeat playlist</string>
+    <string name="repeat_playlist_enabled">Playlist repetition enabled</string>
+    <string name="enable_stop_playback_after_current_song">Stop playback after current song</string>
+    <string name="stop_playback_after_current_song_enabled">Stop playback after current song enabled</string>
     <string name="enable_shuffle">启用随机播放</string>
     <string name="disable_shuffle">禁用随机播放</string>
     <string name="shuffle_enabled">已启用随机播放</string>

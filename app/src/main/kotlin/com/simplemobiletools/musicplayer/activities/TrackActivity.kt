@@ -6,6 +6,7 @@ import android.graphics.*
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
+import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.GestureDetector
@@ -22,6 +23,8 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.Target
+import com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_SHORT
+import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.simplemobiletools.commons.extensions.*
@@ -68,7 +71,7 @@ class TrackActivity : SimpleActivity(), PlaybackSpeedListener {
         }
 
         isThirdPartyIntent = intent.action == Intent.ACTION_VIEW
-        arrayOf(activity_track_toggle_shuffle, activity_track_previous, activity_track_next, activity_track_repeat).forEach {
+        arrayOf(activity_track_toggle_shuffle, activity_track_previous, activity_track_next, activity_track_playback_setting).forEach {
             it.beInvisibleIf(isThirdPartyIntent)
         }
 
@@ -164,10 +167,10 @@ class TrackActivity : SimpleActivity(), PlaybackSpeedListener {
         activity_track_next.setOnClickListener { sendIntent(NEXT) }
         activity_track_progress_current.setOnClickListener { sendIntent(SKIP_BACKWARD) }
         activity_track_progress_max.setOnClickListener { sendIntent(SKIP_FORWARD) }
-        activity_track_repeat.setOnClickListener { toggleTrackRepetition() }
+        activity_track_playback_setting.setOnClickListener { togglePlaybackSetting() }
         activity_track_speed_click_area.setOnClickListener { showPlaybackSpeedPicker() }
         setupShuffleButton()
-        setupTrackRepetitionButton()
+        setupPlaybackSettingButton()
         setupSeekbar()
 
         // constraintlayout with textview wrap_content is broken, so we need to use a more complicated way of drawing speed related things
@@ -296,19 +299,23 @@ class TrackActivity : SimpleActivity(), PlaybackSpeedListener {
         }
     }
 
-    private fun toggleTrackRepetition() {
-        val repeatTrack = !config.repeatTrack
-        config.repeatTrack = repeatTrack
-        toast(if (repeatTrack) R.string.song_repetition_enabled else R.string.song_repetition_disabled)
-        setupTrackRepetitionButton()
+    private fun togglePlaybackSetting() {
+        val newPlaybackSetting = config.playbackSetting.nextPlaybackOption
+        config.playbackSetting = newPlaybackSetting
+
+        toast(newPlaybackSetting.actionCompletedStringRes)
+
+        setupPlaybackSettingButton()
     }
 
-    private fun setupTrackRepetitionButton() {
-        val repeatTrack = config.repeatTrack
-        activity_track_repeat.apply {
-            applyColorFilter(if (repeatTrack) getAdjustedPrimaryColor() else config.textColor)
-            alpha = if (repeatTrack) 1f else MEDIUM_ALPHA
-            contentDescription = getString(if (repeatTrack) R.string.disable_song_repetition else R.string.enable_song_repetition)
+    private fun setupPlaybackSettingButton() {
+        val playbackSetting = config.playbackSetting
+        activity_track_playback_setting.apply {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                tooltipText = getString(playbackSetting.tooltipStringRes)
+            }
+            contentDescription = getString(playbackSetting.contentDescriptionStringRes)
+            setImageResource(playbackSetting.iconRes)
         }
     }
 

@@ -9,6 +9,10 @@
     <string name="disable_song_repetition">Prestať s opakovaním súčasnej pesničky</string>
     <string name="song_repetition_enabled">Opakovanie súčasnej pesničky zapnuté</string>
     <string name="song_repetition_disabled">Opakovanie súčasnej pesničky vypnuté</string>
+    <string name="repeat_playlist">Repeat playlist</string>
+    <string name="repeat_playlist_enabled">Playlist repetition enabled</string>
+    <string name="enable_stop_playback_after_current_song">Stop playback after current song</string>
+    <string name="stop_playback_after_current_song_enabled">Stop playback after current song enabled</string>
     <string name="enable_shuffle">Zapnúť miešanie pesničiek</string>
     <string name="disable_shuffle">Vypnúť miešanie pesničiek</string>
     <string name="shuffle_enabled">Miešanie zapnuté</string>

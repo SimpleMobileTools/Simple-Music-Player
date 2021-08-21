@@ -92,7 +92,7 @@
             android:contentDescription="@string/enable_song_repetition"
             android:paddingTop="@dimen/small_margin"
             android:paddingBottom="@dimen/small_margin"
-            android:src="@drawable/ic_repeat_vector" />
+            android:src="@drawable/ic_repeat_playlist_vector" />
 
     </LinearLayout>
 
