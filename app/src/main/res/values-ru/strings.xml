@@ -6,7 +6,7 @@
     <string name="rename_song_error">Во время переименования произошла ошибка</string>
     <string name="rename_song_empty">Пожалуйста, заполните все поля</string>
     <string name="repeat_song">Повторять текущую композицию</string>
-    <string name="repeat_playlist">Повторять список</string>
+    <string name="repeat_playlist">Повторять всё</string>
     <string name="stop_playback_after_current_song">Остановить воспроизведение после текущей композиции</string>
     <string name="enable_shuffle">Играть в случайном порядке</string>
     <string name="disable_shuffle">Играть подряд</string>
