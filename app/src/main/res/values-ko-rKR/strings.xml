@@ -5,6 +5,7 @@
     <string name="rename_song">음악파일명 변경</string>
     <string name="rename_song_error">이름변경 중 오류발생</string>
     <string name="rename_song_empty">모든 항목 정보를 입력하세요.</string>
+    <string name="repeat_off">Repeat off</string>
     <string name="repeat_song">현재 노래 반복</string>
     <string name="repeat_playlist">Repeat playlist</string>
     <string name="stop_playback_after_current_song">Stop playback after current song</string>

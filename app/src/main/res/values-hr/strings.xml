@@ -5,6 +5,7 @@
     <string name="rename_song">Preimenuj pjesmu</string>
     <string name="rename_song_error">Došlo je do pogreške prilikom preimenovanja</string>
     <string name="rename_song_empty">Ispunite sva polja</string>
+    <string name="repeat_off">Repeat off</string>
     <string name="repeat_song">Ponovi trenutnu pjesmu</string>
     <string name="repeat_playlist">Repeat playlist</string>
     <string name="stop_playback_after_current_song">Stop playback after current song</string>

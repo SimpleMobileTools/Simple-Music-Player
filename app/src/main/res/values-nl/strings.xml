@@ -5,6 +5,7 @@
     <string name="rename_song">Nummer hernoemen</string>
     <string name="rename_song_error">Naam kon niet worden gewijzigd</string>
     <string name="rename_song_empty">Vul alle velden in</string>
+    <string name="repeat_off">Repeat off</string>
     <string name="repeat_song">Nummer herhalen</string>
     <string name="repeat_playlist">Repeat playlist</string>
     <string name="stop_playback_after_current_song">Stop playback after current song</string>

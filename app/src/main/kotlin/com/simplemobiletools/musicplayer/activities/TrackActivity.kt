@@ -13,6 +13,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.widget.SeekBar
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import androidx.core.view.GestureDetectorCompat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
@@ -310,6 +311,11 @@ class TrackActivity : SimpleActivity(), PlaybackSpeedListener {
         activity_track_playback_setting.apply {
             contentDescription = getString(playbackSetting.contentDescriptionStringRes)
             setImageResource(playbackSetting.iconRes)
+
+            val isRepeatOff = playbackSetting == PlaybackSetting.REPEAT_OFF
+
+            alpha = if (isRepeatOff) MEDIUM_ALPHA else 1f
+            applyColorFilter(if (isRepeatOff) config.textColor else getAdjustedPrimaryColor())
         }
     }
 

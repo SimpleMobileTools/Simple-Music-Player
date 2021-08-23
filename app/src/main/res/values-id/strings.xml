@@ -5,6 +5,7 @@
     <string name="rename_song">Ubah nama lagu</string>
     <string name="rename_song_error">Terjadi kesalahan saat mengubah nama</string>
     <string name="rename_song_empty">Silakan isi semua ruas</string>
+    <string name="repeat_off">Repeat off</string>
     <string name="repeat_song">Ulangi lagi ini</string>
     <string name="repeat_playlist">Repeat playlist</string>
     <string name="stop_playback_after_current_song">Stop playback after current song</string>

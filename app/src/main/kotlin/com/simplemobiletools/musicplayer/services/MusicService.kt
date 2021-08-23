@@ -540,6 +540,13 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         }
     }
 
+    private fun isEndOfPlaylist(): Boolean {
+        return when (mTracks.size) {
+            0, 1 -> true
+            else -> mCurrTrack?.mediaStoreId == mTracks.last().mediaStoreId
+        }
+    }
+
     private fun playPreviousTrack() {
         if (mTracks.isEmpty()) {
             handleEmptyPlaylist()
@@ -590,6 +597,14 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         } else {
             setTrack(getNewTrackId())
         }
+    }
+
+    private fun setupNextTrackAndStop() {
+        mPlayer?.seekTo(0)
+        broadcastTrackProgress(0)
+
+        mPlayOnPrepare = false
+        setupNextTrack()
     }
 
     private fun restartTrack() {
@@ -668,11 +683,19 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         val playbackSetting = config.playbackSetting
 
         mPlayOnPrepare = when (playbackSetting) {
+            PlaybackSetting.REPEAT_OFF -> isEndOfPlaylist().not()
             PlaybackSetting.REPEAT_PLAYLIST, PlaybackSetting.REPEAT_SONG -> true
             PlaybackSetting.STOP_AFTER_CURRENT_SONG -> false
         }
 
         when (config.playbackSetting) {
+            PlaybackSetting.REPEAT_OFF -> {
+                if (isEndOfPlaylist()) {
+                    setupNextTrackAndStop()
+                } else {
+                    setupNextTrack()
+                }
+            }
             PlaybackSetting.REPEAT_PLAYLIST -> setupNextTrack()
             PlaybackSetting.REPEAT_SONG -> restartTrack()
             PlaybackSetting.STOP_AFTER_CURRENT_SONG -> {

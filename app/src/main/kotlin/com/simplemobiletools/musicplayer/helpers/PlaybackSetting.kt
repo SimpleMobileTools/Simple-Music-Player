@@ -8,6 +8,10 @@ enum class PlaybackSetting(
     @DrawableRes val iconRes: Int,
     @StringRes val descriptionStringRes: Int
 ) {
+    REPEAT_OFF(
+        iconRes = R.drawable.ic_repeat_playlist_vector,
+        descriptionStringRes = R.string.repeat_off
+    ),
     REPEAT_PLAYLIST(
         iconRes = R.drawable.ic_repeat_playlist_vector,
         descriptionStringRes = R.string.repeat_playlist
@@ -26,8 +30,9 @@ enum class PlaybackSetting(
 
     val nextPlaybackOption: PlaybackSetting
         get() = when (this) {
+            REPEAT_OFF -> REPEAT_PLAYLIST
             REPEAT_PLAYLIST -> REPEAT_SONG
             REPEAT_SONG -> STOP_AFTER_CURRENT_SONG
-            STOP_AFTER_CURRENT_SONG -> REPEAT_PLAYLIST
+            STOP_AFTER_CURRENT_SONG -> REPEAT_OFF
         }
 }
