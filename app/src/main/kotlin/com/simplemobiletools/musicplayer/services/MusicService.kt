@@ -684,8 +684,8 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
         mPlayOnPrepare = when (playbackSetting) {
             PlaybackSetting.REPEAT_OFF -> isEndOfPlaylist().not()
-            PlaybackSetting.REPEAT_PLAYLIST, PlaybackSetting.REPEAT_SONG -> true
-            PlaybackSetting.STOP_AFTER_CURRENT_SONG -> false
+            PlaybackSetting.REPEAT_PLAYLIST, PlaybackSetting.REPEAT_TRACK -> true
+            PlaybackSetting.STOP_AFTER_CURRENT_TRACK -> false
         }
 
         when (config.playbackSetting) {
@@ -697,8 +697,8 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
                 }
             }
             PlaybackSetting.REPEAT_PLAYLIST -> setupNextTrack()
-            PlaybackSetting.REPEAT_SONG -> restartTrack()
-            PlaybackSetting.STOP_AFTER_CURRENT_SONG -> {
+            PlaybackSetting.REPEAT_TRACK -> restartTrack()
+            PlaybackSetting.STOP_AFTER_CURRENT_TRACK -> {
                 broadcastTrackProgress(0)
                 restartTrack()
             }
