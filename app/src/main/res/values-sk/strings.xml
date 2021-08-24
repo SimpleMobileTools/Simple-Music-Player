@@ -6,8 +6,8 @@
     <string name="rename_song_error">Počas premenúvania došlo k chybe</string>
     <string name="rename_song_empty">Prosím vyplňte všetky polia</string>
     <string name="repeat_song">Opakovať súčasnú pesničku</string>
-    <string name="repeat_playlist">Repeat playlist</string>
-    <string name="stop_playback_after_current_song">Stop playback after current song</string>
+    <string name="repeat_playlist">Opakovať playlist</string>
+    <string name="stop_playback_after_current_song">Zastaviť prehrávanie po tejto skladbe</string>
     <string name="enable_shuffle">Zapnúť miešanie pesničiek</string>
     <string name="disable_shuffle">Vypnúť miešanie pesničiek</string>
     <string name="shuffle_enabled">Miešanie zapnuté</string>
