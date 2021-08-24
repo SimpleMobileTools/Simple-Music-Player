@@ -46,7 +46,7 @@ const val TRACK_STATE_CHANGED = "TRACK_STATE_CHANGED"
 
 // shared preferences
 const val SHUFFLE = "shuffle"
-const val REPEAT_TRACK = "repeat_track"
+const val PLAYBACK_SETTING = "playback_setting"
 const val AUTOPLAY = "autoplay"
 const val CURRENT_PLAYLIST = "current_playlist"
 const val SHOW_FILENAME = "show_filename"

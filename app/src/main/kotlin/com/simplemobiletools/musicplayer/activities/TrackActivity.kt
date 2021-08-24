@@ -68,7 +68,7 @@ class TrackActivity : SimpleActivity(), PlaybackSpeedListener {
         }
 
         isThirdPartyIntent = intent.action == Intent.ACTION_VIEW
-        arrayOf(activity_track_toggle_shuffle, activity_track_previous, activity_track_next, activity_track_repeat).forEach {
+        arrayOf(activity_track_toggle_shuffle, activity_track_previous, activity_track_next, activity_track_playback_setting).forEach {
             it.beInvisibleIf(isThirdPartyIntent)
         }
 
@@ -164,10 +164,10 @@ class TrackActivity : SimpleActivity(), PlaybackSpeedListener {
         activity_track_next.setOnClickListener { sendIntent(NEXT) }
         activity_track_progress_current.setOnClickListener { sendIntent(SKIP_BACKWARD) }
         activity_track_progress_max.setOnClickListener { sendIntent(SKIP_FORWARD) }
-        activity_track_repeat.setOnClickListener { toggleTrackRepetition() }
+        activity_track_playback_setting.setOnClickListener { togglePlaybackSetting() }
         activity_track_speed_click_area.setOnClickListener { showPlaybackSpeedPicker() }
         setupShuffleButton()
-        setupTrackRepetitionButton()
+        setupPlaybackSettingButton()
         setupSeekbar()
 
         // constraintlayout with textview wrap_content is broken, so we need to use a more complicated way of drawing speed related things
@@ -296,19 +296,20 @@ class TrackActivity : SimpleActivity(), PlaybackSpeedListener {
         }
     }
 
-    private fun toggleTrackRepetition() {
-        val repeatTrack = !config.repeatTrack
-        config.repeatTrack = repeatTrack
-        toast(if (repeatTrack) R.string.song_repetition_enabled else R.string.song_repetition_disabled)
-        setupTrackRepetitionButton()
+    private fun togglePlaybackSetting() {
+        val newPlaybackSetting = config.playbackSetting.nextPlaybackOption
+        config.playbackSetting = newPlaybackSetting
+
+        toast(newPlaybackSetting.descriptionStringRes)
+
+        setupPlaybackSettingButton()
     }
 
-    private fun setupTrackRepetitionButton() {
-        val repeatTrack = config.repeatTrack
-        activity_track_repeat.apply {
-            applyColorFilter(if (repeatTrack) getAdjustedPrimaryColor() else config.textColor)
-            alpha = if (repeatTrack) 1f else MEDIUM_ALPHA
-            contentDescription = getString(if (repeatTrack) R.string.disable_song_repetition else R.string.enable_song_repetition)
+    private fun setupPlaybackSettingButton() {
+        val playbackSetting = config.playbackSetting
+        activity_track_playback_setting.apply {
+            contentDescription = getString(playbackSetting.contentDescriptionStringRes)
+            setImageResource(playbackSetting.iconRes)
         }
     }
 

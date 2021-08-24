@@ -665,11 +665,20 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             return
         }
 
-        if (config.repeatTrack) {
-            restartTrack()
-        } else if (mPlayer!!.currentPosition > 0) {
-            mPlayer!!.reset()
-            setupNextTrack()
+        val playbackSetting = config.playbackSetting
+
+        mPlayOnPrepare = when (playbackSetting) {
+            PlaybackSetting.REPEAT_PLAYLIST, PlaybackSetting.REPEAT_SONG -> true
+            PlaybackSetting.STOP_AFTER_CURRENT_SONG -> false
+        }
+
+        when (config.playbackSetting) {
+            PlaybackSetting.REPEAT_PLAYLIST -> setupNextTrack()
+            PlaybackSetting.REPEAT_SONG -> restartTrack()
+            PlaybackSetting.STOP_AFTER_CURRENT_SONG -> {
+                broadcastTrackProgress(0)
+                restartTrack()
+            }
         }
     }
 

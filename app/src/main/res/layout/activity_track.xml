@@ -192,18 +192,18 @@
             android:padding="@dimen/tiny_margin"
             android:src="@drawable/ic_next_vector"
             app:layout_constraintBottom_toTopOf="@+id/next_track_holder"
-            app:layout_constraintEnd_toStartOf="@+id/activity_track_repeat"
+            app:layout_constraintEnd_toStartOf="@+id/activity_track_playback_setting"
             app:layout_constraintStart_toEndOf="@+id/activity_track_play_pause"
             app:layout_constraintTop_toBottomOf="@+id/activity_track_artist" />
 
         <ImageView
-            android:id="@+id/activity_track_repeat"
+            android:id="@+id/activity_track_playback_setting"
             android:layout_width="0dp"
             android:layout_height="@dimen/smaller_icon_size"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="@string/enable_song_repetition"
+            android:contentDescription="@string/repeat_song"
             android:padding="@dimen/tiny_margin"
-            android:src="@drawable/ic_repeat_vector"
+            android:src="@drawable/ic_repeat_playlist_vector"
             app:layout_constraintBottom_toTopOf="@+id/next_track_holder"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/activity_track_next"
