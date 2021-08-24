@@ -592,14 +592,6 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         }
     }
 
-    private fun setupNextTrackAndStop() {
-        mPlayer?.seekTo(0)
-        broadcastTrackProgress(0)
-
-        mPlayOnPrepare = false
-        setupNextTrack()
-    }
-
     private fun restartTrack() {
         if (mCurrTrack != null) {
             setTrack(mCurrTrack!!.mediaStoreId)
@@ -688,7 +680,8 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
                 restartTrack()
             }
             PlaybackSetting.STOP_AFTER_CURRENT_SONG -> {
-                setupNextTrackAndStop()
+                broadcastTrackProgress(0)
+                restartTrack()
             }
         }
     }
