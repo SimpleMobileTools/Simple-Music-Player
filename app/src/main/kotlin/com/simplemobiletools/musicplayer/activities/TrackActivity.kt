@@ -13,7 +13,6 @@ import android.view.MotionEvent
 import android.view.View
 import android.widget.SeekBar
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.ContextCompat
 import androidx.core.view.GestureDetectorCompat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
@@ -209,7 +208,13 @@ class TrackActivity : SimpleActivity(), PlaybackSpeedListener {
                             return true
                         }
 
-                        override fun onResourceReady(resource: Drawable, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
+                        override fun onResourceReady(
+                            resource: Drawable,
+                            model: Any?,
+                            target: Target<Drawable>?,
+                            dataSource: DataSource?,
+                            isFirstResource: Boolean
+                        ): Boolean {
                             next_track_image.setImageDrawable(resource)
                             return false
                         }
@@ -243,7 +248,13 @@ class TrackActivity : SimpleActivity(), PlaybackSpeedListener {
                             return true
                         }
 
-                        override fun onResourceReady(resource: Drawable, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
+                        override fun onResourceReady(
+                            resource: Drawable,
+                            model: Any?,
+                            target: Target<Drawable>?,
+                            dataSource: DataSource?,
+                            isFirstResource: Boolean
+                        ): Boolean {
                             val coverHeight = resource.intrinsicHeight
                             if (coverHeight > 0 && activity_track_image.height != coverHeight) {
                                 activity_track_image.layoutParams.height = coverHeight

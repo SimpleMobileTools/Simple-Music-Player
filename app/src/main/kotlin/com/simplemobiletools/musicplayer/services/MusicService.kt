@@ -463,9 +463,11 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             .setOngoing(ongoing)
             .setChannelId(NOTIFICATION_CHANNEL)
             .setCategory(Notification.CATEGORY_SERVICE)
-            .setStyle(androidx.media.app.NotificationCompat.MediaStyle()
-                .setShowActionsInCompactView(0, 1, 2)
-                .setMediaSession(mMediaSession?.sessionToken))
+            .setStyle(
+                androidx.media.app.NotificationCompat.MediaStyle()
+                    .setShowActionsInCompactView(0, 1, 2)
+                    .setMediaSession(mMediaSession?.sessionToken)
+            )
             .setDeleteIntent(notificationDismissedPendingIntent)
             .addAction(R.drawable.ic_previous_vector, getString(R.string.previous), getIntent(PREVIOUS))
             .addAction(playPauseIcon, getString(R.string.playpause), getIntent(PLAYPAUSE))
@@ -482,9 +484,11 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
         val playbackState = if (getIsPlaying()) PlaybackStateCompat.STATE_PLAYING else PlaybackStateCompat.STATE_PAUSED
         try {
-            mMediaSession!!.setPlaybackState(PlaybackStateCompat.Builder()
-                .setState(playbackState, PLAYBACK_POSITION_UNKNOWN, 1.0f)
-                .build())
+            mMediaSession!!.setPlaybackState(
+                PlaybackStateCompat.Builder()
+                    .setState(playbackState, PLAYBACK_POSITION_UNKNOWN, 1.0f)
+                    .build()
+            )
         } catch (ignored: IllegalStateException) {
         }
     }
@@ -599,14 +603,6 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         }
     }
 
-    private fun setupNextTrackAndStop() {
-        mPlayer?.seekTo(0)
-        broadcastTrackProgress(0)
-
-        mPlayOnPrepare = false
-        setupNextTrack()
-    }
-
     private fun restartTrack() {
         if (mCurrTrack != null) {
             setTrack(mCurrTrack!!.mediaStoreId)
@@ -683,7 +679,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         val playbackSetting = config.playbackSetting
 
         mPlayOnPrepare = when (playbackSetting) {
-            PlaybackSetting.REPEAT_OFF -> isEndOfPlaylist().not()
+            PlaybackSetting.REPEAT_OFF -> !isEndOfPlaylist()
             PlaybackSetting.REPEAT_PLAYLIST, PlaybackSetting.REPEAT_TRACK -> true
             PlaybackSetting.STOP_AFTER_CURRENT_TRACK -> false
         }
@@ -691,7 +687,8 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         when (config.playbackSetting) {
             PlaybackSetting.REPEAT_OFF -> {
                 if (isEndOfPlaylist()) {
-                    setupNextTrackAndStop()
+                    broadcastTrackProgress(0)
+                    setupNextTrack()
                 } else {
                     setupNextTrack()
                 }
