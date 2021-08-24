@@ -592,6 +592,14 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         }
     }
 
+    private fun setupNextTrackAndStop() {
+        mPlayer?.seekTo(0)
+        broadcastTrackProgress(0)
+
+        mPlayOnPrepare = false
+        setupNextTrack()
+    }
+
     private fun restartTrack() {
         if (mCurrTrack != null) {
             setTrack(mCurrTrack!!.mediaStoreId)
@@ -665,24 +673,22 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             return
         }
 
+        val playbackSetting = config.playbackSetting
+
+        mPlayOnPrepare = when (playbackSetting) {
+            PlaybackSetting.REPEAT_PLAYLIST, PlaybackSetting.REPEAT_SONG -> true
+            PlaybackSetting.STOP_AFTER_CURRENT_SONG -> false
+        }
+
         when (config.playbackSetting) {
+            PlaybackSetting.REPEAT_PLAYLIST -> {
+                setupNextTrack()
+            }
             PlaybackSetting.REPEAT_SONG -> {
                 restartTrack()
             }
             PlaybackSetting.STOP_AFTER_CURRENT_SONG -> {
-                mPlayer?.seekTo(0)
-                broadcastTrackProgress(0)
-
-                mPlayer!!.reset()
-
-                mPlayOnPrepare = false
-                setupNextTrack()
-            }
-            PlaybackSetting.REPEAT_PLAYLIST -> {
-                if (mPlayer!!.currentPosition > 0) {
-                    mPlayer!!.reset()
-                    setupNextTrack()
-                }
+                setupNextTrackAndStop()
             }
         }
     }
