@@ -5,6 +5,7 @@
     <string name="rename_song">曲の名前を変更</string>
     <string name="rename_song_error">名前を変更中にエラーが発生しました</string>
     <string name="rename_song_empty">すべてのフィールドを入力してください</string>
+    <string name="repeat_off">Repeat off</string>
     <string name="repeat_song">現在の曲を繰り返し</string>
     <string name="repeat_playlist">Repeat playlist</string>
     <string name="stop_playback_after_current_song">Stop playback after current song</string>

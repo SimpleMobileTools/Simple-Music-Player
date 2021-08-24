@@ -13,7 +13,7 @@ class Config(context: Context) : BaseConfig(context) {
         set(shuffle) = prefs.edit().putBoolean(SHUFFLE, shuffle).apply()
 
     var playbackSetting: PlaybackSetting
-        get() = PlaybackSetting.values()[prefs.getInt(PLAYBACK_SETTING, PlaybackSetting.REPEAT_PLAYLIST.ordinal)]
+        get() = PlaybackSetting.values()[prefs.getInt(PLAYBACK_SETTING, PlaybackSetting.REPEAT_OFF.ordinal)]
         set(playbackSetting) = prefs.edit().putInt(PLAYBACK_SETTING, playbackSetting.ordinal).apply()
 
     var autoplay: Boolean

@@ -5,6 +5,7 @@
     <string name="rename_song">Şarkıyı yeniden adlandır</string>
     <string name="rename_song_error">Yeniden adlandırma sırasında bir hata oluştu</string>
     <string name="rename_song_empty">lütfen tüm boşlukları doldurun</string>
+    <string name="repeat_off">Repeat off</string>
     <string name="repeat_song">Geçerli şarkıyı tekrarla</string>
     <string name="repeat_playlist">Repeat playlist</string>
     <string name="stop_playback_after_current_song">Stop playback after current song</string>

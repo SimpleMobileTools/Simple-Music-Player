@@ -5,6 +5,7 @@
     <string name="rename_song">Перейменувати пісню</string>
     <string name="rename_song_error">Трапилася помилка під час перейменування</string>
     <string name="rename_song_empty">Будь ласка, заповніть всі поля</string>
+    <string name="repeat_off">Повтор вимкнено</string>
     <string name="repeat_song">Повторювати поточну пісню</string>
     <string name="repeat_playlist">Повторювати список</string>
     <string name="stop_playback_after_current_song">Зупинити відтворення після поточної пісні</string>

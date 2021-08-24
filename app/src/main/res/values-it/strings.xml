@@ -5,6 +5,7 @@
     <string name="rename_song">Rinomina brano</string>
     <string name="rename_song_error">Impossibile rinominare</string>
     <string name="rename_song_empty">Completare tutti i campi</string>
+    <string name="repeat_off">Repeat off</string>
     <string name="repeat_song">Ripeti il brano attuale</string>
     <string name="repeat_playlist">Repeat playlist</string>
     <string name="stop_playback_after_current_song">Stop playback after current song</string>

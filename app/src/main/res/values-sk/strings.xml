@@ -5,6 +5,7 @@
     <string name="rename_song">Premenovať pesničku</string>
     <string name="rename_song_error">Počas premenúvania došlo k chybe</string>
     <string name="rename_song_empty">Prosím vyplňte všetky polia</string>
+    <string name="repeat_off">Opakovanie vypnuté</string>
     <string name="repeat_song">Opakovať súčasnú pesničku</string>
     <string name="repeat_playlist">Opakovať playlist</string>
     <string name="stop_playback_after_current_song">Zastaviť prehrávanie po tejto skladbe</string>

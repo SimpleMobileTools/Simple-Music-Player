@@ -5,6 +5,7 @@
     <string name="rename_song">Abestia berrizendatu</string>
     <string name="rename_song_error">Akats bat gertatu da berrizendatzerakoan</string>
     <string name="rename_song_empty">Mesedez, eremu guztiak bete itzazu</string>
+    <string name="repeat_off">Repeat off</string>
     <string name="repeat_song">Uneko abestia errepikatu</string>
     <string name="repeat_playlist">Repeat playlist</string>
     <string name="stop_playback_after_current_song">Stop playback after current song</string>

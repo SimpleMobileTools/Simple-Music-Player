@@ -208,7 +208,13 @@ class TrackActivity : SimpleActivity(), PlaybackSpeedListener {
                             return true
                         }
 
-                        override fun onResourceReady(resource: Drawable, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
+                        override fun onResourceReady(
+                            resource: Drawable,
+                            model: Any?,
+                            target: Target<Drawable>?,
+                            dataSource: DataSource?,
+                            isFirstResource: Boolean
+                        ): Boolean {
                             next_track_image.setImageDrawable(resource)
                             return false
                         }
@@ -242,7 +248,13 @@ class TrackActivity : SimpleActivity(), PlaybackSpeedListener {
                             return true
                         }
 
-                        override fun onResourceReady(resource: Drawable, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
+                        override fun onResourceReady(
+                            resource: Drawable,
+                            model: Any?,
+                            target: Target<Drawable>?,
+                            dataSource: DataSource?,
+                            isFirstResource: Boolean
+                        ): Boolean {
                             val coverHeight = resource.intrinsicHeight
                             if (coverHeight > 0 && activity_track_image.height != coverHeight) {
                                 activity_track_image.layoutParams.height = coverHeight
@@ -310,6 +322,11 @@ class TrackActivity : SimpleActivity(), PlaybackSpeedListener {
         activity_track_playback_setting.apply {
             contentDescription = getString(playbackSetting.contentDescriptionStringRes)
             setImageResource(playbackSetting.iconRes)
+
+            val isRepeatOff = playbackSetting == PlaybackSetting.REPEAT_OFF
+
+            alpha = if (isRepeatOff) MEDIUM_ALPHA else 1f
+            applyColorFilter(if (isRepeatOff) config.textColor else getAdjustedPrimaryColor())
         }
     }
 

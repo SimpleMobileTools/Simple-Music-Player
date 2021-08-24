@@ -5,6 +5,7 @@
     <string name="rename_song">重命名歌曲</string>
     <string name="rename_song_error">在重命名过程中发生错误</string>
     <string name="rename_song_empty">请填写全部字段</string>
+    <string name="repeat_off">Repeat off</string>
     <string name="repeat_song">重复当前歌曲</string>
     <string name="repeat_playlist">Repeat playlist</string>
     <string name="stop_playback_after_current_song">Stop playback after current song</string>
