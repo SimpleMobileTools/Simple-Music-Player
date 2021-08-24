@@ -673,12 +673,8 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         }
 
         when (config.playbackSetting) {
-            PlaybackSetting.REPEAT_PLAYLIST -> {
-                setupNextTrack()
-            }
-            PlaybackSetting.REPEAT_SONG -> {
-                restartTrack()
-            }
+            PlaybackSetting.REPEAT_PLAYLIST -> setupNextTrack()
+            PlaybackSetting.REPEAT_SONG -> restartTrack()
             PlaybackSetting.STOP_AFTER_CURRENT_SONG -> {
                 broadcastTrackProgress(0)
                 restartTrack()
