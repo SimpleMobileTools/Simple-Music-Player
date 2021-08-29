@@ -833,6 +833,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
                     }
                 }
             } catch (e: Exception) {
+            } catch (e: Error) {
             }
         }
 
