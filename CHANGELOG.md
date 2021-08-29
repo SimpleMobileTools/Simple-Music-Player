@@ -1,6 +1,14 @@
 Changelog
 ==========
 
+Version 5.7.1 *(2021-08-29)*
+----------------------------
+
+ * Add new repetition options for repeating the current song and stopping after it
+ * Properly show artists and titles with long names
+ * Properly resume the tracks if they have been paused by the app during a call etc
+ * Some translation, stability and UX improvements
+
 Version 5.7.0 *(2021-05-11)*
 ----------------------------
 
