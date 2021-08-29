@@ -15,10 +15,7 @@ import android.media.MediaPlayer
 import android.media.audiofx.Equalizer
 import android.media.session.PlaybackState.PLAYBACK_POSITION_UNKNOWN
 import android.net.Uri
-import android.os.CountDownTimer
-import android.os.Handler
-import android.os.Looper
-import android.os.PowerManager
+import android.os.*
 import android.provider.MediaStore
 import android.provider.MediaStore.Audio
 import android.support.v4.media.MediaMetadataCompat
@@ -136,6 +133,8 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             return START_NOT_STICKY
         }
 
+        notifyFocusGained()
+
         val action = intent.action
         if (isOreoPlus() && action != NEXT && action != PREVIOUS && action != PLAYPAUSE) {
             setupFakeNotification()
@@ -167,6 +166,11 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         MediaButtonReceiver.handleIntent(mMediaSession!!, intent)
         setupNotification()
         return START_NOT_STICKY
+    }
+
+    private fun notifyFocusGained() {
+        mWasPlayingAtFocusLost = false
+        mPrevAudioFocusState = AUDIOFOCUS_GAIN
     }
 
     private fun initService(intent: Intent?) {
@@ -477,7 +481,9 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
         // delay foreground state updating a bit, so the notification can be swiped away properly after initial display
         Handler(Looper.getMainLooper()).postDelayed({
-            if (!getIsPlaying()) {
+            val isFocusLost = mPrevAudioFocusState == AUDIOFOCUS_LOSS || mPrevAudioFocusState == AUDIOFOCUS_LOSS_TRANSIENT
+            val isPlaybackStoppedAfterFocusLoss = mWasPlayingAtFocusLost && isFocusLost
+            if (!getIsPlaying() && !isPlaybackStoppedAfterFocusLoss) {
                 stopForeground(false)
             }
         }, 200L)
