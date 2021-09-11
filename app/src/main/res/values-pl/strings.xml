@@ -15,7 +15,7 @@
     <string name="shuffle_disabled">Wyłączone odtwarzanie losowe</string>
     <string name="sleep_timer">Wyłącznik czasowy</string>
     <string name="volume">Głośność</string>
-    <string name="playback_speed">Szybkość odtwarzania</string>
+    <string name="playback_speed">Prędkość odtwarzania</string>
     <string name="loading_files">Ładowanie plików…</string>
 
     <!-- Playlists -->
