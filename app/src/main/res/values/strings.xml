@@ -58,14 +58,14 @@
     <string name="artists">Artists</string>
     <string name="albums">Albums</string>
     <plurals name="albums_plural">
-        <item quantity="one">%d album</item>
-        <item quantity="other">%d albums</item>
+        <item quantity="one">%d Album</item>
+        <item quantity="other">%d Albums</item>
     </plurals>
 
     <string name="tracks">Tracks</string>
     <plurals name="tracks_plural">
-        <item quantity="one">%d track</item>
-        <item quantity="other">%d tracks</item>
+        <item quantity="one">%d Track</item>
+        <item quantity="other">%d Tracks</item>
     </plurals>
 
     <!-- Queue -->
