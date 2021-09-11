@@ -58,18 +58,18 @@
     <string name="artists">Artyści</string>
     <string name="albums">Albumy</string>
     <plurals name="albums_plural">
-        <item quantity="one">%d album</item>
-        <item quantity="few">%d albumy</item>
-        <item quantity="many">%d albumów</item>
-        <item quantity="other">%d albumów</item>
+        <item quantity="one">%d Album</item>
+        <item quantity="few">%d Albumy</item>
+        <item quantity="many">%d Albumów</item>
+        <item quantity="other">%d Albumów</item>
     </plurals>
 
     <string name="tracks">Utwory</string>
     <plurals name="tracks_plural">
-        <item quantity="one">%d utwór</item>
-        <item quantity="few">%d utwóry</item>
-        <item quantity="many">%d utworów</item>
-        <item quantity="other">%d utworów</item>
+        <item quantity="one">%d Utwór</item>
+        <item quantity="few">%d Utwory</item>
+        <item quantity="many">%d Utworów</item>
+        <item quantity="other">%d Utworów</item>
     </plurals>
 
     <!-- Queue -->
