@@ -27,13 +27,13 @@
     <string name="rename_playlist">Rename playlist</string>
     <string name="playlist_name_exists">A playlist with that name already exists</string>
     <string name="remove_playlist">Remove playlist</string>
-    <string name="remove_playlist_description">This will only remove the selected playlists, not the actual files.</string>
-    <string name="remove_playlist_description_placeholder">This will only remove playlist \"%s\", not the actual files.</string>
+    <string name="remove_playlist_description">This will only remove the selected playlists. The actual files will not be deleted.</string>
+    <string name="remove_playlist_description_placeholder">This will only remove playlist \"%s\". The actual files will not be deleted.</string>
     <string name="remove_from_playlist">Remove from playlist</string>
-    <string name="remove_from_playlist_description">This will only remove the items from playlist \"%s\", the actual files will not be deleted.</string>
+    <string name="remove_from_playlist_description">This will only remove the items from playlist \"%s\". The actual files will not be deleted.</string>
     <string name="delete_the_files_too">Delete the files too</string>
     <string name="open_playlist">Open playlist</string>
-    <string name="all_songs_cannot_be_deleted">\'All songs\' playlist cannot be deleted</string>
+    <string name="all_songs_cannot_be_deleted">\"All songs\" playlist cannot be deleted</string>
     <string name="empty_playlist">Current playlist is empty</string>
     <string name="fetching_songs">Fetching songs…</string>
     <string name="all_songs">All songs</string>
@@ -58,14 +58,14 @@
     <string name="artists">Artists</string>
     <string name="albums">Albums</string>
     <plurals name="albums_plural">
-        <item quantity="one">%d Album</item>
-        <item quantity="other">%d Albums</item>
+        <item quantity="one">%d album</item>
+        <item quantity="other">%d albums</item>
     </plurals>
 
     <string name="tracks">Tracks</string>
     <plurals name="tracks_plural">
-        <item quantity="one">%d Track</item>
-        <item quantity="other">%d Tracks</item>
+        <item quantity="one">%d track</item>
+        <item quantity="other">%d tracks</item>
     </plurals>
 
     <!-- Queue -->
@@ -89,7 +89,9 @@
     <!-- Short description has to have less than 80 chars -->
     <string name="app_short_description">A clean music player with a customizable widget, stylish interface and no ads.</string>
     <string name="app_long_description">
-        A simple music player easily controllable from the status bar, home screen widget or by hardware buttons on your headset. It provides all expected functions like sorting in various ways as well as changing the Equalizer.  Listen to your favorite mp3, other songs or podcasts with this free beautiful music player.
+        A simple music player easily controllable from the status bar, home screen widget or by hardware buttons on your headset.
+        
+        It provides all expected functions like sorting in various ways as well as changing the Equalizer.  Listen to your favorite mp3, other songs or podcasts with this free beautiful music player.
 
         It offers exclusive extras like Search and showing Album Art, a sleep timer and many other settings. This elegant music player allows you creating and managing handy playlists as you desire.
 
@@ -99,7 +101,7 @@
 
         Supports both shuffle and repeating a particular song, as well as skipping and fast forwarding.
 
-        Available in many different languages, offers multiple different equalizers.
+        Available in many different languages and offers multiple different equalizers.
 
         Easily check a file properties like the size, duration, last modified etc.
 
@@ -113,7 +115,7 @@
 
         It comes with material design and dark theme by default, provides great user experience for easy usage. The lack of internet access gives you more privacy, security and stability than other apps.
 
-        Contains no ads or unnecessary permissions. It is fully opensource, provides customizable colors.
+        Contains no ads or unnecessary permissions. It is fully opensource and provides customizable colors.
 
         <b>Check out the full suite of Simple Tools here:</b>
         https://www.simplemobiletools.com
