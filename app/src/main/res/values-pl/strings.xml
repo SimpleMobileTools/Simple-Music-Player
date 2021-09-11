@@ -5,117 +5,123 @@
     <string name="rename_song">Zmień nazwę</string>
     <string name="rename_song_error">Wystąpił błąd podczas zmiany nazwy</string>
     <string name="rename_song_empty">Wypełnij wszystkie pola</string>
-    <string name="repeat_off">Repeat off</string>
+    <string name="repeat_off">Powtarzanie wyłączone</string>
     <string name="repeat_song">Powtarzaj bieżący utwór</string>
-    <string name="repeat_playlist">Repeat playlist</string>
-    <string name="stop_playback_after_current_song">Stop playback after current song</string>
-    <string name="enable_shuffle">Włącz kolejność losową</string>
-    <string name="disable_shuffle">Wyłącz kolejność losową</string>
-    <string name="shuffle_enabled">Kolejność losowa włączona</string>
-    <string name="shuffle_disabled">Kolejność losowa wyłączona</string>
+    <string name="repeat_playlist">Powtórz playlistę</string>
+    <string name="stop_playback_after_current_song">Zatrzymaj odtwarzanie po bieżącym utworze</string>
+    <string name="enable_shuffle">Włącz odtwarzanie losowe</string>
+    <string name="disable_shuffle">Wyłącz odtwarzanie losowe</string>
+    <string name="shuffle_enabled">Włączone odtwarzanie losowe</string>
+    <string name="shuffle_disabled">Wyłączone odtwarzanie losowe</string>
     <string name="sleep_timer">Wyłącznik czasowy</string>
-    <string name="volume">Volume</string>
-    <string name="playback_speed">Playback speed</string>
-    <string name="loading_files">Loading files…</string>
+    <string name="volume">Głośność</string>
+    <string name="playback_speed">Szybkość odtwarzania</string>
+    <string name="loading_files">Ładowanie plików…</string>
 
     <!-- Playlists -->
     <string name="add_file_to_playlist">Dodaj plik do listy odtwarzania</string>
     <string name="add_folder_to_playlist">Dodaj folder do listy odtwarzania</string>
-    <string name="manage_playlists">Zarządzaj listami odtwarzania</string>
-    <string name="playlists">Listy odtwarzania</string>
-    <string name="create_new_playlist">Utwórz listę odtwarzania</string>
-    <string name="rename_playlist">Zmień nazwę listy odtwarzania</string>
-    <string name="playlist_name_exists">Lista odtwarzania z tą nazwą już istnieje</string>
-    <string name="remove_playlist">Usuń listę odtwarzania</string>
-    <string name="remove_playlist_description">To usunie tylko wybrane listy odtwarzania, nie pliki.</string>
-    <string name="remove_playlist_description_placeholder">To usunie tylko listę odtwarzania \"%s\", nie pliki.</string>
-    <string name="remove_from_playlist">Usuń z listy odtwarzania</string>
-    <string name="remove_from_playlist_description">To usunie tylko elementy z listy odtwarzania \"%s\", pliki zostaną nienaruszone.</string>
+    <string name="manage_playlists">Zarządzaj playlistą</string>
+    <string name="playlists">Playlisty</string>
+    <string name="create_new_playlist">Utwórz nową playlistę</string>
+    <string name="rename_playlist">Zmień nazwę playlisty</string>
+    <string name="playlist_name_exists">Playlista z tą nazwą już istnieje</string>
+    <string name="remove_playlist">Usuń playlistę</string>
+    <string name="remove_playlist_description">Spowoduje to usunięcie tylko wybranych playlist. Rzeczywiste pliki nie zostaną usunięte.</string>
+    <string name="remove_playlist_description_placeholder">Spowoduje to usunięcie tylko playlisty \"%s\". Rzeczywiste pliki nie zostaną usunięte.</string>
+    <string name="remove_from_playlist">Usuń z playlisty</string>
+    <string name="remove_from_playlist_description">Spowoduje to usunięcie tylko pozycje z playlisty \"%s\". Rzeczywiste pliki nie zostaną usunięte.</string>
     <string name="delete_the_files_too">Usuń też pliki</string>
-    <string name="open_playlist">Otwórz listę odtwarzania</string>
-    <string name="all_songs_cannot_be_deleted">Lista odtwarzania \'Wszystkie utwory\' nie może zostać usunięta</string>
-    <string name="empty_playlist">Obecna lista odtwarzania jest pusta</string>
-    <string name="fetching_songs">Zbieranie utworów…</string>
+    <string name="open_playlist">Otwórz playlistę</string>
+    <string name="all_songs_cannot_be_deleted">Nie można usunąć playlisty \"Wszystkie utwory\"</string>
+    <string name="empty_playlist">Bieżąca playlista jest pusta</string>
+    <string name="fetching_songs">Pobieram utwory…</string>
     <string name="all_songs">Wszystkie utwory</string>
-    <string name="create_playlist_from_folder">Utwórz nową listę odtwarzania z folderu</string>
+    <string name="create_playlist_from_folder">Utwórz nową playlistę z folderu</string>
     <string name="folder_contains_no_audio">Wybrany folder nie zawiera plików audio</string>
-    <string name="delete_current_song">Usuń obecną piosenkę</string>
-    <string name="remove_current_song">Usuń obecną piosenkę z listy odtwarzania</string>
-    <string name="show_filename">Pokazuj nazwę pliku jako tytuł piosenki</string>
+    <string name="delete_current_song">Usuń bieżący utwór</string>
+    <string name="remove_current_song">Usuń bieżący utwór z playlisty</string>
+    <string name="show_filename">Pokaż nazwę pliku jako tytuł utworu</string>
     <string name="title_is_not_available">Jeśli tytuł jest niedostępny</string>
-    <string name="show_album_cover">Pokazuj okładkę albumu na głównym ekranie</string>
-    <string name="all_tracks">All tracks</string>
-    <string name="add_to_playlist">Add to playlist</string>
-    <string name="create_playlist_label">You can create a new playlist by selecting the wanted artists, albums or tracks and using Menu -> Add to playlist.</string>
+    <string name="show_album_cover">Pokaż okładkę albumu na ekranie głównym</string>
+    <string name="all_tracks">Wszystkie utwory</string>
+    <string name="add_to_playlist">Dodaj do playlisty</string>
+    <string name="create_playlist_label">Możesz utworzyć nową playlistę, wybierając wykonawców, albumy lub utwory i używając Menu -> Dodaj do playlisty.</string>
 
     <!-- Sorting -->
-    <string name="track_count">Track Count</string>
-    <string name="album_count">Album Count</string>
-    <string name="artist_name">Artist Name</string>
-    <string name="year">Year</string>
+    <string name="track_count">Liczba utworów</string>
+    <string name="album_count">Liczba albumów</string>
+    <string name="artist_name">Nazwa artysty</string>
+    <string name="year">Rok</string>
 
     <!-- Artists -->
-    <string name="artists">Artists</string>
-    <string name="albums">Albums</string>
+    <string name="artists">Artyści</string>
+    <string name="albums">Albumy</string>
     <plurals name="albums_plural">
-        <item quantity="one">%d Album</item>
-        <item quantity="other">%d Albums</item>
+        <item quantity="one">%d album</item>
+        <item quantity="few">%d albumy</item>
+        <item quantity="many">%d albumów</item>
+        <item quantity="other">%d albumów</item>
     </plurals>
 
-    <string name="tracks">Tracks</string>
+    <string name="tracks">Utwory</string>
     <plurals name="tracks_plural">
-        <item quantity="one">%d Track</item>
-        <item quantity="other">%d Tracks</item>
+        <item quantity="one">%d utwór</item>
+        <item quantity="few">%d utwóry</item>
+        <item quantity="many">%d utworów</item>
+        <item quantity="other">%d utworów</item>
     </plurals>
 
     <!-- Queue -->
-    <string name="next_track">Next:</string>
-    <string name="track_queue">Track queue</string>
-    <string name="add_to_queue">Add to queue</string>
-    <string name="remove_from_queue">Remove from queue</string>
-    <string name="create_playlist_from_queue">Create playlist from queue</string>
+    <string name="next_track">Następny:</string>
+    <string name="track_queue">Kolejka utworów</string>
+    <string name="add_to_queue">Dodaj do kolejki</string>
+    <string name="remove_from_queue">Usuń z kolejki</string>
+    <string name="create_playlist_from_queue">Utwórz playlistę z kolejki</string>
 
     <!-- Settings -->
     <string name="equalizer">Korektor</string>
-    <string name="swap_prev_next">Swap previous/next headphone buttons</string>
+    <string name="swap_prev_next">Zamień poprzedni/następny przyciski słuchawek</string>
 
     <!-- FAQ -->
-    <string name="faq_1_title">Jak mogę przewijać piosenki?</string>
-    <string name="faq_1_text">Kliknij napis z obecnym jej momentem lub całkowitym czasem trwania.</string>
+    <string name="faq_1_title">Jak mogę przewijać utwory do przodu?</string>
+    <string name="faq_1_text">Możesz kliknąć tekst bieżącego lub maksymalnego czasu trwania w pobliżu paska wyszukiwania, który przesunie utwór do tyłu lub do przodu.</string>
 
     <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
     <!-- App title has to have less than 50 characters. If you cannot squeeze it, just remove a part of it -->
-    <string name="app_title">Simple Music Player - A cool player for your songs</string>
+    <string name="app_title">Prosty odtwarzacz muzyczny - odtwarzacz utworów</string>
     <!-- Short description has to have less than 80 chars -->
-    <string name="app_short_description">A clean music player with a customizable widget, stylish interface and no ads.</string>
+    <string name="app_short_description">Odtwarzacz muzyki z konfigurowalnym widżetem, stylowym interfejsem i bez reklam.</string>
     <string name="app_long_description">
-        A simple music player easily controllable from the status bar, home screen widget or by hardware buttons on your headset. It provides all expected functions like sorting in various ways as well as changing the Equalizer.  Listen to your favorite mp3, other songs or podcasts with this free beautiful music player.
+        Prosty odtwarzacz muzyki, z łatwym sterowaniem na pasku stanu, widżetu na ekranie głównym lub za pomocą przycisków sprzętowych w zestawie słuchawkowym.
+        
+        Zapewnia wszystkie oczekiwane funkcje, takie jak sortowanie na różne sposoby, a także zmiana korektora. Słuchaj swoich ulubionych mp3, innych utworów lub podcastów za pomocą tego bezpłatnego, pięknego odtwarzacza muzyki.
 
-        It offers exclusive extras like Search and showing Album Art, a sleep timer and many other settings. This elegant music player allows you creating and managing handy playlists as you desire.
+        Oferuje ekskluzywne dodatki, takie jak wyszukiwanie i wyświetlanie okładek albumów, wyłącznik czasowy i wiele innych ustawień. Ten elegancki odtwarzacz muzyczny umożliwia tworzenie i zarządzanie poręcznymi listami odtwarzania według własnego uznania.
 
-        Playlists are fully supported. You can add either individual files, or whole folders. If you won\'t like a file, you can either just remove it from a playlist, or delete the actual file altogether.
+        Listy odtwarzania są w pełni obsługiwane. Możesz dodać pojedyncze pliki lub całe foldery. Jeśli plik się nie spodoba, możesz po prostu go usunąć z listy odtwarzania lub całkowicie usunąć rzeczywisty plik.
 
-        Comes with a handy sleep timer so that you can reliably delay the time of the app shutting down.
+        W zestawie poręczny wyłącznik czasowy, dzięki któremu możesz niezawodnie opóźnić czas wyłączenia aplikacji.
 
-        Supports both shuffle and repeating a particular song, as well as skipping and fast forwarding.
+        Obsługuje zarówno odtwarzanie losowe, jak i powtarzanie konkretnego utworu, a także przeskakiwanie i szybkie przewijanie do przodu.
 
-        Available in many different languages, offers multiple different equalizers.
+        Dostępny w wielu różnych językach oraz oferuje wiele różnych korektorów.
 
-        Easily check a file properties like the size, duration, last modified etc.
+        Łatwo sprawdź właściwości pliku, takie jak rozmiar, czas trwania, ostatnia modyfikacja itp.
 
-        Modify file EXIF data like the song title and artist.
+        Zmodyfikuj dane EXIF pliku, takie jak tytuł utworu i wykonawca.
 
-        Quickly share files with your friends on social networks, emails, or anywhere you would like.
+        Szybko udostępniaj pliki znajomym w sieciach społecznościowych, przez e-maila lub w dowolnym innym miejscu.
 
-        This stylish music player contains a widget with customizable text color, alpha and the color of the background for easy access and control.
+        Ten stylowy odtwarzacz muzyki zawiera widżet z dostosowywanym kolorem tekstu, alfa i kolorem tła, co zapewnia łatwy dostęp i kontrolę.
 
-        It properly handles third party intents too for playing individual audio files so it can help at setting ringtones too.
+        Prawidłowo obsługuje również intencje stron trzecich do odtwarzania poszczególnych plików audio, dzięki czemu może również pomóc w ustawianiu dzwonków.
 
-        It comes with material design and dark theme by default, provides great user experience for easy usage. The lack of internet access gives you more privacy, security and stability than other apps.
+        Domyślnie jest wyposażony w istotny wygląd i ciemny motyw, zapewniając doskonałe wrażenia użytkownika i łatwe w użyciu. Brak dostępu do Internetu zapewnia większą prywatność, bezpieczeństwo i stabilność niż inne aplikacje.
 
-        Nie zawiera natomiast żadnych reklam, nie potrzebuje całej masy uprawnień, jest w pełni otwartoźródłowa i w pełni podatna na kolorowanie.
+        Nie zawiera reklam ani niepotrzebnych uprawnień. Jest w pełni opensource i zapewnia konfigurowalne kolory.
 
-        <b>Check out the full suite of Simple Tools here:</b>
+        <b>Zapoznaj się z pełnym zestawem prostych narzędzi tutaj:</b>
         https://www.simplemobiletools.com
 
         <b>Facebook:</b>
