@@ -93,11 +93,11 @@
     <!-- Short description has to have less than 80 chars -->
     <string name="app_short_description">Odtwarzacz muzyki z konfigurowalnym widżetem, stylowym interfejsem i bez reklam.</string>
     <string name="app_long_description">
-        Prosty odtwarzacz muzyki, z łatwym sterowaniem na pasku stanu lub widżecie na ekranie głównym oraz za pomocą przycisków sprzętowych w zestawie słuchawkowym. Zapewnia wszystkie oczekiwane funkcje, takie jak sortowanie na różne sposoby, a także zmiana korektora. Słuchaj swoich ulubionych mp3, innych utworów lub podcastów za pomocą tego bezpłatnego, pięknego odtwarzacza muzyki.
+        Prosty odtwarzacz muzyki, z łatwym sterowaniem na pasku stanu lub widżecie na ekranie głównym oraz za pomocą przycisków sprzętowych w zestawie słuchawkowym. Zapewnia wszystkie oczekiwane funkcje, takie jak sortowanie na różne sposoby, a także zmiana korektora. Słuchaj swoich ulubionych mp3, innych utworów lub podcastów za pomocą tego bezpłatnego odtwarzacza muzyki.
 
         Oferuje ekskluzywne dodatki, takie jak wyszukiwanie i wyświetlanie okładek albumów, wyłącznik czasowy i wiele innych ustawień. Ten elegancki odtwarzacz muzyczny umożliwia tworzenie i zarządzanie poręcznymi listami odtwarzania według własnego uznania.
 
-        Listy odtwarzania są w pełni obsługiwane. Możesz dodać pojedyncze pliki lub całe foldery. Jeśli plik się nie spodoba, możesz po prostu go usunąć z listy odtwarzania lub całkowicie usunąć rzeczywisty plik.
+        Listy odtwarzania są w pełni obsługiwane. Możesz dodać pojedyncze pliki lub całe foldery. Jeśli plik się nie spodoba, możesz go po prostu usunąć z listy odtwarzania lub całkowicie usunąć rzeczywisty plik.
 
         W zestawie poręczny wyłącznik czasowy, dzięki któremu możesz niezawodnie opóźnić czas wyłączenia aplikacji.
 
@@ -113,7 +113,7 @@
 
         Ten stylowy odtwarzacz muzyki zawiera widżet z dostosowywanym kolorem tekstu, alfa i kolorem tła, co zapewnia łatwy dostęp i kontrolę.
 
-        Prawidłowo obsługuje również intencje stron trzecich do odtwarzania poszczególnych plików audio, dzięki czemu może również pomóc w ustawianiu dzwonków.
+        Prawidłowo obsługuje również intencje stron trzecich do odtwarzania poszczególnych plików audio, dzięki czemu może również pomóc w ustawieniu dzwonków.
 
         Domyślnie jest wyposażony w istotny wygląd i ciemny motyw, zapewniając doskonałe wrażenia użytkownika i łatwe w użyciu. Brak dostępu do Internetu zapewnia większą prywatność, bezpieczeństwo i stabilność niż inne aplikacje.
 
