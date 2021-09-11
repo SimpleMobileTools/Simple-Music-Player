@@ -81,7 +81,7 @@
 
     <!-- Settings -->
     <string name="equalizer">Korektor</string>
-    <string name="swap_prev_next">Zamień poprzedni/następny przyciski słuchawek</string>
+    <string name="swap_prev_next">Zamień przyciski słuchawek poprzedni/następny</string>
 
     <!-- FAQ -->
     <string name="faq_1_title">Jak mogę przewijać utwory do przodu?</string>
