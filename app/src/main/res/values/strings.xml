@@ -27,13 +27,13 @@
     <string name="rename_playlist">Rename playlist</string>
     <string name="playlist_name_exists">A playlist with that name already exists</string>
     <string name="remove_playlist">Remove playlist</string>
-    <string name="remove_playlist_description">This will only remove the selected playlists, not the actual files.</string>
-    <string name="remove_playlist_description_placeholder">This will only remove playlist \"%s\", not the actual files.</string>
+    <string name="remove_playlist_description">This will only remove the selected playlists. The actual files will not be deleted.</string>
+    <string name="remove_playlist_description_placeholder">This will only remove playlist \"%s\". The actual files will not be deleted.</string>
     <string name="remove_from_playlist">Remove from playlist</string>
-    <string name="remove_from_playlist_description">This will only remove the items from playlist \"%s\", the actual files will not be deleted.</string>
+    <string name="remove_from_playlist_description">This will only remove the items from playlist \"%s\". The actual files will not be deleted.</string>
     <string name="delete_the_files_too">Delete the files too</string>
     <string name="open_playlist">Open playlist</string>
-    <string name="all_songs_cannot_be_deleted">\'All songs\' playlist cannot be deleted</string>
+    <string name="all_songs_cannot_be_deleted">\"All songs\" playlist cannot be deleted</string>
     <string name="empty_playlist">Current playlist is empty</string>
     <string name="fetching_songs">Fetching songs…</string>
     <string name="all_songs">All songs</string>
@@ -99,7 +99,7 @@
 
         Supports both shuffle and repeating a particular song, as well as skipping and fast forwarding.
 
-        Available in many different languages, offers multiple different equalizers.
+        Available in many different languages and offers multiple different equalizers.
 
         Easily check a file properties like the size, duration, last modified etc.
 
@@ -113,7 +113,7 @@
 
         It comes with material design and dark theme by default, provides great user experience for easy usage. The lack of internet access gives you more privacy, security and stability than other apps.
 
-        Contains no ads or unnecessary permissions. It is fully opensource, provides customizable colors.
+        Contains no ads or unnecessary permissions. It is fully opensource and provides customizable colors.
 
         <b>Check out the full suite of Simple Tools here:</b>
         https://www.simplemobiletools.com
