@@ -23,7 +23,7 @@
         android:layout_marginEnd="@dimen/normal_margin"
         android:layout_marginBottom="@dimen/normal_margin" />
 
-    <com.simplemobiletools.commons.views.MyTextView
+    <com.simplemobiletools.musicplayer.views.MarqueeTextView
         android:id="@+id/current_track_label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -31,9 +31,7 @@
         android:layout_alignBottom="@+id/current_track_image"
         android:layout_toStartOf="@+id/current_track_play_pause"
         android:layout_toEndOf="@+id/current_track_image"
-        android:ellipsize="end"
         android:gravity="center_vertical"
-        android:maxLines="1"
         android:paddingEnd="@dimen/activity_margin"
         android:textSize="@dimen/bigger_text_size"
         tools:text="My Track" />
