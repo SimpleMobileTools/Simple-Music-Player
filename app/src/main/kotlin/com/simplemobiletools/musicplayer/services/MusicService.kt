@@ -1036,7 +1036,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     private fun handleMediaButton(mediaButtonEvent: Intent) {
         if (mediaButtonEvent.action == Intent.ACTION_MEDIA_BUTTON) {
             val swapPrevNext = config.swapPrevNext
-            val event = mediaButtonEvent.getParcelableExtra<KeyEvent>(Intent.EXTRA_KEY_EVENT)
+            val event = mediaButtonEvent.getParcelableExtra<KeyEvent>(Intent.EXTRA_KEY_EVENT) ?: return
             if (event.action == KeyEvent.ACTION_UP) {
                 when (event.keyCode) {
                     KeyEvent.KEYCODE_MEDIA_PLAY -> resumeTrack()
