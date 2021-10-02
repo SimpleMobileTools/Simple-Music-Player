@@ -1,6 +1,12 @@
 Changelog
 ==========
 
+Version 5.8.0 *(2021-10-02)*
+----------------------------
+
+ * Fixed some Android 11 file operation related issues
+ * Added some UX and translation improvements
+
 Version 5.7.1 *(2021-08-29)*
 ----------------------------
 
