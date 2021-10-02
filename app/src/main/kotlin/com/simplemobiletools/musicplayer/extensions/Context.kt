@@ -15,7 +15,6 @@ import com.simplemobiletools.musicplayer.helpers.*
 import com.simplemobiletools.musicplayer.interfaces.*
 import com.simplemobiletools.musicplayer.models.*
 import com.simplemobiletools.musicplayer.services.MusicService
-import org.greenrobot.eventbus.EventBus
 import java.io.File
 
 @SuppressLint("NewApi")
@@ -134,7 +133,8 @@ fun Context.getAlbumsSync(artist: Artist): ArrayList<Album> {
         Audio.Albums._ID,
         Audio.Albums.ARTIST,
         Audio.Albums.FIRST_YEAR,
-        Audio.Albums.ALBUM)
+        Audio.Albums.ALBUM
+    )
 
     var selection = "${Audio.Albums.ARTIST} = ?"
     var selectionArgs = arrayOf(artist.title)
@@ -261,23 +261,6 @@ fun Context.removeQueueItems(tracks: List<Track>, callback: () -> Unit) {
         }
         callback()
     }
-}
-
-fun Context.deleteTracks(tracks: List<Track>, callback: () -> Unit) {
-    tracks.forEach { track ->
-        try {
-            val where = "${Audio.Media._ID} = ?"
-            val args = arrayOf(track.mediaStoreId.toString())
-            val uri = Audio.Media.EXTERNAL_CONTENT_URI
-            contentResolver.delete(uri, where, args)
-            tracksDAO.removeTrack(track.mediaStoreId)
-        } catch (ignored: Exception) {
-        }
-    }
-
-    removeQueueItems(tracks) {}
-    EventBus.getDefault().post(Events.TrackDeleted())
-    callback()
 }
 
 fun Context.getAllInitialTracks(): ArrayList<Track> {
