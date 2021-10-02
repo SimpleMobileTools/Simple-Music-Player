@@ -16,8 +16,8 @@ android {
         applicationId "com.simplemobiletools.musicplayer"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 88
-        versionName "5.7.1"
+        versionCode 89
+        versionName "5.8.0"
         setProperty("archivesBaseName", "music-player")
         vectorDrawables.useSupportLibrary = true
     }
