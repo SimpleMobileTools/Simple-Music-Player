@@ -17,6 +17,7 @@
     <string name="volume">Гучність</string>
     <string name="playback_speed">Швидкість відтворення</string>
     <string name="loading_files">Завантаження файлів…</string>
+    <string name="grant_change_metadata_permission">Please grant the permission to modify audio properties</string>
 
     <!-- Playlists -->
     <string name="add_file_to_playlist">Додати файл до списку відтворення</string>

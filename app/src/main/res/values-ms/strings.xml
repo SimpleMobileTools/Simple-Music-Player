@@ -17,6 +17,7 @@
     <string name="volume">Kelantangan</string>
     <string name="playback_speed">Kelajuan main balik</string>
     <string name="loading_files">Memuatkan fail…</string>
+    <string name="grant_change_metadata_permission">Please grant the permission to modify audio properties</string>
 
     <!-- Playlists -->
     <string name="add_file_to_playlist">Tambah fail ke senarai</string>

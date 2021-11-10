@@ -12,4 +12,5 @@ class Events {
     class PlaylistsUpdated
     class TrackDeleted
     class NoStoragePermission
+    class RefreshTracks
 }

@@ -357,6 +357,11 @@ class MainActivity : SimpleActivity() {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
+    fun tracksUpdated(event: Events.RefreshTracks) {
+        tracks_fragment_holder?.setupFragment(this)
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
     fun trackDeleted(event: Events.TrackDeleted) {
         getAllFragments().forEach {
             it.setupFragment(this)

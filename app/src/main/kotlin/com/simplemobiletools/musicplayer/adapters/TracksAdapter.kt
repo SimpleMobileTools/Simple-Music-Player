@@ -1,6 +1,7 @@
 package com.simplemobiletools.musicplayer.adapters
 
 import android.content.ContentUris
+import android.content.Intent
 import android.provider.MediaStore
 import android.view.Menu
 import android.view.View
@@ -18,19 +19,25 @@ import com.simplemobiletools.commons.views.FastScroller
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
-import com.simplemobiletools.musicplayer.extensions.addTracksToPlaylist
-import com.simplemobiletools.musicplayer.extensions.addTracksToQueue
-import com.simplemobiletools.musicplayer.extensions.deleteTracks
-import com.simplemobiletools.musicplayer.extensions.tracksDAO
+import com.simplemobiletools.musicplayer.dialogs.EditDialog
+import com.simplemobiletools.musicplayer.extensions.*
+import com.simplemobiletools.musicplayer.helpers.EDIT
+import com.simplemobiletools.musicplayer.helpers.EDITED_TRACK
+import com.simplemobiletools.musicplayer.helpers.REFRESH_LIST
+import com.simplemobiletools.musicplayer.helpers.TagHelper
 import com.simplemobiletools.musicplayer.models.Events
 import com.simplemobiletools.musicplayer.models.Track
+import com.simplemobiletools.musicplayer.services.MusicService
 import kotlinx.android.synthetic.main.item_track.view.*
 import org.greenrobot.eventbus.EventBus
 import java.util.*
 
-class TracksAdapter(activity: SimpleActivity, var tracks: ArrayList<Track>, val isPlaylistContent: Boolean, recyclerView: MyRecyclerView,
-                    fastScroller: FastScroller, itemClick: (Any) -> Unit) : MyRecyclerViewAdapter(activity, recyclerView, fastScroller, itemClick) {
+class TracksAdapter(
+    activity: SimpleActivity, var tracks: ArrayList<Track>, val isPlaylistContent: Boolean, recyclerView: MyRecyclerView,
+    fastScroller: FastScroller, itemClick: (Any) -> Unit
+) : MyRecyclerViewAdapter(activity, recyclerView, fastScroller, itemClick) {
 
+    private val tagHelper by lazy { TagHelper(activity) }
     private var textToHighlight = ""
     private val placeholder = resources.getColoredDrawableWithColor(R.drawable.ic_headset, textColor)
     private val cornerRadius = resources.getDimension(R.dimen.rounded_corner_radius_small).toInt()
@@ -56,6 +63,8 @@ class TracksAdapter(activity: SimpleActivity, var tracks: ArrayList<Track>, val 
     override fun prepareActionMode(menu: Menu) {
         menu.apply {
             findItem(R.id.cab_remove_from_playlist).isVisible = isPlaylistContent
+            findItem(R.id.cab_rename).isVisible =
+                isOneItemSelected() && getSelectedTracks().firstOrNull()?.let { !it.path.startsWith("content://") && tagHelper.isEditTagSupported(it) } == true
         }
     }
 
@@ -68,6 +77,7 @@ class TracksAdapter(activity: SimpleActivity, var tracks: ArrayList<Track>, val 
             R.id.cab_add_to_playlist -> addToPlaylist()
             R.id.cab_add_to_queue -> addToQueue()
             R.id.cab_properties -> showProperties()
+            R.id.cab_rename -> displayEditDialog()
             R.id.cab_remove_from_playlist -> removeFromPlaylist()
             R.id.cab_delete -> askConfirmDelete()
             R.id.cab_select_all -> selectAll()
@@ -168,7 +178,7 @@ class TracksAdapter(activity: SimpleActivity, var tracks: ArrayList<Track>, val 
         }
     }
 
-    private fun getSelectedTracks(): List<Track> = tracks.filter { selectedKeys.contains(it.hashCode()) }.toList()
+    private fun getSelectedTracks(): List<Track> = tracks.filter { selectedKeys.contains(it.hashCode()) }
 
     fun updateItems(newItems: ArrayList<Track>, highlightText: String = "", forceUpdate: Boolean = false) {
         if (forceUpdate || newItems.hashCode() != tracks.hashCode()) {
@@ -204,6 +214,25 @@ class TracksAdapter(activity: SimpleActivity, var tracks: ArrayList<Track>, val 
 
             track_image.beVisible()
             track_id.beGone()
+        }
+    }
+
+    private fun displayEditDialog() {
+        getSelectedTracks().firstOrNull()?.let { selectedTrack ->
+            EditDialog(activity as SimpleActivity, selectedTrack) { track ->
+                val trackIndex = tracks.indexOfFirst { it.mediaStoreId == track.mediaStoreId }
+                tracks[trackIndex] = track
+                updateItems(tracks, forceUpdate = true)
+                if (track.mediaStoreId == MusicService.mCurrTrack?.mediaStoreId) {
+                    Intent(activity, MusicService::class.java).apply {
+                        putExtra(EDITED_TRACK, track)
+                        action = EDIT
+                        activity.startService(this)
+                    }
+                }
+                activity.sendIntent(REFRESH_LIST)
+                EventBus.getDefault().post(Events.RefreshTracks())
+            }
         }
     }
 }

@@ -17,6 +17,7 @@
     <string name="volume">Hlasitosť</string>
     <string name="playback_speed">Rýchlosť prehrávania</string>
     <string name="loading_files">Načítanie súborov…</string>
+    <string name="grant_change_metadata_permission">Please grant the permission to modify audio properties</string>
 
     <!-- Playlists -->
     <string name="add_file_to_playlist">Pridať súbor do playlistu</string>

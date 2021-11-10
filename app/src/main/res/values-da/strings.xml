@@ -17,6 +17,7 @@
     <string name="playback_speed">Afspilningshastighed</string>
     <string name="loading_files">Indlæser filer…</string>
     <string name="sleep_timer">Sleep timer</string>
+    <string name="grant_change_metadata_permission">Please grant the permission to modify audio properties</string>
     
         <!-- Playlists -->
     <string name="add_file_to_playlist">Tilføj fil til afspilningsliste</string>

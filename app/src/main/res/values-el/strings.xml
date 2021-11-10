@@ -17,6 +17,7 @@
     <string name="volume">Ένταση</string>
     <string name="playback_speed">Ταχύτητα Αναπ/γής</string>
     <string name="loading_files">Φόρτωση αρχείων…</string>
+    <string name="grant_change_metadata_permission">Please grant the permission to modify audio properties</string>
 
     <!-- Playlists -->
     <string name="add_file_to_playlist">Προσθήκη αρχείου στη λίστα</string>

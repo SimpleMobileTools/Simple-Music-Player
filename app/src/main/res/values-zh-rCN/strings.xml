@@ -17,6 +17,7 @@
     <string name="volume">Volume</string>
     <string name="playback_speed">Playback speed</string>
     <string name="loading_files">Loading files…</string>
+    <string name="grant_change_metadata_permission">Please grant the permission to modify audio properties</string>
 
     <!-- Playlists -->
     <string name="add_file_to_playlist">添加文件至播放列表</string>
