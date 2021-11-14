@@ -1,2 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="all_songs_cannot_be_deleted">«Alle spor»-spillelisten kan ikke slettes</string>
+    <string name="enable_shuffle">Skru på omstokking</string>
+    <plurals name="albums_plural">
+        <item quantity="one">%d album</item>
+        <item quantity="other">%d album</item>
+    </plurals>
+    <string name="create_playlist_from_queue">Opprett spilleliste fra kø</string>
+    <string name="app_name">Enkel musikkspiller</string>
+    <string name="app_launcher_name">Musikkspiller</string>
+    <string name="rename_song">Gi sporet nytt navn</string>
+    <string name="rename_song_empty">Fyll inn alle felter</string>
+    <string name="repeat_off">Gjentagelse av</string>
+    <string name="repeat_song">Gjenta nåværende spor</string>
+    <string name="rename_song_error">Kunne ikke endre navn på spor</string>
+    <string name="playlists">Spillelister</string>
+    <string name="sleep_timer">Søvntidsur</string>
+    <string name="volume">Lydstyrke</string>
+    <string name="playback_speed">Avspillingshastighet</string>
+    <string name="loading_files">Laster inn filer …</string>
+    <string name="add_file_to_playlist">Legg til fil i spilleliste</string>
+    <string name="add_folder_to_playlist">Legg til mappe i spilleliste</string>
+    <string name="manage_playlists">Håndter spillelister</string>
+    <string name="shuffle_disabled">Omstokking av</string>
+    <string name="rename_playlist">Gi spillelisten nytt navn</string>
+    <string name="playlist_name_exists">En spilleliste med dette navnet finnes allerede</string>
+    <string name="remove_playlist">Fjern spilleliste</string>
+    <string name="remove_from_playlist">Fjern fra spilleliste</string>
+    <string name="folder_contains_no_audio">Valgt mappe inneholder ingen lydfiler</string>
+    <string name="open_playlist">Åpne spilleliste</string>
+    <string name="show_album_cover">Vis albumsomslag på hovedskjermen</string>
+    <string name="all_tracks">Alle spor</string>
+    <string name="next_track">Neste:</string>
+    <string name="create_new_playlist">Opprett ny spilleliste</string>
+    <string name="track_queue">Sporkø</string>
+    <string name="add_to_queue">Legg til i kø</string>
+    <string name="equalizer">Tonekontroll</string>
+    <string name="swap_prev_next">Bytt hodetelefonknapper for forrige/neste</string>
+    <string name="faq_1_title">Hvordan kan jeg spole raskt\?</string>
+    <string name="faq_1_text">Du kan klikke på nåværende eller lengde nær blafringsfeltet, noe som flytter avspillingen forover eller bakover.</string>
+    <string name="playlist_empty">Spillelisten din er tom</string>
+    <string name="repeat_playlist">Gjenta alt</string>
+    <string name="stop_playback_after_current_song">Stop avspilling etter dette sporet</string>
+    <string name="disable_shuffle">Skru av omstokking</string>
+    <string name="all_songs">Alle spor</string>
+    <string name="add_to_playlist">Legg til i spilleliste</string>
+    <string name="year">År</string>
+    <string name="shuffle_enabled">Omstokking på</string>
+    <string name="create_playlist_from_folder">Opprett ny spilleliste fra mappe</string>
+    <string name="remove_current_song">Fjern nåvørende spor fra spilleliste</string>
+    <string name="show_filename">Vis filnavn som sportittel</string>
+    <string name="title_is_not_available">Hvis tittel ikke er tilgjengelig</string>
+    <string name="album_count">Albumsantall</string>
+    <string name="artist_name">Artistnavn</string>
+    <string name="artists">Artister</string>
+    <string name="albums">Album</string>
+    <plurals name="tracks_plural">
+        <item quantity="one">%d spor</item>
+        <item quantity="other">%d spor</item>
+    </plurals>
+    <string name="remove_playlist_description">Dette fjerner kun valgte spillelister. De faktiske filene vil ikke bli slettet.</string>
+    <string name="remove_from_playlist_description">Fette vil kun fjerne elementene fra spillelisten «%s». De faktiske filene vil ikke bli slettet.</string>
+    <string name="delete_current_song">Slett nåværende spor</string>
+    <string name="track_count">Sporantall</string>
+    <string name="tracks">Spor</string>
+    <string name="remove_from_queue">Fjern fra kø</string>
+    <string name="remove_playlist_description_placeholder">Dette vil kun fjerne spillelisten «%s». De faktiske filene vil ikke bli slettet.</string>
+    <string name="empty_playlist">Nåværende spilleliste er tom</string>
+    <string name="delete_the_files_too">Slett filene også</string>
+    <string name="fetching_songs">Henter spor …</string>
+    <string name="create_playlist_label">Du kan opprette en ny spilleliste ved å velge ønskede artister, album, eller spor ved å bruke Meny → Legg til i spilleliste.</string>
+    <string name="app_short_description">En ren musikkspiller med tilpassbart miniprogram, stilig grensesnitt, og ingen reklame.</string>
+    <string name="app_title">Enkel musikkspiller – en kul spiller for dine spor</string>
+</resources>
