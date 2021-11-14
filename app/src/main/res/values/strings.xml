@@ -4,7 +4,7 @@
     <string name="app_launcher_name">Music Player</string>
     <string name="playlist_empty">Your playlist is empty</string>
     <string name="rename_song">Rename song</string>
-    <string name="rename_song_error">An error occurred during the renaming</string>
+    <string name="rename_song_error">Could not rename song</string>
     <string name="rename_song_empty">Please fill in all fields</string>
     <string name="repeat_off">Repeat off</string>
     <string name="repeat_song">Repeat current song</string>
@@ -12,13 +12,12 @@
     <string name="stop_playback_after_current_song">Stop playback after current song</string>
     <string name="enable_shuffle">Enable shuffle</string>
     <string name="disable_shuffle">Disable shuffle</string>
-    <string name="shuffle_enabled">Shuffle enabled</string>
-    <string name="shuffle_disabled">Shuffle disabled</string>
+    <string name="shuffle_enabled">Shuffle on</string>
+    <string name="shuffle_disabled">Shuffle off</string>
     <string name="sleep_timer">Sleep timer</string>
     <string name="volume">Volume</string>
     <string name="playback_speed">Playback speed</string>
     <string name="loading_files">Loading files…</string>
-
     <!-- Playlists -->
     <string name="add_file_to_playlist">Add file to playlist</string>
     <string name="add_folder_to_playlist">Add folder to playlist</string>
@@ -54,7 +53,6 @@
     <string name="album_count">Album Count</string>
     <string name="artist_name">Artist Name</string>
     <string name="year">Year</string>
-
     <!-- Artists -->
     <string name="artists">Artists</string>
     <string name="albums">Albums</string>
@@ -62,28 +60,23 @@
         <item quantity="one">%d Album</item>
         <item quantity="other">%d Albums</item>
     </plurals>
-
     <string name="tracks">Tracks</string>
     <plurals name="tracks_plural">
         <item quantity="one">%d Track</item>
         <item quantity="other">%d Tracks</item>
     </plurals>
-
     <!-- Queue -->
     <string name="next_track">Next:</string>
     <string name="track_queue">Track queue</string>
     <string name="add_to_queue">Add to queue</string>
     <string name="remove_from_queue">Remove from queue</string>
     <string name="create_playlist_from_queue">Create playlist from queue</string>
-
     <!-- Settings -->
     <string name="equalizer">Equalizer</string>
     <string name="swap_prev_next">Swap previous/next headphone buttons</string>
-
     <!-- FAQ -->
-    <string name="faq_1_title">How can I fast-forward songs?</string>
-    <string name="faq_1_text">You can click on the current or max duration texts near the seekbar, that will move the song either backward, or forward.</string>
-
+    <string name="faq_1_title">How can I fast-forward\?</string>
+    <string name="faq_1_text">Click on the current or total duration texts near the seekbar, moving playback either backward, or forward.</string>
     <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
     <!-- App title has to have less than 50 characters. If you cannot squeeze it, just remove a part of it -->
     <string name="app_title">Simple Music Player - A cool player for your songs</string>
@@ -125,7 +118,6 @@
         <b>Reddit:</b>
         https://www.reddit.com/r/SimpleMobileTools
     </string>
-
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
