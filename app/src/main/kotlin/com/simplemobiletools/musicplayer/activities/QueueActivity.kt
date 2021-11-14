@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import com.simplemobiletools.commons.extensions.areSystemAnimationsEnabled
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.adapters.QueueAdapter
@@ -63,7 +64,10 @@ class QueueActivity : SimpleActivity() {
                 queue_list.adapter = this
             }
 
-            queue_list.scheduleLayoutAnimation()
+            if (areSystemAnimationsEnabled) {
+                queue_list.scheduleLayoutAnimation()
+            }
+
             queue_fastscroller.setViews(queue_list) {
                 val track = queueAdapter.items.getOrNull(it)
                 queue_fastscroller.updateBubbleText(track?.title ?: "")

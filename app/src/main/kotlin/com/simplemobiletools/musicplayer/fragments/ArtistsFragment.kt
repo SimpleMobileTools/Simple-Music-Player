@@ -5,6 +5,7 @@ import android.content.Intent
 import android.util.AttributeSet
 import com.google.gson.Gson
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
+import com.simplemobiletools.commons.extensions.areSystemAnimationsEnabled
 import com.simplemobiletools.commons.extensions.beGoneIf
 import com.simplemobiletools.commons.extensions.beVisibleIf
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
@@ -59,7 +60,10 @@ class ArtistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
                     artists_list.adapter = this
                 }
 
-                artists_list.scheduleLayoutAnimation()
+                if (context.areSystemAnimationsEnabled) {
+                    artists_list.scheduleLayoutAnimation()
+                }
+
                 artists_fastscroller.setViews(artists_list) {
                     val artist = (artists_list.adapter as ArtistsAdapter).artists.getOrNull(it)
                     artists_fastscroller.updateBubbleText(artist?.getBubbleText() ?: "")

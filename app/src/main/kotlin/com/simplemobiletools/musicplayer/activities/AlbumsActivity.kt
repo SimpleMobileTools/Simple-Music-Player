@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.Menu
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.simplemobiletools.commons.extensions.areSystemAnimationsEnabled
 import com.simplemobiletools.commons.extensions.getFormattedDuration
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.adapters.AlbumsTracksAdapter
@@ -78,7 +79,10 @@ class AlbumsActivity : SimpleActivity() {
                     albums_list.adapter = this
                 }
 
-                albums_list.scheduleLayoutAnimation()
+                if (areSystemAnimationsEnabled) {
+                    albums_list.scheduleLayoutAnimation()
+                }
+
                 albums_fastscroller.setViews(albums_list) {
                     val item = adapter.items.getOrNull(it)
                     if (item is Track) {
