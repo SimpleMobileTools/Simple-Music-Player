@@ -112,6 +112,8 @@ class TrackActivity : SimpleActivity(), PlaybackSpeedListener {
     override fun onResume() {
         super.onResume()
         updateTextColors(activity_track_holder)
+        activity_track_title.setTextColor(config.textColor)
+        activity_track_artist.setTextColor(config.textColor)
     }
 
     override fun onDestroy() {
