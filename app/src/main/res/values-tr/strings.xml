@@ -14,9 +14,9 @@
     <string name="shuffle_enabled">Karıştırma etkin</string>
     <string name="shuffle_disabled">Karıştırma devre dışı</string>
     <string name="sleep_timer">Uyku zamanlayıcısı</string>
-    <string name="volume">Volume</string>
-    <string name="playback_speed">Playback speed</string>
-    <string name="loading_files">Loading files…</string>
+    <string name="volume">Ses seviyesi</string>
+    <string name="playback_speed">Oynatma hızı</string>
+    <string name="loading_files">Dosyalar yükleniyor…</string>
     <string name="grant_change_metadata_permission">Please grant the permission to modify audio properties</string>
 
     <!-- Playlists -->
