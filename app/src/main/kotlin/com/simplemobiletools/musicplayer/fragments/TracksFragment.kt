@@ -22,7 +22,7 @@ import com.simplemobiletools.musicplayer.models.Album
 import com.simplemobiletools.musicplayer.models.Track
 import kotlinx.android.synthetic.main.fragment_tracks.view.*
 
-// Artists -> Albums -> Tracks
+// Artists -> Albums -> Tracks
 class TracksFragment(context: Context, attributeSet: AttributeSet) : MyViewPagerFragment(context, attributeSet) {
     private var tracksIgnoringSearch = ArrayList<Track>()
 
@@ -104,6 +104,7 @@ class TracksFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
     }
 
     override fun setupColors(textColor: Int, adjustedPrimaryColor: Int) {
+        tracks_placeholder.setTextColor(textColor)
         tracks_fastscroller.updatePrimaryColor()
         tracks_fastscroller.updateBubbleColors()
     }
