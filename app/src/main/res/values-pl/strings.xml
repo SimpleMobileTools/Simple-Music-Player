@@ -82,7 +82,7 @@
     <string name="faq_1_text">Naciśnij tekst bieżącego lub całkowitego czasu trwania w pobliżu paska wyszukiwania, przesuwając utwór do tyłu lub do przodu.</string>
     <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
     <!-- App title has to have less than 50 characters. If you cannot squeeze it, just remove a part of it -->
-    <string name="app_title">Prosty odtwarzacz muzyki - odtwarzacz utworów</string>
+    <string name="app_title">Prosty odtwarzacz muzyki - Odtwarzacz piosenek</string>
     <!-- Short description has to have less than 80 chars -->
     <string name="app_short_description">Odtwarzacz muzyki z konfigurowalnym widżetem, stylowym interfejsem i bez reklam.</string>
     <string name="app_long_description">
