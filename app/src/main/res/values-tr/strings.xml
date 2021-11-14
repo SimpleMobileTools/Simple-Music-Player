@@ -1,9 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Basit Müzik Çalar</string>
     <string name="app_launcher_name">Müzik Çalar</string>
     <string name="playlist_empty">Çalma listeniz boş</string>
     <string name="rename_song">Şarkıyı yeniden adlandır</string>
-    <string name="rename_song_error">Yeniden adlandırma sırasında bir hata oluştu</string>
+    <string name="rename_song_error">Şarkı yeniden adlandırılamadı</string>
     <string name="rename_song_empty">lütfen tüm boşlukları doldurun</string>
     <string name="repeat_off">Tekrar kapalı</string>
     <string name="repeat_song">Geçerli şarkıyı tekrarla</string>
@@ -11,13 +12,12 @@
     <string name="stop_playback_after_current_song">Geçerli şarkıdan sonra oynatmayı durdur</string>
     <string name="enable_shuffle">Karıştırmayı etkinleştir</string>
     <string name="disable_shuffle">Karıştırmayı devre dışı bırak</string>
-    <string name="shuffle_enabled">Karıştırma etkin</string>
-    <string name="shuffle_disabled">Karıştırma devre dışı</string>
+    <string name="shuffle_enabled">Karıştırma açık</string>
+    <string name="shuffle_disabled">Karıştırma kapalı</string>
     <string name="sleep_timer">Uyku zamanlayıcısı</string>
     <string name="volume">Ses seviyesi</string>
     <string name="playback_speed">Oynatma hızı</string>
     <string name="loading_files">Dosyalar yükleniyor…</string>
-
     <!-- Playlists -->
     <string name="add_file_to_playlist">Çalma listesine dosya ekle</string>
     <string name="add_folder_to_playlist">Çalma listesine klasör ekle</string>
@@ -46,14 +46,12 @@
     <string name="show_album_cover">Ana ekranda albüm kapağını göster</string>
     <string name="all_tracks">Tüm parçalar</string>
     <string name="add_to_playlist">Çalma listesine ekle</string>
-    <string name="create_playlist_label">İstediğiniz sanatçıları, albümleri veya parçaları seçerek ve Menü -> Çalma listesine ekle\'yi kullanarak yeni bir çalma listesi oluşturabilirsiniz.</string>
-
+    <string name="create_playlist_label">Menü → Çalma listesine ekle\'yi kullanarak istediğiniz sanatçıları, albümleri veya parçaları seçerek yeni bir çalma listesi oluşturun.</string>
     <!-- Sorting -->
     <string name="track_count">Parça Sayısı</string>
     <string name="album_count">Albüm Sayısı</string>
     <string name="artist_name">Sanatçı Adı</string>
     <string name="year">Yıl</string>
-
     <!-- Artists -->
     <string name="artists">Sanatçılar</string>
     <string name="albums">Albümler</string>
@@ -61,28 +59,23 @@
         <item quantity="one">%d Albüm</item>
         <item quantity="other">%d Albüm</item>
     </plurals>
-
     <string name="tracks">Parçalar</string>
     <plurals name="tracks_plural">
         <item quantity="one">%d Parça</item>
         <item quantity="other">%d Parça</item>
     </plurals>
-
     <!-- Queue -->
     <string name="next_track">Sonraki:</string>
     <string name="track_queue">Parça kuyruğu</string>
     <string name="add_to_queue">Kuyruğa ekle</string>
     <string name="remove_from_queue">Kuyruktan kaldır</string>
     <string name="create_playlist_from_queue">Kuyruktan çalma listesi oluştur</string>
-
     <!-- Settings -->
     <string name="equalizer">Ekolayzır</string>
     <string name="swap_prev_next">Önceki/sonraki kulaklık düğmelerini değiştir</string>
-
     <!-- FAQ -->
-    <string name="faq_1_title">Şarkıları nasıl hızlıca ileri sarabilirim?</string>
-    <string name="faq_1_text">Arama çubuğunun yanındaki geçerli veya maksimum süre metinlerini tıklayabilir, şarkıyı geriye ya da ileriye sarabilirsiniz.</string>
-
+    <string name="faq_1_title">Nasıl hızlıca ileri sarabilirim\?</string>
+    <string name="faq_1_text">Arama çubuğunun yanındaki geçerli veya toplam süre metinlerine tıklayın, oynatmayı geri veya ileri hareket ettirin.</string>
     <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
     <!-- App title has to have less than 50 characters. If you cannot squeeze it, just remove a part of it -->
     <string name="app_title">Şarkılarınız için harika bir oynatıcı</string>
@@ -124,7 +117,6 @@
         <b>Reddit:</b>
         https://www.reddit.com/r/SimpleMobileTools
     </string>
-
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
