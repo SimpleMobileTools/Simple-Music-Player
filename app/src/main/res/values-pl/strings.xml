@@ -1,92 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Prosty odtwarzacz muzyki</string>
     <string name="app_launcher_name">Odtwarzacz muzyki</string>
     <string name="playlist_empty">Twoja lista odtwarzania jest pusta</string>
-    <string name="rename_song">Zmień nazwę</string>
-    <string name="rename_song_error">Wystąpił błąd podczas zmiany nazwy</string>
+    <string name="rename_song">Zmień nazwę utworu</string>
+    <string name="rename_song_error">Nie udało się zmienić nazwy utworu</string>
     <string name="rename_song_empty">Wypełnij wszystkie pola</string>
     <string name="repeat_off">Powtarzanie wyłączone</string>
     <string name="repeat_song">Powtarzaj bieżący utwór</string>
-    <string name="repeat_playlist">Powtórz playlistę</string>
+    <string name="repeat_playlist">Powtarzaj wszystko</string>
     <string name="stop_playback_after_current_song">Zatrzymaj odtwarzanie po bieżącym utworze</string>
     <string name="enable_shuffle">Włącz odtwarzanie losowe</string>
     <string name="disable_shuffle">Wyłącz odtwarzanie losowe</string>
-    <string name="shuffle_enabled">Włączone odtwarzanie losowe</string>
-    <string name="shuffle_disabled">Wyłączone odtwarzanie losowe</string>
+    <string name="shuffle_enabled">Odtwarzanie losowe włączone</string>
+    <string name="shuffle_disabled">Odtwarzanie losowe wyłączone</string>
     <string name="sleep_timer">Wyłącznik czasowy</string>
     <string name="volume">Głośność</string>
     <string name="playback_speed">Prędkość odtwarzania</string>
     <string name="loading_files">Ładowanie plików…</string>
-
     <!-- Playlists -->
-    <string name="add_file_to_playlist">Dodaj plik do listy odtwarzania</string>
-    <string name="add_folder_to_playlist">Dodaj folder do listy odtwarzania</string>
+    <string name="add_file_to_playlist">Dodaj plik do playlisty</string>
+    <string name="add_folder_to_playlist">Dodaj folder do playlisty</string>
     <string name="manage_playlists">Zarządzaj playlistą</string>
     <string name="playlists">Playlisty</string>
     <string name="create_new_playlist">Utwórz nową playlistę</string>
     <string name="rename_playlist">Zmień nazwę playlisty</string>
-    <string name="playlist_name_exists">Playlista z tą nazwą już istnieje</string>
+    <string name="playlist_name_exists">Playlista o tej nazwie już istnieje</string>
     <string name="remove_playlist">Usuń playlistę</string>
     <string name="remove_playlist_description">Spowoduje to usunięcie tylko wybranych playlist. Rzeczywiste pliki nie zostaną usunięte.</string>
-    <string name="remove_playlist_description_placeholder">Spowoduje to usunięcie tylko playlisty \"%s\". Rzeczywiste pliki nie zostaną usunięte.</string>
+    <string name="remove_playlist_description_placeholder">Spowoduje to usunięcie tylko playlisty „%s”. Rzeczywiste pliki nie zostaną usunięte.</string>
     <string name="remove_from_playlist">Usuń z playlisty</string>
-    <string name="remove_from_playlist_description">Spowoduje to usunięcie tylko pozycje z playlisty \"%s\". Rzeczywiste pliki nie zostaną usunięte.</string>
+    <string name="remove_from_playlist_description">Spowoduje to usunięcie tylko pozycji z playlisty „%s”. Rzeczywiste pliki nie zostaną usunięte.</string>
     <string name="delete_the_files_too">Usuń też pliki</string>
     <string name="open_playlist">Otwórz playlistę</string>
-    <string name="all_songs_cannot_be_deleted">Nie można usunąć playlisty \"Wszystkie utwory\"</string>
+    <string name="all_songs_cannot_be_deleted">Nie można usunąć playlisty „Wszystkie utwory”</string>
     <string name="empty_playlist">Bieżąca playlista jest pusta</string>
-    <string name="fetching_songs">Pobieram utwory…</string>
+    <string name="fetching_songs">Pobieranie utworów…</string>
     <string name="all_songs">Wszystkie utwory</string>
     <string name="create_playlist_from_folder">Utwórz nową playlistę z folderu</string>
     <string name="folder_contains_no_audio">Wybrany folder nie zawiera plików audio</string>
     <string name="delete_current_song">Usuń bieżący utwór</string>
-    <string name="remove_current_song">Usuń bieżący utwór z playlisty</string>
-    <string name="show_filename">Pokaż nazwę pliku jako tytuł utworu</string>
+    <string name="remove_current_song">Usuń bieżący utwór z playlisty</string>
+    <string name="show_filename">Pokazuj nazwę pliku jako tytuł utworu</string>
     <string name="title_is_not_available">Jeśli tytuł jest niedostępny</string>
-    <string name="show_album_cover">Pokaż okładkę albumu na ekranie głównym</string>
+    <string name="show_album_cover">Pokazuj okładkę albumu na ekranie głównym</string>
     <string name="all_tracks">Wszystkie utwory</string>
     <string name="add_to_playlist">Dodaj do playlisty</string>
-    <string name="create_playlist_label">Możesz utworzyć nową playlistę, wybierając wykonawców, albumy lub utwory i używając Menu -> Dodaj do playlisty.</string>
-
+    <string name="create_playlist_label">Możesz utworzyć nową playlistę, wybierając wykonawców, albumy lub utwory i używając Menu -&gt; Dodaj do playlisty.</string>
     <!-- Sorting -->
     <string name="track_count">Liczba utworów</string>
     <string name="album_count">Liczba albumów</string>
     <string name="artist_name">Nazwa artysty</string>
     <string name="year">Rok</string>
-
     <!-- Artists -->
     <string name="artists">Artyści</string>
     <string name="albums">Albumy</string>
     <plurals name="albums_plural">
-        <item quantity="one">%d Album</item>
-        <item quantity="few">%d Albumy</item>
-        <item quantity="many">%d Albumów</item>
-        <item quantity="other">%d Albumów</item>
+        <item quantity="one">%d album</item>
+        <item quantity="few">%d albumy</item>
+        <item quantity="many">%d albumów</item>
+        <item quantity="other">%d albumów</item>
     </plurals>
-
     <string name="tracks">Utwory</string>
     <plurals name="tracks_plural">
-        <item quantity="one">%d Utwór</item>
-        <item quantity="few">%d Utwory</item>
-        <item quantity="many">%d Utworów</item>
-        <item quantity="other">%d Utworów</item>
+        <item quantity="one">%d utwór</item>
+        <item quantity="few">%d utwory</item>
+        <item quantity="many">%d utworów</item>
+        <item quantity="other">%d utworów</item>
     </plurals>
-
     <!-- Queue -->
     <string name="next_track">Następny:</string>
     <string name="track_queue">Kolejka utworów</string>
     <string name="add_to_queue">Dodaj do kolejki</string>
     <string name="remove_from_queue">Usuń z kolejki</string>
     <string name="create_playlist_from_queue">Utwórz playlistę z kolejki</string>
-
     <!-- Settings -->
     <string name="equalizer">Korektor</string>
     <string name="swap_prev_next">Zamień przyciski słuchawek poprzedni/następny</string>
-
     <!-- FAQ -->
-    <string name="faq_1_title">Jak mogę przewijać utwory do przodu?</string>
-    <string name="faq_1_text">Możesz kliknąć tekst bieżącego lub maksymalnego czasu trwania w pobliżu paska wyszukiwania, który przesunie utwór do tyłu lub do przodu.</string>
-
+    <string name="faq_1_title">Jak mogę przewijać utwory do przodu\?</string>
+    <string name="faq_1_text">Naciśnij tekst bieżącego lub całkowitego czasu trwania w pobliżu paska wyszukiwania, przesuwając utwór do tyłu lub do przodu.</string>
     <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
     <!-- App title has to have less than 50 characters. If you cannot squeeze it, just remove a part of it -->
     <string name="app_title">Prosty odtwarzacz muzyki - odtwarzacz utworów</string>
@@ -128,7 +121,6 @@
         <b>Reddit:</b>
         https://www.reddit.com/r/SimpleMobileTools
     </string>
-
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
