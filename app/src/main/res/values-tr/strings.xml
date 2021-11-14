@@ -5,10 +5,10 @@
     <string name="rename_song">Şarkıyı yeniden adlandır</string>
     <string name="rename_song_error">Yeniden adlandırma sırasında bir hata oluştu</string>
     <string name="rename_song_empty">lütfen tüm boşlukları doldurun</string>
-    <string name="repeat_off">Repeat off</string>
+    <string name="repeat_off">Tekrar kapalı</string>
     <string name="repeat_song">Geçerli şarkıyı tekrarla</string>
-    <string name="repeat_playlist">Repeat playlist</string>
-    <string name="stop_playback_after_current_song">Stop playback after current song</string>
+    <string name="repeat_playlist">Çalma listesini tekrarla</string>
+    <string name="stop_playback_after_current_song">Geçerli şarkıdan sonra oynatmayı durdur</string>
     <string name="enable_shuffle">Karıştırmayı etkinleştir</string>
     <string name="disable_shuffle">Karıştırmayı devre dışı bırak</string>
     <string name="shuffle_enabled">Karıştırma etkin</string>
@@ -31,7 +31,7 @@
     <string name="remove_playlist_description">Bu asıl dosyaları değil, sadece seçilen çalma listelerini kaldıracak.</string>
     <string name="remove_playlist_description_placeholder">Bu asıl dosyaları değil, sadece \"%s\" listesini kaldıracak.</string>
     <string name="remove_from_playlist">Çalma listesinden kaldır</string>
-    <string name="remove_from_playlist_description">Bu sadece öğeleri \"%s\" listesinden kaldırır, asıl dosyalar silinmez.</string>
+    <string name="remove_from_playlist_description">Bu sadece ögeleri \"%s\" listesinden kaldırır, asıl dosyalar silinmez.</string>
     <string name="delete_the_files_too">Dosyaları da sil</string>
     <string name="open_playlist">Çalma listesini aç</string>
     <string name="all_songs_cannot_be_deleted">\'Tüm şarkılar\' çalma listesi silinemez</string>
@@ -100,7 +100,7 @@
 
         Hem karıştırmayı hem de belirli bir şarkıyı tekrarlamayı, ayrıca atlama ve hızlı ileri sarmayı destekler.
 
-        Birçok farklı dilde mevcuttur, birden fazla farklı ekolayzır sunar.
+        Birçok farklı dilde kullanılabilir, birden fazla farklı ekolayzır sunar.
 
         Boyut, süre, son değiştirilme vb. gibi dosya özelliklerini kolayca kontrol edin.
 
