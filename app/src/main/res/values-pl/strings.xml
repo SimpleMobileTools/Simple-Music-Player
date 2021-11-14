@@ -85,42 +85,7 @@
     <string name="app_title">Prosty odtwarzacz muzyki - Odtwarzacz piosenek</string>
     <!-- Short description has to have less than 80 chars -->
     <string name="app_short_description">Odtwarzacz muzyki z konfigurowalnym widżetem, stylowym interfejsem i bez reklam</string>
-    <string name="app_long_description">
-        Prosty odtwarzacz muzyki, z łatwym sterowaniem na pasku stanu lub widżecie na ekranie głównym oraz za pomocą przycisków sprzętowych w zestawie słuchawkowym. Zapewnia wszystkie oczekiwane funkcje, takie jak sortowanie na różne sposoby, a także zmiana korektora. Słuchaj swoich ulubionych mp3, innych utworów lub podcastów za pomocą tego bezpłatnego odtwarzacza muzyki.
-
-        Oferuje ekskluzywne dodatki, takie jak wyszukiwanie i wyświetlanie okładek albumów, wyłącznik czasowy i wiele innych ustawień. Ten elegancki odtwarzacz muzyczny umożliwia tworzenie i zarządzanie poręcznymi listami odtwarzania według własnego uznania.
-
-        Listy odtwarzania są w pełni obsługiwane. Możesz dodać pojedyncze pliki lub całe foldery. Jeśli plik się nie spodoba, możesz go po prostu usunąć z listy odtwarzania lub całkowicie usunąć rzeczywisty plik.
-
-        W zestawie poręczny wyłącznik czasowy, dzięki któremu możesz niezawodnie opóźnić czas wyłączenia aplikacji.
-
-        Obsługuje zarówno odtwarzanie losowe, jak i powtarzanie konkretnego utworu, a także przeskakiwanie i szybkie przewijanie do przodu.
-
-        Dostępny w wielu różnych językach oraz oferuje wiele różnych korektorów.
-
-        Łatwo sprawdź właściwości pliku, takie jak rozmiar, czas trwania, ostatnia modyfikacja itp.
-
-        Zmodyfikuj dane EXIF pliku, takie jak tytuł utworu i wykonawca.
-
-        Szybko udostępniaj pliki znajomym w sieciach społecznościowych, przez e-maila lub w dowolnym innym miejscu.
-
-        Ten stylowy odtwarzacz muzyki zawiera widżet z dostosowywanym kolorem tekstu, alfa i kolorem tła, co zapewnia łatwy dostęp i kontrolę.
-
-        Prawidłowo obsługuje również intencje stron trzecich do odtwarzania poszczególnych plików audio, dzięki czemu może również pomóc w ustawieniu dzwonków.
-
-        Domyślnie jest wyposażony w istotny wygląd i ciemny motyw, zapewniając doskonałe wrażenia użytkownika i łatwe w użyciu. Brak dostępu do Internetu zapewnia większą prywatność, bezpieczeństwo i stabilność niż inne aplikacje.
-
-        Nie zawiera reklam ani niepotrzebnych uprawnień. Jest w pełni opensource i zapewnia konfigurowalne kolory.
-
-        <b>Zapoznaj się z pełnym zestawem prostych narzędzi tutaj:</b>
-        https://www.simplemobiletools.com
-
-        <b>Facebook:</b>
-        https://www.facebook.com/simplemobiletools
-
-        <b>Reddit:</b>
-        https://www.reddit.com/r/SimpleMobileTools
-    </string>
+    <string name="app_long_description"> Prosty odtwarzacz muzyki, którym można łatwo sterować z paska stanu, widżetu na ekranie głównym lub za pomocą przycisków sprzętowych na zestawie słuchawkowym. Zapewnia wszystkie oczekiwane funkcje, takie jak sortowanie na różne sposoby, a także korektor. Słuchaj swoich ulubionych mp3, innych utworów lub podcastów za pomocą tego bezpłatnego odtwarzacza muzyki. Oferuje ekskluzywne dodatki, takie jak wyszukiwanie i wyświetlanie okładek albumów, wyłącznik czasowy i wiele innych ustawień. Ten elegancki odtwarzacz muzyczny umożliwia tworzenie i zarządzanie poręcznymi playlistami według własnego uznania. Playlisty są w pełni obsługiwane. Możesz dodać pojedyncze pliki lub całe foldery. Jeśli plik Ci się nie spodoba, możesz go po prostu usunąć z playlisty lub całkowicie usunąć rzeczywisty plik. Zawiera poręczny wyłącznik czasowy, dzięki któremu możesz niezawodnie opóźnić czas wyłączenia aplikacji. Obsługuje zarówno odtwarzanie losowe, jak i powtarzanie konkretnego utworu, a także przeskakiwanie i szybkie przewijanie do przodu. Jest dostępny w wielu różnych językach oraz oferuje wiele różnych korektorów. Łatwo sprawdzaj właściwości pliku, takie jak rozmiar, czas trwania, ostatnia modyfikacja itp. Modyfikuj metadane pliku, takie jak tytuł utworu i wykonawca. Szybko udostępniaj pliki znajomym w sieciach społecznościowych, przez e-maila lub w dowolnym innym miejscu. Ten stylowy odtwarzacz muzyki zawiera widżet z konfigurowalnym kolorem tekstu, przezroczystością i kolorem tła, co zapewnia łatwy dostęp i kontrolę. Prawidłowo obsługuje także żądania innych aplikacji do odtwarzania poszczególnych plików audio, dzięki czemu może również pomóc w ustawieniu dzwonków. Domyślnie jest wyposażony w Material Design i ciemny motyw, zapewniając doskonałe doświadczenie użytkownika dla łatwego użytkowania. Brak dostępu do Internetu zapewnia większą prywatność, bezpieczeństwo i stabilność niż inne aplikacje. Nie zawiera reklam ani niepotrzebnych uprawnień. Jest w pełni otwartoźródłowy, zapewnia konfigurowalną kolorystykę. <b>Sprawdź pełen zestaw od Simple Tools tutaj:</b> https://www.simplemobiletools.com <b>Facebook:</b> https://www.facebook.com/simplemobiletools <b>Reddit:</b> https://www.reddit.com/r/SimpleMobileTools </string>
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
