@@ -1,10 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Simpel Musikafspiller</string>
     <string name="app_launcher_name">Musikafspiller</string>
     <string name="playlist_empty">Din afspilningsliste er tom</string>
     <string name="rename_song">Omdøb sang</string>
     <string name="rename_song_error">En fejl opstod under omdøbningen</string>
-    <string name="rename_song_empty">Udfyld venligst alle felter</string>
+    <string name="rename_song_empty">Udfyld alle felter</string>
     <string name="repeat_off">Repeat off</string>
     <string name="repeat_song">Gentag den valgte sang</string>
     <string name="repeat_playlist">Repeat playlist</string>
@@ -17,8 +18,7 @@
     <string name="playback_speed">Afspilningshastighed</string>
     <string name="loading_files">Indlæser filer…</string>
     <string name="sleep_timer">Sleep timer</string>
-    
-        <!-- Playlists -->
+    <!-- Playlists -->
     <string name="add_file_to_playlist">Tilføj fil til afspilningsliste</string>
     <string name="add_folder_to_playlist">Tilgøj mappe til afspilningsliste</string>
     <string name="manage_playlists">Rediger afspilningslister</string>
@@ -46,14 +46,12 @@
     <string name="show_album_cover">Vis album cover på hovedskærmen</string>
     <string name="all_tracks">Alle spor</string>
     <string name="add_to_playlist">Tilføj til afspilningsliste</string>
-    <string name="create_playlist_label">Du kan oprette en ny afspilningsliste ved at vælge den ønskede kunstnere, albummer eller spor via Menu -> Tilføj til afspilningsliste."</string>
-    
+    <string name="create_playlist_label">Du kan oprette en ny afspilningsliste ved at vælge den ønskede kunstnere, albummer eller spor via Menu -&gt; Tilføj til afspilningsliste."</string>
     <!-- Sorting -->
     <string name="track_count">Antal spor</string>
     <string name="album_count">Antal albummer</string>
     <string name="artist_name">Kunstnernavn</string>
     <string name="year">År</string>
-    
     <!-- Artists -->
     <string name="artists">Kunstnere</string>
     <string name="albums">Albummer</string>
@@ -61,27 +59,22 @@
         <item quantity="one">%d Album</item>
         <item quantity="other">%d Albummer</item>
     </plurals>
-    
     <string name="tracks">Spor</string>
     <plurals name="tracks_plural">
         <item quantity="one">%d Spor</item>
         <item quantity="other">%d Spor</item>
     </plurals>
-    
     <!-- Queue -->
     <string name="next_track">Næste:</string>
     <string name="track_queue">Afspilningskø</string>
     <string name="add_to_queue">Tilføj til afspilningskø</string>
     <string name="remove_from_queue">Fjern fra afspilningskø</string>
     <string name="create_playlist_from_queue">Opret afspilningsliste fra afspilningskø</string>
-    
     <!-- Settings -->
     <string name="equalizer">Equalizer</string>
     <string name="swap_prev_next">Ombyt forrige/næste hovedtelefonknapper</string>
-    
     <!-- FAQ -->
     <string name="faq_1_title">Hvordan kan jeg spole frem i sange?</string>
-
     <string name="faq_1_text">Du kan klikke på de to tidsangivelser (aktuel spilletid og total varighed af nummeret) nær søgefeltet, der bevæger sangen enten bagud eller fremad.</string>
     <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
     <!-- App title has to have less than 50 characters. If you cannot squeeze it, just remove a part of it -->
@@ -124,7 +117,6 @@
         <b> Reddit : </b>
         https://www.reddit.com/r/SimpleMobileTools
     </string>
-    
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
