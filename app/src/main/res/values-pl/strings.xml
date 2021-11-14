@@ -84,7 +84,7 @@
     <!-- App title has to have less than 50 characters. If you cannot squeeze it, just remove a part of it -->
     <string name="app_title">Prosty odtwarzacz muzyki - Odtwarzacz piosenek</string>
     <!-- Short description has to have less than 80 chars -->
-    <string name="app_short_description">Odtwarzacz muzyki z konfigurowalnym widżetem, stylowym interfejsem i bez reklam.</string>
+    <string name="app_short_description">Odtwarzacz muzyki z konfigurowalnym widżetem, stylowym interfejsem i bez reklam</string>
     <string name="app_long_description">
         Prosty odtwarzacz muzyki, z łatwym sterowaniem na pasku stanu lub widżecie na ekranie głównym oraz za pomocą przycisków sprzętowych w zestawie słuchawkowym. Zapewnia wszystkie oczekiwane funkcje, takie jak sortowanie na różne sposoby, a także zmiana korektora. Słuchaj swoich ulubionych mp3, innych utworów lub podcastów za pomocą tego bezpłatnego odtwarzacza muzyki.
 
