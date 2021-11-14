@@ -46,7 +46,7 @@
     <string name="show_album_cover">Ana ekranda albüm kapağını göster</string>
     <string name="all_tracks">Tüm parçalar</string>
     <string name="add_to_playlist">Çalma listesine ekle</string>
-    <string name="create_playlist_label">Menü → Çalma listesine ekle\'yi kullanarak istediğiniz sanatçıları, albümleri veya parçaları seçerek yeni bir çalma listesi oluşturun.</string>
+    <string name="create_playlist_label">İstediğiniz sanatçıları, albümleri veya parçaları seçip Menü -&gt; Çalma listesine ekle\'yi kullanarak yeni bir çalma listesi oluşturabilirsiniz.</string>
     <!-- Sorting -->
     <string name="track_count">Parça Sayısı</string>
     <string name="album_count">Albüm Sayısı</string>
