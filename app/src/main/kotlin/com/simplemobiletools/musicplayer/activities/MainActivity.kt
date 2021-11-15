@@ -207,7 +207,9 @@ class MainActivity : SimpleActivity() {
             removeAllTabs()
 
             for (i in tabLabels.indices) {
-                val tab = newTab().setText(tabLabels[i])
+                val label = tabLabels[i]
+                val tab = newTab().setText(label)
+                tab.contentDescription = label
                 addTab(tab, i, i == 0)
             }
         }
@@ -275,7 +277,8 @@ class MainActivity : SimpleActivity() {
             RadioItem(10 * 60, "10 $minutes"),
             RadioItem(20 * 60, "20 $minutes"),
             RadioItem(30 * 60, "30 $minutes"),
-            RadioItem(60 * 60, hour))
+            RadioItem(60 * 60, hour)
+        )
 
         if (items.none { it.id == config.lastSleepTimerSeconds }) {
             val lastSleepTimerMinutes = config.lastSleepTimerSeconds / 60
@@ -385,7 +388,8 @@ class MainActivity : SimpleActivity() {
             FAQItem(R.string.faq_4_title_commons, R.string.faq_4_text_commons),
             FAQItem(R.string.faq_2_title_commons, R.string.faq_2_text_commons),
             FAQItem(R.string.faq_6_title_commons, R.string.faq_6_text_commons),
-            FAQItem(R.string.faq_9_title_commons, R.string.faq_9_text_commons))
+            FAQItem(R.string.faq_9_title_commons, R.string.faq_9_text_commons)
+        )
 
         startAboutActivity(R.string.app_name, licenses, BuildConfig.VERSION_NAME, faqItems, true)
     }

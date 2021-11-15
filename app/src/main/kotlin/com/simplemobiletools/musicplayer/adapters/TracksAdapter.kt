@@ -10,12 +10,12 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
+import com.qtalk.recyclerviewfastscroller.RecyclerViewFastScroller
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
 import com.simplemobiletools.commons.dialogs.ConfirmationDialog
 import com.simplemobiletools.commons.dialogs.PropertiesDialog
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
-import com.simplemobiletools.commons.views.FastScroller
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
@@ -33,9 +33,8 @@ import org.greenrobot.eventbus.EventBus
 import java.util.*
 
 class TracksAdapter(
-    activity: SimpleActivity, var tracks: ArrayList<Track>, val isPlaylistContent: Boolean, recyclerView: MyRecyclerView,
-    fastScroller: FastScroller, itemClick: (Any) -> Unit
-) : MyRecyclerViewAdapter(activity, recyclerView, fastScroller, itemClick) {
+    activity: SimpleActivity, var tracks: ArrayList<Track>, val isPlaylistContent: Boolean, recyclerView: MyRecyclerView, itemClick: (Any) -> Unit
+) : MyRecyclerViewAdapter(activity, recyclerView, null, itemClick), RecyclerViewFastScroller.OnPopupTextUpdate {
 
     private val tagHelper by lazy { TagHelper(activity) }
     private var textToHighlight = ""
@@ -216,6 +215,8 @@ class TracksAdapter(
             track_id.beGone()
         }
     }
+
+    override fun onChange(position: Int) = tracks.getOrNull(position)?.getBubbleText() ?: ""
 
     private fun displayEditDialog() {
         getSelectedTracks().firstOrNull()?.let { selectedTrack ->

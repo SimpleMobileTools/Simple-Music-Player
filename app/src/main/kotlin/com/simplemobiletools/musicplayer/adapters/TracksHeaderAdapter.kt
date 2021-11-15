@@ -7,6 +7,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
+import com.qtalk.recyclerviewfastscroller.RecyclerViewFastScroller
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
 import com.simplemobiletools.commons.dialogs.ConfirmationDialog
 import com.simplemobiletools.commons.extensions.beGone
@@ -14,7 +15,6 @@ import com.simplemobiletools.commons.extensions.beVisible
 import com.simplemobiletools.commons.extensions.getColoredDrawableWithColor
 import com.simplemobiletools.commons.extensions.getFormattedDuration
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
-import com.simplemobiletools.commons.views.FastScroller
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
@@ -28,8 +28,8 @@ import kotlinx.android.synthetic.main.item_album_header.view.*
 import kotlinx.android.synthetic.main.item_track.view.*
 import java.util.*
 
-class TracksHeaderAdapter(activity: SimpleActivity, val items: ArrayList<ListItem>, recyclerView: MyRecyclerView, fastScroller: FastScroller,
-                          itemClick: (Any) -> Unit) : MyRecyclerViewAdapter(activity, recyclerView, fastScroller, itemClick) {
+class TracksHeaderAdapter(activity: SimpleActivity, val items: ArrayList<ListItem>, recyclerView: MyRecyclerView, itemClick: (Any) -> Unit) :
+    MyRecyclerViewAdapter(activity, recyclerView, null, itemClick), RecyclerViewFastScroller.OnPopupTextUpdate {
 
     private val ITEM_HEADER = 0
     private val ITEM_TRACK = 1
@@ -181,6 +181,15 @@ class TracksHeaderAdapter(activity: SimpleActivity, val items: ArrayList<ListIte
                 .load(header.coverArt)
                 .apply(options)
                 .into(findViewById(R.id.album_image))
+        }
+    }
+
+    override fun onChange(position: Int): CharSequence {
+        val listItem = items.getOrNull(position)
+        return when (listItem) {
+            is Track -> listItem.getBubbleText()
+            is AlbumHeader -> listItem.title
+            else -> ""
         }
     }
 }

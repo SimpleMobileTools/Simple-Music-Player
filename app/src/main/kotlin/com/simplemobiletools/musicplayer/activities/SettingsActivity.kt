@@ -34,6 +34,14 @@ class SettingsActivity : SimpleActivity() {
         setupReplaceTitle()
         updateTextColors(settings_scrollview)
         invalidateOptionsMenu()
+
+        arrayOf(settings_color_customization_label, settings_general_settings_label).forEach {
+            it.setTextColor(getAdjustedPrimaryColor())
+        }
+
+        arrayOf(settings_color_customization_holder, settings_general_settings_holder).forEach {
+            it.background.applyColorFilter(baseConfig.backgroundColor.getContrastColor())
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -43,6 +51,12 @@ class SettingsActivity : SimpleActivity() {
 
     private fun setupPurchaseThankYou() {
         settings_purchase_thank_you_holder.beGoneIf(isOrWasThankYouInstalled())
+
+        // make sure the corners at ripple fit the stroke rounded corners
+        if (settings_purchase_thank_you_holder.isGone()) {
+            settings_use_english_holder.background = resources.getDrawable(R.drawable.ripple_top_corners, theme)
+        }
+
         settings_purchase_thank_you_holder.setOnClickListener {
             launchPurchaseThankYouIntent()
         }
@@ -67,6 +81,11 @@ class SettingsActivity : SimpleActivity() {
     private fun setupUseEnglish() {
         settings_use_english_holder.beVisibleIf(config.wasUseEnglishToggled || Locale.getDefault().language != "en")
         settings_use_english.isChecked = config.useEnglish
+
+        if (settings_use_english_holder.isGone() && settings_purchase_thank_you_holder.isGone()) {
+            settings_swap_prev_next_holder.background = resources.getDrawable(R.drawable.ripple_top_corners, theme)
+        }
+
         settings_use_english_holder.setOnClickListener {
             settings_use_english.toggle()
             config.useEnglish = settings_use_english.isChecked
@@ -83,24 +102,27 @@ class SettingsActivity : SimpleActivity() {
     }
 
     private fun setupReplaceTitle() {
-        settings_show_filename.text = getShowFilenameText()
+        settings_show_filename.text = getReplaceTitleText()
         settings_show_filename_holder.setOnClickListener {
             val items = arrayListOf(
                 RadioItem(SHOW_FILENAME_NEVER, getString(R.string.never)),
                 RadioItem(SHOW_FILENAME_IF_UNAVAILABLE, getString(R.string.title_is_not_available)),
-                RadioItem(SHOW_FILENAME_ALWAYS, getString(R.string.always)))
+                RadioItem(SHOW_FILENAME_ALWAYS, getString(R.string.always))
+            )
 
             RadioGroupDialog(this@SettingsActivity, items, config.showFilename) {
                 config.showFilename = it as Int
-                settings_show_filename.text = getShowFilenameText()
+                settings_show_filename.text = getReplaceTitleText()
                 sendIntent(REFRESH_LIST)
             }
         }
     }
 
-    private fun getShowFilenameText() = getString(when (config.showFilename) {
-        SHOW_FILENAME_NEVER -> R.string.never
-        SHOW_FILENAME_IF_UNAVAILABLE -> R.string.title_is_not_available
-        else -> R.string.always
-    })
+    private fun getReplaceTitleText() = getString(
+        when (config.showFilename) {
+            SHOW_FILENAME_NEVER -> R.string.never
+            SHOW_FILENAME_IF_UNAVAILABLE -> R.string.title_is_not_available
+            else -> R.string.always
+        }
+    )
 }

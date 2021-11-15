@@ -5,8 +5,10 @@ import android.content.Intent
 import android.util.AttributeSet
 import com.google.gson.Gson
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
+import com.simplemobiletools.commons.extensions.areSystemAnimationsEnabled
 import com.simplemobiletools.commons.extensions.beGoneIf
 import com.simplemobiletools.commons.extensions.beVisibleIf
+import com.simplemobiletools.commons.extensions.getContrastColor
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
@@ -19,7 +21,7 @@ import com.simplemobiletools.musicplayer.helpers.TAB_ALBUMS
 import com.simplemobiletools.musicplayer.models.Album
 import kotlinx.android.synthetic.main.fragment_albums.view.*
 
-// Artists -> Albums -> Tracks
+// Artists -> Albums -> Tracks
 class AlbumsFragment(context: Context, attributeSet: AttributeSet) : MyViewPagerFragment(context, attributeSet) {
     private var albumsIgnoringSearch = ArrayList<Album>()
 
@@ -53,7 +55,7 @@ class AlbumsFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
 
             val adapter = albums_list.adapter
             if (adapter == null) {
-                AlbumsAdapter(activity, albums, albums_list, albums_fastscroller) {
+                AlbumsAdapter(activity, albums, albums_list) {
                     Intent(activity, TracksActivity::class.java).apply {
                         putExtra(ALBUM, Gson().toJson(it))
                         activity.startActivity(this)
@@ -62,10 +64,8 @@ class AlbumsFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
                     albums_list.adapter = this
                 }
 
-                albums_list.scheduleLayoutAnimation()
-                albums_fastscroller.setViews(albums_list) {
-                    val album = (albums_list.adapter as AlbumsAdapter).albums.getOrNull(it)
-                    albums_fastscroller.updateBubbleText(album?.getBubbleText() ?: "")
+                if (context.areSystemAnimationsEnabled) {
+                    albums_list.scheduleLayoutAnimation()
                 }
             } else {
                 val oldItems = (adapter as AlbumsAdapter).albums
@@ -127,7 +127,7 @@ class AlbumsFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
     }
 
     override fun setupColors(textColor: Int, adjustedPrimaryColor: Int) {
-        albums_fastscroller.updatePrimaryColor()
-        albums_fastscroller.updateBubbleColors()
+        albums_placeholder.setTextColor(textColor)
+        albums_fastscroller.updateColors(adjustedPrimaryColor, adjustedPrimaryColor.getContrastColor())
     }
 }

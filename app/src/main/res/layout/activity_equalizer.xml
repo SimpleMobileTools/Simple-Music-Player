@@ -68,14 +68,10 @@
 
         <com.simplemobiletools.commons.views.MyTextView
             android:id="@+id/equalizer_preset"
+            style="@style/ColoredButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/normal_margin"
-            android:background="@drawable/button_background"
-            android:paddingStart="@dimen/activity_margin"
-            android:paddingTop="@dimen/normal_margin"
-            android:paddingEnd="@dimen/activity_margin"
-            android:paddingBottom="@dimen/normal_margin"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/equalizer_bands_holder"

@@ -5,8 +5,7 @@ import android.content.Intent
 import android.util.AttributeSet
 import com.google.gson.Gson
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
-import com.simplemobiletools.commons.extensions.beGoneIf
-import com.simplemobiletools.commons.extensions.beVisibleIf
+import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
@@ -21,7 +20,7 @@ import com.simplemobiletools.musicplayer.models.Album
 import com.simplemobiletools.musicplayer.models.Track
 import kotlinx.android.synthetic.main.fragment_tracks.view.*
 
-// Artists -> Albums -> Tracks
+// Artists -> Albums -> Tracks
 class TracksFragment(context: Context, attributeSet: AttributeSet) : MyViewPagerFragment(context, attributeSet) {
     private var tracksIgnoringSearch = ArrayList<Track>()
 
@@ -46,7 +45,7 @@ class TracksFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
                 tracks_placeholder.beVisibleIf(tracks.isEmpty())
                 val adapter = tracks_list.adapter
                 if (adapter == null) {
-                    TracksAdapter(activity, tracks, false, tracks_list, tracks_fastscroller) {
+                    TracksAdapter(activity, tracks, false, tracks_list) {
                         activity.resetQueueItems(tracks) {
                             Intent(activity, TrackActivity::class.java).apply {
                                 putExtra(TRACK, Gson().toJson(it))
@@ -58,10 +57,8 @@ class TracksFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
                         tracks_list.adapter = this
                     }
 
-                    tracks_list.scheduleLayoutAnimation()
-                    tracks_fastscroller.setViews(tracks_list) {
-                        val track = (tracks_list.adapter as TracksAdapter).tracks.getOrNull(it)
-                        tracks_fastscroller.updateBubbleText(track?.getBubbleText() ?: "")
+                    if (context.areSystemAnimationsEnabled) {
+                        tracks_list.scheduleLayoutAnimation()
                     }
                 } else {
                     (adapter as TracksAdapter).updateItems(tracks)
@@ -100,7 +97,7 @@ class TracksFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
     }
 
     override fun setupColors(textColor: Int, adjustedPrimaryColor: Int) {
-        tracks_fastscroller.updatePrimaryColor()
-        tracks_fastscroller.updateBubbleColors()
+        tracks_placeholder.setTextColor(textColor)
+        tracks_fastscroller.updateColors(adjustedPrimaryColor, adjustedPrimaryColor.getContrastColor())
     }
 }

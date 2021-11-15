@@ -3,13 +3,13 @@ package com.simplemobiletools.musicplayer.adapters
 import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
+import com.qtalk.recyclerviewfastscroller.RecyclerViewFastScroller
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
 import com.simplemobiletools.commons.extensions.deleteFiles
 import com.simplemobiletools.commons.extensions.getFilenameFromPath
 import com.simplemobiletools.commons.extensions.highlightTextPart
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.commons.models.FileDirItem
-import com.simplemobiletools.commons.views.FastScroller
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
@@ -23,8 +23,9 @@ import kotlinx.android.synthetic.main.item_playlist.view.*
 import org.greenrobot.eventbus.EventBus
 import java.util.*
 
-class PlaylistsAdapter(activity: SimpleActivity, var playlists: ArrayList<Playlist>, recyclerView: MyRecyclerView, fastScroller: FastScroller,
-                       itemClick: (Any) -> Unit) : MyRecyclerViewAdapter(activity, recyclerView, fastScroller, itemClick) {
+class PlaylistsAdapter(
+    activity: SimpleActivity, var playlists: ArrayList<Playlist>, recyclerView: MyRecyclerView, itemClick: (Any) -> Unit
+) : MyRecyclerViewAdapter(activity, recyclerView, null, itemClick), RecyclerViewFastScroller.OnPopupTextUpdate {
 
     private var textToHighlight = ""
 
@@ -160,4 +161,6 @@ class PlaylistsAdapter(activity: SimpleActivity, var playlists: ArrayList<Playli
             playlist_tracks.setTextColor(textColor)
         }
     }
+
+    override fun onChange(position: Int) = playlists.getOrNull(position)?.getBubbleText() ?: ""
 }
