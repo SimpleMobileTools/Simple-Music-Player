@@ -62,13 +62,14 @@ android {
 }
 
 dependencies {
-    implementation 'com.github.SimpleMobileTools:Simple-Commons:cbacb108df'
+    implementation 'com.github.SimpleMobileTools:Simple-Commons:92e67a1d01'
     implementation 'org.greenrobot:eventbus:3.2.0'
     implementation 'androidx.media:media:1.4.2'
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.1'
     implementation 'com.google.android.material:material:1.4.0'
     implementation 'com.airbnb.android:lottie:3.6.1'
+    implementation 'com.github.tibbi:RecyclerView-FastScroller:ea19354180'
 
     kapt "androidx.room:room-compiler:2.3.0"
     implementation "androidx.room:room-runtime:2.3.0"

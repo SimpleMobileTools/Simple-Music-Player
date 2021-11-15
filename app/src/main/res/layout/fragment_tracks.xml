@@ -19,23 +19,18 @@
         android:textSize="@dimen/bigger_text_size"
         android:textStyle="italic" />
 
-    <com.simplemobiletools.commons.views.MyRecyclerView
-        android:id="@+id/tracks_list"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:clipToPadding="false"
-        android:layoutAnimation="@anim/layout_animation"
-        app:layoutManager="com.simplemobiletools.commons.views.MyLinearLayoutManager" />
-
-    <com.simplemobiletools.commons.views.FastScroller
+    <com.qtalk.recyclerviewfastscroller.RecyclerViewFastScroller
         android:id="@+id/tracks_fastscroller"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_alignParentEnd="true"
-        android:paddingStart="@dimen/normal_margin">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-        <include layout="@layout/fastscroller_handle_vertical" />
+        <com.simplemobiletools.commons.views.MyRecyclerView
+            android:id="@+id/tracks_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:layoutAnimation="@anim/layout_animation"
+            app:layoutManager="com.simplemobiletools.commons.views.MyLinearLayoutManager" />
 
-    </com.simplemobiletools.commons.views.FastScroller>
-
+    </com.qtalk.recyclerviewfastscroller.RecyclerViewFastScroller>
 </com.simplemobiletools.musicplayer.fragments.TracksFragment>
