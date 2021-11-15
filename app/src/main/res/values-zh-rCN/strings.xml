@@ -46,7 +46,7 @@
     <string name="show_album_cover">在主屏幕显示专辑封面</string>
     <string name="all_tracks">所有曲目</string>
     <string name="add_to_playlist">Add to playlist</string>
-    <string name="create_playlist_label">通过使用菜单 → 添加到播放列表选择想要的艺术家、专辑或曲目来创建新的播放列表。</string>
+    <string name="create_playlist_label">您可以通过选择想要的艺术家、专辑或曲目并使用菜单 -&gt; 添加到播放列表来创建新的播放列表。</string>
     <!-- Sorting -->
     <string name="track_count">曲目数</string>
     <string name="album_count">专辑数</string>
