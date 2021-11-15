@@ -11,6 +11,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
+import com.qtalk.recyclerviewfastscroller.RecyclerViewFastScroller
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
 import com.simplemobiletools.commons.extensions.applyColorFilter
 import com.simplemobiletools.commons.extensions.getAdjustedPrimaryColor
@@ -19,7 +20,6 @@ import com.simplemobiletools.commons.extensions.getFormattedDuration
 import com.simplemobiletools.commons.interfaces.ItemMoveCallback
 import com.simplemobiletools.commons.interfaces.ItemTouchHelperContract
 import com.simplemobiletools.commons.interfaces.StartReorderDragListener
-import com.simplemobiletools.commons.views.FastScroller
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
@@ -35,8 +35,8 @@ import com.simplemobiletools.musicplayer.services.MusicService
 import kotlinx.android.synthetic.main.item_track_queue.view.*
 import java.util.*
 
-class QueueAdapter(activity: SimpleActivity, val items: ArrayList<Track>, recyclerView: MyRecyclerView, fastScroller: FastScroller, itemClick: (Any) -> Unit) :
-    MyRecyclerViewAdapter(activity, recyclerView, fastScroller, itemClick), ItemTouchHelperContract {
+class QueueAdapter(activity: SimpleActivity, val items: ArrayList<Track>, recyclerView: MyRecyclerView, itemClick: (Any) -> Unit) :
+    MyRecyclerViewAdapter(activity, recyclerView, null, itemClick), ItemTouchHelperContract, RecyclerViewFastScroller.OnPopupTextUpdate {
 
     private val placeholder = resources.getColoredDrawableWithColor(R.drawable.ic_headset, textColor)
     private var startReorderDragListener: StartReorderDragListener
@@ -187,4 +187,6 @@ class QueueAdapter(activity: SimpleActivity, val items: ArrayList<Track>, recycl
     override fun onRowClear(myViewHolder: ViewHolder?) {}
 
     override fun onRowSelected(myViewHolder: ViewHolder?) {}
+
+    override fun onChange(position: Int) = items.getOrNull(position)?.getBubbleText() ?: ""
 }

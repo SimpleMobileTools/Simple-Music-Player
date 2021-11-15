@@ -6,6 +6,8 @@ import android.view.Menu
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.simplemobiletools.commons.extensions.areSystemAnimationsEnabled
+import com.simplemobiletools.commons.extensions.getAdjustedPrimaryColor
+import com.simplemobiletools.commons.extensions.getContrastColor
 import com.simplemobiletools.commons.extensions.getFormattedDuration
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.adapters.AlbumsTracksAdapter
@@ -24,7 +26,7 @@ import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
-// Artists -> Albums -> Tracks
+// Artists -> Albums -> Tracks
 class AlbumsActivity : SimpleActivity() {
     private var bus: EventBus? = null
 
@@ -34,6 +36,8 @@ class AlbumsActivity : SimpleActivity() {
 
         bus = EventBus.getDefault()
         bus!!.register(this)
+
+        albums_fastscroller.updateColors(getAdjustedPrimaryColor(), getAdjustedPrimaryColor().getContrastColor())
 
         val artistType = object : TypeToken<Artist>() {}.type
         val artist = Gson().fromJson<Artist>(intent.getStringExtra(ARTIST), artistType)
@@ -60,7 +64,7 @@ class AlbumsActivity : SimpleActivity() {
             listItems.addAll(tracksToAdd)
 
             runOnUiThread {
-                val adapter = AlbumsTracksAdapter(this, listItems, albums_list, albums_fastscroller) {
+                val adapter = AlbumsTracksAdapter(this, listItems, albums_list) {
                     if (it is Album) {
                         Intent(this, TracksActivity::class.java).apply {
                             putExtra(ALBUM, Gson().toJson(it))
@@ -81,15 +85,6 @@ class AlbumsActivity : SimpleActivity() {
 
                 if (areSystemAnimationsEnabled) {
                     albums_list.scheduleLayoutAnimation()
-                }
-
-                albums_fastscroller.setViews(albums_list) {
-                    val item = adapter.items.getOrNull(it)
-                    if (item is Track) {
-                        albums_fastscroller.updateBubbleText(item.title)
-                    } else if (item is Album) {
-                        albums_fastscroller.updateBubbleText(item.title)
-                    }
                 }
             }
         }

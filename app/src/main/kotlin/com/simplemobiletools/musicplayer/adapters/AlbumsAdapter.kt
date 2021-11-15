@@ -7,12 +7,12 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
+import com.qtalk.recyclerviewfastscroller.RecyclerViewFastScroller
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
 import com.simplemobiletools.commons.dialogs.ConfirmationDialog
 import com.simplemobiletools.commons.extensions.getColoredDrawableWithColor
 import com.simplemobiletools.commons.extensions.highlightTextPart
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
-import com.simplemobiletools.commons.views.FastScroller
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
@@ -22,8 +22,8 @@ import com.simplemobiletools.musicplayer.models.Track
 import kotlinx.android.synthetic.main.item_album.view.*
 import java.util.*
 
-class AlbumsAdapter(activity: SimpleActivity, var albums: ArrayList<Album>, recyclerView: MyRecyclerView, fastScroller: FastScroller, itemClick: (Any) -> Unit) :
-    MyRecyclerViewAdapter(activity, recyclerView, fastScroller, itemClick) {
+class AlbumsAdapter(activity: SimpleActivity, var albums: ArrayList<Album>, recyclerView: MyRecyclerView, itemClick: (Any) -> Unit) :
+    MyRecyclerViewAdapter(activity, recyclerView, null, itemClick), RecyclerViewFastScroller.OnPopupTextUpdate {
 
     private var textToHighlight = ""
     private val placeholderBig = resources.getColoredDrawableWithColor(R.drawable.ic_headset, textColor)
@@ -165,4 +165,6 @@ class AlbumsAdapter(activity: SimpleActivity, var albums: ArrayList<Album>, recy
                 .into(findViewById(R.id.album_image))
         }
     }
+
+    override fun onChange(position: Int) = albums.getOrNull(position)?.getBubbleText() ?: ""
 }

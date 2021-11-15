@@ -8,6 +8,7 @@ import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
 import com.simplemobiletools.commons.extensions.areSystemAnimationsEnabled
 import com.simplemobiletools.commons.extensions.beGoneIf
 import com.simplemobiletools.commons.extensions.beVisibleIf
+import com.simplemobiletools.commons.extensions.getContrastColor
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.AlbumsActivity
@@ -51,7 +52,7 @@ class ArtistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
 
             val adapter = artists_list.adapter
             if (adapter == null) {
-                ArtistsAdapter(activity, artists, artists_list, artists_fastscroller) {
+                ArtistsAdapter(activity, artists, artists_list) {
                     Intent(activity, AlbumsActivity::class.java).apply {
                         putExtra(ARTIST, Gson().toJson(it as Artist))
                         activity.startActivity(this)
@@ -62,11 +63,6 @@ class ArtistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
 
                 if (context.areSystemAnimationsEnabled) {
                     artists_list.scheduleLayoutAnimation()
-                }
-
-                artists_fastscroller.setViews(artists_list) {
-                    val artist = (artists_list.adapter as ArtistsAdapter).artists.getOrNull(it)
-                    artists_fastscroller.updateBubbleText(artist?.getBubbleText() ?: "")
                 }
             } else {
                 val oldItems = (adapter as ArtistsAdapter).artists
@@ -129,7 +125,6 @@ class ArtistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
 
     override fun setupColors(textColor: Int, adjustedPrimaryColor: Int) {
         artists_placeholder.setTextColor(textColor)
-        artists_fastscroller.updatePrimaryColor()
-        artists_fastscroller.updateBubbleColors()
+        artists_fastscroller.updateColors(adjustedPrimaryColor, adjustedPrimaryColor.getContrastColor())
     }
 }

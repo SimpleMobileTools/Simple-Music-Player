@@ -18,13 +18,14 @@ import com.simplemobiletools.musicplayer.extensions.*
 import com.simplemobiletools.musicplayer.helpers.*
 import com.simplemobiletools.musicplayer.models.*
 import com.simplemobiletools.musicplayer.services.MusicService
+import kotlinx.android.synthetic.main.activity_queue.*
 import kotlinx.android.synthetic.main.activity_tracks.*
 import kotlinx.android.synthetic.main.view_current_track_bar.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
-// Artists -> Albums -> Tracks
+// Artists -> Albums -> Tracks
 class TracksActivity : SimpleActivity() {
     private var bus: EventBus? = null
     private var playlist: Playlist? = null
@@ -48,8 +49,10 @@ class TracksActivity : SimpleActivity() {
 
         title = playlist?.title ?: album.title
 
+        val adjustedPrimaryColor = getAdjustedPrimaryColor()
+        tracks_fastscroller.updateColors(adjustedPrimaryColor, adjustedPrimaryColor.getContrastColor())
         tracks_placeholder.setTextColor(config.textColor)
-        tracks_placeholder_2.setTextColor(getAdjustedPrimaryColor())
+        tracks_placeholder_2.setTextColor(adjustedPrimaryColor)
         tracks_placeholder_2.underlineText()
         tracks_placeholder_2.setOnClickListener {
             addFolderToPlaylist()
@@ -84,7 +87,7 @@ class TracksActivity : SimpleActivity() {
                         itemClicked(it as Track)
                     }
                 } else {
-                    TracksHeaderAdapter(this, listItems, tracks_list, tracks_fastscroller) {
+                    TracksHeaderAdapter(this, listItems, tracks_list) {
                         itemClicked(it as Track)
                     }
                 }
@@ -93,20 +96,6 @@ class TracksActivity : SimpleActivity() {
 
                 if (areSystemAnimationsEnabled) {
                     tracks_list.scheduleLayoutAnimation()
-                }
-
-                tracks_fastscroller.setViews(tracks_list) {
-                    val listItem = when (adapter) {
-                        is TracksAdapter -> adapter.tracks.getOrNull(it)
-                        is TracksHeaderAdapter -> adapter.items.getOrNull(it)
-                        else -> return@setViews
-                    }
-
-                    if (listItem is Track) {
-                        tracks_fastscroller.updateBubbleText(listItem.title)
-                    } else if (listItem is AlbumHeader) {
-                        tracks_fastscroller.updateBubbleText(listItem.title)
-                    }
                 }
             }
         }
