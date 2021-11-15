@@ -4,7 +4,7 @@
     <string name="app_launcher_name">Music Player</string>
     <string name="playlist_empty">Your playlist is empty</string>
     <string name="rename_song">Rename song</string>
-    <string name="rename_song_error">Could not rename song</string>
+    <string name="rename_song_error">An error occurred during the renaming</string>
     <string name="rename_song_empty">Please fill in all fields</string>
     <string name="repeat_off">Repeat off</string>
     <string name="repeat_song">Repeat current song</string>
@@ -12,8 +12,8 @@
     <string name="stop_playback_after_current_song">Stop playback after current song</string>
     <string name="enable_shuffle">Enable shuffle</string>
     <string name="disable_shuffle">Disable shuffle</string>
-    <string name="shuffle_enabled">Shuffle on</string>
-    <string name="shuffle_disabled">Shuffle off</string>
+    <string name="shuffle_enabled">Shuffle enabled</string>
+    <string name="shuffle_disabled">Shuffle disabled</string>
     <string name="sleep_timer">Sleep timer</string>
     <string name="volume">Volume</string>
     <string name="playback_speed">Playback speed</string>
@@ -75,8 +75,8 @@
     <string name="equalizer">Equalizer</string>
     <string name="swap_prev_next">Swap previous/next headphone buttons</string>
     <!-- FAQ -->
-    <string name="faq_1_title">How can I fast-forward\?</string>
-    <string name="faq_1_text">Click on the current or total duration texts near the seekbar, moving playback either backward, or forward.</string>
+    <string name="faq_1_title">How can I fast-forward songs?</string>
+    <string name="faq_1_text">You can click on the current or max duration texts near the seekbar, that will move the song either backward, or forward.</string>
     <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
     <!-- App title has to have less than 50 characters. If you cannot squeeze it, just remove a part of it -->
     <string name="app_title">Simple Music Player - A cool player for your songs</string>
