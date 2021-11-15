@@ -229,7 +229,7 @@ class AlbumsTracksAdapter(
     override fun onChange(position: Int): CharSequence {
         val listItem = items.getOrNull(position)
         return when (listItem) {
-            is Track -> listItem.getBubbleText()
+            is Track -> listItem.title
             is Album -> listItem.title
             is AlbumSection -> listItem.title
             else -> ""
