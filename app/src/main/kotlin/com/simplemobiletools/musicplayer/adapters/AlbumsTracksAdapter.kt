@@ -231,6 +231,7 @@ class AlbumsTracksAdapter(
         return when (listItem) {
             is Track -> listItem.getBubbleText()
             is Album -> listItem.title
+            is AlbumSection -> listItem.title
             else -> ""
         }
     }
