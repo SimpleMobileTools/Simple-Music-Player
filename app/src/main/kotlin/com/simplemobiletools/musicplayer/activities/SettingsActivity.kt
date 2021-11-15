@@ -102,6 +102,7 @@ class SettingsActivity : SimpleActivity() {
     }
 
     private fun setupReplaceTitle() {
+        settings_show_filename.text = getReplaceTitleText()
         settings_show_filename_holder.setOnClickListener {
             val items = arrayListOf(
                 RadioItem(SHOW_FILENAME_NEVER, getString(R.string.never)),
@@ -111,8 +112,17 @@ class SettingsActivity : SimpleActivity() {
 
             RadioGroupDialog(this@SettingsActivity, items, config.showFilename) {
                 config.showFilename = it as Int
+                settings_show_filename.text = getReplaceTitleText()
                 sendIntent(REFRESH_LIST)
             }
         }
     }
+
+    private fun getReplaceTitleText() = getString(
+        when (config.showFilename) {
+            SHOW_FILENAME_NEVER -> R.string.never
+            SHOW_FILENAME_IF_UNAVAILABLE -> R.string.title_is_not_available
+            else -> R.string.always
+        }
+    )
 }
