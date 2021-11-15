@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/cab_rename"
-        android:icon="@drawable/ic_rename_new_vector"
+        android:icon="@drawable/ic_rename_vector"
         android:title="@string/rename"
         app:showAsAction="ifRoom" />
     <item
