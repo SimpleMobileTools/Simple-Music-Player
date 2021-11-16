@@ -4,7 +4,7 @@
     <string name="app_launcher_name">音乐播放器</string>
     <string name="playlist_empty">您的播放列表为空</string>
     <string name="rename_song">重命名歌曲</string>
-    <string name="rename_song_error">无法重命名歌曲</string>
+    <string name="rename_song_error">重命名过程中发生错误</string>
     <string name="rename_song_empty">请填写全部字段</string>
     <string name="repeat_off">已禁用重复播放</string>
     <string name="repeat_song">重复当前歌曲</string>
@@ -74,7 +74,7 @@
     <string name="swap_prev_next">交换耳机上的上一首/下一首按钮</string>
     <!-- FAQ -->
     <string name="faq_1_title">我如何快进歌曲？</string>
-    <string name="faq_1_text">单击搜索栏附近的当前或总持续时间文本，向后或向前移动播放。</string>
+    <string name="faq_1_text">您可以单击搜索栏附近的当前或最大持续时间文本，这将向后或向前移动歌曲。</string>
     <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
     <!-- App title has to have less than 50 characters. If you cannot squeeze it, just remove a part of it -->
     <string name="app_title">简易音乐播放器 - 您歌曲的酷酷播放器</string>
