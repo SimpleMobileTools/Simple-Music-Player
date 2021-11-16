@@ -1,23 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Simple Music Player</string>
-    <string name="app_launcher_name">Music Player</string>
+    <string name="app_name">Lecteur de musique simple</string>
+    <string name="app_launcher_name">Lecteur de musique</string>
     <string name="playlist_empty">Votre liste de lecture est vide</string>
     <string name="rename_song">Renommer la chanson</string>
-    <string name="rename_song_error">Une erreur s\'est produite lors du changement de nom</string>
+    <string name="rename_song_error">Une erreur s\'est produite pendant le renommage</string>
     <string name="rename_song_empty">Veuillez remplir tous les champs</string>
-    <string name="repeat_off">Repeat off</string>
+    <string name="repeat_off">Répétition désactivée</string>
     <string name="repeat_song">Répéter la chanson en cours</string>
-    <string name="repeat_playlist">Repeat playlist</string>
-    <string name="stop_playback_after_current_song">Stop playback after current song</string>
+    <string name="repeat_playlist">Tout répéter</string>
+    <string name="stop_playback_after_current_song">Arrêter la lecture après le morceau en cours</string>
     <string name="enable_shuffle">Activer la lecture aléatoire</string>
     <string name="disable_shuffle">Désactiver la lecture aléatoire</string>
     <string name="shuffle_enabled">Lecture aléatoire activée</string>
     <string name="shuffle_disabled">Lecture aléatoire désactivée</string>
-    <string name="sleep_timer">Sleep timer</string>
+    <string name="sleep_timer">Minuterie de veille</string>
     <string name="volume">Volume</string>
-    <string name="playback_speed">Playback speed</string>
-    <string name="loading_files">Loading files…</string>
-
+    <string name="playback_speed">Vitesse de lecture</string>
+    <string name="loading_files">Chargement des fichiers…</string>
     <!-- Playlists -->
     <string name="add_file_to_playlist">Ajouter un fichier à la liste de lecture</string>
     <string name="add_folder_to_playlist">Ajouter un dossier à la liste de lecture</string>
@@ -26,14 +26,14 @@
     <string name="create_new_playlist">Créer une liste de lecture</string>
     <string name="rename_playlist">Renommer la liste de lecture</string>
     <string name="playlist_name_exists">Une liste de lecture portant ce nom existe déjà</string>
-    <string name="remove_playlist">Supprimer la liste de lecture</string>
+    <string name="remove_playlist">Retirer la liste de lecture</string>
     <string name="remove_playlist_description">Ceci ne supprimera que les listes de lecture sélectionnées, et non les fichiers réels.</string>
-    <string name="remove_playlist_description_placeholder">Ceci ne supprimera que les \"%s\" de la liste de lecture, et non les fichiers réels.</string>
-    <string name="remove_from_playlist">Supprimer de la liste de lecture</string>
-    <string name="remove_from_playlist_description">Ceci ne supprimera que les éléments de la playlist \"%s\", les fichiers réels ne seront pas supprimés.</string>
+    <string name="remove_playlist_description_placeholder">Ceci ne supprimera que la liste « %s » et non les fichiers réels.</string>
+    <string name="remove_from_playlist">Retirer de la liste de lecture</string>
+    <string name="remove_from_playlist_description">Ceci retirera seulement les éléments de la liste « %s », les fichiers réels ne seront pas supprimés.</string>
     <string name="delete_the_files_too">Supprimer les fichiers aussi</string>
     <string name="open_playlist">Ouvrir la liste de lecture</string>
-    <string name="all_songs_cannot_be_deleted">La liste de lecture de toutes les chansons ne peut pas être supprimée.</string>
+    <string name="all_songs_cannot_be_deleted">La liste de lecture de toutes les chansons ne peut pas être supprimée</string>
     <string name="empty_playlist">La liste de lecture actuelle est vide</string>
     <string name="fetching_songs">Récupération des pistes…</string>
     <string name="all_songs">Tous les titres</string>
@@ -46,85 +46,42 @@
     <string name="show_album_cover">Afficher la pochette de l\'album sur l\'écran principal</string>
     <string name="all_tracks">Toutes les pistes</string>
     <string name="add_to_playlist">Ajouter à la liste de lecture</string>
-    <string name="create_playlist_label">Vous pouvez créer une nouvelle liste de lecture en sélectionnant les artistes, albums ou pistes désirés et en utilisant Menu ->  Ajouter à la liste de lecture</string>
-
+    <string name="create_playlist_label">Vous pouvez créer une nouvelle liste de lecture en sélectionnant les artistes, albums ou pistes désirés et en utilisant Menu -&gt; Ajouter à la liste de lecture.</string>
     <!-- Sorting -->
     <string name="track_count">Nombre de pistes</string>
     <string name="album_count">Nombre d\'albums</string>
     <string name="artist_name">Nom de l\'artiste</string>
     <string name="year">Année</string>
-
     <!-- Artists -->
     <string name="artists">Artistes</string>
     <string name="albums">Albums</string>
     <plurals name="albums_plural">
-        <item quantity="one">%d Album</item>
-        <item quantity="other">%d Albums</item>
+        <item quantity="one">%d album</item>
+        <item quantity="other">%d albums</item>
     </plurals>
-
-    <string name="tracks">Piste</string>
+    <string name="tracks">Pistes</string>
     <plurals name="tracks_plural">
-        <item quantity="one">%d Piste</item>
-        <item quantity="other">%d Pistes</item>
+        <item quantity="one">%d piste</item>
+        <item quantity="other">%d pistes</item>
     </plurals>
-
     <!-- Queue -->
-    <string name="next_track">Suivant:</string>
+    <string name="next_track">Suivant :</string>
     <string name="track_queue">File des pistes</string>
     <string name="add_to_queue">Ajouter à la file</string>
     <string name="remove_from_queue">Supprimer de la file</string>
     <string name="create_playlist_from_queue">Créer une liste de lecture depuis la file</string>
-
     <!-- Settings -->
     <string name="equalizer">Égaliseur</string>
     <string name="swap_prev_next">Remplacer les boutons des écouteurs précédents/suivants</string>
-
     <!-- FAQ -->
-    <string name="faq_1_title">Comment puis-je faire avancer rapidement les chansons ?</string>
-    <string name="faq_1_text">Vous pouvez cliquer sur les textes de durée courante ou maximale près de la barre de recherche, qui déplaceront le morceau vers l\'arrière ou vers l\'avant.</string>
-
+    <string name="faq_1_title">Comment puis-je faire avancer rapidement les chansons \?</string>
+    <string name="faq_1_text">Vous pouvez cliquer sur le texte de la durée actuelle ou de la durée maximale près de la barre de recherche, ce qui fera avancer ou reculer la chanson.</string>
     <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
     <!-- App title has to have less than 50 characters. If you cannot squeeze it, just remove a part of it -->
-    <string name="app_title">Simple Music Player - Lecteur de musiques</string>
+    <string name="app_title">Simple Music Player - Lecteur de musique</string>
     <!-- Short description has to have less than 80 chars -->
     <string name="app_short_description">Un lecteur de musiques propres, personnalisable et sans publicités.</string>
-    <string name="app_long_description">
-        A simple music player easily controllable from the status bar, home screen widget or by hardware buttons on your headset. It provides all expected functions like sorting in various ways as well as changing the Equalizer.  Listen to your favorite mp3, other songs or podcasts with this free beautiful music player.
-
-        It offers exclusive extras like Search and showing Album Art, a sleep timer and many other settings. This elegant music player allows you creating and managing handy playlists as you desire.
-
-        Playlists are fully supported. You can add either individual files, or whole folders. If you won\'t like a file, you can either just remove it from a playlist, or delete the actual file altogether.
-
-        Comes with a handy sleep timer so that you can reliably delay the time of the app shutting down.
-
-        Supports both shuffle and repeating a particular song, as well as skipping and fast forwarding.
-
-        Available in many different languages, offers multiple different equalizers.
-
-        Easily check a file properties like the size, duration, last modified etc.
-
-        Modify file EXIF data like the song title and artist.
-
-        Quickly share files with your friends on social networks, emails, or anywhere you would like.
-
-        This stylish music player contains a widget with customizable text color, alpha and the color of the background for easy access and control.
-
-        It properly handles third party intents too for playing individual audio files so it can help at setting ringtones too.
-
-        It comes with material design and dark theme by default, provides great user experience for easy usage. The lack of internet access gives you more privacy, security and stability than other apps.
-        
-        Contains no ads or unnecessary permissions. It is fully opensource, provides customizable colors.
-        
-        <b>Check out the full suite of Simple Tools here:</b>
-        https://www.simplemobiletools.com
-
-        <b>Facebook:</b>
-        https://www.facebook.com/simplemobiletools
-
-        <b>Reddit:</b>
-        https://www.reddit.com/r/SimpleMobileTools
-    </string>
-
+    <string name="app_long_description"> Un simple lecteur de musique facilement contrôlable à partir de la barre d\'état, du widget de l\'écran d\'accueil ou des boutons matériels de votre casque. Il offre toutes les fonctions attendues, comme le triage de différentes manières et la modification de l\'égaliseur. Écoutez vos mp3 préférés, d\'autres chansons ou des podcasts avec ce magnifique lecteur de musique gratuit. Il offre des extras exclusifs comme la recherche et l\'affichage des pochettes d\'album, une minuterie de mise en veille et de nombreux autres paramètres. Ce lecteur de musique élégant vous permet de créer et de gérer des listes de lecture pratiques comme vous le souhaitez. Les listes de lecture sont entièrement prises en charge. Vous pouvez ajouter soit des fichiers individuels, soit des dossiers entiers. Si vous n\'aimez pas un fichier, vous pouvez soit le supprimer de la liste de lecture, soit supprimer le fichier lui-même. Livré avec une minuterie de sommeil pratique afin que vous puissiez retarder de manière fiable le moment où l\'application s\'éteint. Supporte à la fois la lecture aléatoire et la répétition d\'une chanson particulière, ainsi que le saut et l\'avance rapide. Disponible dans de nombreuses langues et propose plusieurs égaliseurs différents. Vérifiez facilement les propriétés d\'un fichier comme la taille, la durée, la dernière modification, etc. Modifiez les données EXIF des fichiers, comme le titre de la chanson et l\'artiste. Partagez rapidement des fichiers avec vos amis sur les réseaux sociaux, par courriel ou partout où vous le souhaitez. Ce lecteur de musique élégant contient un widget dont la couleur du texte, l\'alpha et la couleur de l\'arrière-plan sont personnalisables pour un accès et un contrôle faciles. Il gère correctement les intentions de tiers pour la lecture de fichiers audio individuels, ce qui permet de définir des sonneries. Il est livré avec un design matériel et un thème sombre par défaut, offrant une grande expérience utilisateur pour une utilisation facile. L\'absence d\'accès à Internet vous offre plus de confidentialité, de sécurité et de stabilité que les autres applications. Ne contient pas de publicités ni de permissions inutiles. Il est entièrement opensource et fournit des couleurs personnalisables. <b>Découvrez la suite complète de Simple Tools ici :</b> https://www.simplemobiletools.com <b>Facebook :</b> https://www.facebook.com/simplemobiletools <b>Reddit :</b> https://www.reddit.com/r/SimpleMobileTools </string>
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
