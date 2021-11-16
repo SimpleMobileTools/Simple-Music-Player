@@ -92,6 +92,7 @@ class AlbumsTracksAdapter(
         when (id) {
             R.id.cab_add_to_playlist -> addToPlaylist()
             R.id.cab_add_to_queue -> addToQueue()
+            R.id.cab_properties -> showProperties()
             R.id.cab_delete -> askConfirmDelete()
             R.id.cab_rename -> displayEditDialog()
             R.id.cab_select_all -> selectAll()
@@ -128,6 +129,15 @@ class AlbumsTracksAdapter(
                 finishActMode()
             }
         }
+    }
+
+    private fun showProperties() {
+        val selectedTracks = getSelectedTracks()
+        if (selectedTracks.isEmpty()) {
+            return
+        }
+
+        activity.showTrackProperties(selectedTracks)
     }
 
     private fun askConfirmDelete() {

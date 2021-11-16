@@ -19,10 +19,7 @@ import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
 import com.simplemobiletools.musicplayer.dialogs.EditDialog
-import com.simplemobiletools.musicplayer.extensions.addTracksToPlaylist
-import com.simplemobiletools.musicplayer.extensions.addTracksToQueue
-import com.simplemobiletools.musicplayer.extensions.deleteTracks
-import com.simplemobiletools.musicplayer.extensions.refreshAfterEdit
+import com.simplemobiletools.musicplayer.extensions.*
 import com.simplemobiletools.musicplayer.helpers.TagHelper
 import com.simplemobiletools.musicplayer.models.AlbumHeader
 import com.simplemobiletools.musicplayer.models.ListItem
@@ -93,6 +90,7 @@ class TracksHeaderAdapter(activity: SimpleActivity, val items: ArrayList<ListIte
         when (id) {
             R.id.cab_add_to_playlist -> addToPlaylist()
             R.id.cab_add_to_queue -> addToQueue()
+            R.id.cab_properties -> showProperties()
             R.id.cab_delete -> askConfirmDelete()
             R.id.cab_rename -> displayEditDialog()
             R.id.cab_select_all -> selectAll()
@@ -122,6 +120,11 @@ class TracksHeaderAdapter(activity: SimpleActivity, val items: ArrayList<ListIte
         activity.addTracksToQueue(getSelectedTracks()) {
             finishActMode()
         }
+    }
+
+    private fun showProperties() {
+        val selectedTracks = getSelectedTracks()
+        activity.showTrackProperties(selectedTracks)
     }
 
     private fun askConfirmDelete() {

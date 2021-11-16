@@ -105,19 +105,7 @@ class TracksAdapter(
 
     private fun showProperties() {
         val selectedTracks = getSelectedTracks()
-        val selectedPaths = selectedTracks.map { track ->
-            if (track.path.isNotEmpty()) {
-                track.path
-            } else {
-                ContentUris.withAppendedId(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, track.mediaStoreId).toString()
-            }
-        }
-
-        if (selectedPaths.size <= 1) {
-            PropertiesDialog(activity, selectedPaths.first(), false)
-        } else {
-            PropertiesDialog(activity, selectedPaths, false)
-        }
+        activity.showTrackProperties(selectedTracks)
     }
 
     private fun removeFromPlaylist() {

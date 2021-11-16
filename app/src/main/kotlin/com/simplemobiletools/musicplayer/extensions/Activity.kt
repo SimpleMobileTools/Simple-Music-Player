@@ -6,6 +6,7 @@ import android.content.Intent
 import android.net.Uri
 import android.provider.MediaStore
 import com.simplemobiletools.commons.activities.BaseSimpleActivity
+import com.simplemobiletools.commons.dialogs.PropertiesDialog
 import com.simplemobiletools.commons.extensions.toast
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.commons.helpers.isRPlus
@@ -100,4 +101,20 @@ fun Activity.refreshAfterEdit(track: Track) {
 
     sendIntent(REFRESH_LIST)
     EventBus.getDefault().post(Events.RefreshTracks())
+}
+
+fun Activity.showTrackProperties(selectedTracks: List<Track>) {
+    val selectedPaths = selectedTracks.map { track ->
+        if (track.path.isNotEmpty()) {
+            track.path
+        } else {
+            ContentUris.withAppendedId(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, track.mediaStoreId).toString()
+        }
+    }
+
+    if (selectedPaths.size <= 1) {
+        PropertiesDialog(this, selectedPaths.first(), false)
+    } else {
+        PropertiesDialog(this, selectedPaths, false)
+    }
 }
