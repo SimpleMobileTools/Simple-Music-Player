@@ -47,10 +47,10 @@ class EditDialog(val activity: BaseSimpleActivity, val track: Track, val callbac
                         }
 
                         if (track.title != newTitle || track.artist != newArtist || track.album != newAlbum) {
-                            track.artist = newArtist
-                            track.title = newTitle
-                            track.album = newAlbum
-                            updateContentResolver(track) {
+                            updateContentResolver(track, newArtist, newTitle, newAlbum) {
+                                track.artist = newArtist
+                                track.title = newTitle
+                                track.album = newAlbum
                                 val oldPath = track.path
                                 val newPath = "${oldPath.getParentPath()}/$newFilename.$newFileExtension"
                                 if (oldPath == newPath) {
@@ -91,17 +91,15 @@ class EditDialog(val activity: BaseSimpleActivity, val track: Track, val callbac
         }
     }
 
-    private fun updateContentResolver(track: Track, onUpdateMediaStore: () -> Unit) {
+    private fun updateContentResolver(track: Track, newArtist: String, newTitle: String, newAlbum: String, onUpdateMediaStore: () -> Unit) {
         ensureBackgroundThread {
             try {
                 activity.handleRecoverableSecurityException { granted ->
                     if (granted) {
-                        tagHelper.writeTag(track)
+                        tagHelper.writeTag(track, newArtist, newTitle, newAlbum)
                         activity.runOnUiThread {
                             onUpdateMediaStore.invoke()
                         }
-                    } else {
-                        activity.toast(R.string.grant_change_metadata_permission)
                     }
                 }
             } catch (e: Exception) {

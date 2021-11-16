@@ -223,7 +223,11 @@ class TracksAdapter(
             EditDialog(activity as SimpleActivity, selectedTrack) { track ->
                 val trackIndex = tracks.indexOfFirst { it.mediaStoreId == track.mediaStoreId }
                 tracks[trackIndex] = track
-                updateItems(tracks, forceUpdate = true)
+                if (trackIndex != -1) {
+                    tracks[trackIndex] = track
+                    notifyItemChanged(trackIndex)
+                    finishActMode()
+                }
                 if (track.mediaStoreId == MusicService.mCurrTrack?.mediaStoreId) {
                     Intent(activity, MusicService::class.java).apply {
                         putExtra(EDITED_TRACK, track)

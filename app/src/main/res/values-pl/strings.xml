@@ -17,7 +17,6 @@
     <string name="volume">Głośność</string>
     <string name="playback_speed">Prędkość odtwarzania</string>
     <string name="loading_files">Ładowanie plików…</string>
-    <string name="grant_change_metadata_permission">Please grant the permission to modify audio properties</string>
 
     <!-- Playlists -->
     <string name="add_file_to_playlist">Dodaj plik do listy odtwarzania</string>

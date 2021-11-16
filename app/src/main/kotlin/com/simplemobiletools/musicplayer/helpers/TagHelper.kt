@@ -35,7 +35,7 @@ class TagHelper(private val activity: BaseSimpleActivity) {
         return SUPPORTED_EXTENSIONS.any { it == track.path.getFilenameExtension() }
     }
 
-    fun writeTag(track: Track) {
+    fun writeTag(track: Track, newArtist: String, newTitle: String, newAlbum: String) {
         if (isEditTagSupported(track)) {
             val uri = ContentUris.withAppendedId(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, track.mediaStoreId)
             val temp = activity.getTempFile(TEMP_FOLDER, track.path.getFilenameFromPath())
@@ -47,9 +47,9 @@ class TagHelper(private val activity: BaseSimpleActivity) {
 
             val audioFile = AudioFileIO.read(temp)
             val tag = audioFile.tag ?: createTag(track.path.getFilenameExtension()).also { audioFile.tag = it }
-            tag.setField(FieldKey.TITLE, track.title)
-            tag.setField(FieldKey.ARTIST, track.artist)
-            tag.setField(FieldKey.ALBUM, track.album)
+            tag.setField(FieldKey.TITLE, newTitle)
+            tag.setField(FieldKey.ARTIST, newArtist)
+            tag.setField(FieldKey.ALBUM, newAlbum)
             audioFile.commit()
 
             activity.contentResolver.openOutputStream(uri, "w")!!.use { outputStream ->

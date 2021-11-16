@@ -1,5 +1,6 @@
 package com.simplemobiletools.musicplayer.adapters
 
+import android.content.Intent
 import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
@@ -18,15 +19,24 @@ import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
+import com.simplemobiletools.musicplayer.dialogs.EditDialog
 import com.simplemobiletools.musicplayer.extensions.addTracksToPlaylist
 import com.simplemobiletools.musicplayer.extensions.addTracksToQueue
 import com.simplemobiletools.musicplayer.extensions.deleteTracks
+import com.simplemobiletools.musicplayer.extensions.sendIntent
+import com.simplemobiletools.musicplayer.helpers.EDIT
+import com.simplemobiletools.musicplayer.helpers.EDITED_TRACK
+import com.simplemobiletools.musicplayer.helpers.REFRESH_LIST
+import com.simplemobiletools.musicplayer.helpers.TagHelper
 import com.simplemobiletools.musicplayer.models.AlbumHeader
+import com.simplemobiletools.musicplayer.models.Events
 import com.simplemobiletools.musicplayer.models.ListItem
 import com.simplemobiletools.musicplayer.models.Track
+import com.simplemobiletools.musicplayer.services.MusicService
 import kotlinx.android.synthetic.main.item_album_header.view.*
 import kotlinx.android.synthetic.main.item_track.view.*
 import java.util.*
+import org.greenrobot.eventbus.EventBus
 
 class TracksHeaderAdapter(activity: SimpleActivity, val items: ArrayList<ListItem>, recyclerView: MyRecyclerView, itemClick: (Any) -> Unit) :
     MyRecyclerViewAdapter(activity, recyclerView, null, itemClick), RecyclerViewFastScroller.OnPopupTextUpdate {
@@ -36,6 +46,7 @@ class TracksHeaderAdapter(activity: SimpleActivity, val items: ArrayList<ListIte
 
     private val placeholder = resources.getColoredDrawableWithColor(R.drawable.ic_headset, textColor)
     private val cornerRadius = resources.getDimension(R.dimen.rounded_corner_radius_big).toInt()
+    private val tagHelper by lazy { TagHelper(activity) }
 
     init {
         setupDragListener(true)
@@ -73,7 +84,13 @@ class TracksHeaderAdapter(activity: SimpleActivity, val items: ArrayList<ListIte
         }
     }
 
-    override fun prepareActionMode(menu: Menu) {}
+    override fun prepareActionMode(menu: Menu) {
+        menu.apply {
+            val oneItemsSelected = isOneItemSelected()
+            val selected = getSelectedTracks().firstOrNull()?.let { !it.path.startsWith("content://") && tagHelper.isEditTagSupported(it) } == true
+            findItem(R.id.cab_rename).isVisible = oneItemsSelected && selected
+        }
+    }
 
     override fun actionItemPressed(id: Int) {
         if (selectedKeys.isEmpty()) {
@@ -84,6 +101,7 @@ class TracksHeaderAdapter(activity: SimpleActivity, val items: ArrayList<ListIte
             R.id.cab_add_to_playlist -> addToPlaylist()
             R.id.cab_add_to_queue -> addToQueue()
             R.id.cab_delete -> askConfirmDelete()
+            R.id.cab_rename -> displayEditDialog()
             R.id.cab_select_all -> selectAll()
         }
     }
@@ -190,6 +208,28 @@ class TracksHeaderAdapter(activity: SimpleActivity, val items: ArrayList<ListIte
             is Track -> listItem.getBubbleText()
             is AlbumHeader -> listItem.title
             else -> ""
+        }
+    }
+
+    private fun displayEditDialog() {
+        getSelectedTracks().firstOrNull()?.let { selectedTrack ->
+            EditDialog(activity as SimpleActivity, selectedTrack) { track ->
+                val trackIndex = items.indexOfFirst { (it as? Track)?.mediaStoreId == track.mediaStoreId }
+                if (trackIndex != -1) {
+                    items[trackIndex] = track
+                    notifyItemChanged(trackIndex)
+                    finishActMode()
+                }
+                if (track.mediaStoreId == MusicService.mCurrTrack?.mediaStoreId) {
+                    Intent(activity, MusicService::class.java).apply {
+                        putExtra(EDITED_TRACK, track)
+                        action = EDIT
+                        activity.startService(this)
+                    }
+                }
+                activity.sendIntent(REFRESH_LIST)
+                EventBus.getDefault().post(Events.RefreshTracks())
+            }
         }
     }
 }
