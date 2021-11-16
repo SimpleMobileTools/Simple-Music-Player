@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Schlichter Musik-Player</string>
     <string name="app_launcher_name">Musik-Player</string>
@@ -17,7 +18,6 @@
     <string name="volume">Volume</string>
     <string name="playback_speed">Playback speed</string>
     <string name="loading_files">Loading files…</string>
-
     <!-- Playlists -->
     <string name="add_file_to_playlist">Datei zu Wiedergabeliste hinzufügen</string>
     <string name="add_folder_to_playlist">Ordner zu Wiedergabeliste hinzufügen</string>
@@ -33,10 +33,10 @@
     <string name="remove_from_playlist_description">Es werden nur die Elemente aus der Wiedergabeliste \"%s\" entfernt, die eigentlichen Dateien werden nicht gelöscht.</string>
     <string name="delete_the_files_too">Dateien auch löschen</string>
     <string name="open_playlist">Wiedergabeliste öffnen</string>
-    <string name="all_songs_cannot_be_deleted">Wiedergabeliste \'Alle Songs\' kann nicht gelöscht werden</string>
+    <string name="all_songs_cannot_be_deleted">Wiedergabeliste „Alle Lieder“ kann nicht gelöscht werden</string>
     <string name="empty_playlist">Die derzeitige Wiedergabeliste ist leer</string>
-    <string name="fetching_songs">Songs werden abgerufen…</string>
-    <string name="all_songs">Alle Songs</string>
+    <string name="fetching_songs">Lieder werden abgerufen …</string>
+    <string name="all_songs">Alle Lieder</string>
     <string name="create_playlist_from_folder">Neue Wiedergabeliste aus Ordner erstellen</string>
     <string name="folder_contains_no_audio">Der ausgewählte Ordner enthält keine Audiodateien</string>
     <string name="delete_current_song">Aktuellen Song löschen</string>
@@ -46,14 +46,12 @@
     <string name="show_album_cover">Album-Cover im Hauptbildschirm anzeigen</string>
     <string name="all_tracks">All tracks</string>
     <string name="add_to_playlist">Zur Wiedergabeliste hinzufügen</string>
-    <string name="create_playlist_label">Um eine neue Wiedergabeliste zu erstellen, wähle Künstler, Album oder Titel aus und nutze das Menü -> Zur Wiedergabeliste hinzufügen</string>
-
+    <string name="create_playlist_label">Um eine neue Wiedergabeliste zu erstellen, wähle Künstler, Album oder Titel aus und nutze das Menü -&gt; Zur Wiedergabeliste hinzufügen</string>
     <!-- Sorting -->
     <string name="track_count">Titelanzahl</string>
     <string name="album_count">Albenanzahl</string>
     <string name="artist_name">Künstlername</string>
     <string name="year">Jahr</string>
-
     <!-- Artists -->
     <string name="artists">Künstler</string>
     <string name="albums">Alben</string>
@@ -61,29 +59,24 @@
         <item quantity="one">%d Album</item>
         <item quantity="other">%d Alben</item>
     </plurals>
-
     <string name="tracks">Titel</string>
     <plurals name="tracks_plural">
         <item quantity="one">%d Titel</item>
         <item quantity="other">%d Titel</item>
     </plurals>
-
     <!-- Queue -->
     <string name="next_track">Als nächstes:</string>
     <string name="track_queue">Warteschlange</string>
     <string name="add_to_queue">In die Warteschlange</string>
     <string name="remove_from_queue">Aus Warteschlange entfernen</string>
     <string name="create_playlist_from_queue">Wiedergabeliste aus Warteschlange erstellen</string>
-
     <!-- Settings -->
     <string name="equalizer">Equalizer</string>
     <string name="swap_prev_next">Vertausche die Kopfhörerknöpfe "Vorheriger/Nächster Titel"</string>
-
     <!-- FAQ -->
     <string name="faq_1_title">Wie kann ich Songs vor- oder zurückspulen?</string>
     <string name="faq_1_text">Du kannst während der Wiedergabe schnell vor- oder zurückspulen, indem du neben der Fortschrittsanzeige entweder die Gesamtdauer oder die aktuelle Dauer des Songs antippst. 
         Alternativ kannst du auch den Schieber der Fortschrittsanzeige direkt zur gewünschten Stelle ziehen.</string>
-
     <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
     <!-- App title has to have less than 50 characters. If you cannot squeeze it, just remove a part of it -->
     <string name="app_title">Schlichter Musik-Player - Coole Wiedergabe Deiner Songs</string>
@@ -125,7 +118,6 @@
         <b>Reddit:</b>
         https://www.reddit.com/r/SimpleMobileTools
     </string>
-
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
