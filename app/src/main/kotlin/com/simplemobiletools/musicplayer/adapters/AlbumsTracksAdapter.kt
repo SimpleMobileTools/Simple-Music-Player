@@ -1,5 +1,6 @@
 package com.simplemobiletools.musicplayer.adapters
 
+import android.content.Intent
 import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
@@ -18,18 +19,18 @@ import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
-import com.simplemobiletools.musicplayer.extensions.addTracksToPlaylist
-import com.simplemobiletools.musicplayer.extensions.addTracksToQueue
-import com.simplemobiletools.musicplayer.extensions.deleteTracks
-import com.simplemobiletools.musicplayer.extensions.getAlbumTracksSync
-import com.simplemobiletools.musicplayer.models.Album
-import com.simplemobiletools.musicplayer.models.AlbumSection
-import com.simplemobiletools.musicplayer.models.ListItem
-import com.simplemobiletools.musicplayer.models.Track
+import com.simplemobiletools.musicplayer.dialogs.EditDialog
+import com.simplemobiletools.musicplayer.extensions.*
+import com.simplemobiletools.musicplayer.helpers.EDIT
+import com.simplemobiletools.musicplayer.helpers.EDITED_TRACK
+import com.simplemobiletools.musicplayer.helpers.REFRESH_LIST
+import com.simplemobiletools.musicplayer.models.*
+import com.simplemobiletools.musicplayer.services.MusicService
 import kotlinx.android.synthetic.main.item_album.view.*
 import kotlinx.android.synthetic.main.item_section.view.*
 import kotlinx.android.synthetic.main.item_track.view.*
 import java.util.*
+import org.greenrobot.eventbus.EventBus
 
 // we show both albums and individual tracks here
 class AlbumsTracksAdapter(
@@ -95,6 +96,7 @@ class AlbumsTracksAdapter(
             R.id.cab_add_to_playlist -> addToPlaylist()
             R.id.cab_add_to_queue -> addToQueue()
             R.id.cab_delete -> askConfirmDelete()
+            R.id.cab_rename -> displayEditDialog()
             R.id.cab_select_all -> selectAll()
         }
     }
@@ -233,6 +235,28 @@ class AlbumsTracksAdapter(
             is Album -> listItem.title
             is AlbumSection -> listItem.title
             else -> ""
+        }
+    }
+
+    private fun displayEditDialog() {
+        getSelectedTracks().firstOrNull()?.let { selectedTrack ->
+            EditDialog(activity as SimpleActivity, selectedTrack) { track ->
+                val trackIndex = items.indexOfFirst { (it as? Track)?.mediaStoreId == track.mediaStoreId }
+                if (trackIndex != -1) {
+                    items[trackIndex] = track
+                    notifyItemChanged(trackIndex)
+                    finishActMode()
+                }
+                if (track.mediaStoreId == MusicService.mCurrTrack?.mediaStoreId) {
+                    Intent(activity, MusicService::class.java).apply {
+                        putExtra(EDITED_TRACK, track)
+                        action = EDIT
+                        activity.startService(this)
+                    }
+                }
+                activity.sendIntent(REFRESH_LIST)
+                EventBus.getDefault().post(Events.RefreshTracks())
+            }
         }
     }
 }

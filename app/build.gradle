@@ -70,6 +70,9 @@ dependencies {
     implementation 'com.google.android.material:material:1.4.0'
     implementation 'com.airbnb.android:lottie:3.6.1'
 
+    // higher versions of jaudiotagger not compatible with <= API 25 devices
+    // https://bitbucket.org/ijabz/jaudiotagger/issues/149/some-nio-classes-are-unavailable-while
+    implementation "net.jthink:jaudiotagger:2.2.5"
     kapt "androidx.room:room-compiler:2.3.0"
     implementation "androidx.room:room-runtime:2.3.0"
     annotationProcessor "androidx.room:room-compiler:2.3.0"
