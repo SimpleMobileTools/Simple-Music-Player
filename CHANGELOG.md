@@ -1,6 +1,14 @@
 Changelog
 ==========
 
+Version 5.8.1 *(2021-11-16)*
+----------------------------
+
+ * Redesigned some parts of the app
+ * Allow editing some file metadata
+ * Changed the side fastscroller to make it more reliable
+ * Some other stability, translation and UI improvements
+
 Version 5.8.0 *(2021-10-02)*
 ----------------------------
 

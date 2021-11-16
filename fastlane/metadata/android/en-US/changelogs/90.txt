@@ -1,0 +1,4 @@
+ * Redesigned some parts of the app
+ * Allow editing some file metadata
+ * Changed the side fastscroller to make it more reliable
+ * Some other stability, translation and UI improvements
