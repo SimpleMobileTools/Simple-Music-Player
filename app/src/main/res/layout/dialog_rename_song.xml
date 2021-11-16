@@ -15,6 +15,7 @@
             android:id="@+id/song_title_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/small_margin"
             android:text="@string/title" />
 
         <com.simplemobiletools.commons.views.MyEditText
@@ -31,6 +32,7 @@
             android:id="@+id/song_artist_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/small_margin"
             android:text="@string/artist" />
 
         <com.simplemobiletools.commons.views.MyEditText
@@ -47,6 +49,7 @@
             android:id="@+id/song_album_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/small_margin"
             android:text="@string/album" />
 
         <com.simplemobiletools.commons.views.MyEditText
@@ -63,6 +66,7 @@
             android:id="@+id/file_name_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/small_margin"
             android:text="@string/filename" />
 
         <com.simplemobiletools.commons.views.MyEditText
@@ -78,6 +82,7 @@
             android:id="@+id/extension_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/small_margin"
             android:text="@string/extension" />
 
         <com.simplemobiletools.commons.views.MyEditText
