@@ -1,7 +1,6 @@
 package com.simplemobiletools.musicplayer.adapters
 
 import android.content.ContentUris
-import android.content.Intent
 import android.provider.MediaStore
 import android.view.Menu
 import android.view.View
@@ -21,13 +20,9 @@ import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
 import com.simplemobiletools.musicplayer.dialogs.EditDialog
 import com.simplemobiletools.musicplayer.extensions.*
-import com.simplemobiletools.musicplayer.helpers.EDIT
-import com.simplemobiletools.musicplayer.helpers.EDITED_TRACK
-import com.simplemobiletools.musicplayer.helpers.REFRESH_LIST
 import com.simplemobiletools.musicplayer.helpers.TagHelper
 import com.simplemobiletools.musicplayer.models.Events
 import com.simplemobiletools.musicplayer.models.Track
-import com.simplemobiletools.musicplayer.services.MusicService
 import kotlinx.android.synthetic.main.item_track.view.*
 import org.greenrobot.eventbus.EventBus
 import java.util.*
@@ -228,15 +223,8 @@ class TracksAdapter(
                     notifyItemChanged(trackIndex)
                     finishActMode()
                 }
-                if (track.mediaStoreId == MusicService.mCurrTrack?.mediaStoreId) {
-                    Intent(activity, MusicService::class.java).apply {
-                        putExtra(EDITED_TRACK, track)
-                        action = EDIT
-                        activity.startService(this)
-                    }
-                }
-                activity.sendIntent(REFRESH_LIST)
-                EventBus.getDefault().post(Events.RefreshTracks())
+
+                activity.refreshAfterEdit(track)
             }
         }
     }

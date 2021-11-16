@@ -1,6 +1,5 @@
 package com.simplemobiletools.musicplayer.adapters
 
-import android.content.Intent
 import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
@@ -23,20 +22,14 @@ import com.simplemobiletools.musicplayer.dialogs.EditDialog
 import com.simplemobiletools.musicplayer.extensions.addTracksToPlaylist
 import com.simplemobiletools.musicplayer.extensions.addTracksToQueue
 import com.simplemobiletools.musicplayer.extensions.deleteTracks
-import com.simplemobiletools.musicplayer.extensions.sendIntent
-import com.simplemobiletools.musicplayer.helpers.EDIT
-import com.simplemobiletools.musicplayer.helpers.EDITED_TRACK
-import com.simplemobiletools.musicplayer.helpers.REFRESH_LIST
+import com.simplemobiletools.musicplayer.extensions.refreshAfterEdit
 import com.simplemobiletools.musicplayer.helpers.TagHelper
 import com.simplemobiletools.musicplayer.models.AlbumHeader
-import com.simplemobiletools.musicplayer.models.Events
 import com.simplemobiletools.musicplayer.models.ListItem
 import com.simplemobiletools.musicplayer.models.Track
-import com.simplemobiletools.musicplayer.services.MusicService
 import kotlinx.android.synthetic.main.item_album_header.view.*
 import kotlinx.android.synthetic.main.item_track.view.*
 import java.util.*
-import org.greenrobot.eventbus.EventBus
 
 class TracksHeaderAdapter(activity: SimpleActivity, val items: ArrayList<ListItem>, recyclerView: MyRecyclerView, itemClick: (Any) -> Unit) :
     MyRecyclerViewAdapter(activity, recyclerView, null, itemClick), RecyclerViewFastScroller.OnPopupTextUpdate {
@@ -220,15 +213,8 @@ class TracksHeaderAdapter(activity: SimpleActivity, val items: ArrayList<ListIte
                     notifyItemChanged(trackIndex)
                     finishActMode()
                 }
-                if (track.mediaStoreId == MusicService.mCurrTrack?.mediaStoreId) {
-                    Intent(activity, MusicService::class.java).apply {
-                        putExtra(EDITED_TRACK, track)
-                        action = EDIT
-                        activity.startService(this)
-                    }
-                }
-                activity.sendIntent(REFRESH_LIST)
-                EventBus.getDefault().post(Events.RefreshTracks())
+
+                activity.refreshAfterEdit(track)
             }
         }
     }
