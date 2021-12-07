@@ -1,2 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="app_name">Lihtne muusikamängija</string>
+    <string name="app_launcher_name">Muusikamängija</string>
+    <string name="playlist_empty">Sinu esitusloend on tühi</string>
+    <string name="rename_song">Muuda loo nime</string>
+    <string name="rename_song_error">Nime muutmisel tekkis viga</string>
+    <string name="rename_song_empty">Palun täida kõik väljad</string>
+</resources>
