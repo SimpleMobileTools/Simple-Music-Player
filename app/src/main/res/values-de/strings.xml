@@ -3,21 +3,21 @@
     <string name="app_name">Schlichter Musik-Player</string>
     <string name="app_launcher_name">Musik-Player</string>
     <string name="playlist_empty">Deine Wiedergabeliste ist leer</string>
-    <string name="rename_song">Song umbenennen</string>
-    <string name="rename_song_error">Während des Umbenennens ist ein Fehler aufgetreten</string>
+    <string name="rename_song">Lied umbenennen</string>
+    <string name="rename_song_error">Bei der Umbenennung ist ein Fehler aufgetreten</string>
     <string name="rename_song_empty">Fülle bitte alle Felder aus</string>
-    <string name="repeat_off">Repeat off</string>
-    <string name="repeat_song">Aktuellen Song wiederholen</string>
+    <string name="repeat_off">Wiederholung aus</string>
+    <string name="repeat_song">Aktuelles Lied wiederholen</string>
     <string name="repeat_playlist">Repeat playlist</string>
-    <string name="stop_playback_after_current_song">Stop playback after current song</string>
+    <string name="stop_playback_after_current_song">Wiedergabe nach dem aktuellen Lied stoppen</string>
     <string name="enable_shuffle">Zufällige Wiedergabe aktivieren</string>
     <string name="disable_shuffle">Zufällige Wiedergabe deaktivieren</string>
     <string name="shuffle_enabled">Zufällige Wiedergabe aktiviert</string>
     <string name="shuffle_disabled">Zufällige Wiedergabe deaktiviert</string>
     <string name="sleep_timer">Sleep-Timer</string>
     <string name="volume">Volume</string>
-    <string name="playback_speed">Playback speed</string>
-    <string name="loading_files">Loading files…</string>
+    <string name="playback_speed">Wiedergabegeschwindigkeit</string>
+    <string name="loading_files">Dateien werden geladen …</string>
     <!-- Playlists -->
     <string name="add_file_to_playlist">Datei zu Wiedergabeliste hinzufügen</string>
     <string name="add_folder_to_playlist">Ordner zu Wiedergabeliste hinzufügen</string>
@@ -39,14 +39,14 @@
     <string name="all_songs">Alle Lieder</string>
     <string name="create_playlist_from_folder">Neue Wiedergabeliste aus Ordner erstellen</string>
     <string name="folder_contains_no_audio">Der ausgewählte Ordner enthält keine Audiodateien</string>
-    <string name="delete_current_song">Aktuellen Song löschen</string>
-    <string name="remove_current_song">Aktuellen Song aus der Wiedergabeliste entfernen</string>
-    <string name="show_filename">Dateiname als Songtitel anzeigen</string>
+    <string name="delete_current_song">Aktuelles Lied löschen</string>
+    <string name="remove_current_song">Aktuelles Lied aus der Wiedergabeliste entfernen</string>
+    <string name="show_filename">Dateiname als Liedtitel anzeigen</string>
     <string name="title_is_not_available">Wenn Titel nicht verfügbar</string>
     <string name="show_album_cover">Album-Cover im Hauptbildschirm anzeigen</string>
-    <string name="all_tracks">All tracks</string>
+    <string name="all_tracks">Alle Titel</string>
     <string name="add_to_playlist">Zur Wiedergabeliste hinzufügen</string>
-    <string name="create_playlist_label">Um eine neue Wiedergabeliste zu erstellen, wähle Künstler, Album oder Titel aus und nutze das Menü -&gt; Zur Wiedergabeliste hinzufügen</string>
+    <string name="create_playlist_label">Um eine neue Wiedergabeliste zu erstellen, wähle Künstler, Album oder Titel aus und nutze das Menü -&gt; Zur Wiedergabeliste hinzufügen.</string>
     <!-- Sorting -->
     <string name="track_count">Titelanzahl</string>
     <string name="album_count">Albenanzahl</string>
@@ -74,50 +74,14 @@
     <string name="equalizer">Equalizer</string>
     <string name="swap_prev_next">Vertausche die Kopfhörerknöpfe "Vorheriger/Nächster Titel"</string>
     <!-- FAQ -->
-    <string name="faq_1_title">Wie kann ich Songs vor- oder zurückspulen?</string>
-    <string name="faq_1_text">Du kannst während der Wiedergabe schnell vor- oder zurückspulen, indem du neben der Fortschrittsanzeige entweder die Gesamtdauer oder die aktuelle Dauer des Songs antippst. 
-        Alternativ kannst du auch den Schieber der Fortschrittsanzeige direkt zur gewünschten Stelle ziehen.</string>
+    <string name="faq_1_title">Wie kann ich Lieder vor- oder zurückspulen\?</string>
+    <string name="faq_1_text">Du kannst während der Wiedergabe schnell vor- oder zurückspulen, indem du neben der Fortschrittsanzeige entweder die Gesamtdauer oder die aktuelle Dauer des Liedes antippst. Alternativ kannst du auch den Schieber der Fortschrittsanzeige direkt zur gewünschten Stelle ziehen.</string>
     <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
     <!-- App title has to have less than 50 characters. If you cannot squeeze it, just remove a part of it -->
-    <string name="app_title">Schlichter Musik-Player - Coole Wiedergabe Deiner Songs</string>
+    <string name="app_title">Schlichter Musik-Player – Ein cooler Player für deine Musik</string>
     <!-- Short description has to have less than 80 chars -->
     <string name="app_short_description">Ein Musik-Player mit anpassbarem Widget, einer eleganten Oberfläche und ohne Werbung.</string>
-    <string name="app_long_description">
-        Ein einfacher Musik-Player, der über die Statusleiste, das Startbildschirm-Widget oder über Hardwaretasten Ihres Headsets gesteuert werden kann. Er bietet alle Funktionen wie das Sortieren auf verschiedene Arten sowie das Anpassen des Equalizers. Hören Sie Ihre Lieblings-MP3s, andere Songs oder Podcasts mit diesem kostenlosen und wunderschönen Musik-Player.
-
-        Er bietet exklusive Extras wie Suchen und Anzeigen von Album-Covers, einen Sleep-Timer und viele andere Einstellungen. Mit diesem eleganten Musik-Player können Sie Wiedergabelisten nach Ihren Wünschen erstellen und verwalten.
-
-        Wiedergabelisten werden vollständig unterstützt. Sie können entweder einzelne Dateien oder ganze Ordner hinzufügen. Wenn Ihnen eine Datei nicht gefällt, können Sie sie entweder einfach aus einer Wiedergabeliste entfernen oder die eigentliche Datei ganz löschen.
-
-        Kommt mit einem praktischen Sleep-Timer, so dass Sie die Zeit des Schliessens der App zuverlässig verzögern können.
-
-        Unterstützt sowohl das Mischen als auch das Wiederholen eines bestimmten Songs sowie das Überspringen und den schnellen Vorlauf.
-
-        Erhältlich in vielen verschiedenen Sprachen, bietet mehrere verschiedene Equalizer.
-
-        Überprüfen Sie einfach die Eigenschaften einer Datei wie Grösse, Dauer, zuletzt geänderte Änderungen usw.
-
-        Ändern Sie die EXIF-Daten der Datei wie den Songtitel und den Interpreten.
-
-        Teilen Sie Dateien schnell mit Ihren Freunden in sozialen Netzwerken, E-Mails oder an einem beliebigen Ort.
-
-        Dieser stilvolle Musik-Player enthält ein Widget mit anpassbarer Textfarbe, Alpha und Hintergrundfarbe für einfachen Zugriff und Kontrolle.
-
-        Unterstützt auch die Wiedergabe einzelner Audiodateien direkt aus anderen Apps.
-
-        Weiter unterstützt die App standardmässig das Materialdesign und Dark-Theme und bietet eine hervorragende Benutzererfahrung für eine einfache Verwendung. Keine Internetverbindung nötig, dadurch mehr Privatsphäre, Sicherheit und Stabilität als andere Apps.
-        
-        Enthält keine Werbungen und benötigt keine unnötigen Berechtigungen. Vollständig OpenSource und bietet anpassbare Farben.
-
-        <b>Schau dir die vollständige Serie der Schlichten Apps hier an:</b>
-        https://www.simplemobiletools.com
-
-        <b>Facebook:</b>
-        https://www.facebook.com/simplemobiletools
-
-        <b>Reddit:</b>
-        https://www.reddit.com/r/SimpleMobileTools
-    </string>
+    <string name="app_long_description"> Ein einfacher Musik-Player, der über die Statusleiste, das Startbildschirm-Widget oder über Hardwaretasten Ihres Kopfhörersatzes gesteuert werden kann. Er bietet alle Funktionen wie das Sortieren auf verschiedene Arten sowie das Anpassen des Equalizers. Hören Sie Ihre Lieblings-MP3s, andere Lieder oder Podcasts mit diesem kostenlosen und wunderschönen Musik-Player. Er bietet exklusive Extras wie Suchen und Anzeigen von Album-Covers, eine Schaltuhr und viele andere Einstellungen. Mit diesem eleganten Musik-Player können Sie Wiedergabelisten nach Ihren Wünschen erstellen und verwalten. Wiedergabelisten werden vollständig unterstützt. Sie können entweder einzelne Dateien oder ganze Ordner hinzufügen. Wenn Ihnen eine Datei nicht gefällt, können Sie sie entweder einfach aus einer Wiedergabeliste entfernen oder die eigentliche Datei ganz löschen. Kommt mit einer praktischen Schaltuhr, so dass Sie die Zeit des Schließens der Anwendung zuverlässig verzögern können. Unterstützt sowohl das Mischen als auch das Wiederholen eines bestimmten Songs sowie das Überspringen und den schnellen Vorlauf. Erhältlich in vielen verschiedenen Sprachen, bietet mehrere verschiedene Equalizer. Überprüfen Sie einfach die Eigenschaften einer Datei wie Größe, Dauer, zuletzt geänderte Änderungen usw. Ändern Sie die EXIF-Daten der Datei wie den Liedtitel und den Interpreten. Teilen Sie Dateien schnell mit Ihren Freunden in sozialen Netzwerken, E-Mails oder an einem beliebigen Ort. Dieser stilvolle Musik-Player enthält ein Widget mit anpassbarer Textfarbe, Alpha und Hintergrundfarbe für einfachen Zugriff und Kontrolle. Unterstützt auch die Wiedergabe einzelner Audiodateien direkt aus anderen Anwendungen. Weiter unterstützt die Anwendung standardmäßig das Material-Design und dunkles Farbschema und bietet eine hervorragende Benutzererfahrung für eine einfache Verwendung. Keine Internetverbindung nötig, dadurch mehr Privatsphäre, Sicherheit und Stabilität als andere Anwendungen. Enthält keine Werbungen und benötigt keine unnötigen Berechtigungen. Vollständig frei und bietet anpassbare Farben. <b>Schau dir die vollständige Serie der Schlichten Anwendungen hier an:</b> https://www.simplemobiletools.com <b>Facebook:</b> https://www.facebook.com/simplemobiletools <b>Reddit:</b> https://www.reddit.com/r/SimpleMobileTools </string>
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res

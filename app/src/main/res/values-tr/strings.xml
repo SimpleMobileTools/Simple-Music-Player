@@ -4,7 +4,7 @@
     <string name="app_launcher_name">Müzik Çalar</string>
     <string name="playlist_empty">Çalma listeniz boş</string>
     <string name="rename_song">Şarkıyı yeniden adlandır</string>
-    <string name="rename_song_error">Şarkı yeniden adlandırılamadı</string>
+    <string name="rename_song_error">Yeniden adlandırma sırasında bir hata oluştu</string>
     <string name="rename_song_empty">lütfen tüm boşlukları doldurun</string>
     <string name="repeat_off">Tekrar kapalı</string>
     <string name="repeat_song">Geçerli şarkıyı tekrarla</string>
@@ -12,8 +12,8 @@
     <string name="stop_playback_after_current_song">Geçerli şarkıdan sonra oynatmayı durdur</string>
     <string name="enable_shuffle">Karıştırmayı etkinleştir</string>
     <string name="disable_shuffle">Karıştırmayı devre dışı bırak</string>
-    <string name="shuffle_enabled">Karıştırma açık</string>
-    <string name="shuffle_disabled">Karıştırma kapalı</string>
+    <string name="shuffle_enabled">Karıştırma etkin</string>
+    <string name="shuffle_disabled">Karıştırma devre dışı</string>
     <string name="sleep_timer">Uyku zamanlayıcısı</string>
     <string name="volume">Ses seviyesi</string>
     <string name="playback_speed">Oynatma hızı</string>
@@ -74,11 +74,11 @@
     <string name="equalizer">Ekolayzır</string>
     <string name="swap_prev_next">Önceki/sonraki kulaklık düğmelerini değiştir</string>
     <!-- FAQ -->
-    <string name="faq_1_title">Nasıl hızlıca ileri sarabilirim\?</string>
-    <string name="faq_1_text">Arama çubuğunun yanındaki geçerli veya toplam süre metinlerine tıklayın, oynatmayı geri veya ileri hareket ettirin.</string>
+    <string name="faq_1_title">Şarkıları nasıl hızlıca ileri sarabilirim\?</string>
+    <string name="faq_1_text">Arama çubuğunun yanındaki geçerli veya maksimum süre metinlerini tıklayabilir, şarkıyı geriye ya da ileriye sarabilirsiniz.</string>
     <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
     <!-- App title has to have less than 50 characters. If you cannot squeeze it, just remove a part of it -->
-    <string name="app_title">Şarkılarınız için harika bir oynatıcı</string>
+    <string name="app_title">Basit Müzik Çalar - Harika bir şarkı oynatıcı</string>
     <!-- Short description has to have less than 80 chars -->
     <string name="app_short_description">Özelleştirilebilir widget\'a, şık arayüze sahip reklamsız temiz müzik çalar.</string>
     <string name="app_long_description">
