@@ -128,6 +128,6 @@ class AlbumsFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
 
     override fun setupColors(textColor: Int, adjustedPrimaryColor: Int) {
         albums_placeholder.setTextColor(textColor)
-        albums_fastscroller.updateColors(adjustedPrimaryColor, adjustedPrimaryColor.getContrastColor())
+        albums_fastscroller.updateColors(adjustedPrimaryColor)
     }
 }

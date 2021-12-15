@@ -50,7 +50,7 @@ class TracksActivity : SimpleActivity() {
         title = playlist?.title ?: album.title
 
         val adjustedPrimaryColor = getAdjustedPrimaryColor()
-        tracks_fastscroller.updateColors(adjustedPrimaryColor, adjustedPrimaryColor.getContrastColor())
+        tracks_fastscroller.updateColors(adjustedPrimaryColor)
         tracks_placeholder.setTextColor(config.textColor)
         tracks_placeholder_2.setTextColor(adjustedPrimaryColor)
         tracks_placeholder_2.underlineText()

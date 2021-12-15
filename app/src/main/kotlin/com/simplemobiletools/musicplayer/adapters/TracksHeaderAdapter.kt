@@ -29,7 +29,7 @@ import kotlinx.android.synthetic.main.item_track.view.*
 import java.util.*
 
 class TracksHeaderAdapter(activity: SimpleActivity, val items: ArrayList<ListItem>, recyclerView: MyRecyclerView, itemClick: (Any) -> Unit) :
-    MyRecyclerViewAdapter(activity, recyclerView, null, itemClick), RecyclerViewFastScroller.OnPopupTextUpdate {
+    MyRecyclerViewAdapter(activity, recyclerView, itemClick), RecyclerViewFastScroller.OnPopupTextUpdate {
 
     private val ITEM_HEADER = 0
     private val ITEM_TRACK = 1

@@ -25,7 +25,7 @@ import java.util.*
 
 class PlaylistsAdapter(
     activity: SimpleActivity, var playlists: ArrayList<Playlist>, recyclerView: MyRecyclerView, itemClick: (Any) -> Unit
-) : MyRecyclerViewAdapter(activity, recyclerView, null, itemClick), RecyclerViewFastScroller.OnPopupTextUpdate {
+) : MyRecyclerViewAdapter(activity, recyclerView, itemClick), RecyclerViewFastScroller.OnPopupTextUpdate {
 
     private var textToHighlight = ""
 
@@ -139,7 +139,6 @@ class PlaylistsAdapter(
             textToHighlight = highlightText
             notifyDataSetChanged()
         }
-        fastScroller?.measureRecyclerView()
     }
 
     private fun showRenameDialog() {

@@ -98,6 +98,6 @@ class TracksFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
 
     override fun setupColors(textColor: Int, adjustedPrimaryColor: Int) {
         tracks_placeholder.setTextColor(textColor)
-        tracks_fastscroller.updateColors(adjustedPrimaryColor, adjustedPrimaryColor.getContrastColor())
+        tracks_fastscroller.updateColors(adjustedPrimaryColor)
     }
 }

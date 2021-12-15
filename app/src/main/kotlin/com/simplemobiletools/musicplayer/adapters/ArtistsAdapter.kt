@@ -25,7 +25,7 @@ import kotlinx.android.synthetic.main.item_artist.view.*
 import java.util.*
 
 class ArtistsAdapter(activity: SimpleActivity, var artists: ArrayList<Artist>, recyclerView: MyRecyclerView, itemClick: (Any) -> Unit) :
-    MyRecyclerViewAdapter(activity, recyclerView, null, itemClick), RecyclerViewFastScroller.OnPopupTextUpdate {
+    MyRecyclerViewAdapter(activity, recyclerView, itemClick), RecyclerViewFastScroller.OnPopupTextUpdate {
 
     private var textToHighlight = ""
     private val placeholder = resources.getColoredDrawableWithColor(R.drawable.ic_headset_padded, textColor)
@@ -154,7 +154,6 @@ class ArtistsAdapter(activity: SimpleActivity, var artists: ArrayList<Artist>, r
             textToHighlight = highlightText
             notifyDataSetChanged()
         }
-        fastScroller?.measureRecyclerView()
     }
 
     private fun setupView(view: View, artist: Artist) {

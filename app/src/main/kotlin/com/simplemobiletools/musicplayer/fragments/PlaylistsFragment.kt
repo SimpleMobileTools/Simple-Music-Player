@@ -102,7 +102,6 @@ class PlaylistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPa
     override fun setupColors(textColor: Int, adjustedPrimaryColor: Int) {
         playlists_placeholder.setTextColor(textColor)
         playlists_placeholder_2.setTextColor(adjustedPrimaryColor)
-
-        playlists_fastscroller.updateColors(adjustedPrimaryColor, adjustedPrimaryColor.getContrastColor())
+        playlists_fastscroller.updateColors(adjustedPrimaryColor)
     }
 }

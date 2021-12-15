@@ -36,7 +36,7 @@ import kotlinx.android.synthetic.main.item_track_queue.view.*
 import java.util.*
 
 class QueueAdapter(activity: SimpleActivity, val items: ArrayList<Track>, recyclerView: MyRecyclerView, itemClick: (Any) -> Unit) :
-    MyRecyclerViewAdapter(activity, recyclerView, null, itemClick), ItemTouchHelperContract, RecyclerViewFastScroller.OnPopupTextUpdate {
+    MyRecyclerViewAdapter(activity, recyclerView, itemClick), ItemTouchHelperContract, RecyclerViewFastScroller.OnPopupTextUpdate {
 
     private val placeholder = resources.getColoredDrawableWithColor(R.drawable.ic_headset, textColor)
     private var startReorderDragListener: StartReorderDragListener

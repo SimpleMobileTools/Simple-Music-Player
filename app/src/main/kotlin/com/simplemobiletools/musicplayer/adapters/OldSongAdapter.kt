@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
 import com.simplemobiletools.commons.dialogs.PropertiesDialog
 import com.simplemobiletools.commons.extensions.sharePathsIntent
-import com.simplemobiletools.commons.views.FastScroller
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.musicplayer.BuildConfig
 import com.simplemobiletools.musicplayer.R
@@ -20,9 +19,11 @@ import com.simplemobiletools.musicplayer.helpers.REFRESH_LIST
 import com.simplemobiletools.musicplayer.models.Track
 import com.simplemobiletools.musicplayer.services.MusicService
 
-class OldSongAdapter(activity: SimpleActivity, var songs: ArrayList<Track>, val transparentView: View,
-                     recyclerView: MyRecyclerView, fastScroller: FastScroller, itemClick: (Any) -> Unit) :
-        MyRecyclerViewAdapter(activity, recyclerView, fastScroller, itemClick) {
+class OldSongAdapter(
+    activity: SimpleActivity, var songs: ArrayList<Track>, val transparentView: View,
+    recyclerView: MyRecyclerView, itemClick: (Any) -> Unit
+) :
+    MyRecyclerViewAdapter(activity, recyclerView, itemClick) {
 
     private val VIEW_TYPE_TRANSPARENT = 0
     private val VIEW_TYPE_NAVIGATION = 1

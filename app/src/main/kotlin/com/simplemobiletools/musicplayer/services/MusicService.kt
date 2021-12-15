@@ -794,12 +794,12 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     private fun getAlbumImage(): Pair<Bitmap, Boolean> {
         if (File(mCurrTrack?.path ?: "").exists()) {
             try {
-                val mediaMetadataRetriever = MediaMetadataRetriever()
-                mediaMetadataRetriever.setDataSource(mCurrTrack!!.path)
-                val rawArt = mediaMetadataRetriever.embeddedPicture
-                if (rawArt != null) {
-                    val options = BitmapFactory.Options()
-                    try {
+                try {
+                    val mediaMetadataRetriever = MediaMetadataRetriever()
+                    mediaMetadataRetriever.setDataSource(mCurrTrack!!.path)
+                    val rawArt = mediaMetadataRetriever.embeddedPicture
+                    if (rawArt != null) {
+                        val options = BitmapFactory.Options()
                         val bitmap = BitmapFactory.decodeByteArray(rawArt, 0, rawArt.size, options)
                         if (bitmap != null) {
                             val resultBitmap = if (bitmap.height > mCoverArtHeight * 2) {
@@ -810,9 +810,9 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
                             }
                             return Pair(resultBitmap, true)
                         }
-                    } catch (ignored: OutOfMemoryError) {
-                    } catch (ignored: Exception) {
                     }
+                } catch (ignored: OutOfMemoryError) {
+                } catch (ignored: Exception) {
                 }
 
                 val trackParentDirectory = File(mCurrTrack!!.path).parent.trimEnd('/')

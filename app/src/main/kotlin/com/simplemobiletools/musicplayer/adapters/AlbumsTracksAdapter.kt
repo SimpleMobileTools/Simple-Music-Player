@@ -33,7 +33,7 @@ import java.util.*
 class AlbumsTracksAdapter(
     activity: SimpleActivity, val items: ArrayList<ListItem>, recyclerView: MyRecyclerView,
     itemClick: (Any) -> Unit
-) : MyRecyclerViewAdapter(activity, recyclerView, null, itemClick), RecyclerViewFastScroller.OnPopupTextUpdate {
+) : MyRecyclerViewAdapter(activity, recyclerView, itemClick), RecyclerViewFastScroller.OnPopupTextUpdate {
 
     private val ITEM_SECTION = 0
     private val ITEM_ALBUM = 1

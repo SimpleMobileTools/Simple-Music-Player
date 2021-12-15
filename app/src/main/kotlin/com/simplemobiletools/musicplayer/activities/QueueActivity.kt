@@ -33,7 +33,7 @@ class QueueActivity : SimpleActivity() {
         bus = EventBus.getDefault()
         bus!!.register(this)
         setupAdapter()
-        queue_fastscroller.updateColors(getAdjustedPrimaryColor(), getAdjustedPrimaryColor().getContrastColor())
+        queue_fastscroller.updateColors(getAdjustedPrimaryColor())
     }
 
     override fun onDestroy() {

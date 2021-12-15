@@ -125,6 +125,6 @@ class ArtistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
 
     override fun setupColors(textColor: Int, adjustedPrimaryColor: Int) {
         artists_placeholder.setTextColor(textColor)
-        artists_fastscroller.updateColors(adjustedPrimaryColor, adjustedPrimaryColor.getContrastColor())
+        artists_fastscroller.updateColors(adjustedPrimaryColor)
     }
 }

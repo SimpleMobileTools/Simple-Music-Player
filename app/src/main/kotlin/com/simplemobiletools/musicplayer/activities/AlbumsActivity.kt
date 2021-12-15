@@ -7,7 +7,6 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.simplemobiletools.commons.extensions.areSystemAnimationsEnabled
 import com.simplemobiletools.commons.extensions.getAdjustedPrimaryColor
-import com.simplemobiletools.commons.extensions.getContrastColor
 import com.simplemobiletools.commons.extensions.getFormattedDuration
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.adapters.AlbumsTracksAdapter
@@ -37,7 +36,7 @@ class AlbumsActivity : SimpleActivity() {
         bus = EventBus.getDefault()
         bus!!.register(this)
 
-        albums_fastscroller.updateColors(getAdjustedPrimaryColor(), getAdjustedPrimaryColor().getContrastColor())
+        albums_fastscroller.updateColors(getAdjustedPrimaryColor())
 
         val artistType = object : TypeToken<Artist>() {}.type
         val artist = Gson().fromJson<Artist>(intent.getStringExtra(ARTIST), artistType)
