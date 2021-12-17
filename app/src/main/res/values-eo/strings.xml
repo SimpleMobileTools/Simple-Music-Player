@@ -1,2 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="repeat_playlist">Ripeti ĉion</string>
+    <string name="volume">Laŭto</string>
+    <string name="track_count">Nombro de kantoj</string>
+    <string name="all_songs">Ĉiuj kantoj</string>
+    <string name="loading_files">Ŝargante dosierojn…</string>
+    <string name="app_name">Simpla Muzikludilo</string>
+    <string name="album_count">Nombro de albumoj</string>
+    <string name="artist_name">Nomo de muzikisto</string>
+    <string name="year">Jaro</string>
+    <string name="artists">Muzikistoj</string>
+    <string name="albums">Albumoj</string>
+    <plurals name="albums_plural">
+        <item quantity="one">%d albumo</item>
+        <item quantity="other">%d albumoj</item>
+    </plurals>
+    <string name="tracks">Kantoj</string>
+    <plurals name="tracks_plural">
+        <item quantity="one">%d kanto</item>
+        <item quantity="other">%d kantoj</item>
+    </plurals>
+    <string name="app_launcher_name">Muzikludilo</string>
+    <string name="all_tracks">Ĉiuj kantoj</string>
+</resources>
