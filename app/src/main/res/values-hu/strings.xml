@@ -10,7 +10,7 @@
     <string name="repeat_playlist">Lista ismétlése</string>
     <string name="stop_playback_after_current_song">Lejátszás leállítása e szám után</string>
     <string name="enable_shuffle">Véletlenszerű lejátszás engedélyezése</string>
-    <string name="disable_shuffle">Véletlenszerű lejátszás letitása</string>
+    <string name="disable_shuffle">Véletlenszerű lejátszás letiltása</string>
     <string name="shuffle_enabled">Véletlenszerű lejátszás engedélyezve</string>
     <string name="shuffle_disabled">Véletlenszerű lejátszás letiltva</string>
     <string name="sleep_timer">Alvásidőzítő</string>
@@ -80,7 +80,7 @@
     <string name="swap_prev_next">Fülhallgató számváltó gombok felcserélése</string>
 
     <!-- FAQ -->
-    <string name="faq_1_title">Hogy tudom a számot előretekerni?</string>
+    <string name="faq_1_title">Hogy tudom a számot előre tekerni?</string>
     <string name="faq_1_text">A hátralévő és összidőtartam közötti keresőmezőre kattintva tudsz előre és hátra tekerni.</string>
 
     <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
@@ -97,7 +97,7 @@
 
         Praktikus alvásidőzítővel rendelkezik, így megbízhatóan késleltetheti az alkalmazás kikapcsolásának idejét.
 
-        Támogatja mind a keverést, mind az adott dal ismétlését, valamint a kihagyást és a gyors előretekerést.
+        Támogatja mind a keverést, mind az adott dal ismétlését, valamint a kihagyást és a gyors előre tekerést.
 
         Számos különböző nyelven elérhető, többféle equalizert kínál.
 
@@ -115,7 +115,7 @@
 
         Nem tartalmaz reklámokat, és nem kér szükségtelen engedélyeket. Teljesen nyílt forráskódú, és testreszabhatóak a színei.
 
-        <b>Itt tudhasz meg többet a teljek Simple Tools ökoszisztémáról:</b>
+        <b>Itt tudhasz meg többet a teljes Simple Tools ökoszisztémáról:</b>
         https://www.simplemobiletools.com
 
         <b>Facebook:</b>
