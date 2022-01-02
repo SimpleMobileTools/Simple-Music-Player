@@ -46,41 +46,41 @@
     <string name="show_album_cover">Põhivaates näita albumi kaanepilti</string>
     <string name="all_tracks">Kõik lood</string>
     <string name="add_to_playlist">Lisa esitusloendisse</string>
-    <string name="create_playlist_label">You can create a new playlist by selecting the wanted artists, albums or tracks and using Menu -> Add to playlist.</string>
+    <string name="create_playlist_label">Valides Menüü -&gt; Lisa esitusloendisse saad soovitud esitajate, albumite või lugude alusel luua uue esitusloendi.</string>
     <!-- Sorting -->
-    <string name="track_count">Track Count</string>
-    <string name="album_count">Album Count</string>
+    <string name="track_count">Palade arv</string>
+    <string name="album_count">Albumeid</string>
     <string name="artist_name">Artist Name</string>
-    <string name="year">Year</string>
+    <string name="year">Aasta</string>
     <!-- Artists -->
-    <string name="artists">Artists</string>
-    <string name="albums">Albums</string>
+    <string name="artists">Esiitajaid</string>
+    <string name="albums">Albumid</string>
     <plurals name="albums_plural">
-        <item quantity="one">%d Album</item>
-        <item quantity="other">%d Albums</item>
+        <item quantity="one">%d album</item>
+        <item quantity="other">%d albumit</item>
     </plurals>
-    <string name="tracks">Tracks</string>
+    <string name="tracks">Palad</string>
     <plurals name="tracks_plural">
-        <item quantity="one">%d Track</item>
-        <item quantity="other">%d Tracks</item>
+        <item quantity="one">%d pala</item>
+        <item quantity="other">%d pala</item>
     </plurals>
     <!-- Queue -->
     <string name="next_track">Next:</string>
-    <string name="track_queue">Track queue</string>
-    <string name="add_to_queue">Add to queue</string>
-    <string name="remove_from_queue">Remove from queue</string>
-    <string name="create_playlist_from_queue">Create playlist from queue</string>
+    <string name="track_queue">Esitusjärjekord</string>
+    <string name="add_to_queue">Lisa esitusjärjekorda</string>
+    <string name="remove_from_queue">Eemalda esitusjärjekorrast</string>
+    <string name="create_playlist_from_queue">Loo esitusjärjekorra alusel esitusloend</string>
     <!-- Settings -->
-    <string name="equalizer">Equalizer</string>
-    <string name="swap_prev_next">Swap previous/next headphone buttons</string>
+    <string name="equalizer">Ekvalaiser</string>
+    <string name="swap_prev_next">Vaheta kõrvaklappide eelmine/järgmine nupud</string>
     <!-- FAQ -->
-    <string name="faq_1_title">How can I fast-forward songs?</string>
-    <string name="faq_1_text">You can click on the current or max duration texts near the seekbar, that will move the song either backward, or forward.</string>
+    <string name="faq_1_title">Kuidas ma saan palasid kiiresti edasi kerida\?</string>
+    <string name="faq_1_text">Klõpsi esitusribal kas esituse aega või pala pikkust ning sellega hüppad loos tagasi või edasi.</string>
     <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
     <!-- App title has to have less than 50 characters. If you cannot squeeze it, just remove a part of it -->
-    <string name="app_title">Simple Music Player - A cool player for your songs</string>
+    <string name="app_title">Lihtne muusikamängija - kuula oma muusikat</string>
     <!-- Short description has to have less than 80 chars -->
-    <string name="app_short_description">A clean music player with a customizable widget, stylish interface and no ads.</string>
+    <string name="app_short_description">Selge kasutajaliidesega reklaamivaba ja kohendatav muusikamängija.</string>
     <string name="app_long_description">
         A simple music player easily controllable from the status bar, home screen widget or by hardware buttons on your headset. It provides all expected functions like sorting in various ways as well as changing the Equalizer.  Listen to your favorite mp3, other songs or podcasts with this free beautiful music player.
 
