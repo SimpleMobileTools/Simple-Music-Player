@@ -78,6 +78,7 @@ const val PLAYER_SORT_BY_ARTIST_TITLE = 32
 
 const val PLAYLIST_SORTING = "playlist_sorting"
 const val PLAYLIST_TRACKS_SORTING = "playlist_tracks_sorting"
+const val FOLDER_SORTING = "folder_sorting"
 const val ARTIST_SORTING = "artist_sorting"
 const val ALBUM_SORTING = "album_sorting"
 const val TRACK_SORTING = "track_sorting"

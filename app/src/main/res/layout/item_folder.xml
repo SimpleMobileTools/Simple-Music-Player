@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/playlist_frame"
+    android:id="@+id/folder_frame"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="?attr/selectableItemBackground"
@@ -12,21 +12,21 @@
     android:padding="@dimen/activity_margin">
 
     <com.simplemobiletools.commons.views.MyTextView
-        android:id="@+id/playlist_title"
+        android:id="@+id/folder_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:paddingStart="@dimen/medium_margin"
         android:paddingEnd="@dimen/medium_margin"
         android:textSize="@dimen/big_text_size"
-        app:layout_constraintBottom_toTopOf="@+id/playlist_tracks"
+        app:layout_constraintBottom_toTopOf="@+id/folder_tracks"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed"
-        tools:text="My Playlist" />
+        tools:text="Music" />
 
     <com.simplemobiletools.commons.views.MyTextView
-        android:id="@+id/playlist_tracks"
+        android:id="@+id/folder_tracks"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:alpha="0.8"
@@ -35,7 +35,7 @@
         android:textSize="@dimen/normal_text_size"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/playlist_title"
+        app:layout_constraintTop_toBottomOf="@+id/folder_title"
         tools:text="5 Tracks" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

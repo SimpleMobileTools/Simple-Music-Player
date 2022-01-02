@@ -10,7 +10,6 @@ import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.commons.helpers.isOreoPlus
 import com.simplemobiletools.commons.helpers.isQPlus
-import com.simplemobiletools.commons.helpers.mydebug
 import com.simplemobiletools.musicplayer.databases.SongsDatabase
 import com.simplemobiletools.musicplayer.helpers.*
 import com.simplemobiletools.musicplayer.interfaces.*
@@ -191,7 +190,8 @@ fun Context.getAlbumTracksSync(albumId: Long): ArrayList<Track> {
         Audio.Media.TITLE,
         Audio.Media.ARTIST,
         Audio.Media.ALBUM,
-        Audio.Media.TRACK
+        Audio.Media.TRACK,
+        Audio.Media.BUCKET_DISPLAY_NAME
     )
 
     val selection = "${Audio.Albums.ALBUM_ID} = ?"
@@ -207,7 +207,8 @@ fun Context.getAlbumTracksSync(albumId: Long): ArrayList<Track> {
         val path = cursor.getStringValue(Audio.Media.DATA)
         val artist = cursor.getStringValue(Audio.Media.ARTIST) ?: MediaStore.UNKNOWN_STRING
         val album = cursor.getStringValue(Audio.Media.ALBUM)
-        val track = Track(0, id, title, artist, path, duration, album, coverArt, 0, trackId, "")
+        val folderName = cursor.getStringValue(Audio.Media.BUCKET_DISPLAY_NAME) ?: MediaStore.UNKNOWN_STRING
+        val track = Track(0, id, title, artist, path, duration, album, coverArt, 0, trackId, folderName)
         tracks.add(track)
     }
 

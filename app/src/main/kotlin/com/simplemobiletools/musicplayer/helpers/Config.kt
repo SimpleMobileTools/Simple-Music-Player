@@ -2,6 +2,7 @@ package com.simplemobiletools.musicplayer.helpers
 
 import android.content.Context
 import com.simplemobiletools.commons.helpers.BaseConfig
+import com.simplemobiletools.commons.helpers.SORT_BY_TITLE
 
 class Config(context: Context) : BaseConfig(context) {
     companion object {
@@ -43,6 +44,10 @@ class Config(context: Context) : BaseConfig(context) {
     var playlistTracksSorting: Int
         get() = prefs.getInt(PLAYLIST_TRACKS_SORTING, PLAYER_SORT_BY_TITLE)
         set(playlistTracksSorting) = prefs.edit().putInt(PLAYLIST_TRACKS_SORTING, playlistTracksSorting).apply()
+
+    var folderSorting: Int
+        get() = prefs.getInt(FOLDER_SORTING, SORT_BY_TITLE)
+        set(folderSorting) = prefs.edit().putInt(FOLDER_SORTING, folderSorting).apply()
 
     var artistSorting: Int
         get() = prefs.getInt(ARTIST_SORTING, PLAYER_SORT_BY_TITLE)
