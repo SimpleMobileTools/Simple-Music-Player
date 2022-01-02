@@ -37,7 +37,7 @@ class PlaylistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPa
         ensureBackgroundThread {
             val playlists = context.playlistDAO.getAll() as ArrayList<Playlist>
             playlists.forEach {
-                it.trackCnt = context.tracksDAO.getTracksCountFromPlaylist(it.id)
+                it.trackCount = context.tracksDAO.getTracksCountFromPlaylist(it.id)
             }
 
             Playlist.sorting = context.config.playlistSorting

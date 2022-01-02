@@ -155,7 +155,7 @@ class PlaylistsAdapter(
             playlist_title.text = if (textToHighlight.isEmpty()) playlist.title else playlist.title.highlightTextPart(textToHighlight, adjustedPrimaryColor)
             playlist_title.setTextColor(textColor)
 
-            val tracks = resources.getQuantityString(R.plurals.tracks_plural, playlist.trackCnt, playlist.trackCnt)
+            val tracks = resources.getQuantityString(R.plurals.tracks_plural, playlist.trackCount, playlist.trackCount)
             playlist_tracks.text = tracks
             playlist_tracks.setTextColor(textColor)
         }

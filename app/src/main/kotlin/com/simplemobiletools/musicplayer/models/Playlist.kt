@@ -10,7 +10,7 @@ data class Playlist(
     @PrimaryKey(autoGenerate = true) var id: Int,
     @ColumnInfo(name = "title") var title: String,
 
-    @Ignore var trackCnt: Int = 0
+    @Ignore var trackCount: Int = 0
 ) : Comparable<Playlist> {
     constructor() : this(0, "", 0)
 
@@ -21,7 +21,7 @@ data class Playlist(
     override fun compareTo(other: Playlist): Int {
         var result = when {
             sorting and PLAYER_SORT_BY_TITLE != 0 -> AlphanumericComparator().compare(title.toLowerCase(), other.title.toLowerCase())
-            else -> trackCnt.compareTo(other.trackCnt)
+            else -> trackCount.compareTo(other.trackCount)
         }
 
         if (sorting and SORT_DESCENDING != 0) {
@@ -33,6 +33,6 @@ data class Playlist(
 
     fun getBubbleText() = when {
         sorting and PLAYER_SORT_BY_TITLE != 0 -> title
-        else -> trackCnt.toString()
+        else -> trackCount.toString()
     }
 }
