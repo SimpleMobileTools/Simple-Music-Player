@@ -55,7 +55,7 @@ class RoomHelper(val context: Context) {
                 val album = cursor.getStringValue(Audio.Media.ALBUM)
                 val albumId = cursor.getLongValue(Audio.Media.ALBUM_ID)
                 val coverArt = ContentUris.withAppendedId(artworkUri, albumId).toString()
-                val song = Track(0, mediaStoreId, title, artist, path, duration, album, coverArt, playlistId, 0)
+                val song = Track(0, mediaStoreId, title, artist, path, duration, album, coverArt, playlistId, 0, "")
                 song.title = song.getProperTitle(showFilename)
                 songs.add(song)
                 pathsMap.remove(path)
@@ -65,7 +65,7 @@ class RoomHelper(val context: Context) {
         pathsMap.forEach {
             val unknown = MediaStore.UNKNOWN_STRING
             val title = context.getTitle(it) ?: unknown
-            val song = Track(0, 0, title, context.getArtist(it) ?: unknown, it, context.getDuration(it) ?: 0, "", "", playlistId, 0)
+            val song = Track(0, 0, title, context.getArtist(it) ?: unknown, it, context.getDuration(it) ?: 0, "", "", playlistId, 0, "")
             song.title = song.getProperTitle(showFilename)
             songs.add(song)
         }
