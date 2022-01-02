@@ -20,6 +20,9 @@ interface SongsDao {
     @Query("SELECT COUNT(*) FROM tracks WHERE playlist_id = :playlistId")
     fun getTracksCountFromPlaylist(playlistId: Int): Int
 
+    @Query("SELECT * FROM tracks WHERE folder_name = :folderName COLLATE NOCASE")
+    fun getTracksFromFolder(folderName: String): List<Track>
+
     @Query("SELECT * FROM tracks WHERE media_store_id = :mediaStoreId")
     fun getTrackWithMediaStoreId(mediaStoreId: Long): Track?
 

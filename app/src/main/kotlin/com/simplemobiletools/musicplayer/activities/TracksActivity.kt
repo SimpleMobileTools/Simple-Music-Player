@@ -59,6 +59,7 @@ class TracksActivity : SimpleActivity() {
         val folder = intent.getStringExtra(FOLDER)
         if (folder != null) {
             tracksType = TYPE_FOLDER
+            tracks_placeholder_2.beGone()
         }
 
         title = playlist?.title ?: album?.title ?: folder
@@ -97,17 +98,24 @@ class TracksActivity : SimpleActivity() {
                     listItems.addAll(tracks)
                 }
                 else -> {
+                    val folderTracks = tracksDAO.getTracksFromFolder(folder ?: "")
+                    runOnUiThread {
+                        tracks_placeholder.beVisibleIf(folderTracks.isEmpty())
+                    }
 
+                    tracks.addAll(folderTracks)
+                    listItems.addAll(tracks)
                 }
             }
 
             runOnUiThread {
-                val adapter = if (playlist != null) {
-                    TracksAdapter(this, tracks, true, tracks_list) {
+                val adapter = if (tracksType == TYPE_ALBUM) {
+                    TracksHeaderAdapter(this, listItems, tracks_list) {
                         itemClicked(it as Track)
                     }
                 } else {
-                    TracksHeaderAdapter(this, listItems, tracks_list) {
+                    val isPlaylistContent = tracksType == TYPE_PLAYLIST
+                    TracksAdapter(this, tracks, isPlaylistContent, tracks_list) {
                         itemClicked(it as Track)
                     }
                 }
@@ -242,9 +250,8 @@ class TracksActivity : SimpleActivity() {
 
     private fun itemClicked(track: Track) {
         val tracks = when (tracksType) {
-            TYPE_PLAYLIST -> (tracks_list.adapter as? TracksAdapter)?.tracks?.toMutableList() as? ArrayList<Track> ?: ArrayList()
             TYPE_ALBUM -> (tracks_list.adapter as? TracksHeaderAdapter)?.items?.filterIsInstance<Track>()?.toMutableList() as? ArrayList<Track> ?: ArrayList()
-            else -> ArrayList()
+            else -> (tracks_list.adapter as? TracksAdapter)?.tracks?.toMutableList() as? ArrayList<Track> ?: ArrayList()
         }
 
         resetQueueItems(tracks) {

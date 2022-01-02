@@ -24,13 +24,16 @@ class RoomHelper(val context: Context) {
 
     private fun getTracksFromPaths(paths: List<String>, playlistId: Int): ArrayList<Track> {
         val uri = Audio.Media.EXTERNAL_CONTENT_URI
-        val projection = arrayOf(Audio.Media._ID,
+        val projection = arrayOf(
+            Audio.Media._ID,
             Audio.Media.TITLE,
             Audio.Media.ARTIST,
             Audio.Media.DATA,
             Audio.Media.DURATION,
             Audio.Media.ALBUM,
-            Audio.Media.ALBUM_ID)
+            Audio.Media.ALBUM_ID,
+            Audio.Media.BUCKET_DISPLAY_NAME
+        )
 
         val pathsMap = HashSet<String>()
         paths.mapTo(pathsMap) { it }
@@ -55,7 +58,8 @@ class RoomHelper(val context: Context) {
                 val album = cursor.getStringValue(Audio.Media.ALBUM)
                 val albumId = cursor.getLongValue(Audio.Media.ALBUM_ID)
                 val coverArt = ContentUris.withAppendedId(artworkUri, albumId).toString()
-                val song = Track(0, mediaStoreId, title, artist, path, duration, album, coverArt, playlistId, 0, "")
+                val folderName = cursor.getStringValue(Audio.Media.BUCKET_DISPLAY_NAME)
+                val song = Track(0, mediaStoreId, title, artist, path, duration, album, coverArt, playlistId, 0, folderName)
                 song.title = song.getProperTitle(showFilename)
                 songs.add(song)
                 pathsMap.remove(path)
