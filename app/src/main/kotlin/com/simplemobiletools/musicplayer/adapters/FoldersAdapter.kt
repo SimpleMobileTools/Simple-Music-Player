@@ -83,5 +83,5 @@ class FoldersAdapter(
         }
     }
 
-    override fun onChange(position: Int) = folders.getOrNull(position)?.title ?: ""
+    override fun onChange(position: Int) = folders.getOrNull(position)?.getBubbleText() ?: ""
 }
