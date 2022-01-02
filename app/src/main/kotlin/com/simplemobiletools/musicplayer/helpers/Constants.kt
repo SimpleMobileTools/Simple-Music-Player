@@ -15,6 +15,7 @@ const val ARTIST = "artist"
 const val ALBUM = "album"
 const val TRACK = "track"
 const val PLAYLIST = "playlist"
+const val FOLDER = "folder"
 
 private const val PATH = "com.simplemobiletools.musicplayer.action."
 val artworkUri = Uri.parse("content://media/external/audio/albumart")
@@ -67,7 +68,7 @@ const val TAB_FOLDERS = 1
 const val TAB_ARTISTS = 2
 const val TAB_ALBUMS = 3
 const val TAB_TRACKS = 4
-const val ACTIVITY_PLAYLIST = 5
+const val ACTIVITY_PLAYLIST_FOLDER = 5
 
 // use custom sorting constants, there are too many app specific ones
 const val PLAYER_SORT_BY_TITLE = 1

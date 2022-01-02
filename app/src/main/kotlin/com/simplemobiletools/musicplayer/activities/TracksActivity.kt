@@ -25,29 +25,43 @@ import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
+const val TYPE_PLAYLIST = 1
+const val TYPE_FOLDER = 2
+const val TYPE_ALBUM = 3
+
+// this activity is used for displaying Playlist and Folder tracks, also Album tracks with a possible album header at the top
 // Artists -> Albums -> Tracks
 class TracksActivity : SimpleActivity() {
     private var bus: EventBus? = null
     private var playlist: Playlist? = null
+    private var tracksType = 0
     private var lastFilePickerPath = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tracks)
-
         bus = EventBus.getDefault()
         bus!!.register(this)
 
         val playlistType = object : TypeToken<Playlist>() {}.type
         playlist = Gson().fromJson<Playlist>(intent.getStringExtra(PLAYLIST), playlistType)
         if (playlist != null) {
+            tracksType = TYPE_PLAYLIST
             invalidateOptionsMenu()
         }
 
         val albumType = object : TypeToken<Album>() {}.type
         val album = Gson().fromJson<Album>(intent.getStringExtra(ALBUM), albumType)
+        if (album != null) {
+            tracksType = TYPE_ALBUM
+        }
 
-        title = playlist?.title ?: album.title
+        val folder = intent.getStringExtra(FOLDER)
+        if (folder != null) {
+            tracksType = TYPE_FOLDER
+        }
+
+        title = playlist?.title ?: album?.title ?: folder
 
         val adjustedPrimaryColor = getAdjustedPrimaryColor()
         tracks_fastscroller.updateColors(adjustedPrimaryColor)
@@ -61,24 +75,30 @@ class TracksActivity : SimpleActivity() {
         ensureBackgroundThread {
             val tracks = ArrayList<Track>()
             val listItems = ArrayList<ListItem>()
-            if (playlist != null) {
-                val playlistTracks = tracksDAO.getTracksFromPlaylist(playlist!!.id)
-                runOnUiThread {
-                    tracks_placeholder.beVisibleIf(playlistTracks.isEmpty())
-                    tracks_placeholder_2.beVisibleIf(playlistTracks.isEmpty())
+            when (tracksType) {
+                TYPE_PLAYLIST -> {
+                    val playlistTracks = tracksDAO.getTracksFromPlaylist(playlist!!.id)
+                    runOnUiThread {
+                        tracks_placeholder.beVisibleIf(playlistTracks.isEmpty())
+                        tracks_placeholder_2.beVisibleIf(playlistTracks.isEmpty())
+                    }
+
+                    tracks.addAll(playlistTracks)
+                    listItems.addAll(tracks)
                 }
+                TYPE_ALBUM -> {
+                    val albumTracks = getAlbumTracksSync(album.id)
+                    albumTracks.sortWith(compareBy({ it.trackId }, { it.title.toLowerCase() }))
+                    tracks.addAll(albumTracks)
 
-                tracks.addAll(playlistTracks)
-                listItems.addAll(tracks)
-            } else {
-                val albumTracks = getAlbumTracksSync(album.id)
-                albumTracks.sortWith(compareBy({ it.trackId }, { it.title.toLowerCase() }))
-                tracks.addAll(albumTracks)
+                    val coverArt = ContentUris.withAppendedId(artworkUri, album.id).toString()
+                    val header = AlbumHeader(album.title, coverArt, album.year, tracks.size, tracks.sumBy { it.duration }, album.artist)
+                    listItems.add(header)
+                    listItems.addAll(tracks)
+                }
+                else -> {
 
-                val coverArt = ContentUris.withAppendedId(artworkUri, album.id).toString()
-                val header = AlbumHeader(album.title, coverArt, album.year, tracks.size, tracks.sumBy { it.duration }, album.artist)
-                listItems.add(header)
-                listItems.addAll(tracks)
+                }
             }
 
             runOnUiThread {
@@ -121,9 +141,9 @@ class TracksActivity : SimpleActivity() {
         menuInflater.inflate(R.menu.menu_playlist, menu)
 
         menu.apply {
-            findItem(R.id.sort).isVisible = playlist != null
-            findItem(R.id.add_file_to_playlist).isVisible = playlist != null
-            findItem(R.id.add_folder_to_playlist).isVisible = playlist != null
+            findItem(R.id.sort).isVisible = tracksType != TYPE_ALBUM
+            findItem(R.id.add_file_to_playlist).isVisible = tracksType == TYPE_PLAYLIST
+            findItem(R.id.add_folder_to_playlist).isVisible = tracksType == TYPE_PLAYLIST
         }
 
         updateMenuItemColors(menu)
@@ -141,7 +161,7 @@ class TracksActivity : SimpleActivity() {
     }
 
     private fun showSortingDialog() {
-        ChangeSortingDialog(this, ACTIVITY_PLAYLIST) {
+        ChangeSortingDialog(this, ACTIVITY_PLAYLIST_FOLDER) {
             val adapter = tracks_list.adapter as? TracksAdapter ?: return@ChangeSortingDialog
             val tracks = adapter.tracks
             Track.sorting = config.playlistTracksSorting
@@ -209,7 +229,6 @@ class TracksActivity : SimpleActivity() {
         val newTracks = tracksDAO.getTracksFromPlaylist(playlist!!.id).toMutableList() as ArrayList<Track>
         runOnUiThread {
             (tracks_list.adapter as? TracksAdapter)?.updateItems(newTracks)
-
             tracks_placeholder.beVisibleIf(newTracks.isEmpty())
             tracks_placeholder_2.beVisibleIf(newTracks.isEmpty())
         }
@@ -222,11 +241,10 @@ class TracksActivity : SimpleActivity() {
     }
 
     private fun itemClicked(track: Track) {
-        val tracks = if (playlist != null) {
-            (tracks_list.adapter as? TracksAdapter)?.tracks?.toMutableList() as? ArrayList<Track> ?: ArrayList()
-        } else {
-            (tracks_list.adapter as? TracksHeaderAdapter)?.items?.filterIsInstance<Track>()?.toMutableList() as? ArrayList<Track>
-                ?: ArrayList()
+        val tracks = when (tracksType) {
+            TYPE_PLAYLIST -> (tracks_list.adapter as? TracksAdapter)?.tracks?.toMutableList() as? ArrayList<Track> ?: ArrayList()
+            TYPE_ALBUM -> (tracks_list.adapter as? TracksHeaderAdapter)?.items?.filterIsInstance<Track>()?.toMutableList() as? ArrayList<Track> ?: ArrayList()
+            else -> ArrayList()
         }
 
         resetQueueItems(tracks) {

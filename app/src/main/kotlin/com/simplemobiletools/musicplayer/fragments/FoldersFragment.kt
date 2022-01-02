@@ -1,6 +1,7 @@
 package com.simplemobiletools.musicplayer.fragments
 
 import android.content.Context
+import android.content.Intent
 import android.util.AttributeSet
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
 import com.simplemobiletools.commons.extensions.areSystemAnimationsEnabled
@@ -8,12 +9,14 @@ import com.simplemobiletools.commons.extensions.beGoneIf
 import com.simplemobiletools.commons.extensions.beVisibleIf
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
+import com.simplemobiletools.musicplayer.activities.TracksActivity
 import com.simplemobiletools.musicplayer.adapters.FoldersAdapter
 import com.simplemobiletools.musicplayer.dialogs.ChangeSortingDialog
 import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.extensions.getAlbumTracksSync
 import com.simplemobiletools.musicplayer.extensions.getAlbumsSync
 import com.simplemobiletools.musicplayer.extensions.getArtistsSync
+import com.simplemobiletools.musicplayer.helpers.FOLDER
 import com.simplemobiletools.musicplayer.helpers.TAB_FOLDERS
 import com.simplemobiletools.musicplayer.models.Album
 import com.simplemobiletools.musicplayer.models.Folder
@@ -54,7 +57,10 @@ class FoldersFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
             val adapter = folders_list.adapter
             if (adapter == null) {
                 FoldersAdapter(activity, folders, folders_list) {
-
+                    Intent(activity, TracksActivity::class.java).apply {
+                        putExtra(FOLDER, (it as Folder).title)
+                        activity.startActivity(this)
+                    }
                 }.apply {
                     folders_list.adapter = this
                 }
