@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
 import com.simplemobiletools.commons.extensions.areSystemAnimationsEnabled
+import com.simplemobiletools.commons.extensions.beGoneIf
 import com.simplemobiletools.commons.extensions.beVisibleIf
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
@@ -18,9 +19,10 @@ import com.simplemobiletools.musicplayer.models.Album
 import com.simplemobiletools.musicplayer.models.Folder
 import com.simplemobiletools.musicplayer.models.Track
 import kotlinx.android.synthetic.main.fragment_folders.view.*
-import kotlinx.android.synthetic.main.fragment_playlists.view.*
 
 class FoldersFragment(context: Context, attributeSet: AttributeSet) : MyViewPagerFragment(context, attributeSet) {
+    private var foldersIgnoringSearch = ArrayList<Folder>()
+
     override fun setupFragment(activity: SimpleActivity) {
         val albums = ArrayList<Album>()
         val artists = context.getArtistsSync()
@@ -70,11 +72,20 @@ class FoldersFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
         (folders_list.adapter as? MyRecyclerViewAdapter)?.finishActMode()
     }
 
-    override fun onSearchQueryChanged(text: String) {}
+    override fun onSearchQueryChanged(text: String) {
+        val filtered = foldersIgnoringSearch.filter { it.title.contains(text, true) }.toMutableList() as ArrayList<Folder>
+        (folders_list.adapter as? FoldersAdapter)?.updateItems(filtered, text)
+        folders_placeholder.beVisibleIf(filtered.isEmpty())
+    }
 
-    override fun onSearchOpened() {}
+    override fun onSearchOpened() {
+        foldersIgnoringSearch = (folders_list?.adapter as? FoldersAdapter)?.folders ?: ArrayList()
+    }
 
-    override fun onSearchClosed() {}
+    override fun onSearchClosed() {
+        (folders_list.adapter as? FoldersAdapter)?.updateItems(foldersIgnoringSearch)
+        folders_placeholder.beGoneIf(foldersIgnoringSearch.isNotEmpty())
+    }
 
     override fun onSortOpen(activity: SimpleActivity) {
         ChangeSortingDialog(activity, TAB_FOLDERS) {
