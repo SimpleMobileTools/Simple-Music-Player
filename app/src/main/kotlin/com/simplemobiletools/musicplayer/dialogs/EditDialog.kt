@@ -12,8 +12,8 @@ import com.simplemobiletools.musicplayer.models.Track
 import kotlinx.android.synthetic.main.dialog_rename_song.*
 import kotlinx.android.synthetic.main.dialog_rename_song.view.*
 
-class EditDialog(val activity: BaseSimpleActivity, val track: Track, val callback: (Track) -> Unit) {
-    private val tagHelper by lazy { TagHelper(activity) }
+class EditDialog(val activity: BaseSimpleActivity, val track: Track, val callback: (track: Track) -> Unit) {
+    private val tagHelper = TagHelper(activity)
 
     init {
         val view = activity.layoutInflater.inflate(R.layout.dialog_rename_song, null).apply {
@@ -24,7 +24,9 @@ class EditDialog(val activity: BaseSimpleActivity, val track: Track, val callbac
             file_name.setText(filename.substring(0, filename.lastIndexOf(".")))
             extension.setText(track.path.getFilenameExtension())
             if (isRPlus()) {
-                arrayOf(file_name_label, file_name, extension_label, extension).forEach { it.beGone() }
+                arrayOf(file_name_label, file_name, extension_label, extension).forEach {
+                    it.beGone()
+                }
             }
         }
 
@@ -61,8 +63,8 @@ class EditDialog(val activity: BaseSimpleActivity, val track: Track, val callbac
                                 }
 
                                 if (!isRPlus()) {
-                                    activity.renameFile(oldPath, newPath) {
-                                        if (it) {
+                                    activity.renameFile(oldPath, newPath, false) { success, andd ->
+                                        if (success) {
                                             storeEditedSong(track, oldPath, newPath)
                                             track.path = newPath
                                             callback(track)
