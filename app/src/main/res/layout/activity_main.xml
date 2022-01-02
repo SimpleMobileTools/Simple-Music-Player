@@ -13,7 +13,7 @@
         app:elevation="6dp"
         app:tabIndicatorColor="@android:color/white"
         app:tabIndicatorHeight="2dp"
-        app:tabMinWidth="150dp"
+        app:tabMode="scrollable"
         app:tabSelectedTextColor="@android:color/white" />
 
     <com.simplemobiletools.commons.views.MyViewPager
