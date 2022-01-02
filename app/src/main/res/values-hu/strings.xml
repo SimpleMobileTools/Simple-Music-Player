@@ -5,18 +5,18 @@
     <string name="rename_song">Szám átnevezése</string>
     <string name="rename_song_error">Hiba történt az átnevezés során</string>
     <string name="rename_song_empty">Töltse ki az összes mezőt</string>
-    <string name="repeat_off">Repeat off</string>
+    <string name="repeat_off">Ismétlés ki</string>
     <string name="repeat_song">Jelenlegi szám ismétlése</string>
-    <string name="repeat_playlist">Repeat playlist</string>
-    <string name="stop_playback_after_current_song">Stop playback after current song</string>
+    <string name="repeat_playlist">Lista ismétlése</string>
+    <string name="stop_playback_after_current_song">Lejátszás leállítása e szám után</string>
     <string name="enable_shuffle">Véletlenszerű lejátszás engedélyezése</string>
-    <string name="disable_shuffle">Véletlenszerű lejátszás letitása</string>
+    <string name="disable_shuffle">Véletlenszerű lejátszás letiltása</string>
     <string name="shuffle_enabled">Véletlenszerű lejátszás engedélyezve</string>
     <string name="shuffle_disabled">Véletlenszerű lejátszás letiltva</string>
-    <string name="sleep_timer">Sleep timer</string>
-    <string name="volume">Volume</string>
-    <string name="playback_speed">Playback speed</string>
-    <string name="loading_files">Loading files…</string>
+    <string name="sleep_timer">Alvásidőzítő</string>
+    <string name="volume">Hangerő</string>
+    <string name="playback_speed">Lejátszási sebesség</string>
+    <string name="loading_files">Fájlok betöltése…</string>
 
     <!-- Playlists -->
     <string name="add_file_to_playlist">Fájl hozzáadása a lejátszólistához</string>
@@ -33,89 +33,89 @@
     <string name="remove_from_playlist_description">Ez csak az elemeket törli ki a(z) „%s” lejátszólistából, nem magukat a fájlokat.</string>
     <string name="delete_the_files_too">A fájlok is kerüljenek törlésre</string>
     <string name="open_playlist">Lejátszólista megnyitása</string>
-    <string name="all_songs_cannot_be_deleted">Az \'Összes szám\' lejátszólista nem törölhet</string>
+    <string name="all_songs_cannot_be_deleted">Az \'Összes szám\' lejátszólista nem törölhető</string>
     <string name="empty_playlist">A jelenlegi lejátszólista üres</string>
     <string name="fetching_songs">Számok lekérése…</string>
     <string name="all_songs">Összes szám</string>
-    <string name="create_playlist_from_folder">Create new playlist from folder</string>
-    <string name="folder_contains_no_audio">The selected folder contains no audio files</string>
-    <string name="delete_current_song">Delete current song</string>
-    <string name="remove_current_song">Remove current song from playlist</string>
-    <string name="show_filename">Show filename as song title</string>
-    <string name="title_is_not_available">If title is not available</string>
-    <string name="show_album_cover">Show album cover on the main screen</string>
-    <string name="all_tracks">All tracks</string>
-    <string name="add_to_playlist">Add to playlist</string>
-    <string name="create_playlist_label">You can create a new playlist by selecting the wanted artists, albums or tracks and using Menu -> Add to playlist.</string>
+    <string name="create_playlist_from_folder">Lejátszólista készítése mappából</string>
+    <string name="folder_contains_no_audio">A mappa nem tartalmaz zenefájlokat</string>
+    <string name="delete_current_song">Aktuális szám törlése</string>
+    <string name="remove_current_song">Aktuális szám törlése a lejátszólistából</string>
+    <string name="show_filename">Fájlnevet használd számnévnek</string>
+    <string name="title_is_not_available">Ha a szám címe nem található</string>
+    <string name="show_album_cover">Címlapborító mutatása a főképernyőn</string>
+    <string name="all_tracks">Minden szám</string>
+    <string name="add_to_playlist">Lejátszólistához adás</string>
+    <string name="create_playlist_label">Lejátszólistát tudsz csinálni, ha kiválasztod az előadót, albumot, számot a Menü -> Lejátszólistához adás-al.</string>
 
     <!-- Sorting -->
-    <string name="track_count">Track Count</string>
-    <string name="album_count">Album Count</string>
-    <string name="artist_name">Artist Name</string>
-    <string name="year">Year</string>
+    <string name="track_count">Számok</string>
+    <string name="album_count">Albumok</string>
+    <string name="artist_name">Előadó neve</string>
+    <string name="year">Év</string>
 
     <!-- Artists -->
-    <string name="artists">Artists</string>
-    <string name="albums">Albums</string>
+    <string name="artists">Előadók</string>
+    <string name="albums">Albumok</string>
     <plurals name="albums_plural">
-        <item quantity="one">%d Album</item>
-        <item quantity="other">%d Albums</item>
+        <item quantity="one">%d album</item>
+        <item quantity="other">%d album</item>
     </plurals>
 
-    <string name="tracks">Tracks</string>
+    <string name="tracks">Számok</string>
     <plurals name="tracks_plural">
-        <item quantity="one">%d Track</item>
-        <item quantity="other">%d Tracks</item>
+        <item quantity="one">%d szám</item>
+        <item quantity="other">%d szám</item>
     </plurals>
 
     <!-- Queue -->
-    <string name="next_track">Next:</string>
-    <string name="track_queue">Track queue</string>
-    <string name="add_to_queue">Add to queue</string>
-    <string name="remove_from_queue">Remove from queue</string>
-    <string name="create_playlist_from_queue">Create playlist from queue</string>
+    <string name="next_track">Következő:</string>
+    <string name="track_queue">Szám várólista</string>
+    <string name="add_to_queue">Várólistához adás</string>
+    <string name="remove_from_queue">Várólistából törlés</string>
+    <string name="create_playlist_from_queue">Lejátszólista a várólistából</string>
 
     <!-- Settings -->
     <string name="equalizer">Hangszínszabályzó</string>
-    <string name="swap_prev_next">Swap previous/next headphone buttons</string>
+    <string name="swap_prev_next">Fülhallgató számváltó gombok felcserélése</string>
 
     <!-- FAQ -->
-    <string name="faq_1_title">How can I fast-forward songs?</string>
-    <string name="faq_1_text">You can click on the current or max duration texts near the seekbar, that will move the song either backward, or forward.</string>
+    <string name="faq_1_title">Hogy tudom a számot előre tekerni?</string>
+    <string name="faq_1_text">A hátralévő és összidőtartam közötti keresőmezőre kattintva tudsz előre és hátra tekerni.</string>
 
     <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
     <!-- App title has to have less than 50 characters. If you cannot squeeze it, just remove a part of it -->
-    <string name="app_title">Simple Music Player - A cool player for your songs</string>
+    <string name="app_title">Simple Music Player - Zenelejátszó</string>
     <!-- Short description has to have less than 80 chars -->
-    <string name="app_short_description">A clean music player with a customizable widget, stylish interface and no ads.</string>
+    <string name="app_short_description">Egy sovány zenelejátszó konfigurálható widgettel, modern kinézettel, reklámmentesen.</string>
     <string name="app_long_description">
-        A simple music player easily controllable from the status bar, home screen widget or by hardware buttons on your headset. It provides all expected functions like sorting in various ways as well as changing the Equalizer.  Listen to your favorite mp3, other songs or podcasts with this free beautiful music player.
+        Egy egyszerű zenelejátszó, amely könnyen vezérelhető az állapotsorból, a kezdőképernyő widgetjéből vagy a fejhallgató hardveres gombjaival. Minden elvárt funkciót biztosít, mint például a különböző válogatási módok, valamint az Equalizer módosítása. Hallgassa kedvenc mp3-ját, egyéb zeneszámait vagy podcastjait ezzel az ingyenes, gyönyörű zenelejátszóval.
 
-        It offers exclusive extras like Search and showing Album Art, a sleep timer and many other settings. This elegant music player allows you creating and managing handy playlists as you desire.
+        Olyan exkluzív extrákat kínál, mint a Keresés és az Album Art megjelenítése, az alvásidőzítő és sok más beállítás. Ez az elegáns zenelejátszó lehetővé teszi a praktikus lejátszási listák létrehozását és kezelését tetszés szerint.
 
-        Playlists are fully supported. You can add either individual files, or whole folders. If you won\'t like a file, you can either just remove it from a playlist, or delete the actual file altogether.
+        A lejátszási listák teljes mértékben támogatottak. Hozzáadhat akár egyedi fájlokat, akár egész mappákat. Ha nem tetszik egy fájl, egyszerűen eltávolíthatja a lejátszási listából, vagy törölheti a tényleges fájlt.
 
-        Comes with a handy sleep timer so that you can reliably delay the time of the app shutting down.
+        Praktikus alvásidőzítővel rendelkezik, így megbízhatóan késleltetheti az alkalmazás kikapcsolásának idejét.
 
-        Supports both shuffle and repeating a particular song, as well as skipping and fast forwarding.
+        Támogatja mind a keverést, mind az adott dal ismétlését, valamint a kihagyást és a gyors előre tekerést.
 
-        Available in many different languages, offers multiple different equalizers.
+        Számos különböző nyelven elérhető, többféle equalizert kínál.
 
-        Easily check a file properties like the size, duration, last modified etc.
+        Könnyedén ellenőrizheti a fájl tulajdonságait, például a méretet, az időtartamot, az utolsó módosítást stb.
 
-        Modify file EXIF data like the song title and artist.
+        Módosíthatja a fájl EXIF-adatait, például a dal címét és előadóját.
 
-        Quickly share files with your friends on social networks, emails, or anywhere you would like.
+        Gyorsan megoszthatja a fájlokat barátaival a közösségi hálózatokon, e-mailben vagy bárhol, ahol szeretné.
 
-        This stylish music player contains a widget with customizable text color, alpha and the color of the background for easy access and control.
+        Ez a stílusos zenelejátszó tartalmaz egy widgetet testreszabható szövegszínnel, átlátszhatósággal és a háttér színével a könnyű hozzáférés és vezérlés érdekében.
 
-        It properly handles third party intents too for playing individual audio files so it can help at setting ringtones too.
+        Megfelelően kezeli a harmadik féltől származó jelzéseket is az egyes hangfájlok lejátszásához, így a csengőhangok beállításánál is segíthet.
 
-        It comes with material design and dark theme by default, provides great user experience for easy usage. The lack of internet access gives you more privacy, security and stability than other apps.
+        Alapértelmezés szerint anyagi dizájnnal és sötét témával rendelkezik, nagyszerű felhasználói élményt nyújt a könnyű használathoz. Az internet-igénylés mellőzése több privátszférát, biztonságot és stabilitást biztosít, mint más alkalmazások.
 
         Nem tartalmaz reklámokat, és nem kér szükségtelen engedélyeket. Teljesen nyílt forráskódú, és testreszabhatóak a színei.
 
-        <b>Check out the full suite of Simple Tools here:</b>
+        <b>Itt tudhasz meg többet a teljes Simple Tools ökoszisztémáról:</b>
         https://www.simplemobiletools.com
 
         <b>Facebook:</b>
