@@ -37,6 +37,7 @@ import com.simplemobiletools.musicplayer.services.MusicService
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_albums.*
 import kotlinx.android.synthetic.main.fragment_artists.*
+import kotlinx.android.synthetic.main.fragment_folders.*
 import kotlinx.android.synthetic.main.fragment_playlists.*
 import kotlinx.android.synthetic.main.fragment_tracks.*
 import kotlinx.android.synthetic.main.view_current_track_bar.*
@@ -182,7 +183,7 @@ class MainActivity : SimpleActivity() {
 
     private fun initFragments() {
         viewpager.adapter = ViewPagerAdapter(this)
-        viewpager.offscreenPageLimit = 3
+        viewpager.offscreenPageLimit = 4
         viewpager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrollStateChanged(state: Int) {
                 if (isSearchOpen) {
@@ -206,7 +207,13 @@ class MainActivity : SimpleActivity() {
             }
         )
 
-        val tabLabels = arrayOf(getString(R.string.playlists), getString(R.string.artists), getString(R.string.albums), getString(R.string.tracks))
+        val tabLabels = arrayOf(
+            getString(R.string.playlists),
+            getString(R.string.folders),
+            getString(R.string.artists),
+            getString(R.string.albums),
+            getString(R.string.tracks)
+        )
         main_tabs_holder.apply {
             removeAllTabs()
 
@@ -224,8 +231,9 @@ class MainActivity : SimpleActivity() {
     private fun getCurrentFragment(): MyViewPagerFragment? {
         return when (viewpager.currentItem) {
             0 -> playlists_fragment_holder
-            1 -> artists_fragment_holder
-            2 -> albums_fragment_holder
+            1 -> folders_fragment_holder
+            2 -> artists_fragment_holder
+            3 -> albums_fragment_holder
             else -> tracks_fragment_holder
         }
     }
