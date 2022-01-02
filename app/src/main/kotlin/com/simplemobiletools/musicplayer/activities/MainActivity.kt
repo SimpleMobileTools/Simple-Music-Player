@@ -86,10 +86,14 @@ class MainActivity : SimpleActivity() {
         }
     }
 
+    override fun onPause() {
+        super.onPause()
+        config.lastUsedViewPagerPage = viewpager.currentItem
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         bus?.unregister(this)
-        config.lastUsedViewPagerPage = viewpager.currentItem
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
