@@ -54,6 +54,7 @@
     <string name="year">Anno</string>
     <!-- Artists -->
     <string name="artists">Artisti</string>
+    <string name="folders">Folders</string>
     <string name="albums">Album</string>
     <plurals name="albums_plural">
         <item quantity="one">%d album</item>
