@@ -67,6 +67,10 @@ class MainActivity : SimpleActivity() {
         volumeControlStream = AudioManager.STREAM_MUSIC
         checkWhatsNewDialog()
         checkAppOnSDCard()
+
+        if (config.appRunCount == 1) {
+            config.wereTrackFoldersAdded = true
+        }
     }
 
     override fun onResume() {

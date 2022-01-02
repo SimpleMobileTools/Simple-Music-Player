@@ -76,4 +76,8 @@ class Config(context: Context) : BaseConfig(context) {
     var playbackSpeedProgress: Int
         get() = prefs.getInt(PLAYBACK_SPEED_PROGRESS, -1)
         set(playbackSpeedProgress) = prefs.edit().putInt(PLAYBACK_SPEED_PROGRESS, playbackSpeedProgress).apply()
+
+    var wereTrackFoldersAdded: Boolean
+        get() = prefs.getBoolean(WERE_TRACK_FOLDERS_ADDED, false)
+        set(wereTrackFoldersAdded) = prefs.edit().putBoolean(WERE_TRACK_FOLDERS_ADDED, wereTrackFoldersAdded).apply()
 }
