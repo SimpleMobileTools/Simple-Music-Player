@@ -46,7 +46,7 @@ class Config(context: Context) : BaseConfig(context) {
         set(playlistTracksSorting) = prefs.edit().putInt(PLAYLIST_TRACKS_SORTING, playlistTracksSorting).apply()
 
     var folderSorting: Int
-        get() = prefs.getInt(FOLDER_SORTING, SORT_BY_TITLE)
+        get() = prefs.getInt(FOLDER_SORTING, PLAYER_SORT_BY_TITLE)
         set(folderSorting) = prefs.edit().putInt(FOLDER_SORTING, folderSorting).apply()
 
     var artistSorting: Int

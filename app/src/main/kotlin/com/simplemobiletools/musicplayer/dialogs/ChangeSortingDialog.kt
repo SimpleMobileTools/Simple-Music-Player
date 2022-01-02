@@ -22,6 +22,7 @@ class ChangeSortingDialog(val activity: Activity, val location: Int, val callbac
     init {
         currSorting = when (location) {
             TAB_PLAYLISTS -> config.playlistSorting
+            TAB_FOLDERS -> config.folderSorting
             TAB_ARTISTS -> config.artistSorting
             TAB_ALBUMS -> config.albumSorting
             ACTIVITY_PLAYLIST -> config.playlistTracksSorting
@@ -42,7 +43,7 @@ class ChangeSortingDialog(val activity: Activity, val location: Int, val callbac
     private fun setupSortRadio() {
         val radioItems = ArrayList<RadioItem>()
         when (location) {
-            TAB_PLAYLISTS -> {
+            TAB_PLAYLISTS, TAB_FOLDERS -> {
                 radioItems.add(RadioItem(0, activity.getString(R.string.title), PLAYER_SORT_BY_TITLE))
                 radioItems.add(RadioItem(1, activity.getString(R.string.track_count), PLAYER_SORT_BY_TRACK_COUNT))
             }
@@ -98,6 +99,7 @@ class ChangeSortingDialog(val activity: Activity, val location: Int, val callbac
         if (currSorting != sorting) {
             when (location) {
                 TAB_PLAYLISTS -> config.playlistSorting = sorting
+                TAB_FOLDERS -> config.folderSorting = sorting
                 TAB_ARTISTS -> config.artistSorting = sorting
                 TAB_ALBUMS -> config.albumSorting = sorting
                 TAB_TRACKS -> config.trackSorting = sorting

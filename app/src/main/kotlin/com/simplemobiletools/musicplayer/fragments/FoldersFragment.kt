@@ -8,14 +8,17 @@ import com.simplemobiletools.commons.extensions.beVisibleIf
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
 import com.simplemobiletools.musicplayer.adapters.FoldersAdapter
+import com.simplemobiletools.musicplayer.dialogs.ChangeSortingDialog
 import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.extensions.getAlbumTracksSync
 import com.simplemobiletools.musicplayer.extensions.getAlbumsSync
 import com.simplemobiletools.musicplayer.extensions.getArtistsSync
+import com.simplemobiletools.musicplayer.helpers.TAB_FOLDERS
 import com.simplemobiletools.musicplayer.models.Album
 import com.simplemobiletools.musicplayer.models.Folder
 import com.simplemobiletools.musicplayer.models.Track
 import kotlinx.android.synthetic.main.fragment_folders.view.*
+import kotlinx.android.synthetic.main.fragment_playlists.view.*
 
 class FoldersFragment(context: Context, attributeSet: AttributeSet) : MyViewPagerFragment(context, attributeSet) {
     override fun setupFragment(activity: SimpleActivity) {
@@ -73,7 +76,15 @@ class FoldersFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
 
     override fun onSearchClosed() {}
 
-    override fun onSortOpen(activity: SimpleActivity) {}
+    override fun onSortOpen(activity: SimpleActivity) {
+        ChangeSortingDialog(activity, TAB_FOLDERS) {
+            val adapter = folders_list.adapter as? FoldersAdapter ?: return@ChangeSortingDialog
+            val folders = adapter.folders
+            Folder.sorting = activity.config.folderSorting
+            folders.sort()
+            adapter.updateItems(folders, forceUpdate = true)
+        }
+    }
 
     override fun setupColors(textColor: Int, adjustedPrimaryColor: Int) {
         folders_placeholder.setTextColor(textColor)
