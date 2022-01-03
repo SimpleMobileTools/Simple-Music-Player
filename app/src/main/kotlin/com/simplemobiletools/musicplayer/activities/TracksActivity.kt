@@ -25,13 +25,13 @@ import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
-const val TYPE_PLAYLIST = 1
-const val TYPE_FOLDER = 2
-const val TYPE_ALBUM = 3
-
 // this activity is used for displaying Playlist and Folder tracks, also Album tracks with a possible album header at the top
 // Artists -> Albums -> Tracks
 class TracksActivity : SimpleActivity() {
+    val TYPE_PLAYLIST = 1
+    val TYPE_FOLDER = 2
+    val TYPE_ALBUM = 3
+
     private var bus: EventBus? = null
     private var playlist: Playlist? = null
     private var tracksType = 0
