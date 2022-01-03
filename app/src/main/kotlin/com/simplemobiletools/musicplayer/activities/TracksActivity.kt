@@ -62,7 +62,8 @@ class TracksActivity : SimpleActivity() {
             tracks_placeholder_2.beGone()
         }
 
-        title = playlist?.title ?: album?.title ?: folder
+        val titleToUse = playlist?.title ?: album?.title ?: folder ?: ""
+        title = titleToUse.replace("<", "&lt;")
 
         val adjustedPrimaryColor = getAdjustedPrimaryColor()
         tracks_fastscroller.updateColors(adjustedPrimaryColor)
