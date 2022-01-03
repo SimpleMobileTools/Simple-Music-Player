@@ -9,7 +9,10 @@
     android:clickable="true"
     android:focusable="true"
     android:foreground="@drawable/selector"
-    android:padding="@dimen/activity_margin">
+    android:paddingStart="@dimen/medium_margin"
+    android:paddingTop="@dimen/activity_margin"
+    android:paddingEnd="@dimen/activity_margin"
+    android:paddingBottom="@dimen/activity_margin">
 
     <com.simplemobiletools.commons.views.MyTextView
         android:id="@+id/playlist_title"
