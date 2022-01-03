@@ -19,7 +19,7 @@ class MyTabLayout : TabLayout {
             }
 
             val tabLayout = getChildAt(0) as ViewGroup
-            val childCount: Int = tabLayout.childCount
+            val childCount = tabLayout.childCount
             val widths = IntArray(childCount + 1)
 
             for (i in 0 until childCount) {

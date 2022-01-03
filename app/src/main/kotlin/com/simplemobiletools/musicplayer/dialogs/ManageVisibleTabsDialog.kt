@@ -2,12 +2,14 @@ package com.simplemobiletools.musicplayer.dialogs
 
 import androidx.appcompat.app.AlertDialog
 import com.simplemobiletools.commons.activities.BaseSimpleActivity
+import com.simplemobiletools.commons.extensions.beGone
 import com.simplemobiletools.commons.extensions.setupDialogStuff
 import com.simplemobiletools.commons.helpers.isQPlus
 import com.simplemobiletools.commons.views.MyAppCompatCheckbox
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.helpers.*
+import kotlinx.android.synthetic.main.dialog_manage_visible_tabs.view.*
 
 class ManageVisibleTabsDialog(val activity: BaseSimpleActivity) {
     private var view = activity.layoutInflater.inflate(R.layout.dialog_manage_visible_tabs, null)
@@ -24,6 +26,7 @@ class ManageVisibleTabsDialog(val activity: BaseSimpleActivity) {
 
         if (!isQPlus()) {
             tabs.remove(TAB_FOLDERS)
+            view.manage_visible_tabs_folders.beGone()
         }
 
         val showTabs = activity.config.showTabs
