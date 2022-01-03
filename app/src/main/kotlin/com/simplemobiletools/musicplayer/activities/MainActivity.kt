@@ -15,10 +15,7 @@ import androidx.viewpager.widget.ViewPager
 import com.simplemobiletools.commons.dialogs.FilePickerDialog
 import com.simplemobiletools.commons.dialogs.RadioGroupDialog
 import com.simplemobiletools.commons.extensions.*
-import com.simplemobiletools.commons.helpers.LICENSE_EVENT_BUS
-import com.simplemobiletools.commons.helpers.LICENSE_GLIDE
-import com.simplemobiletools.commons.helpers.PERMISSION_WRITE_STORAGE
-import com.simplemobiletools.commons.helpers.ensureBackgroundThread
+import com.simplemobiletools.commons.helpers.*
 import com.simplemobiletools.commons.models.FAQItem
 import com.simplemobiletools.commons.models.RadioItem
 import com.simplemobiletools.commons.models.Release
@@ -224,13 +221,16 @@ class MainActivity : SimpleActivity() {
             }
         )
 
-        val tabLabels = arrayOf(
+        val tabLabels = arrayListOf(
             getString(R.string.playlists),
-            getString(R.string.folders),
             getString(R.string.artists),
             getString(R.string.albums),
             getString(R.string.tracks)
         )
+
+        if (isQPlus()) {
+            tabLabels.add(1, getString(R.string.folders))
+        }
 
         main_tabs_holder.removeAllTabs()
         var skippedTabs = 0
