@@ -1,10 +1,14 @@
 package com.simplemobiletools.musicplayer.activities
 
+import android.app.SearchManager
 import android.content.ContentUris
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.appcompat.widget.SearchView
+import androidx.core.view.MenuItemCompat
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.simplemobiletools.commons.dialogs.FilePickerDialog
@@ -20,6 +24,7 @@ import com.simplemobiletools.musicplayer.models.*
 import com.simplemobiletools.musicplayer.services.MusicService
 import kotlinx.android.synthetic.main.activity_queue.*
 import kotlinx.android.synthetic.main.activity_tracks.*
+import kotlinx.android.synthetic.main.fragment_albums.view.*
 import kotlinx.android.synthetic.main.view_current_track_bar.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -28,10 +33,13 @@ import org.greenrobot.eventbus.ThreadMode
 // this activity is used for displaying Playlist and Folder tracks, also Album tracks with a possible album header at the top
 // Artists -> Albums -> Tracks
 class TracksActivity : SimpleActivity() {
-    val TYPE_PLAYLIST = 1
-    val TYPE_FOLDER = 2
-    val TYPE_ALBUM = 3
+    private val TYPE_PLAYLIST = 1
+    private val TYPE_FOLDER = 2
+    private val TYPE_ALBUM = 3
 
+    private var isSearchOpen = false
+    private var searchMenuItem: MenuItem? = null
+    private var tracksIgnoringSearch = ArrayList<Track>()
     private var bus: EventBus? = null
     private var playlist: Playlist? = null
     private var tracksType = 0
@@ -150,11 +158,13 @@ class TracksActivity : SimpleActivity() {
         menuInflater.inflate(R.menu.menu_playlist, menu)
 
         menu.apply {
+            findItem(R.id.search).isVisible = tracksType != TYPE_ALBUM
             findItem(R.id.sort).isVisible = tracksType != TYPE_ALBUM
             findItem(R.id.add_file_to_playlist).isVisible = tracksType == TYPE_PLAYLIST
             findItem(R.id.add_folder_to_playlist).isVisible = tracksType == TYPE_PLAYLIST
         }
 
+        setupSearch(menu)
         updateMenuItemColors(menu)
         return super.onCreateOptionsMenu(menu)
     }
@@ -167,6 +177,39 @@ class TracksActivity : SimpleActivity() {
             else -> return super.onOptionsItemSelected(item)
         }
         return true
+    }
+
+    private fun setupSearch(menu: Menu) {
+        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        searchMenuItem = menu.findItem(R.id.search)
+        (searchMenuItem!!.actionView as SearchView).apply {
+            setSearchableInfo(searchManager.getSearchableInfo(componentName))
+            isSubmitButtonEnabled = false
+            setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String) = false
+
+                override fun onQueryTextChange(newText: String): Boolean {
+                    if (isSearchOpen) {
+                        onSearchQueryChanged(newText)
+                    }
+                    return true
+                }
+            })
+        }
+
+        MenuItemCompat.setOnActionExpandListener(searchMenuItem, object : MenuItemCompat.OnActionExpandListener {
+            override fun onMenuItemActionExpand(item: MenuItem?): Boolean {
+                onSearchOpened()
+                isSearchOpen = true
+                return true
+            }
+
+            override fun onMenuItemActionCollapse(item: MenuItem?): Boolean {
+                onSearchClosed()
+                isSearchOpen = false
+                return true
+            }
+        })
     }
 
     private fun showSortingDialog() {
@@ -230,6 +273,21 @@ class TracksActivity : SimpleActivity() {
                 }
             }
         }
+    }
+
+    private fun onSearchOpened() {
+        tracksIgnoringSearch = (tracks_list.adapter as? TracksAdapter)?.tracks ?: return
+    }
+
+    private fun onSearchClosed() {
+        (tracks_list.adapter as? TracksAdapter)?.updateItems(tracksIgnoringSearch)
+        tracks_placeholder.beGoneIf(tracksIgnoringSearch.isNotEmpty())
+    }
+
+    private fun onSearchQueryChanged(text: String) {
+        val filtered = tracksIgnoringSearch.filter { it.title.contains(text, true) }.toMutableList() as ArrayList<Track>
+        (tracks_list.adapter as? TracksAdapter)?.updateItems(filtered, text)
+        tracks_placeholder.beGoneIf(filtered.isNotEmpty())
     }
 
     private fun refreshPlaylist() {
