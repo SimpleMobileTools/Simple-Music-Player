@@ -5,6 +5,7 @@ import android.content.Context
 import android.provider.MediaStore
 import android.provider.MediaStore.Audio
 import com.simplemobiletools.commons.extensions.*
+import com.simplemobiletools.commons.helpers.isQPlus
 import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.extensions.tracksDAO
 import com.simplemobiletools.musicplayer.models.Events
@@ -24,16 +25,19 @@ class RoomHelper(val context: Context) {
 
     private fun getTracksFromPaths(paths: List<String>, playlistId: Int): ArrayList<Track> {
         val uri = Audio.Media.EXTERNAL_CONTENT_URI
-        val projection = arrayOf(
+        val projection = arrayListOf(
             Audio.Media._ID,
             Audio.Media.TITLE,
             Audio.Media.ARTIST,
             Audio.Media.DATA,
             Audio.Media.DURATION,
             Audio.Media.ALBUM,
-            Audio.Media.ALBUM_ID,
-            Audio.Media.BUCKET_DISPLAY_NAME
+            Audio.Media.ALBUM_ID
         )
+
+        if (isQPlus()) {
+            projection.add(Audio.Media.BUCKET_DISPLAY_NAME)
+        }
 
         val pathsMap = HashSet<String>()
         paths.mapTo(pathsMap) { it }
@@ -49,7 +53,7 @@ class RoomHelper(val context: Context) {
             val selection = "${Audio.Media.DATA} IN ($questionMarks)"
             val selectionArgs = sublist.toTypedArray()
 
-            context.queryCursor(uri, projection, selection, selectionArgs) { cursor ->
+            context.queryCursor(uri, projection.toTypedArray(), selection, selectionArgs) { cursor ->
                 val mediaStoreId = cursor.getLongValue(Audio.Media._ID)
                 val title = cursor.getStringValue(Audio.Media.TITLE)
                 val artist = cursor.getStringValue(Audio.Media.ARTIST)
@@ -58,7 +62,12 @@ class RoomHelper(val context: Context) {
                 val album = cursor.getStringValue(Audio.Media.ALBUM)
                 val albumId = cursor.getLongValue(Audio.Media.ALBUM_ID)
                 val coverArt = ContentUris.withAppendedId(artworkUri, albumId).toString()
-                val folderName = cursor.getStringValue(Audio.Media.BUCKET_DISPLAY_NAME)
+                val folderName = if (isQPlus()) {
+                    cursor.getStringValue(Audio.Media.BUCKET_DISPLAY_NAME) ?: MediaStore.UNKNOWN_STRING
+                } else {
+                    ""
+                }
+
                 val song = Track(0, mediaStoreId, title, artist, path, duration, album, coverArt, playlistId, 0, folderName)
                 song.title = song.getProperTitle(showFilename)
                 songs.add(song)

@@ -183,23 +183,26 @@ fun Context.getAlbumsCount(artist: Artist): Int {
 fun Context.getAlbumTracksSync(albumId: Long): ArrayList<Track> {
     val tracks = ArrayList<Track>()
     val uri = Audio.Media.EXTERNAL_CONTENT_URI
-    val projection = arrayOf(
+    val projection = arrayListOf(
         Audio.Media._ID,
         Audio.Media.DURATION,
         Audio.Media.DATA,
         Audio.Media.TITLE,
         Audio.Media.ARTIST,
         Audio.Media.ALBUM,
-        Audio.Media.TRACK,
-        Audio.Media.BUCKET_DISPLAY_NAME
+        Audio.Media.TRACK
     )
+
+    if (isQPlus()) {
+        projection.add(Audio.Media.BUCKET_DISPLAY_NAME)
+    }
 
     val selection = "${Audio.Albums.ALBUM_ID} = ?"
     val selectionArgs = arrayOf(albumId.toString())
     val coverUri = ContentUris.withAppendedId(artworkUri, albumId)
     val coverArt = coverUri.toString()
 
-    queryCursor(uri, projection, selection, selectionArgs, showErrors = true) { cursor ->
+    queryCursor(uri, projection.toTypedArray(), selection, selectionArgs, showErrors = true) { cursor ->
         val id = cursor.getLongValue(Audio.Media._ID)
         val title = cursor.getStringValue(Audio.Media.TITLE)
         val duration = cursor.getIntValue(Audio.Media.DURATION) / 1000
@@ -207,7 +210,12 @@ fun Context.getAlbumTracksSync(albumId: Long): ArrayList<Track> {
         val path = cursor.getStringValue(Audio.Media.DATA)
         val artist = cursor.getStringValue(Audio.Media.ARTIST) ?: MediaStore.UNKNOWN_STRING
         val album = cursor.getStringValue(Audio.Media.ALBUM)
-        val folderName = cursor.getStringValue(Audio.Media.BUCKET_DISPLAY_NAME) ?: MediaStore.UNKNOWN_STRING
+        val folderName = if (isQPlus()) {
+            cursor.getStringValue(Audio.Media.BUCKET_DISPLAY_NAME) ?: MediaStore.UNKNOWN_STRING
+        } else {
+            ""
+        }
+
         val track = Track(0, id, title, artist, path, duration, album, coverArt, 0, trackId, folderName)
         tracks.add(track)
     }
