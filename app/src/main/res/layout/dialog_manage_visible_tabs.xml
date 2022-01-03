@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/manage_visible_tabs_scroll_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:id="@+id/manage_visible_tabs_holder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingStart="@dimen/activity_margin"
+        android:paddingTop="@dimen/activity_margin"
+        android:paddingEnd="@dimen/activity_margin">
+
+        <com.simplemobiletools.commons.views.MyAppCompatCheckbox
+            android:id="@+id/manage_visible_tabs_playlists"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/activity_margin"
+            android:paddingBottom="@dimen/activity_margin"
+            android:text="@string/playlists" />
+
+        <com.simplemobiletools.commons.views.MyAppCompatCheckbox
+            android:id="@+id/manage_visible_tabs_folders"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/activity_margin"
+            android:paddingBottom="@dimen/activity_margin"
+            android:text="@string/folders" />
+
+        <com.simplemobiletools.commons.views.MyAppCompatCheckbox
+            android:id="@+id/manage_visible_tabs_artists"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/activity_margin"
+            android:paddingBottom="@dimen/activity_margin"
+            android:text="@string/artists" />
+
+        <com.simplemobiletools.commons.views.MyAppCompatCheckbox
+            android:id="@+id/manage_visible_tabs_albums"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/activity_margin"
+            android:paddingBottom="@dimen/activity_margin"
+            android:text="@string/albums" />
+
+        <com.simplemobiletools.commons.views.MyAppCompatCheckbox
+            android:id="@+id/manage_visible_tabs_tracks"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/activity_margin"
+            android:paddingBottom="@dimen/activity_margin"
+            android:text="@string/tracks" />
+
+    </LinearLayout>
+</ScrollView>

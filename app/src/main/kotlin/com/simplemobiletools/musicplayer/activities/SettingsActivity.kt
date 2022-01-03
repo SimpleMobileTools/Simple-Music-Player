@@ -8,6 +8,7 @@ import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.IS_CUSTOMIZING_COLORS
 import com.simplemobiletools.commons.models.RadioItem
 import com.simplemobiletools.musicplayer.R
+import com.simplemobiletools.musicplayer.dialogs.ManageVisibleTabsDialog
 import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.extensions.sendIntent
 import com.simplemobiletools.musicplayer.helpers.REFRESH_LIST
@@ -32,6 +33,7 @@ class SettingsActivity : SimpleActivity() {
         setupUseEnglish()
         setupSwapPrevNext()
         setupReplaceTitle()
+        setupManageShownTabs()
         updateTextColors(settings_scrollview)
         invalidateOptionsMenu()
 
@@ -125,4 +127,10 @@ class SettingsActivity : SimpleActivity() {
             else -> R.string.always
         }
     )
+
+    private fun setupManageShownTabs() {
+        settings_manage_shown_tabs_holder.setOnClickListener {
+            ManageVisibleTabsDialog(this)
+        }
+    }
 }

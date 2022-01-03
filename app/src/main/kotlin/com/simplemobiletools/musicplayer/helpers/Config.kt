@@ -2,7 +2,6 @@ package com.simplemobiletools.musicplayer.helpers
 
 import android.content.Context
 import com.simplemobiletools.commons.helpers.BaseConfig
-import com.simplemobiletools.commons.helpers.SORT_BY_TITLE
 
 class Config(context: Context) : BaseConfig(context) {
     companion object {
@@ -80,4 +79,8 @@ class Config(context: Context) : BaseConfig(context) {
     var wereTrackFoldersAdded: Boolean
         get() = prefs.getBoolean(WERE_TRACK_FOLDERS_ADDED, false)
         set(wereTrackFoldersAdded) = prefs.edit().putBoolean(WERE_TRACK_FOLDERS_ADDED, wereTrackFoldersAdded).apply()
+
+    var showTabs: Int
+        get() = prefs.getInt(SHOW_TABS, allTabsMask)
+        set(showTabs) = prefs.edit().putInt(SHOW_TABS, showTabs).apply()
 }

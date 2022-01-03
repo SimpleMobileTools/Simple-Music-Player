@@ -1,6 +1,7 @@
 package com.simplemobiletools.musicplayer.helpers
 
 import android.net.Uri
+import com.simplemobiletools.commons.helpers.isQPlus
 
 const val PROGRESS = "progress"
 const val EDITED_TRACK = "edited_track"
@@ -59,17 +60,43 @@ const val EQUALIZER_BANDS = "EQUALIZER_BANDS"
 const val PLAYBACK_SPEED = "PLAYBACK_SPEED"
 const val PLAYBACK_SPEED_PROGRESS = "PLAYBACK_SPEED_PROGRESS"
 const val WERE_TRACK_FOLDERS_ADDED = "were_track_folders_added"
+const val SHOW_TABS = "show_tabs"
 
 const val SHOW_FILENAME_NEVER = 1
 const val SHOW_FILENAME_IF_UNAVAILABLE = 2
 const val SHOW_FILENAME_ALWAYS = 3
 
-const val TAB_PLAYLISTS = 0
-const val TAB_FOLDERS = 1
-const val TAB_ARTISTS = 2
-const val TAB_ALBUMS = 3
-const val TAB_TRACKS = 4
-const val ACTIVITY_PLAYLIST_FOLDER = 5
+const val TAB_PLAYLISTS = 1
+const val TAB_FOLDERS = 2
+const val TAB_ARTISTS = 4
+const val TAB_ALBUMS = 8
+const val TAB_TRACKS = 16
+const val ACTIVITY_PLAYLIST_FOLDER = 32
+
+// show Folders tab only on Android Q+, BUCKET_DISPLAY_NAME hasn't been available before that
+val allTabsMask = if (isQPlus()) {
+    TAB_PLAYLISTS or TAB_FOLDERS or TAB_ARTISTS or TAB_ALBUMS or TAB_TRACKS
+} else {
+    TAB_PLAYLISTS or TAB_ARTISTS or TAB_ALBUMS or TAB_TRACKS
+}
+
+val tabsList: ArrayList<Int>
+    get() = if (isQPlus()) {
+        arrayListOf(
+            TAB_PLAYLISTS,
+            TAB_FOLDERS,
+            TAB_ARTISTS,
+            TAB_ALBUMS,
+            TAB_TRACKS
+        )
+    } else {
+        arrayListOf(
+            TAB_PLAYLISTS,
+            TAB_ARTISTS,
+            TAB_ALBUMS,
+            TAB_TRACKS
+        )
+    }
 
 // use custom sorting constants, there are too many app specific ones
 const val PLAYER_SORT_BY_TITLE = 1

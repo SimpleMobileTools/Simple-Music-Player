@@ -127,7 +127,7 @@
                 style="@style/SettingsHolderTextViewStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/ripple_bottom_corners">
+                android:background="@drawable/ripple_background">
 
                 <com.simplemobiletools.commons.views.MyTextView
                     android:id="@+id/settings_show_filename_label"
@@ -143,6 +143,22 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/settings_show_filename_label"
                     tools:text="@string/title_is_not_available" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/settings_manage_shown_tabs_holder"
+                style="@style/SettingsHolderTextViewOneLinerStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ripple_bottom_corners">
+
+                <com.simplemobiletools.commons.views.MyTextView
+                    android:id="@+id/settings_manage_shown_tabs_label"
+                    style="@style/SettingsTextLabelStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/manage_shown_tabs" />
 
             </RelativeLayout>
         </LinearLayout>
