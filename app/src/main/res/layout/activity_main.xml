@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.google.android.material.tabs.TabLayout
+    <com.simplemobiletools.musicplayer.views.MyTabLayout
         android:id="@+id/main_tabs_holder"
         android:layout_width="match_parent"
         android:layout_height="48dp"

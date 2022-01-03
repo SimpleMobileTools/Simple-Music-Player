@@ -29,9 +29,7 @@ import com.simplemobiletools.musicplayer.dialogs.NewPlaylistDialog
 import com.simplemobiletools.musicplayer.dialogs.SleepTimerCustomDialog
 import com.simplemobiletools.musicplayer.extensions.*
 import com.simplemobiletools.musicplayer.fragments.MyViewPagerFragment
-import com.simplemobiletools.musicplayer.helpers.INIT_QUEUE
-import com.simplemobiletools.musicplayer.helpers.START_SLEEP_TIMER
-import com.simplemobiletools.musicplayer.helpers.STOP_SLEEP_TIMER
+import com.simplemobiletools.musicplayer.helpers.*
 import com.simplemobiletools.musicplayer.models.Events
 import com.simplemobiletools.musicplayer.services.MusicService
 import kotlinx.android.synthetic.main.activity_main.*
@@ -49,11 +47,13 @@ class MainActivity : SimpleActivity() {
     private var isSearchOpen = false
     private var searchMenuItem: MenuItem? = null
     private var bus: EventBus? = null
+    private var storedShowTabs = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         appLaunched(BuildConfig.APPLICATION_ID)
+        storeStateVariables()
 
         handlePermission(PERMISSION_WRITE_STORAGE) {
             if (it) {
@@ -75,6 +75,12 @@ class MainActivity : SimpleActivity() {
 
     override fun onResume() {
         super.onResume()
+        if (storedShowTabs != config.showTabs) {
+            config.lastUsedViewPagerPage = 0
+            System.exit(0)
+            return
+        }
+
         updateTextColors(main_holder)
         sleep_timer_holder.background = ColorDrawable(config.backgroundColor)
         sleep_timer_stop.applyColorFilter(config.textColor)
@@ -93,6 +99,7 @@ class MainActivity : SimpleActivity() {
 
     override fun onPause() {
         super.onPause()
+        storeStateVariables()
         config.lastUsedViewPagerPage = viewpager.currentItem
     }
 
@@ -129,6 +136,12 @@ class MainActivity : SimpleActivity() {
             else -> return super.onOptionsItemSelected(item)
         }
         return true
+    }
+
+    private fun storeStateVariables() {
+        config.apply {
+            storedShowTabs = showTabs
+        }
     }
 
     private fun setupSearch(menu: Menu) {
@@ -187,7 +200,7 @@ class MainActivity : SimpleActivity() {
 
     private fun initFragments() {
         viewpager.adapter = ViewPagerAdapter(this)
-        viewpager.offscreenPageLimit = 4
+        viewpager.offscreenPageLimit = tabsList.size - 1
         viewpager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrollStateChanged(state: Int) {
                 if (isSearchOpen) {
@@ -218,14 +231,17 @@ class MainActivity : SimpleActivity() {
             getString(R.string.albums),
             getString(R.string.tracks)
         )
-        main_tabs_holder.apply {
-            removeAllTabs()
 
-            for (i in tabLabels.indices) {
-                val label = tabLabels[i]
-                val tab = newTab().setText(label)
+        main_tabs_holder.removeAllTabs()
+        var skippedTabs = 0
+        tabsList.forEachIndexed { index, value ->
+            if (config.showTabs and value == 0) {
+                skippedTabs++
+            } else {
+                val label = tabLabels[index]
+                val tab = main_tabs_holder.newTab().setText(label)
                 tab.contentDescription = label
-                addTab(tab, i, i == 0)
+                main_tabs_holder.addTab(tab, index - skippedTabs, config.lastUsedViewPagerPage == index - skippedTabs)
             }
         }
 
