@@ -45,6 +45,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="@dimen/medium_margin"
+        android:gravity="end"
         android:textSize="@dimen/bigger_text_size"
         app:flow_verticalAlign="center"
         app:layout_constraintBottom_toBottomOf="parent"
