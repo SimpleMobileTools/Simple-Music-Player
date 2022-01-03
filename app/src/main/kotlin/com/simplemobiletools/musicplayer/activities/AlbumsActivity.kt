@@ -40,7 +40,7 @@ class AlbumsActivity : SimpleActivity() {
 
         val artistType = object : TypeToken<Artist>() {}.type
         val artist = Gson().fromJson<Artist>(intent.getStringExtra(ARTIST), artistType)
-        title = artist.title
+        title = artist.title.replace("<", "&lt;")
 
         getAlbums(artist) { albums ->
             val listItems = ArrayList<ListItem>()
