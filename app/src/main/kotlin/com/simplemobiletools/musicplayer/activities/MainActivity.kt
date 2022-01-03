@@ -249,13 +249,29 @@ class MainActivity : SimpleActivity() {
     }
 
     private fun getCurrentFragment(): MyViewPagerFragment? {
-        return when (viewpager.currentItem) {
-            0 -> playlists_fragment_holder
-            1 -> folders_fragment_holder
-            2 -> artists_fragment_holder
-            3 -> albums_fragment_holder
-            else -> tracks_fragment_holder
+        val showTabs = config.showTabs
+        val fragments = arrayListOf<MyViewPagerFragment>()
+        if (showTabs and TAB_PLAYLISTS != 0) {
+            fragments.add(playlists_fragment_holder)
         }
+
+        if (showTabs and TAB_FOLDERS != 0) {
+            fragments.add(folders_fragment_holder)
+        }
+
+        if (showTabs and TAB_ARTISTS != 0) {
+            fragments.add(artists_fragment_holder)
+        }
+
+        if (showTabs and TAB_ALBUMS != 0) {
+            fragments.add(albums_fragment_holder)
+        }
+
+        if (showTabs and TAB_TRACKS != 0) {
+            fragments.add(tracks_fragment_holder)
+        }
+
+        return fragments.getOrNull(viewpager.currentItem)
     }
 
     private fun showSortingDialog() {
