@@ -1,6 +1,15 @@
 Changelog
 ==========
 
+Version 5.9.0 *(2022-01-05)*
+----------------------------
+
+ * Added a Folders tab on Android 10+
+ * Added Search at the playlists and tracks screen
+ * Fixed a glitch at songs not starting playback properly
+ * Allow customizing visible tabs
+ * Added some stability, translation and UX improvements
+
 Version 5.8.2 *(2021-12-15)*
 ----------------------------
 

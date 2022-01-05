@@ -1,0 +1,5 @@
+ * Added a Folders tab on Android 10+
+ * Added Search at the playlists and tracks screen
+ * Fixed a glitch at songs not starting playback properly
+ * Allow customizing visible tabs
+ * Added some stability, translation and UX improvements
