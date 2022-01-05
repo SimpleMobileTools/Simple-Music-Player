@@ -54,7 +54,7 @@
     <string name="year">Год</string>
     <!-- Artists -->
     <string name="artists">Исполнители</string>
-    <string name="folders">Folders</string>
+    <string name="folders">Папки</string>
     <string name="albums">Альбомы</string>
     <plurals name="albums_plural">
         <item quantity="one">%d альбом</item>
