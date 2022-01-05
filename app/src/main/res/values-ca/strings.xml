@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Simple Music Player</string>
+    <string name="app_launcher_name">Music Player</string>
+    <string name="playlist_empty">Your playlist is empty</string>
+    <string name="rename_song">Rename song</string>
+    <string name="rename_song_error">An error occurred during the renaming</string>
+    <string name="rename_song_empty">Please fill in all fields</string>
+    <string name="repeat_off">Repeat off</string>
+    <string name="repeat_song">Repeat current song</string>
+    <string name="repeat_playlist">Repeat all</string>
+    <string name="stop_playback_after_current_song">Stop playback after current song</string>
+    <string name="enable_shuffle">Enable shuffle</string>
+    <string name="disable_shuffle">Disable shuffle</string>
+    <string name="shuffle_enabled">Shuffle enabled</string>
+    <string name="shuffle_disabled">Shuffle disabled</string>
+    <string name="sleep_timer">Sleep timer</string>
+    <string name="volume">Volume</string>
+    <string name="playback_speed">Playback speed</string>
+    <string name="loading_files">Loading files…</string>
+    <!-- Playlists -->
+    <string name="add_file_to_playlist">Add file to playlist</string>
+    <string name="add_folder_to_playlist">Add folder to playlist</string>
+    <string name="manage_playlists">Manage playlists</string>
+    <string name="playlists">Playlists</string>
+    <string name="create_new_playlist">Create new playlist</string>
+    <string name="rename_playlist">Rename playlist</string>
+    <string name="playlist_name_exists">A playlist with that name already exists</string>
+    <string name="remove_playlist">Remove playlist</string>
+    <string name="remove_playlist_description">This will only remove the selected playlists. The actual files will not be deleted.</string>
+    <string name="remove_playlist_description_placeholder">This will only remove playlist \"%s\". The actual files will not be deleted.</string>
+    <string name="remove_from_playlist">Remove from playlist</string>
+    <string name="remove_from_playlist_description">This will only remove the items from playlist \"%s\". The actual files will not be deleted.</string>
+    <string name="delete_the_files_too">Delete the files too</string>
+    <string name="open_playlist">Open playlist</string>
+    <string name="all_songs_cannot_be_deleted">\"All songs\" playlist cannot be deleted</string>
+    <string name="empty_playlist">Current playlist is empty</string>
+    <string name="fetching_songs">Fetching songs…</string>
+    <string name="all_songs">All songs</string>
+    <string name="create_playlist_from_folder">Create new playlist from folder</string>
+    <string name="folder_contains_no_audio">The selected folder contains no audio files</string>
+    <string name="delete_current_song">Delete current song</string>
+    <string name="remove_current_song">Remove current song from playlist</string>
+    <string name="show_filename">Show filename as song title</string>
+    <string name="title_is_not_available">If title is not available</string>
+    <string name="show_album_cover">Show album cover on the main screen</string>
+    <string name="all_tracks">All tracks</string>
+    <string name="add_to_playlist">Add to playlist</string>
+    <string name="create_playlist_label">You can create a new playlist by selecting the wanted artists, albums or tracks and using Menu -> Add to playlist.</string>
+
+    <!-- Sorting -->
+    <string name="track_count">Track Count</string>
+    <string name="album_count">Album Count</string>
+    <string name="artist_name">Artist Name</string>
+    <string name="year">Year</string>
+    <!-- Artists -->
+    <string name="artists">Artists</string>
+    <string name="folders">Folders</string>
+    <string name="albums">Albums</string>
+    <plurals name="albums_plural">
+        <item quantity="one">%d Album</item>
+        <item quantity="other">%d Albums</item>
+    </plurals>
+    <string name="tracks">Tracks</string>
+    <plurals name="tracks_plural">
+        <item quantity="one">%d Track</item>
+        <item quantity="other">%d Tracks</item>
+    </plurals>
+    <!-- Queue -->
+    <string name="next_track">Next:</string>
+    <string name="track_queue">Track queue</string>
+    <string name="add_to_queue">Add to queue</string>
+    <string name="remove_from_queue">Remove from queue</string>
+    <string name="create_playlist_from_queue">Create playlist from queue</string>
+    <!-- Settings -->
+    <string name="equalizer">Equalizer</string>
+    <string name="swap_prev_next">Swap previous/next headphone buttons</string>
+    <!-- FAQ -->
+    <string name="faq_1_title">How can I fast-forward songs?</string>
+    <string name="faq_1_text">You can click on the current or max duration texts near the seekbar, that will move the song either backward, or forward.</string>
+    <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
+    <!-- App title has to have less than 50 characters. If you cannot squeeze it, just remove a part of it -->
+    <string name="app_title">Simple Music Player - A cool player for your songs</string>
+    <!-- Short description has to have less than 80 chars -->
+    <string name="app_short_description">A clean music player with a customizable widget, stylish interface and no ads.</string>
+    <string name="app_long_description">
+        A simple music player easily controllable from the status bar, home screen widget or by hardware buttons on your headset. It provides all expected functions like sorting in various ways as well as changing the Equalizer.  Listen to your favorite mp3, other songs or podcasts with this free beautiful music player.
+
+        It offers exclusive extras like Search and showing Album Art, a sleep timer and many other settings. This elegant music player allows you creating and managing handy playlists as you desire.
+
+        Playlists are fully supported. You can add either individual files, or whole folders. If you won\'t like a file, you can either just remove it from a playlist, or delete the actual file altogether.
+
+        Comes with a handy sleep timer so that you can reliably delay the time of the app shutting down.
+
+        Supports both shuffle and repeating a particular song, as well as skipping and fast forwarding.
+
+        Available in many different languages and offers multiple different equalizers.
+
+        Easily check a file properties like the size, duration, last modified etc.
+
+        Modify file EXIF data like the song title and artist.
+
+        Quickly share files with your friends on social networks, emails, or anywhere you would like.
+
+        This stylish music player contains a widget with customizable text color, alpha and the color of the background for easy access and control.
+
+        It properly handles third party intents too for playing individual audio files so it can help at setting ringtones too.
+
+        It comes with material design and dark theme by default, provides great user experience for easy usage. The lack of internet access gives you more privacy, security and stability than other apps.
+
+        Contains no ads or unnecessary permissions. It is fully opensource and provides customizable colors.
+
+        <b>Check out the full suite of Simple Tools here:</b>
+        https://www.simplemobiletools.com
+
+        <b>Facebook:</b>
+        https://www.facebook.com/simplemobiletools
+
+        <b>Reddit:</b>
+        https://www.reddit.com/r/SimpleMobileTools
+    </string>
+    <!--
+        Haven't found some strings? There's more at
+        https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
+    -->
+</resources>
