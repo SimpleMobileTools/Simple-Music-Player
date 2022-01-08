@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Simple Music Player</string>
+    <string name="app_name">Egyszerű zenelejátszó</string>
     <string name="app_launcher_name">Zenelejátszó</string>
     <string name="playlist_empty">A lejátszólista üres</string>
     <string name="rename_song">Szám átnevezése</string>
