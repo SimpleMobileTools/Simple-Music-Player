@@ -83,11 +83,15 @@ class TracksActivity : SimpleActivity() {
         }
 
         ensureBackgroundThread {
+            val showFilename = config.showFilename
             val tracks = ArrayList<Track>()
             val listItems = ArrayList<ListItem>()
             when (tracksType) {
                 TYPE_PLAYLIST -> {
-                    val playlistTracks = tracksDAO.getTracksFromPlaylist(playlist!!.id)
+                    val playlistTracks = tracksDAO.getTracksFromPlaylist(playlist!!.id).map { track ->
+                        track.title = track.getProperTitle(showFilename)
+                        track
+                    }
                     runOnUiThread {
                         tracks_placeholder.beVisibleIf(playlistTracks.isEmpty())
                         tracks_placeholder_2.beVisibleIf(playlistTracks.isEmpty())
@@ -107,7 +111,10 @@ class TracksActivity : SimpleActivity() {
                     listItems.addAll(tracks)
                 }
                 else -> {
-                    val folderTracks = tracksDAO.getTracksFromFolder(folder ?: "")
+                    val folderTracks = tracksDAO.getTracksFromFolder(folder ?: "").map { track ->
+                        track.title = track.getProperTitle(showFilename)
+                        track
+                    }
                     runOnUiThread {
                         tracks_placeholder.beVisibleIf(folderTracks.isEmpty())
                     }

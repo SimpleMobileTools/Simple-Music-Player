@@ -201,6 +201,7 @@ fun Context.getAlbumTracksSync(albumId: Long): ArrayList<Track> {
     val selectionArgs = arrayOf(albumId.toString())
     val coverUri = ContentUris.withAppendedId(artworkUri, albumId)
     val coverArt = coverUri.toString()
+    val showFilename = config.showFilename
 
     queryCursor(uri, projection.toTypedArray(), selection, selectionArgs, showErrors = true) { cursor ->
         val id = cursor.getLongValue(Audio.Media._ID)
@@ -217,6 +218,7 @@ fun Context.getAlbumTracksSync(albumId: Long): ArrayList<Track> {
         }
 
         val track = Track(0, id, title, artist, path, duration, album, coverArt, 0, trackId, folderName)
+        track.title = track.getProperTitle(showFilename)
         tracks.add(track)
     }
 
