@@ -44,8 +44,17 @@ class MyWidgetProvider : AppWidgetProvider() {
         when (action) {
             TRACK_CHANGED -> songChanged(context, intent)
             TRACK_STATE_CHANGED -> songStateChanged(context, intent)
-            PREVIOUS, PLAYPAUSE, NEXT -> context.sendIntent(action)
+            PREVIOUS, PLAYPAUSE, NEXT -> handlePlayerControls(context, action)
             else -> super.onReceive(context, intent)
+        }
+    }
+
+    private fun handlePlayerControls(context: Context, action: String) {
+        if (MusicService.mCurrTrack == null) {
+            val intent = context.getLaunchIntent() ?: Intent(context, SplashActivity::class.java)
+            context.startActivity(intent)
+        } else {
+            context.sendIntent(action)
         }
     }
 
@@ -69,11 +78,12 @@ class MyWidgetProvider : AppWidgetProvider() {
     }
 
     private fun songChanged(context: Context, intent: Intent) {
-        val song = intent.getSerializableExtra(NEW_TRACK) as? Track ?: return
         val appWidgetManager = AppWidgetManager.getInstance(context) ?: return
+        val song = intent.getSerializableExtra(NEW_TRACK) as? Track
         appWidgetManager.getAppWidgetIds(getComponentName(context)).forEach {
             val views = getRemoteViews(appWidgetManager, context, it)
             updateSongInfo(views, song)
+            updatePlayPauseButton(context, views, MusicService.getIsPlaying())
             appWidgetManager.updateAppWidget(it, views)
         }
     }
