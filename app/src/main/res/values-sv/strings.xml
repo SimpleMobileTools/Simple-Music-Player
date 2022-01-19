@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Simple Music Player</string>
     <string name="app_launcher_name">Musikspelare</string>
@@ -11,13 +12,12 @@
     <string name="stop_playback_after_current_song">Stop playback after current song</string>
     <string name="enable_shuffle">Aktivera blanda</string>
     <string name="disable_shuffle">Inaktivera blanda</string>
-    <string name="shuffle_enabled">Blanda är nu aktiverad</string>
-    <string name="shuffle_disabled">Blanda är nu inaktiverad</string>
+    <string name="shuffle_enabled">Blanda aktiverad</string>
+    <string name="shuffle_disabled">Blanda inaktiverad</string>
     <string name="sleep_timer">Vilotidtagare</string>
     <string name="volume">Volume</string>
     <string name="playback_speed">Playback speed</string>
     <string name="loading_files">Loading files…</string>
-
     <!-- Playlists -->
     <string name="add_file_to_playlist">Lägg till fil i spellista</string>
     <string name="add_folder_to_playlist">Lägg till mapp i spellista</string>
@@ -46,14 +46,12 @@
     <string name="show_album_cover">Visa skivomslag i huvudvyn</string>
     <string name="all_tracks">Alla spår</string>
     <string name="add_to_playlist">Lägg till i spellista</string>
-    <string name="create_playlist_label">Du kan skapa en ny spellista genom att välja önskade artister, album eller spår och använda Meny -> Lägg till i spellista.</string>
-
+    <string name="create_playlist_label">Du kan skapa en ny spellista genom att välja önskade artister, album eller spår och använda Meny -&gt; Lägg till i spellista.</string>
     <!-- Sorting -->
     <string name="track_count">Spårantal</string>
     <string name="album_count">Albumantal</string>
     <string name="artist_name">Artistnamn</string>
     <string name="year">År</string>
-
     <!-- Artists -->
     <string name="artists">Artister</string>
     <string name="folders">Folders</string>
@@ -62,28 +60,23 @@
         <item quantity="one">%d album</item>
         <item quantity="other">%d album</item>
     </plurals>
-
     <string name="tracks">Spår</string>
     <plurals name="tracks_plural">
         <item quantity="one">%d spår</item>
         <item quantity="other">%d spår</item>
     </plurals>
-
     <!-- Queue -->
     <string name="next_track">Nästa:</string>
     <string name="track_queue">Spårkö</string>
     <string name="add_to_queue">Lägg till i kö</string>
     <string name="remove_from_queue">Ta bort från kö</string>
     <string name="create_playlist_from_queue">Skapa spellista från kö</string>
-
     <!-- Settings -->
     <string name="equalizer">Frekvenskorrigerare</string>
     <string name="swap_prev_next">Växla hörlurars föregående- och nästaknappar</string>
-
     <!-- FAQ -->
-    <string name="faq_1_title">Hur kan jag snabbspola låtar?</string>
+    <string name="faq_1_title">Hur kan jag snabbspola låtar\?</string>
     <string name="faq_1_text">Du kan klicka på låtens nuvarande tid eller längd nära sökfältet, vilket kommer att spola låten antingen bakåt eller framåt.</string>
-
     <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
     <!-- App title has to have less than 50 characters. If you cannot squeeze it, just remove a part of it -->
     <string name="app_title">Simple Music Player - A cool player for your songs</string>
@@ -125,7 +118,6 @@
         <b>Reddit:</b>
         https://www.reddit.com/r/SimpleMobileTools
     </string>
-
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res

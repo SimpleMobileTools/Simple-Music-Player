@@ -1,5 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Simple Music Player</string>
+    <string name="app_name">Egyszerű zenelejátszó</string>
     <string name="app_launcher_name">Zenelejátszó</string>
     <string name="playlist_empty">A lejátszólista üres</string>
     <string name="rename_song">Szám átnevezése</string>
@@ -17,7 +18,6 @@
     <string name="volume">Hangerő</string>
     <string name="playback_speed">Lejátszási sebesség</string>
     <string name="loading_files">Fájlok betöltése…</string>
-
     <!-- Playlists -->
     <string name="add_file_to_playlist">Fájl hozzáadása a lejátszólistához</string>
     <string name="add_folder_to_playlist">Mappa hozzáadása a lejátszólistához</string>
@@ -46,86 +46,43 @@
     <string name="show_album_cover">Címlapborító mutatása a főképernyőn</string>
     <string name="all_tracks">Minden szám</string>
     <string name="add_to_playlist">Lejátszólistához adás</string>
-    <string name="create_playlist_label">Lejátszólistát tudsz csinálni, ha kiválasztod az előadót, albumot, számot a Menü -> Lejátszólistához adás-al.</string>
-
+    <string name="create_playlist_label">Lejátszólistát a Menü -&gt; Lejátszólistához adás lehetőséggel tud létrehozni, ha kiválasztja az előadót, albumot vagy számot.</string>
     <!-- Sorting -->
     <string name="track_count">Számok</string>
     <string name="album_count">Albumok</string>
     <string name="artist_name">Előadó neve</string>
     <string name="year">Év</string>
-
     <!-- Artists -->
     <string name="artists">Előadók</string>
-    <string name="folders">Folders</string>
+    <string name="folders">Mappák</string>
     <string name="albums">Albumok</string>
     <plurals name="albums_plural">
         <item quantity="one">%d album</item>
         <item quantity="other">%d album</item>
     </plurals>
-
     <string name="tracks">Számok</string>
     <plurals name="tracks_plural">
         <item quantity="one">%d szám</item>
         <item quantity="other">%d szám</item>
     </plurals>
-
     <!-- Queue -->
     <string name="next_track">Következő:</string>
     <string name="track_queue">Szám várólista</string>
     <string name="add_to_queue">Várólistához adás</string>
     <string name="remove_from_queue">Várólistából törlés</string>
     <string name="create_playlist_from_queue">Lejátszólista a várólistából</string>
-
     <!-- Settings -->
     <string name="equalizer">Hangszínszabályzó</string>
     <string name="swap_prev_next">Fülhallgató számváltó gombok felcserélése</string>
-
     <!-- FAQ -->
-    <string name="faq_1_title">Hogy tudom a számot előre tekerni?</string>
-    <string name="faq_1_text">A hátralévő és összidőtartam közötti keresőmezőre kattintva tudsz előre és hátra tekerni.</string>
-
+    <string name="faq_1_title">Hogy tudom a számot előre tekerni\?</string>
+    <string name="faq_1_text">A keresősáv melletti jelenlegi vagy maximális hossz szövegekre kattintva tud előre és hátra tekerni.</string>
     <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
     <!-- App title has to have less than 50 characters. If you cannot squeeze it, just remove a part of it -->
     <string name="app_title">Simple Music Player - Zenelejátszó</string>
     <!-- Short description has to have less than 80 chars -->
     <string name="app_short_description">Egy sovány zenelejátszó konfigurálható widgettel, modern kinézettel, reklámmentesen.</string>
-    <string name="app_long_description">
-        Egy egyszerű zenelejátszó, amely könnyen vezérelhető az állapotsorból, a kezdőképernyő widgetjéből vagy a fejhallgató hardveres gombjaival. Minden elvárt funkciót biztosít, mint például a különböző válogatási módok, valamint az Equalizer módosítása. Hallgassa kedvenc mp3-ját, egyéb zeneszámait vagy podcastjait ezzel az ingyenes, gyönyörű zenelejátszóval.
-
-        Olyan exkluzív extrákat kínál, mint a Keresés és az Album Art megjelenítése, az alvásidőzítő és sok más beállítás. Ez az elegáns zenelejátszó lehetővé teszi a praktikus lejátszási listák létrehozását és kezelését tetszés szerint.
-
-        A lejátszási listák teljes mértékben támogatottak. Hozzáadhat akár egyedi fájlokat, akár egész mappákat. Ha nem tetszik egy fájl, egyszerűen eltávolíthatja a lejátszási listából, vagy törölheti a tényleges fájlt.
-
-        Praktikus alvásidőzítővel rendelkezik, így megbízhatóan késleltetheti az alkalmazás kikapcsolásának idejét.
-
-        Támogatja mind a keverést, mind az adott dal ismétlését, valamint a kihagyást és a gyors előre tekerést.
-
-        Számos különböző nyelven elérhető, többféle equalizert kínál.
-
-        Könnyedén ellenőrizheti a fájl tulajdonságait, például a méretet, az időtartamot, az utolsó módosítást stb.
-
-        Módosíthatja a fájl EXIF-adatait, például a dal címét és előadóját.
-
-        Gyorsan megoszthatja a fájlokat barátaival a közösségi hálózatokon, e-mailben vagy bárhol, ahol szeretné.
-
-        Ez a stílusos zenelejátszó tartalmaz egy widgetet testreszabható szövegszínnel, átlátszhatósággal és a háttér színével a könnyű hozzáférés és vezérlés érdekében.
-
-        Megfelelően kezeli a harmadik féltől származó jelzéseket is az egyes hangfájlok lejátszásához, így a csengőhangok beállításánál is segíthet.
-
-        Alapértelmezés szerint anyagi dizájnnal és sötét témával rendelkezik, nagyszerű felhasználói élményt nyújt a könnyű használathoz. Az internet-igénylés mellőzése több privátszférát, biztonságot és stabilitást biztosít, mint más alkalmazások.
-
-        Nem tartalmaz reklámokat, és nem kér szükségtelen engedélyeket. Teljesen nyílt forráskódú, és testreszabhatóak a színei.
-
-        <b>Itt tudhasz meg többet a teljes Simple Tools ökoszisztémáról:</b>
-        https://www.simplemobiletools.com
-
-        <b>Facebook:</b>
-        https://www.facebook.com/simplemobiletools
-
-        <b>Reddit:</b>
-        https://www.reddit.com/r/SimpleMobileTools
-    </string>
-
+    <string name="app_long_description"> Egy egyszerű zenelejátszó, amely könnyen vezérelhető az állapotsorból, a kezdőképernyő moduljáról vagy a fejhallgató hardveres gombjaival. Minden elvárt funkciót biztosít, mint például a különböző válogatási módokat, valamint a hangszínszabályzót. Hallgassa kedvenc mp3-ját, egyéb zeneszámait vagy podcastjait ezzel az ingyenes, gyönyörű zenelejátszóval. Olyan exkluzív extrákat kínál, mint a Keresés és az albumgrafika megjelenítése, az alvásidőzítő és sok más beállítás. Ez az elegáns zenelejátszó lehetővé teszi a praktikus lejátszási listák létrehozását és kezelését tetszés szerint. A lejátszási listák teljes mértékben támogatottak. Hozzáadhat akár egyedi fájlokat, akár egész mappákat. Ha nem tetszik egy fájl, egyszerűen eltávolíthatja a lejátszási listából, vagy törölheti a tényleges fájlt. Praktikus alvásidőzítővel rendelkezik, így megbízhatóan késleltetheti az alkalmazás kikapcsolásának idejét. Támogatja mind a keverést, mind az adott szám ismétlését, valamint a kihagyást és a gyors előretekerést. Számos különböző nyelven elérhető, többféle hangszínszabályzót kínál. Könnyedén ellenőrizheti a fájl tulajdonságait, például a méretét, az időtartamát, az utolsó módosítás idejét stb. Módosíthatja a fájl EXIF-adatait, például a szám címét és előadóját. Gyorsan megoszthatja a fájlokat barátaival a közösségi hálózatokon, e-mailben vagy bárhol, ahol szeretné. Ez a stílusos zenelejátszó tartalmaz egy modult testreszabható szövegszínnel, átlátszósággal és háttérszínét a könnyű hozzáférés és vezérlés érdekében. Megfelelően kezeli a harmadik féltől származó jelzéseket is az egyes hangfájlok lejátszásához, így a csengőhangok beállításánál is segíthet. Alapértelmezés szerint material dizájnnal és sötét témával rendelkezik, nagyszerű felhasználói élményt nyújt a könnyű használathoz. Az internet-elérés hiánya miatt nagyobb adatvédelmet, biztonságot és stabilitást biztosít, mint más alkalmazások. Nem tartalmaz reklámokat, és nem kér szükségtelen engedélyeket. Teljesen nyílt forráskódú, és testreszabhatók a színei. <b>Itt tudhat meg többet a teljes Simple Tools alkalmazáscsomagról:</b> https://www.simplemobiletools.com <b>Facebook:</b> https://www.facebook.com/simplemobiletools <b>Reddit:</b> https://www.reddit.com/r/SimpleMobileTools </string>
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
