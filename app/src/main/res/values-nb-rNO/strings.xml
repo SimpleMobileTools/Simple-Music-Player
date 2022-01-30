@@ -4,7 +4,7 @@
     <string name="app_launcher_name">Musikkspiller</string>
     <string name="playlist_empty">Spillelisten din er tom</string>
     <string name="rename_song">Gi sporet nytt navn</string>
-    <string name="rename_song_error">Kunne ikke endre navn på spor</string>
+    <string name="rename_song_error">Det oppsto en feil under endringen av navn</string>
     <string name="rename_song_empty">Fyll inn alle felter</string>
     <string name="repeat_off">Gjentagelse av</string>
     <string name="repeat_song">Gjenta nåværende spor</string>
@@ -12,13 +12,12 @@
     <string name="stop_playback_after_current_song">Stop avspilling etter dette sporet</string>
     <string name="enable_shuffle">Skru på omstokking</string>
     <string name="disable_shuffle">Skru av omstokking</string>
-    <string name="shuffle_enabled">Omstokking på</string>
-    <string name="shuffle_disabled">Omstokking av</string>
+    <string name="shuffle_enabled">Shuffle aktivert</string>
+    <string name="shuffle_disabled">Shuffle deaktivert</string>
     <string name="sleep_timer">Søvntidsur</string>
     <string name="volume">Lydstyrke</string>
     <string name="playback_speed">Avspillingshastighet</string>
     <string name="loading_files">Laster inn filer …</string>
-
     <!-- Playlists -->
     <string name="add_file_to_playlist">Legg til fil i spilleliste</string>
     <string name="add_folder_to_playlist">Legg til mappe i spilleliste</string>
@@ -47,14 +46,12 @@
     <string name="show_album_cover">Vis albumsomslag på hovedskjermen</string>
     <string name="all_tracks">Alle spor</string>
     <string name="add_to_playlist">Legg til i spilleliste</string>
-    <string name="create_playlist_label">Du kan opprette en ny spilleliste ved å velge ønskede artister, album, eller spor ved å bruke Meny → Legg til i spilleliste.</string>
-
+    <string name="create_playlist_label">Du kan opprette en ny spilleliste ved å velge ønskede artister, album eller spor og bruke Meny -&gt; Legg til i spilleliste.</string>
     <!-- Sorting -->
     <string name="track_count">Sporantall</string>
     <string name="album_count">Albumsantall</string>
     <string name="artist_name">Artistnavn</string>
     <string name="year">År</string>
-
     <!-- Artists -->
     <string name="artists">Artister</string>
     <string name="folders">Folders</string>
@@ -63,28 +60,23 @@
         <item quantity="one">%d album</item>
         <item quantity="other">%d album</item>
     </plurals>
-
     <string name="tracks">Spor</string>
     <plurals name="tracks_plural">
         <item quantity="one">%d spor</item>
         <item quantity="other">%d spor</item>
     </plurals>
-
     <!-- Queue -->
     <string name="next_track">Neste:</string>
     <string name="track_queue">Sporkø</string>
     <string name="add_to_queue">Legg til i kø</string>
     <string name="remove_from_queue">Fjern fra kø</string>
     <string name="create_playlist_from_queue">Opprett spilleliste fra kø</string>
-
     <!-- Settings -->
     <string name="equalizer">Tonekontroll</string>
     <string name="swap_prev_next">Bytt hodetelefonknapper for forrige/neste</string>
-
     <!-- FAQ -->
-    <string name="faq_1_title">Hvordan kan jeg spole raskt\?</string>
-    <string name="faq_1_text">Du kan klikke på nåværende eller lengde nær blafringsfeltet, noe som flytter avspillingen forover eller bakover.</string>
-
+    <string name="faq_1_title">Hvordan kan jeg spole fremover sanger\?</string>
+    <string name="faq_1_text">Du kan klikke på gjeldende eller maksimale varighetstekster nær søkefeltet, som vil flytte sangen enten bakover eller fremover.</string>
     <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
     <!-- App title has to have less than 50 characters. If you cannot squeeze it, just remove a part of it -->
     <string name="app_title">Enkel musikkspiller – en kul spiller for dine spor</string>
@@ -126,7 +118,6 @@
         <b>Reddit:</b>
         https://www.reddit.com/r/SimpleMobileTools
     </string>
-
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
