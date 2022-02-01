@@ -1,6 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Simple Music Player</string>
-    <string name="app_launcher_name">Reprodutor de músicas</string>
+    <string name="app_launcher_name">Leitor de música</string>
     <string name="playlist_empty">A lista de reprodução está vazia</string>
     <string name="rename_song">Renomear música</string>
     <string name="rename_song_error">Ocorreu um erro ao renomear</string>
@@ -17,7 +18,6 @@
     <string name="volume">Volume</string>
     <string name="playback_speed">Velocidade de reprodução</string>
     <string name="loading_files">A carregar ficheiros…</string>
-
     <!-- Playlists -->
     <string name="add_file_to_playlist">Adicionar ficheiro à lista de reprodução</string>
     <string name="add_folder_to_playlist">Adicionar pasta à lista de reprodução</string>
@@ -27,13 +27,13 @@
     <string name="rename_playlist">Renomear lista de reprodução</string>
     <string name="playlist_name_exists">Já existe uma lista de reprodução com este nome</string>
     <string name="remove_playlist">Remover lista de reprodução</string>
-    <string name="remove_playlist_description">Esta ação remove as listas de reprodução selecionadas mas não apaga os ficheiros.</string>
-    <string name="remove_playlist_description_placeholder">Esta ação remove a lista de reprodução \"%s\" mas não apaga os ficheiros.</string>
+    <string name="remove_playlist_description">Esta acção remove as listas de reprodução selecionadas mas não apaga os ficheiros.</string>
+    <string name="remove_playlist_description_placeholder">Esta acção remove a lista de reprodução \"%s\" mas não apaga os ficheiros.</string>
     <string name="remove_from_playlist">Remover da lista de reprodução</string>
     <string name="remove_from_playlist_description">Esta ação remove os elementos da lista de reprodução \"%s\" mas não apaga os ficheiros.</string>
     <string name="delete_the_files_too">Apagar também os ficheiros</string>
     <string name="open_playlist">Abrir lista de reprodução</string>
-    <string name="all_songs_cannot_be_deleted">Não é possível apagar a lista de reprodução \'Todas as faixas\'.</string>
+    <string name="all_songs_cannot_be_deleted">Não é possível apagar a lista de reprodução \"Todas as faixas\"</string>
     <string name="empty_playlist">A lista de reprodução está vazia</string>
     <string name="fetching_songs">A obter músicas…</string>
     <string name="all_songs">Todas as faixas</string>
@@ -46,86 +46,43 @@
     <string name="show_album_cover">Mostrar imagem do álbum no ecrã principal</string>
     <string name="all_tracks">Todas as faixas</string>
     <string name="add_to_playlist">Adicionar à lista de reprodução</string>
-    <string name="create_playlist_label">Pode criar listas de reprodução em Menu -> Adicionar à lista de reprodução.</string>
-
+    <string name="create_playlist_label">Pode criar listas de reprodução em Menu -&gt; Adicionar à lista de reprodução.</string>
     <!-- Sorting -->
     <string name="track_count">Número de faixas</string>
     <string name="album_count">Número de álbuns</string>
     <string name="artist_name">Nome do artista</string>
     <string name="year">Ano</string>
-
     <!-- Artists -->
     <string name="artists">Artistas</string>
-    <string name="folders">Folders</string>
+    <string name="folders">Pastas</string>
     <string name="albums">Álbuns</string>
     <plurals name="albums_plural">
         <item quantity="one">%d álbum</item>
         <item quantity="other">%d álbuns</item>
     </plurals>
-
     <string name="tracks">Faixas</string>
     <plurals name="tracks_plural">
         <item quantity="one">%d faixa</item>
         <item quantity="other">%d faixas</item>
     </plurals>
-
     <!-- Queue -->
     <string name="next_track">Seguinte:</string>
     <string name="track_queue">Fila de reprodução</string>
     <string name="add_to_queue">Adiiconar à fila de reprodução</string>
     <string name="remove_from_queue">Remover da fila de reprodução</string>
     <string name="create_playlist_from_queue">Criar lista de reprodução a partir da fila</string>
-
     <!-- Settings -->
     <string name="equalizer">Equalizador</string>
     <string name="swap_prev_next">Trocar de faixa com os botões do auricular</string>
-
     <!-- FAQ -->
-    <string name="faq_1_title">Como posso avançar/recuar rapidamente uma faixa?</string>
-    <string name="faq_1_text">Pode tocar nos textos de duração máxima/atual junto à barra de progresso para avançar ou recuar a posição na faixa.</string>
-
+    <string name="faq_1_title">Como posso avançar/recuar rapidamente uma faixa\?</string>
+    <string name="faq_1_text">Toque nos textos de duração máxima/atual junto à barra de progresso para avançar ou recuar a posição na faixa.</string>
     <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
     <!-- App title has to have less than 50 characters. If you cannot squeeze it, just remove a part of it -->
-    <string name="app_title">Simple Music Player - Reprodutor de músicas</string>
+    <string name="app_title">Simple Music Player - Leitor de música simples mas com muito estilo</string>
     <!-- Short description has to have less than 80 chars -->
-    <string name="app_short_description">Reprodutor de músicas simples, com widget e sem anúncios.</string>
-    <string name="app_long_description">
-        Um reprodutor que pode ser controlado através da barra de estado, do widget ou pelos botões dos seus periféricos. Disponibiliza todas as funções que se esperam de uma aplicação deste tipo tais como ordenação de faixas, equalizador... Escute os seus mp3, outros ficheiros ou podcasts com este belo reprodutor.
-
-        Permite a pesquisa de faixas, a exibição da imagem dos álbuns, um temporizador e muito mais. Este elegante reprodutor permite-lhe criar e gerir listas de reprodução ao seu gosto.
-
-        Nas listas de reprodução, pode adicionar ficheiros ou pastas. Se deixar de gostar de uma música, pode remover o ficheiro da lista de reprodução e/ou apagar o ficheiro do armazenamento.
-
-        Disponibiliza um temporizador para que a aplicação se desligue nos termos por si desejados.
-
-        Também consegue baralhar e/ou repetir faixas bem como avanço e recuo rápido.
-
-        Está disponível em diversos idiomas e disponibiliza diversas predefinições para o equalizador.
-
-        Verificação facilitada das propriedades dos ficheiros tais como tamanho, duração, data de modificação...
-
-        Possibilita a edição dos dados EXIF tais como título e artista da faixa.
-
-        Com esta aplicação também consegue partilhar as faixas e as listas de reprodução com os seus amigos nas redes sociais, por e-mail ou outras formas..
-
-        Pode criar um widget personalizado para acesso e controlo facilitado no ecrã.
-
-        Efetue a gestão de ações de aplicações de terceiros para a reprodução de ficheiros e definição dos tons de toque.
-
-        A interface é em material design e tema escuro por definição, mas pode alterar os temas a seu gosto. Não requer o acesso a Internet o que lhe confere mais privacidade, segurança e estabilidade.
-
-        Não contém anúncios nem permissões desnecessárias. Disponibiliza um tema escuro e é totalmente \'open source\'.
-
-        <b>Consulte o conjunto completo das aplicações Simple Tools:</b>
-        https://www.simplemobiletools.com
-
-        <b>Facebook:</b>
-        https://www.facebook.com/simplemobiletools
-
-        <b>Reddit:</b>
-        https://www.reddit.com/r/SimpleMobileTools
-    </string>
-
+    <string name="app_short_description">Leitor de música simples, com widget e sem anúncios.</string>
+    <string name="app_long_description"> ⋅ Um leitor que pode controlar através da barra de estado, do widget ou pelos botões dos seus periféricos. Com as já habituais funções de ordenação de faixas ou o equalizador, reproduz ficheiros mp3, entre outros. Escute a sua música ou podcasts preferidos e não só. Para além disso, pode pesquisar, afixar a capa dos álbuns, marcar o temporizador e mais. Crie e gira listas de reprodução a seu gosto ás quais pode adicionar quer ficheiros, quer pastas. E se deixar de gostar de uma música, remova simplesmente o ficheiro da lista de reprodução ou apague-o em definitivo do armazenamento. Um prático temporizador garante que se desliga consoante o programou. Também é possível baralhar/reproduzir de modo aleatório, repetir faixas ou avançar e recuar rapidamente. Está disponível em vários idiomas e dispõe de diversas predefinições para o equalizador. Analise facilmente as propriedades dos ficheiros como o tamanho, a duração, a data de modificação, etc. e faça até a edição dos dados EXIF da faixa como o título e o artista. E depois se quiser, partilhe as suas listas de reprodução com os seus amigos nas redes sociais ou por e-mail. Através de um widget altamente personalizável, desde a cor do texto à do fundo, aceda e controle o leitor directamente a partir do ecrã principal. Serve ainda para estabelecer sons de toque, já que pode ser convocado por outras aplicações. Em Material Design num tema escuro por definição. Não requer acesso à Internet o que lhe confere mais privacidade, segurança e estabilidade. Não contém anúncios nem permissões desnecessárias. É totalmente open source e permite personalização de cores a gosto. <b>Consulte o conjunto completo das aplicações Simple Tools:</b> https://www.simplemobiletools.com <b>Facebook:</b> https://www.facebook.com/simplemobiletools <b>Reddit:</b> https://www.reddit.com/r/SimpleMobileTools </string>
     <!--
         Não encontrou todas as cadeias a traduzir? Existem mais algumas em:
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res

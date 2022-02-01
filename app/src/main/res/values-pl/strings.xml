@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">Prosty odtwarzacz muzyki</string>
     <string name="app_launcher_name">Odtwarzacz muzyki</string>
-    <string name="playlist_empty">Twoja lista odtwarzania jest pusta</string>
+    <string name="playlist_empty">Twoja playlista jest pusta</string>
     <string name="rename_song">Zmień nazwę utworu</string>
     <string name="rename_song_error">Wystąpił błąd podczas zmiany nazwy</string>
     <string name="rename_song_empty">Wypełnij wszystkie pola</string>
