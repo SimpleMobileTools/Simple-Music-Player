@@ -145,6 +145,7 @@ class TracksActivity : SimpleActivity() {
         }
 
         current_track_bar.setOnClickListener {
+            hideKeyboard()
             Intent(this, TrackActivity::class.java).apply {
                 startActivity(this)
             }
@@ -321,6 +322,7 @@ class TracksActivity : SimpleActivity() {
         }
 
         resetQueueItems(tracks) {
+            hideKeyboard()
             Intent(this, TrackActivity::class.java).apply {
                 putExtra(TRACK, Gson().toJson(track))
                 putExtra(RESTART_PLAYER, true)

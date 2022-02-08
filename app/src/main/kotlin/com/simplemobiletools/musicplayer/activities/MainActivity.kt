@@ -420,10 +420,12 @@ class MainActivity : SimpleActivity() {
     }
 
     private fun launchEqualizer() {
+        hideKeyboard()
         startActivity(Intent(applicationContext, EqualizerActivity::class.java))
     }
 
     private fun launchSettings() {
+        hideKeyboard()
         startActivity(Intent(applicationContext, SettingsActivity::class.java))
     }
 

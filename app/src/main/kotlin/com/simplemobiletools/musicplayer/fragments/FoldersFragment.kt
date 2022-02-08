@@ -7,6 +7,7 @@ import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
 import com.simplemobiletools.commons.extensions.areSystemAnimationsEnabled
 import com.simplemobiletools.commons.extensions.beGoneIf
 import com.simplemobiletools.commons.extensions.beVisibleIf
+import com.simplemobiletools.commons.extensions.hideKeyboard
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
@@ -65,6 +66,7 @@ class FoldersFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
                 val adapter = folders_list.adapter
                 if (adapter == null) {
                     FoldersAdapter(activity, folders, folders_list) {
+                        activity.hideKeyboard()
                         Intent(activity, TracksActivity::class.java).apply {
                             putExtra(FOLDER, (it as Folder).title)
                             activity.startActivity(this)

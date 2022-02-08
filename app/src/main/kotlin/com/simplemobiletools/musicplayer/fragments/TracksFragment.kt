@@ -46,6 +46,7 @@ class TracksFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
                 val adapter = tracks_list.adapter
                 if (adapter == null) {
                     TracksAdapter(activity, tracks, false, tracks_list) {
+                        activity.hideKeyboard()
                         activity.resetQueueItems(tracks) {
                             Intent(activity, TrackActivity::class.java).apply {
                                 putExtra(TRACK, Gson().toJson(it))

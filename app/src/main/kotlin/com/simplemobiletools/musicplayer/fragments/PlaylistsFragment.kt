@@ -50,6 +50,7 @@ class PlaylistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPa
                 val adapter = playlists_list.adapter
                 if (adapter == null) {
                     PlaylistsAdapter(activity, playlists, playlists_list) {
+                        activity.hideKeyboard()
                         Intent(activity, TracksActivity::class.java).apply {
                             putExtra(PLAYLIST, Gson().toJson(it))
                             activity.startActivity(this)

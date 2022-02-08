@@ -8,6 +8,7 @@ import com.google.gson.reflect.TypeToken
 import com.simplemobiletools.commons.extensions.areSystemAnimationsEnabled
 import com.simplemobiletools.commons.extensions.getAdjustedPrimaryColor
 import com.simplemobiletools.commons.extensions.getFormattedDuration
+import com.simplemobiletools.commons.extensions.hideKeyboard
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.adapters.AlbumsTracksAdapter
 import com.simplemobiletools.musicplayer.extensions.getAlbumTracksSync
@@ -63,7 +64,8 @@ class AlbumsActivity : SimpleActivity() {
             listItems.addAll(tracksToAdd)
 
             runOnUiThread {
-                val adapter = AlbumsTracksAdapter(this, listItems, albums_list) {
+                AlbumsTracksAdapter(this, listItems, albums_list) {
+                    hideKeyboard()
                     if (it is Album) {
                         Intent(this, TracksActivity::class.java).apply {
                             putExtra(ALBUM, Gson().toJson(it))
@@ -89,6 +91,7 @@ class AlbumsActivity : SimpleActivity() {
         }
 
         current_track_bar.setOnClickListener {
+            hideKeyboard()
             Intent(this, TrackActivity::class.java).apply {
                 startActivity(this)
             }
