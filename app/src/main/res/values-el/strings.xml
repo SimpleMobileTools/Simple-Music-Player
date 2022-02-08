@@ -5,10 +5,10 @@
     <string name="rename_song">Μετονομασία τραγουδιού</string>
     <string name="rename_song_error">Παρουσιάστηκε σφάλμα κατά τη μετονομασία</string>
     <string name="rename_song_empty">Συμπληρώστε όλα τα πεδία</string>
-    <string name="repeat_off">Repeat off</string>
+    <string name="repeat_off">Επανάληψη Ανενεργή</string>
     <string name="repeat_song">Επανάληψη τρέχοντος τραγουδιού</string>
-    <string name="repeat_playlist">Repeat playlist</string>
-    <string name="stop_playback_after_current_song">Stop playback after current song</string>
+    <string name="repeat_playlist">Επανάληψη λίστας</string>
+    <string name="stop_playback_after_current_song">Διακοπή αναπ/γής μετά το τρέχον τραγούδι</string>
     <string name="enable_shuffle">Ενεργοποίηση τυχαίας σειράς</string>
     <string name="disable_shuffle">Απενεργοποίηση τυχαίας σειράς</string>
     <string name="shuffle_enabled">Τυχαία σειρά Ενεργή</string>
@@ -22,7 +22,7 @@
     <string name="add_file_to_playlist">Προσθήκη αρχείου στη λίστα</string>
     <string name="add_folder_to_playlist">Προσθήκη φακέλου στη λίστα</string>
     <string name="manage_playlists">Διαχείριση λιστών </string>
-    <string name="playlists">Λίστες αναπαραγωγής</string>
+    <string name="playlists">Λίστες</string>
     <string name="create_new_playlist">Δημιουργία λίστας</string>
     <string name="rename_playlist">Μετονομασία λίστας</string>
     <string name="playlist_name_exists">Υπάρχει ήδη μια λίστα με αυτό το όνομα</string>
@@ -44,34 +44,34 @@
     <string name="show_filename">Εμφάνιση ονόματος αρχείου ως τίτλος τραγουδιού</string>
     <string name="title_is_not_available">Εάν ο τίτλος δεν είναι διαθέσιμος</string>
     <string name="show_album_cover">Εμφάνιση εξώφυλλου άλμπουμ στην κύρια οθόνη</string>
-    <string name="all_tracks">Όλα τα κομμάτια</string>
+    <string name="all_tracks">Όλα τα τραγούδια</string>
     <string name="add_to_playlist">Προσθήκη στη λίστα</string>
-    <string name="create_playlist_label">Μπορείτε να δημιουργήσετε μια νέα λίστα επιλέγοντας τους επιθυμητούς καλλιτέχνες, άλμπουμ ή κομμάτια και απο το μενού -> Προσθήκη στη λίστα αναπαραγωγής.</string>
+    <string name="create_playlist_label">Μπορείτε να δημιουργήσετε μια νέα λίστα επιλέγοντας τους επιθυμητούς καλλιτέχνες, άλμπουμ ή τραγούδια και απο το μενού -> Προσθήκη στη λίστα αναπαραγωγής.</string>
 
     <!-- Sorting -->
-    <string name="track_count">Αριθμός κομματιών</string>
+    <string name="track_count">Αριθμός τραγουδιών</string>
     <string name="album_count">Αριθμός άλμπουμ</string>
-    <string name="artist_name">Αριθμός καλλιτεχνών</string>
+    <string name="artist_name">Όνομα καλλιτέχνη</string>
     <string name="year">Έτος</string>
 
     <!-- Artists -->
     <string name="artists">Καλλιτέχνες</string>
-    <string name="folders">Folders</string>
+    <string name="folders">Φάκελοι</string>
     <string name="albums">Άλμπουμ</string>
     <plurals name="albums_plural">
         <item quantity="one">%d Άλμπουμ</item>
         <item quantity="other">%d Άλμπουμ</item>
     </plurals>
 
-    <string name="tracks">Κομμάτια</string>
+    <string name="tracks">Τραγούδια</string>
     <plurals name="tracks_plural">
-        <item quantity="one">%d Κομμάτι</item>
-        <item quantity="other">%d Κομμάτια</item>
+        <item quantity="one">%d Τραγούδι</item>
+        <item quantity="other">%d Τραγούδια</item>
     </plurals>
 
     <!-- Queue -->
     <string name="next_track">Επόμενο:</string>
-    <string name="track_queue">Αναμονή ουράς</string>
+    <string name="track_queue">Τραγούδια σε ουρά</string>
     <string name="add_to_queue">Προσθήκη στην ουρά</string>
     <string name="remove_from_queue">Κατάργηση από την ουρά</string>
     <string name="create_playlist_from_queue">Δημιουργία λίστας από την ουρά</string>
