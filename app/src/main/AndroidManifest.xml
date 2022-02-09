@@ -142,6 +142,7 @@
                 <action android:name="com.simplemobiletools.musicplayer.action.SKIP_FORWARD" />
                 <action android:name="com.simplemobiletools.musicplayer.action.SET_PLAYBACK_SPEED" />
                 <action android:name="com.simplemobiletools.musicplayer.action.BROADCAST_STATUS" />
+                <action android:name="com.simplemobiletools.musicplayer.action.UPDATE_QUEUE_SIZE" />
             </intent-filter>
         </service>
 

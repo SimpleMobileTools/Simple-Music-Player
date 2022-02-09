@@ -13,7 +13,6 @@ import android.media.AudioManager.*
 import android.media.MediaMetadataRetriever
 import android.media.MediaPlayer
 import android.media.audiofx.Equalizer
-import android.media.session.PlaybackState.PLAYBACK_POSITION_UNKNOWN
 import android.net.Uri
 import android.os.*
 import android.provider.MediaStore
@@ -161,6 +160,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             STOP_SLEEP_TIMER -> stopSleepTimer()
             BROADCAST_STATUS -> broadcastPlayerStatus()
             SET_PLAYBACK_SPEED -> setPlaybackSpeed()
+            UPDATE_QUEUE_SIZE -> updateQueueSize()
         }
 
         MediaButtonReceiver.handleIntent(mMediaSession!!, intent)
@@ -497,16 +497,6 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
                 stopForeground(false)
             }
         }, 200L)
-
-        val playbackState = if (getIsPlaying()) PlaybackStateCompat.STATE_PLAYING else PlaybackStateCompat.STATE_PAUSED
-        try {
-            mMediaSession!!.setPlaybackState(
-                PlaybackStateCompat.Builder()
-                    .setState(playbackState, PLAYBACK_POSITION_UNKNOWN, 1.0f)
-                    .build()
-            )
-        } catch (ignored: IllegalStateException) {
-        }
     }
 
     private fun getContentIntent(): PendingIntent {
@@ -739,16 +729,47 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     }
 
     private fun trackChanged() {
+        broadcastTrackChange()
+        updateMediaSession()
+        updateMediaSessionState()
+    }
+
+    private fun updateMediaSession() {
         val albumImage = getAlbumImage()
         mCurrTrackCover = albumImage.first
-        broadcastTrackChange()
+        var lockScreenImage = if (albumImage.second) albumImage.first else null
+        if (lockScreenImage == null || lockScreenImage.isRecycled) {
+            lockScreenImage = resources.getColoredBitmap(R.drawable.ic_headset, config.textColor)
+        }
 
-        val lockScreenImage = if (albumImage.second) albumImage.first else null
         val metadata = MediaMetadataCompat.Builder()
-            .putBitmap(MediaMetadataCompat.METADATA_KEY_ALBUM_ART, lockScreenImage)
+            .putBitmap(MediaMetadataCompat.METADATA_KEY_ART, lockScreenImage)
+            .putString(MediaMetadataCompat.METADATA_KEY_ALBUM, mCurrTrack?.album ?: "")
+            .putString(MediaMetadataCompat.METADATA_KEY_ARTIST, mCurrTrack?.artist ?: "")
+            .putString(MediaMetadataCompat.METADATA_KEY_TITLE, mCurrTrack?.title ?: "")
+            .putString(MediaMetadataCompat.METADATA_KEY_MEDIA_ID, mCurrTrack?.mediaStoreId?.toString())
+            .putLong(MediaMetadataCompat.METADATA_KEY_DURATION, (mCurrTrack?.duration?.toLong() ?: 0L) * 1000)
+            .putLong(MediaMetadataCompat.METADATA_KEY_TRACK_NUMBER, mTracks.indexOf(mCurrTrack).toLong() + 1)
+            .putLong(MediaMetadataCompat.METADATA_KEY_NUM_TRACKS, mTracks.size.toLong())
             .build()
 
         mMediaSession?.setMetadata(metadata)
+    }
+
+    private fun updateMediaSessionState() {
+        val builder = PlaybackStateCompat.Builder()
+        val playbackState = if (getIsPlaying()) {
+            PlaybackStateCompat.STATE_PLAYING
+        } else {
+            PlaybackStateCompat.STATE_PAUSED
+        }
+
+        builder.setState(playbackState, mPlayer?.currentPosition?.toLong() ?: 0L, mPlaybackSpeed)
+        mMediaSession?.setPlaybackState(builder.build())
+    }
+
+    private fun updateQueueSize() {
+        updateMediaSession()
     }
 
     @SuppressLint("NewApi")
@@ -797,6 +818,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
     private fun broadcastTrackProgress(progress: Int) {
         EventBus.getDefault().post(Events.ProgressUpdated(progress))
+        updateMediaSessionState()
     }
 
     // do not just return the album cover, but also a boolean to indicate if it a real cover, or just the placeholder
@@ -973,7 +995,6 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     private fun trackStateChanged(isPlaying: Boolean) {
         handleProgressHandler(isPlaying)
         setupNotification()
-        mMediaSession?.isActive = isPlaying
         broadcastTrackStateChange(isPlaying)
 
         if (isPlaying) {

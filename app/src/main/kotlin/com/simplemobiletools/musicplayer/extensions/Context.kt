@@ -262,6 +262,7 @@ fun Context.addQueueItems(newTracks: List<Track>, callback: () -> Unit) {
 
         tracksDAO.insertAll(newTracks)
         queueDAO.insertAll(itemsToInsert)
+        sendIntent(UPDATE_QUEUE_SIZE)
         callback()
     }
 }
