@@ -399,7 +399,17 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         val tracks = ArrayList<Track>()
         val allTracks = tracksDAO.getAll()
         val wantedIds = queueDAO.getAll().map { it.trackId }
-        val wantedTracks = allTracks.filter { wantedIds.contains(it.mediaStoreId) }
+
+        // make sure we fetch the songs in the order they were displayed in
+        val wantedTracks = ArrayList<Track>()
+        for (wantedId in wantedIds) {
+            val wantedTrack = allTracks.firstOrNull { it.mediaStoreId == wantedId }
+            if (wantedTrack != null) {
+                wantedTracks.add(wantedTrack)
+                continue
+            }
+        }
+
         tracks.addAll(wantedTracks)
         return tracks.distinctBy { it.mediaStoreId }.toMutableList() as ArrayList<Track>
     }
