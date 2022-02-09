@@ -1,6 +1,14 @@
 Changelog
 ==========
 
+Version 5.9.1 *(2022-02-09)*
+----------------------------
+
+ * Properly update song info at the media session, fixing bluetooth devices and maybe some lockscreens
+ * Add items in the queue in the proper order
+ * Show track count at Albums tab
+ * Added some translation, stability and UX improvements
+
 Version 5.9.0 *(2022-01-05)*
 ----------------------------
 

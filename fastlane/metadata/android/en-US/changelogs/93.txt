@@ -1,0 +1,4 @@
+ * Properly update song info at the media session, fixing bluetooth devices and maybe some lockscreens
+ * Add items in the queue in the proper order
+ * Show track count at Albums tab
+ * Added some translation, stability and UX improvements
