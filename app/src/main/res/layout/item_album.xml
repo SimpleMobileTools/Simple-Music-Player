@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/album_frame"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -33,10 +34,24 @@
             android:paddingStart="@dimen/activity_margin"
             android:text="@string/text_color"
             android:textSize="@dimen/bigger_text_size"
-            app:layout_constraintBottom_toBottomOf="@+id/album_image"
+            app:layout_constraintBottom_toTopOf="@+id/album_tracks"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/album_image"
-            app:layout_constraintTop_toTopOf="@+id/album_image" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <com.simplemobiletools.commons.views.MyTextView
+            android:id="@+id/album_tracks"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:alpha="0.8"
+            android:paddingStart="@dimen/activity_margin"
+            android:textSize="@dimen/normal_text_size"
+            app:layout_constraintBottom_toBottomOf="@+id/album_image"
+            app:layout_constraintEnd_toEndOf="@+id/album_title"
+            app:layout_constraintStart_toEndOf="@+id/album_image"
+            app:layout_constraintTop_toBottomOf="@+id/album_title"
+            tools:text="5 tracks" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

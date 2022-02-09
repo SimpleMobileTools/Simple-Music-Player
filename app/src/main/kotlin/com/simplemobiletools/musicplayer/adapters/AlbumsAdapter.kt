@@ -154,6 +154,10 @@ class AlbumsAdapter(activity: SimpleActivity, var albums: ArrayList<Album>, recy
             album_title.text = if (textToHighlight.isEmpty()) album.title else album.title.highlightTextPart(textToHighlight, adjustedPrimaryColor)
             album_title.setTextColor(textColor)
 
+            val tracks = resources.getQuantityString(R.plurals.tracks_plural, album.trackCnt, album.trackCnt)
+            album_tracks.text = tracks
+            album_tracks.setTextColor(textColor)
+
             val options = RequestOptions()
                 .error(placeholderBig)
                 .transform(CenterCrop(), RoundedCorners(cornerRadius))
