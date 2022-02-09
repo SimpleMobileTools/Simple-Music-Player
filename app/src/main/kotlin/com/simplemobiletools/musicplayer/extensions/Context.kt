@@ -150,7 +150,8 @@ fun Context.getAlbumsSync(artist: Artist): ArrayList<Album> {
         val title = cursor.getStringValue(Audio.Albums.ALBUM)
         val coverArt = ContentUris.withAppendedId(artworkUri, id).toString()
         val year = cursor.getIntValue(Audio.Albums.FIRST_YEAR)
-        val album = Album(id, artistName, title, coverArt, year)
+        val trackCnt = getAlbumTracksCount(id)
+        val album = Album(id, artistName, title, coverArt, year, trackCnt)
         albums.add(album)
     }
 
