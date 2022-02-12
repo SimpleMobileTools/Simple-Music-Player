@@ -6,10 +6,10 @@
     <string name="rename_song">Omdøb sang</string>
     <string name="rename_song_error">En fejl opstod under omdøbningen</string>
     <string name="rename_song_empty">Udfyld alle felter</string>
-    <string name="repeat_off">Repeat off</string>
+    <string name="repeat_off">Gentag fra</string>
     <string name="repeat_song">Gentag den valgte sang</string>
     <string name="repeat_playlist">Repeat playlist</string>
-    <string name="stop_playback_after_current_song">Stop playback after current song</string>
+    <string name="stop_playback_after_current_song">Stop afspilningen efter den aktuelle sang</string>
     <string name="enable_shuffle">Aktiver tilfældig rækkefølge</string>
     <string name="disable_shuffle">Deaktiver tilfældig rækkefølge</string>
     <string name="shuffle_enabled">Tilfældig rækkefølge aktiveret</string>
@@ -17,7 +17,7 @@
     <string name="volume">Volume</string>
     <string name="playback_speed">Afspilningshastighed</string>
     <string name="loading_files">Indlæser filer…</string>
-    <string name="sleep_timer">Sleep timer</string>
+    <string name="sleep_timer">Timer til slumretilstand</string>
     <!-- Playlists -->
     <string name="add_file_to_playlist">Tilføj fil til afspilningsliste</string>
     <string name="add_folder_to_playlist">Tilgøj mappe til afspilningsliste</string>
@@ -46,7 +46,7 @@
     <string name="show_album_cover">Vis album cover på hovedskærmen</string>
     <string name="all_tracks">Alle spor</string>
     <string name="add_to_playlist">Tilføj til afspilningsliste</string>
-    <string name="create_playlist_label">Du kan oprette en ny afspilningsliste ved at vælge den ønskede kunstnere, albummer eller spor via Menu -&gt; Tilføj til afspilningsliste."</string>
+    <string name="create_playlist_label">Du kan oprette en ny afspilningsliste ved at vælge de ønskede kunstnere, albummer eller spor via Menu -&gt; Tilføj til afspilningsliste.</string>
     <!-- Sorting -->
     <string name="track_count">Antal spor</string>
     <string name="album_count">Antal albummer</string>
@@ -54,7 +54,7 @@
     <string name="year">År</string>
     <!-- Artists -->
     <string name="artists">Kunstnere</string>
-    <string name="folders">Folders</string>
+    <string name="folders">Mapper</string>
     <string name="albums">Albummer</string>
     <plurals name="albums_plural">
         <item quantity="one">%d Album</item>
@@ -75,7 +75,7 @@
     <string name="equalizer">Equalizer</string>
     <string name="swap_prev_next">Ombyt forrige/næste hovedtelefonknapper</string>
     <!-- FAQ -->
-    <string name="faq_1_title">Hvordan kan jeg spole frem i sange?</string>
+    <string name="faq_1_title">Hvordan kan jeg spole frem i sange\?</string>
     <string name="faq_1_text">Du kan klikke på de to tidsangivelser (aktuel spilletid og total varighed af nummeret) nær søgefeltet, der bevæger sangen enten bagud eller fremad.</string>
     <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
     <!-- App title has to have less than 50 characters. If you cannot squeeze it, just remove a part of it -->
