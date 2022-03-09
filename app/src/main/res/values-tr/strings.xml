@@ -27,10 +27,10 @@
     <string name="rename_playlist">Çalma listesini yeniden adlandır</string>
     <string name="playlist_name_exists">Bu ada sahip bir çalma listesi zaten var</string>
     <string name="remove_playlist">Çalma listesini kaldır</string>
-    <string name="remove_playlist_description">Bu asıl dosyaları değil, sadece seçilen çalma listelerini kaldıracak.</string>
-    <string name="remove_playlist_description_placeholder">Bu asıl dosyaları değil, sadece \"%s\" listesini kaldıracak.</string>
+    <string name="remove_playlist_description">Bu asıl dosyaları değil, yalnızca seçilen çalma listelerini kaldıracak.</string>
+    <string name="remove_playlist_description_placeholder">Bu asıl dosyaları değil, yalnızca \"%s\" listesini kaldıracak.</string>
     <string name="remove_from_playlist">Çalma listesinden kaldır</string>
-    <string name="remove_from_playlist_description">Bu sadece ögeleri \"%s\" listesinden kaldırır, asıl dosyalar silinmez.</string>
+    <string name="remove_from_playlist_description">Bu yalnızca ögeleri \"%s\" listesinden kaldırır, asıl dosyalar silinmez.</string>
     <string name="delete_the_files_too">Dosyaları da sil</string>
     <string name="open_playlist">Çalma listesini aç</string>
     <string name="all_songs_cannot_be_deleted">\'Tüm şarkılar\' çalma listesi silinemez</string>
@@ -82,42 +82,7 @@
     <string name="app_title">Basit Müzik Çalar - Harika bir şarkı oynatıcı</string>
     <!-- Short description has to have less than 80 chars -->
     <string name="app_short_description">Özelleştirilebilir widget\'a, şık arayüze sahip reklamsız temiz müzik çalar.</string>
-    <string name="app_long_description">
-        Durum çubuğundan, ana ekran widget\'ından veya kulaklığınızdaki donanım düğmelerinden kolayca kontrol edilebilen basit bir müzik çalar. Ekolayzırı değiştirmenin yanı sıra çeşitli şekillerde sıralama gibi beklenen tüm işlevleri sağlar. Bu ücretsiz ve güzel müzik çalarla en sevdiğiniz mp3\'leri, diğer şarkıları veya podcast\'leri dinleyin.
-
-        Arama ve Albüm Resmini gösterme, uyku zamanlayıcısı ve diğer birçok ayar gibi özel ekstralar sunar. Bu zarif müzik çalar, istediğiniz gibi kullanışlı çalma listeleri oluşturmanıza ve yönetmenize olanak tanır.
-
-        Çalma listeleri tam olarak desteklenmektedir. Tek tek dosyaları veya tüm klasörleri ekleyebilirsiniz. Bir dosyayı beğenmezseniz, onu bir çalma listesinden kaldırabilir veya asıl dosyayı tamamen silebilirsiniz.
-
-        Kullanışlı bir uyku zamanlayıcısı ile birlikte gelir, böylece uygulamanın kapanma süresini güvenilir bir şekilde geciktirebilirsiniz.
-
-        Hem karıştırmayı hem de belirli bir şarkıyı tekrarlamayı, ayrıca atlama ve hızlı ileri sarmayı destekler.
-
-        Birçok farklı dilde kullanılabilir, birden fazla farklı ekolayzır sunar.
-
-        Boyut, süre, son değiştirilme vb. gibi dosya özelliklerini kolayca kontrol edin.
-
-        Şarkı adı ve sanatçı gibi dosya EXIF verilerini değiştirin.
-
-        Sosyal ağlarda, e-postalarda veya istediğiniz herhangi bir yerde arkadaşlarınızla hızla dosya paylaşın.
-
-        Bu şık müzik çalar, kolay erişim ve kontrol için özelleştirilebilir metin rengi, alfa ve arka plan rengine sahip bir widget içerir.
-
-        Tek tek ses dosyalarını oynatmak için üçüncü taraf amaçlarını da düzgün bir şekilde işler, böylece zil seslerinin ayarlanmasına da yardımcı olabilir.
-
-        Varsayılan olarak materyal tasarım ve koyu tema ile birlikte gelir, kolay kullanım için harika bir kullanıcı deneyimi sağlar. İnternet erişiminin olmaması size diğer uygulamalardan daha fazla gizlilik, güvenlik ve istikrar sağlar.
-
-        Reklam veya gereksiz izinler içermez. Tamamen açık kaynaktır, özelleştirilebilir renkler sağlar.
-
-        <b>Tüm Basit Araçlar paketini buradan inceleyin:</b>
-        https://www.simplemobiletools.com
-
-        <b>Facebook:</b>
-        https://www.facebook.com/simplemobiletools
-
-        <b>Reddit:</b>
-        https://www.reddit.com/r/SimpleMobileTools
-    </string>
+    <string name="app_long_description"> Durum çubuğundan, ana ekran widget\'ından veya kulaklığınızdaki donanım düğmelerinden kolayca denetlenebilen basit bir müzik çalar. Ekolayzırı değiştirmenin yanı sıra çeşitli şekillerde sıralama gibi beklenen tüm işlevleri sağlar. Bu ücretsiz ve güzel müzik çalarla en sevdiğiniz mp3\'leri, diğer şarkıları veya podcast\'leri dinleyin. Arama ve Albüm Resmini gösterme, uyku zamanlayıcısı ve diğer birçok ayar gibi özel ekstralar sunar. Bu zarif müzik çalar, istediğiniz gibi kullanışlı çalma listeleri oluşturmanıza ve yönetmenize olanak tanır. Çalma listeleri tam olarak desteklenmektedir. Tek tek dosyaları veya tüm klasörleri ekleyebilirsiniz. Bir dosyayı beğenmezseniz, onu bir çalma listesinden kaldırabilir veya asıl dosyayı tamamen silebilirsiniz. Kullanışlı bir uyku zamanlayıcısı ile birlikte gelir, böylece uygulamanın kapanma süresini güvenilir bir şekilde geciktirebilirsiniz. Hem karıştırmayı hem de belirli bir şarkıyı tekrarlamayı, ayrıca atlama ve hızlı ileri sarmayı destekler. Birçok farklı dilde kullanılabilir, birden fazla farklı ekolayzır sunar. Boyut, süre, son değiştirilme vb. gibi dosya özelliklerini kolayca görün. Şarkı adı ve sanatçı gibi dosya EXIF verilerini değiştirin. Sosyal ağlarda, e-postalarda veya istediğiniz herhangi bir yerde arkadaşlarınızla hızla dosya paylaşın. Bu şık müzik çalar, kolay erişim ve denetim için özelleştirilebilir metin rengi, alfa ve arka plan rengine sahip bir widget içerir. Tek tek ses dosyalarını oynatmak için üçüncü taraf amaçlarını da düzgün bir şekilde işler, böylece zil seslerinin ayarlanmasına da yardımcı olabilir. Öntanımlı olarak materyal tasarım ve koyu tema ile birlikte gelir, kolay kullanım için harika bir kullanıcı deneyimi sağlar. İnternet erişiminin olmaması size diğer uygulamalardan daha fazla gizlilik, güvenlik ve istikrar sağlar. Reklam veya gereksiz izinler içermez. Tamamen açık kaynaktır, özelleştirilebilir renkler sağlar. <b>Tüm Basit Araçlar paketini buradan inceleyin:</b> https://www.simplemobiletools.com <b>Facebook:</b> https://www.facebook.com/simplemobiletools <b>Reddit:</b> https://www.reddit.com/r/SimpleMobileTools </string>
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
