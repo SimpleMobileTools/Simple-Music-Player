@@ -1,9 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Простий Музичний Програвач</string>
     <string name="app_launcher_name">Музичний Програвач</string>
     <string name="playlist_empty">Ваш список відтворення порожній</string>
     <string name="rename_song">Перейменувати пісню</string>
-    <string name="rename_song_error">Трапилася помилка під час перейменування</string>
+    <string name="rename_song_error">Під час перейменування сталася помилка</string>
     <string name="rename_song_empty">Будь ласка, заповніть всі поля</string>
     <string name="repeat_off">Повтор вимкнено</string>
     <string name="repeat_song">Повторювати поточну пісню</string>
@@ -17,7 +18,6 @@
     <string name="volume">Гучність</string>
     <string name="playback_speed">Швидкість відтворення</string>
     <string name="loading_files">Завантаження файлів…</string>
-
     <!-- Playlists -->
     <string name="add_file_to_playlist">Додати файл до списку відтворення</string>
     <string name="add_folder_to_playlist">Додати теку до списку відтворення</string>
@@ -46,46 +46,39 @@
     <string name="show_album_cover">Показувати обгортку альбома на головному екрані</string>
     <string name="all_tracks">Усі композиції</string>
     <string name="add_to_playlist">Додати до плейлисту</string>
-    <string name="create_playlist_label">Ви можете створити новий список відтворення, вибравши потрібних виконавців, альбоми або композиції використовуючи Меню -> Додати до плейлисту.</string>
-
+    <string name="create_playlist_label">Ви можете створити новий список відтворення, вибравши потрібних виконавців, альбоми або композиції використовуючи Меню -&gt; Додати до плейлисту.</string>
     <!-- Sorting -->
     <string name="track_count">Кількість композицій</string>
     <string name="album_count">Кількість альбомів</string>
     <string name="artist_name">Ім\'я виконавця</string>
     <string name="year">Рік</string>
-
     <!-- Artists -->
     <string name="artists">Виконавці</string>
-    <string name="folders">Folders</string>
+    <string name="folders">Теки</string>
     <string name="albums">Альбоми</string>
     <plurals name="albums_plural">
         <item quantity="one">%d Альбом</item>
         <item quantity="few">%d Альбома</item>
         <item quantity="other">%d Альбомів</item>
     </plurals>
-
     <string name="tracks">Композиції</string>
     <plurals name="tracks_plural">
         <item quantity="one">%d Композиція</item>
         <item quantity="few">%d Композиції</item>
         <item quantity="other">%d Композицій</item>
     </plurals>
-
     <!-- Queue -->
     <string name="next_track">Наступна:</string>
     <string name="track_queue">Черга композицій</string>
     <string name="add_to_queue">Додати до черги</string>
     <string name="remove_from_queue">Вилучити з черги</string>
     <string name="create_playlist_from_queue">Створити плейліст із черги</string>
-
     <!-- Settings -->
     <string name="equalizer">Еквалайзер</string>
     <string name="swap_prev_next">Змінити призначення кнопок навушників Попередній/Наступний</string>
-
     <!-- FAQ -->
     <string name="faq_1_title">Як я можу змінити момент відтворення композиції?</string>
     <string name="faq_1_text">Ви можете натиснути на текст поточної або загальної тривалості відтворення поруч із ковзним елементом, що відображає відтворення, це перемістить програвання композиції або вперед, або назад.</string>
-
     <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
     <!-- App title has to have less than 50 characters. If you cannot squeeze it, just remove a part of it -->
     <string name="app_title">Simple Music Player - Крутий плеєр для пісень</string>
@@ -127,7 +120,6 @@
         <b>Reddit:</b>
         https://www.reddit.com/r/SimpleMobileTools
     </string>
-
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res

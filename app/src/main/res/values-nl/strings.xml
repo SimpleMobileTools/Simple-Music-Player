@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Eenvoudige Muziekspeler</string>
     <string name="app_launcher_name">Muziek</string>
@@ -17,7 +18,6 @@
     <string name="volume">Volume</string>
     <string name="playback_speed">Afspeelsnelheid</string>
     <string name="loading_files">Bestanden laden…</string>
-
     <!-- Playlists -->
     <string name="add_file_to_playlist">Bestand toevoegen aan afspeellijst</string>
     <string name="add_folder_to_playlist">Map toevoegen aan afspeellijst</string>
@@ -46,14 +46,12 @@
     <string name="show_album_cover">Albumhoes in hoofdscherm weergeven</string>
     <string name="all_tracks">Alle nummers</string>
     <string name="add_to_playlist">Naar afspeellijst</string>
-    <string name="create_playlist_label">Maak een nieuwe afspeellijst aan via Menu -> Naar afspeellijst na het kiezen van artiesten, albums of nummers.</string>
-
+    <string name="create_playlist_label">Maak een nieuwe afspeellijst aan via Menu -&gt; Naar afspeellijst na het kiezen van artiesten, albums of nummers.</string>
     <!-- Sorting -->
     <string name="track_count">Aantal nummers</string>
     <string name="album_count">Aantal albums</string>
     <string name="artist_name">Artiest</string>
     <string name="year">Jaar</string>
-
     <!-- Artists -->
     <string name="artists">Artiesten</string>
     <string name="folders">Mappen</string>
@@ -62,28 +60,23 @@
         <item quantity="one">%d album</item>
         <item quantity="other">%d albums</item>
     </plurals>
-
     <string name="tracks">Nummers</string>
     <plurals name="tracks_plural">
         <item quantity="one">%d nummer</item>
         <item quantity="other">%d nummers</item>
     </plurals>
-
     <!-- Queue -->
     <string name="next_track">Volgende:</string>
     <string name="track_queue">Wachtrij</string>
     <string name="add_to_queue">Aan wachtrij toevoegen</string>
     <string name="remove_from_queue">Uit wachtrij verwijderen</string>
     <string name="create_playlist_from_queue">Wachtrij naar afspeellijst</string>
-
     <!-- Settings -->
     <string name="equalizer">Equalizer</string>
     <string name="swap_prev_next">Knoppen Vorige/Volgende op koptelefoon omdraaien</string>
-
     <!-- FAQ -->
-    <string name="faq_1_title">Hoe kan ik een nummer vooruitspoelen?</string>
+    <string name="faq_1_title">Hoe kan ik een nummer vooruitspoelen\?</string>
     <string name="faq_1_text">Klik op de tijdsindicatoren voor de voortgang of de looptijd om resp. terug of vooruit te spoelen.</string>
-
     <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
     <!-- App title has to have less than 50 characters. If you cannot squeeze it, just remove a part of it -->
     <string name="app_title">Eenvoudige Muziekspeler - Een coole jukebox</string>
@@ -125,7 +118,6 @@
         <b>Reddit:</b>
         https://www.reddit.com/r/SimpleMobileTools
     </string>
-
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
