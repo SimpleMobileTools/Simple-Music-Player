@@ -284,10 +284,11 @@ fun Context.getAllInitialTracks(): ArrayList<Track> {
 }
 
 // store new artists, albums and tracks into our local db, delete invalid items
-fun Context.updateAllDatabases() {
+fun Context.updateAllDatabases(callback: () -> Unit) {
     ensureBackgroundThread {
         updateCachedArtists { artists ->
             updateCachedAlbums(artists)
+            callback()
         }
     }
 }

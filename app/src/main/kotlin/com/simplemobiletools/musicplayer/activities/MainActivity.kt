@@ -194,7 +194,11 @@ class MainActivity : SimpleActivity() {
             }
         }
 
-        updateAllDatabases()
+        updateAllDatabases {
+            getAllFragments().forEach {
+                it?.setupFragment(this)
+            }
+        }
     }
 
     private fun initFragments() {
@@ -377,7 +381,8 @@ class MainActivity : SimpleActivity() {
         }
     }
 
-    private fun getAllFragments() = arrayListOf(playlists_fragment_holder, artists_fragment_holder, albums_fragment_holder, tracks_fragment_holder)
+    private fun getAllFragments() =
+        arrayListOf(playlists_fragment_holder, folders_fragment_holder, artists_fragment_holder, albums_fragment_holder, tracks_fragment_holder)
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun trackChangedEvent(event: Events.TrackChanged) {
