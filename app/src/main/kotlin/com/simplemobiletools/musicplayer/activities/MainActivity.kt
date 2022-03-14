@@ -421,8 +421,10 @@ class MainActivity : SimpleActivity() {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun trackDeleted(event: Events.TrackDeleted) {
-        getAllFragments().forEach {
-            it.setupFragment(this)
+        updateAllDatabases {
+            getAllFragments().forEach {
+                it.setupFragment(this)
+            }
         }
     }
 
