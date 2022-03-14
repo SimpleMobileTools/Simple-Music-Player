@@ -27,28 +27,17 @@ class AlbumsFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
         ensureBackgroundThread {
             val cachedAlbums = activity.albumsDAO.getAll() as ArrayList<Album>
             activity.runOnUiThread {
-                gotAlbums(activity, cachedAlbums, true)
-
-                ensureBackgroundThread {
-                    val albums = ArrayList<Album>()
-
-                    val artists = context.getArtistsSync()
-                    artists.forEach { artist ->
-                        albums.addAll(context.getAlbumsSync(artist))
-                    }
-
-                    gotAlbums(activity, albums, false)
-                }
+                gotAlbums(activity, cachedAlbums)
             }
         }
     }
 
-    private fun gotAlbums(activity: SimpleActivity, albums: ArrayList<Album>, isFromCache: Boolean) {
+    private fun gotAlbums(activity: SimpleActivity, albums: ArrayList<Album>) {
         albums.sort()
 
         activity.runOnUiThread {
             albums_placeholder.text = context.getString(R.string.no_items_found)
-            albums_placeholder.beVisibleIf(albums.isEmpty() && !isFromCache)
+            albums_placeholder.beVisibleIf(albums.isEmpty())
 
             val adapter = albums_list.adapter
             if (adapter == null) {
@@ -69,27 +58,6 @@ class AlbumsFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
                 val oldItems = (adapter as AlbumsAdapter).albums
                 if (oldItems.sortedBy { it.id }.hashCode() != albums.sortedBy { it.id }.hashCode()) {
                     adapter.updateItems(albums)
-
-                    ensureBackgroundThread {
-                        albums.forEach {
-                            context.albumsDAO.insert(it)
-                        }
-
-                        // remove deleted albums from cache
-                        if (!isFromCache) {
-                            val newIds = albums.map { it.id }
-                            val idsToRemove = arrayListOf<Long>()
-                            oldItems.forEach { album ->
-                                if (!newIds.contains(album.id)) {
-                                    idsToRemove.add(album.id)
-                                }
-                            }
-
-                            idsToRemove.forEach {
-                                activity.albumsDAO.deleteAlbum(it)
-                            }
-                        }
-                    }
                 }
             }
         }

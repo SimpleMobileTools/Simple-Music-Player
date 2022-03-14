@@ -71,13 +71,6 @@ fun Context.broadcastUpdateWidgetTrackState(isPlaying: Boolean) {
     }
 }
 
-fun Context.getArtists(callback: (artists: ArrayList<Artist>) -> Unit) {
-    ensureBackgroundThread {
-        val artists = getArtistsSync()
-        callback(artists)
-    }
-}
-
 fun Context.getArtistsSync(): ArrayList<Artist> {
     val artists = ArrayList<Artist>()
     val uri = Audio.Artists.EXTERNAL_CONTENT_URI
@@ -293,24 +286,57 @@ fun Context.getAllInitialTracks(): ArrayList<Track> {
 // store new artists, albums and tracks into our local db, delete invalid items
 fun Context.updateAllDatabases() {
     ensureBackgroundThread {
-        val artists = getArtistsSync()
-        artists.forEach { artist ->
-            artistDAO.insert(artist)
+        updateCachedArtists { artists ->
+            updateCachedAlbums(artists)
         }
+    }
+}
 
-        // remove deleted artists from cache
-        val cachedArtists = artistDAO.getAll() as ArrayList<Artist>
-        val newIds = artists.map { it.id }
-        val idsToRemove = arrayListOf<Long>()
-        cachedArtists.forEach { artist ->
-            if (!newIds.contains(artist.id)) {
-                idsToRemove.add(artist.id)
-            }
-        }
+fun Context.updateCachedArtists(callback: (artists: ArrayList<Artist>) -> Unit) {
+    val artists = getArtistsSync()
+    artists.forEach { artist ->
+        artistDAO.insert(artist)
+    }
 
-        idsToRemove.forEach {
-            artistDAO.deleteArtist(it)
+    // remove deleted artists from cache
+    val cachedArtists = artistDAO.getAll() as ArrayList<Artist>
+    val newIds = artists.map { it.id }
+    val idsToRemove = arrayListOf<Long>()
+    cachedArtists.forEach { artist ->
+        if (!newIds.contains(artist.id)) {
+            idsToRemove.add(artist.id)
         }
+    }
+
+    idsToRemove.forEach {
+        artistDAO.deleteArtist(it)
+    }
+
+    callback(artists)
+}
+
+fun Context.updateCachedAlbums(artists: ArrayList<Artist>) {
+    val albums = ArrayList<Album>()
+    artists.forEach { artist ->
+        albums.addAll(getAlbumsSync(artist))
+    }
+
+    albums.forEach {
+        albumsDAO.insert(it)
+    }
+
+    // remove deleted artists from cache
+    val cachedAlbums = albumsDAO.getAll() as ArrayList<Album>
+    val newIds = albums.map { it.id }
+    val idsToRemove = arrayListOf<Long>()
+    cachedAlbums.forEach { album ->
+        if (!newIds.contains(album.id)) {
+            idsToRemove.add(album.id)
+        }
+    }
+
+    idsToRemove.forEach {
+        albumsDAO.deleteAlbum(it)
     }
 }
 
