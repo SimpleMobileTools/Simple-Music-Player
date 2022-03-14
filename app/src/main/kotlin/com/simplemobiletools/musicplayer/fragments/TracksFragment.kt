@@ -27,14 +27,14 @@ class TracksFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
     override fun setupFragment(activity: SimpleActivity) {
         ensureBackgroundThread {
             val albums = ArrayList<Album>()
-            val artists = context.getArtistsSync()
+            val artists = context.artistDAO.getAll()
             artists.forEach { artist ->
-                albums.addAll(context.getAlbumsSync(artist))
+                albums.addAll(context.albumsDAO.getArtistAlbums(artist.id))
             }
 
             val tracks = ArrayList<Track>()
-            albums.forEach {
-                tracks.addAll(context.getAlbumTracksSync(it.id))
+            albums.forEach { album ->
+                tracks.addAll(context.tracksDAO.getTracksFromAlbum(album.id))
             }
 
             Track.sorting = context.config.trackSorting

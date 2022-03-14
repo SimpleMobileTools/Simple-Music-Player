@@ -17,7 +17,8 @@ data class Album(
     @ColumnInfo(name = "title") val title: String,
     @ColumnInfo(name = "cover_art") val coverArt: String,
     @ColumnInfo(name = "year") val year: Int,
-    @ColumnInfo(name = "track_cnt") var trackCnt: Int
+    @ColumnInfo(name = "track_cnt") var trackCnt: Int,
+    @ColumnInfo(name = "artist_id") var artistId: Long
 ) : ListItem(), Comparable<Album> {
     companion object {
         var sorting = 0
