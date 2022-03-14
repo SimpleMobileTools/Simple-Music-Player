@@ -10,6 +10,7 @@ import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.commons.helpers.isOreoPlus
 import com.simplemobiletools.commons.helpers.isQPlus
+import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.databases.SongsDatabase
 import com.simplemobiletools.musicplayer.helpers.*
 import com.simplemobiletools.musicplayer.interfaces.*
@@ -270,19 +271,6 @@ fun Context.removeQueueItems(tracks: List<Track>, callback: () -> Unit) {
     }
 }
 
-fun Context.getAllInitialTracks(): ArrayList<Track> {
-    val allTracks = ArrayList<Track>()
-    getArtistsSync().forEach { artist ->
-        getAlbumsSync(artist).forEach { album ->
-            getAlbumTracksSync(album.id).forEach {
-                it.playListId = ALL_TRACKS_PLAYLIST_ID
-                allTracks.add(it)
-            }
-        }
-    }
-    return allTracks
-}
-
 // store new artists, albums and tracks into our local db, delete invalid items
 fun Context.updateAllDatabases(callback: () -> Unit) {
     ensureBackgroundThread {
@@ -365,6 +353,17 @@ fun Context.updateCachedTracks(albums: ArrayList<Album>) {
 
     idsToRemove.forEach {
         tracksDAO.removeTrack(it)
+    }
+
+    if (!config.wasAllTracksPlaylistCreated) {
+        val allTracksLabel = resources.getString(R.string.all_tracks)
+        val playlist = Playlist(ALL_TRACKS_PLAYLIST_ID, allTracksLabel)
+        playlistDAO.insert(playlist)
+        tracks.forEach {
+            it.playListId = ALL_TRACKS_PLAYLIST_ID
+        }
+        RoomHelper(this).insertTracksWithPlaylist(tracks)
+        config.wasAllTracksPlaylistCreated = true
     }
 }
 

@@ -6,15 +6,9 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
-import com.simplemobiletools.musicplayer.R
-import com.simplemobiletools.musicplayer.extensions.getAllInitialTracks
-import com.simplemobiletools.musicplayer.extensions.playlistDAO
-import com.simplemobiletools.musicplayer.helpers.ALL_TRACKS_PLAYLIST_ID
-import com.simplemobiletools.musicplayer.helpers.RoomHelper
 import com.simplemobiletools.musicplayer.interfaces.*
 import com.simplemobiletools.musicplayer.models.*
 import com.simplemobiletools.musicplayer.objects.MyExecutor
-import java.util.concurrent.Executors
 
 @Database(entities = [Track::class, Playlist::class, QueueItem::class, Artist::class, Album::class], version = 10)
 abstract class SongsDatabase : RoomDatabase() {
@@ -38,14 +32,6 @@ abstract class SongsDatabase : RoomDatabase() {
                     if (db == null) {
                         db = Room.databaseBuilder(context.applicationContext, SongsDatabase::class.java, "songs.db")
                             .setQueryExecutor(MyExecutor.myExecutor)
-                            .addCallback(object : Callback() {
-                                override fun onCreate(db: SupportSQLiteDatabase) {
-                                    super.onCreate(db)
-                                    Executors.newSingleThreadExecutor().execute {
-                                        addInitialPlaylist(context)
-                                    }
-                                }
-                            })
                             .addMigrations(MIGRATION_1_2)
                             .addMigrations(MIGRATION_2_3)
                             .addMigrations(MIGRATION_3_4)
@@ -64,14 +50,6 @@ abstract class SongsDatabase : RoomDatabase() {
 
         fun destroyInstance() {
             db = null
-        }
-
-        private fun addInitialPlaylist(context: Context) {
-            val allTracksLabel = context.resources.getString(R.string.all_tracks)
-            val playlist = Playlist(ALL_TRACKS_PLAYLIST_ID, allTracksLabel)
-            context.playlistDAO.insert(playlist)
-            val allTracks = context.getAllInitialTracks()
-            RoomHelper(context).insertTracksWithPlaylist(allTracks)
         }
 
         // removing the "type" value of Song
