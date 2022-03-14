@@ -290,6 +290,30 @@ fun Context.getAllInitialTracks(): ArrayList<Track> {
     return allTracks
 }
 
+// store new artists, albums and tracks into our local db, delete invalid items
+fun Context.updateAllDatabases() {
+    ensureBackgroundThread {
+        val artists = getArtistsSync()
+        artists.forEach { artist ->
+            artistDAO.insert(artist)
+        }
+
+        // remove deleted artists from cache
+        val cachedArtists = artistDAO.getAll() as ArrayList<Artist>
+        val newIds = artists.map { it.id }
+        val idsToRemove = arrayListOf<Long>()
+        cachedArtists.forEach { artist ->
+            if (!newIds.contains(artist.id)) {
+                idsToRemove.add(artist.id)
+            }
+        }
+
+        idsToRemove.forEach {
+            artistDAO.deleteArtist(it)
+        }
+    }
+}
+
 fun Context.getMediaStoreIdFromPath(path: String): Long {
     var id = 0L
     val projection = arrayOf(

@@ -193,6 +193,8 @@ class MainActivity : SimpleActivity() {
                 }
             }
         }
+
+        updateAllDatabases()
     }
 
     private fun initFragments() {

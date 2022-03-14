@@ -14,7 +14,6 @@ import com.simplemobiletools.musicplayer.adapters.ArtistsAdapter
 import com.simplemobiletools.musicplayer.dialogs.ChangeSortingDialog
 import com.simplemobiletools.musicplayer.extensions.artistDAO
 import com.simplemobiletools.musicplayer.extensions.config
-import com.simplemobiletools.musicplayer.extensions.getArtists
 import com.simplemobiletools.musicplayer.helpers.ARTIST
 import com.simplemobiletools.musicplayer.helpers.TAB_ARTISTS
 import com.simplemobiletools.musicplayer.models.Artist
@@ -29,23 +28,17 @@ class ArtistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
         ensureBackgroundThread {
             val cachedArtists = activity.artistDAO.getAll() as ArrayList<Artist>
             activity.runOnUiThread {
-                gotArtists(activity, cachedArtists, true)
-
-                ensureBackgroundThread {
-                    activity.getArtists { artists ->
-                        gotArtists(activity, artists, false)
-                    }
-                }
+                gotArtists(activity, cachedArtists)
             }
         }
     }
 
-    private fun gotArtists(activity: SimpleActivity, artists: ArrayList<Artist>, isFromCache: Boolean) {
+    private fun gotArtists(activity: SimpleActivity, artists: ArrayList<Artist>) {
         artists.sort()
 
         activity.runOnUiThread {
             artists_placeholder.text = context.getString(R.string.no_items_found)
-            artists_placeholder.beVisibleIf(artists.isEmpty() && !isFromCache)
+            artists_placeholder.beVisibleIf(artists.isEmpty())
 
             val adapter = artists_list.adapter
             if (adapter == null) {
@@ -66,27 +59,6 @@ class ArtistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
                 val oldItems = (adapter as ArtistsAdapter).artists
                 if (oldItems.sortedBy { it.id }.hashCode() != artists.sortedBy { it.id }.hashCode()) {
                     adapter.updateItems(artists)
-
-                    ensureBackgroundThread {
-                        artists.forEach {
-                            context.artistDAO.insert(it)
-                        }
-
-                        // remove deleted artists from cache
-                        if (!isFromCache) {
-                            val newIds = artists.map { it.id }
-                            val idsToRemove = arrayListOf<Long>()
-                            oldItems.forEach { artist ->
-                                if (!newIds.contains(artist.id)) {
-                                    idsToRemove.add(artist.id)
-                                }
-                            }
-
-                            idsToRemove.forEach {
-                                activity.artistDAO.deleteArtist(it)
-                            }
-                        }
-                    }
                 }
             }
         }
