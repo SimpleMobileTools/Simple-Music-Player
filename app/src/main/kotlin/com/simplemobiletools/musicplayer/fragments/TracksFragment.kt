@@ -32,10 +32,12 @@ class TracksFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
                 albums.addAll(context.albumsDAO.getArtistAlbums(artist.id))
             }
 
-            val tracks = ArrayList<Track>()
+            var tracks = ArrayList<Track>()
             albums.forEach { album ->
                 tracks.addAll(context.tracksDAO.getTracksFromAlbum(album.id))
             }
+
+            tracks = tracks.distinctBy { "${it.path}/${it.mediaStoreId}" }.toMutableList() as ArrayList<Track>
 
             Track.sorting = context.config.trackSorting
             tracks.sort()

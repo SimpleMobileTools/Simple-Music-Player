@@ -23,7 +23,7 @@ interface SongsDao {
     @Query("SELECT COUNT(*) FROM tracks WHERE playlist_id = :playlistId")
     fun getTracksCountFromPlaylist(playlistId: Int): Int
 
-    @Query("SELECT * FROM tracks WHERE folder_name = :folderName COLLATE NOCASE")
+    @Query("SELECT * FROM tracks WHERE folder_name = :folderName COLLATE NOCASE GROUP BY media_store_id")
     fun getTracksFromFolder(folderName: String): List<Track>
 
     @Query("SELECT * FROM tracks WHERE media_store_id = :mediaStoreId")
@@ -32,8 +32,8 @@ interface SongsDao {
     @Delete
     fun removeSongsFromPlaylists(songs: List<Track>)
 
-    @Query("DELETE FROM tracks WHERE media_store_id = :id")
-    fun removeTrack(id: Long)
+    @Query("DELETE FROM tracks WHERE media_store_id = :mediaStoreId")
+    fun removeTrack(mediaStoreId: Long)
 
     @Query("DELETE FROM tracks WHERE playlist_id = :playlistId")
     fun removePlaylistSongs(playlistId: Int)

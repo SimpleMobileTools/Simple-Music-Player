@@ -299,7 +299,7 @@ fun Context.updateCachedArtists(callback: (artists: ArrayList<Artist>) -> Unit) 
         artistDAO.insert(artist)
     }
 
-    // remove deleted artists from cache
+    // remove invalid artists from cache
     val cachedArtists = artistDAO.getAll() as ArrayList<Artist>
     val newIds = artists.map { it.id }
     val idsToRemove = arrayListOf<Long>()
@@ -322,11 +322,11 @@ fun Context.updateCachedAlbums(artists: ArrayList<Artist>) {
         albums.addAll(getAlbumsSync(artist))
     }
 
-    albums.forEach {
-        albumsDAO.insert(it)
+    albums.forEach { album ->
+        albumsDAO.insert(album)
     }
 
-    // remove deleted artists from cache
+    // remove invalid albums from cache
     val cachedAlbums = albumsDAO.getAll() as ArrayList<Album>
     val newIds = albums.map { it.id }
     val idsToRemove = arrayListOf<Long>()
@@ -338,6 +338,33 @@ fun Context.updateCachedAlbums(artists: ArrayList<Artist>) {
 
     idsToRemove.forEach {
         albumsDAO.deleteAlbum(it)
+    }
+
+    updateCachedTracks(albums)
+}
+
+fun Context.updateCachedTracks(albums: ArrayList<Album>) {
+    val tracks = ArrayList<Track>()
+    albums.forEach { album ->
+        tracks.addAll(getAlbumTracksSync(album.id))
+    }
+
+    tracks.forEach { track ->
+        tracksDAO.insert(track)
+    }
+
+    // remove invalid tracks from cache
+    val cachedTracks = tracksDAO.getAll() as ArrayList<Track>
+    val newIds = tracks.map { it.mediaStoreId }
+    val idsToRemove = arrayListOf<Long>()
+    cachedTracks.forEach { track ->
+        if (!newIds.contains(track.mediaStoreId)) {
+            idsToRemove.add(track.mediaStoreId)
+        }
+    }
+
+    idsToRemove.forEach {
+        tracksDAO.removeTrack(it)
     }
 }
 
