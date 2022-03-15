@@ -190,6 +190,7 @@ class AlbumsTracksAdapter(
             album_frame?.isSelected = selectedKeys.contains(album.hashCode())
             album_title.text = album.title
             album_title.setTextColor(textColor)
+            album_tracks.text = resources.getQuantityString(R.plurals.tracks_plural, album.trackCnt, album.trackCnt)
 
             val options = RequestOptions()
                 .error(placeholderBig)
