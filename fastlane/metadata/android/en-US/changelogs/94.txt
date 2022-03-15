@@ -1,0 +1,3 @@
+ * Reworked file fetching, should improve performance a lot
+ * Added Privacy policy
+ * Added some translation, stability and UX improvements

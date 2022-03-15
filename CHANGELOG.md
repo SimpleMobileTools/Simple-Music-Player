@@ -1,6 +1,13 @@
 Changelog
 ==========
 
+Version 5.10.0 *(2022-03-15)*
+----------------------------
+
+ * Reworked file fetching, should improve performance a lot
+ * Added Privacy policy
+ * Added some translation, stability and UX improvements
+
 Version 5.9.1 *(2022-02-09)*
 ----------------------------
 
