@@ -426,7 +426,7 @@ class MainActivity : SimpleActivity() {
     fun trackDeleted(event: Events.TrackDeleted) {
         updateAllDatabases {
             getAllFragments().forEach {
-                it.setupFragment(this)
+                it?.setupFragment(this)
             }
         }
     }
