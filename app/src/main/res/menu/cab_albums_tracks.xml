@@ -18,10 +18,12 @@
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/cab_add_to_playlist"
+        android:showAsAction="never"
         android:title="@string/add_to_playlist"
         app:showAsAction="never" />
     <item
         android:id="@+id/cab_add_to_queue"
+        android:showAsAction="never"
         android:title="@string/add_to_queue"
         app:showAsAction="never" />
     <item
