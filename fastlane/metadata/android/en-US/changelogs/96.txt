@@ -1,0 +1,4 @@
+ * Added Material You theme support on Android 12+
+ * Make sure the playback speed is applied to new tracks too
+ * Fixed some third party intent related glitches
+ * Added many stability, translation and UX improvements

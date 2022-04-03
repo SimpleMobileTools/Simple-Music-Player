@@ -1,6 +1,14 @@
 Changelog
 ==========
 
+Version 5.11.0 *(2022-04-03)*
+----------------------------
+
+ * Added Material You theme support on Android 12+
+ * Make sure the playback speed is applied to new tracks too
+ * Fixed some third party intent related glitches
+ * Added many stability, translation and UX improvements
+
 Version 5.10.1 *(2022-03-16)*
 ----------------------------
 
