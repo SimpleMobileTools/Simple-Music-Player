@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Simple Music Player</string>
+    <string name="app_name">Simpel musikspelare</string>
     <string name="app_launcher_name">Musikspelare</string>
     <string name="playlist_empty">Din spellista är tom</string>
     <string name="rename_song">Byt namn på låt</string>
     <string name="rename_song_error">Ett fel uppstod under namnbytet</string>
     <string name="rename_song_empty">Du måste fylla i alla fält</string>
-    <string name="repeat_off">Repeat off</string>
+    <string name="repeat_off">Repetera av</string>
     <string name="repeat_song">Repetera nuvarande låt</string>
-    <string name="repeat_playlist">Repeat playlist</string>
-    <string name="stop_playback_after_current_song">Stop playback after current song</string>
+    <string name="repeat_playlist">Repetera alla</string>
+    <string name="stop_playback_after_current_song">Stopa uppspelning efter nuvarande låt</string>
     <string name="enable_shuffle">Aktivera blanda</string>
     <string name="disable_shuffle">Inaktivera blanda</string>
     <string name="shuffle_enabled">Blanda aktiverad</string>
     <string name="shuffle_disabled">Blanda inaktiverad</string>
     <string name="sleep_timer">Vilotidtagare</string>
-    <string name="volume">Volume</string>
-    <string name="playback_speed">Playback speed</string>
-    <string name="loading_files">Loading files…</string>
+    <string name="volume">Volym</string>
+    <string name="playback_speed">Uppspelningshastighet</string>
+    <string name="loading_files">Laddar filer…</string>
     <!-- Playlists -->
-    <string name="add_file_to_playlist">Lägg till fil i spellista</string>
-    <string name="add_folder_to_playlist">Lägg till mapp i spellista</string>
+    <string name="add_file_to_playlist">Addera fil i spellista</string>
+    <string name="add_folder_to_playlist">Addera mapp till spellista</string>
     <string name="manage_playlists">Hantera spellistor</string>
     <string name="playlists">Spellistor</string>
     <string name="create_new_playlist">Skapa spellista</string>
@@ -48,13 +48,13 @@
     <string name="add_to_playlist">Lägg till i spellista</string>
     <string name="create_playlist_label">Du kan skapa en ny spellista genom att välja önskade artister, album eller spår och använda Meny -&gt; Lägg till i spellista.</string>
     <!-- Sorting -->
-    <string name="track_count">Spårantal</string>
-    <string name="album_count">Albumantal</string>
+    <string name="track_count">Antal spår</string>
+    <string name="album_count">Antal album</string>
     <string name="artist_name">Artistnamn</string>
     <string name="year">År</string>
     <!-- Artists -->
     <string name="artists">Artister</string>
-    <string name="folders">Folders</string>
+    <string name="folders">Mappar</string>
     <string name="albums">Album</string>
     <plurals name="albums_plural">
         <item quantity="one">%d album</item>
@@ -79,9 +79,9 @@
     <string name="faq_1_text">Du kan klicka på låtens nuvarande tid eller längd nära sökfältet, vilket kommer att spola låten antingen bakåt eller framåt.</string>
     <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
     <!-- App title has to have less than 50 characters. If you cannot squeeze it, just remove a part of it -->
-    <string name="app_title">Simple Music Player - A cool player for your songs</string>
+    <string name="app_title">Simpel musikspelare - En cool spelare för dina låtar</string>
     <!-- Short description has to have less than 80 chars -->
-    <string name="app_short_description">A clean music player with a customizable widget, stylish interface and no ads.</string>
+    <string name="app_short_description">En ren musikspelare med en anpassningsbar widget, snyggt gränssnitt och inga annonser.</string>
     <string name="app_long_description">
         En musikspelare som du enkelt styr från statusfältet, en gränssnittskomponent på startskärmen eller knapparna på din mikrofonlur. Det har alla förväntade funktioner som sortering på olika sätt samt ändring av frekvenskorrigerare. Lyssna på din favorit mp3, andra låtar eller podcasts med denna gratis och vackra musikspelare.
 
