@@ -721,6 +721,10 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         if (mPlayOnPrepare) {
             mp.start()
             requestAudioFocus()
+
+            if (mIsThirdPartyIntent) {
+                trackChanged()
+            }
         } else if (mSetProgressOnPrepare > 0) {
             mPlayer?.seekTo(mSetProgressOnPrepare)
             broadcastTrackProgress(mSetProgressOnPrepare / 1000)
