@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">簡易音樂播放器</string>
     <string name="app_launcher_name">簡易音樂播放器</string>
@@ -5,19 +6,18 @@
     <string name="rename_song">重新命名歌曲</string>
     <string name="rename_song_error">重新命名時發生錯誤</string>
     <string name="rename_song_empty">請填入全部欄位</string>
-    <string name="repeat_off">Repeat off</string>
+    <string name="repeat_off">重播 關</string>
     <string name="repeat_song">重播當前歌曲</string>
     <string name="repeat_playlist">Repeat playlist</string>
-    <string name="stop_playback_after_current_song">Stop playback after current song</string>
+    <string name="stop_playback_after_current_song">播完這首歌曲後停止播放</string>
     <string name="enable_shuffle">啟用隨機</string>
     <string name="disable_shuffle">停用隨機</string>
     <string name="shuffle_enabled">隨機已啟用</string>
     <string name="shuffle_disabled">隨機已停用</string>
     <string name="sleep_timer">睡眠定時器</string>
     <string name="volume">Volume</string>
-    <string name="playback_speed">Playback speed</string>
-    <string name="loading_files">Loading files…</string>
-
+    <string name="playback_speed">播放速度</string>
+    <string name="loading_files">正在載入檔案……</string>
     <!-- Playlists -->
     <string name="add_file_to_playlist">添加檔案到播放清單</string>
     <string name="add_folder_to_playlist">添加資料夾到播放清單</string>
@@ -44,46 +44,38 @@
     <string name="show_filename">顯示檔案名稱作為歌名</string>
     <string name="title_is_not_available">如果標題不可用</string>
     <string name="show_album_cover">在主畫面顯示專輯封面</string>
-    <string name="all_tracks">All tracks</string>
+    <string name="all_tracks">所有曲目</string>
     <string name="add_to_playlist">Add to playlist</string>
-    <string name="create_playlist_label">You can create a new playlist by selecting the wanted artists, albums or tracks and using Menu -> Add to playlist.</string>
-
+    <string name="create_playlist_label">You can create a new playlist by selecting the wanted artists, albums or tracks and using Menu -&gt; Add to playlist.</string>
     <!-- Sorting -->
-    <string name="track_count">Track Count</string>
-    <string name="album_count">Album Count</string>
+    <string name="track_count">曲目數</string>
+    <string name="album_count">專輯數</string>
     <string name="artist_name">Artist Name</string>
-    <string name="year">Year</string>
-
+    <string name="year">年份</string>
     <!-- Artists -->
-    <string name="artists">Artists</string>
-    <string name="folders">Folders</string>
-    <string name="albums">Albums</string>
+    <string name="artists">演出者</string>
+    <string name="folders">資料夾</string>
+    <string name="albums">專輯</string>
     <plurals name="albums_plural">
         <item quantity="one">%d Album</item>
         <item quantity="other">%d Albums</item>
     </plurals>
-
-    <string name="tracks">Tracks</string>
+    <string name="tracks">曲目</string>
     <plurals name="tracks_plural">
-        <item quantity="one">%d Track</item>
-        <item quantity="other">%d Tracks</item>
+        <item quantity="other">%d 首曲目</item>
     </plurals>
-
     <!-- Queue -->
     <string name="next_track">Next:</string>
-    <string name="track_queue">Track queue</string>
-    <string name="add_to_queue">Add to queue</string>
-    <string name="remove_from_queue">Remove from queue</string>
+    <string name="track_queue">曲目隊列</string>
+    <string name="add_to_queue">加到隊列</string>
+    <string name="remove_from_queue">從隊列中移除</string>
     <string name="create_playlist_from_queue">Create playlist from queue</string>
-
     <!-- Settings -->
     <string name="equalizer">等化器</string>
     <string name="swap_prev_next">交換耳機按鈕的 上一首/下一首</string>
-
     <!-- FAQ -->
     <string name="faq_1_title">我如何快轉歌曲?</string>
     <string name="faq_1_text">你可以點擊進度條附近的當前或總時長文字，歌曲就會快進或倒退。</string>
-
     <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
     <!-- App title has to have less than 50 characters. If you cannot squeeze it, just remove a part of it -->
     <string name="app_title">簡易音樂播放器 - 一個酷炫的歌曲播放器</string>
@@ -125,7 +117,6 @@
         <b>Reddit:</b>
         https://www.reddit.com/r/SimpleMobileTools
     </string>
-
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
