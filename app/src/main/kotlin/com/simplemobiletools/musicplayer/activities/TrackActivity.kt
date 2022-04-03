@@ -7,6 +7,7 @@ import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.os.Looper
 import android.provider.MediaStore
 import android.view.GestureDetector
 import android.view.MotionEvent
@@ -246,7 +247,11 @@ class TrackActivity : SimpleActivity(), PlaybackSpeedListener {
                             val drawable = resources.getDrawable(R.drawable.ic_headset)
                             val placeholder = getResizedDrawable(drawable, wantedHeight)
                             placeholder.applyColorFilter(getProperTextColor())
-                            activity_track_image.setImageDrawable(placeholder)
+
+                            runOnUiThread {
+                                activity_track_image.setImageDrawable(placeholder)
+                            }
+
                             return true
                         }
 
