@@ -647,6 +647,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             } else {
                 ContentUris.withAppendedId(Audio.Media.EXTERNAL_CONTENT_URI, mCurrTrack!!.mediaStoreId)
             }
+
             mPlayer!!.setDataSource(applicationContext, trackUri)
             mPlayer!!.prepareAsync()
             trackChanged()
@@ -721,6 +722,10 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         if (mPlayOnPrepare) {
             mp.start()
             requestAudioFocus()
+
+            if (isMarshmallowPlus()) {
+                mp.playbackParams = mp.playbackParams.setSpeed(config.playbackSpeed)
+            }
 
             if (mIsThirdPartyIntent) {
                 trackChanged()
