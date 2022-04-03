@@ -159,7 +159,7 @@ class ArtistsAdapter(activity: SimpleActivity, var artists: ArrayList<Artist>, r
     private fun setupView(view: View, artist: Artist) {
         view.apply {
             artist_frame?.isSelected = selectedKeys.contains(artist.hashCode())
-            artist_title.text = if (textToHighlight.isEmpty()) artist.title else artist.title.highlightTextPart(textToHighlight, adjustedPrimaryColor)
+            artist_title.text = if (textToHighlight.isEmpty()) artist.title else artist.title.highlightTextPart(textToHighlight, properPrimaryColor)
             artist_title.setTextColor(textColor)
 
             val albums = resources.getQuantityString(R.plurals.albums_plural, artist.albumCnt, artist.albumCnt)

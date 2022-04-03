@@ -67,13 +67,13 @@ class MyWidgetProvider : AppWidgetProvider() {
     private fun setupIntent(context: Context, views: RemoteViews, action: String, id: Int) {
         val intent = Intent(context, MyWidgetProvider::class.java)
         intent.action = action
-        val pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0)
+        val pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
         views.setOnClickPendingIntent(id, pendingIntent)
     }
 
     private fun setupAppOpenIntent(context: Context, views: RemoteViews, id: Int) {
         val intent = context.getLaunchIntent() ?: Intent(context, SplashActivity::class.java)
-        val pendingIntent = PendingIntent.getActivity(context, 0, intent, 0)
+        val pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
         views.setOnClickPendingIntent(id, pendingIntent)
     }
 

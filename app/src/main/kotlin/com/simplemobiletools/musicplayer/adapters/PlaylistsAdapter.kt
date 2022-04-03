@@ -152,7 +152,7 @@ class PlaylistsAdapter(
     private fun setupView(view: View, playlist: Playlist) {
         view.apply {
             playlist_frame?.isSelected = selectedKeys.contains(playlist.id)
-            playlist_title.text = if (textToHighlight.isEmpty()) playlist.title else playlist.title.highlightTextPart(textToHighlight, adjustedPrimaryColor)
+            playlist_title.text = if (textToHighlight.isEmpty()) playlist.title else playlist.title.highlightTextPart(textToHighlight, properPrimaryColor)
             playlist_title.setTextColor(textColor)
 
             val tracks = resources.getQuantityString(R.plurals.tracks_plural, playlist.trackCount, playlist.trackCount)

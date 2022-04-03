@@ -20,7 +20,6 @@ import com.simplemobiletools.musicplayer.extensions.*
 import com.simplemobiletools.musicplayer.models.Album
 import com.simplemobiletools.musicplayer.models.Track
 import kotlinx.android.synthetic.main.item_album.view.*
-import java.util.*
 
 class AlbumsAdapter(activity: SimpleActivity, var albums: ArrayList<Album>, recyclerView: MyRecyclerView, itemClick: (Any) -> Unit) :
     MyRecyclerViewAdapter(activity, recyclerView, itemClick), RecyclerViewFastScroller.OnPopupTextUpdate {
@@ -151,7 +150,7 @@ class AlbumsAdapter(activity: SimpleActivity, var albums: ArrayList<Album>, recy
     private fun setupView(view: View, album: Album) {
         view.apply {
             album_frame?.isSelected = selectedKeys.contains(album.hashCode())
-            album_title.text = if (textToHighlight.isEmpty()) album.title else album.title.highlightTextPart(textToHighlight, adjustedPrimaryColor)
+            album_title.text = if (textToHighlight.isEmpty()) album.title else album.title.highlightTextPart(textToHighlight, properPrimaryColor)
             album_title.setTextColor(textColor)
 
             val tracks = resources.getQuantityString(R.plurals.tracks_plural, album.trackCnt, album.trackCnt)

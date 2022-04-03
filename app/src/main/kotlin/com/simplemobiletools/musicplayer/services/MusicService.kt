@@ -14,7 +14,10 @@ import android.media.MediaMetadataRetriever
 import android.media.MediaPlayer
 import android.media.audiofx.Equalizer
 import android.net.Uri
-import android.os.*
+import android.os.CountDownTimer
+import android.os.Handler
+import android.os.Looper
+import android.os.PowerManager
 import android.provider.MediaStore
 import android.provider.MediaStore.Audio
 import android.support.v4.media.MediaMetadataCompat
@@ -42,7 +45,6 @@ import com.simplemobiletools.musicplayer.receivers.NotificationDismissedReceiver
 import org.greenrobot.eventbus.EventBus
 import java.io.File
 import java.io.IOException
-import java.util.*
 
 class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnErrorListener, MediaPlayer.OnCompletionListener, OnAudioFocusChangeListener {
     companion object {
@@ -501,13 +503,13 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
     private fun getContentIntent(): PendingIntent {
         val contentIntent = Intent(this, MainActivity::class.java)
-        return PendingIntent.getActivity(this, 0, contentIntent, 0)
+        return PendingIntent.getActivity(this, 0, contentIntent, PendingIntent.FLAG_IMMUTABLE)
     }
 
     private fun getIntent(action: String): PendingIntent {
         val intent = Intent(this, ControlActionsListener::class.java)
         intent.action = action
-        return PendingIntent.getBroadcast(applicationContext, 0, intent, 0)
+        return PendingIntent.getBroadcast(applicationContext, 0, intent, PendingIntent.FLAG_IMMUTABLE)
     }
 
     // on Android 8+ the service is launched with startForegroundService(), so startForeground must be called within a few secs

@@ -13,10 +13,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.qtalk.recyclerviewfastscroller.RecyclerViewFastScroller
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
-import com.simplemobiletools.commons.extensions.applyColorFilter
-import com.simplemobiletools.commons.extensions.getAdjustedPrimaryColor
-import com.simplemobiletools.commons.extensions.getColoredDrawableWithColor
-import com.simplemobiletools.commons.extensions.getFormattedDuration
+import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.interfaces.ItemMoveCallback
 import com.simplemobiletools.commons.interfaces.ItemTouchHelperContract
 import com.simplemobiletools.commons.interfaces.StartReorderDragListener
@@ -142,7 +139,7 @@ class QueueAdapter(activity: SimpleActivity, val items: ArrayList<Track>, recycl
             track_queue_title.text = track.title
 
             arrayOf(track_queue_title, track_queue_duration).forEach {
-                val color = if (track == MusicService.mCurrTrack) context.getAdjustedPrimaryColor() else textColor
+                val color = if (track == MusicService.mCurrTrack) context.getProperPrimaryColor() else textColor
                 it.setTextColor(color)
             }
 

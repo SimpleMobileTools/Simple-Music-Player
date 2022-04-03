@@ -5,8 +5,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import com.simplemobiletools.commons.extensions.areSystemAnimationsEnabled
-import com.simplemobiletools.commons.extensions.getAdjustedPrimaryColor
-import com.simplemobiletools.commons.extensions.getContrastColor
+import com.simplemobiletools.commons.extensions.getProperPrimaryColor
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.adapters.QueueAdapter
@@ -33,7 +32,7 @@ class QueueActivity : SimpleActivity() {
         bus = EventBus.getDefault()
         bus!!.register(this)
         setupAdapter()
-        queue_fastscroller.updateColors(getAdjustedPrimaryColor())
+        queue_fastscroller.updateColors(getProperPrimaryColor())
     }
 
     override fun onDestroy() {

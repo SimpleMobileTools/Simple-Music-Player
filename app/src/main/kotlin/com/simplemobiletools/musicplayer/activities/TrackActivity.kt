@@ -2,7 +2,7 @@ package com.simplemobiletools.musicplayer.activities
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.graphics.*
+import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
@@ -304,7 +304,7 @@ class TrackActivity : SimpleActivity(), PlaybackSpeedListener {
     private fun setupShuffleButton() {
         val isShuffleEnabled = config.isShuffleEnabled
         activity_track_toggle_shuffle.apply {
-            applyColorFilter(if (isShuffleEnabled) getAdjustedPrimaryColor() else config.textColor)
+            applyColorFilter(if (isShuffleEnabled) getProperPrimaryColor() else config.textColor)
             alpha = if (isShuffleEnabled) 1f else MEDIUM_ALPHA
             contentDescription = getString(if (isShuffleEnabled) R.string.disable_shuffle else R.string.enable_shuffle)
         }
@@ -328,7 +328,7 @@ class TrackActivity : SimpleActivity(), PlaybackSpeedListener {
             val isRepeatOff = playbackSetting == PlaybackSetting.REPEAT_OFF
 
             alpha = if (isRepeatOff) MEDIUM_ALPHA else 1f
-            applyColorFilter(if (isRepeatOff) config.textColor else getAdjustedPrimaryColor())
+            applyColorFilter(if (isRepeatOff) config.textColor else getProperPrimaryColor())
         }
     }
 

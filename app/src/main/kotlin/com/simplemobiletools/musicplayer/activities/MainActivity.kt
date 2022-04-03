@@ -86,7 +86,7 @@ class MainActivity : SimpleActivity() {
         sleep_timer_stop.applyColorFilter(config.textColor)
         updateCurrentTrackBar()
 
-        val adjustedPrimaryColor = getAdjustedPrimaryColor()
+        val adjustedPrimaryColor = getProperPrimaryColor()
         main_tabs_holder.apply {
             setTabTextColors(config.textColor, adjustedPrimaryColor)
             setSelectedTabIndicatorColor(adjustedPrimaryColor)

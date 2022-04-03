@@ -6,8 +6,8 @@ import android.view.Menu
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.simplemobiletools.commons.extensions.areSystemAnimationsEnabled
-import com.simplemobiletools.commons.extensions.getAdjustedPrimaryColor
 import com.simplemobiletools.commons.extensions.getFormattedDuration
+import com.simplemobiletools.commons.extensions.getProperPrimaryColor
 import com.simplemobiletools.commons.extensions.hideKeyboard
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.adapters.AlbumsTracksAdapter
@@ -37,7 +37,7 @@ class AlbumsActivity : SimpleActivity() {
         bus = EventBus.getDefault()
         bus!!.register(this)
 
-        albums_fastscroller.updateColors(getAdjustedPrimaryColor())
+        albums_fastscroller.updateColors(getProperPrimaryColor())
 
         val artistType = object : TypeToken<Artist>() {}.type
         val artist = Gson().fromJson<Artist>(intent.getStringExtra(ARTIST), artistType)

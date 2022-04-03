@@ -10,12 +10,12 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 31
 
     defaultConfig {
         applicationId "com.simplemobiletools.musicplayer"
         minSdkVersion 21
-        targetSdkVersion 30
+        targetSdkVersion 31
         versionCode 95
         versionName "5.10.1"
         setProperty("archivesBaseName", "music-player")
@@ -68,7 +68,7 @@ android {
 }
 
 dependencies {
-    implementation 'com.github.SimpleMobileTools:Simple-Commons:c3c88596e0'
+    implementation 'com.github.SimpleMobileTools:Simple-Commons:8301d8356c'
     implementation 'org.greenrobot:eventbus:3.2.0'
     implementation 'androidx.media:media:1.4.3'
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'

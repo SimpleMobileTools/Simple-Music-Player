@@ -74,7 +74,7 @@ class FoldersAdapter(
     private fun setupView(view: View, folder: Folder) {
         view.apply {
             folder_frame?.isSelected = selectedKeys.contains(folder.hashCode())
-            folder_title.text = if (textToHighlight.isEmpty()) folder.title else folder.title.highlightTextPart(textToHighlight, adjustedPrimaryColor)
+            folder_title.text = if (textToHighlight.isEmpty()) folder.title else folder.title.highlightTextPart(textToHighlight, properPrimaryColor)
             folder_title.setTextColor(textColor)
 
             val tracks = resources.getQuantityString(R.plurals.tracks_plural, folder.trackCount, folder.trackCount)

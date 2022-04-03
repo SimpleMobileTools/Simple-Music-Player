@@ -174,7 +174,7 @@ class TracksAdapter(
     private fun setupView(view: View, track: Track) {
         view.apply {
             track_frame?.isSelected = selectedKeys.contains(track.hashCode())
-            track_title.text = if (textToHighlight.isEmpty()) track.title else track.title.highlightTextPart(textToHighlight, adjustedPrimaryColor)
+            track_title.text = if (textToHighlight.isEmpty()) track.title else track.title.highlightTextPart(textToHighlight, properPrimaryColor)
 
             arrayOf(track_id, track_title, track_duration).forEach {
                 it.setTextColor(textColor)
