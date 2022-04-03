@@ -25,6 +25,11 @@ class PlaybackSpeedFragment : BottomSheetDialogFragment() {
     private var seekBar: MySeekBar? = null
     private var listener: PlaybackSpeedListener? = null
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setStyle(STYLE_NORMAL, R.style.CustomBottomSheetDialogTheme)
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val config = requireContext().config
         val view = inflater.inflate(R.layout.fragment_playback_speed, container, false)
