@@ -457,7 +457,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         }
 
         if (mCurrTrackCover?.isRecycled == true) {
-            mCurrTrackCover = resources.getColoredBitmap(R.drawable.ic_headset, config.textColor)
+            mCurrTrackCover = resources.getColoredBitmap(R.drawable.ic_headset, getProperTextColor())
         }
 
         val notificationDismissedIntent = Intent(this, NotificationDismissedReceiver::class.java).apply {
@@ -741,7 +741,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         mCurrTrackCover = albumImage.first
         var lockScreenImage = if (albumImage.second) albumImage.first else null
         if (lockScreenImage == null || lockScreenImage.isRecycled) {
-            lockScreenImage = resources.getColoredBitmap(R.drawable.ic_headset, config.textColor)
+            lockScreenImage = resources.getColoredBitmap(R.drawable.ic_headset, getProperTextColor())
         }
 
         val metadata = MediaMetadataCompat.Builder()
@@ -891,7 +891,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         }
 
         if (mHeadsetPlaceholder == null) {
-            mHeadsetPlaceholder = resources.getColoredBitmap(R.drawable.ic_headset, config.textColor)
+            mHeadsetPlaceholder = resources.getColoredBitmap(R.drawable.ic_headset, getProperTextColor())
         }
 
         return Pair(mHeadsetPlaceholder!!, false)

@@ -6,10 +6,10 @@ import android.text.method.LinkMovementMethod
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import com.simplemobiletools.commons.extensions.applyColorFilter
+import com.simplemobiletools.commons.extensions.getProperTextColor
 import com.simplemobiletools.commons.extensions.launchPurchaseThankYouIntent
 import com.simplemobiletools.commons.extensions.setupDialogStuff
 import com.simplemobiletools.musicplayer.R
-import com.simplemobiletools.musicplayer.extensions.config
 import kotlinx.android.synthetic.main.dialog_widget_locked.view.*
 
 class WidgetLockedDialog(val activity: Activity, val callback: () -> Unit) {
@@ -17,7 +17,7 @@ class WidgetLockedDialog(val activity: Activity, val callback: () -> Unit) {
 
     init {
         val view: View = activity.layoutInflater.inflate(R.layout.dialog_widget_locked, null)
-        view.widget_locked_image.applyColorFilter(activity.config.textColor)
+        view.widget_locked_image.applyColorFilter(activity.getProperTextColor())
 
         dialog = AlertDialog.Builder(activity)
             .setPositiveButton(R.string.purchase, null)

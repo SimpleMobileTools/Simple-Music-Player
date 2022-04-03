@@ -82,18 +82,18 @@ class MainActivity : SimpleActivity() {
         }
 
         updateTextColors(main_holder)
-        sleep_timer_holder.background = ColorDrawable(config.backgroundColor)
-        sleep_timer_stop.applyColorFilter(config.textColor)
+        sleep_timer_holder.background = ColorDrawable(getProperBackgroundColor())
+        sleep_timer_stop.applyColorFilter(getProperTextColor())
         updateCurrentTrackBar()
 
         val adjustedPrimaryColor = getProperPrimaryColor()
         main_tabs_holder.apply {
-            setTabTextColors(config.textColor, adjustedPrimaryColor)
+            setTabTextColors(getProperTextColor(), adjustedPrimaryColor)
             setSelectedTabIndicatorColor(adjustedPrimaryColor)
         }
 
         getAllFragments().forEach {
-            it?.setupColors(config.textColor, adjustedPrimaryColor)
+            it?.setupColors(getProperTextColor(), adjustedPrimaryColor)
         }
     }
 

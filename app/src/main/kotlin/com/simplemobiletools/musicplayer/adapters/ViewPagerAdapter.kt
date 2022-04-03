@@ -4,6 +4,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.viewpager.widget.PagerAdapter
 import com.simplemobiletools.commons.extensions.getProperPrimaryColor
+import com.simplemobiletools.commons.extensions.getProperTextColor
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
 import com.simplemobiletools.musicplayer.extensions.config
@@ -20,7 +21,7 @@ class ViewPagerAdapter(val activity: SimpleActivity) : PagerAdapter() {
 
         (view as MyViewPagerFragment).apply {
             setupFragment(activity)
-            setupColors(activity.config.textColor, activity.getProperPrimaryColor())
+            setupColors(activity.getProperTextColor(), activity.getProperPrimaryColor())
         }
 
         return view

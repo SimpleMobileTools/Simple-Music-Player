@@ -6,9 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.simplemobiletools.commons.extensions.applyColorFilter
-import com.simplemobiletools.commons.extensions.onSeekBarChangeListener
-import com.simplemobiletools.commons.extensions.updateTextColors
+import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.views.MySeekBar
 import com.simplemobiletools.commons.views.MyTextView
 import com.simplemobiletools.musicplayer.R
@@ -28,17 +26,17 @@ class PlaybackSpeedFragment : BottomSheetDialogFragment() {
     private var listener: PlaybackSpeedListener? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val config = context!!.config
+        val config = requireContext().config
         val view = inflater.inflate(R.layout.fragment_playback_speed, container, false)
-        val background = context!!.resources.getDrawable(R.drawable.bottom_sheet_bg)
-        (background as LayerDrawable).findDrawableByLayerId(R.id.bottom_sheet_background).applyColorFilter(config.backgroundColor)
+        val background = requireContext().resources.getDrawable(R.drawable.bottom_sheet_bg, requireContext().theme)
+        (background as LayerDrawable).findDrawableByLayerId(R.id.bottom_sheet_background).applyColorFilter(requireContext().getProperBackgroundColor())
 
         view.apply {
             seekBar = playback_speed_seekbar
             setBackgroundDrawable(background)
-            context!!.updateTextColors(playback_speed_holder)
-            playback_speed_slow.applyColorFilter(config.textColor)
-            playback_speed_fast.applyColorFilter(config.textColor)
+            requireContext().updateTextColors(playback_speed_holder)
+            playback_speed_slow.applyColorFilter(requireContext().getProperTextColor())
+            playback_speed_fast.applyColorFilter(requireContext().getProperTextColor())
             playback_speed_slow.setOnClickListener { reduceSpeed() }
             playback_speed_fast.setOnClickListener { increaseSpeed() }
             initSeekbar(playback_speed_seekbar, playback_speed_label, config)
@@ -98,7 +96,7 @@ class PlaybackSpeedFragment : BottomSheetDialogFragment() {
 
     private fun reduceSpeed() {
         var currentProgress = seekBar?.progress ?: return
-        val currentSpeed = context!!.config.playbackSpeed
+        val currentSpeed = requireContext().config.playbackSpeed
         while (currentProgress > 0) {
             val newSpeed = getPlaybackSpeed(--currentProgress)
             if (newSpeed != currentSpeed) {
@@ -110,7 +108,7 @@ class PlaybackSpeedFragment : BottomSheetDialogFragment() {
 
     private fun increaseSpeed() {
         var currentProgress = seekBar?.progress ?: return
-        val currentSpeed = context!!.config.playbackSpeed
+        val currentSpeed = requireContext().config.playbackSpeed
         while (currentProgress < MAX_PROGRESS) {
             val newSpeed = getPlaybackSpeed(++currentProgress)
             if (newSpeed != currentSpeed) {

@@ -55,7 +55,7 @@ class TrackActivity : SimpleActivity(), PlaybackSpeedListener {
         showTransparentTop = true
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_track)
-        nextTrackPlaceholder = resources.getColoredDrawableWithColor(R.drawable.ic_headset, config.textColor)
+        nextTrackPlaceholder = resources.getColoredDrawableWithColor(R.drawable.ic_headset, getProperTextColor())
         bus = EventBus.getDefault()
         bus!!.register(this)
         setupButtons()
@@ -94,7 +94,7 @@ class TrackActivity : SimpleActivity(), PlaybackSpeedListener {
                 action = INIT
                 try {
                     startService(this)
-                    activity_track_play_pause.updatePlayPauseIcon(true, config.textColor)
+                    activity_track_play_pause.updatePlayPauseIcon(true, getProperTextColor())
                 } catch (e: Exception) {
                     showErrorToast(e)
                 }
@@ -103,7 +103,7 @@ class TrackActivity : SimpleActivity(), PlaybackSpeedListener {
             sendIntent(BROADCAST_STATUS)
         }
 
-        next_track_holder.background = ColorDrawable(config.backgroundColor)
+        next_track_holder.background = ColorDrawable(getProperBackgroundColor())
         next_track_holder.setOnClickListener {
             startActivity(Intent(applicationContext, QueueActivity::class.java))
         }
@@ -112,8 +112,8 @@ class TrackActivity : SimpleActivity(), PlaybackSpeedListener {
     override fun onResume() {
         super.onResume()
         updateTextColors(activity_track_holder)
-        activity_track_title.setTextColor(config.textColor)
-        activity_track_artist.setTextColor(config.textColor)
+        activity_track_title.setTextColor(getProperTextColor())
+        activity_track_artist.setTextColor(getProperTextColor())
     }
 
     override fun onDestroy() {
@@ -178,7 +178,7 @@ class TrackActivity : SimpleActivity(), PlaybackSpeedListener {
         }
 
         arrayOf(activity_track_previous, activity_track_play_pause, activity_track_next).forEach {
-            it.applyColorFilter(config.textColor)
+            it.applyColorFilter(getProperTextColor())
         }
     }
 
@@ -245,7 +245,7 @@ class TrackActivity : SimpleActivity(), PlaybackSpeedListener {
                         override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
                             val drawable = resources.getDrawable(R.drawable.ic_headset)
                             val placeholder = getResizedDrawable(drawable, wantedHeight)
-                            placeholder.applyColorFilter(config.textColor)
+                            placeholder.applyColorFilter(getProperTextColor())
                             activity_track_image.setImageDrawable(placeholder)
                             return true
                         }
@@ -304,7 +304,7 @@ class TrackActivity : SimpleActivity(), PlaybackSpeedListener {
     private fun setupShuffleButton() {
         val isShuffleEnabled = config.isShuffleEnabled
         activity_track_toggle_shuffle.apply {
-            applyColorFilter(if (isShuffleEnabled) getProperPrimaryColor() else config.textColor)
+            applyColorFilter(if (isShuffleEnabled) getProperPrimaryColor() else getProperTextColor())
             alpha = if (isShuffleEnabled) 1f else MEDIUM_ALPHA
             contentDescription = getString(if (isShuffleEnabled) R.string.disable_shuffle else R.string.enable_shuffle)
         }
@@ -328,13 +328,13 @@ class TrackActivity : SimpleActivity(), PlaybackSpeedListener {
             val isRepeatOff = playbackSetting == PlaybackSetting.REPEAT_OFF
 
             alpha = if (isRepeatOff) MEDIUM_ALPHA else 1f
-            applyColorFilter(if (isRepeatOff) config.textColor else getProperPrimaryColor())
+            applyColorFilter(if (isRepeatOff) getProperTextColor() else getProperPrimaryColor())
         }
     }
 
     private fun setupSeekbar() {
         if (isMarshmallowPlus()) {
-            activity_track_speed_icon.applyColorFilter(config.textColor)
+            activity_track_speed_icon.applyColorFilter(getProperTextColor())
             updatePlaybackSpeed(config.playbackSpeed)
         }
 
@@ -388,7 +388,7 @@ class TrackActivity : SimpleActivity(), PlaybackSpeedListener {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun trackStateChanged(event: Events.TrackStateChanged) {
-        activity_track_play_pause.updatePlayPauseIcon(event.isPlaying, config.textColor)
+        activity_track_play_pause.updatePlayPauseIcon(event.isPlaying, getProperTextColor())
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

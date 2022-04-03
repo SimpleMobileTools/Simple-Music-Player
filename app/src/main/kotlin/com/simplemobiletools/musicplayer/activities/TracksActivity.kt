@@ -22,9 +22,7 @@ import com.simplemobiletools.musicplayer.extensions.*
 import com.simplemobiletools.musicplayer.helpers.*
 import com.simplemobiletools.musicplayer.models.*
 import com.simplemobiletools.musicplayer.services.MusicService
-import kotlinx.android.synthetic.main.activity_queue.*
 import kotlinx.android.synthetic.main.activity_tracks.*
-import kotlinx.android.synthetic.main.fragment_albums.view.*
 import kotlinx.android.synthetic.main.view_current_track_bar.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -73,10 +71,10 @@ class TracksActivity : SimpleActivity() {
         val titleToUse = playlist?.title ?: album?.title ?: folder ?: ""
         title = titleToUse.replace("<", "&lt;")
 
-        val adjustedPrimaryColor = getProperPrimaryColor()
-        tracks_fastscroller.updateColors(adjustedPrimaryColor)
-        tracks_placeholder.setTextColor(config.textColor)
-        tracks_placeholder_2.setTextColor(adjustedPrimaryColor)
+        val properPrimaryColor = getProperPrimaryColor()
+        tracks_fastscroller.updateColors(properPrimaryColor)
+        tracks_placeholder.setTextColor(getProperTextColor())
+        tracks_placeholder_2.setTextColor(properPrimaryColor)
         tracks_placeholder_2.underlineText()
         tracks_placeholder_2.setOnClickListener {
             addFolderToPlaylist()

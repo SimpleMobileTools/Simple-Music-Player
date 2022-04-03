@@ -9,6 +9,7 @@ import android.widget.SeekBar
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.simplemobiletools.commons.dialogs.RadioGroupDialog
+import com.simplemobiletools.commons.extensions.getProperTextColor
 import com.simplemobiletools.commons.extensions.showErrorToast
 import com.simplemobiletools.commons.extensions.updateTextColors
 import com.simplemobiletools.commons.models.RadioItem
@@ -74,7 +75,7 @@ class EqualizerActivity : SimpleActivity() {
                 equalizer_bands_holder.addView(this)
                 bandSeekBars.add(this.equalizer_band_seek_bar)
                 this.equalizer_band_label.text = formatted
-                this.equalizer_band_label.setTextColor(config.textColor)
+                this.equalizer_band_label.setTextColor(getProperTextColor())
                 this.equalizer_band_seek_bar.max = maxValue - minValue
 
                 this.equalizer_band_seek_bar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
