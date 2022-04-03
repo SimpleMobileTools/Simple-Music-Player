@@ -463,14 +463,14 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         val notificationDismissedIntent = Intent(this, NotificationDismissedReceiver::class.java).apply {
             action = NOTIFICATION_DISMISSED
         }
-        val notificationDismissedPendingIntent =
-            PendingIntent.getBroadcast(this, 0, notificationDismissedIntent, PendingIntent.FLAG_CANCEL_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+
+        val flags = PendingIntent.FLAG_CANCEL_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        val notificationDismissedPendingIntent = PendingIntent.getBroadcast(this, 0, notificationDismissedIntent, flags)
 
         val notification = NotificationCompat.Builder(applicationContext, NOTIFICATION_CHANNEL)
             .setContentTitle(title)
             .setContentText(artist)
             .setSmallIcon(R.drawable.ic_headset_small)
-            .setLargeIcon(mCurrTrackCover)
             .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
             .setPriority(NotificationCompat.PRIORITY_MAX)
             .setWhen(notifWhen)
@@ -489,6 +489,11 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             .addAction(R.drawable.ic_previous_vector, getString(R.string.previous), getIntent(PREVIOUS))
             .addAction(playPauseIcon, getString(R.string.playpause), getIntent(PLAYPAUSE))
             .addAction(R.drawable.ic_next_vector, getString(R.string.next), getIntent(NEXT))
+
+        try {
+            notification.setLargeIcon(mCurrTrackCover)
+        } catch (e: OutOfMemoryError) {
+        }
 
         startForeground(NOTIFICATION_ID, notification.build())
 
@@ -751,7 +756,10 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         mCurrTrackCover = albumImage.first
         var lockScreenImage = if (albumImage.second) albumImage.first else null
         if (lockScreenImage == null || lockScreenImage.isRecycled) {
-            lockScreenImage = resources.getColoredBitmap(R.drawable.ic_headset, getProperTextColor())
+            try {
+                lockScreenImage = resources.getColoredBitmap(R.drawable.ic_headset, getProperTextColor())
+            } catch (e: OutOfMemoryError) {
+            }
         }
 
         val metadata = MediaMetadataCompat.Builder()
@@ -777,7 +785,10 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         }
 
         builder.setState(playbackState, mPlayer?.currentPosition?.toLong() ?: 0L, mPlaybackSpeed)
-        mMediaSession?.setPlaybackState(builder.build())
+        try {
+            mMediaSession?.setPlaybackState(builder.build())
+        } catch (ignored: Exception) {
+        }
     }
 
     private fun updateQueueSize() {
