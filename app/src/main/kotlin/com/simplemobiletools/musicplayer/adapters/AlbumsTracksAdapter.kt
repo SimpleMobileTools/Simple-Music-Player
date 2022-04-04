@@ -191,6 +191,7 @@ class AlbumsTracksAdapter(
             album_title.text = album.title
             album_title.setTextColor(textColor)
             album_tracks.text = resources.getQuantityString(R.plurals.tracks_plural, album.trackCnt, album.trackCnt)
+            album_tracks.setTextColor(textColor)
 
             val options = RequestOptions()
                 .error(placeholderBig)

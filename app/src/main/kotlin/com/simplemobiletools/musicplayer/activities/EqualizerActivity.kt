@@ -9,9 +9,7 @@ import android.widget.SeekBar
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.simplemobiletools.commons.dialogs.RadioGroupDialog
-import com.simplemobiletools.commons.extensions.getProperTextColor
-import com.simplemobiletools.commons.extensions.showErrorToast
-import com.simplemobiletools.commons.extensions.updateTextColors
+import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.models.RadioItem
 import com.simplemobiletools.commons.views.MySeekBar
 import com.simplemobiletools.musicplayer.R
@@ -52,6 +50,7 @@ class EqualizerActivity : SimpleActivity() {
         setupBands(equalizer)
         setupPresets(equalizer)
         updateTextColors(equalizer_holder)
+        equalizer_preset.setTextColor(getProperPrimaryColor().getContrastColor())
     }
 
     private fun setupBands(equalizer: Equalizer) {
