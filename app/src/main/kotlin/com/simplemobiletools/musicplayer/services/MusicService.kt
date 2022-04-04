@@ -729,7 +729,10 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             requestAudioFocus()
 
             if (isMarshmallowPlus()) {
-                mp.playbackParams = mp.playbackParams.setSpeed(config.playbackSpeed)
+                try {
+                    mp.playbackParams = mp.playbackParams.setSpeed(config.playbackSpeed)
+                } catch (e: Exception) {
+                }
             }
 
             if (mIsThirdPartyIntent) {
