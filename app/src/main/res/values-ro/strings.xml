@@ -36,4 +36,42 @@
     <string name="open_playlist">Deschideți lista de redare</string>
     <string name="remove_from_playlist_description">Acest lucru va elimina numai elementele din lista de redare \"%s\". Fișierele propriu-zise nu vor fi șterse.</string>
     <string name="all_songs_cannot_be_deleted">Lista de redare \"Toate melodiile\" nu poate fi ștearsă</string>
+    <string name="create_playlist_from_folder">Creați o nouă listă de redare din dosar</string>
+    <string name="folder_contains_no_audio">Dosarul selectat nu conține fișiere audio</string>
+    <string name="delete_current_song">Ștergeți melodia curentă</string>
+    <string name="remove_current_song">Elimină melodia curentă din lista de redare</string>
+    <string name="show_album_cover">Afișați coperta albumului pe ecranul principal</string>
+    <string name="all_tracks">Toate piesele</string>
+    <string name="add_to_playlist">Adăugați la lista de redare</string>
+    <string name="create_playlist_label">Puteți crea o nouă listă de redare selectând artiștii, albumele sau piesele dorite și folosind Meniu -&gt; Adaugaţi la lista de redare.</string>
+    <string name="track_count">Număr de piese</string>
+    <string name="album_count">Număr de albume</string>
+    <string name="artist_name">Numele artistului</string>
+    <string name="year">An</string>
+    <string name="artists">Artiști</string>
+    <string name="folders">Dosare</string>
+    <string name="albums">Albume</string>
+    <plurals name="albums_plural">
+        <item quantity="one">%d Album</item>
+        <item quantity="few">%d Albume</item>
+        <item quantity="other">%d Albume</item>
+    </plurals>
+    <string name="tracks">Piese</string>
+    <plurals name="tracks_plural">
+        <item quantity="one">%d Piesă</item>
+        <item quantity="few">%d Piese</item>
+        <item quantity="other">%d Piese</item>
+    </plurals>
+    <string name="next_track">Urmează:</string>
+    <string name="add_to_queue">Adăugați la coadă</string>
+    <string name="remove_from_queue">Eliminaţi din coadă</string>
+    <string name="create_playlist_from_queue">Creați o listă de redare din coadă</string>
+    <string name="equalizer">Egalizator</string>
+    <string name="swap_prev_next">Inversaţi butoanele anterior/următor pentru căști</string>
+    <string name="faq_1_title">Cum pot să avansez rapid melodiile\?</string>
+    <string name="faq_1_text">Puteți face clic pe textele de durată curentă sau maximă de lângă bara de căutare, care vor muta melodia fie înapoi, fie înainte.</string>
+    <string name="app_short_description">Un player muzical simplu, cu un widget personalizabil şi o interfață elegantă.</string>
+    <string name="title_is_not_available">Dacă titlul nu este disponibil</string>
+    <string name="show_filename">Afișează numele fișierului ca titlu al melodiei</string>
+    <string name="app_title">Simple Music Player - Player pentru melodiile tale</string>
 </resources>
