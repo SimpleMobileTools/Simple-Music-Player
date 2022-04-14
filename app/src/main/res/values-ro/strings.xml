@@ -81,8 +81,9 @@
     <string name="faq_1_text">Puteți face clic pe textele de durată curentă sau maximă de lângă bara de căutare, care vor muta melodia fie înapoi, fie înainte.</string>
     <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
     <!-- App title has to have less than 50 characters. If you cannot squeeze it, just remove a part of it -->
-    <string name="app_short_description">Un player muzical simplu, cu un widget personalizabil şi o interfață elegantă.</string>
     <string name="app_title">Simple Music Player - Player pentru melodiile tale</string>
+    <!-- Short description has to have less than 80 chars -->
+    <string name="app_short_description">Un player muzical simplu, cu un widget personalizabil şi o interfață elegantă.</string>
     <string name="app_long_description">
         A simple music player easily controllable from the status bar, home screen widget or by hardware buttons on your headset. It provides all expected functions like sorting in various ways as well as changing the Equalizer.  Listen to your favorite mp3, other songs or podcasts with this free beautiful music player.
 

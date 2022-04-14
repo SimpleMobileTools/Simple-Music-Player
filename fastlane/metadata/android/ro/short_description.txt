@@ -1,0 +1,1 @@
+Un player muzical simplu, cu un widget personalizabil şi o interfață elegantă.
