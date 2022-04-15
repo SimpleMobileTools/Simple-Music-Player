@@ -1,6 +1,13 @@
 Changelog
 ==========
 
+Version 5.11.2 *(2022-04-15)*
+----------------------------
+
+ * Make sure the current track bar doesn't cover up anything
+ * Fixed an Android 12 related crash
+ * Added some stability and translation improvements
+
 Version 5.11.1 *(2022-04-14)*
 ----------------------------
 

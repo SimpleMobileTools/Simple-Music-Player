@@ -1,0 +1,3 @@
+ * Make sure the current track bar doesn't cover up anything
+ * Fixed an Android 12 related crash
+ * Added some stability and translation improvements
