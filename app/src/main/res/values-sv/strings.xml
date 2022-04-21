@@ -14,7 +14,7 @@
     <string name="disable_shuffle">Inaktivera blanda</string>
     <string name="shuffle_enabled">Blanda aktiverad</string>
     <string name="shuffle_disabled">Blanda inaktiverad</string>
-    <string name="sleep_timer">Vilotidtagare</string>
+    <string name="sleep_timer">Insomningstimer</string>
     <string name="volume">Volym</string>
     <string name="playback_speed">Uppspelningshastighet</string>
     <string name="loading_files">Laddar filer…</string>
@@ -46,7 +46,7 @@
     <string name="show_album_cover">Visa skivomslag i huvudvyn</string>
     <string name="all_tracks">Alla spår</string>
     <string name="add_to_playlist">Lägg till i spellista</string>
-    <string name="create_playlist_label">Du kan skapa en ny spellista genom att välja önskade artister, album eller spår och använda Meny -&gt; Lägg till i spellista.</string>
+    <string name="create_playlist_label">Du kan skapa en ny spellista genom att välja önskade artister, album eller spår och använda Meny -&gt; Lägg till i spellista.</string>
     <!-- Sorting -->
     <string name="track_count">Antal spår</string>
     <string name="album_count">Antal album</string>
