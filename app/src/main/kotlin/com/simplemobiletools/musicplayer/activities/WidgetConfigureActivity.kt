@@ -7,10 +7,10 @@ import android.graphics.Color
 import android.os.Bundle
 import android.widget.RemoteViews
 import com.simplemobiletools.commons.dialogs.ColorPickerDialog
+import com.simplemobiletools.commons.dialogs.WidgetLockedDialog
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.IS_CUSTOMIZING_COLORS
 import com.simplemobiletools.musicplayer.R
-import com.simplemobiletools.musicplayer.dialogs.WidgetLockedDialog
 import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.helpers.MyWidgetProvider
 import com.simplemobiletools.musicplayer.services.MusicService
