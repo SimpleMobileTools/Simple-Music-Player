@@ -57,13 +57,13 @@
     <string name="folders">Mappar</string>
     <string name="albums">Album</string>
     <plurals name="albums_plural">
-        <item quantity="one">%d album</item>
-        <item quantity="other">%d album</item>
+        <item quantity="one">%d Album</item>
+        <item quantity="other">%d Album</item>
     </plurals>
     <string name="tracks">Spår</string>
     <plurals name="tracks_plural">
-        <item quantity="one">%d spår</item>
-        <item quantity="other">%d spår</item>
+        <item quantity="one">%d S pår</item>
+        <item quantity="other">%d Spår</item>
     </plurals>
     <!-- Queue -->
     <string name="next_track">Nästa:</string>
