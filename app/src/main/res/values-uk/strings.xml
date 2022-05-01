@@ -78,7 +78,7 @@
     <string name="swap_prev_next">Змінити призначення кнопок навушників Попередній/Наступний</string>
     <!-- FAQ -->
     <string name="faq_1_title">Як я можу змінити момент відтворення композиції?</string>
-    <string name="faq_1_text">Ви можете натиснути на текст поточної або загальної тривалості відтворення поруч із ковзним елементом, що відображає відтворення, це перемістить програвання композиції або вперед, або назад.</string>
+    <string name="faq_1_text">Ви можете натиснути на текст поточної або загальної тривалості відтворення поруч із ковзним елементом відтворення, це перемістить програвання композиції або назад, або вперед.</string>
     <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
     <!-- App title has to have less than 50 characters. If you cannot squeeze it, just remove a part of it -->
     <string name="app_title">Simple Music Player - Крутий плеєр для пісень</string>
