@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Simple Music Player</string>
     <string name="app_launcher_name">Música</string>
@@ -17,7 +18,6 @@
     <string name="volume">Volume</string>
     <string name="playback_speed">Playback speed</string>
     <string name="loading_files">Loading files…</string>
-
     <!-- Playlists -->
     <string name="add_file_to_playlist">Añadir archivo a lista de reproducción</string>
     <string name="add_folder_to_playlist">Añadir carpeta a lista de reproducción</string>
@@ -46,14 +46,12 @@
     <string name="show_album_cover">Mostrar portada de álbum en la pantalla principal</string>
     <string name="all_tracks">Todas las canciones</string>
     <string name="add_to_playlist">Añadir a lista de reproducción</string>
-    <string name="create_playlist_label">Puedes crear una nueva lista de reproducción seleccionando los artistas deseados, álbumes o canciones y seleccionando Menú -> Añadir a lista de reproducción.</string>
-
+    <string name="create_playlist_label">Puedes crear una nueva lista de reproducción seleccionando los artistas deseados, álbumes o canciones y seleccionando Menú -&gt; Añadir a lista de reproducción.</string>
     <!-- Sorting -->
     <string name="track_count">Conteo de canciones</string>
     <string name="album_count">Conteo de álbumes</string>
     <string name="artist_name">Nombre de artista</string>
     <string name="year">Año</string>
-
     <!-- Artists -->
     <string name="artists">Artistas</string>
     <string name="folders">Folders</string>
@@ -62,28 +60,23 @@
         <item quantity="one">%d Álbum</item>
         <item quantity="other">%d Álbumes</item>
     </plurals>
-
     <string name="tracks">Canciones</string>
     <plurals name="tracks_plural">
         <item quantity="one">%d Canción</item>
         <item quantity="other">%d Canciones</item>
     </plurals>
-
     <!-- Queue -->
     <string name="next_track">Siguiente:</string>
     <string name="track_queue">Cola de canciones</string>
     <string name="add_to_queue">Añadir a la cola</string>
     <string name="remove_from_queue">Quitar de la cola</string>
     <string name="create_playlist_from_queue">Crear lista de reproducción de la cola</string>
-
     <!-- Settings -->
     <string name="equalizer">Ecualizador</string>
     <string name="swap_prev_next">Intercambiar botones de anterior/siguiente de los audífonos</string>
-
     <!-- FAQ -->
     <string name="faq_1_title">¿Cómo puedo adelantar canciones?</string>
     <string name="faq_1_text">Puedes tocar los textos de la duración actual o máxima cerca de la barra de búsqueda, eso hará que la canción avance o retroceda.</string>
-
     <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
     <!-- App title has to have less than 50 characters. If you cannot squeeze it, just remove a part of it -->
     <string name="app_title">Reproductor de Música Simple - Un buen reproductor</string>
@@ -125,7 +118,6 @@
         <b>Reddit:</b>
         https://www.reddit.com/r/SimpleMobileTools
     </string>
-
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res

@@ -12,8 +12,8 @@
     <string name="stop_playback_after_current_song">播完這首歌曲後停止播放</string>
     <string name="enable_shuffle">啟用隨機</string>
     <string name="disable_shuffle">停用隨機</string>
-    <string name="shuffle_enabled">隨機已啟用</string>
-    <string name="shuffle_disabled">隨機已停用</string>
+    <string name="shuffle_enabled">已啟用隨機播放</string>
+    <string name="shuffle_disabled">已停用隨機播放</string>
     <string name="sleep_timer">睡眠定時器</string>
     <string name="volume">Volume</string>
     <string name="playback_speed">播放速度</string>
@@ -74,8 +74,8 @@
     <string name="equalizer">等化器</string>
     <string name="swap_prev_next">交換耳機按鈕的 上一首/下一首</string>
     <!-- FAQ -->
-    <string name="faq_1_title">我如何快轉歌曲?</string>
-    <string name="faq_1_text">你可以點擊進度條附近的當前或總時長文字，歌曲就會快進或倒退。</string>
+    <string name="faq_1_title">要怎麼快轉歌曲？</string>
+    <string name="faq_1_text">點一下進度條旁邊的目前或總時長文字，歌曲就會倒帶或快轉。</string>
     <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
     <!-- App title has to have less than 50 characters. If you cannot squeeze it, just remove a part of it -->
     <string name="app_title">簡易音樂播放器 - 一個酷炫的歌曲播放器</string>
