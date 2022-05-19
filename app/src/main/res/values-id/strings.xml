@@ -90,6 +90,7 @@
 \n<b>Lihat rangkaian lengkap Simple Tools di sini:</b> https://www.simplemobiletools.com
 \n<b>Facebook:</b> https://www.facebook.com/simplemobiletools
 \n<b>Reddit :</b> https://www.reddit.com/r/SimpleMobileTools </string>
+    <string name="export_playlist">Export playlist</string>
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res

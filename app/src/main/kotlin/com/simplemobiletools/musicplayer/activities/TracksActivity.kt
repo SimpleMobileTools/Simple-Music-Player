@@ -1,23 +1,29 @@
 package com.simplemobiletools.musicplayer.activities
 
+import android.app.Activity
 import android.app.SearchManager
+import android.content.ActivityNotFoundException
 import android.content.ContentUris
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.MenuItemCompat
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.simplemobiletools.commons.dialogs.FilePickerDialog
 import com.simplemobiletools.commons.extensions.*
+import com.simplemobiletools.commons.helpers.PERMISSION_WRITE_STORAGE
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
+import com.simplemobiletools.commons.helpers.isQPlus
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.adapters.TracksAdapter
 import com.simplemobiletools.musicplayer.adapters.TracksHeaderAdapter
 import com.simplemobiletools.musicplayer.dialogs.ChangeSortingDialog
+import com.simplemobiletools.musicplayer.dialogs.ExportPlaylistDialog
 import com.simplemobiletools.musicplayer.extensions.*
 import com.simplemobiletools.musicplayer.helpers.*
 import com.simplemobiletools.musicplayer.models.*
@@ -27,6 +33,7 @@ import kotlinx.android.synthetic.main.view_current_track_bar.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import java.io.OutputStream
 
 // this activity is used for displaying Playlist and Folder tracks, also Album tracks with a possible album header at the top
 // Artists -> Albums -> Tracks
@@ -34,6 +41,8 @@ class TracksActivity : SimpleActivity() {
     private val TYPE_PLAYLIST = 1
     private val TYPE_FOLDER = 2
     private val TYPE_ALBUM = 3
+
+    private val PICK_EXPORT_FILE_INTENT = 2
 
     private var isSearchOpen = false
     private var searchMenuItem: MenuItem? = null
@@ -168,6 +177,7 @@ class TracksActivity : SimpleActivity() {
             findItem(R.id.sort).isVisible = tracksType != TYPE_ALBUM
             findItem(R.id.add_file_to_playlist).isVisible = tracksType == TYPE_PLAYLIST
             findItem(R.id.add_folder_to_playlist).isVisible = tracksType == TYPE_PLAYLIST
+            findItem(R.id.export_playlist).isVisible = tracksType == TYPE_PLAYLIST
         }
 
         setupSearch(menu)
@@ -180,6 +190,7 @@ class TracksActivity : SimpleActivity() {
             R.id.sort -> showSortingDialog()
             R.id.add_file_to_playlist -> addFileToPlaylist()
             R.id.add_folder_to_playlist -> addFolderToPlaylist()
+            R.id.export_playlist -> tryExportPlaylist()
             else -> return super.onOptionsItemSelected(item)
         }
         return true
@@ -326,6 +337,64 @@ class TracksActivity : SimpleActivity() {
                 putExtra(RESTART_PLAYER, true)
                 startActivity(this)
             }
+        }
+    }
+
+    private fun tryExportPlaylist() {
+        if (isQPlus()) {
+            ExportPlaylistDialog(this, playlist!!.title, config.lastExportPath, true) { file ->
+                Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
+                    type = "audio/mpegurl"
+                    putExtra(Intent.EXTRA_TITLE, file.name)
+                    addCategory(Intent.CATEGORY_OPENABLE)
+
+                    try {
+                        startActivityForResult(this, PICK_EXPORT_FILE_INTENT)
+                    } catch (e: ActivityNotFoundException) {
+                        toast(R.string.system_service_disabled, Toast.LENGTH_LONG)
+                    } catch (e: Exception) {
+                        showErrorToast(e)
+                    }
+                }
+            }
+        } else {
+            handlePermission(PERMISSION_WRITE_STORAGE) {
+                // TODO:
+                /*if (it) {
+                    ExportContactsDialog(this, config.lastExportPath, false) { file, ignoredContactSources ->
+                        getFileOutputStream(file.toFileDirItem(this), true) {
+                            exportContactsTo(ignoredContactSources, it)
+                        }
+                    }
+                }*/
+            }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, resultData: Intent?) {
+        super.onActivityResult(requestCode, resultCode, resultData)
+        /*if (requestCode == PICK_IMPORT_SOURCE_INTENT && resultCode == Activity.RESULT_OK && resultData != null && resultData.data != null) {
+            tryImportContactsFromFile(resultData.data!!)
+        } else*/ if (requestCode == PICK_EXPORT_FILE_INTENT && resultCode == Activity.RESULT_OK && resultData != null && resultData.data != null) {
+            try {
+                val outputStream = contentResolver.openOutputStream(resultData.data!!)
+                exportPlaylistTo(outputStream)
+            } catch (e: Exception) {
+                showErrorToast(e)
+            }
+        }
+    }
+
+    private fun exportPlaylistTo(outputStream: OutputStream?) {
+        val tracks = (tracks_list.adapter as TracksAdapter).tracks
+
+        if (tracks.isEmpty()) {
+            toast(R.string.no_entries_for_exporting)
+            return
+        }
+
+        M3uExporter().exportPlaylist(this, outputStream, tracks) { result ->
+            toast(R.string.exporting_successful)
         }
     }
 

@@ -24,4 +24,9 @@
         android:showAsAction="never"
         android:title="@string/add_folder_to_playlist"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/export_playlist"
+        android:showAsAction="never"
+        android:title="@string/export_playlist"
+        app:showAsAction="never" />
 </menu>

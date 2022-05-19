@@ -87,4 +87,8 @@ class Config(context: Context) : BaseConfig(context) {
     var showTabs: Int
         get() = prefs.getInt(SHOW_TABS, allTabsMask)
         set(showTabs) = prefs.edit().putInt(SHOW_TABS, showTabs).apply()
+
+    var lastExportPath: String
+        get() = prefs.getString(LAST_EXPORT_PATH, "")!!
+        set(lastExportPath) = prefs.edit().putString(LAST_EXPORT_PATH, lastExportPath).apply()
 }
