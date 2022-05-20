@@ -342,9 +342,9 @@ class TracksActivity : SimpleActivity() {
 
     private fun tryExportPlaylist() {
         if (isQPlus()) {
-            ExportPlaylistDialog(this, playlist!!.title, config.lastExportPath, true) { file ->
+            ExportPlaylistDialog(this, config.lastExportPath, true) { file ->
                 Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
-                    type = "audio/mpegurl"
+                    type = MIME_TYPE_M3U
                     putExtra(Intent.EXTRA_TITLE, file.name)
                     addCategory(Intent.CATEGORY_OPENABLE)
 
@@ -358,24 +358,21 @@ class TracksActivity : SimpleActivity() {
                 }
             }
         } else {
-            handlePermission(PERMISSION_WRITE_STORAGE) {
-                // TODO:
-                /*if (it) {
-                    ExportContactsDialog(this, config.lastExportPath, false) { file, ignoredContactSources ->
-                        getFileOutputStream(file.toFileDirItem(this), true) {
-                            exportContactsTo(ignoredContactSources, it)
+            handlePermission(PERMISSION_WRITE_STORAGE) { granted ->
+                if (granted) {
+                    ExportPlaylistDialog(this, config.lastExportPath, false) { file ->
+                        getFileOutputStream(file.toFileDirItem(this), true) { outputStream ->
+                            exportPlaylistTo(outputStream)
                         }
                     }
-                }*/
+                }
             }
         }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, resultData: Intent?) {
         super.onActivityResult(requestCode, resultCode, resultData)
-        /*if (requestCode == PICK_IMPORT_SOURCE_INTENT && resultCode == Activity.RESULT_OK && resultData != null && resultData.data != null) {
-            tryImportContactsFromFile(resultData.data!!)
-        } else*/ if (requestCode == PICK_EXPORT_FILE_INTENT && resultCode == Activity.RESULT_OK && resultData != null && resultData.data != null) {
+        if (requestCode == PICK_EXPORT_FILE_INTENT && resultCode == Activity.RESULT_OK && resultData != null && resultData.data != null) {
             try {
                 val outputStream = contentResolver.openOutputStream(resultData.data!!)
                 exportPlaylistTo(outputStream)
@@ -393,7 +390,7 @@ class TracksActivity : SimpleActivity() {
             return
         }
 
-        M3uExporter().exportPlaylist(this, outputStream, tracks) { result ->
+        M3uExporter(this).exportPlaylist(outputStream, tracks) { result ->
             toast(R.string.exporting_successful)
         }
     }

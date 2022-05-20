@@ -13,7 +13,6 @@ import java.io.File
 
 class ExportPlaylistDialog(
     val activity: SimpleActivity,
-    val playlistName: String,
     val path: String,
     val hidePath: Boolean,
     private val callback: (file: File) -> Unit
@@ -25,8 +24,7 @@ class ExportPlaylistDialog(
         val view = (activity.layoutInflater.inflate(R.layout.dialog_export_playlist, null) as ViewGroup).apply {
             export_playlist_folder.text = activity.humanizePath(realPath)
 
-            // TODO: format name
-            val fileName = "${playlistName}_playlist_${activity.getCurrentFormattedDateTime()}"
+            val fileName = "playlist_${activity.getCurrentFormattedDateTime()}"
             export_playlist_filename.setText(fileName)
 
             if (hidePath) {

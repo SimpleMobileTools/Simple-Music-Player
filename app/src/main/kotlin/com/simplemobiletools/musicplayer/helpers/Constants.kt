@@ -115,3 +115,8 @@ const val FOLDER_SORTING = "folder_sorting"
 const val ARTIST_SORTING = "artist_sorting"
 const val ALBUM_SORTING = "album_sorting"
 const val TRACK_SORTING = "track_sorting"
+
+const val MIME_TYPE_M3U = "audio/mpegurl"
+const val M3U_HEADER = "#EXTM3U"
+const val M3U_ENTRY = "#EXTINF:"
+const val M3U_DURATION_SEPARATOR = ","

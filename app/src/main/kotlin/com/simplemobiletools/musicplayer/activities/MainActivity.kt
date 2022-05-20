@@ -1,14 +1,18 @@
 package com.simplemobiletools.musicplayer.activities
 
+import android.app.Activity
 import android.app.SearchManager
+import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.ColorDrawable
 import android.media.AudioManager
+import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.RelativeLayout
+import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.MenuItemCompat
 import androidx.viewpager.widget.ViewPager
@@ -23,6 +27,7 @@ import com.simplemobiletools.musicplayer.BuildConfig
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.adapters.ViewPagerAdapter
 import com.simplemobiletools.musicplayer.dialogs.NewPlaylistDialog
+import com.simplemobiletools.musicplayer.dialogs.SelectPlaylistDialog
 import com.simplemobiletools.musicplayer.dialogs.SleepTimerCustomDialog
 import com.simplemobiletools.musicplayer.extensions.*
 import com.simplemobiletools.musicplayer.fragments.MyViewPagerFragment
@@ -39,8 +44,11 @@ import kotlinx.android.synthetic.main.view_current_track_bar.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import java.io.FileOutputStream
 
 class MainActivity : SimpleActivity() {
+    private val PICK_IMPORT_SOURCE_INTENT = 1
+
     private var isSearchOpen = false
     private var searchMenuItem: MenuItem? = null
     private var bus: EventBus? = null
@@ -119,6 +127,7 @@ class MainActivity : SimpleActivity() {
         menu.apply {
             findItem(R.id.create_new_playlist).isVisible = getCurrentFragment() == playlists_fragment_holder
             findItem(R.id.create_playlist_from_folder).isVisible = getCurrentFragment() == playlists_fragment_holder
+            findItem(R.id.import_playlist).isVisible = getCurrentFragment() == playlists_fragment_holder
         }
 
         return true
@@ -129,6 +138,7 @@ class MainActivity : SimpleActivity() {
             R.id.sort -> showSortingDialog()
             R.id.sleep_timer -> showSleepTimer()
             R.id.create_new_playlist -> createNewPlaylist()
+            R.id.import_playlist -> tryImportPlaylist()
             R.id.create_playlist_from_folder -> createPlaylistFromFolder()
             R.id.equalizer -> launchEqualizer()
             R.id.settings -> launchSettings()
@@ -320,6 +330,75 @@ class MainActivity : SimpleActivity() {
                             EventBus.getDefault().post(Events.PlaylistsUpdated())
                         }
                     }
+                }
+            }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, resultData: Intent?) {
+        super.onActivityResult(requestCode, resultCode, resultData)
+        if (requestCode == PICK_IMPORT_SOURCE_INTENT && resultCode == Activity.RESULT_OK && resultData != null && resultData.data != null) {
+            tryImportPlaylistFromFile(resultData.data!!)
+        }
+    }
+
+    private fun tryImportPlaylistFromFile(uri: Uri) {
+        when {
+            uri.scheme == "file" -> {} /*showImportContactsDialog(uri.path!!)*/
+            uri.scheme == "content" -> {
+                val tempFile = getTempFile("test-folder", uri.path!!.getFilenameFromPath())
+                if (tempFile == null) {
+                    toast(R.string.unknown_error_occurred)
+                    return
+                }
+
+                try {
+                    val inputStream = contentResolver.openInputStream(uri)
+                    val out = FileOutputStream(tempFile)
+                    inputStream!!.copyTo(out)
+
+                    SelectPlaylistDialog(this) { id ->
+                        ensureBackgroundThread {
+                            M3uImporter(this).importPlaylist(tempFile.absolutePath, id)
+                        }
+                    }
+                } catch (e: Exception) {
+                    showErrorToast(e)
+                }
+            }
+            else -> toast(R.string.invalid_file_format)
+        }
+    }
+
+    private fun tryImportPlaylist() {
+        if (isQPlus()) {
+            hideKeyboard()
+            Intent(Intent.ACTION_GET_CONTENT).apply {
+                addCategory(Intent.CATEGORY_OPENABLE)
+                type = MIME_TYPE_M3U
+
+                try {
+                    startActivityForResult(this, PICK_IMPORT_SOURCE_INTENT)
+                } catch (e: ActivityNotFoundException) {
+                    toast(R.string.system_service_disabled, Toast.LENGTH_LONG)
+                } catch (e: Exception) {
+                    showErrorToast(e)
+                }
+            }
+        } else {
+            handlePermission(PERMISSION_READ_STORAGE) { granted ->
+                if (granted) {
+                    importPlaylist()
+                }
+            }
+        }
+    }
+
+    private fun importPlaylist() {
+        FilePickerDialog(this) { path ->
+            SelectPlaylistDialog(this) { id ->
+                ensureBackgroundThread {
+                    M3uImporter(this).importPlaylist(path, id)
                 }
             }
         }
