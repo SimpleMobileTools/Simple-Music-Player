@@ -18,6 +18,7 @@ import com.simplemobiletools.commons.dialogs.FilePickerDialog
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.PERMISSION_WRITE_STORAGE
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
+import com.simplemobiletools.commons.helpers.isOreoPlus
 import com.simplemobiletools.commons.helpers.isQPlus
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.adapters.TracksAdapter
@@ -26,6 +27,7 @@ import com.simplemobiletools.musicplayer.dialogs.ChangeSortingDialog
 import com.simplemobiletools.musicplayer.dialogs.ExportPlaylistDialog
 import com.simplemobiletools.musicplayer.extensions.*
 import com.simplemobiletools.musicplayer.helpers.*
+import com.simplemobiletools.musicplayer.helpers.M3uExporter.ExportResult
 import com.simplemobiletools.musicplayer.models.*
 import com.simplemobiletools.musicplayer.services.MusicService
 import kotlinx.android.synthetic.main.activity_tracks.*
@@ -177,7 +179,7 @@ class TracksActivity : SimpleActivity() {
             findItem(R.id.sort).isVisible = tracksType != TYPE_ALBUM
             findItem(R.id.add_file_to_playlist).isVisible = tracksType == TYPE_PLAYLIST
             findItem(R.id.add_folder_to_playlist).isVisible = tracksType == TYPE_PLAYLIST
-            findItem(R.id.export_playlist).isVisible = tracksType == TYPE_PLAYLIST
+            findItem(R.id.export_playlist).isVisible = tracksType == TYPE_PLAYLIST && isOreoPlus()
         }
 
         setupSearch(menu)
@@ -391,7 +393,13 @@ class TracksActivity : SimpleActivity() {
         }
 
         M3uExporter(this).exportPlaylist(outputStream, tracks) { result ->
-            toast(R.string.exporting_successful)
+            toast(
+                when (result) {
+                    ExportResult.EXPORT_OK -> R.string.exporting_successful
+                    ExportResult.EXPORT_PARTIAL -> R.string.exporting_some_entries_failed
+                    else -> R.string.exporting_failed
+                }
+            )
         }
     }
 

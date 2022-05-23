@@ -32,6 +32,7 @@ import com.simplemobiletools.musicplayer.dialogs.SleepTimerCustomDialog
 import com.simplemobiletools.musicplayer.extensions.*
 import com.simplemobiletools.musicplayer.fragments.MyViewPagerFragment
 import com.simplemobiletools.musicplayer.helpers.*
+import com.simplemobiletools.musicplayer.helpers.M3uImporter.ImportResult
 import com.simplemobiletools.musicplayer.models.Events
 import com.simplemobiletools.musicplayer.services.MusicService
 import kotlinx.android.synthetic.main.activity_main.*
@@ -127,7 +128,7 @@ class MainActivity : SimpleActivity() {
         menu.apply {
             findItem(R.id.create_new_playlist).isVisible = getCurrentFragment() == playlists_fragment_holder
             findItem(R.id.create_playlist_from_folder).isVisible = getCurrentFragment() == playlists_fragment_holder
-            findItem(R.id.import_playlist).isVisible = getCurrentFragment() == playlists_fragment_holder
+            findItem(R.id.import_playlist).isVisible = getCurrentFragment() == playlists_fragment_holder && isOreoPlus()
         }
 
         return true
@@ -344,9 +345,9 @@ class MainActivity : SimpleActivity() {
 
     private fun tryImportPlaylistFromFile(uri: Uri) {
         when {
-            uri.scheme == "file" -> {} /*showImportContactsDialog(uri.path!!)*/
+            uri.scheme == "file" -> showImportPlaylistDialog(uri.path!!)
             uri.scheme == "content" -> {
-                val tempFile = getTempFile("test-folder", uri.path!!.getFilenameFromPath())
+                val tempFile = getTempFile("imports", uri.path!!.getFilenameFromPath())
                 if (tempFile == null) {
                     toast(R.string.unknown_error_occurred)
                     return
@@ -357,11 +358,7 @@ class MainActivity : SimpleActivity() {
                     val out = FileOutputStream(tempFile)
                     inputStream!!.copyTo(out)
 
-                    SelectPlaylistDialog(this) { id ->
-                        ensureBackgroundThread {
-                            M3uImporter(this).importPlaylist(tempFile.absolutePath, id)
-                        }
-                    }
+                    showImportPlaylistDialog(tempFile.absolutePath)
                 } catch (e: Exception) {
                     showErrorToast(e)
                 }
@@ -388,19 +385,41 @@ class MainActivity : SimpleActivity() {
         } else {
             handlePermission(PERMISSION_READ_STORAGE) { granted ->
                 if (granted) {
-                    importPlaylist()
+                    showFilePickerDialog()
                 }
             }
         }
     }
 
-    private fun importPlaylist() {
+    private fun showFilePickerDialog() {
         FilePickerDialog(this) { path ->
             SelectPlaylistDialog(this) { id ->
-                ensureBackgroundThread {
-                    M3uImporter(this).importPlaylist(path, id)
-                }
+                importPlaylist(path, id)
             }
+        }
+    }
+
+    private fun showImportPlaylistDialog(path: String) {
+        SelectPlaylistDialog(this) { id ->
+            importPlaylist(path, id)
+        }
+    }
+
+    private fun importPlaylist(path: String, id: Int) {
+        ensureBackgroundThread {
+            M3uImporter(this) { result ->
+                runOnUiThread {
+                    toast(
+                        when (result) {
+                            ImportResult.IMPORT_OK -> R.string.importing_successful
+                            ImportResult.IMPORT_PARTIAL -> R.string.importing_some_entries_failed
+                            else -> R.string.importing_failed
+                        }
+                    )
+
+                    playlists_fragment_holder.setupFragment(this)
+                }
+            }.importPlaylist(path, id)
         }
     }
 
