@@ -540,7 +540,7 @@ class MainActivity : SimpleActivity() {
     }
 
     private fun launchAbout() {
-        val licenses = LICENSE_EVENT_BUS or LICENSE_GLIDE
+        val licenses = LICENSE_EVENT_BUS or LICENSE_GLIDE or LICENSE_M3U_PARSER
 
         val faqItems = arrayListOf(
             FAQItem(R.string.faq_1_title, R.string.faq_1_text),
