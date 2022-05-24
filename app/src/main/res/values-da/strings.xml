@@ -47,6 +47,9 @@
     <string name="all_tracks">Alle spor</string>
     <string name="add_to_playlist">Tilføj til afspilningsliste</string>
     <string name="create_playlist_label">Du kan oprette en ny afspilningsliste ved at vælge de ønskede kunstnere, albummer eller spor via Menu -&gt; Tilføj til afspilningsliste.</string>
+    <string name="export_playlist">Export playlist</string>
+    <string name="import_playlist">Import playlist</string>
+    <string name="filename_without_m3u">Filename (without .m3u)</string>
     <!-- Sorting -->
     <string name="track_count">Antal spor</string>
     <string name="album_count">Antal albummer</string>
@@ -118,9 +121,6 @@
         <b> Reddit : </b>
         https://www.reddit.com/r/SimpleMobileTools
     </string>
-    <string name="export_playlist">Export playlist</string>
-    <string name="import_playlist">Import playlist</string>
-    <string name="filename_without_m3u">Filename (without .m3u)</string>
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res

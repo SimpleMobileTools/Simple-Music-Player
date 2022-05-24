@@ -47,6 +47,9 @@
     <string name="all_tracks">Totes les peces</string>
     <string name="add_to_playlist">Afegeix a la llista de reproducció</string>
     <string name="create_playlist_label">Podeu crear una llista de reproducció nova seleccionant els artistes, àlbums o peces desitjades i emprant Menú -&gt; Afegeix a la llista de reproducció.</string>
+    <string name="export_playlist">Export playlist</string>
+    <string name="import_playlist">Import playlist</string>
+    <string name="filename_without_m3u">Filename (without .m3u)</string>
     <!-- Sorting -->
     <string name="track_count">Comptador de peces</string>
     <string name="album_count">Comptador d\'àlbums</string>
@@ -83,9 +86,6 @@
     <!-- Short description has to have less than 80 chars -->
     <string name="app_short_description">Un reproductor de música net amb un giny personalitzable, una interfície elegant i sense anuncis.</string>
     <string name="app_long_description"> Un reproductor de música senzill fàcilment controlable des de la barra d\'estat, el giny de la pantalla d\'inici o els botons físics dels auriculars. Proporciona totes les funcions esperades, com ara ordenar de diverses maneres, així com canviar l\'equalitzador. Escolteu els vostres MP3 preferits, altres cançons o podcasts amb aquest reproductor de música bonic i gratuït. Ofereix extres exclusius com cercar i mostrar l\'art de l\'àlbum, un temporitzador per adormir-se i moltes altres opcions. Aquest reproductor elegant de música us permet crear i gestionar les llistes de reproducció com vulgueu. Les llistes de reproducció són totalment compatibles. Podeu afegir fitxers individuals o carpetes senceres. Si no us agrada un fitxer, podeu eliminar-lo d\'una llista de reproducció o suprimir-lo completament. Ve amb un temporitzador pràctic per adormir-se perquè pugueu retardar de manera fiable el temps de tancament de l\'aplicació. Admet tant la reproducció aleatòria com repetir una cançó en particular, així com saltar i avançar ràpidament. Disponible en molts idiomes diferents i ofereix múltiples equalitzadors diferents. Comproveu fàcilment les propietats d\'un fitxer com la mida, la durada, l\'última modificació, etc. Modifiqueu les dades EXIF dels fitxers, com ara el títol de la cançó i l\'artista. Compartiu ràpidament fitxers amb els vostres amics a les xarxes socials, correus electrònics o a qualsevol lloc que vulgueu. Aquest elegant reproductor de música conté un giny amb color de text, alfa i color del fons personalitzables per facilitar-hi l\'accés i el control. També gestiona correctament els intents de tercers per reproduir fitxers d\'àudio individuals, de manera que també pot ajudar a configurar tons de trucada. Inclou el «material design» i un tema fosc per defecte, proporcionant una gran experiència d\'usuari per facilitar-ne l\'ús. La manca d\'accés a Internet li dona més privacitat, seguretat i estabilitat que altres aplicacions. No conté anuncis ni permisos innecessaris. És totalment de codi obert i proporciona colors personalitzables. <b> Consulteu el conjunt complet d\'eines Simples aquí:</b> https://www.simplemobiletools.com <b>Facebook:</b> https://www.facebook.com/simplemobiletools <b>Reddit:</b> https://www.reddit.com/r/SimpleMobileTools </string>
-    <string name="export_playlist">Export playlist</string>
-    <string name="import_playlist">Import playlist</string>
-    <string name="filename_without_m3u">Filename (without .m3u)</string>
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res

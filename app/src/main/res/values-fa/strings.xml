@@ -47,6 +47,9 @@
     <string name="all_tracks">همه آهنگ ها</string>
     <string name="add_to_playlist">افزودن به لیست پخش</string>
     <string name="create_playlist_label">با انتخاب هنرمندان ، آلبوم ها یا آهنگ های موردنظر و استفاده از منو -&gt; افزودن به لیست پخش ، می توانید یک لیست پخش جدید ایجاد کنید.</string>
+    <string name="export_playlist">Export playlist</string>
+    <string name="import_playlist">Import playlist</string>
+    <string name="filename_without_m3u">Filename (without .m3u)</string>
     <!-- Sorting -->
     <string name="track_count">تعداد آهنگ</string>
     <string name="album_count">تعداد آلبوم ها</string>
@@ -118,9 +121,6 @@
         <b> Reddit: </b>
         https://www.reddit.com/r/SimpleMobileTools
     </string>
-    <string name="export_playlist">Export playlist</string>
-    <string name="import_playlist">Import playlist</string>
-    <string name="filename_without_m3u">Filename (without .m3u)</string>
     <!--
        Haven't found some strings? There's more at
        https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res

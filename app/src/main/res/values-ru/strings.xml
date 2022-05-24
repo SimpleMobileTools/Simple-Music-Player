@@ -47,6 +47,9 @@
     <string name="all_tracks">Все композиции</string>
     <string name="add_to_playlist">Добавить в плейлист</string>
     <string name="create_playlist_label">Вы можете создать новый плейлист, выбрав нужных исполнителей, альбомы или композиции используя \"Меню\" → \"Добавить в плейлист\".</string>
+    <string name="export_playlist">Экспортировать плейлист</string>
+    <string name="import_playlist">Импортировать плейлист</string>
+    <string name="filename_without_m3u">Имя файла (без .m3u)</string>
     <!-- Sorting -->
     <string name="track_count">Количество композиций</string>
     <string name="album_count">Количество альбомов</string>
@@ -122,9 +125,6 @@
         <b>Reddit:</b>
         https://www.reddit.com/r/SimpleMobileTools
     </string>
-    <string name="export_playlist">Экспортировать плейлист</string>
-    <string name="import_playlist">Импортировать плейлист</string>
-    <string name="filename_without_m3u">Имя файла (без .m3u)</string>
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res

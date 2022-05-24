@@ -47,6 +47,9 @@
     <string name="all_tracks">Minden szám</string>
     <string name="add_to_playlist">Lejátszólistához adás</string>
     <string name="create_playlist_label">Lejátszólistát a Menü -&gt; Lejátszólistához adás lehetőséggel tud létrehozni, ha kiválasztja az előadót, albumot vagy számot.</string>
+    <string name="export_playlist">Export playlist</string>
+    <string name="import_playlist">Import playlist</string>
+    <string name="filename_without_m3u">Filename (without .m3u)</string>
     <!-- Sorting -->
     <string name="track_count">Számok</string>
     <string name="album_count">Albumok</string>
@@ -83,9 +86,6 @@
     <!-- Short description has to have less than 80 chars -->
     <string name="app_short_description">Egy sovány zenelejátszó konfigurálható widgettel, modern kinézettel, reklámmentesen.</string>
     <string name="app_long_description"> Egy egyszerű zenelejátszó, amely könnyen vezérelhető az állapotsorból, a kezdőképernyő moduljáról vagy a fejhallgató hardveres gombjaival. Minden elvárt funkciót biztosít, mint például a különböző válogatási módokat, valamint a hangszínszabályzót. Hallgassa kedvenc mp3-ját, egyéb zeneszámait vagy podcastjait ezzel az ingyenes, gyönyörű zenelejátszóval. Olyan exkluzív extrákat kínál, mint a Keresés és az albumgrafika megjelenítése, az alvásidőzítő és sok más beállítás. Ez az elegáns zenelejátszó lehetővé teszi a praktikus lejátszási listák létrehozását és kezelését tetszés szerint. A lejátszási listák teljes mértékben támogatottak. Hozzáadhat akár egyedi fájlokat, akár egész mappákat. Ha nem tetszik egy fájl, egyszerűen eltávolíthatja a lejátszási listából, vagy törölheti a tényleges fájlt. Praktikus alvásidőzítővel rendelkezik, így megbízhatóan késleltetheti az alkalmazás kikapcsolásának idejét. Támogatja mind a keverést, mind az adott szám ismétlését, valamint a kihagyást és a gyors előretekerést. Számos különböző nyelven elérhető, többféle hangszínszabályzót kínál. Könnyedén ellenőrizheti a fájl tulajdonságait, például a méretét, az időtartamát, az utolsó módosítás idejét stb. Módosíthatja a fájl EXIF-adatait, például a szám címét és előadóját. Gyorsan megoszthatja a fájlokat barátaival a közösségi hálózatokon, e-mailben vagy bárhol, ahol szeretné. Ez a stílusos zenelejátszó tartalmaz egy modult testreszabható szövegszínnel, átlátszósággal és háttérszínét a könnyű hozzáférés és vezérlés érdekében. Megfelelően kezeli a harmadik féltől származó jelzéseket is az egyes hangfájlok lejátszásához, így a csengőhangok beállításánál is segíthet. Alapértelmezés szerint material dizájnnal és sötét témával rendelkezik, nagyszerű felhasználói élményt nyújt a könnyű használathoz. Az internet-elérés hiánya miatt nagyobb adatvédelmet, biztonságot és stabilitást biztosít, mint más alkalmazások. Nem tartalmaz reklámokat, és nem kér szükségtelen engedélyeket. Teljesen nyílt forráskódú, és testreszabhatók a színei. <b>Itt tudhat meg többet a teljes Simple Tools alkalmazáscsomagról:</b> https://www.simplemobiletools.com <b>Facebook:</b> https://www.facebook.com/simplemobiletools <b>Reddit:</b> https://www.reddit.com/r/SimpleMobileTools </string>
-    <string name="export_playlist">Export playlist</string>
-    <string name="import_playlist">Import playlist</string>
-    <string name="filename_without_m3u">Filename (without .m3u)</string>
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res

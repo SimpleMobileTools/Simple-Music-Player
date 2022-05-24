@@ -47,6 +47,9 @@
     <string name="all_tracks">Toutes les pistes</string>
     <string name="add_to_playlist">Ajouter à la liste de lecture</string>
     <string name="create_playlist_label">Vous pouvez créer une nouvelle liste de lecture en sélectionnant les artistes, albums ou pistes désirés et en utilisant Menu -&gt; Ajouter à la liste de lecture.</string>
+    <string name="export_playlist">Export playlist</string>
+    <string name="import_playlist">Import playlist</string>
+    <string name="filename_without_m3u">Filename (without .m3u)</string>
     <!-- Sorting -->
     <string name="track_count">Nombre de pistes</string>
     <string name="album_count">Nombre d\'albums</string>
@@ -83,9 +86,6 @@
     <!-- Short description has to have less than 80 chars -->
     <string name="app_short_description">Un lecteur de musiques propres, personnalisable et sans publicités.</string>
     <string name="app_long_description"> Un simple lecteur de musique facilement contrôlable à partir de la barre d\'état, du widget de l\'écran d\'accueil ou des boutons matériels de votre casque. Il offre toutes les fonctions attendues, comme le triage de différentes manières et la modification de l\'égaliseur. Écoutez vos mp3 préférés, d\'autres chansons ou des podcasts avec ce magnifique lecteur de musique gratuit. Il offre des extras exclusifs comme la recherche et l\'affichage des pochettes d\'album, une minuterie de mise en veille et de nombreux autres paramètres. Ce lecteur de musique élégant vous permet de créer et de gérer des listes de lecture pratiques comme vous le souhaitez. Les listes de lecture sont entièrement prises en charge. Vous pouvez ajouter soit des fichiers individuels, soit des dossiers entiers. Si vous n\'aimez pas un fichier, vous pouvez soit le supprimer de la liste de lecture, soit supprimer le fichier lui-même. Livré avec une minuterie de sommeil pratique afin que vous puissiez retarder de manière fiable le moment où l\'application s\'éteint. Supporte à la fois la lecture aléatoire et la répétition d\'une chanson particulière, ainsi que le saut et l\'avance rapide. Disponible dans de nombreuses langues et propose plusieurs égaliseurs différents. Vérifiez facilement les propriétés d\'un fichier comme la taille, la durée, la dernière modification, etc. Modifiez les données EXIF des fichiers, comme le titre de la chanson et l\'artiste. Partagez rapidement des fichiers avec vos amis sur les réseaux sociaux, par courriel ou partout où vous le souhaitez. Ce lecteur de musique élégant contient un widget dont la couleur du texte, l\'alpha et la couleur de l\'arrière-plan sont personnalisables pour un accès et un contrôle faciles. Il gère correctement les intentions de tiers pour la lecture de fichiers audio individuels, ce qui permet de définir des sonneries. Il est livré avec un design matériel et un thème sombre par défaut, offrant une grande expérience utilisateur pour une utilisation facile. L\'absence d\'accès à Internet vous offre plus de confidentialité, de sécurité et de stabilité que les autres applications. Ne contient pas de publicités ni de permissions inutiles. Il est entièrement opensource et fournit des couleurs personnalisables. <b>Découvrez la suite complète de Simple Tools ici :</b> https://www.simplemobiletools.com <b>Facebook :</b> https://www.facebook.com/simplemobiletools <b>Reddit :</b> https://www.reddit.com/r/SimpleMobileTools </string>
-    <string name="export_playlist">Export playlist</string>
-    <string name="import_playlist">Import playlist</string>
-    <string name="filename_without_m3u">Filename (without .m3u)</string>
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res

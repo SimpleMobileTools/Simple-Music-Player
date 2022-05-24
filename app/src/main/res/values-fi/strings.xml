@@ -47,6 +47,9 @@
     <string name="all_tracks">Kaikki kappaleet</string>
     <string name="add_to_playlist">Lisää soittolistaan</string>
     <string name="create_playlist_label">Voit luoda uuden soittolistan valitsemalla haluamasi artistit, albumit tai kappaleet ja valitsemalla Valikko -> Lisää soittolistaan.</string>
+    <string name="export_playlist">Export playlist</string>
+    <string name="import_playlist">Import playlist</string>
+    <string name="filename_without_m3u">Filename (without .m3u)</string>
 
     <!-- Sorting -->
     <string name="track_count">Kappalemäärä</string>
@@ -125,9 +128,6 @@
         <b>Reddit:</b>
         https://www.reddit.com/r/SimpleMobileTools
     </string>
-    <string name="export_playlist">Export playlist</string>
-    <string name="import_playlist">Import playlist</string>
-    <string name="filename_without_m3u">Filename (without .m3u)</string>
 
     <!--
         Haven't found some strings? There's more at

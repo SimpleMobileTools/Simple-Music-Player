@@ -47,6 +47,9 @@
     <string name="all_tracks">全てのトラック</string>
     <string name="add_to_playlist">プレイリストに追加</string>
     <string name="create_playlist_label">アーティスト、アルバム、トラックを選択してメニュー→プレイリストに追加することで、新しいプレイリストを追加できます。</string>
+    <string name="export_playlist">Export playlist</string>
+    <string name="import_playlist">Import playlist</string>
+    <string name="filename_without_m3u">Filename (without .m3u)</string>
 
     <!-- Sorting -->
     <string name="track_count">トラック数</string>
@@ -123,9 +126,6 @@
         <b> Reddit：</b>
          https://www.reddit.com/r/SimpleMobileTools
     </string>
-    <string name="export_playlist">Export playlist</string>
-    <string name="import_playlist">Import playlist</string>
-    <string name="filename_without_m3u">Filename (without .m3u)</string>
 
     <!--
         Haven't found some strings? There's more at

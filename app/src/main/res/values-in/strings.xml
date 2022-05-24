@@ -47,6 +47,9 @@
     <string name="all_tracks">Semua trek</string>
     <string name="add_to_playlist">Add to playlist</string>
     <string name="create_playlist_label">Anda dapat membuat sebuah daftar putar baru dengan memilih artis, album atau trek yang diinginkan dengan menggunakan Menu -&gt; Tambahkan ke daftar putar.</string>
+    <string name="export_playlist">Export playlist</string>
+    <string name="import_playlist">Import playlist</string>
+    <string name="filename_without_m3u">Filename (without .m3u)</string>
     <!-- Sorting -->
     <string name="track_count">Hitungan Trek</string>
     <string name="album_count">Hitungan Album</string>
@@ -90,9 +93,6 @@
 \n<b>Lihat rangkaian lengkap Simple Tools di sini:</b> https://www.simplemobiletools.com
 \n<b>Facebook:</b> https://www.facebook.com/simplemobiletools
 \n<b>Reddit :</b> https://www.reddit.com/r/SimpleMobileTools </string>
-    <string name="export_playlist">Export playlist</string>
-    <string name="import_playlist">Import playlist</string>
-    <string name="filename_without_m3u">Filename (without .m3u)</string>
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
