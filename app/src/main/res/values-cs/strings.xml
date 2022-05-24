@@ -6,7 +6,7 @@
     <string name="rename_song">Přejmenovat skladbu</string>
     <string name="rename_song_error">Během přejmenovávání došlo k chybě</string>
     <string name="rename_song_empty">Prosím vyplňte všechna pole</string>
-    <string name="repeat_off">Repeat off</string>
+    <string name="repeat_off">Vypnout opakování</string>
     <string name="repeat_song">Opakovat aktuální skladbu</string>
     <string name="repeat_playlist">Repeat playlist</string>
     <string name="stop_playback_after_current_song">Stop playback after current song</string>
@@ -16,7 +16,7 @@
     <string name="shuffle_disabled">Náhodné přehrávání vypnuto</string>
     <string name="sleep_timer">Časovač vypnutí</string>
     <string name="volume">Volume</string>
-    <string name="playback_speed">Playback speed</string>
+    <string name="playback_speed">Rychlost přehrávání</string>
     <string name="loading_files">Načítaní souborů…</string>
     <!-- Playlists -->
     <string name="add_file_to_playlist">Přidat soubor do seznamu skladeb</string>
@@ -49,8 +49,8 @@
     <string name="create_playlist_label">You can create a new playlist by selecting the wanted artists, albums or tracks and using Menu -&gt; Add to playlist.</string>
     <!-- Sorting -->
     <string name="track_count">Track Count</string>
-    <string name="album_count">Album Count</string>
-    <string name="artist_name">Artist Name</string>
+    <string name="album_count">Počet alb</string>
+    <string name="artist_name">Jméno umělce</string>
     <string name="year">Rok</string>
     <!-- Artists -->
     <string name="artists">Umělci</string>
