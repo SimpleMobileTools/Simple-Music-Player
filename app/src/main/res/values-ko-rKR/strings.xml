@@ -47,6 +47,9 @@
     <string name="all_tracks">All tracks</string>
     <string name="add_to_playlist">Add to playlist</string>
     <string name="create_playlist_label">You can create a new playlist by selecting the wanted artists, albums or tracks and using Menu -> Add to playlist.</string>
+    <string name="export_playlist">Export playlist</string>
+    <string name="import_playlist">Import playlist</string>
+    <string name="filename_without_m3u">Filename (without .m3u)</string>
 
     <!-- Sorting -->
     <string name="track_count">Track Count</string>

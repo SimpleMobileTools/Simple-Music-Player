@@ -63,6 +63,7 @@ const val PLAYBACK_SPEED_PROGRESS = "PLAYBACK_SPEED_PROGRESS"
 const val WERE_TRACK_FOLDERS_ADDED = "were_track_folders_added"
 const val SHOW_TABS = "show_tabs"
 const val WAS_ALL_TRACKS_PLAYLIST_CREATED = "was_all_tracks_playlist_created"
+const val LAST_EXPORT_PATH = "last_export_path"
 
 const val SHOW_FILENAME_NEVER = 1
 const val SHOW_FILENAME_IF_UNAVAILABLE = 2
@@ -114,3 +115,8 @@ const val FOLDER_SORTING = "folder_sorting"
 const val ARTIST_SORTING = "artist_sorting"
 const val ALBUM_SORTING = "album_sorting"
 const val TRACK_SORTING = "track_sorting"
+
+const val MIME_TYPE_M3U = "audio/x-mpegurl"
+const val M3U_HEADER = "#EXTM3U"
+const val M3U_ENTRY = "#EXTINF:"
+const val M3U_DURATION_SEPARATOR = ","

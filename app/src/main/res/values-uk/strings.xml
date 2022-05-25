@@ -47,6 +47,9 @@
     <string name="all_tracks">Усі композиції</string>
     <string name="add_to_playlist">Додати до плейлисту</string>
     <string name="create_playlist_label">Ви можете створити новий список відтворення, вибравши потрібних виконавців, альбоми або композиції використовуючи Меню -&gt; Додати до плейлисту.</string>
+    <string name="export_playlist">Export playlist</string>
+    <string name="import_playlist">Import playlist</string>
+    <string name="filename_without_m3u">Filename (without .m3u)</string>
     <!-- Sorting -->
     <string name="track_count">Кількість композицій</string>
     <string name="album_count">Кількість альбомів</string>

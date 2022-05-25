@@ -47,6 +47,9 @@
     <string name="all_tracks">Všetky skladby</string>
     <string name="add_to_playlist">Pridať do playlistu</string>
     <string name="create_playlist_label">Nový playlist môžete vytvoriť označením žiadaných interpretov, albumov alebo skladieb a použitím Menu -> Pridať do playlistu.</string>
+    <string name="export_playlist">Exportovať playlist</string>
+    <string name="import_playlist">Importovať playlist</string>
+    <string name="filename_without_m3u">Názov súboru (bez .m3u)</string>
 
     <!-- Sorting -->
     <string name="track_count">Počet skladieb</string>

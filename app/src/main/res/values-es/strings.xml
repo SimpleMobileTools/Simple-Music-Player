@@ -47,6 +47,9 @@
     <string name="all_tracks">Todas las canciones</string>
     <string name="add_to_playlist">Añadir a lista de reproducción</string>
     <string name="create_playlist_label">Puedes crear una nueva lista de reproducción seleccionando los artistas deseados, álbumes o canciones y seleccionando Menú -&gt; Añadir a lista de reproducción.</string>
+    <string name="export_playlist">Export playlist</string>
+    <string name="import_playlist">Import playlist</string>
+    <string name="filename_without_m3u">Filename (without .m3u)</string>
     <!-- Sorting -->
     <string name="track_count">Conteo de canciones</string>
     <string name="album_count">Conteo de álbumes</string>

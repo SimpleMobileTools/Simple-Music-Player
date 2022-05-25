@@ -47,6 +47,9 @@
     <string name="all_tracks">Όλα τα τραγούδια</string>
     <string name="add_to_playlist">Προσθήκη στη λίστα</string>
     <string name="create_playlist_label">Μπορείτε να δημιουργήσετε μια νέα λίστα επιλέγοντας τους επιθυμητούς καλλιτέχνες, άλμπουμ ή τραγούδια και απο το μενού -> Προσθήκη στη λίστα αναπαραγωγής.</string>
+    <string name="export_playlist">Export playlist</string>
+    <string name="import_playlist">Import playlist</string>
+    <string name="filename_without_m3u">Filename (without .m3u)</string>
 
     <!-- Sorting -->
     <string name="track_count">Αριθμός τραγουδιών</string>
@@ -125,7 +128,6 @@
         <b>Reddit:</b>
         https://www.reddit.com/r/SimpleMobileTools
     </string>
-
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res

@@ -47,6 +47,9 @@
     <string name="all_tracks">Toutes les pistes</string>
     <string name="add_to_playlist">Ajouter à la liste de lecture</string>
     <string name="create_playlist_label">Vous pouvez créer une nouvelle liste de lecture en sélectionnant les artistes, albums ou pistes désirés et en utilisant Menu -&gt; Ajouter à la liste de lecture.</string>
+    <string name="export_playlist">Export playlist</string>
+    <string name="import_playlist">Import playlist</string>
+    <string name="filename_without_m3u">Filename (without .m3u)</string>
     <!-- Sorting -->
     <string name="track_count">Nombre de pistes</string>
     <string name="album_count">Nombre d\'albums</string>

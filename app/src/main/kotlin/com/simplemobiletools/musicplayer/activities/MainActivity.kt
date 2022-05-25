@@ -1,14 +1,18 @@
 package com.simplemobiletools.musicplayer.activities
 
+import android.app.Activity
 import android.app.SearchManager
+import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.ColorDrawable
 import android.media.AudioManager
+import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.RelativeLayout
+import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.MenuItemCompat
 import androidx.viewpager.widget.ViewPager
@@ -23,10 +27,12 @@ import com.simplemobiletools.musicplayer.BuildConfig
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.adapters.ViewPagerAdapter
 import com.simplemobiletools.musicplayer.dialogs.NewPlaylistDialog
+import com.simplemobiletools.musicplayer.dialogs.SelectPlaylistDialog
 import com.simplemobiletools.musicplayer.dialogs.SleepTimerCustomDialog
 import com.simplemobiletools.musicplayer.extensions.*
 import com.simplemobiletools.musicplayer.fragments.MyViewPagerFragment
 import com.simplemobiletools.musicplayer.helpers.*
+import com.simplemobiletools.musicplayer.helpers.M3uImporter.ImportResult
 import com.simplemobiletools.musicplayer.models.Events
 import com.simplemobiletools.musicplayer.services.MusicService
 import kotlinx.android.synthetic.main.activity_main.*
@@ -39,8 +45,11 @@ import kotlinx.android.synthetic.main.view_current_track_bar.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import java.io.FileOutputStream
 
 class MainActivity : SimpleActivity() {
+    private val PICK_IMPORT_SOURCE_INTENT = 1
+
     private var isSearchOpen = false
     private var searchMenuItem: MenuItem? = null
     private var bus: EventBus? = null
@@ -119,6 +128,7 @@ class MainActivity : SimpleActivity() {
         menu.apply {
             findItem(R.id.create_new_playlist).isVisible = getCurrentFragment() == playlists_fragment_holder
             findItem(R.id.create_playlist_from_folder).isVisible = getCurrentFragment() == playlists_fragment_holder
+            findItem(R.id.import_playlist).isVisible = getCurrentFragment() == playlists_fragment_holder && isOreoPlus()
         }
 
         return true
@@ -130,6 +140,7 @@ class MainActivity : SimpleActivity() {
             R.id.sleep_timer -> showSleepTimer()
             R.id.create_new_playlist -> createNewPlaylist()
             R.id.create_playlist_from_folder -> createPlaylistFromFolder()
+            R.id.import_playlist -> tryImportPlaylist()
             R.id.equalizer -> launchEqualizer()
             R.id.settings -> launchSettings()
             R.id.about -> launchAbout()
@@ -325,6 +336,93 @@ class MainActivity : SimpleActivity() {
         }
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, resultData: Intent?) {
+        super.onActivityResult(requestCode, resultCode, resultData)
+        if (requestCode == PICK_IMPORT_SOURCE_INTENT && resultCode == Activity.RESULT_OK && resultData != null && resultData.data != null) {
+            tryImportPlaylistFromFile(resultData.data!!)
+        }
+    }
+
+    private fun tryImportPlaylistFromFile(uri: Uri) {
+        when {
+            uri.scheme == "file" -> showImportPlaylistDialog(uri.path!!)
+            uri.scheme == "content" -> {
+                val tempFile = getTempFile("imports", uri.path!!.getFilenameFromPath())
+                if (tempFile == null) {
+                    toast(R.string.unknown_error_occurred)
+                    return
+                }
+
+                try {
+                    val inputStream = contentResolver.openInputStream(uri)
+                    val out = FileOutputStream(tempFile)
+                    inputStream!!.copyTo(out)
+
+                    showImportPlaylistDialog(tempFile.absolutePath)
+                } catch (e: Exception) {
+                    showErrorToast(e)
+                }
+            }
+            else -> toast(R.string.invalid_file_format)
+        }
+    }
+
+    private fun tryImportPlaylist() {
+        if (isQPlus()) {
+            hideKeyboard()
+            Intent(Intent.ACTION_GET_CONTENT).apply {
+                addCategory(Intent.CATEGORY_OPENABLE)
+                type = MIME_TYPE_M3U
+
+                try {
+                    startActivityForResult(this, PICK_IMPORT_SOURCE_INTENT)
+                } catch (e: ActivityNotFoundException) {
+                    toast(R.string.system_service_disabled, Toast.LENGTH_LONG)
+                } catch (e: Exception) {
+                    showErrorToast(e)
+                }
+            }
+        } else {
+            handlePermission(PERMISSION_READ_STORAGE) { granted ->
+                if (granted) {
+                    showFilePickerDialog()
+                }
+            }
+        }
+    }
+
+    private fun showFilePickerDialog() {
+        FilePickerDialog(this) { path ->
+            SelectPlaylistDialog(this) { id ->
+                importPlaylist(path, id)
+            }
+        }
+    }
+
+    private fun showImportPlaylistDialog(path: String) {
+        SelectPlaylistDialog(this) { id ->
+            importPlaylist(path, id)
+        }
+    }
+
+    private fun importPlaylist(path: String, id: Int) {
+        ensureBackgroundThread {
+            M3uImporter(this) { result ->
+                runOnUiThread {
+                    toast(
+                        when (result) {
+                            ImportResult.IMPORT_OK -> R.string.importing_successful
+                            ImportResult.IMPORT_PARTIAL -> R.string.importing_some_entries_failed
+                            else -> R.string.importing_failed
+                        }
+                    )
+
+                    playlists_fragment_holder.setupFragment(this)
+                }
+            }.importPlaylist(path, id)
+        }
+    }
+
     private fun showSleepTimer() {
         val minutes = getString(R.string.minutes_raw)
         val hour = resources.getQuantityString(R.plurals.hours, 1, 1)
@@ -442,7 +540,7 @@ class MainActivity : SimpleActivity() {
     }
 
     private fun launchAbout() {
-        val licenses = LICENSE_EVENT_BUS or LICENSE_GLIDE
+        val licenses = LICENSE_EVENT_BUS or LICENSE_GLIDE or LICENSE_M3U_PARSER
 
         val faqItems = arrayListOf(
             FAQItem(R.string.faq_1_title, R.string.faq_1_text),

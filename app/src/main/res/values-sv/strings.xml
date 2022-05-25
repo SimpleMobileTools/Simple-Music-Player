@@ -47,6 +47,9 @@
     <string name="all_tracks">Alla spår</string>
     <string name="add_to_playlist">Lägg till i spellista</string>
     <string name="create_playlist_label">Du kan skapa en ny spellista genom att välja önskade artister, album eller spår och använda Meny -&gt; Lägg till i spellista.</string>
+    <string name="export_playlist">Export playlist</string>
+    <string name="import_playlist">Import playlist</string>
+    <string name="filename_without_m3u">Filename (without .m3u)</string>
     <!-- Sorting -->
     <string name="track_count">Antal spår</string>
     <string name="album_count">Antal album</string>

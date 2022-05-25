@@ -47,6 +47,9 @@
     <string name="all_tracks">Toate piesele</string>
     <string name="add_to_playlist">Adăugați la lista de redare</string>
     <string name="create_playlist_label">Puteți crea o nouă listă de redare selectând artiștii, albumele sau piesele dorite și folosind Meniu -&gt; Adaugaţi la lista de redare.</string>
+    <string name="export_playlist">Export playlist</string>
+    <string name="import_playlist">Import playlist</string>
+    <string name="filename_without_m3u">Filename (without .m3u)</string>
     <!-- Sorting -->
     <string name="track_count">Număr de piese</string>
     <string name="album_count">Număr de albume</string>
