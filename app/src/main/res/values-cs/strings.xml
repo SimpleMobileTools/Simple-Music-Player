@@ -1,11 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Jednoduchý hudební přehrávač</string>
     <string name="app_launcher_name">Hudební přehrávač</string>
     <string name="playlist_empty">Váš seznam skladeb je prázdný</string>
     <string name="rename_song">Přejmenovat skladbu</string>
-    <string name="rename_song_error">Během přejmenování došlo k chybě</string>
+    <string name="rename_song_error">Během přejmenovávání došlo k chybě</string>
     <string name="rename_song_empty">Prosím vyplňte všechna pole</string>
-    <string name="repeat_off">Repeat off</string>
+    <string name="repeat_off">Vypnout opakování</string>
     <string name="repeat_song">Opakovat aktuální skladbu</string>
     <string name="repeat_playlist">Repeat playlist</string>
     <string name="stop_playback_after_current_song">Stop playback after current song</string>
@@ -15,9 +16,8 @@
     <string name="shuffle_disabled">Náhodné přehrávání vypnuto</string>
     <string name="sleep_timer">Časovač vypnutí</string>
     <string name="volume">Volume</string>
-    <string name="playback_speed">Playback speed</string>
-    <string name="loading_files">Loading files…</string>
-
+    <string name="playback_speed">Rychlost přehrávání</string>
+    <string name="loading_files">Načítaní souborů…</string>
     <!-- Playlists -->
     <string name="add_file_to_playlist">Přidat soubor do seznamu skladeb</string>
     <string name="add_folder_to_playlist">Přidat složku do seznamu skladeb</string>
@@ -44,51 +44,46 @@
     <string name="show_filename">Zobrazit název souboru místo názvu skladby</string>
     <string name="title_is_not_available">Pokud je název skladby neznámý</string>
     <string name="show_album_cover">Zobrazit obal alba na hlavní obrazovce</string>
-    <string name="all_tracks">All tracks</string>
-    <string name="add_to_playlist">Add to playlist</string>
-    <string name="create_playlist_label">You can create a new playlist by selecting the wanted artists, albums or tracks and using Menu -> Add to playlist.</string>
-
+    <string name="all_tracks">Všechny skladby</string>
+    <string name="add_to_playlist">přidat do playlistu</string>
+    <string name="create_playlist_label">You can create a new playlist by selecting the wanted artists, albums or tracks and using Menu -&gt; Add to playlist.</string>
     <!-- Sorting -->
     <string name="track_count">Track Count</string>
-    <string name="album_count">Album Count</string>
-    <string name="artist_name">Artist Name</string>
-    <string name="year">Year</string>
-
+    <string name="album_count">Počet alb</string>
+    <string name="artist_name">Jméno umělce</string>
+    <string name="year">Rok</string>
     <!-- Artists -->
-    <string name="artists">Artists</string>
-    <string name="folders">Folders</string>
-    <string name="albums">Albums</string>
+    <string name="artists">Umělci</string>
+    <string name="folders">Složky</string>
+    <string name="albums">Alba</string>
     <plurals name="albums_plural">
         <item quantity="one">%d Album</item>
-        <item quantity="other">%d Albums</item>
+        <item quantity="few">%d Alba</item>
+        <item quantity="other">%d Alba</item>
     </plurals>
-
-    <string name="tracks">Tracks</string>
+    <string name="tracks">Stopy</string>
     <plurals name="tracks_plural">
-        <item quantity="one">%d Track</item>
-        <item quantity="other">%d Tracks</item>
+        <item quantity="one">%d Stopa</item>
+        <item quantity="few">%d Stopy</item>
+        <item quantity="other">%d Stopy</item>
     </plurals>
-
     <!-- Queue -->
-    <string name="next_track">Next:</string>
-    <string name="track_queue">Track queue</string>
-    <string name="add_to_queue">Add to queue</string>
-    <string name="remove_from_queue">Remove from queue</string>
-    <string name="create_playlist_from_queue">Create playlist from queue</string>
-
+    <string name="next_track">Další:</string>
+    <string name="track_queue">Pořadí stopy</string>
+    <string name="add_to_queue">Přidat do fronty</string>
+    <string name="remove_from_queue">Odstranit z fronty</string>
+    <string name="create_playlist_from_queue">Vytvořit playlist z fronty</string>
     <!-- Settings -->
     <string name="equalizer">Ekvalizér</string>
     <string name="swap_prev_next">Zaměnit tlačítka sluchátek pro předchozí/následující skladbu</string>
-
     <!-- FAQ -->
     <string name="faq_1_title">Jak mohu rychle posunout skladbu vpřed?</string>
     <string name="faq_1_text">Můžete klepnout na texty aktuální nebo celkové délky skladby, které jsou vedle indikátoru průběhu přehrávání. To posune skladbu vpřed nebo vzad.</string>
-
     <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
     <!-- App title has to have less than 50 characters. If you cannot squeeze it, just remove a part of it -->
-    <string name="app_title">Simple Music Player - A cool player for your songs</string>
+    <string name="app_title">Jednoduchý přehrávač hudby - Cool přehrávač pro vaše písničky</string>
     <!-- Short description has to have less than 80 chars -->
-    <string name="app_short_description">A clean music player with a customizable widget, stylish interface and no ads.</string>
+    <string name="app_short_description">Čistý hudební přehrávač s přispůsobivými widgety, stylové rozhraní bez reklam.</string>
     <string name="app_long_description">
         A simple music player easily controllable from the status bar, home screen widget or by hardware buttons on your headset. It provides all expected functions like sorting in various ways as well as changing the Equalizer.  Listen to your favorite mp3, other songs or podcasts with this free beautiful music player.
 
@@ -125,7 +120,6 @@
         <b>Reddit:</b>
         https://www.reddit.com/r/SimpleMobileTools
     </string>
-
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
