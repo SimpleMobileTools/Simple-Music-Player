@@ -20,14 +20,14 @@
         android:title="@string/create_new_playlist"
         app:showAsAction="never" />
     <item
-        android:id="@+id/import_playlist"
-        android:showAsAction="never"
-        android:title="@string/import_playlist"
-        app:showAsAction="never" />
-    <item
         android:id="@+id/create_playlist_from_folder"
         android:showAsAction="never"
         android:title="@string/create_playlist_from_folder"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/import_playlist"
+        android:showAsAction="never"
+        android:title="@string/import_playlist"
         app:showAsAction="never" />
     <item
         android:id="@+id/sleep_timer"
