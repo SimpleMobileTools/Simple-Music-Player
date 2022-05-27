@@ -10,6 +10,7 @@ import com.simplemobiletools.commons.dialogs.ColorPickerDialog
 import com.simplemobiletools.commons.dialogs.WidgetLockedDialog
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.IS_CUSTOMIZING_COLORS
+import com.simplemobiletools.commons.helpers.mydebug
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.helpers.MyWidgetProvider
@@ -44,6 +45,9 @@ class WidgetConfigureActivity : SimpleActivity() {
         config_save.setOnClickListener { saveConfig() }
         config_bg_color.setOnClickListener { pickBackgroundColor() }
         config_text_color.setOnClickListener { pickTextColor() }
+
+        val primaryColor = getProperPrimaryColor()
+        config_bg_seekbar.setColors(mTextColor, primaryColor, primaryColor)
 
         val currSong = MusicService.mCurrTrack
         if (currSong != null) {
@@ -125,14 +129,12 @@ class WidgetConfigureActivity : SimpleActivity() {
     private fun updateBackgroundColor() {
         mBgColor = mBgColorWithoutTransparency.adjustAlpha(mBgAlpha)
         config_player.widget_background.applyColorFilter(mBgColor)
-        config_save.setBackgroundColor(mBgColor)
-        config_bg_color.setFillWithStroke(mBgColor, Color.BLACK)
+        config_bg_color.setFillWithStroke(mBgColor, mBgColor)
     }
 
     private fun updateTextColor() {
-        config_text_color.setFillWithStroke(mTextColor, Color.BLACK)
+        config_text_color.setFillWithStroke(mTextColor, mTextColor)
 
-        config_save.setTextColor(mTextColor)
         song_info_title.setTextColor(mTextColor)
         song_info_artist.setTextColor(mTextColor)
 
