@@ -8,7 +8,7 @@
     <string name="rename_song_empty">Vul alle velden in</string>
     <string name="repeat_off">Repeat off</string>
     <string name="repeat_song">Nummer herhalen</string>
-    <string name="repeat_playlist">Repeat playlist</string>
+    <string name="repeat_playlist">Afspeellijst herhalen</string>
     <string name="stop_playback_after_current_song">Stop playback after current song</string>
     <string name="enable_shuffle">Shuffle inschakelen</string>
     <string name="disable_shuffle">Shuffle uitschakelen</string>
@@ -25,7 +25,7 @@
     <string name="playlists">Afspeellijsten</string>
     <string name="create_new_playlist">Afspeellijst maken</string>
     <string name="rename_playlist">Afspeellijst hernoemen</string>
-    <string name="playlist_name_exists">Afspeellijst met deze naam bestaat reeds</string>
+    <string name="playlist_name_exists">Er bestaat reeds een afspeellijst met deze naam</string>
     <string name="remove_playlist">Afspeellijst verwijderen</string>
     <string name="remove_playlist_description">Dit zal alleen de geselecteerde afspeellijsten verwijderen, niet de bestanden.</string>
     <string name="remove_playlist_description_placeholder">Dit zal afspeellijst \"%s\" verwijderen. Bestanden worden niet verwijderd.</string>
@@ -40,16 +40,16 @@
     <string name="create_playlist_from_folder">Van deze map nieuwe afspeellijst maken</string>
     <string name="folder_contains_no_audio">De geselecteerde map bevat geen geluidsbestanden</string>
     <string name="delete_current_song">Huidige nummer verwijderen</string>
-    <string name="remove_current_song">Huidige nummer uit afspeellijst verwijderen</string>
+    <string name="remove_current_song">Huidig nummer uit afspeellijst verwijderen</string>
     <string name="show_filename">Bestandsnaam als titel gebruiken</string>
     <string name="title_is_not_available">Als titel niet beschikbaar is</string>
     <string name="show_album_cover">Albumhoes in hoofdscherm weergeven</string>
     <string name="all_tracks">Alle nummers</string>
     <string name="add_to_playlist">Naar afspeellijst</string>
-    <string name="create_playlist_label">Maak een nieuwe afspeellijst aan via Menu -&gt; Naar afspeellijst na het kiezen van artiesten, albums of nummers.</string>
-    <string name="export_playlist">Export playlist</string>
-    <string name="import_playlist">Import playlist</string>
-    <string name="filename_without_m3u">Filename (without .m3u)</string>
+    <string name="create_playlist_label">Maak na het kiezen van artiesten, albums of nummers een nieuwe afspeellijst aan via Menu -&gt; Naar afspeellijst.</string>
+    <string name="export_playlist">Afspeellijst exporteren</string>
+    <string name="import_playlist">Afspeellijst importeren</string>
+    <string name="filename_without_m3u">Bestandsnaam (zonder .m3u)</string>
     <!-- Sorting -->
     <string name="track_count">Aantal nummers</string>
     <string name="album_count">Aantal albums</string>
@@ -73,7 +73,7 @@
     <string name="track_queue">Wachtrij</string>
     <string name="add_to_queue">Aan wachtrij toevoegen</string>
     <string name="remove_from_queue">Uit wachtrij verwijderen</string>
-    <string name="create_playlist_from_queue">Wachtrij naar afspeellijst</string>
+    <string name="create_playlist_from_queue">Wachtrij opslaan als afspeellijst</string>
     <!-- Settings -->
     <string name="equalizer">Equalizer</string>
     <string name="swap_prev_next">Knoppen Vorige/Volgende op koptelefoon omdraaien</string>

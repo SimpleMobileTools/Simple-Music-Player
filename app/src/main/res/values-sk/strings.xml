@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Jednoduchý hudobný prehrávač</string>
     <string name="app_launcher_name">Hudobný prehrávač</string>
@@ -17,7 +18,6 @@
     <string name="volume">Hlasitosť</string>
     <string name="playback_speed">Rýchlosť prehrávania</string>
     <string name="loading_files">Načítanie súborov…</string>
-
     <!-- Playlists -->
     <string name="add_file_to_playlist">Pridať súbor do playlistu</string>
     <string name="add_folder_to_playlist">Pridať priečinok do playlistu</string>
@@ -46,17 +46,15 @@
     <string name="show_album_cover">Zobraziť obal albumu na hlavnej obrazovke</string>
     <string name="all_tracks">Všetky skladby</string>
     <string name="add_to_playlist">Pridať do playlistu</string>
-    <string name="create_playlist_label">Nový playlist môžete vytvoriť označením žiadaných interpretov, albumov alebo skladieb a použitím Menu -> Pridať do playlistu.</string>
+    <string name="create_playlist_label">Nový playlist môžete vytvoriť označením žiadaných interpretov, albumov alebo skladieb a použitím Menu -&gt; Pridať do playlistu.</string>
     <string name="export_playlist">Exportovať playlist</string>
     <string name="import_playlist">Importovať playlist</string>
     <string name="filename_without_m3u">Názov súboru (bez .m3u)</string>
-
     <!-- Sorting -->
     <string name="track_count">Počet skladieb</string>
     <string name="album_count">Počet albumov</string>
     <string name="artist_name">Meno interpreta</string>
     <string name="year">Rok</string>
-
     <!-- Artists -->
     <string name="artists">Interpreti</string>
     <string name="folders">Priečinky</string>
@@ -66,29 +64,24 @@
         <item quantity="few">%d albumy</item>
         <item quantity="other">%d albumov</item>
     </plurals>
-
     <string name="tracks">Skladby</string>
     <plurals name="tracks_plural">
         <item quantity="one">%d skladba</item>
         <item quantity="few">%d skladby</item>
         <item quantity="other">%d skladieb</item>
     </plurals>
-
     <!-- Queue -->
     <string name="next_track">Nasleduje:</string>
     <string name="track_queue">Poradie skladieb</string>
     <string name="add_to_queue">Pridať do poradia skladieb</string>
     <string name="remove_from_queue">Odstrániť z poradia skladieb</string>
     <string name="create_playlist_from_queue">Vytvoriť playlist z poradia</string>
-
     <!-- Settings -->
     <string name="equalizer">Ekvalizér</string>
     <string name="swap_prev_next">Vymeniť slúchadlové tlačidlá pre ďalšiu/predošlú skladbu</string>
-
     <!-- FAQ -->
-    <string name="faq_1_title">Ako viem posunúť skladbu vpred?</string>
+    <string name="faq_1_title">Ako viem posunúť skladbu vpred\?</string>
     <string name="faq_1_text">Môžete kliknúť na texty súčasnej, alebo maximálnej dĺžky skladby, ktoré sú vedľa indikátora súčasného progresu. To posunie skladbu buď vpred, alebo vzad.</string>
-
     <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
     <!-- App title has to have less than 50 characters. If you cannot squeeze it, just remove a part of it -->
     <string name="app_title">Jednoduchý hudobný prehrávač - Pre vaše skladby</string>
@@ -130,7 +123,6 @@
         <b>Reddit:</b>
         https://www.reddit.com/r/SimpleMobileTools
     </string>
-
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res

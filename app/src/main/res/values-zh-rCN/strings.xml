@@ -49,7 +49,7 @@
     <string name="create_playlist_label">您可以通过选择想要的艺术家、专辑或曲目并使用菜单 -&gt; 添加到播放列表来创建新的播放列表。</string>
     <string name="export_playlist">Export playlist</string>
     <string name="import_playlist">Import playlist</string>
-    <string name="filename_without_m3u">Filename (without .m3u)</string>
+    <string name="filename_without_m3u">文件名 (不带 .m3u)</string>
     <!-- Sorting -->
     <string name="track_count">曲目数</string>
     <string name="album_count">专辑数</string>
