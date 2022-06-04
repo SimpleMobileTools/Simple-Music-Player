@@ -19,8 +19,8 @@
     <string name="playback_speed">Uppspelningshastighet</string>
     <string name="loading_files">Laddar filer…</string>
     <!-- Playlists -->
-    <string name="add_file_to_playlist">Addera fil i spellista</string>
-    <string name="add_folder_to_playlist">Addera mapp till spellista</string>
+    <string name="add_file_to_playlist">Lägg till fil i spellista</string>
+    <string name="add_folder_to_playlist">Lägg till mapp i spellista</string>
     <string name="manage_playlists">Hantera spellistor</string>
     <string name="playlists">Spellistor</string>
     <string name="create_new_playlist">Skapa spellista</string>
@@ -47,9 +47,9 @@
     <string name="all_tracks">Alla spår</string>
     <string name="add_to_playlist">Lägg till i spellista</string>
     <string name="create_playlist_label">Du kan skapa en ny spellista genom att välja önskade artister, album eller spår och använda Meny -&gt; Lägg till i spellista.</string>
-    <string name="export_playlist">Export playlist</string>
-    <string name="import_playlist">Import playlist</string>
-    <string name="filename_without_m3u">Filename (without .m3u)</string>
+    <string name="export_playlist">Exportera spellista</string>
+    <string name="import_playlist">Importera spellista</string>
+    <string name="filename_without_m3u">Filnamn (utan .m3u)</string>
     <!-- Sorting -->
     <string name="track_count">Antal spår</string>
     <string name="album_count">Antal album</string>
