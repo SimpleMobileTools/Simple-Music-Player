@@ -100,7 +100,11 @@ class TracksActivity : SimpleActivity() {
                     val playlistTracks = tracksDAO.getTracksFromPlaylist(playlist!!.id).map { track ->
                         track.title = track.getProperTitle(showFilename)
                         track
-                    }
+                    } as ArrayList<Track>
+
+                    Track.sorting = config.playlistTracksSorting
+                    playlistTracks.sort()
+
                     runOnUiThread {
                         tracks_placeholder.beVisibleIf(playlistTracks.isEmpty())
                         tracks_placeholder_2.beVisibleIf(playlistTracks.isEmpty())
@@ -123,7 +127,11 @@ class TracksActivity : SimpleActivity() {
                     val folderTracks = tracksDAO.getTracksFromFolder(folder ?: "").map { track ->
                         track.title = track.getProperTitle(showFilename)
                         track
-                    }
+                    } as ArrayList<Track>
+
+                    Track.sorting = config.playlistTracksSorting
+                    folderTracks.sort()
+
                     runOnUiThread {
                         tracks_placeholder.beVisibleIf(folderTracks.isEmpty())
                     }
