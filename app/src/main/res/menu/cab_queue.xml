@@ -5,7 +5,7 @@
     tools:ignore="AppCompatResource">
     <item
         android:id="@+id/cab_remove_from_queue"
-        android:icon="@drawable/ic_delete_vector"
+        android:icon="@drawable/ic_minus_circle_vector"
         android:title="@string/remove_from_queue"
         app:showAsAction="ifRoom" />
     <item
