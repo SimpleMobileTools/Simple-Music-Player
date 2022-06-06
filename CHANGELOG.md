@@ -1,6 +1,13 @@
 Changelog
 ==========
 
+Version 5.11.3 *(2022-06-06)*
+----------------------------
+
+ * Added support for m3a playlist files
+ * Properly sort playlist and folder files
+ * Added some stability, translation and UX improvements
+
 Version 5.11.2 *(2022-04-15)*
 ----------------------------
 
