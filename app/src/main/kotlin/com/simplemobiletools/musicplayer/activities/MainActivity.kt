@@ -54,6 +54,7 @@ class MainActivity : SimpleActivity() {
     private var searchMenuItem: MenuItem? = null
     private var bus: EventBus? = null
     private var storedShowTabs = 0
+    private var fragmentInSearchMode: MyViewPagerFragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -175,13 +176,15 @@ class MainActivity : SimpleActivity() {
 
         MenuItemCompat.setOnActionExpandListener(searchMenuItem, object : MenuItemCompat.OnActionExpandListener {
             override fun onMenuItemActionExpand(item: MenuItem?): Boolean {
-                getCurrentFragment()?.onSearchOpened()
+                fragmentInSearchMode = getCurrentFragment()
+                fragmentInSearchMode?.onSearchOpened()
                 isSearchOpen = true
                 return true
             }
 
             override fun onMenuItemActionCollapse(item: MenuItem?): Boolean {
-                getCurrentFragment()?.onSearchClosed()
+                fragmentInSearchMode?.onSearchClosed()
+                fragmentInSearchMode = null
                 isSearchOpen = false
                 return true
             }
