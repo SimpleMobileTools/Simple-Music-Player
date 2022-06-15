@@ -10,7 +10,7 @@
     <string name="repeat_song">Repeat current song</string>
     <string name="repeat_playlist">Repeat all</string>
     <string name="stop_playback_after_current_song">Stop playback after current song</string>
-    <string name="volume">Volume</string>
+    <string name="volume">مستوى الصوت</string>
     <string name="sleep_timer">Sleep timer</string>
     <string name="playback_speed">Playback speed</string>
     <string name="loading_files">Loading files…</string>
