@@ -1,1 +1,1 @@
-A clean music player with a customizable widget.
+Clean music player with a customizable widget, sleep timer, battery saver
