@@ -1,2 +1,0 @@
- * Fixed some Android 11 file operation related issues
- * Added some UX and translation improvements

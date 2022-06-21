@@ -1,2 +1,0 @@
- * Use a nicer app icon on older devices
- * Adding some stability and translation improvements

@@ -1,3 +1,0 @@
- * Cache artists and albums for quicker loading
- * Some widget reliability improvements
- * Adding some translation and stability improvements

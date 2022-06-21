@@ -1,4 +1,0 @@
- * Readding the sleep timer
- * Properly handle unknown artists, list them as <unknown>
- * Added a couple other UX, stability and translation improvements
-

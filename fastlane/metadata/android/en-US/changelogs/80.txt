@@ -1,3 +1,0 @@
- * Added a White theme with special handling
- * Added an initial implementation of a more advanced equalizer
- * Some stability and translation improvements

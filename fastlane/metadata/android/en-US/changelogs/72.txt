@@ -1,2 +1,0 @@
- * Allow manually adding files and folders to playlists
- * Add sorting to every tab
