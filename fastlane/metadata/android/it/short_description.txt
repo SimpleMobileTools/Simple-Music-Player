@@ -1,0 +1,1 @@
+Lettore musicale pulito con widget, timer di spegnimento, risparmio batteria

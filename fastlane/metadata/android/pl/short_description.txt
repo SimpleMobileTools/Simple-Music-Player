@@ -1,1 +1,1 @@
-Prosty odtwarzacz muzyki z konfigurowalnym widżetem.
+Odtwarzacz muzyki z widżetem, wyłącznikiem czasowym i oszczędzaniem baterii
