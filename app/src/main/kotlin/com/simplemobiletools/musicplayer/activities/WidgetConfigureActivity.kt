@@ -7,10 +7,9 @@ import android.graphics.Color
 import android.os.Bundle
 import android.widget.RemoteViews
 import com.simplemobiletools.commons.dialogs.ColorPickerDialog
-import com.simplemobiletools.commons.dialogs.WidgetLockedDialog
+import com.simplemobiletools.commons.dialogs.FeatureLockedDialog
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.IS_CUSTOMIZING_COLORS
-import com.simplemobiletools.commons.helpers.mydebug
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.helpers.MyWidgetProvider
@@ -26,7 +25,7 @@ class WidgetConfigureActivity : SimpleActivity() {
     private var mBgColor = 0
     private var mTextColor = 0
     private var mBgColorWithoutTransparency = 0
-    private var mWidgetLockedDialog: WidgetLockedDialog? = null
+    private var mFeatureLockedDialog: FeatureLockedDialog? = null
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         useDynamicTheme = false
@@ -59,7 +58,7 @@ class WidgetConfigureActivity : SimpleActivity() {
         }
 
         if (!isCustomizingColors && !isOrWasThankYouInstalled()) {
-            mWidgetLockedDialog = WidgetLockedDialog(this) {
+            mFeatureLockedDialog = FeatureLockedDialog(this) {
                 if (!isOrWasThankYouInstalled()) {
                     finish()
                 }
@@ -69,8 +68,8 @@ class WidgetConfigureActivity : SimpleActivity() {
 
     override fun onResume() {
         super.onResume()
-        if (mWidgetLockedDialog != null && isOrWasThankYouInstalled()) {
-            mWidgetLockedDialog?.dismissDialog()
+        if (mFeatureLockedDialog != null && isOrWasThankYouInstalled()) {
+            mFeatureLockedDialog?.dismissDialog()
         }
     }
 
