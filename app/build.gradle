@@ -50,6 +50,7 @@ android {
     productFlavors {
         core {}
         fdroid {}
+        prepaid {}
     }
 
     sourceSets {
@@ -69,7 +70,7 @@ android {
 }
 
 dependencies {
-    implementation 'com.github.SimpleMobileTools:Simple-Commons:e1e07bf005'
+    implementation 'com.github.SimpleMobileTools:Simple-Commons:fbcf12e609'
     implementation 'org.greenrobot:eventbus:3.3.1'
     implementation 'androidx.media:media:1.6.0'
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
