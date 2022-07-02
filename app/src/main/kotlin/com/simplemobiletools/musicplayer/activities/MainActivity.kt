@@ -13,7 +13,6 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.ImageView
-import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
@@ -334,7 +333,6 @@ class MainActivity : SimpleActivity() {
         current_track_bar.updateColors()
         current_track_bar.updateCurrentTrack(MusicService.mCurrTrack)
         current_track_bar.updateTrackState(MusicService.getIsPlaying())
-        checkSleepTimerPosition()
     }
 
     private fun createNewPlaylist() {
@@ -496,7 +494,6 @@ class MainActivity : SimpleActivity() {
     }
 
     private fun startSleepTimer() {
-        checkSleepTimerPosition()
         sleep_timer_holder.fadeIn()
         sendIntent(START_SLEEP_TIMER)
     }
@@ -504,14 +501,6 @@ class MainActivity : SimpleActivity() {
     private fun stopSleepTimer() {
         sendIntent(STOP_SLEEP_TIMER)
         sleep_timer_holder.fadeOut()
-    }
-
-    private fun checkSleepTimerPosition() {
-        if (current_track_bar.isVisible()) {
-            (sleep_timer_holder.layoutParams as RelativeLayout.LayoutParams).removeRule(RelativeLayout.ALIGN_PARENT_BOTTOM)
-        } else {
-            (sleep_timer_holder.layoutParams as RelativeLayout.LayoutParams).addRule(RelativeLayout.ALIGN_PARENT_BOTTOM)
-        }
     }
 
     private fun getAllFragments() =

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_holder"
@@ -10,19 +10,19 @@
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/current_track_bar" />
+        app:layout_constraintBottom_toTopOf="@+id/current_track_bar" />
 
     <include
         layout="@layout/view_current_track_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/main_tabs_holder" />
+        app:layout_constraintBottom_toTopOf="@+id/main_tabs_holder" />
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/main_tabs_holder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:tabIndicator="@null"
         app:tabMinWidth="150dp"
         app:tabRippleColor="@null" />
@@ -31,19 +31,24 @@
         android:id="@+id/sleep_timer_holder"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/current_track_bar"
-        android:layout_alignParentEnd="true"
         android:background="@color/default_background_color"
         android:clickable="true"
-        android:visibility="gone">
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/current_track_bar"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:visibility="visible">
 
-        <include
-            layout="@layout/divider"
+        <ImageView
+            android:id="@+id/sleep_timer_divider_top"
+            android:layout_width="0dp"
+            android:layout_height="1px"
+            android:background="@color/divider_grey"
             app:layout_constraintBottom_toTopOf="@+id/sleep_timer_stop"
             app:layout_constraintEnd_toEndOf="@+id/sleep_timer_stop"
             app:layout_constraintStart_toStartOf="@+id/sleep_timer_label" />
 
         <ImageView
+            android:id="@+id/sleep_timer_divider_start"
             android:layout_width="1px"
             android:layout_height="0dp"
             android:background="@color/divider_grey"
@@ -88,4 +93,4 @@
             app:layout_constraintEnd_toEndOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
