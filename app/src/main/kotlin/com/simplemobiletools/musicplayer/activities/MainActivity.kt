@@ -342,7 +342,7 @@ class MainActivity : SimpleActivity() {
     }
 
     private fun createPlaylistFromFolder() {
-        FilePickerDialog(this, pickFile = false) {
+        FilePickerDialog(this, pickFile = false, enforceStorageRestrictions = false) {
             createPlaylistFrom(it)
         }
     }
@@ -422,7 +422,7 @@ class MainActivity : SimpleActivity() {
     }
 
     private fun showFilePickerDialog() {
-        FilePickerDialog(this) { path ->
+        FilePickerDialog(this, enforceStorageRestrictions = false) { path ->
             SelectPlaylistDialog(this) { id ->
                 importPlaylist(path, id)
             }

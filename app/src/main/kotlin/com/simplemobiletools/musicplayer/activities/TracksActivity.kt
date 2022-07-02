@@ -250,7 +250,7 @@ class TracksActivity : SimpleActivity() {
     }
 
     private fun addFileToPlaylist() {
-        FilePickerDialog(this, lastFilePickerPath) { path ->
+        FilePickerDialog(this, lastFilePickerPath, enforceStorageRestrictions = false) { path ->
             ensureBackgroundThread {
                 lastFilePickerPath = path
                 if (path.isAudioFast()) {
@@ -288,7 +288,7 @@ class TracksActivity : SimpleActivity() {
     }
 
     private fun addFolderToPlaylist() {
-        FilePickerDialog(this, pickFile = false) {
+        FilePickerDialog(this, pickFile = false, enforceStorageRestrictions = false) {
             ensureBackgroundThread {
                 getFolderTracks(it, true) { tracks ->
                     tracks.forEach {
