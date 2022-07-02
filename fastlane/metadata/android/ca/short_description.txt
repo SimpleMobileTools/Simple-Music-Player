@@ -1,0 +1,1 @@
+Reproductor de música amb un giny personalitzable, temporitzador de son i estalvi de bateria
