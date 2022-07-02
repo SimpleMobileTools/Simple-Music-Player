@@ -34,6 +34,7 @@ class AlbumsFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
 
     private fun gotAlbums(activity: SimpleActivity, albums: ArrayList<Album>) {
         albums.sort()
+        albumsIgnoringSearch = albums
 
         activity.runOnUiThread {
             albums_placeholder.text = context.getString(R.string.no_items_found)

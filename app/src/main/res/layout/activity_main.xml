@@ -6,28 +6,26 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.simplemobiletools.musicplayer.views.MyTabLayout
-        android:id="@+id/main_tabs_holder"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        app:elevation="6dp"
-        app:tabIndicatorColor="@android:color/white"
-        app:tabIndicatorHeight="2dp"
-        app:tabMode="scrollable"
-        app:tabSelectedTextColor="@android:color/white" />
-
     <com.simplemobiletools.commons.views.MyViewPager
-        android:id="@+id/viewpager"
+        android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/current_track_bar"
-        android:layout_below="@+id/main_tabs_holder" />
+        android:layout_above="@+id/current_track_bar" />
 
     <include
         layout="@layout/view_current_track_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true" />
+        android:layout_above="@+id/main_tabs_holder" />
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/main_tabs_holder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        app:tabIndicator="@null"
+        app:tabMinWidth="150dp"
+        app:tabRippleColor="@null" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/sleep_timer_holder"

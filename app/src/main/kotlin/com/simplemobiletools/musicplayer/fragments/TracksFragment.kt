@@ -41,6 +41,7 @@ class TracksFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
 
             Track.sorting = context.config.trackSorting
             tracks.sort()
+            tracksIgnoringSearch = tracks
 
             activity.runOnUiThread {
                 tracks_placeholder.text = context.getString(R.string.no_items_found)

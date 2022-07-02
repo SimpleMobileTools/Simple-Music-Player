@@ -6,12 +6,15 @@ import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.Drawable
 import android.media.AudioManager
 import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.ImageView
 import android.widget.RelativeLayout
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.MenuItemCompat
@@ -42,6 +45,7 @@ import kotlinx.android.synthetic.main.fragment_folders.*
 import kotlinx.android.synthetic.main.fragment_playlists.*
 import kotlinx.android.synthetic.main.fragment_tracks.*
 import kotlinx.android.synthetic.main.view_current_track_bar.*
+import me.grantland.widget.AutofitHelper
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -54,13 +58,13 @@ class MainActivity : SimpleActivity() {
     private var searchMenuItem: MenuItem? = null
     private var bus: EventBus? = null
     private var storedShowTabs = 0
-    private var fragmentInSearchMode: MyViewPagerFragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         appLaunched(BuildConfig.APPLICATION_ID)
         storeStateVariables()
+        setupTabs()
 
         handlePermission(PERMISSION_WRITE_STORAGE) {
             if (it) {
@@ -92,25 +96,20 @@ class MainActivity : SimpleActivity() {
         }
 
         updateTextColors(main_holder)
+        setupTabColors()
         sleep_timer_holder.background = ColorDrawable(getProperBackgroundColor())
         sleep_timer_stop.applyColorFilter(getProperTextColor())
         updateCurrentTrackBar()
 
-        val adjustedPrimaryColor = getProperPrimaryColor()
-        main_tabs_holder.apply {
-            setTabTextColors(getProperTextColor(), adjustedPrimaryColor)
-            setSelectedTabIndicatorColor(adjustedPrimaryColor)
-        }
-
         getAllFragments().forEach {
-            it?.setupColors(getProperTextColor(), adjustedPrimaryColor)
+            it?.setupColors(getProperTextColor(), getProperPrimaryColor())
         }
     }
 
     override fun onPause() {
         super.onPause()
         storeStateVariables()
-        config.lastUsedViewPagerPage = viewpager.currentItem
+        config.lastUsedViewPagerPage = view_pager.currentItem
     }
 
     override fun onDestroy() {
@@ -176,15 +175,13 @@ class MainActivity : SimpleActivity() {
 
         MenuItemCompat.setOnActionExpandListener(searchMenuItem, object : MenuItemCompat.OnActionExpandListener {
             override fun onMenuItemActionExpand(item: MenuItem?): Boolean {
-                fragmentInSearchMode = getCurrentFragment()
-                fragmentInSearchMode?.onSearchOpened()
+                getCurrentFragment()?.onSearchOpened()
                 isSearchOpen = true
                 return true
             }
 
             override fun onMenuItemActionCollapse(item: MenuItem?): Boolean {
-                fragmentInSearchMode?.onSearchClosed()
-                fragmentInSearchMode = null
+                getCurrentFragment()?.onSearchClosed()
                 isSearchOpen = false
                 return true
             }
@@ -219,14 +216,10 @@ class MainActivity : SimpleActivity() {
     }
 
     private fun initFragments() {
-        viewpager.adapter = ViewPagerAdapter(this)
-        viewpager.offscreenPageLimit = tabsList.size - 1
-        viewpager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
-            override fun onPageScrollStateChanged(state: Int) {
-                if (isSearchOpen) {
-                    searchMenuItem?.collapseActionView()
-                }
-            }
+        view_pager.adapter = ViewPagerAdapter(this)
+        view_pager.offscreenPageLimit = tabsList.size - 1
+        view_pager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+            override fun onPageScrollStateChanged(state: Int) {}
 
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
 
@@ -235,40 +228,76 @@ class MainActivity : SimpleActivity() {
                 getAllFragments().forEach {
                     it?.finishActMode()
                 }
+                invalidateOptionsMenu()
             }
         })
+    }
+
+    private fun setupTabs() {
+        main_tabs_holder.removeAllTabs()
+        tabsList.forEachIndexed { index, value ->
+            if (config.showTabs and value != 0) {
+                main_tabs_holder.newTab().setCustomView(R.layout.bottom_tablayout_item).apply {
+                    customView?.findViewById<ImageView>(R.id.tab_item_icon)?.setImageDrawable(getTabIcon(value))
+                    customView?.findViewById<TextView>(R.id.tab_item_label)?.text = getTabLabel(value)
+                    AutofitHelper.create(customView?.findViewById(R.id.tab_item_label))
+                    main_tabs_holder.addTab(this)
+                }
+            }
+        }
 
         main_tabs_holder.onTabSelectionChanged(
+            tabUnselectedAction = {
+                updateBottomTabItemColors(it.customView, false)
+            },
             tabSelectedAction = {
-                viewpager.currentItem = it.position
+                closeSearch()
+                view_pager.currentItem = it.position
+                updateBottomTabItemColors(it.customView, true)
             }
         )
 
-        val tabLabels = arrayListOf(
-            getString(R.string.playlists),
-            getString(R.string.artists),
-            getString(R.string.albums),
-            getString(R.string.tracks)
-        )
+        main_tabs_holder.beGoneIf(main_tabs_holder.tabCount == 1)
+    }
 
-        if (isQPlus()) {
-            tabLabels.add(1, getString(R.string.folders))
+    private fun setupTabColors() {
+        val activeView = main_tabs_holder.getTabAt(view_pager.currentItem)?.customView
+        updateBottomTabItemColors(activeView, true)
+
+        getInactiveTabIndexes(view_pager.currentItem).forEach { index ->
+            val inactiveView = main_tabs_holder.getTabAt(index)?.customView
+            updateBottomTabItemColors(inactiveView, false)
         }
 
-        main_tabs_holder.removeAllTabs()
-        var skippedTabs = 0
-        tabsList.forEachIndexed { index, value ->
-            if (config.showTabs and value == 0) {
-                skippedTabs++
-            } else {
-                val label = tabLabels[index]
-                val tab = main_tabs_holder.newTab().setText(label)
-                tab.contentDescription = label
-                main_tabs_holder.addTab(tab, index - skippedTabs, config.lastUsedViewPagerPage == index - skippedTabs)
-            }
+        val bottomBarColor = getBottomTabsBackgroundColor()
+        main_tabs_holder.setBackgroundColor(bottomBarColor)
+        updateNavigationBarColor(bottomBarColor)
+    }
+
+    private fun getInactiveTabIndexes(activeIndex: Int) = (0 until tabsList.size).filter { it != activeIndex }
+
+    private fun getTabIcon(position: Int): Drawable {
+        val drawableId = when (position) {
+            TAB_PLAYLISTS -> R.drawable.ic_playlist_vector
+            TAB_FOLDERS -> R.drawable.ic_folder_vector
+            TAB_ARTISTS -> R.drawable.ic_person_vector
+            TAB_ALBUMS -> R.drawable.ic_album_vector
+            else -> R.drawable.ic_music_note_vector
         }
 
-        viewpager.currentItem = config.lastUsedViewPagerPage
+        return resources.getColoredDrawableWithColor(drawableId, getProperTextColor())
+    }
+
+    private fun getTabLabel(position: Int): String {
+        val stringId = when (position) {
+            TAB_PLAYLISTS -> R.string.playlists
+            TAB_FOLDERS -> R.string.folders
+            TAB_ARTISTS -> R.string.artists
+            TAB_ALBUMS -> R.string.albums
+            else -> R.string.tracks
+        }
+
+        return resources.getString(stringId)
     }
 
     private fun getCurrentFragment(): MyViewPagerFragment? {
@@ -294,7 +323,7 @@ class MainActivity : SimpleActivity() {
             fragments.add(tracks_fragment_holder)
         }
 
-        return fragments.getOrNull(viewpager.currentItem)
+        return fragments.getOrNull(view_pager.currentItem)
     }
 
     private fun showSortingDialog() {
@@ -532,18 +561,29 @@ class MainActivity : SimpleActivity() {
         }
     }
 
+    private fun closeSearch() {
+        if (isSearchOpen) {
+            getAllFragments().forEach {
+                it?.onSearchClosed()
+            }
+            searchMenuItem?.collapseActionView()
+        }
+    }
+
     private fun launchEqualizer() {
+        closeSearch()
         hideKeyboard()
         startActivity(Intent(applicationContext, EqualizerActivity::class.java))
     }
 
     private fun launchSettings() {
+        closeSearch()
         hideKeyboard()
         startActivity(Intent(applicationContext, SettingsActivity::class.java))
     }
 
     private fun launchAbout() {
-        val licenses = LICENSE_EVENT_BUS or LICENSE_GLIDE or LICENSE_M3U_PARSER
+        val licenses = LICENSE_EVENT_BUS or LICENSE_GLIDE or LICENSE_M3U_PARSER or LICENSE_AUTOFITTEXTVIEW
 
         val faqItems = arrayListOf(
             FAQItem(R.string.faq_1_title, R.string.faq_1_text),

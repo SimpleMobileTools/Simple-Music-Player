@@ -64,6 +64,7 @@ class FoldersFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
 
                 Folder.sorting = activity.config.folderSorting
                 folders.sort()
+                foldersIgnoringSearch = folders
 
                 val adapter = folders_list.adapter
                 if (adapter == null) {

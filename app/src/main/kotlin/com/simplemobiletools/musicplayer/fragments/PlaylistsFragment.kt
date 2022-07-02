@@ -42,6 +42,7 @@ class PlaylistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPa
 
             Playlist.sorting = context.config.playlistSorting
             playlists.sort()
+            playlistsIgnoringSearch = playlists
 
             activity.runOnUiThread {
                 playlists_placeholder.text = context.getString(R.string.no_items_found)
