@@ -1,6 +1,12 @@
 Changelog
 ==========
 
+Version 5.12.0 *(2022-07-02)*
+----------------------------
+
+ * Moved top tabs at the bottom
+ * Added many translation, stability and UX improvements
+
 Version 5.11.3 *(2022-06-06)*
 ----------------------------
 
