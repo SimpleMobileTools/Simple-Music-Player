@@ -14,7 +14,7 @@
     <string name="disable_shuffle">Onemogući slučajnu reprodukciju</string>
     <string name="shuffle_enabled">Omogućena je slučajna reprodukcija</string>
     <string name="shuffle_disabled">Onemogućena je slučajna reprodukcija</string>
-    <string name="sleep_timer">Sleep timer</string>
+    <string name="sleep_timer"></string>
     <string name="volume">Glasnoća</string>
     <string name="playback_speed">Brzina reprodukcije</string>
     <string name="loading_files">Učitavanje datoteka …</string>
@@ -72,9 +72,9 @@
     </plurals>
     <!-- Queue -->
     <string name="next_track">Sljedeća:</string>
-    <string name="track_queue">Track queue</string>
-    <string name="add_to_queue">Add to queue</string>
-    <string name="remove_from_queue">Remove from queue</string>
+    <string name="track_queue"></string>
+    <string name="add_to_queue"></string>
+    <string name="remove_from_queue"></string>
     <string name="create_playlist_from_queue">Stvori popis pjesama iz reda čekanja</string>
     <!-- Settings -->
     <string name="equalizer">Ekvilizator</string>
@@ -86,7 +86,7 @@
     <!-- App title has to have less than 50 characters. If you cannot squeeze it, just remove a part of it -->
     <string name="app_title">Jednostavan glazbeni svirač – Svira tvoje pjesme</string>
     <!-- Short description has to have less than 80 chars -->
-    <string name="app_short_description">A clean music player with a customizable widget, stylish interface and no ads.</string>
+    <string name="app_short_description"></string>
     <string name="app_long_description"> A simple music player easily controllable from the status bar, home screen widget or by hardware buttons on your headset. It provides all expected functions like sorting in various ways as well as changing the Equalizer. Listen to your favorite mp3, other songs or podcasts with this free beautiful music player. It offers exclusive extras like Search and showing Album Art, a sleep timer and many other settings. This elegant music player allows you creating and managing handy playlists as you desire. Playlists are fully supported. You can add either individual files, or whole folders. If you won\'t like a file, you can either just remove it from a playlist, or delete the actual file altogether. Comes with a handy sleep timer so that you can reliably delay the time of the app shutting down. Supports both shuffle and repeating a particular song, as well as skipping and fast forwarding. Available in many different languages, offers multiple different equalizers. Easily check a file properties like the size, duration, last modified etc. Modify file EXIF data like the song title and artist. Quickly share files with your friends on social networks, emails, or anywhere you would like. This stylish music player contains a widget with customizable text color, alpha and the color of the background for easy access and control. It properly handles third party intents too for playing individual audio files so it can help at setting ringtones too. Aplikacija je izrađena u material-dizajnu i standardno koristi tamnu temu, pruža izvrsno korisničko iskustvo za jednostavnu upotrebu. Nedostatak pristupa internetu pruža bolju privatnost, sigurnost i stabilnost od drugih aplikacija. Ne sadrži oglase niti nepotrebne dozvole. Potpuno je otvorenog koda, pruža prilagodljive boje. <b>Pogledaj cijeli paket „Jednostavni alati” ovdje:</b> https://www.simplemobiletools.com <b>Facebook:</b> https://www.facebook.com/simplemobiletools <b>Reddit:</b> https://www.reddit.com/r/SimpleMobileTools </string>
     <!--
         Haven't found some strings? There's more at
