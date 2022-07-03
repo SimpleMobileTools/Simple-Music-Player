@@ -1,126 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Jednostavni glazbeni svirač</string>
+    <string name="app_name">Jednostavan glazbeni svirač</string>
     <string name="app_launcher_name">Glazbeni svirač</string>
-    <string name="playlist_empty">Vaš popis pjesama je prazan</string>
+    <string name="playlist_empty">Tvoj popis pjesama je prazan</string>
     <string name="rename_song">Preimenuj pjesmu</string>
-    <string name="rename_song_error">Došlo je do pogreške prilikom preimenovanja</string>
-    <string name="rename_song_empty">Ispunite sva polja</string>
-    <string name="repeat_off">Repeat off</string>
-    <string name="repeat_song">Ponovi trenutnu pjesmu</string>
+    <string name="rename_song_error">Dogodila se greška tijekom preimenovanja</string>
+    <string name="rename_song_empty">Ispuni sva polja</string>
+    <string name="repeat_off">Ponavljanje isključeno</string>
+    <string name="repeat_song">Ponovi aktualnu pjesmu</string>
     <string name="repeat_playlist">Ponovi sve</string>
-    <string name="stop_playback_after_current_song">Stop playback after current song</string>
+    <string name="stop_playback_after_current_song">Prekini reprodukciju nakon aktualne pjesme</string>
     <string name="enable_shuffle">Omogući slučajnu reprodukciju</string>
     <string name="disable_shuffle">Onemogući slučajnu reprodukciju</string>
     <string name="shuffle_enabled">Omogućena je slučajna reprodukcija</string>
     <string name="shuffle_disabled">Onemogućena je slučajna reprodukcija</string>
-    <string name="sleep_timer">Sleep timer</string>
-    <string name="volume">Volume</string>
-    <string name="playback_speed">Playback speed</string>
-    <string name="loading_files">Loading files…</string>
+    <string name="sleep_timer"></string>
+    <string name="volume">Glasnoća</string>
+    <string name="playback_speed">Brzina reprodukcije</string>
+    <string name="loading_files">Učitavanje datoteka …</string>
     <!-- Playlists -->
-    <string name="add_file_to_playlist">Dodajte datoteku u popis pjesama</string>
-    <string name="add_folder_to_playlist">Dodajte mapu u popis pjesama</string>
+    <string name="add_file_to_playlist">Dodaj datoteku u popis pjesama</string>
+    <string name="add_folder_to_playlist">Dodaj mapu u popis pjesama</string>
     <string name="manage_playlists">Upravljaj popisom pjesama</string>
     <string name="playlists">Popisi pjesama</string>
     <string name="create_new_playlist">Izradi novi popis pjesama</string>
     <string name="rename_playlist">Preimenuj popis pjesama</string>
-    <string name="playlist_name_exists">Popis pjesama s tim nazivom već postoji</string>
+    <string name="playlist_name_exists">Popis pjesama s tim imenom već postoji</string>
     <string name="remove_playlist">Ukloni popis pjesama</string>
-    <string name="remove_playlist_description">To će ukloniti samo odabrane popise pjesama. Stvarne datoteke se neće izbrisati.</string>
-    <string name="remove_playlist_description_placeholder">To će ukloniti samo popis pjesama „%s”. Stvarne datoteke se neće izbrisati.</string>
+    <string name="remove_playlist_description">To će ukloniti samo odabrane popise pjesama. Same datoteke se neće izbrisati.</string>
+    <string name="remove_playlist_description_placeholder">To će ukloniti samo popis pjesama „%s”. Same datoteke se neće izbrisati.</string>
     <string name="remove_from_playlist">Ukloni iz popisa pjesama</string>
-    <string name="remove_from_playlist_description">To će ukloniti samo stavke iz popisa pjesama „%s”. Stvarne datoteke se neće izbrisati.</string>
+    <string name="remove_from_playlist_description">To će ukloniti samo stavke iz popisa pjesama „%s”. Same datoteke se neće izbrisati.</string>
     <string name="delete_the_files_too">Također izbriši datoteke</string>
     <string name="open_playlist">Otvori popis pjesama</string>
     <string name="all_songs_cannot_be_deleted">Nije moguće izbrisati popis pjesama „Sve pjesme”</string>
-    <string name="empty_playlist">Trenutačan popis pjesama je prazan</string>
-    <string name="fetching_songs">Dohvaćanje pjesama…</string>
+    <string name="empty_playlist">Aktualni popis pjesama je prazan</string>
+    <string name="fetching_songs">Dohvaćanje pjesama …</string>
     <string name="all_songs">Sve pjesme</string>
-    <string name="create_playlist_from_folder">Izradite novi popis pjesama iz mape</string>
+    <string name="create_playlist_from_folder">Izradi novi popis pjesama iz mape</string>
     <string name="folder_contains_no_audio">Odabrana mapa ne sadrži audio datoteke</string>
-    <string name="delete_current_song">Brisanje trenutne pjesme</string>
-    <string name="remove_current_song">Uklonite trenutačnu pjesmu iz popisa pjesama</string>
-    <string name="show_filename">Prikaži naziv datoteke kao naslov pjesme</string>
+    <string name="delete_current_song">Izbriši aktualnu pjesmu</string>
+    <string name="remove_current_song">Ukloni aktualnu pjesmu iz popisa pjesama</string>
+    <string name="show_filename">Prikaži ime datoteke kao naslov pjesme</string>
     <string name="title_is_not_available">Ako naslov nije dostupan</string>
-    <string name="show_album_cover">Pokazivanje naslovnice albuma na glavnom zaslonu</string>
-    <string name="all_tracks">All tracks</string>
+    <string name="show_album_cover">Pokaži naslovnicu albuma na glavnom ekranu</string>
+    <string name="all_tracks">Sve pjesme</string>
     <string name="add_to_playlist">Dodaj u popis pjesama</string>
     <string name="create_playlist_label">Možeš stvoriti novi popis pjesama odabirom željenih izvođača, albuma ili pjesama i korištenjem mogućnosti Izbornik -&gt; Dodaj u popis pjesama.</string>
-    <string name="export_playlist">Export playlist</string>
-    <string name="import_playlist">Import playlist</string>
-    <string name="filename_without_m3u">Filename (without .m3u)</string>
+    <string name="export_playlist">Izvezi popis pjesama</string>
+    <string name="import_playlist">Uvezi popis pjesama</string>
+    <string name="filename_without_m3u">Ime datoteke (bez .m3u)</string>
     <!-- Sorting -->
-    <string name="track_count">Track Count</string>
-    <string name="album_count">Album Count</string>
-    <string name="artist_name">Artist Name</string>
-    <string name="year">Year</string>
+    <string name="track_count">Broj pjesme</string>
+    <string name="album_count">Broj albuma</string>
+    <string name="artist_name">Ime izvođača</string>
+    <string name="year">Godina</string>
     <!-- Artists -->
-    <string name="artists">Artists</string>
-    <string name="folders">Folders</string>
-    <string name="albums">Albums</string>
+    <string name="artists">Izvođači</string>
+    <string name="folders">Mape</string>
+    <string name="albums">Albumi</string>
     <plurals name="albums_plural">
-        <item quantity="one">%d Album</item>
-        <item quantity="other">%d Albums</item>
+        <item quantity="one">%d album</item>
+        <item quantity="few">%d albuma</item>
+        <item quantity="other">%d albuma</item>
     </plurals>
-    <string name="tracks">Tracks</string>
+    <string name="tracks">Pjesme</string>
     <plurals name="tracks_plural">
-        <item quantity="one">%d Track</item>
-        <item quantity="other">%d Tracks</item>
+        <item quantity="one">%d pjesma</item>
+        <item quantity="few">%d pjesme</item>
+        <item quantity="other">%d pjesmi</item>
     </plurals>
     <!-- Queue -->
-    <string name="next_track">Next:</string>
-    <string name="track_queue">Track queue</string>
-    <string name="add_to_queue">Add to queue</string>
-    <string name="remove_from_queue">Remove from queue</string>
+    <string name="next_track">Sljedeća:</string>
+    <string name="track_queue"></string>
+    <string name="add_to_queue"></string>
+    <string name="remove_from_queue"></string>
     <string name="create_playlist_from_queue">Stvori popis pjesama iz reda čekanja</string>
     <!-- Settings -->
-    <string name="equalizer">Ekvilajzer</string>
-    <string name="swap_prev_next">Zamijeni prethodna/sljedeća tipke slušalica</string>
+    <string name="equalizer">Ekvilizator</string>
+    <string name="swap_prev_next">Zamijeni gumbe prethodne/sljedeća slušalice</string>
     <!-- FAQ -->
     <string name="faq_1_title">Kako mogu premotati pjesme\?</string>
-    <string name="faq_1_text">Možete kliknuti na tekst trenutnog ili krajnjeg trajanja pjesme u blizini trake za pretraživanje, pomoću kojeg ćete premotati pjesmu unatrag ili naprijed.</string>
+    <string name="faq_1_text">Možeš pritisnuti tekst aktualnog ili krajnjeg trajanja pjesme u blizini trake za pretraživanje. Time ćeš premotati pjesmu unatrag ili naprijed.</string>
     <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
     <!-- App title has to have less than 50 characters. If you cannot squeeze it, just remove a part of it -->
-    <string name="app_title">Simple Music Player - A cool player for your songs</string>
+    <string name="app_title">Jednostavan glazbeni svirač – Svira tvoje pjesme</string>
     <!-- Short description has to have less than 80 chars -->
-    <string name="app_short_description">A clean music player with a customizable widget, stylish interface and no ads.</string>
-    <string name="app_long_description">
-        A simple music player easily controllable from the status bar, home screen widget or by hardware buttons on your headset. It provides all expected functions like sorting in various ways as well as changing the Equalizer.  Listen to your favorite mp3, other songs or podcasts with this free beautiful music player.
-
-        It offers exclusive extras like Search and showing Album Art, a sleep timer and many other settings. This elegant music player allows you creating and managing handy playlists as you desire.
-
-        Playlists are fully supported. You can add either individual files, or whole folders. If you won\'t like a file, you can either just remove it from a playlist, or delete the actual file altogether.
-
-        Comes with a handy sleep timer so that you can reliably delay the time of the app shutting down.
-
-        Supports both shuffle and repeating a particular song, as well as skipping and fast forwarding.
-
-        Available in many different languages, offers multiple different equalizers.
-
-        Easily check a file properties like the size, duration, last modified etc.
-
-        Modify file EXIF data like the song title and artist.
-
-        Quickly share files with your friends on social networks, emails, or anywhere you would like.
-
-        This stylish music player contains a widget with customizable text color, alpha and the color of the background for easy access and control.
-
-        It properly handles third party intents too for playing individual audio files so it can help at setting ringtones too.
-
-        It comes with material design and dark theme by default, provides great user experience for easy usage. The lack of internet access gives you more privacy, security and stability than other apps.
-
-        Ne sadrži oglase ili nepotrebne dozvole. Aplikacije je otvorenog koda, pruža prilagodljive boje.
-
-        <b>Check out the full suite of Simple Tools here:</b>
-        https://www.simplemobiletools.com
-
-        <b>Facebook:</b>
-        https://www.facebook.com/simplemobiletools
-
-        <b>Reddit:</b>
-        https://www.reddit.com/r/SimpleMobileTools
-    </string>
+    <string name="app_short_description"></string>
+    <string name="app_long_description"> A simple music player easily controllable from the status bar, home screen widget or by hardware buttons on your headset. It provides all expected functions like sorting in various ways as well as changing the Equalizer. Listen to your favorite mp3, other songs or podcasts with this free beautiful music player. It offers exclusive extras like Search and showing Album Art, a sleep timer and many other settings. This elegant music player allows you creating and managing handy playlists as you desire. Playlists are fully supported. You can add either individual files, or whole folders. If you won\'t like a file, you can either just remove it from a playlist, or delete the actual file altogether. Comes with a handy sleep timer so that you can reliably delay the time of the app shutting down. Supports both shuffle and repeating a particular song, as well as skipping and fast forwarding. Available in many different languages, offers multiple different equalizers. Easily check a file properties like the size, duration, last modified etc. Modify file EXIF data like the song title and artist. Quickly share files with your friends on social networks, emails, or anywhere you would like. This stylish music player contains a widget with customizable text color, alpha and the color of the background for easy access and control. It properly handles third party intents too for playing individual audio files so it can help at setting ringtones too. Aplikacija je izrađena u material-dizajnu i standardno koristi tamnu temu, pruža izvrsno korisničko iskustvo za jednostavnu upotrebu. Nedostatak pristupa internetu pruža bolju privatnost, sigurnost i stabilnost od drugih aplikacija. Ne sadrži oglase niti nepotrebne dozvole. Potpuno je otvorenog koda, pruža prilagodljive boje. <b>Pogledaj cijeli paket „Jednostavni alati” ovdje:</b> https://www.simplemobiletools.com <b>Facebook:</b> https://www.facebook.com/simplemobiletools <b>Reddit:</b> https://www.reddit.com/r/SimpleMobileTools </string>
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
