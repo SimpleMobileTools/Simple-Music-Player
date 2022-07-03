@@ -9,8 +9,9 @@
     <com.simplemobiletools.commons.views.MyViewPager
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toTopOf="@+id/current_track_bar" />
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/current_track_bar"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <include
         layout="@layout/view_current_track_bar"
