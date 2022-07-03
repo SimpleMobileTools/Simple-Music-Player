@@ -24,11 +24,11 @@
 
 不包含广告及非必要的权限，而且完全开放源代码，并提供自定义颜色。
 
-<b>于此查看简易工具系列全套:</b>
+查看全套简易工具:
 https://www.simplemobiletools.com
 
-<b>Facebook:</b>
+Facebook:
 https://www.facebook.com/simplemobiletools
 
-<b>Reddit:</b>
+Reddit:
 https://www.reddit.com/r/SimpleMobileTools
