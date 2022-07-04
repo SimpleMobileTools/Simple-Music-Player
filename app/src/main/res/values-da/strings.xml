@@ -80,47 +80,6 @@
     <!-- FAQ -->
     <string name="faq_1_title">Hvordan kan jeg spole frem i sange\?</string>
     <string name="faq_1_text">Du kan klikke på de to tidsangivelser (aktuel spilletid og total varighed af nummeret) nær søgefeltet, der bevæger sangen enten bagud eller fremad.</string>
-    <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
-    <!-- App title has to have less than 50 characters. If you cannot squeeze it, just remove a part of it -->
-    <string name="app_title">Simpel Musikafspiller - En cool afspiller til dine sange</string>
-    <!-- Short description has to have less than 80 chars -->
-    <string name="app_short_description">En enkel musikafspiller med en tilpasselig widget, stilfuld grænseflade og ingen annoncer.</string>
-    <string name="app_long_description">
-        En simpel musikafspiller, der let kan styres fra statuslinjen, startskærmwidget eller med hardwareknapper på dit headset. Det giver alle forventede funktioner som sortering på forskellige måder, samt en equalizer. Lyt til dine mp3 sange eller podcasts med denne gratis, smukke musikafspiller.
-        
-        Den tilbyder mulighed for at søge, og viser album-billeder, har en sleep-timer og mange andre indstillinger. Denne elegante musikafspiller giver dig mulighed for at oprette og administrere praktiske afspilningslister, som du ønsker.
-        
-        Afspilningslister understøttes fuldt ud. Du kan tilføje enten individuelle filer eller hele mapper. Hvis du ikke kan lide en sang, kan du enten bare fjerne den fra en afspilningsliste eller helt slette filen.
-        
-        Har en praktisk sleep timer, så du indstille tiden for lukning af appen.
-        
-        Understøtter både vilkårlig rækkefølge og gentagelse af en bestemt sang, såvel som at springe over og spole hurtigt frem.
-        
-        Fås på mange forskellige sprog og tilbyder flere forskellige equalizers.
-        
-        Se nemt filegenskaber som størrelse, varighed, sidst ændret osv.
-        
-        Rediger fil EXIF-data som sangtitel og kunstner.
-        
-        Del hurtigt filer med dine venner på sociale netværk, e-mails, eller hvor du vil.
-        
-        Denne stilfulde musikafspiller indeholder en widget med redigerbar tekstfarve, alfa og baggrundsfarven, for nem adgang og kontrol.
-        
-        Den kan også hjælpe med at indstille ringetoner.
-        
-        Den leveres med Material Design og mørkt tema som standard, og giver god brugeroplevelse. Manglen på internetadgang giver dig mere privatliv, sikkerhed og stabilitet end andre apps.
-        
-        Indeholder ingen annoncer eller unødvendige tilladelser. Den er helt igennem OpenSource, og du kan selv bestemme farverne.
-        
-        <b> Se hele pakken med enkle værktøjer her: </b> 
-        https://www.simplemobiletools.com 
-        
-        <b> Facebook: </b> 
-        https://www.facebook.com/simplemobiletools
-        
-        <b> Reddit : </b>
-        https://www.reddit.com/r/SimpleMobileTools
-    </string>
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res

@@ -82,47 +82,6 @@
     <!-- FAQ -->
     <string name="faq_1_title">Ako viem posunúť skladbu vpred\?</string>
     <string name="faq_1_text">Môžete kliknúť na texty súčasnej, alebo maximálnej dĺžky skladby, ktoré sú vedľa indikátora súčasného progresu. To posunie skladbu buď vpred, alebo vzad.</string>
-    <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
-    <!-- App title has to have less than 50 characters. If you cannot squeeze it, just remove a part of it -->
-    <string name="app_title">Jednoduchý hudobný prehrávač - Pre vaše skladby</string>
-    <!-- Short description has to have less than 80 chars -->
-    <string name="app_short_description">Jednoduchý hudobný prehrávač s meniteľným widgetom na plochu bez reklám.</string>
-    <string name="app_long_description">
-        Hudobný prehrávač jednoducho ovládateľný zo stavovej lišty, widgetu na ploche, alebo hardvérovými tlačidlami na slúchadlách. Poskytuje všetky očakávané funkcie ako radenie rôznymi spôsobmi a zmena ekvalizéra. Počúvajte vaše obľúbené mp3, iné pesničky alebo podcasty s týmto pekným a bezplatným hudobným prehrávačom.
-
-        Poskytuje exkluzívne funkcie ako vyhľadávanie, zobrazovanie obrázkov albumov, časovač spánku a veľa rôznych nastavení. Tento elegantný hudobný prehrávač vám tiež umožňuje tvorbu a správu playlistov.
-
-        Zoznamy skladieb sú plne podporované. Viete do nich pridať buď jednotlivé súbory, alebo celé priečinky naraz. Ak sa vám niektorá položka nebude páčiť, môžete ju buď odstrániť zo zoznamu, alebo vymazať súbor ako taký.
-
-        K dispozícií je aj spoľahlivý časovač spánku pomocou ktorého viete nastaviť vypnutie apky.
-
-        Podporuje aj miešanie skladieb a opakovanie jedného súboru, ako aj preskakovanie a rýchle presúvanie.
-
-        Je k dispozícií vo veľa rôznych jazykoch, poskytuje niekoľko rôznych ekvalizérov.
-
-        Viete si jednoducho pozrieť vlastnosti súborov ako veľkosť, dĺžka, dátum poslednej úpravy atď.
-
-        Problémom nie je ani úprava EXIF údajov súborov ako sú interpret a názov skladby.
-
-        Rýchlo viete zdieľať súbory s vašimi kamošmi cez sociálne siete, emaily, alebo akokoľvek chcete.
-
-        Tento štýlový hudobný prehrávač má widget s nastaviteľnými farbami, ako aj meniteľnou priehľadnosťou a farbou pozadia pre jednoduchý prístup a kontrolu.
-
-        Správne spravuje požiadavky tretích strán na prehrávanie konkrétnych súborov, apka tak môže byť nápomocná aj pri zmene zvonenia.
-
-        Táto apka je založená na Material dizajne a má prednastavenú tmavú tému, poskytuje výbornú používateľskú skúsenosť pre ľahké používanie. Chýbajúci prístup k internetu garantuje lepšie súkromie, bezpečnosť a stabilitu ako ostatné apky.
-
-        Neobsahuje žiadne reklamy a nepotrebné oprávnenia. Je opensource, poskytuje možnosť zmeny farieb.
-
-        <b>Pozrite si celú sadu aplikácií na:</b>
-        https://www.simplemobiletools.com
-
-        <b>Facebook:</b>
-        https://www.facebook.com/simplemobiletools
-
-        <b>Reddit:</b>
-        https://www.reddit.com/r/SimpleMobileTools
-    </string>
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res

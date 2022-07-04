@@ -3,41 +3,11 @@
     <string name="app_name">Обикновен музикален плейър</string>
     <string name="app_launcher_name">Музикален плейър</string>
     <string name="playlist_empty">Вашият плейлист е празен</string>
-    <string name="repeat_song">Повтаряне на текущата песен</string>
-    <string name="volume">Сила на звука</string>
-    <string name="playback_speed">Скорост на възпроизвеждане</string>
-    <string name="loading_files">Файловете се зареждат…</string>
-    <string name="playlists">Плейлисти</string>
-    <string name="rename_playlist">Преименуване на плейлист</string>
-    <string name="remove_from_playlist">Премахване от плейлист</string>
-    <string name="remove_from_playlist_description">Това ще премахне само елементите от плейлиста „%s“. Реалните файлове няма да бъдат изтрити.</string>
-    <string name="all_songs">Всички песни</string>
-    <string name="create_playlist_from_folder">Създаване на нов плейлист от папка</string>
-    <string name="folder_contains_no_audio">Избраната папка не съдържа аудио файлове</string>
-    <string name="title_is_not_available">Ако заглавието не е налично</string>
-    <string name="show_album_cover">Показване на корицата на албума на главния екран</string>
-    <string name="all_tracks">Всички песни</string>
-    <string name="import_playlist">Импортиране на плейлист</string>
-    <string name="filename_without_m3u">Име на файл (без .m3u)</string>
-    <string name="track_count">Брой песни</string>
-    <string name="album_count">Брой албуми</string>
-    <string name="artist_name">Име на изпълнител</string>
-    <string name="tracks">Песни</string>
-    <plurals name="tracks_plural">
-        <item quantity="one">%d Песен</item>
-        <item quantity="other">%d Песни</item>
-    </plurals>
-    <string name="next_track">Следващо:</string>
-    <string name="track_queue">Опашка от песни</string>
-    <string name="add_to_queue">Добавяне в опашка</string>
-    <string name="equalizer">Еквалайзер</string>
-    <string name="swap_prev_next">Размяна на бутоните за предишно/следващо на слушалките</string>
-    <string name="faq_1_title">Как мога да превъртам песни\?</string>
-    <string name="faq_1_text">You can click on the current or max duration texts near the seekbar, that will move the song either backward, or forward.</string>
     <string name="rename_song">Преименуване на песен</string>
     <string name="rename_song_error">Възникна грешка по време на преименуването</string>
     <string name="rename_song_empty">Моля, попълнете всички полета</string>
     <string name="repeat_off">Изключено повтаряне</string>
+    <string name="repeat_song">Повтаряне на текущата песен</string>
     <string name="repeat_playlist">Повтаряне на всички</string>
     <string name="stop_playback_after_current_song">Спиране на възпроизвеждането след текущата песен</string>
     <string name="enable_shuffle">Активиране на разбъркване</string>
@@ -45,26 +15,47 @@
     <string name="shuffle_enabled">Разбъркването е активирано</string>
     <string name="shuffle_disabled">Разбъркването е деактивирано</string>
     <string name="sleep_timer">Таймер за заспиване</string>
+    <string name="volume">Сила на звука</string>
+    <string name="playback_speed">Скорост на възпроизвеждане</string>
+    <string name="loading_files">Файловете се зареждат…</string>
+    <!-- Playlists -->
     <string name="add_file_to_playlist">Добавяне на файл към плейлист</string>
     <string name="add_folder_to_playlist">Добавяне на папка към плейлист</string>
     <string name="manage_playlists">Управление на плейлисти</string>
+    <string name="playlists">Плейлисти</string>
     <string name="create_new_playlist">Създаване на нов плейлист</string>
+    <string name="rename_playlist">Преименуване на плейлист</string>
     <string name="playlist_name_exists">Вече съществува плейлист с това име</string>
     <string name="remove_playlist">Премахване на плейлист</string>
     <string name="remove_playlist_description">Това ще премахне само избраните плейлисти. Реалните файлове няма да бъдат изтрити.</string>
     <string name="remove_playlist_description_placeholder">Това ще премахне само плейлист \"%s\". Реалните файлове няма да бъдат изтрити.</string>
+    <string name="remove_from_playlist">Премахване от плейлист</string>
+    <string name="remove_from_playlist_description">Това ще премахне само елементите от плейлиста „%s“. Реалните файлове няма да бъдат изтрити.</string>
     <string name="delete_the_files_too">Изтриване на файловете също</string>
     <string name="open_playlist">Отваряне на плейлист</string>
     <string name="all_songs_cannot_be_deleted">Плейлистът „Всички песни“ не може да бъде изтрит</string>
     <string name="empty_playlist">Текущият плейлист е празен</string>
     <string name="fetching_songs">Извличат се песни…</string>
+    <string name="all_songs">Всички песни</string>
+    <string name="create_playlist_from_folder">Създаване на нов плейлист от папка</string>
+    <string name="folder_contains_no_audio">Избраната папка не съдържа аудио файлове</string>
     <string name="delete_current_song">Изтриване на текущата песен</string>
     <string name="remove_current_song">Премахване на текущата песен от плейлист</string>
     <string name="show_filename">Показване на името на файла като заглавие на песента</string>
+    <string name="title_is_not_available">Ако заглавието не е налично</string>
+    <string name="show_album_cover">Показване на корицата на албума на главния екран</string>
+    <string name="all_tracks">Всички песни</string>
     <string name="add_to_playlist">Добавяне към плейлист</string>
     <string name="create_playlist_label">Можете да създадете нов плейлист, като изберете желаните изпълнители, албуми или песни и използвате Меню -&gt; Добавяне към плейлист.</string>
     <string name="export_playlist">Експортиране на плейлист</string>
+    <string name="import_playlist">Импортиране на плейлист</string>
+    <string name="filename_without_m3u">Име на файл (без .m3u)</string>
+    <!-- Sorting -->
+    <string name="track_count">Брой песни</string>
+    <string name="album_count">Брой албуми</string>
+    <string name="artist_name">Име на изпълнител</string>
     <string name="year">Година</string>
+    <!-- Artists -->
     <string name="artists">Изпълнители</string>
     <string name="folders">Папки</string>
     <string name="albums">Албуми</string>
@@ -72,9 +63,25 @@
         <item quantity="one">%d Албум</item>
         <item quantity="other">%d Албума</item>
     </plurals>
+    <string name="tracks">Песни</string>
+    <plurals name="tracks_plural">
+        <item quantity="one">%d Песен</item>
+        <item quantity="other">%d Песни</item>
+    </plurals>
+    <!-- Queue -->
+    <string name="next_track">Следващо:</string>
+    <string name="track_queue">Опашка от песни</string>
+    <string name="add_to_queue">Добавяне в опашка</string>
     <string name="remove_from_queue">Премахване от опашка</string>
     <string name="create_playlist_from_queue">Създаване на плейлист от опашка</string>
-    <string name="app_title">Обикновен музикален плейър - Готин плейър за песни</string>
-    <string name="app_short_description">A clean music player with a customizable widget, stylish interface and no ads.</string>
-    <string name="app_long_description"> A simple music player easily controllable from the status bar, home screen widget or by hardware buttons on your headset. It provides all expected functions like sorting in various ways as well as changing the Equalizer. Listen to your favorite mp3, other songs or podcasts with this free beautiful music player. It offers exclusive extras like Search and showing Album Art, a sleep timer and many other settings. This elegant music player allows you creating and managing handy playlists as you desire. Playlists are fully supported. You can add either individual files, or whole folders. If you won\'t like a file, you can either just remove it from a playlist, or delete the actual file altogether. Comes with a handy sleep timer so that you can reliably delay the time of the app shutting down. Supports both shuffle and repeating a particular song, as well as skipping and fast forwarding. Available in many different languages and offers multiple different equalizers. Easily check a file properties like the size, duration, last modified etc. Modify file EXIF data like the song title and artist. Quickly share files with your friends on social networks, emails, or anywhere you would like. This stylish music player contains a widget with customizable text color, alpha and the color of the background for easy access and control. It properly handles third party intents too for playing individual audio files so it can help at setting ringtones too. It comes with material design and dark theme by default, provides great user experience for easy usage. The lack of internet access gives you more privacy, security and stability than other apps. Contains no ads or unnecessary permissions. It is fully opensource and provides customizable colors. <b>Check out the full suite of Simple Tools here:</b> https://www.simplemobiletools.com <b>Facebook:</b> https://www.facebook.com/simplemobiletools <b>Reddit:</b> https://www.reddit.com/r/SimpleMobileTools </string>
+    <!-- Settings -->
+    <string name="equalizer">Еквалайзер</string>
+    <string name="swap_prev_next">Размяна на бутоните за предишно/следващо на слушалките</string>
+    <!-- FAQ -->
+    <string name="faq_1_title">Как мога да превъртам песни\?</string>
+    <string name="faq_1_text">You can click on the current or max duration texts near the seekbar, that will move the song either backward, or forward.</string>
+    <!--
+        Haven't found some strings? There's more at
+        https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
+    -->
 </resources>

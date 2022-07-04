@@ -80,47 +80,6 @@
     <!-- FAQ -->
     <string name="faq_1_title">¿Cómo puedo avanzar canciones\?</string>
     <string name="faq_1_text">Puedes tocar los textos de la duración actual o máxima cerca de la barra de búsqueda, eso hará que la canción avance o retroceda.</string>
-    <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
-    <!-- App title has to have less than 50 characters. If you cannot squeeze it, just remove a part of it -->
-    <string name="app_title">Reproductor de Música Simple - Un buen reproductor</string>
-    <!-- Short description has to have less than 80 chars -->
-    <string name="app_short_description">Reproductor de música con widget personalizable, buena interfaz y sin anuncios.</string>
-    <string name="app_long_description">
-        Un reproductor de música simple fácilmente controlable desde la barra de estado, widget en la pantalla principal o con los botónes de tus audífonos. Provee todas las funciones esperadas como ordenar de diferentes formas como modificar el Ecualizador.  Escucha tus mp3 favoritos, otras canciones o podcasts con este reproductor hermoso y gratuito.
-
-        Ofrece extras exclusivos como Buscar y mostrar Carátula de álbum, un temporizador para dormir y otros ajustes varios. Este elegante reproductor te permite crear y administrar prácticas listas de reproducción como desees.
-
-        Las listas de reproducción son completamente soportadas. También puedes añadir archivos individuales, o carpetas completas. Si no te gusta una cación, puedes solo removerla de la lista de reproduccion, o también eliminar el archivo real.
-
-        Incluye un prácico temporizador para dormir, así que puedes programar el tiempo para que la aplicaicón se detenga sola con confianza.
-
-        Soporta modo aleatorio y repetir una canción en particular, como saltar una canción y adelantar la misma.
-
-        Disponible en diferentes lenguajes, ofrece diferentes ecualizadores.
-
-        Mira fácilmente las propiedades de un archivo como el tamaño, duración, última modificación, etc.
-
-        Modifica la información EXIF del archivo como el título de la canción y artista.
-
-        Comparte rápidamente las canciones con tus amigos en redes sociales, correo electrónico o cualquier lugar que quieras.
-
-        Este reproductor con estilo contiene un widget con color de texto, transparencia y color del fondo personalizables para fácil acceso y control.
-
-        También maneja apropiadamente actividades de aplicaciones externas para reproducir archivos de audio individuales, así que también ayuda a establecer tonos de llamada.
-
-        Incluye diseño material y tema obscuro por defecto, provee una gran experiencia de usuario para uso sencillo. La falta del acceso a internet te da más privacidad, seguridad y estabilidad que otras aplicaciones.
-
-        No contiene anuncios o permisos innecesarios. Es completamente de código abierto, provee colores personalizables.
-
-        <b>Mira la suite completa de herramientas Simples aquí:</b>
-        https://www.simplemobiletools.com
-
-        <b>Facebook:</b>
-        https://www.facebook.com/simplemobiletools
-
-        <b>Reddit:</b>
-        https://www.reddit.com/r/SimpleMobileTools
-    </string>
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res

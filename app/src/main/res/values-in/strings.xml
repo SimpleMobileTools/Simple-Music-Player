@@ -79,20 +79,6 @@
     <!-- FAQ -->
     <string name="faq_1_title">Bagaimana saya memajukan lagu\?</string>
     <string name="faq_1_text">Anda bisa klik teks durasi di dekat bilah laju, tindakan tersebut akan memajukan atau memundurkan lagu.</string>
-    <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
-    <!-- App title has to have less than 50 characters. If you cannot squeeze it, just remove a part of it -->
-    <string name="app_title">Simple Music Player - Pemain musik untuk lagu Anda</string>
-    <!-- Short description has to have less than 80 chars -->
-    <string name="app_short_description">Sebuah pemain musik bersih dengan widget yang dapat dikustomisasi, antarmuka yang bergaya dan tidak ada iklan.</string>
-    <string name="app_long_description"> Pemutar musik sederhana yang mudah dikontrol dari bilah status, widget layar beranda, atau dengan tombol perangkat keras pada headset Anda. Ini menyediakan semua fungsi yang diharapkan seperti menyortir dengan berbagai cara serta mengubah Equalizer. Dengarkan mp3 favorit Anda, lagu atau podcast lain dengan pemutar musik cantik gratis ini. Ini menawarkan ekstra eksklusif seperti Cari dan tampilkan Album Art, pengatur waktu tidur, dan banyak pengaturan lainnya. Pemutar musik yang elegan ini memungkinkan Anda membuat dan mengelola daftar putar praktis sesuai keinginan. Daftar putar didukung sepenuhnya. Anda dapat menambahkan file individual, atau seluruh folder.
-\n
-\nJika Anda tidak menyukai sebuah file, Anda dapat menghapusnya dari daftar putar, atau menghapus file yang sebenarnya sama sekali. Dilengkapi dengan pengatur waktu tidur yang praktis sehingga Anda dapat dengan andal menunda waktu penutupan aplikasi. Mendukung pengacakan dan pengulangan lagu tertentu, serta melewatkan dan meneruskan cepat. Tersedia dalam berbagai bahasa dan menawarkan beberapa equalizer yang berbeda. Periksa properti file dengan mudah seperti ukuran, durasi, modifikasi terakhir, dll. Ubah data EXIF file seperti judul lagu dan artis. Bagikan file dengan cepat ke teman Anda di jejaring sosial, email, atau di mana pun Anda mau. Pemutar musik bergaya ini berisi widget dengan warna teks yang dapat disesuaikan, alpha, dan warna latar belakang untuk akses dan kontrol yang mudah. Ini juga menangani maksud pihak ketiga dengan benar untuk memutar file audio individual sehingga dapat membantu mengatur nada dering juga.
-\n
-\nMuncul dengan desain material dan tema gelap secara default, memberikan pengalaman pengguna yang luar biasa untuk penggunaan yang mudah. Kurangnya akses internet memberi Anda lebih banyak privasi, keamanan, dan stabilitas daripada aplikasi lain. Tidak mengandung iklan atau izin yang tidak perlu. Ini sepenuhnya sumber-terbuka dan menyediakan warna yang dapat disesuaikan.
-\n
-\n<b>Lihat rangkaian lengkap Simple Tools di sini:</b> https://www.simplemobiletools.com
-\n<b>Facebook:</b> https://www.facebook.com/simplemobiletools
-\n<b>Reddit :</b> https://www.reddit.com/r/SimpleMobileTools </string>
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res

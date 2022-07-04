@@ -86,47 +86,6 @@
     <!-- FAQ -->
     <string name="faq_1_title">曲を早送りするにはどうすればよいですか？</string>
     <string name="faq_1_text">シークバーの近くにある[再生中]または[再生時間]をタップすると、曲の巻戻しまたは早送りをすることができます。</string>
-
-    <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
-    <!-- App title has to have less than 50 characters. If you cannot squeeze it, just remove a part of it -->
-    <string name="app_title">シンプルな音楽プレーヤー-オーディオファイルを簡単に再生</string>
-    <!-- Short description has to have less than 80 chars -->
-    <string name="app_short_description">お気に入り曲をクイック再生、プレイリスト、スリープタイマー、広告なし</string>
-    <string name="app_long_description">
-        このミュージックプレイヤーは操作が簡単で、ステータスバーからホームスクリーンウィジェット、ヘッドセットのハードウェアボタンまで扱い易いものとなっています。音楽ジャンルの分類やイコライザーの変更など必要な機能は全てついています。この素晴らしいミュージックプレイヤーで、お気に入りのMP3やポッドキャストなど様々な音楽をお聞きください。
-
-        検索機能やアルバムジャケットの表示、スリープタイマーなどの様々な設定があります。ユーザーの思い通りにプレイリストを制作・編集することもできます。
-
-        プレイリストは完全にサポートされています。個人のファイル、全体フォルダーもプレイリストに追加することが可能です。ファイルがお気に召さない場合は、プレイリストからファイルを移動させるか、本体のファイルを削除してください。
-
-        スリープタイマーとは一定時間が経過するとアプリが自動的にシャットダウンする便利な機能です。
-
-        シャッフル、リピート、スキップ、早送りの機能もございます。
-
-        アプリは多くの言語に対応しており、複数のイコライザーを用意しています。
-
-        ファイルの容量、時間、最終更新日は簡単にチェックすることが出来ます。
-
-        曲名や歌手名などのEXIFデータの修正が可能です。
-
-        ファイルは好きな時すぐにSNSやメールで友人と共有できます。
-
-        アプリのウィジェットの文字の色、背景の色・アルファ値はカスタム可能なため、操作がし易くなることでしょう。
-
-        個人オーディオファイルを再生するために付いているサードパーティーのインテントにより、ファイルの音楽を着信音に設定することができます。
-
-        広告や不要な権限はありません。 完全にオープンソースで、カラーもカスタマイズ可能。
-
-        <b>シンプルツールの完全なリストはこちらからご確認ください：</b>
-         https://www.simplemobiletools.com
-
-        <b> Facebook：</b>
-         https://www.facebook.com/simplemobiletools
-
-        <b> Reddit：</b>
-         https://www.reddit.com/r/SimpleMobileTools
-    </string>
-
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res

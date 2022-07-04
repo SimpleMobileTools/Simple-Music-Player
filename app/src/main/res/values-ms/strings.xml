@@ -86,49 +86,6 @@
     <!-- FAQ -->
     <string name="faq_1_title">Bagaimana saya boleh meneruskan lagu?</string>
     <string name="faq_1_text">Anda boleh mengklik pada teks semasa atau maksimum yang berada di dekat bar carian, yang akan menggerakkan lagu itu ke belakang atau ke hadapan.</string>
-
-    <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
-    <!-- App title has to have less than 50 characters. If you cannot squeeze it, just remove a part of it -->
-    <string name="app_title">Pemain Muzik Ringkas</string>
-    <!-- Short description has to have less than 80 chars -->
-    <string name="app_short_description">Pemain muzik dengan widget yang dapat disesuaikan, bergaya, tanpa iklan.</string>
-    <string name="app_long_description">
-        Pemain muzik sederhana yang mudah dikawal dari bar status, widget skrin utama atau butang perkakasan pada alat dengar anda. Ini menyediakan semua fungsi yang diharapkan seperti menyusun dalam pelbagai cara serta mengubah Equalizer. Dengarkan mp3 kegemaran anda, lagu atau podcast lain dengan pemain muzik cantik percuma ini.
-
-        Ia menawarkan tambahan eksklusif seperti Cari dan menunjukkan Art Album, pemasa tidur(sleep timer) dan banyak tetapan lain. Pemain muzik yang elegan ini membolehkan anda membuat dan mengurus senarai main berguna seperti yang anda mahukan.
-
-        Senarai main disokong sepenuhnya. Anda boleh menambah fail individu, atau keseluruhan folder. Sekiranya anda tidak menyukai fail, anda boleh menghapusnya dari senarai main, atau memadam fail sebenar sama sekali.
-
-        Dilengkapi dengan pemasa tidur yang praktikal sehingga anda dapat menunda masa aplikasi dimatikan dengan pasti.
-
-        Menyokong pengacakan dan pengulangan lagu tertentu, serta melangkau dan meneruskan cepat.
-
-        Terdapat dalam pelbagai bahasa, menawarkan banyak penyamaan yang berbeza.
-
-        Periksa sifat fail dengan mudah seperti ukuran, tempoh, terakhir diubahsuai dll.
-
-        Ubah suai data EXIF ​​seperti tajuk lagu dan artis.
-
-        Kongsi fail dengan rakan anda dengan cepat di rangkaian sosial, e-mel, atau di mana sahaja yang anda mahukan.
-
-        Pemain muzik bergaya ini mengandungi widget dengan warna teks yang disesuaikan, alfa dan warna latar untuk akses dan kawalan yang mudah.
-
-        Ia dengan betul menangani maksud pihak ketiga juga untuk memainkan fail audio individu sehingga dapat membantu mengatur nada dering juga.
-
-        Ia dilengkapi dengan reka bentuk bahan dan tema gelap secara lalai, memberikan pengalaman pengguna yang hebat untuk penggunaan yang mudah. Kekurangan akses internet memberi anda lebih banyak privasi, keselamatan dan kestabilan daripada aplikasi lain.
-
-        Tidak mengandungi iklan atau kebenaran yang tidak perlu. Ia sepenuhnya terbuka, memberikan warna yang dapat disesuaikan.
-
-        <b>Lihat set lengkap Alat Mudah di sini:</b>
-        https://www.simplemobiletools.com
-
-        <b>Facebook:</b>
-        https://www.facebook.com/simplemobiletools
-
-        <b>Reddit:</b>
-        https://www.reddit.com/r/SimpleMobileTools
-    </string>
-
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
