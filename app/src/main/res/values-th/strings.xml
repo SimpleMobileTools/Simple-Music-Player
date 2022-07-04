@@ -46,7 +46,7 @@
     <string name="show_album_cover">Show album cover on the main screen</string>
     <string name="all_tracks">All tracks</string>
     <string name="add_to_playlist">Add to playlist</string>
-    <string name="create_playlist_label">You can create a new playlist by selecting the wanted artists, albums or tracks and using Menu -> Add to playlist.</string>
+    <string name="create_playlist_label">You can create a new playlist by selecting the wanted artists, albums or tracks and using Menu -&gt; Add to playlist.</string>
     <string name="export_playlist">Export playlist</string>
     <string name="import_playlist">Import playlist</string>
     <string name="filename_without_m3u">Filename (without .m3u)</string>
@@ -60,13 +60,11 @@
     <string name="folders">Folders</string>
     <string name="albums">Albums</string>
     <plurals name="albums_plural">
-        <item quantity="one">%d Album</item>
-        <item quantity="other">%d Albums</item>
+        <item quantity="other">%d Album</item>
     </plurals>
     <string name="tracks">Tracks</string>
     <plurals name="tracks_plural">
-        <item quantity="one">%d Track</item>
-        <item quantity="other">%d Tracks</item>
+        <item quantity="other">%d Track</item>
     </plurals>
     <!-- Queue -->
     <string name="next_track">Next:</string>
@@ -78,7 +76,7 @@
     <string name="equalizer">Equalizer</string>
     <string name="swap_prev_next">Swap previous/next headphone buttons</string>
     <!-- FAQ -->
-    <string name="faq_1_title">How can I fast-forward songs?</string>
+    <string name="faq_1_title">How can I fast-forward songs\?</string>
     <string name="faq_1_text">You can click on the current or max duration texts near the seekbar, that will move the song either backward, or forward.</string>
     <!--
         Haven't found some strings? There's more at
