@@ -64,7 +64,6 @@ class TracksActivity : SimpleActivity() {
         playlist = Gson().fromJson<Playlist>(intent.getStringExtra(PLAYLIST), playlistType)
         if (playlist != null) {
             tracksType = TYPE_PLAYLIST
-            invalidateOptionsMenu()
         }
 
         val albumType = object : TypeToken<Album>() {}.type
@@ -79,6 +78,7 @@ class TracksActivity : SimpleActivity() {
             tracks_placeholder_2.beGone()
         }
 
+        refreshMenuItems()
         val titleToUse = playlist?.title ?: album?.title ?: folder ?: ""
         tracks_toolbar.title = titleToUse.replace("<", "&lt;")
 
