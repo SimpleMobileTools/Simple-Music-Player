@@ -217,6 +217,7 @@ class MainActivity : SimpleActivity() {
     private fun initFragments() {
         view_pager.adapter = ViewPagerAdapter(this)
         view_pager.offscreenPageLimit = tabsList.size - 1
+        view_pager.currentItem = config.lastUsedViewPagerPage
         view_pager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrollStateChanged(state: Int) {}
 
