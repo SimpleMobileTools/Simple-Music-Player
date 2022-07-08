@@ -1,23 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/activity_queue_holder"
+    android:id="@+id/queue_coordinator"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.qtalk.recyclerviewfastscroller.RecyclerViewFastScroller
-        android:id="@+id/queue_fastscroller"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/queue_app_bar_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="wrap_content">
 
-        <com.simplemobiletools.commons.views.MyRecyclerView
-            android:id="@+id/queue_list"
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/queue_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clipToPadding="false"
-            android:layoutAnimation="@anim/layout_animation"
-            app:layoutManager="com.simplemobiletools.commons.views.MyLinearLayoutManager" />
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/color_primary"
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:menu="@menu/menu_queue"
+            app:title="@string/track_queue"
+            app:titleTextAppearance="@style/AppTheme.ActionBar.TitleTextStyle" />
 
-    </com.qtalk.recyclerviewfastscroller.RecyclerViewFastScroller>
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/queue_nested_scrollview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:scrollbars="none"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <com.qtalk.recyclerviewfastscroller.RecyclerViewFastScroller
+            android:id="@+id/queue_fastscroller"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.simplemobiletools.commons.views.MyRecyclerView
+                android:id="@+id/queue_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:layoutAnimation="@anim/layout_animation"
+                app:layoutManager="com.simplemobiletools.commons.views.MyLinearLayoutManager" />
+
+        </com.qtalk.recyclerviewfastscroller.RecyclerViewFastScroller>
+    </androidx.core.widget.NestedScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -1,97 +1,128 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main_holder"
+    android:id="@+id/main_coordinator"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.simplemobiletools.commons.views.MyViewPager
-        android:id="@+id/view_pager"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/main_app_bar_layout"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/current_track_bar"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="wrap_content">
 
-    <include
-        layout="@layout/view_current_track_bar"
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/main_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/color_primary"
+            app:menu="@menu/menu_main"
+            app:title="@string/app_launcher_name"
+            app:titleTextAppearance="@style/AppTheme.ActionBar.TitleTextStyle" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/main_nested_scrollview"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/main_tabs_holder" />
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:scrollbars="none"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/main_tabs_holder"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:tabIndicator="@null"
-        app:tabMinWidth="150dp"
-        app:tabRippleColor="@null" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/main_holder"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/sleep_timer_holder"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/default_background_color"
-        android:clickable="true"
-        android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@+id/current_track_bar"
-        app:layout_constraintEnd_toEndOf="parent"
-        tools:visibility="visible">
+            <com.simplemobiletools.commons.views.MyViewPager
+                android:id="@+id/view_pager"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toTopOf="@+id/current_track_bar"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/sleep_timer_divider_top"
-            android:layout_width="0dp"
-            android:layout_height="1px"
-            android:background="@color/divider_grey"
-            app:layout_constraintBottom_toTopOf="@+id/sleep_timer_stop"
-            app:layout_constraintEnd_toEndOf="@+id/sleep_timer_stop"
-            app:layout_constraintStart_toStartOf="@+id/sleep_timer_label" />
+            <include
+                layout="@layout/view_current_track_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toTopOf="@+id/main_tabs_holder" />
 
-        <ImageView
-            android:id="@+id/sleep_timer_divider_start"
-            android:layout_width="1px"
-            android:layout_height="0dp"
-            android:background="@color/divider_grey"
-            app:layout_constraintBottom_toBottomOf="@+id/sleep_timer_stop"
-            app:layout_constraintStart_toStartOf="@+id/sleep_timer_label"
-            app:layout_constraintTop_toTopOf="@+id/sleep_timer_stop" />
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/main_tabs_holder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:tabIndicator="@null"
+                app:tabMinWidth="150dp"
+                app:tabRippleColor="@null" />
 
-        <com.simplemobiletools.commons.views.MyTextView
-            android:id="@+id/sleep_timer_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:paddingStart="@dimen/normal_margin"
-            android:paddingEnd="@dimen/normal_margin"
-            android:text="@string/sleep_timer"
-            android:textSize="@dimen/big_text_size"
-            app:layout_constraintBottom_toBottomOf="@+id/sleep_timer_stop"
-            app:layout_constraintEnd_toStartOf="@+id/sleep_timer_value"
-            app:layout_constraintTop_toTopOf="@+id/sleep_timer_stop" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/sleep_timer_holder"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/default_background_color"
+                android:clickable="true"
+                android:visibility="gone"
+                app:layout_constraintBottom_toTopOf="@+id/current_track_bar"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:visibility="visible">
 
-        <com.simplemobiletools.commons.views.MyTextView
-            android:id="@+id/sleep_timer_value"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="00:00"
-            android:textSize="@dimen/big_text_size"
-            app:layout_constraintBottom_toBottomOf="@+id/sleep_timer_stop"
-            app:layout_constraintEnd_toStartOf="@+id/sleep_timer_stop"
-            app:layout_constraintTop_toTopOf="@+id/sleep_timer_stop"
-            tools:ignore="HardcodedText" />
+                <ImageView
+                    android:id="@+id/sleep_timer_divider_top"
+                    android:layout_width="0dp"
+                    android:layout_height="1px"
+                    android:background="@color/divider_grey"
+                    app:layout_constraintBottom_toTopOf="@+id/sleep_timer_stop"
+                    app:layout_constraintEnd_toEndOf="@+id/sleep_timer_stop"
+                    app:layout_constraintStart_toStartOf="@+id/sleep_timer_label" />
 
-        <ImageView
-            android:id="@+id/sleep_timer_stop"
-            android:layout_width="@dimen/normal_icon_size"
-            android:layout_height="@dimen/normal_icon_size"
-            android:layout_marginStart="@dimen/tiny_margin"
-            android:layout_marginEnd="@dimen/tiny_margin"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:padding="@dimen/medium_margin"
-            android:src="@drawable/ic_cross_vector"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+                <ImageView
+                    android:id="@+id/sleep_timer_divider_start"
+                    android:layout_width="1px"
+                    android:layout_height="0dp"
+                    android:background="@color/divider_grey"
+                    app:layout_constraintBottom_toBottomOf="@+id/sleep_timer_stop"
+                    app:layout_constraintStart_toStartOf="@+id/sleep_timer_label"
+                    app:layout_constraintTop_toTopOf="@+id/sleep_timer_stop" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+                <com.simplemobiletools.commons.views.MyTextView
+                    android:id="@+id/sleep_timer_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:paddingStart="@dimen/normal_margin"
+                    android:paddingEnd="@dimen/normal_margin"
+                    android:text="@string/sleep_timer"
+                    android:textSize="@dimen/big_text_size"
+                    app:layout_constraintBottom_toBottomOf="@+id/sleep_timer_stop"
+                    app:layout_constraintEnd_toStartOf="@+id/sleep_timer_value"
+                    app:layout_constraintTop_toTopOf="@+id/sleep_timer_stop" />
+
+                <com.simplemobiletools.commons.views.MyTextView
+                    android:id="@+id/sleep_timer_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="00:00"
+                    android:textSize="@dimen/big_text_size"
+                    app:layout_constraintBottom_toBottomOf="@+id/sleep_timer_stop"
+                    app:layout_constraintEnd_toStartOf="@+id/sleep_timer_stop"
+                    app:layout_constraintTop_toTopOf="@+id/sleep_timer_stop"
+                    tools:ignore="HardcodedText" />
+
+                <ImageView
+                    android:id="@+id/sleep_timer_stop"
+                    android:layout_width="@dimen/normal_icon_size"
+                    android:layout_height="@dimen/normal_icon_size"
+                    android:layout_marginStart="@dimen/tiny_margin"
+                    android:layout_marginEnd="@dimen/tiny_margin"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:padding="@dimen/medium_margin"
+                    android:src="@drawable/ic_cross_vector"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

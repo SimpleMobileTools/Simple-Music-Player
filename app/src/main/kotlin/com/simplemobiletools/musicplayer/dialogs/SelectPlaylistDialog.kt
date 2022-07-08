@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioGroup
 import androidx.appcompat.app.AlertDialog
+import com.simplemobiletools.commons.extensions.getAlertDialogBuilder
 import com.simplemobiletools.commons.extensions.setupDialogStuff
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.musicplayer.R
@@ -12,7 +13,6 @@ import com.simplemobiletools.musicplayer.extensions.playlistDAO
 import com.simplemobiletools.musicplayer.models.Playlist
 import kotlinx.android.synthetic.main.dialog_select_playlist.view.*
 import kotlinx.android.synthetic.main.select_playlist_item.view.*
-import java.util.*
 
 class SelectPlaylistDialog(val activity: Activity, val callback: (playlistId: Int) -> Unit) {
     private var dialog: AlertDialog? = null
@@ -51,14 +51,18 @@ class SelectPlaylistDialog(val activity: Activity, val callback: (playlistId: In
                     }
                 }
 
-                view.dialog_select_playlist_linear.addView(this, RadioGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT))
+                view.dialog_select_playlist_linear.addView(
+                    this,
+                    RadioGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+                )
             }
         }
 
-        dialog = AlertDialog.Builder(activity)
-            .create().apply {
-                activity.setupDialogStuff(view, this)
+        activity.getAlertDialogBuilder().apply {
+            activity.setupDialogStuff(view, this) { alertDialog ->
+                dialog = alertDialog
             }
+        }
     }
 
     private fun showNewPlaylistDialog() {

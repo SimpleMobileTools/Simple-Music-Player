@@ -4,7 +4,7 @@ import android.app.Activity
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioGroup
-import androidx.appcompat.app.AlertDialog
+import com.simplemobiletools.commons.extensions.getAlertDialogBuilder
 import com.simplemobiletools.commons.extensions.setupDialogStuff
 import com.simplemobiletools.commons.helpers.SORT_DESCENDING
 import com.simplemobiletools.commons.models.RadioItem
@@ -32,10 +32,10 @@ class ChangeSortingDialog(val activity: Activity, val location: Int, val callbac
         setupSortRadio()
         setupOrderRadio()
 
-        AlertDialog.Builder(activity)
+        activity.getAlertDialogBuilder()
             .setPositiveButton(R.string.ok) { dialog, which -> dialogConfirmed() }
             .setNegativeButton(R.string.cancel, null)
-            .create().apply {
+            .apply {
                 activity.setupDialogStuff(view, this, R.string.sort_by)
             }
     }
@@ -72,7 +72,10 @@ class ChangeSortingDialog(val activity: Activity, val location: Int, val callbac
                     id = radioItem.value as Int
                 }
 
-                view.sorting_dialog_radio_sorting.addView(this, RadioGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT))
+                view.sorting_dialog_radio_sorting.addView(
+                    this,
+                    RadioGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+                )
             }
         }
     }

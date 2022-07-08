@@ -9,7 +9,6 @@ import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.extensions.tracksDAO
 import com.simplemobiletools.musicplayer.helpers.TagHelper
 import com.simplemobiletools.musicplayer.models.Track
-import kotlinx.android.synthetic.main.dialog_rename_song.*
 import kotlinx.android.synthetic.main.dialog_rename_song.view.*
 
 class EditDialog(val activity: BaseSimpleActivity, val track: Track, val callback: (track: Track) -> Unit) {
@@ -30,13 +29,13 @@ class EditDialog(val activity: BaseSimpleActivity, val track: Track, val callbac
             }
         }
 
-        AlertDialog.Builder(activity)
+        activity.getAlertDialogBuilder()
             .setPositiveButton(R.string.ok, null)
             .setNegativeButton(R.string.cancel, null)
-            .create().apply {
-                activity.setupDialogStuff(view, this, R.string.rename_song) {
-                    showKeyboard(song_title)
-                    getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
+            .apply {
+                activity.setupDialogStuff(view, this, R.string.rename_song) { alertDialog ->
+                    alertDialog.showKeyboard(view.song_title)
+                    alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
                         val newTitle = view.song_title.value
                         val newArtist = view.song_artist.value
                         val newAlbum = view.song_album.value
@@ -58,7 +57,7 @@ class EditDialog(val activity: BaseSimpleActivity, val track: Track, val callbac
                                 if (oldPath == newPath) {
                                     storeEditedSong(track, oldPath, newPath)
                                     callback(track)
-                                    dismiss()
+                                    alertDialog.dismiss()
                                     return@updateContentResolver
                                 }
 
@@ -71,12 +70,12 @@ class EditDialog(val activity: BaseSimpleActivity, val track: Track, val callbac
                                         } else {
                                             activity.toast(R.string.rename_song_error)
                                         }
-                                        dismiss()
+                                        alertDialog.dismiss()
                                     }
                                 }
                             }
                         } else {
-                            dismiss()
+                            alertDialog.dismiss()
                         }
                     }
                 }

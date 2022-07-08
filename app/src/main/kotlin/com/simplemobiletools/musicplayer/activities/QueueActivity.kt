@@ -2,10 +2,9 @@ package com.simplemobiletools.musicplayer.activities
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
 import com.simplemobiletools.commons.extensions.areSystemAnimationsEnabled
 import com.simplemobiletools.commons.extensions.getProperPrimaryColor
+import com.simplemobiletools.commons.helpers.NavigationIcon
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.adapters.QueueAdapter
@@ -21,7 +20,6 @@ import kotlinx.android.synthetic.main.activity_queue.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
-import java.util.*
 
 class QueueActivity : SimpleActivity() {
     private var bus: EventBus? = null
@@ -29,10 +27,17 @@ class QueueActivity : SimpleActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_queue)
+        setupOptionsMenu()
+
         bus = EventBus.getDefault()
         bus!!.register(this)
         setupAdapter()
         queue_fastscroller.updateColors(getProperPrimaryColor())
+    }
+
+    override fun onResume() {
+        super.onResume()
+        setupToolbar(queue_toolbar, NavigationIcon.Arrow)
     }
 
     override fun onDestroy() {
@@ -40,18 +45,14 @@ class QueueActivity : SimpleActivity() {
         bus?.unregister(this)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.menu_queue, menu)
-        updateMenuItemColors(menu)
-        return super.onCreateOptionsMenu(menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.create_playlist_from_queue -> createPlaylistFromQueue()
-            else -> return super.onOptionsItemSelected(item)
+    private fun setupOptionsMenu() {
+        queue_toolbar.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.create_playlist_from_queue -> createPlaylistFromQueue()
+                else -> return@setOnMenuItemClickListener false
+            }
+            return@setOnMenuItemClickListener true
         }
-        return true
     }
 
     private fun setupAdapter() {

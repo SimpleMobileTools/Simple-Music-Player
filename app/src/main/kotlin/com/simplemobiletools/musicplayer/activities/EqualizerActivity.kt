@@ -4,12 +4,12 @@ import android.annotation.SuppressLint
 import android.media.MediaPlayer
 import android.media.audiofx.Equalizer
 import android.os.Bundle
-import android.view.Menu
 import android.widget.SeekBar
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.simplemobiletools.commons.dialogs.RadioGroupDialog
 import com.simplemobiletools.commons.extensions.*
+import com.simplemobiletools.commons.helpers.NavigationIcon
 import com.simplemobiletools.commons.models.RadioItem
 import com.simplemobiletools.commons.views.MySeekBar
 import com.simplemobiletools.musicplayer.R
@@ -19,7 +19,6 @@ import com.simplemobiletools.musicplayer.services.MusicService
 import kotlinx.android.synthetic.main.activity_equalizer.*
 import kotlinx.android.synthetic.main.equalizer_band.view.*
 import java.text.DecimalFormat
-import java.util.*
 
 class EqualizerActivity : SimpleActivity() {
     private var bands = HashMap<Short, Int>()
@@ -31,9 +30,9 @@ class EqualizerActivity : SimpleActivity() {
         initMediaPlayer()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        updateMenuItemColors(menu)
-        return super.onCreateOptionsMenu(menu)
+    override fun onResume() {
+        super.onResume()
+        setupToolbar(equalizer_toolbar, NavigationIcon.Arrow)
     }
 
     @SuppressLint("SetTextI18n")

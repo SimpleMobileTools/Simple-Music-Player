@@ -2,13 +2,13 @@ package com.simplemobiletools.musicplayer.activities
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.Menu
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.simplemobiletools.commons.extensions.areSystemAnimationsEnabled
 import com.simplemobiletools.commons.extensions.getFormattedDuration
 import com.simplemobiletools.commons.extensions.getProperPrimaryColor
 import com.simplemobiletools.commons.extensions.hideKeyboard
+import com.simplemobiletools.commons.helpers.NavigationIcon
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.adapters.AlbumsTracksAdapter
 import com.simplemobiletools.musicplayer.extensions.getAlbumTracksSync
@@ -101,16 +101,12 @@ class AlbumsActivity : SimpleActivity() {
     override fun onResume() {
         super.onResume()
         updateCurrentTrackBar()
+        setupToolbar(albums_toolbar, NavigationIcon.Arrow)
     }
 
     override fun onDestroy() {
         super.onDestroy()
         bus?.unregister(this)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        updateMenuItemColors(menu)
-        return super.onCreateOptionsMenu(menu)
     }
 
     private fun updateCurrentTrackBar() {

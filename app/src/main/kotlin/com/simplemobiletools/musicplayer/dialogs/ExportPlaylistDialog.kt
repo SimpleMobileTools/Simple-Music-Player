@@ -39,15 +39,14 @@ class ExportPlaylistDialog(
                     }
                 }
             }
-
         }
 
-        AlertDialog.Builder(activity)
+        activity.getAlertDialogBuilder()
             .setPositiveButton(R.string.ok, null)
             .setNegativeButton(R.string.cancel, null)
-            .create().apply {
-                activity.setupDialogStuff(view, this, R.string.export_playlist) {
-                    getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
+            .apply {
+                activity.setupDialogStuff(view, this, R.string.export_playlist) { alertDialog ->
+                    alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
                         val filename = view.export_playlist_filename.value
                         when {
                             filename.isEmpty() -> activity.toast(R.string.empty_name)
@@ -62,7 +61,7 @@ class ExportPlaylistDialog(
                                 ensureBackgroundThread {
                                     activity.config.lastExportPath = file.absolutePath.getParentPath()
                                     callback(file)
-                                    dismiss()
+                                    alertDialog.dismiss()
                                 }
                             }
                             else -> activity.toast(R.string.invalid_name)

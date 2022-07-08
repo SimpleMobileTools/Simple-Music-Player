@@ -16,10 +16,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.simplemobiletools.commons.dialogs.FilePickerDialog
 import com.simplemobiletools.commons.extensions.*
-import com.simplemobiletools.commons.helpers.PERMISSION_WRITE_STORAGE
-import com.simplemobiletools.commons.helpers.ensureBackgroundThread
-import com.simplemobiletools.commons.helpers.isOreoPlus
-import com.simplemobiletools.commons.helpers.isQPlus
+import com.simplemobiletools.commons.helpers.*
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.adapters.TracksAdapter
 import com.simplemobiletools.musicplayer.adapters.TracksHeaderAdapter
@@ -57,6 +54,9 @@ class TracksActivity : SimpleActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tracks)
+        setupOptionsMenu()
+        refreshMenuItems()
+
         bus = EventBus.getDefault()
         bus!!.register(this)
 
@@ -80,7 +80,7 @@ class TracksActivity : SimpleActivity() {
         }
 
         val titleToUse = playlist?.title ?: album?.title ?: folder ?: ""
-        title = titleToUse.replace("<", "&lt;")
+        tracks_toolbar.title = titleToUse.replace("<", "&lt;")
 
         val properPrimaryColor = getProperPrimaryColor()
         tracks_fastscroller.updateColors(properPrimaryColor)
@@ -172,6 +172,7 @@ class TracksActivity : SimpleActivity() {
     override fun onResume() {
         super.onResume()
         updateCurrentTrackBar()
+        setupToolbar(tracks_toolbar, NavigationIcon.Arrow)
     }
 
     override fun onDestroy() {
@@ -179,31 +180,28 @@ class TracksActivity : SimpleActivity() {
         bus?.unregister(this)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.menu_playlist, menu)
-
-        menu.apply {
+    private fun refreshMenuItems() {
+        tracks_toolbar.menu.apply {
             findItem(R.id.search).isVisible = tracksType != TYPE_ALBUM
             findItem(R.id.sort).isVisible = tracksType != TYPE_ALBUM
             findItem(R.id.add_file_to_playlist).isVisible = tracksType == TYPE_PLAYLIST
             findItem(R.id.add_folder_to_playlist).isVisible = tracksType == TYPE_PLAYLIST
             findItem(R.id.export_playlist).isVisible = tracksType == TYPE_PLAYLIST && isOreoPlus()
         }
-
-        setupSearch(menu)
-        updateMenuItemColors(menu)
-        return super.onCreateOptionsMenu(menu)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.sort -> showSortingDialog()
-            R.id.add_file_to_playlist -> addFileToPlaylist()
-            R.id.add_folder_to_playlist -> addFolderToPlaylist()
-            R.id.export_playlist -> tryExportPlaylist()
-            else -> return super.onOptionsItemSelected(item)
+    private fun setupOptionsMenu() {
+        setupSearch(tracks_toolbar.menu)
+        tracks_toolbar.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.sort -> showSortingDialog()
+                R.id.add_file_to_playlist -> addFileToPlaylist()
+                R.id.add_folder_to_playlist -> addFolderToPlaylist()
+                R.id.export_playlist -> tryExportPlaylist()
+                else -> return@setOnMenuItemClickListener false
+            }
+            return@setOnMenuItemClickListener true
         }
-        return true
     }
 
     private fun setupSearch(menu: Menu) {

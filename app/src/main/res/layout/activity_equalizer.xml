@@ -1,81 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/equalizer_scrollview"
+    android:id="@+id/equalizer_coordinator"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/equalizer_holder"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/equalizer_app_bar_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/activity_margin">
+        android:layout_height="wrap_content">
 
-        <RelativeLayout
-            android:id="@+id/equalizer_db_labels_holder"
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/equalizer_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/color_primary"
+            app:title="@string/equalizer"
+            app:titleTextAppearance="@style/AppTheme.ActionBar.TitleTextStyle" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/equalizer_nested_scrollview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:scrollbars="none"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/equalizer_holder"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:padding="@dimen/activity_margin">
+
+            <RelativeLayout
+                android:id="@+id/equalizer_db_labels_holder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.simplemobiletools.commons.views.MyTextView
+                    android:id="@+id/equalizer_label_margin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="4" />
+
+                <com.simplemobiletools.commons.views.MyTextView
+                    android:id="@+id/equalizer_label_left"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="@dimen/medium_margin"
+                    android:layout_toEndOf="@+id/equalizer_label_margin"
+                    android:textSize="@dimen/normal_text_size"
+                    tools:text="+15" />
+
+                <com.simplemobiletools.commons.views.MyTextView
+                    android:id="@+id/equalizer_label_0"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_toStartOf="@+id/equalizer_label_right"
+                    android:layout_toEndOf="@+id/equalizer_label_left"
+                    android:gravity="center_horizontal"
+                    android:textSize="@dimen/normal_text_size"
+                    tools:text="0" />
+
+                <com.simplemobiletools.commons.views.MyTextView
+                    android:id="@+id/equalizer_label_right"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="@dimen/activity_margin"
+                    android:textSize="@dimen/normal_text_size"
+                    tools:text="-15" />
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/equalizer_bands_holder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/equalizer_db_labels_holder" />
 
             <com.simplemobiletools.commons.views.MyTextView
-                android:id="@+id/equalizer_label_margin"
+                android:id="@+id/equalizer_preset"
+                style="@style/ColoredButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:ems="4" />
+                android:layout_marginTop="@dimen/normal_margin"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/equalizer_bands_holder"
+                tools:text="@string/custom" />
 
-            <com.simplemobiletools.commons.views.MyTextView
-                android:id="@+id/equalizer_label_left"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="@dimen/medium_margin"
-                android:layout_toEndOf="@+id/equalizer_label_margin"
-                android:textSize="@dimen/normal_text_size"
-                tools:text="+15" />
-
-            <com.simplemobiletools.commons.views.MyTextView
-                android:id="@+id/equalizer_label_0"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_toStartOf="@+id/equalizer_label_right"
-                android:layout_toEndOf="@+id/equalizer_label_left"
-                android:gravity="center_horizontal"
-                android:textSize="@dimen/normal_text_size"
-                tools:text="0" />
-
-            <com.simplemobiletools.commons.views.MyTextView
-                android:id="@+id/equalizer_label_right"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginEnd="@dimen/activity_margin"
-                android:textSize="@dimen/normal_text_size"
-                tools:text="-15" />
-
-        </RelativeLayout>
-
-        <LinearLayout
-            android:id="@+id/equalizer_bands_holder"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/equalizer_db_labels_holder" />
-
-        <com.simplemobiletools.commons.views.MyTextView
-            android:id="@+id/equalizer_preset"
-            style="@style/ColoredButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/normal_margin"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/equalizer_bands_holder"
-            tools:text="@string/custom" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</ScrollView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

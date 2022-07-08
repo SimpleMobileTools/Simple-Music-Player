@@ -1,30 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/albums_holder"
+    android:id="@+id/albums_coordinator"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent">
 
-    <com.qtalk.recyclerviewfastscroller.RecyclerViewFastScroller
-        android:id="@+id/albums_fastscroller"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/albums_app_bar_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/current_track_bar">
+        android:layout_height="wrap_content">
 
-        <com.simplemobiletools.commons.views.MyRecyclerView
-            android:id="@+id/albums_list"
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/albums_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clipToPadding="false"
-            android:layoutAnimation="@anim/layout_animation"
-            app:layoutManager="com.simplemobiletools.commons.views.MyLinearLayoutManager" />
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/color_primary"
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:menu="@menu/menu_playlist"
+            app:title="@string/artist"
+            app:titleTextAppearance="@style/AppTheme.ActionBar.TitleTextStyle" />
 
-    </com.qtalk.recyclerviewfastscroller.RecyclerViewFastScroller>
+    </com.google.android.material.appbar.AppBarLayout>
 
-    <include
-        layout="@layout/view_current_track_bar"
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/albums_nested_scrollview"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true" />
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:scrollbars="none"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-</RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/albums_holder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.qtalk.recyclerviewfastscroller.RecyclerViewFastScroller
+                android:id="@+id/albums_fastscroller"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/current_track_bar">
+
+                <com.simplemobiletools.commons.views.MyRecyclerView
+                    android:id="@+id/albums_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clipToPadding="false"
+                    android:layoutAnimation="@anim/layout_animation"
+                    app:layoutManager="com.simplemobiletools.commons.views.MyLinearLayoutManager" />
+
+            </com.qtalk.recyclerviewfastscroller.RecyclerViewFastScroller>
+
+            <include
+                layout="@layout/view_current_track_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true" />
+
+        </RelativeLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

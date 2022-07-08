@@ -62,6 +62,8 @@ class MainActivity : SimpleActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         appLaunched(BuildConfig.APPLICATION_ID)
+        setupOptionsMenu()
+        refreshMenuItems()
         storeStateVariables()
         setupTabs()
 
@@ -88,6 +90,7 @@ class MainActivity : SimpleActivity() {
 
     override fun onResume() {
         super.onResume()
+        setupToolbar(main_toolbar)
         if (storedShowTabs != config.showTabs) {
             config.lastUsedViewPagerPage = 0
             System.exit(0)
@@ -116,36 +119,30 @@ class MainActivity : SimpleActivity() {
         bus?.unregister(this)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.menu_main, menu)
-        setupSearch(menu)
-        updateMenuItemColors(menu)
-        return true
-    }
-
-    override fun onPrepareOptionsMenu(menu: Menu): Boolean {
-        menu.apply {
+    private fun refreshMenuItems() {
+        main_toolbar.menu.apply {
             findItem(R.id.create_new_playlist).isVisible = getCurrentFragment() == playlists_fragment_holder
             findItem(R.id.create_playlist_from_folder).isVisible = getCurrentFragment() == playlists_fragment_holder
             findItem(R.id.import_playlist).isVisible = getCurrentFragment() == playlists_fragment_holder && isOreoPlus()
         }
-
-        return true
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.sort -> showSortingDialog()
-            R.id.sleep_timer -> showSleepTimer()
-            R.id.create_new_playlist -> createNewPlaylist()
-            R.id.create_playlist_from_folder -> createPlaylistFromFolder()
-            R.id.import_playlist -> tryImportPlaylist()
-            R.id.equalizer -> launchEqualizer()
-            R.id.settings -> launchSettings()
-            R.id.about -> launchAbout()
-            else -> return super.onOptionsItemSelected(item)
+    private fun setupOptionsMenu() {
+        setupSearch(main_toolbar.menu)
+        main_toolbar.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.sort -> showSortingDialog()
+                R.id.sleep_timer -> showSleepTimer()
+                R.id.create_new_playlist -> createNewPlaylist()
+                R.id.create_playlist_from_folder -> createPlaylistFromFolder()
+                R.id.import_playlist -> tryImportPlaylist()
+                R.id.equalizer -> launchEqualizer()
+                R.id.settings -> launchSettings()
+                R.id.about -> launchAbout()
+                else -> return@setOnMenuItemClickListener false
+            }
+            return@setOnMenuItemClickListener true
         }
-        return true
     }
 
     private fun storeStateVariables() {
@@ -217,7 +214,6 @@ class MainActivity : SimpleActivity() {
     private fun initFragments() {
         view_pager.adapter = ViewPagerAdapter(this)
         view_pager.offscreenPageLimit = tabsList.size - 1
-        view_pager.currentItem = config.lastUsedViewPagerPage
         view_pager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrollStateChanged(state: Int) {}
 
@@ -228,9 +224,10 @@ class MainActivity : SimpleActivity() {
                 getAllFragments().forEach {
                     it?.finishActMode()
                 }
-                invalidateOptionsMenu()
+                refreshMenuItems()
             }
         })
+        view_pager.currentItem = config.lastUsedViewPagerPage
     }
 
     private fun setupTabs() {
@@ -269,7 +266,7 @@ class MainActivity : SimpleActivity() {
             updateBottomTabItemColors(inactiveView, false)
         }
 
-        val bottomBarColor = getBottomTabsBackgroundColor()
+        val bottomBarColor = getBottomNavigationBackgroundColor()
         main_tabs_holder.setBackgroundColor(bottomBarColor)
         updateNavigationBarColor(bottomBarColor)
     }

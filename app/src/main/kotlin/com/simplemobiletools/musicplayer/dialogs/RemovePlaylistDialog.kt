@@ -1,7 +1,7 @@
 package com.simplemobiletools.musicplayer.dialogs
 
 import android.app.Activity
-import androidx.appcompat.app.AlertDialog
+import com.simplemobiletools.commons.extensions.getAlertDialogBuilder
 import com.simplemobiletools.commons.extensions.setupDialogStuff
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.models.Playlist
@@ -13,12 +13,12 @@ class RemovePlaylistDialog(val activity: Activity, val playlist: Playlist? = nul
             remove_playlist_description.text = getDescriptionText()
         }
 
-        AlertDialog.Builder(activity)
-                .setPositiveButton(R.string.ok) { dialog, which -> callback(view.remove_playlist_checkbox.isChecked) }
-                .setNegativeButton(R.string.cancel, null)
-                .create().apply {
-                    activity.setupDialogStuff(view, this, R.string.remove_playlist)
-                }
+        activity.getAlertDialogBuilder()
+            .setPositiveButton(R.string.ok) { dialog, which -> callback(view.remove_playlist_checkbox.isChecked) }
+            .setNegativeButton(R.string.cancel, null)
+            .apply {
+                activity.setupDialogStuff(view, this, R.string.remove_playlist)
+            }
     }
 
     private fun getDescriptionText(): String {

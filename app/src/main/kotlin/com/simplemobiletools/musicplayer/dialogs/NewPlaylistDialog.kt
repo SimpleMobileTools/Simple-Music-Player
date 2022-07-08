@@ -2,10 +2,7 @@ package com.simplemobiletools.musicplayer.dialogs
 
 import android.app.Activity
 import androidx.appcompat.app.AlertDialog
-import com.simplemobiletools.commons.extensions.setupDialogStuff
-import com.simplemobiletools.commons.extensions.showKeyboard
-import com.simplemobiletools.commons.extensions.toast
-import com.simplemobiletools.commons.extensions.value
+import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.extensions.getPlaylistIdWithTitle
@@ -25,48 +22,48 @@ class NewPlaylistDialog(val activity: Activity, var playlist: Playlist? = null, 
             new_playlist_title.setText(playlist!!.title)
         }
 
-        AlertDialog.Builder(activity)
-                .setPositiveButton(R.string.ok, null)
-                .setNegativeButton(R.string.cancel, null)
-                .create().apply {
-                    val dialogTitle = if (isNewPlaylist) R.string.create_new_playlist else R.string.rename_playlist
-                    activity.setupDialogStuff(view, this, dialogTitle) {
-                        showKeyboard(view.new_playlist_title)
-                        getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
-                            val title = view.new_playlist_title.value
-                            ensureBackgroundThread {
-                                val playlistIdWithTitle = activity.getPlaylistIdWithTitle(title)
-                                var isPlaylistTitleTaken = isNewPlaylist && playlistIdWithTitle != -1
-                                if (!isPlaylistTitleTaken) {
-                                    isPlaylistTitleTaken = !isNewPlaylist && playlist!!.id != playlistIdWithTitle && playlistIdWithTitle != -1
-                                }
+        activity.getAlertDialogBuilder()
+            .setPositiveButton(R.string.ok, null)
+            .setNegativeButton(R.string.cancel, null)
+            .apply {
+                val dialogTitle = if (isNewPlaylist) R.string.create_new_playlist else R.string.rename_playlist
+                activity.setupDialogStuff(view, this, dialogTitle) { alertDialog ->
+                    alertDialog.showKeyboard(view.new_playlist_title)
+                    alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
+                        val title = view.new_playlist_title.value
+                        ensureBackgroundThread {
+                            val playlistIdWithTitle = activity.getPlaylistIdWithTitle(title)
+                            var isPlaylistTitleTaken = isNewPlaylist && playlistIdWithTitle != -1
+                            if (!isPlaylistTitleTaken) {
+                                isPlaylistTitleTaken = !isNewPlaylist && playlist!!.id != playlistIdWithTitle && playlistIdWithTitle != -1
+                            }
 
-                                if (title.isEmpty()) {
-                                    activity.toast(R.string.empty_name)
-                                    return@ensureBackgroundThread
-                                } else if (isPlaylistTitleTaken) {
-                                    activity.toast(R.string.playlist_name_exists)
-                                    return@ensureBackgroundThread
-                                }
+                            if (title.isEmpty()) {
+                                activity.toast(R.string.empty_name)
+                                return@ensureBackgroundThread
+                            } else if (isPlaylistTitleTaken) {
+                                activity.toast(R.string.playlist_name_exists)
+                                return@ensureBackgroundThread
+                            }
 
-                                playlist!!.title = title
+                            playlist!!.title = title
 
-                                val eventTypeId = if (isNewPlaylist) {
-                                    activity.playlistDAO.insert(playlist!!).toInt()
-                                } else {
-                                    activity.playlistDAO.update(playlist!!)
-                                    playlist!!.id
-                                }
+                            val eventTypeId = if (isNewPlaylist) {
+                                activity.playlistDAO.insert(playlist!!).toInt()
+                            } else {
+                                activity.playlistDAO.update(playlist!!)
+                                playlist!!.id
+                            }
 
-                                if (eventTypeId != -1) {
-                                    dismiss()
-                                    callback(eventTypeId)
-                                } else {
-                                    activity.toast(R.string.unknown_error_occurred)
-                                }
+                            if (eventTypeId != -1) {
+                                alertDialog.dismiss()
+                                callback(eventTypeId)
+                            } else {
+                                activity.toast(R.string.unknown_error_occurred)
                             }
                         }
                     }
                 }
+            }
     }
 }
