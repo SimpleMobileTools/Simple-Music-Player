@@ -16,14 +16,14 @@ class EditDialog(val activity: BaseSimpleActivity, val track: Track, val callbac
 
     init {
         val view = activity.layoutInflater.inflate(R.layout.dialog_rename_song, null).apply {
-            song_title.setText(track.title)
-            song_artist.setText(track.artist)
-            song_album.setText(track.album)
+            title.setText(track.title)
+            artist.setText(track.artist)
+            album.setText(track.album)
             val filename = track.path.getFilenameFromPath()
             file_name.setText(filename.substring(0, filename.lastIndexOf(".")))
             extension.setText(track.path.getFilenameExtension())
             if (isRPlus()) {
-                arrayOf(file_name_label, file_name, extension_label, extension).forEach {
+                arrayOf(file_name_hint, extension_hint).forEach {
                     it.beGone()
                 }
             }
@@ -34,11 +34,11 @@ class EditDialog(val activity: BaseSimpleActivity, val track: Track, val callbac
             .setNegativeButton(R.string.cancel, null)
             .apply {
                 activity.setupDialogStuff(view, this, R.string.rename_song) { alertDialog ->
-                    alertDialog.showKeyboard(view.song_title)
+                    alertDialog.showKeyboard(view.title)
                     alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
-                        val newTitle = view.song_title.value
-                        val newArtist = view.song_artist.value
-                        val newAlbum = view.song_album.value
+                        val newTitle = view.title.value
+                        val newArtist = view.artist.value
+                        val newAlbum = view.album.value
                         val newFilename = view.file_name.value
                         val newFileExtension = view.extension.value
 

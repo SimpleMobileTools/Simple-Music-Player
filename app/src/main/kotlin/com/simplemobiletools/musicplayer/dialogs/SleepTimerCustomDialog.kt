@@ -11,18 +11,20 @@ class SleepTimerCustomDialog(val activity: Activity, val callback: (seconds: Int
     private val view = activity.layoutInflater.inflate(R.layout.dialog_custom_sleep_timer_picker, null)
 
     init {
+        view.minutes_hint.hint = activity.getString(R.string.minutes_raw).replaceFirstChar { it.uppercaseChar() }
         activity.getAlertDialogBuilder()
             .setPositiveButton(R.string.ok) { dialog, which -> dialogConfirmed() }
             .setNegativeButton(R.string.cancel, null)
             .apply {
                 activity.setupDialogStuff(view, this, R.string.sleep_timer) { alertDialog ->
-                    alertDialog.showKeyboard(view.dialog_custom_sleep_timer_value)
+                    dialog = alertDialog
+                    alertDialog.showKeyboard(view.minutes)
                 }
             }
     }
 
     private fun dialogConfirmed() {
-        val value = view.dialog_custom_sleep_timer_value.value
+        val value = view.minutes.value
         val minutes = Integer.valueOf(if (value.isEmpty()) "0" else value)
         callback(minutes * 60)
         activity.hideKeyboard()

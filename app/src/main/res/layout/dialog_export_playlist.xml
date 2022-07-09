@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/export_playlist_scrollview"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -37,7 +36,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/filename_without_m3u">
 
-            <com.simplemobiletools.commons.views.MyEditText
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/export_playlist_filename"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
