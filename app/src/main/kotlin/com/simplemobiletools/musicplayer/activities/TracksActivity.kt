@@ -172,7 +172,7 @@ class TracksActivity : SimpleActivity() {
     override fun onResume() {
         super.onResume()
         updateCurrentTrackBar()
-        setupToolbar(tracks_toolbar, NavigationIcon.Arrow)
+        setupToolbar(tracks_toolbar, NavigationIcon.Arrow, searchMenuItem = searchMenuItem)
     }
 
     override fun onDestroy() {
