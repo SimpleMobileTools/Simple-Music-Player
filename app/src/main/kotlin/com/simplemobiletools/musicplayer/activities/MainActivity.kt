@@ -90,7 +90,7 @@ class MainActivity : SimpleActivity() {
 
     override fun onResume() {
         super.onResume()
-        setupToolbar(main_toolbar)
+        setupToolbar(main_toolbar, searchMenuItem = searchMenuItem)
         if (storedShowTabs != config.showTabs) {
             config.lastUsedViewPagerPage = 0
             System.exit(0)
@@ -117,6 +117,14 @@ class MainActivity : SimpleActivity() {
     override fun onDestroy() {
         super.onDestroy()
         bus?.unregister(this)
+    }
+
+    override fun onBackPressed() {
+        if (isSearchOpen && searchMenuItem != null) {
+            searchMenuItem!!.collapseActionView()
+        } else {
+            super.onBackPressed()
+        }
     }
 
     private fun refreshMenuItems() {
