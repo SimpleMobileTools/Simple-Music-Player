@@ -9,6 +9,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.simplemobiletools.commons.dialogs.RadioGroupDialog
 import com.simplemobiletools.commons.extensions.*
+import com.simplemobiletools.commons.helpers.DARK_GREY
 import com.simplemobiletools.commons.helpers.NavigationIcon
 import com.simplemobiletools.commons.models.RadioItem
 import com.simplemobiletools.commons.views.MySeekBar
@@ -49,7 +50,13 @@ class EqualizerActivity : SimpleActivity() {
         setupBands(equalizer)
         setupPresets(equalizer)
         updateTextColors(equalizer_holder)
-        equalizer_preset.setTextColor(getProperPrimaryColor().getContrastColor())
+
+        val presetTextColor = if (isWhiteTheme()) {
+            DARK_GREY
+        } else {
+            getProperPrimaryColor().getContrastColor()
+        }
+        equalizer_preset.setTextColor(presetTextColor)
     }
 
     private fun setupBands(equalizer: Equalizer) {
