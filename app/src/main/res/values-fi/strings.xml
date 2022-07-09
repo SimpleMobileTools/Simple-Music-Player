@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Simple Music Player</string>
     <string name="app_launcher_name">Musiikkisoitin</string>
@@ -17,7 +18,6 @@
     <string name="volume">Volume</string>
     <string name="playback_speed">Playback speed</string>
     <string name="loading_files">Loading files…</string>
-
     <!-- Playlists -->
     <string name="add_file_to_playlist">Lisää tiedosto soittolistaan</string>
     <string name="add_folder_to_playlist">Lisää kansio soittolistaan</string>
@@ -46,17 +46,15 @@
     <string name="show_album_cover">Show album cover on the main screen</string>
     <string name="all_tracks">Kaikki kappaleet</string>
     <string name="add_to_playlist">Lisää soittolistaan</string>
-    <string name="create_playlist_label">Voit luoda uuden soittolistan valitsemalla haluamasi artistit, albumit tai kappaleet ja valitsemalla Valikko -> Lisää soittolistaan.</string>
+    <string name="create_playlist_label">Voit luoda uuden soittolistan valitsemalla haluamasi artistit, albumit tai kappaleet ja valitsemalla Valikko -&gt; Lisää soittolistaan.</string>
     <string name="export_playlist">Export playlist</string>
     <string name="import_playlist">Import playlist</string>
     <string name="filename_without_m3u">Filename (without .m3u)</string>
-
     <!-- Sorting -->
     <string name="track_count">Kappalemäärä</string>
     <string name="album_count">Albumien määrä</string>
     <string name="artist_name">Artistin Nimi</string>
     <string name="year">Vuosi</string>
-
     <!-- Artists -->
     <string name="artists">Artistit</string>
     <string name="folders">Folders</string>
@@ -65,26 +63,22 @@
         <item quantity="one">%d Albumi</item>
         <item quantity="other">%d Albumia</item>
     </plurals>
-
     <string name="tracks">Kappaleet</string>
     <plurals name="tracks_plural">
         <item quantity="one">%d Kappale</item>
         <item quantity="other">%d Kappaletta</item>
     </plurals>
-
     <!-- Queue -->
     <string name="next_track">Seuraava:</string>
     <string name="track_queue">Kappalejono</string>
     <string name="add_to_queue">Lisää jonoon</string>
     <string name="remove_from_queue">Poista jonosta</string>
     <string name="create_playlist_from_queue">Luo soittolista jonosta</string>
-
     <!-- Settings -->
     <string name="equalizer">Taajuuskorjain</string>
     <string name="swap_prev_next">Vaihda edellinen/seuraava kuulokepainikkeet</string>
-
     <!-- FAQ -->
-    <string name="faq_1_title">Kuinka kappaleita voi kelata eteenpäin?</string>
+    <string name="faq_1_title">Kuinka voin kelata kappaleita eteenpäin\?</string>
     <string name="faq_1_text">Voit napsauttaa hakupalkin lähellä olevia nykyisiä tai enimmäiskestoisia tekstejä, jotka siirtävät kappaleen joko taaksepäin tai eteenpäin.</string>
     <!--
         Haven't found some strings? There's more at
