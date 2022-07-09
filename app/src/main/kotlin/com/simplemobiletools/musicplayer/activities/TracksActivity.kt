@@ -80,7 +80,7 @@ class TracksActivity : SimpleActivity() {
 
         refreshMenuItems()
         val titleToUse = playlist?.title ?: album?.title ?: folder ?: ""
-        tracks_toolbar.title = titleToUse.replace("<", "&lt;")
+        tracks_toolbar.title = titleToUse
 
         val properPrimaryColor = getProperPrimaryColor()
         tracks_fastscroller.updateColors(properPrimaryColor)
