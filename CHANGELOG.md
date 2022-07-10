@@ -1,6 +1,12 @@
 Changelog
 ==========
 
+Version 5.13.0 *(2022-07-10)*
+----------------------------
+
+ * Adding some slight material redesigns
+ * Added some stability, translation and UX improvements
+
 Version 5.12.0 *(2022-07-02)*
 ----------------------------
 
