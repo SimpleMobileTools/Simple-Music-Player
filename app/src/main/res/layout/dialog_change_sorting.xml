@@ -9,9 +9,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingLeft="@dimen/activity_margin"
+        android:paddingStart="@dimen/activity_margin"
         android:paddingTop="@dimen/activity_margin"
-        android:paddingRight="@dimen/activity_margin">
+        android:paddingEnd="@dimen/activity_margin">
 
         <RadioGroup
             android:id="@+id/sorting_dialog_radio_sorting"
@@ -21,8 +21,8 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="1px"
-            android:layout_marginTop="@dimen/medium_margin"
-            android:layout_marginBottom="@dimen/medium_margin"
+            android:layout_marginTop="@dimen/small_margin"
+            android:layout_marginBottom="@dimen/small_margin"
             android:background="@color/divider_grey" />
 
         <RadioGroup
