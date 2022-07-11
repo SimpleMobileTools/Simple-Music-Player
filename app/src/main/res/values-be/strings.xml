@@ -14,7 +14,7 @@
     <string name="disable_shuffle">Disable shuffle</string>
     <string name="shuffle_enabled">Shuffle enabled</string>
     <string name="shuffle_disabled">Shuffle disabled</string>
-    <string name="sleep_timer">Sleep timer</string>
+    <string name="sleep_timer">Таймер сну</string>
     <string name="volume">Гучнасць</string>
     <string name="playback_speed">Хуткасць прайгравання</string>
     <string name="loading_files">Загрузка файлаў…</string>
@@ -27,22 +27,22 @@
     <string name="rename_playlist">Перайменаваць спіс прайгравання</string>
     <string name="playlist_name_exists">Спіс прайгравання з такой назвай ужо існуе</string>
     <string name="remove_playlist">Выдаліць спіс прайгравання</string>
-    <string name="remove_playlist_description">This will only remove the selected playlists. The actual files will not be deleted.</string>
-    <string name="remove_playlist_description_placeholder">This will only remove playlist \"%s\". The actual files will not be deleted.</string>
+    <string name="remove_playlist_description">Будуць выдалены толькі выбраныя спісы прайгравання, файлы не будуць выдалены.</string>
+    <string name="remove_playlist_description_placeholder">Будзе выдалены толькі спіс прайгравання \"%s\", файлы не будуць выдалены.</string>
     <string name="remove_from_playlist">Выдаліць са спіса прайгравання</string>
-    <string name="remove_from_playlist_description">This will only remove the items from playlist \"%s\". The actual files will not be deleted.</string>
-    <string name="delete_the_files_too">Delete the files too</string>
+    <string name="remove_from_playlist_description">Будуць выдалены толькі кампазіцыі са спіса прайгравання \"%s\", файлы не будуць выдалены.</string>
+    <string name="delete_the_files_too">Таксама выдаліць файлы</string>
     <string name="open_playlist">Адкрыць спіс прайгравання</string>
-    <string name="all_songs_cannot_be_deleted">\"All songs\" playlist cannot be deleted</string>
+    <string name="all_songs_cannot_be_deleted">Немагчыма выдаліць спіс прайгравання \"Усе кампазіцыі\"</string>
     <string name="empty_playlist">Бягучы спіс прайгравання пусты</string>
     <string name="fetching_songs">Загрузка кампазіцый…</string>
     <string name="all_songs">Усе кампазіцыі</string>
     <string name="create_playlist_from_folder">Стварыць новы спіс прайгравання з папкі</string>
     <string name="folder_contains_no_audio">The selected folder contains no audio files</string>
     <string name="delete_current_song">Выдаліць бягучую кампазіцыю</string>
-    <string name="remove_current_song">Remove current song from playlist</string>
+    <string name="remove_current_song">Выдаліць бягучую кампазіцыю са спіса прайгравання</string>
     <string name="show_filename">Паказваць назву файла замест назвы кампазіцыі</string>
-    <string name="title_is_not_available">If title is not available</string>
+    <string name="title_is_not_available">Калі назва недаступная</string>
     <string name="show_album_cover">Паказваць вокладку альбома на галоўным экране</string>
     <string name="all_tracks">Усе кампазіцыі</string>
     <string name="add_to_playlist">Дадаць да спіса прайгравання</string>
@@ -80,7 +80,7 @@
     <string name="create_playlist_from_queue">Стварыць спіс праігравання з чаргі</string>
     <!-- Settings -->
     <string name="equalizer">Эквалайзер</string>
-    <string name="swap_prev_next">Swap previous/next headphone buttons</string>
+    <string name="swap_prev_next">Абмяняць прызначэнне кнопак навушнікаў \"Папярэдні\"/\"Наступны\"</string>
     <!-- FAQ -->
     <string name="faq_1_title">How can I fast-forward songs\?</string>
     <string name="faq_1_text">You can click on the current or max duration texts near the seekbar, that will move the song either backward, or forward.</string>
