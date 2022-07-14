@@ -60,8 +60,7 @@
     <string name="folders">文件夹</string>
     <string name="albums">专辑</string>
     <plurals name="albums_plural">
-        <item quantity="one">%d Album</item>
-        <item quantity="other">%d Albums</item>
+        <item quantity="other">%d Album</item>
     </plurals>
     <string name="tracks">歌曲</string>
     <plurals name="tracks_plural">

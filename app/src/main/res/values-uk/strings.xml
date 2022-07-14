@@ -62,12 +62,14 @@
     <plurals name="albums_plural">
         <item quantity="one">%d Альбом</item>
         <item quantity="few">%d Альбома</item>
+        <item quantity="many">%d Альбомів</item>
         <item quantity="other">%d Альбомів</item>
     </plurals>
     <string name="tracks">Композиції</string>
     <plurals name="tracks_plural">
         <item quantity="one">%d Композиція</item>
         <item quantity="few">%d Композиції</item>
+        <item quantity="many">%d Композицій</item>
         <item quantity="other">%d Композицій</item>
     </plurals>
     <!-- Queue -->

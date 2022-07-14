@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Pemain Muzik Ringkas</string>
     <string name="app_launcher_name">Pemain Muzik</string>
@@ -17,7 +18,6 @@
     <string name="volume">Kelantangan</string>
     <string name="playback_speed">Kelajuan main balik</string>
     <string name="loading_files">Memuatkan fail…</string>
-
     <!-- Playlists -->
     <string name="add_file_to_playlist">Tambah fail ke senarai</string>
     <string name="add_folder_to_playlist">Tambah folder ke senarai</string>
@@ -46,45 +46,37 @@
     <string name="show_album_cover">Tunjukkan kulit album di skrin utama</string>
     <string name="all_tracks">Semua trek</string>
     <string name="add_to_playlist">Tambahkan ke senarai main</string>
-    <string name="create_playlist_label">Anda boleh buat senarai main baru dengan pilih artis, album atau trek yang dikehendaki dan klik Menu -> Tambahkan ke senarai main.</string>
+    <string name="create_playlist_label">Anda boleh buat senarai main baru dengan pilih artis, album atau trek yang dikehendaki dan klik Menu -&gt; Tambahkan ke senarai main.</string>
     <string name="export_playlist">Export playlist</string>
     <string name="import_playlist">Import playlist</string>
     <string name="filename_without_m3u">Filename (without .m3u)</string>
-
     <!-- Sorting -->
     <string name="track_count">Kiraan Trek</string>
     <string name="album_count">Kiraan Album</string>
     <string name="artist_name">Nama Artis</string>
     <string name="year">Tahun</string>
-
     <!-- Artists -->
     <string name="artists">Artis</string>
     <string name="folders">Folders</string>
     <string name="albums">Album</string>
     <plurals name="albums_plural">
-        <item quantity="one">%d Album</item>
         <item quantity="other">%d Album</item>
     </plurals>
-
     <string name="tracks">Trek</string>
     <plurals name="tracks_plural">
-        <item quantity="one">%d Trek</item>
         <item quantity="other">%d Trek</item>
     </plurals>
-
     <!-- Queue -->
     <string name="next_track">Seterusnya:</string>
     <string name="track_queue">Barisan trek</string>
     <string name="add_to_queue">Tambahkan ke Barisan</string>
     <string name="remove_from_queue">Alih keluar dari Barisan</string>
     <string name="create_playlist_from_queue">Buat senarai main dari barisan</string>
-
     <!-- Settings -->
     <string name="equalizer">Equalizer</string>
     <string name="swap_prev_next">Tukar butang fon kepala sebelumnya/seterusnya</string>
-
     <!-- FAQ -->
-    <string name="faq_1_title">Bagaimana saya boleh meneruskan lagu?</string>
+    <string name="faq_1_title">Bagaimana saya boleh meneruskan lagu\?</string>
     <string name="faq_1_text">Anda boleh mengklik pada teks semasa atau maksimum yang berada di dekat bar carian, yang akan menggerakkan lagu itu ke belakang atau ke hadapan.</string>
     <!--
         Haven't found some strings? There's more at
