@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Απλός Music Player</string>
     <string name="app_launcher_name">Music Player</string>
@@ -17,11 +18,10 @@
     <string name="volume">Ένταση</string>
     <string name="playback_speed">Ταχύτητα Αναπ/γής</string>
     <string name="loading_files">Φόρτωση αρχείων…</string>
-
     <!-- Playlists -->
     <string name="add_file_to_playlist">Προσθήκη αρχείου στη λίστα</string>
     <string name="add_folder_to_playlist">Προσθήκη φακέλου στη λίστα</string>
-    <string name="manage_playlists">Διαχείριση λιστών </string>
+    <string name="manage_playlists">Διαχείριση λιστών</string>
     <string name="playlists">Λίστες</string>
     <string name="create_new_playlist">Δημιουργία λίστας</string>
     <string name="rename_playlist">Μετονομασία λίστας</string>
@@ -46,17 +46,15 @@
     <string name="show_album_cover">Εμφάνιση εξώφυλλου άλμπουμ στην κύρια οθόνη</string>
     <string name="all_tracks">Όλα τα τραγούδια</string>
     <string name="add_to_playlist">Προσθήκη στη λίστα</string>
-    <string name="create_playlist_label">Μπορείτε να δημιουργήσετε μια νέα λίστα επιλέγοντας τους επιθυμητούς καλλιτέχνες, άλμπουμ ή τραγούδια και απο το μενού -> Προσθήκη στη λίστα αναπαραγωγής.</string>
+    <string name="create_playlist_label">Μπορείτε να δημιουργήσετε μια νέα λίστα επιλέγοντας τους επιθυμητούς καλλιτέχνες, άλμπουμ ή τραγούδια και απο το μενού -&gt; Προσθήκη στη λίστα αναπαραγωγής.</string>
     <string name="export_playlist">Εξαγωγή λίστας</string>
     <string name="import_playlist">Εισαγωγή λίστας</string>
     <string name="filename_without_m3u">Όνομα αρχείου (χωρίς .m3u)</string>
-
     <!-- Sorting -->
     <string name="track_count">Αριθμός τραγουδιών</string>
     <string name="album_count">Αριθμός άλμπουμ</string>
     <string name="artist_name">Όνομα καλλιτέχνη</string>
     <string name="year">Έτος</string>
-
     <!-- Artists -->
     <string name="artists">Καλλιτέχνες</string>
     <string name="folders">Φάκελοι</string>
@@ -65,24 +63,20 @@
         <item quantity="one">%d Άλμπουμ</item>
         <item quantity="other">%d Άλμπουμ</item>
     </plurals>
-
     <string name="tracks">Τραγούδια</string>
     <plurals name="tracks_plural">
         <item quantity="one">%d Τραγούδι</item>
         <item quantity="other">%d Τραγούδια</item>
     </plurals>
-
     <!-- Queue -->
     <string name="next_track">Επόμενο:</string>
     <string name="track_queue">Τραγούδια σε ουρά</string>
     <string name="add_to_queue">Προσθήκη στην ουρά</string>
     <string name="remove_from_queue">Κατάργηση από την ουρά</string>
     <string name="create_playlist_from_queue">Δημιουργία λίστας από την ουρά</string>
-
     <!-- Settings -->
     <string name="equalizer">Ισοσταθμιστής</string>
     <string name="swap_prev_next">Εναλλαγή κουμπιών ακουστικών Πίσω/Εμπρός</string>
-
     <!-- FAQ -->
     <string name="faq_1_title">Πώς μπορώ να προωθήσω γρήγορα τα τραγούδια;</string>
     <string name="faq_1_text">Μπορείτε να κάνετε κλικ στο τρέχον ή μέγιστης διάρκειας κείμενο κοντά στη γραμμή προόδου, το οποίο θα μετακινήσει το τραγούδι πίσω ή εμπρός.</string>
