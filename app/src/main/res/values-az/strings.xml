@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Sadə Musiqi Çalar</string>
     <string name="app_launcher_name">Musiqi Çalar</string>
@@ -17,7 +18,6 @@
     <string name="volume">Volume</string>
     <string name="playback_speed">Playback speed</string>
     <string name="loading_files">Loading files…</string>
-
     <!-- Playlists -->
     <string name="add_file_to_playlist">Alboma fayl əlavə et</string>
     <string name="add_folder_to_playlist">Alboma qovluq əlavə et</string>
@@ -46,17 +46,15 @@
     <string name="show_album_cover">Əsas ekranda albom çərçivəsini göstər</string>
     <string name="all_tracks">All tracks</string>
     <string name="add_to_playlist">Add to playlist</string>
-    <string name="create_playlist_label">You can create a new playlist by selecting the wanted artists, albums or tracks and using Menu -> Add to playlist.</string>
+    <string name="create_playlist_label">You can create a new playlist by selecting the wanted artists, albums or tracks and using Menu -&gt; Add to playlist.</string>
     <string name="export_playlist">Export playlist</string>
     <string name="import_playlist">Import playlist</string>
     <string name="filename_without_m3u">Filename (without .m3u)</string>
-
     <!-- Sorting -->
     <string name="track_count">Track Count</string>
     <string name="album_count">Album Count</string>
     <string name="artist_name">Artist Name</string>
     <string name="year">Year</string>
-
     <!-- Artists -->
     <string name="artists">Artists</string>
     <string name="folders">Folders</string>
@@ -65,26 +63,22 @@
         <item quantity="one">%d Album</item>
         <item quantity="other">%d Albums</item>
     </plurals>
-
     <string name="tracks">Tracks</string>
     <plurals name="tracks_plural">
         <item quantity="one">%d Track</item>
         <item quantity="other">%d Tracks</item>
     </plurals>
-
     <!-- Queue -->
     <string name="next_track">Next:</string>
     <string name="track_queue">Track queue</string>
     <string name="add_to_queue">Add to queue</string>
     <string name="remove_from_queue">Remove from queue</string>
     <string name="create_playlist_from_queue">Create playlist from queue</string>
-
     <!-- Settings -->
     <string name="equalizer">Qarışdırıcı</string>
     <string name="swap_prev_next">Swap previous/next headphone buttons</string>
-
     <!-- FAQ -->
-    <string name="faq_1_title">How can I fast-forward songs?</string>
+    <string name="faq_1_title">How can I fast-forward songs\?</string>
     <string name="faq_1_text">You can click on the current or max duration texts near the seekbar, that will move the song either backward, or forward.</string>
     <!--
         Haven't found some strings? There's more at
