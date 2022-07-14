@@ -25,7 +25,7 @@
     <string name="playlists">لیست پخش</string>
     <string name="create_new_playlist">ایجاد لیست پخش جدید</string>
     <string name="rename_playlist">تغییر نام لیست پخش</string>
-    <string name="playlist_name_exists">لیست پخش با این  نام از قبل موجود است</string>
+    <string name="playlist_name_exists">لیست پخش با این نام از قبل موجود است</string>
     <string name="remove_playlist">حذف لیست پخش</string>
     <string name="remove_playlist_description">با این کار فقط لیست های پخش انتخاب شده حذف می شوند ، نه فایل های واقعی.</string>
     <string name="remove_playlist_description_placeholder">This will only remove playlist \"%s\", not the actual files.</string>
@@ -69,7 +69,7 @@
         <item quantity="other">%d آهنگ</item>
     </plurals>
     <!-- Queue -->
-    <string name="next_track">بعدی: </string>
+    <string name="next_track">بعدی:</string>
     <string name="track_queue">صف آهنگ</string>
     <string name="add_to_queue">افزودن به صف</string>
     <string name="remove_from_queue">حذف از صف</string>
