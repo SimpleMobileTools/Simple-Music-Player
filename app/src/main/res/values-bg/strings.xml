@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Обикновен Музикален Плейър</string>
-    <string name="app_launcher_name">Музикален плейър</string>
+    <string name="app_launcher_name">Музикален Плейър</string>
     <string name="playlist_empty">Вашият плейлист е празен</string>
     <string name="rename_song">Преименуване на песен</string>
     <string name="rename_song_error">Възникна грешка по време на преименуването</string>
