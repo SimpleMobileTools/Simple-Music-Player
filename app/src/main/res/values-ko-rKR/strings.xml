@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">심플 뮤직 플레이어</string>
     <string name="app_launcher_name">뮤직 플레이어</string>
@@ -17,7 +18,6 @@
     <string name="volume">Volume</string>
     <string name="playback_speed">Playback speed</string>
     <string name="loading_files">Loading files…</string>
-
     <!-- Playlists -->
     <string name="add_file_to_playlist">재생목록에 파일 추가</string>
     <string name="add_folder_to_playlist">재생목록에 폴더 추가</string>
@@ -46,45 +46,37 @@
     <string name="show_album_cover">Show album cover on the main screen</string>
     <string name="all_tracks">All tracks</string>
     <string name="add_to_playlist">Add to playlist</string>
-    <string name="create_playlist_label">You can create a new playlist by selecting the wanted artists, albums or tracks and using Menu -> Add to playlist.</string>
+    <string name="create_playlist_label">You can create a new playlist by selecting the wanted artists, albums or tracks and using Menu -&gt; Add to playlist.</string>
     <string name="export_playlist">Export playlist</string>
     <string name="import_playlist">Import playlist</string>
     <string name="filename_without_m3u">Filename (without .m3u)</string>
-
     <!-- Sorting -->
     <string name="track_count">Track Count</string>
     <string name="album_count">Album Count</string>
     <string name="artist_name">Artist Name</string>
     <string name="year">Year</string>
-
     <!-- Artists -->
     <string name="artists">Artists</string>
     <string name="folders">Folders</string>
     <string name="albums">Albums</string>
     <plurals name="albums_plural">
-        <item quantity="one">%d Album</item>
-        <item quantity="other">%d Albums</item>
+        <item quantity="other">%d Album</item>
     </plurals>
-
     <string name="tracks">Tracks</string>
     <plurals name="tracks_plural">
-        <item quantity="one">%d Track</item>
-        <item quantity="other">%d Tracks</item>
+        <item quantity="other">%d Track</item>
     </plurals>
-
     <!-- Queue -->
     <string name="next_track">Next:</string>
     <string name="track_queue">Track queue</string>
     <string name="add_to_queue">Add to queue</string>
     <string name="remove_from_queue">Remove from queue</string>
     <string name="create_playlist_from_queue">Create playlist from queue</string>
-
     <!-- Settings -->
     <string name="equalizer">이퀄라이저</string>
     <string name="swap_prev_next">Swap previous/next headphone buttons</string>
-
     <!-- FAQ -->
-    <string name="faq_1_title">How can I fast-forward songs?</string>
+    <string name="faq_1_title">How can I fast-forward songs\?</string>
     <string name="faq_1_text">You can click on the current or max duration texts near the seekbar, that will move the song either backward, or forward.</string>
     <!--
         Haven't found some strings? There's more at
