@@ -1,7 +1,0 @@
-En musikspelare som du enkelt styr från statusfältet, en gränssnittskomponent på startskärmen eller knapparna på din mikrofonlur. Du kan ändra Equalizern och sortera låtarna efter titel eller artist. Du kan inte filtrera efter artist eller album ännu, men håll ögonen öppna!
-
-Den har en gränssnittskomponent med anpassningsbar textfärg, bakgrundsfärg och bakgrundsgenomskinlighet.
-
-Innehåller ingen reklam eller onödiga behörigheter. Den har helt öppen källkod och anpassningsbara färger.
-
-Denna app är bara en del av en större serie appar. Du hittar resten av dem på https://www.simplemobiletools.com

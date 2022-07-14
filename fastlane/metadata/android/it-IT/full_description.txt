@@ -1,0 +1,37 @@
+Un semplice lettore musicale facilmente controllabile dalla barra di stato, dal widget della schermata iniziale o dai pulsanti hardware sull'auricolare. Fornisce tutte le funzioni previste come l'ordinamento in vari modi e la modifica dell'equalizzatore. Ascolta i tuoi mp3 preferiti, altre canzoni o podcast con questo bellissimo lettore musicale gratuito. Questo lettore mp3 ha anche una caratteristica unica di risparmio della batteria. Non devi più preoccuparti della batteria consumata dalla musica che suoni. Riproduci la musica senza intoppi con questo lettore musicale a risparmio energetico.
+
+Offre extra esclusivi come la ricerca e la visualizzazione delle copertine degli album, un timer di spegnimento e molte altre impostazioni. Questo elegante lettore musicale ti consente di creare e gestire comode playlist come desideri. Con tutte queste impostazioni uniche, questa app ti dà anche una mano leggera sulla batteria. La tecnologia di risparmio della batteria utilizzata in questa app è notevole ed è stata apprezzata da tutti gli utenti di questa app. Questo lettore mp3 riproduce musica con audio surround mentre ti dà la libertà di utilizzare questa app come preferisci.
+
+Le playlist sono completamente supportate in questo lettore mp3. Puoi aggiungere singoli file o intere cartelle. Se non ti piace un file, puoi semplicemente rimuoverlo da una playlist o eliminare del tutto il file effettivo. Questo lettore musicale ti offre la possibilità di gestire il tuo elenco musicale in base alle tue preferenze.
+
+Viene fornito con un pratico timer di spegnimento in modo da poter ritardare in modo affidabile il tempo di chiusura dell'app. Questa funzione non influirà mai sui tempi della batteria poiché con la funzione di risparmio della batteria, puoi utilizzare questa app senza preoccuparti che la batteria del tuo dispositivo si scarichi. A differenza di qualsiasi altro lettore musicale, questo lettore mp3 riproduce la musica utilizzando al minimo le altre risorse per implementare la tecnologia di risparmio della batteria.
+
+Supporta sia la riproduzione casuale che la ripetizione di un brano particolare, nonché il salto e l'avanzamento veloce. Goditi la tua musica come vuoi. Modella questo lettore e riproduci la musica in base al tuo umore e ottieni il meglio da te. Questo lettore mp3 ti dà la libertà di cambiare i colori e le trame dello sfondo.
+
+Disponibile in molte lingue diverse, offre più equalizzatori diversi. L'equalizzatore in questo risparmio batteria ti dà l'autorità di modificare gli effetti musicali in base al luogo in cui ti trovi. Puoi impostare l'equalizzatore su stereo, suono surround e molti altri.
+
+Controlla facilmente le proprietà di un file come la dimensione, la durata, l'ultima modifica, ecc.
+
+Modifica i dati EXIF ​​del file come il titolo del brano e l'artista.
+
+Condividi rapidamente file con i tuoi amici sui social network, e-mail o ovunque tu voglia. Puoi condividere i tuoi file musicali senza cercarli altrove. Condividili qui e lascia che i tuoi amici ascoltino la magia del tuo gusto musicale.
+
+Questo elegante lettore musicale contiene un widget con colore del testo personalizzabile, alfa e il colore dello sfondo per un facile accesso e controllo.
+
+Gestisce correttamente anche gli intenti di terze parti per la riproduzione di singoli file audio in modo che possa aiutare anche a impostare le suonerie.
+
+Viene fornito con design dei materiali e tema scuro per impostazione predefinita, offre un'ottima esperienza utente per un facile utilizzo. La mancanza di accesso a Internet ti offre maggiore privacy, sicurezza e stabilità rispetto ad altre app.
+
+Non contiene pubblicità o autorizzazioni non necessarie. È completamente opensource, fornisce colori personalizzabili.
+
+Dai un'occhiata alla suite completa di Simple Tools qui:
+https://www.simplemobiletools.com
+
+Facebook:
+https://www.facebook.com/simplemobiletools
+
+Reddit:
+https://www.reddit.com/r/SimpleMobileTools
+
+Telegram:
+https://t.me/SimpleMobileTools

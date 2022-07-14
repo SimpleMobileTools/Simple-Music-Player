@@ -1,0 +1,35 @@
+Un simple lecteur de musique facilement contrôlable depuis la barre d'état, le widget de l'écran d'accueil ou par les boutons matériels de votre casque. Il fournit toutes les fonctions attendues comme le tri de différentes manières ainsi que la modification de l'égaliseur. 
+
+Écoutez votre mp3 préféré, d'autres chansons ou podcasts avec ce beau lecteur de musique gratuit. Ce lecteur mp3 a également une caractéristique unique d'économiseur de batterie. Vous n'avez plus à vous soucier de la batterie consommée par la musique que vous écoutez. Écoutez de la musique sans accroc avec ce lecteur de musique économiseur de batterie.
+
+Il offre des extras exclusifs comme la recherche et l'affichage de la pochette d'album, une minuterie de mise en veille et de nombreux autres paramètres. Cet élégant lecteur de musique vous permet de créer et de gérer des listes de lecture pratiques à votre guise. Avec tous ces paramètres uniques, cette application vous donne également une main légère sur votre batterie. La technologie d'économie de batterie utilisée dans cette application est remarquable et a été appréciée par tous les utilisateurs de cette application. Ce lecteur mp3 lit de la musique avec un son surround tout en vous donnant la liberté d'utiliser cette application comme vous le souhaitez.
+
+Les listes de lecture sont entièrement prises en charge dans ce lecteur mp3. Vous pouvez ajouter des fichiers individuels ou des dossiers entiers. Si vous n'aimez pas un fichier, vous pouvez soit simplement le supprimer d'une liste de lecture, soit supprimer complètement le fichier réel. Ce lecteur de musique vous offre le choix de gérer votre liste de musique selon vos goûts.
+
+Livré avec une minuterie de mise en veille pratique pour que vous puissiez retarder de manière fiable le moment de l'arrêt de l'application. Cette fonctionnalité n'affectera jamais la synchronisation de votre batterie, car avec la fonction d'économie de batterie, vous pouvez utiliser cette application sans vous soucier de l'épuisement de la batterie de votre appareil. Contrairement à tout autre lecteur de musique, ce lecteur mp3 lit de la musique tout en utilisant au minimum les autres ressources pour implémenter la technologie d'économie de batterie.
+
+Prend en charge à la fois la lecture aléatoire et la répétition d'une chanson particulière, ainsi que le saut et l'avance rapide. Profitez de votre musique comme vous le souhaitez. Moulez ce lecteur et écoutez de la musique selon votre humeur et faites ressortir le meilleur de vous. Ce lecteur mp3 vous donne la liberté de changer les couleurs et les textures d'arrière-plan.
+
+Disponible dans de nombreuses langues différentes, offre plusieurs égaliseurs différents. L'égaliseur de cet économiseur de batterie vous permet de modifier les effets musicaux en fonction de l'endroit où vous vous trouvez actuellement. Vous pouvez régler l'égaliseur sur stéréo, son surround et bien d'autres.
+
+Vérifiez facilement les propriétés d'un fichier telles que la taille, la durée, la dernière modification, etc.
+
+Modifiez les données EXIF ​​du fichier comme le titre de la chanson et l'artiste.
+
+Partagez rapidement des fichiers avec vos amis sur les réseaux sociaux, les e-mails ou partout où vous le souhaitez. Vous pouvez partager vos fichiers musicaux sans les rechercher ailleurs. Partagez-les simplement ici et laissez vos proches écouter la magie de votre goût musical.
+
+Ce lecteur de musique élégant contient un widget avec la couleur du texte personnalisable, l'alpha et la couleur de l'arrière-plan pour un accès et un contrôle faciles.
+
+Ne contient aucune publicité ou autorisations inutiles. Il est entièrement open source, fournit des couleurs personnalisables.
+
+Découvrez la suite complète des outils simples ici:
+https://www.simplemobiletools.com
+
+Facebook:
+https://www.facebook.com/simplemobiletools
+
+Reddit:
+https://www.reddit.com/r/SimpleMobileTools
+
+Telegram:
+https://t.me/SimpleMobileTools

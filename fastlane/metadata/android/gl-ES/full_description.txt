@@ -1,0 +1,37 @@
+Un reprodutor de música de balde, simple e facilmente controlable desde a barra de estado, desde o widget da pantalla principal ou desde os botóns do hardware nos auriculares. Fornece todas as funcións esperadas como pode ser ordenar de diferentes maneiras, cambiar o ecualizador, escoitar os teus mp3 favoritos ou outras cancións ou podcasts.
+
+Inclúe extras exclusivas como Buscar e ensinar a portada dun álbum, un temporizador e outras configuracións. Permíteche crear e xestionar listas de reprodución como ti queiras.
+
+Hai posibilidade de crear listas de reprodución. Engada tanto ficheiros individuais como un cartafol enteiro. Se non che gusta un ficheiro, pódelo eliminar da lista de reprodución ou por completo.
+
+Tamén vén cun temporizador práctico para que de xeito fiable poidas atrasar o tempo do aplicativo pechándoo.
+
+Inclúe o modo aleatorio e repetir, saltar ou avanzar rápido nunha canción.
+
+Dispoñible en moitos idiomas e ofrece diferentes ecualizadores.
+
+Comproba de maneira fácil as propiedades do ficheiro como o tamaño, duración, última modificación, etc.
+
+Modificar os datos do ficheiro EXIF como o título ou artista.
+
+Compartir ficheiros de maneira rápida cos teus amigos nas redes sociais, no correo electrónico ou en calquera sitio que ti queiras.
+
+Este reprodutor de música contén un widget con cor de texto, letras e fondo personalizables para un acceso e control máis fácil.
+
+A parte de reproducir de xeito individual ficheiros de audio, tamén pode establecelo como ton de chamada.
+
+E, por último, vén cun deseño material e tema escuro por defecto, fornece unha experiencia de usuario xenial para un uso fácil. O non acceso a Internet dáche máis privacidade, seguridade e estabilidade que a outros aplicativos.
+
+Non ten publicidade nin permisos innecesarios. É un aplicativo 100% de código aberto, con cores personalizables.
+
+Visita a nosa páxina aquí:
+https://www.simplemobiletools.com
+
+Facebook:
+https://www.facebook.com/simplemobiletools
+
+Reddit:
+https://www.reddit.com/r/SimpleMobileTools
+
+Telegram:
+https://t.me/SimpleMobileTools

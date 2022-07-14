@@ -1,1 +1,0 @@
-En ren musikspelare med en anpassningsbar gränssnittskomponent.

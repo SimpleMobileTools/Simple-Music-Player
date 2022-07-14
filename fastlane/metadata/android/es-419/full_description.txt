@@ -1,0 +1,35 @@
+Un sencillo reproductor de música fácilmente controlable desde la barra de estado, el widget de la pantalla de inicio o mediante los botones de hardware de los auriculares. Proporciona todas las funciones esperadas, como ordenar de varias formas, así como cambiar el ecualizador. Escuche su mp3 favorito, otras canciones o podcasts con este hermoso reproductor de música gratuito. Este reproductor de mp3 también tiene una característica única de ahorro de batería. No tiene que preocuparse más por la batería consumida por la música que toca. Reproduzca música sin problemas con este reproductor de música que ahorra batería.
+
+Ofrece extras exclusivos como Buscar y mostrar la carátula del álbum, un temporizador de apagado y muchas otras configuraciones. Este elegante reproductor de música le permite crear y administrar útiles listas de reproducción como desee. Con todas estas configuraciones únicas, esta aplicación también te ayuda a controlar la batería. La tecnología de ahorro de batería utilizada en esta aplicación es notable y ha gustado a todos los usuarios de esta aplicación. Este reproductor de mp3 reproduce música con sonido envolvente mientras te da la libertad de usar esta aplicación como quieras.
+
+Las listas de reproducción son totalmente compatibles con este reproductor de mp3. Puede agregar archivos individuales o carpetas completas. Si no le gusta un archivo, puede simplemente eliminarlo de una lista de reproducción o eliminar el archivo real por completo. Este reproductor de música le brinda opciones para administrar su lista de música de acuerdo con su gusto.
+
+Viene con un práctico temporizador de apagado para que pueda retrasar de manera confiable el tiempo de apagado de la aplicación. Esta función nunca afectará el tiempo de la batería, ya que con la función de ahorro de batería, puede usar esta aplicación sin preocuparse de que se agote la batería de su dispositivo. A diferencia de cualquier otro reproductor de música, este reproductor de mp3 reproduce música mientras usa los otros recursos como mínimo para implementar la tecnología de ahorro de batería.
+
+Admite tanto la reproducción aleatoria como la repetición de una canción en particular, así como el salto y el avance rápido. Disfruta tu música como quieras. Moldea este reproductor y reproduce música de acuerdo a tu estado de ánimo y saca lo mejor de ti. Este reproductor de mp3 te da la libertad de cambiar los colores y texturas de fondo.
+
+Disponible en muchos idiomas diferentes, ofrece múltiples ecualizadores diferentes. El ecualizador de este ahorrador de batería le da autoridad para cambiar los efectos de la música de acuerdo con el lugar en el que se encuentre actualmente. Puede configurar el ecualizador en estéreo, sonido envolvente y muchos más.
+
+Verifique fácilmente las propiedades de un archivo como el tamaño, la duración, la última modificación, etc.
+
+Modifique los datos EXIF ​​del archivo como el título de la canción y el artista.
+
+Comparta archivos rápidamente con sus amigos en redes sociales, correos electrónicos o en cualquier lugar que desee. Puede compartir sus archivos de música sin buscarlos en ningún otro lugar. Solo compártelos aquí y deja que tus más cerrados escuchen la magia de tu gusto musical.
+
+Este elegante reproductor de música contiene un widget con color de texto personalizable, alfa y el color del fondo para un fácil acceso y control.
+
+También maneja correctamente las intenciones de terceros para reproducir archivos de audio individuales, por lo que también puede ayudar a configurar los tonos de llamada.
+
+Viene con diseño de material y tema oscuro de forma predeterminada, brinda una excelente experiencia de usuario para un uso fácil.
+
+Consulte el conjunto completo de herramientas simples aquí:
+https://www.simplemobiletools.com
+
+Facebook:
+https://www.facebook.com/simplemobiletools
+
+Reddit:
+https://www.reddit.com/r/SimpleMobileTools
+
+Telegram:
+https://t.me/SimpleMobileTools

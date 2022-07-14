@@ -1,1 +1,0 @@
-Odtwarzacz muzyki z widżetem, wyłącznikiem czasowym i oszczędzaniem baterii

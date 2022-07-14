@@ -1,34 +1,61 @@
-A simple music player easily controllable from the status bar, home screen widget or by hardware buttons on your headset. It provides all expected functions like sorting in various ways as well as changing the Equalizer.  Listen to your favorite mp3, other songs or podcasts with this free beautiful music player.
+🎧 Listen to your music with No Ads 🎧
+We know very well how important your time is. That is the reason we don't put Ads in our app. Ads are annoying, and people hate ads. Simple like that.
 
-It offers exclusive extras like Search and showing Album Art, a sleep timer and many other settings. This elegant music player allows you creating and managing handy playlists as you desire.
+Simple Music Player is focused on one thing, enjoy your music without any distraction. Use our app while you are relaxed at home, working, or maybe while you are driving in your car.
 
-Playlists are fully supported. You can add either individual files, or whole folders. If you won\'t like a file, you can either just remove it from a playlist, or delete the actual file altogether.
+The best part about it is FREE to install.
 
-Comes with a handy sleep timer so that you can reliably delay the time of the app shutting down.
+You can bring your music everywhere: walking on the streets, hiking on the mountain, even to the moon. This MP3 Player is offline, which means you don't need the internet to use it.
 
-Supports both shuffle and repeating a particular song, as well as skipping and fast forwarding.
+Moreover, Simple Music Player has a unique battery-saving feature. Due to our new technology, you will not have to worry anymore about running out of battery during the day. Play your music without a hitch with this smart music player. 
 
-Available in many different languages and offers multiple different equalizers.
+👉  What are you waiting for to download it and enjoy your music without Ads? 
 
-Easily check a file properties like the size, duration, last modified etc.
+Control your music from the status bar, widget, or hardware buttons on your headphones. It has never been so easy to handle. 
 
-Modify file EXIF data like the song title and artist.
+In addition, you can customize the widget. Change the text and background colors for easy access and control.
 
-Quickly share files with your friends on social networks, emails, or anywhere you would like.
+Listen to your favorite mp3, other audio songs, or podcasts with this free beautiful music player. Put your style on the app customizing the interface colors. 
 
-This stylish music player contains a widget with customizable text color, alpha and the color of the background for easy access and control.
+You can program which track/music you want to fall asleep with through the sleep timer feature. Maybe jazz, chill, zen, even nature sounds, select which one suits you the best from your music. And, enjoy your dreams!
 
-It properly handles third party intents too for playing individual audio files so it can help at setting ringtones too.
+Raise the level of quality of sound with our equalizer. This audio player gives you the chance to change the music effects according to the type of music you listen to (Classic, Pop, Rock, Dance, Techno, Latino, Flat, etc.). Even according to the speakers you have (Headphone, Stereo, Surround and many more). Now, you will have the power of the sounds in your ears. 
 
-It comes with material design and dark theme by default, provides great user experience for easy usage. The lack of internet access gives you more privacy, security and stability than other apps.
+Simple Music Player gives you also the chance to make your music list inside the app. Create and manage your playlist as you desire. You can take your songs from your phone and SD card. Furthermore, you can add folders easily. 
 
-Contains no ads or unnecessary permissions. It is fully opensource and provides customizable colors.
+This player supports the shuffle, repeating a particular song, skipping, and forwarding. Mix the music like a professional DJ.
 
-<b>Check out the full suite of Simple Tools here:</b>
+Don't you like how the song is labeled? Edit it as you prefer, modify the name of the songs, artists, groups, etc.
+
+Features
+⭐️ Nice and beautiful interface
+⭐️ Color customization
+⭐️ Battery Saver
+⭐️ Sleep timer
+⭐️ Powerful Equalizer with a handful of presets
+⭐️ Playback widget
+⭐️ Playlist management
+⭐️ Multi-language
+⭐️ File properties management
+⭐️ Songs label management
+⭐️ Privacy
+⭐️ Sharing music 
+
+
+👉 We take the privacy of our users very seriously. We don't share any information with others.
+
+Install Simple Music Player NOW❗️
+
+🎧 Enjoy the music with no Ads 🎧
+
+Check out the full suite of Simple Tools here:
 https://www.simplemobiletools.com
 
-<b>Facebook:</b>
+Facebook:
 https://www.facebook.com/simplemobiletools
 
-<b>Reddit:</b>
+Reddit:
 https://www.reddit.com/r/SimpleMobileTools
+
+Telegram:
+https://t.me/SimpleMobileTools

@@ -1,1 +1,1 @@
-Jednoduchý hudobný prehrávač s meniteľným widgetom na plochu.
+Ľahký hudobný prehrávač pekný widget so štýlovým rozhraním, bez reklám

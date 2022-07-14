@@ -1,0 +1,41 @@
+🎶 Pemutar musik sederhana yang mudah dikontrol dari bilah status, widget layar beranda, atau dengan tombol perangkat keras pada headsetmu ⭐️
+
+Aplikasi ini menyediakan semua fungsi yang diharapkan seperti menyortir dengan berbagai cara serta mengubah Equalizer. 
+
+Dengarkan mp3 favorit Anda, lagu lain, atau podcast dengan pemutar musik gratis yang indah ini. Pemutar mp3 ini juga memiliki fitur unik penghemat baterai. Anda tidak perlu khawatir lagi tentang baterai yang dikonsumsi oleh musik yang Anda putar. Putar musik tanpa hambatan dengan pemutar musik penghemat baterai ini.
+
+Ini menawarkan ekstra eksklusif seperti Pencarian dan menampilkan Seni Album, pengatur waktu tidur dan banyak pengaturan lainnya. Pemutar musik yang elegan ini memungkinkan Anda membuat dan mengelola daftar putar praktis sesuai keinginan. Dengan semua pengaturan unik ini, aplikasi ini juga memberi Anda kemudahan pada baterai Anda. Teknologi penghemat baterai yang digunakan dalam aplikasi ini luar biasa dan disukai oleh semua pengguna aplikasi ini. Pemutar mp3 ini memainkan musik dengan suara surround sambil memberi Anda kebebasan untuk menggunakan aplikasi ini sesuka Anda.
+
+Daftar putar didukung penuh di pemutar mp3 ini. Anda dapat menambahkan file satu per satu, atau seluruh folder. Jika Anda tidak menyukai suatu file, Anda dapat menghapusnya dari daftar putar, atau menghapus file yang sebenarnya sama sekali. Pemutar musik ini memberi Anda pilihan untuk mengatur daftar musik Anda sesuai dengan keinginan Anda.
+
+Dilengkapi dengan pengatur waktu tidur yang praktis sehingga Anda dapat dengan andal menunda waktu mematikan aplikasi. Fitur ini tidak akan pernah memengaruhi waktu baterai Anda karena dengan fitur penghemat baterai, Anda dapat menggunakan aplikasi ini tanpa khawatir baterai perangkat Anda terkuras. Tidak seperti pemutar musik lainnya, pemutar mp3 ini memutar musik dengan menggunakan sumber daya lain minimal untuk menerapkan teknologi penghemat baterai.
+
+Mendukung pengocokan dan pengulangan lagu tertentu, serta skipping dan penerusan cepat. Nikmati musik Anda sesuai keinginan. Bentuk pemutar ini dan mainkan musik sesuai suasana hati Anda dan berikan yang terbaik dari Anda. Pemutar mp3 ini memberi Anda kebebasan untuk mengubah warna dan tekstur latar belakang.
+
+Tersedia dalam berbagai bahasa, menawarkan beberapa equalizer yang berbeda. Equalizer dalam penghemat baterai ini memberi Anda kewenangan untuk mengubah efek musik sesuai dengan tempat Anda saat ini. Anda dapat mengatur equalizer ke stereo, suara surround, dan banyak lagi.
+
+Dengan mudah memeriksa properti file seperti ukuran, durasi, terakhir diubah, dll.
+
+Ubah file data EXIF ​​seperti judul lagu dan artis.
+
+Bagikan file dengan cepat kepada teman Anda di jejaring sosial, email, atau di mana pun Anda mau. Anda dapat membagikan file musik Anda tanpa mencarinya di tempat lain. Bagikan saja di sini dan biarkan orang-orang terdekat Anda mendengarkan keajaiban selera musik Anda.
+
+Pemutar musik penuh gaya ini berisi widget dengan warna teks yang dapat disesuaikan, alfa, dan warna latar belakang untuk akses dan kontrol yang mudah.
+
+Ini dengan benar menangani maksud pihak ketiga juga untuk memutar file audio individual sehingga dapat membantu mengatur nada dering juga.
+
+Muncul dengan desain material dan tema gelap secara default, memberikan pengalaman pengguna yang luar biasa untuk penggunaan yang mudah. Kurangnya akses internet memberi Anda lebih banyak privasi, keamanan, dan stabilitas daripada aplikasi lain.
+
+Tidak mengandung iklan atau izin yang tidak perlu. Ini sepenuhnya open source, memberikan warna yang dapat disesuaikan.
+
+Lihat rangkaian lengkap Alat Sederhana di sini:
+https://www.simplemobiletools.com
+
+Facebook:
+https://www.facebook.com/simplemobiletools
+
+Reddit:
+https://www.reddit.com/r/SimpleMobileTools
+
+Telegram:
+https://t.me/SimpleMobileTools

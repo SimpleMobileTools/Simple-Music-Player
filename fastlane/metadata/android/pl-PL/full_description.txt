@@ -1,0 +1,37 @@
+Prosty odtwarzacz muzyki, który można łatwo kontrolować z paska stanu, widżetu na ekranie głównym lub przycisków sprzętowych na zestawie słuchawkowym. Zapewnia wszystkie oczekiwane funkcje, takie jak sortowanie na różne sposoby, a także zmiana korektora. Słuchaj swoich ulubionych plików MP3, innych piosenek lub podcastów za pomocą tego bezpłatnego, pięknego odtwarzacza muzycznego. Ten odtwarzacz mp3 ma również unikalną funkcję oszczędzania baterii. Nie musisz już martwić się o baterię zużywaną przez odtwarzaną muzykę. Odtwarzaj muzykę bez żadnych problemów dzięki temu odtwarzaczowi muzycznemu z oszczędzaniem baterii.
+
+Oferuje ekskluzywne dodatki, takie jak wyszukiwanie i wyświetlanie okładek albumów, wyłącznik czasowy i wiele innych ustawień. Ten elegancki odtwarzacz muzyczny umożliwia tworzenie przydatnych list odtwarzania i zarządzanie nimi według własnego uznania. Dzięki tym wszystkim unikalnym ustawieniom ta aplikacja zapewnia również lekką rękę na baterii. Technologia oszczędzania baterii zastosowana w tej aplikacji jest niezwykła i została polubiona przez wszystkich użytkowników tej aplikacji. Ten odtwarzacz mp3 odtwarza muzykę z dźwiękiem przestrzennym, dając Ci swobodę korzystania z tej aplikacji w dowolny sposób.
+
+Listy odtwarzania są w pełni obsługiwane w tym odtwarzaczu mp3. Możesz dodać pojedyncze pliki lub całe foldery. Jeśli nie podoba ci się plik, możesz po prostu usunąć go z listy odtwarzania lub całkowicie usunąć sam plik. Ten odtwarzacz muzyczny umożliwia zarządzanie listą muzyki według własnych upodobań.
+
+Wyposażony jest w poręczny wyłącznik czasowy, dzięki czemu można niezawodnie opóźnić czas wyłączenia aplikacji. Ta funkcja nigdy nie wpłynie na czas pracy baterii, ponieważ w przypadku funkcji oszczędzania baterii możesz korzystać z tej aplikacji bez martwienia się o wyczerpanie baterii urządzenia. W przeciwieństwie do innych odtwarzaczy muzycznych, ten odtwarzacz mp3 odtwarza muzykę, wykorzystując przynajmniej inne zasoby do implementacji technologii oszczędzania baterii.
+
+Obsługuje zarówno odtwarzanie losowe, jak i powtarzanie określonego utworu, a także pomijanie i przewijanie do przodu. Ciesz się muzyką tak, jak chcesz. Dopasuj ten odtwarzacz i odtwarzaj muzykę zgodnie ze swoim nastrojem i wydobądź z siebie to, co najlepsze. Ten odtwarzacz mp3 zapewnia swobodę zmiany kolorów i tekstur tła.
+
+Dostępny w wielu różnych językach, oferuje wiele różnych korektorów. Korektor w tym oszczędzaniu baterii daje Ci uprawnienia do zmiany efektów muzycznych w zależności od miejsca, w którym się aktualnie znajdujesz. Możesz ustawić korektor na stereo, dźwięk przestrzenny i wiele innych.
+
+Łatwo sprawdź właściwości pliku, takie jak rozmiar, czas trwania, ostatnia modyfikacja itp.
+
+Zmodyfikuj dane EXIF ​​pliku, takie jak tytuł utworu i wykonawca.
+
+Szybko udostępniaj pliki znajomym w sieciach społecznościowych, e-mailach lub w dowolnym miejscu. Możesz udostępniać swoje pliki muzyczne bez przeszukiwania ich nigdzie indziej. Po prostu udostępnij je tutaj i pozwól bliskim posłuchać magii Twojego gustu muzycznego.
+
+Ten stylowy odtwarzacz muzyczny zawiera widżet z konfigurowalnym kolorem tekstu, alfą i kolorem tła dla łatwego dostępu i kontroli.
+
+Prawidłowo obsługuje również intencje stron trzecich do odtwarzania pojedynczych plików audio, dzięki czemu może pomóc również w ustawianiu dzwonków.
+
+Domyślnie jest wyposażony w materiałowy wygląd i ciemny motyw, zapewnia doskonałą obsługę i łatwe użytkowanie. Brak dostępu do Internetu zapewnia większą prywatność, bezpieczeństwo i stabilność niż inne aplikacje.
+
+Nie zawiera reklam ani niepotrzebnych uprawnień. Jest w pełni open source, zapewnia konfigurowalne kolory.
+
+Zobacz pełny zestaw prostych narzędzi tutaj:
+https://www.simplemobiletools.com
+
+Facebook:
+https://www.facebook.com/simplemobiletools
+
+Reddit:
+https://www.reddit.com/r/SimpleMobileTools
+
+Telegram:
+https://t.me/SimpleMobileTools

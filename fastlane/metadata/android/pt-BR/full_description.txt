@@ -1,0 +1,39 @@
+Um reprodutor de música simples facilmente controlável a partir da barra de status, widget da tela inicial ou botões de hardware em seu fone de ouvido. Ele fornece todas as funções esperadas, como classificação de várias maneiras, bem como alterar o equalizador. 
+
+Ouça seus mp3, outras músicas ou podcasts favoritos com este lindo reprodutor de música gratuito. Este mp3 player também possui um recurso exclusivo de economia de bateria. Você não precisa mais se preocupar com a bateria consumida pela música que toca. Reproduza música sem problemas com este reprodutor de música que economiza bateria.
+
+Oferece extras exclusivos, como Pesquisar e mostrar a arte do álbum, um temporizador e muitas outras configurações. Este elegante reprodutor de música permite criar e gerenciar listas de reprodução úteis como desejar. Com todas essas configurações exclusivas, este aplicativo também oferece uma mão leve na bateria. A tecnologia de economia de bateria usada neste aplicativo é notável e tem sido apreciada por todos os usuários deste aplicativo. Este mp3 player reproduz música com som surround, dando-lhe liberdade para usar este aplicativo como quiser.
+
+As listas de reprodução são totalmente suportadas neste mp3 player. Você pode adicionar arquivos individuais ou pastas inteiras. Se não gostar de um arquivo, você pode simplesmente removê-lo de uma lista de reprodução ou excluir o arquivo real. Este reprodutor de música oferece opções para gerenciar sua lista de músicas de acordo com sua preferência.
+
+Vem com um prático temporizador de suspensão para que você possa atrasar com segurança o tempo de desligamento do aplicativo. Este recurso nunca afetará o tempo da bateria, pois com o recurso de economia de bateria, você pode usar este aplicativo sem se preocupar com o esgotamento da bateria do seu dispositivo. Ao contrário de qualquer outro reprodutor de música, este reprodutor de mp3 reproduz música enquanto usa os outros recursos, no mínimo, para implementar a tecnologia de economia de bateria.
+
+Suporta reprodução aleatória e repetição de uma música específica, bem como pulo e avanço rápido. Desfrute da sua música como quiser. Molde este reprodutor e toque música de acordo com seu humor e tire o melhor de você. Este mp3 player oferece a liberdade de alterar as cores e texturas de fundo.
+
+Disponível em muitos idiomas diferentes, oferece vários equalizadores diferentes. O equalizador nesta economia de bateria lhe dá autoridade para alterar os efeitos musicais de acordo com o local em que você está. Você pode definir o equalizador para estéreo, som surround e muito mais.
+
+Verifique facilmente as propriedades de um arquivo, como tamanho, duração, última modificação etc.
+
+Modifique os dados EXIF ​​do arquivo, como o título da música e o artista.
+
+Compartilhe arquivos rapidamente com seus amigos em redes sociais, e-mails ou em qualquer lugar que você desejar. Você pode compartilhar seus arquivos de música sem procurá-los em qualquer outro lugar. Basta compartilhá-los aqui e deixar seus entes queridos ouvir a magia do seu gosto musical.
+
+Este estiloso reprodutor de música contém um widget com cor de texto personalizável, alfa e a cor de fundo para fácil acesso e controle.
+
+Ele lida adequadamente com intenções de terceiros também para reproduzir arquivos de áudio individuais, portanto, também pode ajudar na configuração de toques.
+
+Ele vem com design de material e tema escuro por padrão, oferece ótima experiência do usuário para fácil utilização. A falta de acesso à Internet oferece mais privacidade, segurança e estabilidade do que outros aplicativos.
+
+Não contém anúncios ou permissões desnecessárias. É totalmente open source, oferece cores personalizáveis.
+
+Confira o pacote completo de ferramentas simples aqui:
+https://www.simplemobiletools.com
+
+Facebook:
+https://www.facebook.com/simplemobiletools
+
+Reddit:
+https://www.reddit.com/r/SimpleMobileTools
+
+Telegram:
+https://t.me/SimpleMobileTools

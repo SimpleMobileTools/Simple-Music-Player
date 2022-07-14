@@ -1,1 +1,0 @@
-Een eenvoudige muziekspeler met aan te passen widget, zonder advertenties

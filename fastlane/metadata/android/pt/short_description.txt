@@ -1,1 +1,0 @@
-Um reprodutor de músicas com um widget personalizável.

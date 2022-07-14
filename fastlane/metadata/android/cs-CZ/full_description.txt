@@ -1,0 +1,17 @@
+Hudební přehrávač jednoduše ovladatelný ze stavové lišty, widgetu na ploše, nebo tlačítky na sluchátkách. Poskytuje různé možnosti řazení skladeb a různé ekvalizéry.
+
+Obsahuje přizpůsobitelný widget, kterému můžete upravit barvu textu a také průhlednost a barvu pozadí.
+
+Neobsahuje žádné reklamy ani nepotřebná oprávnění. Má otevřený zdrojový kód a možnost změny barev.
+
+Check out the full suite of Simple Tools here:
+https://www.simplemobiletools.com
+
+Facebook:
+https://www.facebook.com/simplemobiletools
+
+Reddit:
+https://www.reddit.com/r/SimpleMobileTools
+
+Telegram:
+https://t.me/SimpleMobileTools

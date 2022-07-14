@@ -1,0 +1,37 @@
+Een muziekspeler die gemakkelijk te bedienen is via statusbalk, widget of met de fysieke knoppen op de headset. Deze app bevat de mogelijkheid om nummers te sorteren op titel of artiest en om de Equalizer aan te passen. Luister naar mp3, podcasts en andere geluidsformaten met deze prachtige gratis app.
+
+De muziekspeler bevat unieke extra\'s, zoals Zoeken en het tonen van albumhoezen, een slaaptimer en nog veel meer. Deze elegante app biedt de mogelijkheid om snel afspeellijsten te maken en aan te passen.
+
+Afspeellijsten zijn volledig ondersteund: voeg individuele bestanden of hele mappen toe, verwijder snel een ongewenst nummer uit de lijst of zelfs het muziekbestand.
+
+Bevat een handige slaaptimer, zodat de app na de opgegeven vertraging automatisch zal afsluiten.
+
+Ook shuffle en repeat worden ondersteund, evenals het overslaan van en het terug-/vooruitzoeken in een nummer.
+
+Beschikbaar in vele talen en biedt meerdere verschillende equalizers.
+
+Controleer gemakkelijk de bestandseigenschappen, zoals grootte, duur, laatst gewijzigd etc.
+
+Pas naar voorkeur de metadata van het bestand aan, zoals de titel en de artiestnaam.
+
+Deel snel bestanden met vrienden op sociale media, per e-mail, of waar dan ook.
+
+Deze stijlvolle muziekspeler bevat een widget met aan te passen tekstkleur, transparantie en achtergrond voor eenvoudige toegang en bediening.
+
+Het afspelen van een muziekbestand vanuit andere apps wordt ook ondersteund, evenals het instellen van ringtones.
+
+De app is ontworpen volgens material design en heeft standaard een donker thema. De app heeft geen toegang tot het internet nodig en voorziet van meer privacy, veiligheid en stabiliteit dan andere apps.
+
+Bevat geen advertenties of onnodige permissies. Volledig open-source. Kleuren van de app kunnen worden aangepast.
+
+Probeer ook eens de andere apps van Simple Tools:
+https://www.simplemobiletools.com
+
+Facebook:
+https://www.facebook.com/simplemobiletools
+
+Reddit:
+https://www.reddit.com/r/SimpleMobileTools
+
+Telegram:
+https://t.me/SimpleMobileTools
