@@ -284,7 +284,7 @@ class MainActivity : SimpleActivity() {
     private fun getTabIcon(position: Int): Drawable {
         val drawableId = when (position) {
             TAB_PLAYLISTS -> R.drawable.ic_playlist_vector
-            TAB_FOLDERS -> R.drawable.ic_folder_vector
+            TAB_FOLDERS -> R.drawable.ic_folders_vector
             TAB_ARTISTS -> R.drawable.ic_person_vector
             TAB_ALBUMS -> R.drawable.ic_album_vector
             else -> R.drawable.ic_music_note_vector
