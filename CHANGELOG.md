@@ -1,6 +1,12 @@
 Changelog
 ==========
 
+Version 5.13.1 *(2022-07-15)*
+----------------------------
+
+ * Fixing a glitch with undismissable notifications
+ * Adding some stability and UX improvements
+
 Version 5.13.0 *(2022-07-10)*
 ----------------------------
 
