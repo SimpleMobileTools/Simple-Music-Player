@@ -1,5 +1,6 @@
 🎧 Listen to your music with No Ads 🎧
-We know very well how important your time is. That is the reason we don't put Ads in our app. Ads are annoying, and people hate ads. Simple like that.
+
+We know very well how important your time is. That is the reason we don't put Ads in our app. Ads are annoying, and people hate ads. Simple as that.
 
 Simple Music Player is focused on one thing, enjoy your music without any distraction. Use our app while you are relaxed at home, working, or maybe while you are driving in your car.
 
@@ -41,12 +42,13 @@ Features
 ⭐️ Privacy
 ⭐️ Sharing music 
 
-
 👉 We take the privacy of our users very seriously. We don't share any information with others.
 
-Install Simple Music Player NOW❗️
-
 🎧 Enjoy the music with no Ads 🎧
+
+It comes with material design and dark theme by default, provides great user experience for easy usage. The lack of internet access gives you more privacy, security and stability than other apps.
+
+Contains no ads or unnecessary permissions. It is fully opensource, provides customizable colors.
 
 Check out the full suite of Simple Tools here:
 https://www.simplemobiletools.com
