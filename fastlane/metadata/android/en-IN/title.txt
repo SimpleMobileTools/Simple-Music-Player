@@ -1,1 +1,1 @@
-Simple Music Player: Play MP3
+Simple Music Player
