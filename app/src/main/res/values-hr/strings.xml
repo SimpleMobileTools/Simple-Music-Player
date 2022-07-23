@@ -14,7 +14,7 @@
     <string name="disable_shuffle">Onemogući slučajnu reprodukciju</string>
     <string name="shuffle_enabled">Omogućena je slučajna reprodukcija</string>
     <string name="shuffle_disabled">Onemogućena je slučajna reprodukcija</string>
-    <string name="sleep_timer">Sleep timer</string>
+    <string name="sleep_timer">Mjerač vremena za isključivanje</string>
     <string name="volume">Glasnoća</string>
     <string name="playback_speed">Brzina reprodukcije</string>
     <string name="loading_files">Učitavanje datoteka …</string>
@@ -72,10 +72,10 @@
     </plurals>
     <!-- Queue -->
     <string name="next_track">Sljedeća:</string>
-    <string name="track_queue">Track queue</string>
-    <string name="add_to_queue">Add to queue</string>
-    <string name="remove_from_queue">Remove from queue</string>
-    <string name="create_playlist_from_queue">Stvori popis pjesama iz reda čekanja</string>
+    <string name="track_queue">Red pjesama</string>
+    <string name="add_to_queue">Dodaj u red</string>
+    <string name="remove_from_queue">Ukloni iz reda</string>
+    <string name="create_playlist_from_queue">Stvori popis pjesama iz reda</string>
     <!-- Settings -->
     <string name="equalizer">Ekvilizator</string>
     <string name="swap_prev_next">Zamijeni gumbe prethodne/sljedeća slušalice</string>
