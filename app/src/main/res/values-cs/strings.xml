@@ -47,8 +47,8 @@
     <string name="all_tracks">Všechny skladby</string>
     <string name="add_to_playlist">Přidat do seznamu skladeb</string>
     <string name="create_playlist_label">Nový seznam skladeb vytvoříte tak, že vyberete požadované interprety, alba nebo skladby a použijete Menu -&gt; Přidat do seznamu skladeb.</string>
-    <string name="export_playlist">Export playlist</string>
-    <string name="import_playlist">Import playlist</string>
+    <string name="export_playlist">Exportovat seznam skladeb</string>
+    <string name="import_playlist">Importovat seznam skladeb</string>
     <string name="filename_without_m3u">Název souboru (bez .m3u)</string>
     <!-- Sorting -->
     <string name="track_count">Počet skladeb</string>
@@ -62,20 +62,20 @@
     <plurals name="albums_plural">
         <item quantity="one">%d Album</item>
         <item quantity="few">%d Alba</item>
-        <item quantity="other">%d Alba</item>
+        <item quantity="other">%d Alb</item>
     </plurals>
-    <string name="tracks">Stopy</string>
+    <string name="tracks">Skladby</string>
     <plurals name="tracks_plural">
-        <item quantity="one">%d Stopa</item>
-        <item quantity="few">%d Stopy</item>
-        <item quantity="other">%d Stopy</item>
+        <item quantity="one">%d Skladba</item>
+        <item quantity="few">%d Skladby</item>
+        <item quantity="other">%d Skladeb</item>
     </plurals>
     <!-- Queue -->
     <string name="next_track">Další:</string>
-    <string name="track_queue">Pořadí stopy</string>
+    <string name="track_queue">Fronta skladeb</string>
     <string name="add_to_queue">Přidat do fronty</string>
-    <string name="remove_from_queue">Odstranit z fronty</string>
-    <string name="create_playlist_from_queue">Vytvořit playlist z fronty</string>
+    <string name="remove_from_queue">Odstranit z fronty</string>
+    <string name="create_playlist_from_queue">Vytvořit seznam skladeb z fronty</string>
     <!-- Settings -->
     <string name="equalizer">Ekvalizér</string>
     <string name="swap_prev_next">Zaměnit tlačítka sluchátek pro předchozí/následující skladbu</string>
