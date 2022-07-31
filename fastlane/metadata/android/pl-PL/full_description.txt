@@ -1,4 +1,5 @@
 🎧 Słuchaj swojej muzyki bez reklam 🎧
+
 Doskonale wiemy, jak ważny jest Twój czas. To jest powód, dla którego nie umieszczamy reklam w naszej aplikacji. Reklamy są denerwujące, a ludzie nienawidzą reklam. Tak po prostu.
 
 Prosty odtwarzacz muzyki koncentruje się na jednej rzeczy, więc ciesz się muzyką bez rozpraszania się. Korzystaj z naszej aplikacji, gdy jesteś zrelaksowany(-a) w domu, pracując, a może podczas jazdy samochodem.
@@ -41,12 +42,13 @@ Cechy:
 ⭐️ Prywatność
 ⭐️ Udostępnianie muzyki
 
-
 👉 Bardzo poważnie traktujemy prywatność naszych użytkowników. Nie udostępniamy żadnych informacji innym.
 
-Zainstaluj Prosty odtwarzacz muzyki TERAZ❗️
-
 🎧 Ciesz się muzyką bez reklam 🎧
+
+Domyślnie jest wyposażony w Material Design i ciemny motyw, zapewniając doskonałe doświadczenie użytkownika dla łatwego użytkowania. Brak dostępu do Internetu zapewnia większą prywatność, bezpieczeństwo i stabilność niż inne aplikacje.
+
+Nie zawiera reklam ani niepotrzebnych uprawnień. Jest w pełni otwartoźródłowy, zapewnia konfigurowalną kolorystykę.
 
 Sprawdź pełen zestaw od Simple Tools tutaj:
 https://www.simplemobiletools.com

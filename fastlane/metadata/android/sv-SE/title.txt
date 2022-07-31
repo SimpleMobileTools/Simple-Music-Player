@@ -1,1 +1,1 @@
-Enkel musikspelare
+Simpel musikspelare

@@ -1,4 +1,5 @@
 🎧 Escolteu la vostra música sense anuncis 🎧
+
 Sabem molt bé com d'important és el vostre temps. Aquesta és la raó per la qual no posem anuncis a la nostra aplicació. Els anuncis són molestos i la gent odia els anuncis. Així de senzill.
 
 El Simple Music Player se centra en una cosa: gaudiu la música sense cap distracció. Utilitzeu la nostra aplicació mentre esteu relaxat a casa, treballant o potser mentre conduïu el cotxe.
@@ -41,12 +42,13 @@ Característiques
 ⭐️ Privadesa
 ⭐️ Compartició de música
 
-
 👉 Ens prenem molt seriosament la privadesa dels nostres usuaris. No compartim cap informació amb tercers.
 
-Instal·leu el Simple Music Player ARA❗️
-
 🎧 Gaudiu de la música sense anuncis 🎧
+
+De manera predeterminada, inclou el «Material design» i un tema fosc, proporcionant una gran experiència d'usuari per a un ús fàcil. La manca d'accés a Internet us ofereix més privadesa, seguretat i estabilitat que altres aplicacions.
+
+No conté anuncis ni permisos innecessaris. És totalment de codi obert, ofereix colors personalitzables.
 
 Consulteu el conjunt complet d'eines simples aquí:
 https://www.simplemobiletools.com
