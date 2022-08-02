@@ -1,28 +1,56 @@
-Un sencillo reproductor de música fácilmente controlable desde la barra de estado, el widget de la pantalla de inicio o mediante los botones de hardware de los auriculares. Proporciona todas las funciones esperadas, como ordenar de varias formas, así como cambiar el ecualizador. Escuche su mp3 favorito, otras canciones o podcasts con este hermoso reproductor de música gratuito. Este reproductor de mp3 también tiene una característica única de ahorro de batería. No tiene que preocuparse más por la batería consumida por la música que toca. Reproduzca música sin problemas con este reproductor de música que ahorra batería.
+🎧 Escucha tu música sin anuncios 🎧
 
-Ofrece extras exclusivos como Buscar y mostrar la carátula del álbum, un temporizador de apagado y muchas otras configuraciones. Este elegante reproductor de música le permite crear y administrar útiles listas de reproducción como desee. Con todas estas configuraciones únicas, esta aplicación también te ayuda a controlar la batería. La tecnología de ahorro de batería utilizada en esta aplicación es notable y ha gustado a todos los usuarios de esta aplicación. Este reproductor de mp3 reproduce música con sonido envolvente mientras te da la libertad de usar esta aplicación como quieras.
+Sabemos muy bien lo importante que es tu tiempo. Esa es la razón por la que no ponemos anuncios en nuestra aplicación. Los anuncios son molestos y la gente odia los anuncios. Así de simple.
 
-Las listas de reproducción son totalmente compatibles con este reproductor de mp3. Puede agregar archivos individuales o carpetas completas. Si no le gusta un archivo, puede simplemente eliminarlo de una lista de reproducción o eliminar el archivo real por completo. Este reproductor de música le brinda opciones para administrar su lista de música de acuerdo con su gusto.
+Simple Music Player se centra en una cosa, disfrutar de su música sin ninguna distracción. Utiliza nuestra aplicación mientras estás relajado en casa, trabajando, o quizás mientras conduces en tu coche.
 
-Viene con un práctico temporizador de apagado para que pueda retrasar de manera confiable el tiempo de apagado de la aplicación. Esta función nunca afectará el tiempo de la batería, ya que con la función de ahorro de batería, puede usar esta aplicación sin preocuparse de que se agote la batería de su dispositivo. A diferencia de cualquier otro reproductor de música, este reproductor de mp3 reproduce música mientras usa los otros recursos como mínimo para implementar la tecnología de ahorro de batería.
+Lo mejor de todo es que su instalación es GRATUITA.
 
-Admite tanto la reproducción aleatoria como la repetición de una canción en particular, así como el salto y el avance rápido. Disfruta tu música como quieras. Moldea este reproductor y reproduce música de acuerdo a tu estado de ánimo y saca lo mejor de ti. Este reproductor de mp3 te da la libertad de cambiar los colores y texturas de fondo.
+Puedes llevar tu música a todas partes: caminando por la calle, de excursión en la montaña, incluso a la luna. Este reproductor de MP3 es offline, lo que significa que no necesitas internet para usarlo.
 
-Disponible en muchos idiomas diferentes, ofrece múltiples ecualizadores diferentes. El ecualizador de este ahorrador de batería le da autoridad para cambiar los efectos de la música de acuerdo con el lugar en el que se encuentre actualmente. Puede configurar el ecualizador en estéreo, sonido envolvente y muchos más.
+Además, Simple Music Player tiene una función única de ahorro de batería. Gracias a nuestra nueva tecnología, ya no tendrás que preocuparte por quedarte sin batería durante el día. Reproduce tu música sin problemas con este reproductor de música inteligente. 
 
-Verifique fácilmente las propiedades de un archivo como el tamaño, la duración, la última modificación, etc.
+👉 ¿A qué esperas para descargarlo y disfrutar de tu música sin anuncios? 
 
-Modifique los datos EXIF ​​del archivo como el título de la canción y el artista.
+Controla tu música desde la barra de estado, el widget o los botones de hardware de tus auriculares. Nunca ha sido tan fácil de manejar. 
 
-Comparta archivos rápidamente con sus amigos en redes sociales, correos electrónicos o en cualquier lugar que desee. Puede compartir sus archivos de música sin buscarlos en ningún otro lugar. Solo compártelos aquí y deja que tus más cerrados escuchen la magia de tu gusto musical.
+Además, puedes personalizar el widget. Cambia el texto y los colores de fondo para facilitar el acceso y el control.
 
-Este elegante reproductor de música contiene un widget con color de texto personalizable, alfa y el color del fondo para un fácil acceso y control.
+Escucha tu mp3 favorito, otras canciones de audio o podcasts con este hermoso reproductor de música gratuito. Pon tu estilo en la aplicación personalizando los colores de la interfaz. 
 
-También maneja correctamente las intenciones de terceros para reproducir archivos de audio individuales, por lo que también puede ayudar a configurar los tonos de llamada.
+Puedes programar la pista/música con la que quieres dormirte a través de la función de temporizador de sueño. Puede ser jazz, chill, zen, incluso sonidos de la naturaleza, seleccione el que más le convenga de su música. Y, ¡disfruta de tus sueños!
 
-Viene con diseño de material y tema oscuro de forma predeterminada, brinda una excelente experiencia de usuario para un uso fácil.
+Aumenta el nivel de calidad del sonido con nuestro ecualizador. Este reproductor de audio te da la posibilidad de cambiar los efectos musicales según el tipo de música que escuches (Clásica, Pop, Rock, Dance, Tecno, Latina, Plana, etc.). Incluso según los altavoces que tengas (Headphone, Stereo, Surround y muchos más). Ahora, tendrás el poder de los sonidos en tus oídos. 
 
-Consulte el conjunto completo de herramientas simples aquí:
+Simple Music Player te da también la posibilidad de hacer tu lista de música dentro de la aplicación. Crea y gestiona tu lista de reproducción como quieras. Puedes tomar tus canciones del teléfono y de la tarjeta SD. Además, puedes añadir carpetas fácilmente. 
+
+Este reproductor admite la reproducción aleatoria, la repetición de una canción concreta, el salto y el reenvío. Mezcla la música como un DJ profesional.
+
+¿No te gusta cómo está etiquetada la canción? Edítala como prefieras, modifica el nombre de las canciones, los artistas, los grupos, etc.
+
+Características
+⭐️ Bonita y hermosa interfaz
+⭐️ Personalización del color
+⭐️ Ahorro de batería
+⭐️ Temporizador de reposo
+⭐️ Potente ecualizador con un puñado de preajustes
+⭐️ Widget de reproducción
+⭐️ Gestión de listas de reproducción
+⭐️ Multilenguaje
+⭐️ Gestión de las propiedades de los archivos
+⭐️ Gestión de etiquetas de canciones
+⭐️ Privacidad
+⭐️ Compartir música 
+
+👉 Nos tomamos muy en serio la privacidad de nuestros usuarios. No compartimos ninguna información con otros.
+
+🎧 Disfruta de la música sin anuncios 🎧
+
+Viene con material design y tema oscuro por defecto, proporciona una gran experiencia de usuario para facilitar el uso. La falta de acceso a internet te da más privacidad, seguridad y estabilidad que otras apps.
+
+No contiene anuncios ni permisos innecesarios. Es totalmente opensource, proporciona colores personalizables.
+
+Consulta el conjunto completo de Simple Tools aquí:
 https://www.simplemobiletools.com
 
 Facebook:
