@@ -49,14 +49,14 @@
     <string name="create_playlist_label">Naują grojaraštį galite sukurti pasirinkę norimus atlikėjus, albumus ar kūrinius ir naudodami Meniu -&gt; Įtraukti į grojaraštį.</string>
     <string name="export_playlist">Eksportuoti grojaraštį</string>
     <string name="import_playlist">Import playlist</string>
-    <string name="filename_without_m3u">Filename (without .m3u)</string>
+    <string name="filename_without_m3u">Failo pavadinimas (be .m3u)</string>
     <!-- Sorting -->
-    <string name="track_count">Track Count</string>
-    <string name="album_count">Album Count</string>
-    <string name="artist_name">Artist Name</string>
-    <string name="year">Year</string>
+    <string name="track_count">Takelių skaičius</string>
+    <string name="album_count">Albumų skaičius</string>
+    <string name="artist_name">Menininko vardas</string>
+    <string name="year">Metai</string>
     <!-- Artists -->
-    <string name="artists">Artists</string>
+    <string name="artists">Menininkai</string>
     <string name="folders">Folders</string>
     <string name="albums">Albums</string>
     <plurals name="albums_plural">
@@ -71,17 +71,17 @@
         <item quantity="other"/>
     </plurals>
     <!-- Queue -->
-    <string name="next_track">Next:</string>
+    <string name="next_track">Kitas:</string>
     <string name="track_queue">Stebėti eilę</string>
     <string name="add_to_queue">Pridėti į eilę</string>
-    <string name="remove_from_queue">Remove from queue</string>
-    <string name="create_playlist_from_queue">Create playlist from queue</string>
+    <string name="remove_from_queue">Pašalinti iš eilės</string>
+    <string name="create_playlist_from_queue">Sukurti grojaraštį iš eilės</string>
     <!-- Settings -->
     <string name="equalizer">Ekvalaizeris</string>
-    <string name="swap_prev_next">Swap previous/next headphone buttons</string>
+    <string name="swap_prev_next">Ankstesnių / vėlesnių ausinių mygtukų keitimas</string>
     <!-- FAQ -->
-    <string name="faq_1_title">How can I fast-forward songs\?</string>
-    <string name="faq_1_text">You can click on the current or max duration texts near the seekbar, that will move the song either backward, or forward.</string>
+    <string name="faq_1_title">Kaip greitai persukti dainas į priekį\?</string>
+    <string name="faq_1_text">Galite spustelėti esamos arba maksimalios trukmės tekstus, esančius šalia paieškos juostos, ir daina bus perkelta atgal arba į priekį.</string>
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
