@@ -8,16 +8,16 @@
     <string name="rename_song_empty">모든 항목 정보를 입력하세요.</string>
     <string name="repeat_off">Repeat off</string>
     <string name="repeat_song">현재 노래 반복</string>
-    <string name="repeat_playlist">Repeat playlist</string>
-    <string name="stop_playback_after_current_song">Stop playback after current song</string>
+    <string name="repeat_playlist">모두 반복합니다</string>
+    <string name="stop_playback_after_current_song">현재 노래 재생 후 재생을 중지합니다</string>
     <string name="enable_shuffle">셔플 활성화</string>
     <string name="disable_shuffle">셔플 비 활성화</string>
     <string name="shuffle_enabled">셔플 활성화됨</string>
     <string name="shuffle_disabled">셔플 비 활성화됨</string>
-    <string name="sleep_timer">Sleep timer</string>
-    <string name="volume">Volume</string>
-    <string name="playback_speed">Playback speed</string>
-    <string name="loading_files">Loading files…</string>
+    <string name="sleep_timer">취침 타이머</string>
+    <string name="volume">볼륨</string>
+    <string name="playback_speed">재생 속도</string>
+    <string name="loading_files">파일 로드 중…</string>
     <!-- Playlists -->
     <string name="add_file_to_playlist">재생목록에 파일 추가</string>
     <string name="add_folder_to_playlist">재생목록에 폴더 추가</string>
@@ -30,7 +30,7 @@
     <string name="remove_playlist_description">선택된 재생목록만 삭제가 되며, 실제 파일은 삭제되지 않습니다.</string>
     <string name="remove_playlist_description_placeholder">\"%s\" 재생목록만 삭제가 되며, 실제 파일은 삭제되지 않습니다.</string>
     <string name="remove_from_playlist">재생목록에서 제거</string>
-    <string name="remove_from_playlist_description">This will only remove the items from playlist \"%s\", the actual files will not be deleted.</string>
+    <string name="remove_from_playlist_description">재생 목록에서 항목만 제거됩니다 \"%s\", 실제 파일은 삭제되지 않습니다.</string>
     <string name="delete_the_files_too">파일도 삭제하기</string>
     <string name="open_playlist">재생목록 열기</string>
     <string name="all_songs_cannot_be_deleted">\'전체 음악\' 목록은 삭제 할 수 없습니다.</string>
@@ -39,21 +39,21 @@
     <string name="all_songs">전체 음악</string>
     <string name="create_playlist_from_folder">폴더를 선택하여 새로운 재생목록 생성</string>
     <string name="folder_contains_no_audio">선택된 폴더에는 오디오파일이 없습니다.</string>
-    <string name="delete_current_song">Delete current song</string>
-    <string name="remove_current_song">Remove current song from playlist</string>
-    <string name="show_filename">Show filename as song title</string>
-    <string name="title_is_not_available">If title is not available</string>
-    <string name="show_album_cover">Show album cover on the main screen</string>
-    <string name="all_tracks">All tracks</string>
-    <string name="add_to_playlist">Add to playlist</string>
-    <string name="create_playlist_label">You can create a new playlist by selecting the wanted artists, albums or tracks and using Menu -&gt; Add to playlist.</string>
-    <string name="export_playlist">Export playlist</string>
-    <string name="import_playlist">Import playlist</string>
-    <string name="filename_without_m3u">Filename (without .m3u)</string>
+    <string name="delete_current_song">현재 노래를 삭제합니다</string>
+    <string name="remove_current_song">재생 목록에서 현재 노래를 제거합니다</string>
+    <string name="show_filename">파일 이름을 노래 제목으로 표시</string>
+    <string name="title_is_not_available">제목을 사용할 수 없는 경우</string>
+    <string name="show_album_cover">메인 화면에 앨범 커버를 표시합니다</string>
+    <string name="all_tracks">모든 트랙</string>
+    <string name="add_to_playlist">재생 목록에 추가합니다</string>
+    <string name="create_playlist_label">원하는 아티스트, 앨범 또는 트랙을 선택하고 Menu(메뉴) -&gt; Add to playlist(재생 목록에 추가) 를 사용하여 새 재생 목록을 만들 수 있습니다.</string>
+    <string name="export_playlist">재생 목록을 내보냅니다</string>
+    <string name="import_playlist">재생 목록을 가져옵니다</string>
+    <string name="filename_without_m3u">파일 이름(.m3u 제외)</string>
     <!-- Sorting -->
-    <string name="track_count">Track Count</string>
-    <string name="album_count">Album Count</string>
-    <string name="artist_name">Artist Name</string>
+    <string name="track_count">트랙 수</string>
+    <string name="album_count">앨범 수</string>
+    <string name="artist_name">아티스트 이름</string>
     <string name="year">Year</string>
     <!-- Artists -->
     <string name="artists">Artists</string>
