@@ -1,28 +1,54 @@
-En musikspelare som du enkelt styr från statusfältet, en gränssnittskomponent på startskärmen eller knapparna på din mikrofonlur. Det har alla förväntade funktioner som sortering på olika sätt samt ändring av Equalizer. Lyssna på din favorit mp3, andra låtar eller podcasts med denna gratis och vackra musikspelare.
+🎧 Lyssna på din musik utan reklam 🎧
 
-Det erbjuder exklusiva extrafunktioner som Sök och visar Albumomslag, en sömntidtagare och många andra inställningar. Denna eleganta musikspelare låter dig skapa och hantera praktiska spellistor som du vill.
+Vi vet mycket väl hur viktig din tid är. Det är anledningen till att vi inte lägger in annonser i vår app. Annonser är irriterande och människor hatar annonser. Så enkelt är det.
 
-Spellistor stöds fullt ut. Du kan lägga till antingen enskilda filer eller hela mappar. Om du inte gillar en fil kan du antingen bara ta bort den från en spellista eller ta bort den faktiska filen helt.
+Simple Music Player är fokuserad på en sak, att njuta av din musik utan att bli distraherad. Använd vår app när du är avslappnad hemma, arbetar eller kanske när du kör i bilen.
 
-Kommer med en praktisk sömntidtagare så att du på ett tillförlitligt sätt kan försena tiden för appens avstängning.
+Det bästa är att den är GRATIS att installera.
 
-Stöder både blandning och upprepning av en viss låt samt hoppning och snabbspolning.
+Du kan ta med dig musiken överallt: när du går på gatorna, vandrar på berget och till och med till månen. Denna MP3-spelare är offline, vilket innebär att du inte behöver internet för att använda den.
 
-Finns på många olika språk och erbjuder flera olika equalizers.
+Dessutom har Simple Music Player en unik batterisparfunktion. Tack vare vår nya teknik behöver du inte längre oroa dig för att batteriet tar slut under dagen. Spela din musik utan problem med den här smarta musikspelaren. 
 
-Kontrollera enkelt filegenskaper som storlek, längd, senast ändrad o.s.v.
+👉 Vad väntar du på att ladda ner den och njuta av din musik utan annonser? 
 
-Ändra EXIF-data för fil som låttitel och artist.
+Styr din musik från statusfältet, widgeten eller hårdvaruknapparna på dina hörlurar. Det har aldrig varit så enkelt att hantera. 
 
-Dela snabbt filer med dina vänner på sociala nätverk, e-postmeddelanden eller var du än vill.
+Dessutom kan du anpassa widgeten. Ändra texten och bakgrundsfärgerna för enkel åtkomst och kontroll.
 
-Denna eleganta musikspelare innehåller en gränssnittskomponent med anpassningsbar textfärg, alfa och bakgrundsfärgen för enkel åtkomst och styrning.
+Lyssna på din favorit mp3, andra ljudlåtar eller podcasts med den här gratis vackra musikspelaren. Sätt din stil på appen genom att anpassa gränssnittets färger. 
 
-Den hanterar riktigt tredjeparts avsikter också för att spela enskilda ljudfiler så att det kan hjälpa till att ställa in ringsignaler också.
+Du kan programmera vilket spår/musik du vill somna med genom funktionen sömntimer. Kanske jazz, chill, zen, till och med naturljud, välj vilket som passar dig bäst från din musik. Och njut av dina drömmar!
 
-Den levereras som standard med materialdesign och mörkt tema, ger bra användarupplevelse för enkel användning. Bristen på tillgång till internet ger dig mer integritet, säkerhet och stabilitet än andra appar.
+Höj ljudkvaliteten med vår equalizer. Den här ljudspelaren ger dig chansen att ändra musikeffekterna beroende på vilken typ av musik du lyssnar på (klassisk, pop, rock, dans, techno, latino, platt osv.). Även enligt de högtalare du har (hörlurar, stereo, surround och många fler). Nu kommer du att ha kraften i ljuden i dina öron. 
 
-Innehåller ingen reklam eller onödiga behörigheter. Den har helt öppen källkod och anpassningsbara färger.
+Simple Music Player ger dig också möjlighet att göra din musiklista inne i appen. Skapa och hantera din spellista som du vill. Du kan ta dina låtar från din telefon och SD-kort. Dessutom kan du enkelt lägga till mappar. 
+
+Den här spelaren har stöd för shuffle, upprepning av en viss låt, hoppa över och spola framåt. Mixa musiken som en professionell DJ.
+
+Gillar du inte hur låten är märkt? Redigera den som du vill, ändra namnet på låtarna, artisterna, grupperna osv.
+
+Funktioner
+⭐️ Trevligt och vackert gränssnitt.
+⭐️ Färganpassning
+⭐️ Batterisparare
+⭐️ Sömntimer
+⭐️ Kraftfull equalizer med en handfull förinställningar
+⭐️ Widget för uppspelning
+⭐️ Hantering av spellistor
+⭐️ Flera språk
+⭐️ Hantering av filegenskaper
+⭐️ Hantering av låttetiketter
+⭐️ Integritet
+⭐️ Delning av musik 
+
+👉 Vi tar våra användares integritet på största allvar. Vi delar ingen information med andra.
+
+🎧 Njut av musiken utan annonser 🎧
+
+Den levereras med materialdesign och mörkt tema som standard, ger bra användarupplevelse för enkel användning. Avsaknaden av internetåtkomst ger dig mer integritet, säkerhet och stabilitet än andra appar.
+
+Innehåller inga annonser eller onödiga behörigheter. Den är helt öppen källkod, ger anpassningsbara färger.
 
 Kolla in hela sviten av Simple Tools här:
 https://www.simplemobiletools.com

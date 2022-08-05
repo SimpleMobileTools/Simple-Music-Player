@@ -1,54 +1,57 @@
-🎧 Listen to your music with No Ads 🎧
-We know very well how important your time is. That is the reason we don't put Ads in our app. Ads are annoying, and people hate ads. Simple like that.
+🎧 Lytt til musikken din uten annonser 🎧
 
-Simple Music Player is focused on one thing, enjoy your music without any distraction. Use our app while you are relaxed at home, working, or maybe while you are driving in your car.
+Vi vet veldig godt hvor viktig tiden din er. Det er grunnen til at vi ikke plasserer annonser i appen vår. Annonser er irriterende, og folk hater annonser. Så enkelt som det.
 
-The best part about it is FREE to install.
+Simple Music Player er fokusert på en ting, nyt musikken din uten distraksjon. Bruk appen vår mens du er avslappet hjemme, jobber eller kanskje mens du kjører i bilen.
 
-You can bring your music everywhere: walking on the streets, hiking on the mountain, even to the moon. This MP3 Player is offline, which means you don't need the internet to use it.
+Det beste med det er GRATIS å installere.
 
-Moreover, Simple Music Player has a unique battery-saving feature. Due to our new technology, you will not have to worry anymore about running out of battery during the day. Play your music without a hitch with this smart music player. 
+Du kan ta med musikken din overalt: gå på gatene, gå på fjellet, til og med til månen. Denne MP3-spilleren er offline, noe som betyr at du ikke trenger internett for å bruke den.
 
-👉  What are you waiting for to download it and enjoy your music without Ads? 
+Dessuten har Simple Music Player en unik batteribesparende funksjon. På grunn av vår nye teknologi trenger du ikke lenger å bekymre deg for å gå tom for batteri i løpet av dagen. Spill musikken din uten problemer med denne smarte musikkspilleren. 
 
-Control your music from the status bar, widget, or hardware buttons on your headphones. It has never been so easy to handle. 
+👉 Hva venter du på å laste den ned og nyte musikken din uten annonser? 
 
-In addition, you can customize the widget. Change the text and background colors for easy access and control.
+Kontroller musikken fra statuslinjen, widgeten eller maskinvareknappene på hodetelefonene. Det har aldri vært så lett å håndtere. 
 
-Listen to your favorite mp3, other audio songs, or podcasts with this free beautiful music player. Put your style on the app customizing the interface colors. 
+I tillegg kan du tilpasse widgeten. Endre tekst- og bakgrunnsfargene for enkel tilgang og kontroll.
 
-You can program which track/music you want to fall asleep with through the sleep timer feature. Maybe jazz, chill, zen, even nature sounds, select which one suits you the best from your music. And, enjoy your dreams!
+Lytt til din favoritt mp3, andre lydsanger eller podcaster med denne gratis vakre musikkspilleren. Sett stilen din på appen som tilpasser grensesnittfargene. 
 
-Raise the level of quality of sound with our equalizer. This audio player gives you the chance to change the music effects according to the type of music you listen to (Classic, Pop, Rock, Dance, Techno, Latino, Flat, etc.). Even according to the speakers you have (Headphone, Stereo, Surround and many more). Now, you will have the power of the sounds in your ears. 
+Du kan programmere hvilket spor / musikk du vil sovne med gjennom søvntidtakerfunksjonen. Kanskje jazz, chill, zen, til og med naturlyder, velg hvilken som passer deg best fra musikken din. Og nyt drømmene dine!
 
-Simple Music Player gives you also the chance to make your music list inside the app. Create and manage your playlist as you desire. You can take your songs from your phone and SD card. Furthermore, you can add folders easily. 
+Øk lydkvaliteten med equalizeren vår. Denne lydspilleren gir deg sjansen til å endre musikkeffektene i henhold til hvilken type musikk du lytter til (Classic, Pop, Rock, Dance, Techno, Latino, Flat, etc.).
 
-This player supports the shuffle, repeating a particular song, skipping, and forwarding. Mix the music like a professional DJ.
+Selv i henhold til høyttalerne du har (hodetelefon, stereo, surround og mange flere). Nå vil du ha lydens kraft i ørene dine.
 
-Don't you like how the song is labeled? Edit it as you prefer, modify the name of the songs, artists, groups, etc.
+Simple Music Player gir deg også muligheten til å lage musikklisten din inne i appen. Opprett og administrer spillelisten din som du ønsker. Du kan ta sangene dine fra telefonen og SD-kortet. Videre kan du enkelt legge til mapper.
 
-Features
-⭐️ Nice and beautiful interface
-⭐️ Color customization
-⭐️ Battery Saver
-⭐️ Sleep timer
-⭐️ Powerful Equalizer with a handful of presets
-⭐️ Playback widget
-⭐️ Playlist management
-⭐️ Multi-language
-⭐️ File properties management
-⭐️ Songs label management
-⭐️ Privacy
-⭐️ Sharing music 
+Denne spilleren støtter tilfeldig rekkefølge, gjentar en bestemt sang, hopper over og videresender. Bland musikken som en profesjonell DJ.
 
+Liker du ikke hvordan sangen er merket? Rediger det som du foretrekker, endre navnet på sangene, artistene, gruppene osv.
 
-👉 We take the privacy of our users very seriously. We don't share any information with others.
+Funksjoner
+⭐️ Fint og vakkert grensesnitt
+⭐️ Fargetilpasning
+⭐️ Batterisparing
+⭐️ Tidtaker for hvilemodus
+⭐️ Kraftig equalizer med en håndfull forhåndsinnstillinger
+⭐️ Kontrollprogram for avspilling
+⭐️ Behandling av spillelister
+⭐️ Flere språk
+⭐️ Behandling av filegenskaper
+⭐️ Behandling av sangeretiketter
+⭐️ Personvern
+⭐️ Dele musikk
+👉 Vi tar personvernet til brukerne våre veldig alvorlig. Vi deler ingen informasjon med andre.
 
-Install Simple Music Player NOW❗️
+🎧 Nyt musikken uten annonser 🎧
 
-🎧 Enjoy the music with no Ads 🎧
+Den kommer med materialdesign og mørkt tema som standard, gir god brukeropplevelse for enkel bruk. Mangelen på internett-tilgang gir deg mer personvern, sikkerhet og stabilitet enn andre apper.
 
-Check out the full suite of Simple Tools here:
+Inneholder ingen annonser eller unødvendige tillatelser. Det er helt opensource, gir tilpassbare farger.
+
+Sjekk ut hele pakken med enkle verktøy her:
 https://www.simplemobiletools.com
 
 Facebook:

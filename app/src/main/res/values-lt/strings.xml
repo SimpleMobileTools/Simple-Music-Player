@@ -6,17 +6,17 @@
     <string name="rename_song">Pervardinti dainą</string>
     <string name="rename_song_error">Įvyko klaida pervardinant</string>
     <string name="rename_song_empty">Prašome užpildyti visus laukelius</string>
-    <string name="repeat_off">Repeat off</string>
+    <string name="repeat_off">Pakartokite išjungti</string>
     <string name="repeat_song">Pakartoti dabartinę dainą</string>
-    <string name="repeat_playlist">Repeat playlist</string>
-    <string name="stop_playback_after_current_song">Stop playback after current song</string>
+    <string name="repeat_playlist">Kartoti grojaraštį</string>
+    <string name="stop_playback_after_current_song">Sustabdyti atkūrimą po dabartinės dainos</string>
     <string name="enable_shuffle">Įjungti grojimą atsitiktine tvarka</string>
     <string name="disable_shuffle">Išjungti grojimą atsitiktine tvarka</string>
     <string name="shuffle_enabled">Grojimas atsitiktine tvarka įjungtas</string>
     <string name="shuffle_disabled">Grojimas atsitiktine tvarka išjungtas</string>
-    <string name="sleep_timer">Sleep timer</string>
-    <string name="volume">Volume</string>
-    <string name="playback_speed">Playback speed</string>
+    <string name="sleep_timer">Miego laikmatis</string>
+    <string name="volume">Apimtis</string>
+    <string name="playback_speed">Atkūrimo greitis</string>
     <string name="loading_files">Loading files…</string>
     <!-- Playlists -->
     <string name="add_file_to_playlist">Pridėti bylą į grojaraštį</string>
@@ -44,44 +44,44 @@
     <string name="show_filename">Rodyti bylos pavadinimą kaip dainos pavadinimą</string>
     <string name="title_is_not_available">Jei pavadinimas negalimas</string>
     <string name="show_album_cover">Rodyti albumo nuotrauką pagrindiniame lange</string>
-    <string name="all_tracks">All tracks</string>
-    <string name="add_to_playlist">Add to playlist</string>
-    <string name="create_playlist_label">You can create a new playlist by selecting the wanted artists, albums or tracks and using Menu -&gt; Add to playlist.</string>
-    <string name="export_playlist">Export playlist</string>
+    <string name="all_tracks">Visi takeliai</string>
+    <string name="add_to_playlist">Pridėti į grojaraštį</string>
+    <string name="create_playlist_label">Naują grojaraštį galite sukurti pasirinkę norimus atlikėjus, albumus ar kūrinius ir naudodami Meniu -&gt; Įtraukti į grojaraštį.</string>
+    <string name="export_playlist">Eksportuoti grojaraštį</string>
     <string name="import_playlist">Import playlist</string>
-    <string name="filename_without_m3u">Filename (without .m3u)</string>
+    <string name="filename_without_m3u">Failo pavadinimas (be .m3u)</string>
     <!-- Sorting -->
-    <string name="track_count">Track Count</string>
-    <string name="album_count">Album Count</string>
-    <string name="artist_name">Artist Name</string>
-    <string name="year">Year</string>
+    <string name="track_count">Takelių skaičius</string>
+    <string name="album_count">Albumų skaičius</string>
+    <string name="artist_name">Menininko vardas</string>
+    <string name="year">Metai</string>
     <!-- Artists -->
-    <string name="artists">Artists</string>
+    <string name="artists">Menininkai</string>
     <string name="folders">Folders</string>
     <string name="albums">Albums</string>
     <plurals name="albums_plural">
         <item quantity="one">%d Album</item>
         <item quantity="few">%d Albums</item>
-        <item quantity="other"></item>
+        <item quantity="other"/>
     </plurals>
     <string name="tracks">Tracks</string>
     <plurals name="tracks_plural">
         <item quantity="one">%d Track</item>
         <item quantity="few">%d Tracks</item>
-        <item quantity="other"></item>
+        <item quantity="other"/>
     </plurals>
     <!-- Queue -->
-    <string name="next_track">Next:</string>
-    <string name="track_queue">Track queue</string>
-    <string name="add_to_queue">Add to queue</string>
-    <string name="remove_from_queue">Remove from queue</string>
-    <string name="create_playlist_from_queue">Create playlist from queue</string>
+    <string name="next_track">Kitas:</string>
+    <string name="track_queue">Stebėti eilę</string>
+    <string name="add_to_queue">Pridėti į eilę</string>
+    <string name="remove_from_queue">Pašalinti iš eilės</string>
+    <string name="create_playlist_from_queue">Sukurti grojaraštį iš eilės</string>
     <!-- Settings -->
     <string name="equalizer">Ekvalaizeris</string>
-    <string name="swap_prev_next">Swap previous/next headphone buttons</string>
+    <string name="swap_prev_next">Ankstesnių / vėlesnių ausinių mygtukų keitimas</string>
     <!-- FAQ -->
-    <string name="faq_1_title">How can I fast-forward songs\?</string>
-    <string name="faq_1_text">You can click on the current or max duration texts near the seekbar, that will move the song either backward, or forward.</string>
+    <string name="faq_1_title">Kaip greitai persukti dainas į priekį\?</string>
+    <string name="faq_1_text">Galite spustelėti esamos arba maksimalios trukmės tekstus, esančius šalia paieškos juostos, ir daina bus perkelta atgal arba į priekį.</string>
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
