@@ -16,7 +16,10 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.simplemobiletools.commons.dialogs.FilePickerDialog
 import com.simplemobiletools.commons.extensions.*
-import com.simplemobiletools.commons.helpers.*
+import com.simplemobiletools.commons.helpers.NavigationIcon
+import com.simplemobiletools.commons.helpers.ensureBackgroundThread
+import com.simplemobiletools.commons.helpers.isOreoPlus
+import com.simplemobiletools.commons.helpers.isQPlus
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.adapters.TracksAdapter
 import com.simplemobiletools.musicplayer.adapters.TracksHeaderAdapter
@@ -163,8 +166,14 @@ class TracksActivity : SimpleActivity() {
 
         current_track_bar.setOnClickListener {
             hideKeyboard()
-            Intent(this, TrackActivity::class.java).apply {
-                startActivity(this)
+            handleNotificationPermission { granted ->
+                if (granted) {
+                    Intent(this, TrackActivity::class.java).apply {
+                        startActivity(this)
+                    }
+                } else {
+                    toast(R.string.no_post_notifications_permissions)
+                }
             }
         }
     }
@@ -334,16 +343,24 @@ class TracksActivity : SimpleActivity() {
 
     private fun itemClicked(track: Track) {
         val tracks = when (tracksType) {
-            TYPE_ALBUM -> (tracks_list.adapter as? TracksHeaderAdapter)?.items?.filterIsInstance<Track>()?.toMutableList() as? ArrayList<Track> ?: ArrayList()
+            TYPE_ALBUM -> (tracks_list.adapter as? TracksHeaderAdapter)?.items?.filterIsInstance<Track>()?.toMutableList() as? ArrayList<Track>
+                ?: ArrayList()
             else -> (tracks_list.adapter as? TracksAdapter)?.tracks?.toMutableList() as? ArrayList<Track> ?: ArrayList()
         }
 
-        resetQueueItems(tracks) {
-            hideKeyboard()
-            Intent(this, TrackActivity::class.java).apply {
-                putExtra(TRACK, Gson().toJson(track))
-                putExtra(RESTART_PLAYER, true)
-                startActivity(this)
+        handleNotificationPermission { granted ->
+            if (granted) {
+                resetQueueItems(tracks) {
+                    hideKeyboard()
+                    Intent(this, TrackActivity::class.java).apply {
+                        putExtra(TRACK, Gson().toJson(track))
+                        putExtra(RESTART_PLAYER, true)
+                        startActivity(this)
+                    }
+
+                }
+            } else {
+                toast(R.string.no_post_notifications_permissions)
             }
         }
     }

@@ -4,10 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.simplemobiletools.commons.extensions.areSystemAnimationsEnabled
-import com.simplemobiletools.commons.extensions.getFormattedDuration
-import com.simplemobiletools.commons.extensions.getProperPrimaryColor
-import com.simplemobiletools.commons.extensions.hideKeyboard
+import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.NavigationIcon
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.adapters.AlbumsTracksAdapter
@@ -72,11 +69,17 @@ class AlbumsActivity : SimpleActivity() {
                             startActivity(this)
                         }
                     } else {
-                        resetQueueItems(tracksToAdd) {
-                            Intent(this, TrackActivity::class.java).apply {
-                                putExtra(TRACK, Gson().toJson(it))
-                                putExtra(RESTART_PLAYER, true)
-                                startActivity(this)
+                        handleNotificationPermission { granted ->
+                            if (granted) {
+                                resetQueueItems(tracksToAdd) {
+                                    Intent(this, TrackActivity::class.java).apply {
+                                        putExtra(TRACK, Gson().toJson(it))
+                                        putExtra(RESTART_PLAYER, true)
+                                        startActivity(this)
+                                    }
+                                }
+                            } else {
+                                toast(R.string.no_post_notifications_permissions)
                             }
                         }
                     }
@@ -92,8 +95,14 @@ class AlbumsActivity : SimpleActivity() {
 
         current_track_bar.setOnClickListener {
             hideKeyboard()
-            Intent(this, TrackActivity::class.java).apply {
-                startActivity(this)
+            handleNotificationPermission { granted ->
+                if (granted) {
+                    Intent(this, TrackActivity::class.java).apply {
+                        startActivity(this)
+                    }
+                } else {
+                    toast(R.string.no_post_notifications_permissions)
+                }
             }
         }
     }

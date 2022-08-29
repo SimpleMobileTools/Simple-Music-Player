@@ -199,8 +199,14 @@ class MainActivity : SimpleActivity() {
         sleep_timer_stop.setOnClickListener { stopSleepTimer() }
 
         current_track_bar.setOnClickListener {
-            Intent(this, TrackActivity::class.java).apply {
-                startActivity(this)
+            handleNotificationPermission { granted ->
+                if (granted) {
+                    Intent(this, TrackActivity::class.java).apply {
+                        startActivity(this)
+                    }
+                } else {
+                    toast(R.string.no_post_notifications_permissions)
+                }
             }
         }
 

@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.util.AttributeSet
 import com.google.gson.Gson
+import com.simplemobiletools.commons.activities.BaseSimpleActivity
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
@@ -50,11 +51,17 @@ class TracksFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
                 if (adapter == null) {
                     TracksAdapter(activity, tracks, false, tracks_list) {
                         activity.hideKeyboard()
-                        activity.resetQueueItems(tracks) {
-                            Intent(activity, TrackActivity::class.java).apply {
-                                putExtra(TRACK, Gson().toJson(it))
-                                putExtra(RESTART_PLAYER, true)
-                                activity.startActivity(this)
+                        (activity as BaseSimpleActivity).handleNotificationPermission { granted ->
+                            if (granted) {
+                                activity.resetQueueItems(tracks) {
+                                    Intent(activity, TrackActivity::class.java).apply {
+                                        putExtra(TRACK, Gson().toJson(it))
+                                        putExtra(RESTART_PLAYER, true)
+                                        activity.startActivity(this)
+                                    }
+                                }
+                            } else {
+                                context.toast(R.string.no_post_notifications_permissions)
                             }
                         }
                     }.apply {
