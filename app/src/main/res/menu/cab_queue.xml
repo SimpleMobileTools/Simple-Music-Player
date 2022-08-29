@@ -7,7 +7,7 @@
         android:id="@+id/cab_remove_from_queue"
         android:icon="@drawable/ic_minus_circle_vector"
         android:title="@string/remove_from_queue"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="always" />
     <item
         android:id="@+id/cab_add_to_playlist"
         android:showAsAction="never"
@@ -17,5 +17,5 @@
         android:id="@+id/cab_select_all"
         android:icon="@drawable/ic_select_all_vector"
         android:title="@string/select_all"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="always" />
 </menu>
