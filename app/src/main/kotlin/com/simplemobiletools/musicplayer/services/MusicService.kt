@@ -113,7 +113,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             mOreoFocusHandler = OreoAudioFocusHandler(applicationContext)
         }
 
-        if (!isQPlus() && !hasPermission(PERMISSION_WRITE_STORAGE)) {
+        if (!isQPlus() && !hasPermission(getPermissionToRequest())) {
             EventBus.getDefault().post(Events.NoStoragePermission())
         }
     }
@@ -130,7 +130,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     }
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
-        if (!isQPlus() && !hasPermission(PERMISSION_WRITE_STORAGE)) {
+        if (!isQPlus() && !hasPermission(getPermissionToRequest())) {
             return START_NOT_STICKY
         }
 

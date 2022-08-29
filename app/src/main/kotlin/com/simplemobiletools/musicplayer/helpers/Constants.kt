@@ -1,7 +1,10 @@
 package com.simplemobiletools.musicplayer.helpers
 
 import android.net.Uri
+import com.simplemobiletools.commons.helpers.PERMISSION_READ_MEDIA_AUDIO
+import com.simplemobiletools.commons.helpers.PERMISSION_WRITE_STORAGE
 import com.simplemobiletools.commons.helpers.isQPlus
+import com.simplemobiletools.commons.helpers.isTiramisuPlus
 
 const val PROGRESS = "progress"
 const val EDITED_TRACK = "edited_track"
@@ -120,3 +123,5 @@ const val MIME_TYPE_M3U = "audio/x-mpegurl"
 const val M3U_HEADER = "#EXTM3U"
 const val M3U_ENTRY = "#EXTINF:"
 const val M3U_DURATION_SEPARATOR = ","
+
+fun getPermissionToRequest() = if (isTiramisuPlus()) PERMISSION_READ_MEDIA_AUDIO else PERMISSION_WRITE_STORAGE

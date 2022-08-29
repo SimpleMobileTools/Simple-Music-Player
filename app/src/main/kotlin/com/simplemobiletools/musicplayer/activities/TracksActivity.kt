@@ -366,7 +366,7 @@ class TracksActivity : SimpleActivity() {
                 }
             }
         } else {
-            handlePermission(PERMISSION_WRITE_STORAGE) { granted ->
+            handlePermission(getPermissionToRequest()) { granted ->
                 if (granted) {
                     ExportPlaylistDialog(this, config.lastExportPath, false) { file ->
                         getFileOutputStream(file.toFileDirItem(this), true) { outputStream ->
