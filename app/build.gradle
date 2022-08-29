@@ -10,12 +10,12 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-    compileSdkVersion 31
+    compileSdkVersion 33
 
     defaultConfig {
         applicationId "com.simplemobiletools.musicplayer"
         minSdkVersion 21
-        targetSdkVersion 31
+        targetSdkVersion 33
         versionCode 102
         versionName "5.13.1"
         setProperty("archivesBaseName", "music-player")
@@ -70,7 +70,7 @@ android {
 }
 
 dependencies {
-    implementation 'com.github.SimpleMobileTools:Simple-Commons:8ee6c0c17b'
+    implementation 'com.github.SimpleMobileTools:Simple-Commons:f6ddbdf19b'
     implementation 'org.greenrobot:eventbus:3.3.1'
     implementation 'androidx.media:media:1.6.0'
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
@@ -84,7 +84,7 @@ dependencies {
     // higher versions of jaudiotagger not compatible with <= API 25 devices
     // https://bitbucket.org/ijabz/jaudiotagger/issues/149/some-nio-classes-are-unavailable-while
     implementation "net.jthink:jaudiotagger:2.2.5"
-    kapt "androidx.room:room-compiler:2.4.2"
-    implementation "androidx.room:room-runtime:2.4.2"
+    kapt "androidx.room:room-compiler:2.4.3"
+    implementation "androidx.room:room-runtime:2.4.3"
     annotationProcessor "androidx.room:room-compiler:2.4.2"
 }
