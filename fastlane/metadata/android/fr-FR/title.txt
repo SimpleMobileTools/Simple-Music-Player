@@ -1,1 +1,1 @@
-Lecteur musique Simple
+Simple lecteur de musique

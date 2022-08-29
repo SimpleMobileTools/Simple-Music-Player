@@ -1,1 +1,1 @@
-Simple Music Player
+Lettore Musicale Semplice

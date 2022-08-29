@@ -1,1 +1,1 @@
-Un lettore musicale elegante con un widget personalizzabile, no pubblicità.
+Elegante lettore musicale con widget, timer per il sonno, risparmio batteria
