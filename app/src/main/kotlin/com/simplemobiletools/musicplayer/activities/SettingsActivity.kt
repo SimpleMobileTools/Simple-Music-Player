@@ -6,6 +6,7 @@ import com.simplemobiletools.commons.dialogs.RadioGroupDialog
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.IS_CUSTOMIZING_COLORS
 import com.simplemobiletools.commons.helpers.NavigationIcon
+import com.simplemobiletools.commons.helpers.isTiramisuPlus
 import com.simplemobiletools.commons.models.RadioItem
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.dialogs.ManageVisibleTabsDialog
@@ -17,6 +18,7 @@ import com.simplemobiletools.musicplayer.helpers.SHOW_FILENAME_IF_UNAVAILABLE
 import com.simplemobiletools.musicplayer.helpers.SHOW_FILENAME_NEVER
 import kotlinx.android.synthetic.main.activity_settings.*
 import java.util.*
+import kotlin.system.exitProcess
 
 class SettingsActivity : SimpleActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,6 +34,7 @@ class SettingsActivity : SimpleActivity() {
         setupCustomizeColors()
         setupCustomizeWidgetColors()
         setupUseEnglish()
+        setupLanguage()
         setupSwapPrevNext()
         setupReplaceTitle()
         setupManageShownTabs()
@@ -52,6 +55,7 @@ class SettingsActivity : SimpleActivity() {
         // make sure the corners at ripple fit the stroke rounded corners
         if (settings_purchase_thank_you_holder.isGone()) {
             settings_use_english_holder.background = resources.getDrawable(R.drawable.ripple_top_corners, theme)
+            settings_language_holder.background = resources.getDrawable(R.drawable.ripple_top_corners, theme)
         }
 
         settings_purchase_thank_you_holder.setOnClickListener {
@@ -76,17 +80,25 @@ class SettingsActivity : SimpleActivity() {
     }
 
     private fun setupUseEnglish() {
-        settings_use_english_holder.beVisibleIf(config.wasUseEnglishToggled || Locale.getDefault().language != "en")
+        settings_use_english_holder.beVisibleIf((config.wasUseEnglishToggled || Locale.getDefault().language != "en") && !isTiramisuPlus())
         settings_use_english.isChecked = config.useEnglish
-
-        if (settings_use_english_holder.isGone() && settings_purchase_thank_you_holder.isGone()) {
-            settings_swap_prev_next_holder.background = resources.getDrawable(R.drawable.ripple_top_corners, theme)
-        }
-
         settings_use_english_holder.setOnClickListener {
             settings_use_english.toggle()
             config.useEnglish = settings_use_english.isChecked
-            System.exit(0)
+            exitProcess(0)
+        }
+    }
+
+    private fun setupLanguage() {
+        settings_language.text = Locale.getDefault().displayLanguage
+        settings_language_holder.beVisibleIf(isTiramisuPlus())
+
+        if (settings_use_english_holder.isGone() && settings_language_holder.isGone() && settings_purchase_thank_you_holder.isGone()) {
+            settings_swap_prev_next_holder.background = resources.getDrawable(R.drawable.ripple_top_corners, theme)
+        }
+
+        settings_language_holder.setOnClickListener {
+            launchChangeAppLanguageIntent()
         }
     }
 
