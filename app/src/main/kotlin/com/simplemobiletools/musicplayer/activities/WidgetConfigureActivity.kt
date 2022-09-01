@@ -69,10 +69,10 @@ class WidgetConfigureActivity : SimpleActivity() {
 
     override fun onResume() {
         super.onResume()
+        setupToolbar(config_toolbar)
         if (mFeatureLockedDialog != null && isOrWasThankYouInstalled()) {
             mFeatureLockedDialog?.dismissDialog()
         }
-        setupToolbar(config_toolbar)
     }
 
     private fun initVariables() {
