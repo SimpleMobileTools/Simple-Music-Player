@@ -1,6 +1,12 @@
 Changelog
 ==========
 
+Version 5.14.0 *(2022-09-02)*
+----------------------------
+
+ * Added Monochrome icon and Language picker support on Android 13+
+ * Added some translation and UX improvements
+
 Version 5.13.1 *(2022-07-15)*
 ----------------------------
 
