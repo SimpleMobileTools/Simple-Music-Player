@@ -70,7 +70,7 @@ android {
 }
 
 dependencies {
-    implementation 'com.github.SimpleMobileTools:Simple-Commons:041407d4da'
+    implementation 'com.github.SimpleMobileTools:Simple-Commons:28e3b108e7'
     implementation 'org.greenrobot:eventbus:3.3.1'
     implementation 'androidx.media:media:1.6.0'
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
