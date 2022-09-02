@@ -30,7 +30,10 @@ import androidx.media.session.MediaButtonReceiver
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.simplemobiletools.commons.extensions.*
-import com.simplemobiletools.commons.helpers.*
+import com.simplemobiletools.commons.helpers.ensureBackgroundThread
+import com.simplemobiletools.commons.helpers.isMarshmallowPlus
+import com.simplemobiletools.commons.helpers.isOreoPlus
+import com.simplemobiletools.commons.helpers.isQPlus
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.MainActivity
 import com.simplemobiletools.musicplayer.databases.SongsDatabase
@@ -77,6 +80,14 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         private var mIsServiceInitialized = false
         private var mPrevAudioFocusState = 0
         private var mSetProgressOnPrepare = 0
+        private const val mMediaSessionActions =
+            PlaybackStateCompat.ACTION_STOP or
+                PlaybackStateCompat.ACTION_PAUSE or
+                PlaybackStateCompat.ACTION_PLAY or
+                PlaybackStateCompat.ACTION_SKIP_TO_PREVIOUS or
+                PlaybackStateCompat.ACTION_SKIP_TO_NEXT or
+                PlaybackStateCompat.ACTION_SEEK_TO or
+                PlaybackStateCompat.ACTION_PLAY_PAUSE
 
         fun getIsPlaying() = mPlayer?.isPlaying == true
     }
@@ -105,6 +116,30 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             override fun onMediaButtonEvent(mediaButtonEvent: Intent): Boolean {
                 handleMediaButton(mediaButtonEvent)
                 return true
+            }
+
+            override fun onPlay() {
+                resumeTrack()
+            }
+
+            override fun onPause() {
+                pauseTrack()
+            }
+
+            override fun onStop() {
+                pauseTrack()
+            }
+
+            override fun onSkipToNext() {
+                handleNext()
+            }
+
+            override fun onSkipToPrevious() {
+                handlePrevious()
+            }
+
+            override fun onSeekTo(pos: Long) {
+                updateProgress((pos / 1000).toInt())
             }
         })
 
@@ -590,6 +625,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         initMediaPlayerIfNeeded()
         mPlayer!!.pause()
         trackStateChanged(false)
+        updateMediaSessionState()
     }
 
     private fun resumeTrack() {
@@ -790,7 +826,9 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             PlaybackStateCompat.STATE_PAUSED
         }
 
-        builder.setState(playbackState, mPlayer?.currentPosition?.toLong() ?: 0L, mPlaybackSpeed)
+        builder
+            .setActions(mMediaSessionActions)
+            .setState(playbackState, mPlayer?.currentPosition?.toLong() ?: 0L, mPlaybackSpeed)
         try {
             mMediaSession?.setPlaybackState(builder.build())
         } catch (ignored: Exception) {
