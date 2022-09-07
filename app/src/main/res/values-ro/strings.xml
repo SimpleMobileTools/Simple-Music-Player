@@ -49,7 +49,7 @@
     <string name="create_playlist_label">Puteți crea o nouă listă de redare selectând artiștii, albumele sau piesele dorite și folosind Meniu -&gt; Adaugaţi la lista de redare.</string>
     <string name="export_playlist">Export playlist</string>
     <string name="import_playlist">Import playlist</string>
-    <string name="filename_without_m3u">Filename (without .m3u)</string>
+    <string name="filename_without_m3u">Numele fișierului (fără .m3u)</string>
     <!-- Sorting -->
     <string name="track_count">Număr de piese</string>
     <string name="album_count">Număr de albume</string>
@@ -72,7 +72,7 @@
     </plurals>
     <!-- Queue -->
     <string name="next_track">Urmează:</string>
-    <string name="track_queue">Track queue</string>
+    <string name="track_queue">Coada de melodii</string>
     <string name="add_to_queue">Adăugați la coadă</string>
     <string name="remove_from_queue">Eliminaţi din coadă</string>
     <string name="create_playlist_from_queue">Creați o listă de redare din coadă</string>
