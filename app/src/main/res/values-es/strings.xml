@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Reproductor de Música Simple</string>
-    <string name="app_launcher_name">Música</string>
-    <string name="playlist_empty">Su lista de reproducción está vacía</string>
-    <string name="rename_song">Renombrar canción</string>
-    <string name="rename_song_error">Ha ocurrido un error durante el renombrado</string>
+    <string name="app_launcher_name">Reproductor de música</string>
+    <string name="playlist_empty">Tu lista de reproducción está vacía</string>
+    <string name="rename_song">Cambiar el nombre de la canción</string>
+    <string name="rename_song_error">Se ha producido un error durante el cambio de nombre</string>
     <string name="rename_song_empty">Por favor, rellene todos los campos</string>
-    <string name="repeat_off">Repetir</string>
+    <string name="repeat_off">Repetir apagado</string>
     <string name="repeat_song">Repetir la canción actual</string>
-    <string name="repeat_playlist">Repeat playlist</string>
-    <string name="stop_playback_after_current_song">Parar la reproducción después de la canción actual</string>
-    <string name="enable_shuffle">Activar aleatorio</string>
-    <string name="disable_shuffle">Desactivar aleatorio</string>
+    <string name="repeat_playlist">Repetir todo</string>
+    <string name="stop_playback_after_current_song">Detener la reproducción después de la canción actual</string>
+    <string name="enable_shuffle">Activar la reproducción aleatoria</string>
+    <string name="disable_shuffle">Desactivar la reproducción aleatoria</string>
     <string name="shuffle_enabled">Reproducción aleatoria activada</string>
     <string name="shuffle_disabled">Reproducción aleatoria desactivada</string>
-    <string name="sleep_timer">Temporizador para dormir</string>
-    <string name="volume">Volume</string>
+    <string name="sleep_timer">Temporizador</string>
+    <string name="volume">Volumen</string>
     <string name="playback_speed">Velocidad de reproducción</string>
     <string name="loading_files">Cargando archivos…</string>
     <!-- Playlists -->
@@ -28,7 +28,7 @@
     <string name="playlist_name_exists">Ya existe una lista de reproducción con ese nombre</string>
     <string name="remove_playlist">Eliminar lista de reproducción</string>
     <string name="remove_playlist_description">Esto solo eliminará las listas de reproducción seleccionadas, no los archivos reales.</string>
-    <string name="remove_playlist_description_placeholder">Esto solo eliminará la lista de reproducción \"%s\", no los archivos reales.</string>
+    <string name="remove_playlist_description_placeholder">Esto solo eliminará la lista de reproducción \"%s\". Los archivos actuales no serán borrados.</string>
     <string name="remove_from_playlist">Eliminar de lista de reproducción</string>
     <string name="remove_from_playlist_description">Esto solo eliminará los elementos de la lista de reproducción \"%s\", los archivos reales no serán eliminados.</string>
     <string name="delete_the_files_too">También eliminar los archivos</string>

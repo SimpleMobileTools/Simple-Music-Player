@@ -4,20 +4,20 @@
     <string name="app_launcher_name">ミュージック プレイヤー</string>
     <string name="playlist_empty">プレイリストは空です</string>
     <string name="rename_song">曲の名前を変更</string>
-    <string name="rename_song_error">名前を変更中にエラーが発生しました</string>
+    <string name="rename_song_error">名前の変更中にエラーが発生しました</string>
     <string name="rename_song_empty">すべてのフィールドを入力してください</string>
-    <string name="repeat_off">Repeat off</string>
+    <string name="repeat_off">リピート無効</string>
     <string name="repeat_song">現在の曲を繰り返し</string>
-    <string name="repeat_playlist">Repeat playlist</string>
-    <string name="stop_playback_after_current_song">Stop playback after current song</string>
+    <string name="repeat_playlist">再生リストをリピート</string>
+    <string name="stop_playback_after_current_song">現在の曲の後に停止</string>
     <string name="enable_shuffle">シャッフルを有効にする</string>
     <string name="disable_shuffle">シャッフルを無効にする</string>
     <string name="shuffle_enabled">シャッフル有効</string>
     <string name="shuffle_disabled">シャッフル無効</string>
     <string name="sleep_timer">スリープタイマー</string>
-    <string name="volume">Volume</string>
-    <string name="playback_speed">Playback speed</string>
-    <string name="loading_files">Loading files…</string>
+    <string name="volume">音量</string>
+    <string name="playback_speed">再生速度</string>
+    <string name="loading_files">ファイルを読込中…</string>
     <!-- Playlists -->
     <string name="add_file_to_playlist">プレイリストにファイルを追加</string>
     <string name="add_folder_to_playlist">プレイリストにフォルダを追加</string>
@@ -37,7 +37,7 @@
     <string name="empty_playlist">プレイリストは空です</string>
     <string name="fetching_songs">曲を取得中…</string>
     <string name="all_songs">すべての曲</string>
-    <string name="create_playlist_from_folder">フォルダから新しいプレイリストを作成する</string>
+    <string name="create_playlist_from_folder">フォルダから新しいプレイリストを作成</string>
     <string name="folder_contains_no_audio">選択したフォルダにはオーディオファイルが含まれていません</string>
     <string name="delete_current_song">現在の曲を削除</string>
     <string name="remove_current_song">プレイリストから現在の曲を削除</string>
@@ -47,8 +47,8 @@
     <string name="all_tracks">全てのトラック</string>
     <string name="add_to_playlist">プレイリストに追加</string>
     <string name="create_playlist_label">アーティスト、アルバム、トラックを選択してメニュー→プレイリストに追加することで、新しいプレイリストを追加できます。</string>
-    <string name="export_playlist">Export playlist</string>
-    <string name="import_playlist">Import playlist</string>
+    <string name="export_playlist">プレイリストのエクスポート</string>
+    <string name="import_playlist">プレイリストのインポート</string>
     <string name="filename_without_m3u">Filename (without .m3u)</string>
     <!-- Sorting -->
     <string name="track_count">トラック数</string>
@@ -57,7 +57,7 @@
     <string name="year">年</string>
     <!-- Artists -->
     <string name="artists">アーティスト</string>
-    <string name="folders">Folders</string>
+    <string name="folders">フォルダ</string>
     <string name="albums">アルバム</string>
     <plurals name="albums_plural">
         <item quantity="other">%d 件のアルバム</item>

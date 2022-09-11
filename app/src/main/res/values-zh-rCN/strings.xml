@@ -8,14 +8,14 @@
     <string name="rename_song_empty">请填写全部字段</string>
     <string name="repeat_off">已禁用重复播放</string>
     <string name="repeat_song">重复当前歌曲</string>
-    <string name="repeat_playlist">Repeat playlist</string>
+    <string name="repeat_playlist">重复播放列表</string>
     <string name="stop_playback_after_current_song">在当前歌曲后停止播放</string>
     <string name="enable_shuffle">启用随机播放</string>
     <string name="disable_shuffle">禁用随机播放</string>
     <string name="shuffle_enabled">已启用随机播放</string>
     <string name="shuffle_disabled">已禁用随机播放</string>
     <string name="sleep_timer">睡眠定时器</string>
-    <string name="volume">Volume</string>
+    <string name="volume">音量</string>
     <string name="playback_speed">播放速度</string>
     <string name="loading_files">加载文件中…</string>
     <!-- Playlists -->
@@ -45,29 +45,29 @@
     <string name="title_is_not_available">如果标题不可用时</string>
     <string name="show_album_cover">在主屏幕显示专辑封面</string>
     <string name="all_tracks">所有曲目</string>
-    <string name="add_to_playlist">Add to playlist</string>
+    <string name="add_to_playlist">添加到播放列表</string>
     <string name="create_playlist_label">您可以通过选择想要的艺术家、专辑或曲目并使用菜单 -&gt; 添加到播放列表来创建新的播放列表。</string>
-    <string name="export_playlist">Export playlist</string>
-    <string name="import_playlist">Import playlist</string>
+    <string name="export_playlist">导出播放列表</string>
+    <string name="import_playlist">导入播放列表</string>
     <string name="filename_without_m3u">文件名 (不带 .m3u)</string>
     <!-- Sorting -->
     <string name="track_count">曲目数</string>
     <string name="album_count">专辑数</string>
-    <string name="artist_name">Artist Name</string>
+    <string name="artist_name">艺术家名称</string>
     <string name="year">年份</string>
     <!-- Artists -->
-    <string name="artists">歌手</string>
+    <string name="artists">艺术家</string>
     <string name="folders">文件夹</string>
     <string name="albums">专辑</string>
     <plurals name="albums_plural">
-        <item quantity="other">%d Album</item>
+        <item quantity="other">%d 专辑</item>
     </plurals>
     <string name="tracks">歌曲</string>
     <plurals name="tracks_plural">
         <item quantity="other">%d 首歌</item>
     </plurals>
     <!-- Queue -->
-    <string name="next_track">Next:</string>
+    <string name="next_track">下一首:</string>
     <string name="track_queue">歌曲队列</string>
     <string name="add_to_queue">添加到队列</string>
     <string name="remove_from_queue">从队列中删除</string>
