@@ -1,1 +1,1 @@
-Simple Music Player
+Egyszerű zenelejátszó
