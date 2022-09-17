@@ -33,7 +33,7 @@
     <string name="remove_from_playlist_description">Sellega eemaldad vaid kirjed „%s“ esitusloendist. Tegelikud failid jäävad puutumata.</string>
     <string name="delete_the_files_too">Kustuta ka failid</string>
     <string name="open_playlist">Ava esitusloend</string>
-    <string name="all_songs_cannot_be_deleted">Esitusloendit „Kõik lood“ ei saa kustutada</string>
+    <string name="all_songs_cannot_be_deleted">Esitusloendit \"Kõik lood\" ei saa kustutada</string>
     <string name="empty_playlist">Praegune esitusloend on tühi</string>
     <string name="fetching_songs">Laadin lugusid…</string>
     <string name="all_songs">Kõik lood</string>
@@ -47,16 +47,16 @@
     <string name="all_tracks">Kõik lood</string>
     <string name="add_to_playlist">Lisa esitusloendisse</string>
     <string name="create_playlist_label">Valides Menüü -&gt; Lisa esitusloendisse saad soovitud esitajate, albumite või lugude alusel luua uue esitusloendi.</string>
-    <string name="export_playlist">Export playlist</string>
-    <string name="import_playlist">Import playlist</string>
+    <string name="export_playlist">Esitusloendi eksportimine</string>
+    <string name="import_playlist">Esitusloendi importimine</string>
     <string name="filename_without_m3u">Faili nimi (ilma .m3u laiendita)</string>
     <!-- Sorting -->
     <string name="track_count">Palade arv</string>
     <string name="album_count">Albumeid</string>
-    <string name="artist_name">Artist Name</string>
+    <string name="artist_name">Kunstniku nimi</string>
     <string name="year">Aasta</string>
     <!-- Artists -->
-    <string name="artists">Esiitajaid</string>
+    <string name="artists">Kunstnik</string>
     <string name="folders">Kaustad</string>
     <string name="albums">Albumid</string>
     <plurals name="albums_plural">
@@ -69,7 +69,7 @@
         <item quantity="other">%d pala</item>
     </plurals>
     <!-- Queue -->
-    <string name="next_track">Next:</string>
+    <string name="next_track">Järgmine:</string>
     <string name="track_queue">Esitusjärjekord</string>
     <string name="add_to_queue">Lisa esitusjärjekorda</string>
     <string name="remove_from_queue">Eemalda esitusjärjekorrast</string>
