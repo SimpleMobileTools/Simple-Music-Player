@@ -55,6 +55,7 @@
     <string name="album_count">Aantal albums</string>
     <string name="artist_name">Artiest</string>
     <string name="year">Jaar</string>
+    <string name="trackID">Track Number</string>
     <!-- Artists -->
     <string name="artists">Artiesten</string>
     <string name="folders">Mappen</string>
@@ -80,7 +81,6 @@
     <!-- FAQ -->
     <string name="faq_1_title">Hoe kan ik een nummer vooruitspoelen\?</string>
     <string name="faq_1_text">Klik op de tijdsindicatoren voor de voortgang of de looptijd om resp. terug of vooruit te spoelen.</string>
-    <string name="trackID">Track Number</string>
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res

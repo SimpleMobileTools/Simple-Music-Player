@@ -55,6 +55,7 @@
     <string name="album_count">Albumok</string>
     <string name="artist_name">Előadó neve</string>
     <string name="year">Év</string>
+    <string name="trackID">Track Number</string>
     <!-- Artists -->
     <string name="artists">Előadók</string>
     <string name="folders">Mappák</string>
@@ -80,7 +81,6 @@
     <!-- FAQ -->
     <string name="faq_1_title">Hogy tudom a számot előre tekerni\?</string>
     <string name="faq_1_text">A keresősáv melletti jelenlegi vagy maximális hossz szövegekre kattintva tud előre és hátra tekerni.</string>
-    <string name="trackID">Track Number</string>
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res

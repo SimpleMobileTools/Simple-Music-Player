@@ -55,6 +55,7 @@
     <string name="album_count">Número de álbuns</string>
     <string name="artist_name">Nome do artista</string>
     <string name="year">Ano</string>
+    <string name="trackID">Track Number</string>
     <!-- Artists -->
     <string name="artists">Artistas</string>
     <string name="folders">Pastas</string>
@@ -80,7 +81,6 @@
     <!-- FAQ -->
     <string name="faq_1_title">Como posso avançar/recuar rapidamente uma faixa\?</string>
     <string name="faq_1_text">Toque nos textos de duração máxima/atual junto à barra de progresso para avançar ou recuar a posição na faixa.</string>
-    <string name="trackID">Track Number</string>
     <!--
         Não encontrou todas as cadeias a traduzir? Existem mais algumas em:
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res

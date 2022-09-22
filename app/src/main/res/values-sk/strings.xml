@@ -55,6 +55,7 @@
     <string name="album_count">Počet albumov</string>
     <string name="artist_name">Meno interpreta</string>
     <string name="year">Rok</string>
+    <string name="trackID">Track Number</string>
     <!-- Artists -->
     <string name="artists">Interpreti</string>
     <string name="folders">Priečinky</string>
@@ -82,7 +83,6 @@
     <!-- FAQ -->
     <string name="faq_1_title">Ako viem posunúť skladbu vpred\?</string>
     <string name="faq_1_text">Môžete kliknúť na texty súčasnej, alebo maximálnej dĺžky skladby, ktoré sú vedľa indikátora súčasného progresu. To posunie skladbu buď vpred, alebo vzad.</string>
-    <string name="trackID">Track Number</string>
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res

@@ -55,6 +55,7 @@
     <string name="album_count">專輯數</string>
     <string name="artist_name">演出者名</string>
     <string name="year">年份</string>
+    <string name="trackID">Track Number</string>
     <!-- Artists -->
     <string name="artists">演出者</string>
     <string name="folders">資料夾</string>
@@ -78,7 +79,6 @@
     <!-- FAQ -->
     <string name="faq_1_title">要怎麼快轉歌曲？</string>
     <string name="faq_1_text">點一下進度條旁邊的目前或總時長文字，歌曲就會倒帶或快轉。</string>
-    <string name="trackID">Track Number</string>
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res

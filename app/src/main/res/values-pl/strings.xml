@@ -55,6 +55,7 @@
     <string name="album_count">Liczba albumów</string>
     <string name="artist_name">Nazwa artysty</string>
     <string name="year">Rok</string>
+    <string name="trackID">Track Number</string>
     <!-- Artists -->
     <string name="artists">Artyści</string>
     <string name="folders">Foldery</string>
@@ -84,7 +85,6 @@
     <!-- FAQ -->
     <string name="faq_1_title">Jak mogę przewijać utwory do przodu\?</string>
     <string name="faq_1_text">Możesz nacisnąć tekst bieżącego lub całkowitego czasu trwania w pobliżu paska przewijania — przewinie to utwór do tyłu lub do przodu.</string>
-    <string name="trackID">Track Number</string>
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res

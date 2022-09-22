@@ -55,6 +55,7 @@
     <string name="album_count">专辑数</string>
     <string name="artist_name">艺术家名称</string>
     <string name="year">年份</string>
+    <string name="trackID">Track Number</string>
     <!-- Artists -->
     <string name="artists">艺术家</string>
     <string name="folders">文件夹</string>
@@ -78,7 +79,6 @@
     <!-- FAQ -->
     <string name="faq_1_title">我如何快进歌曲？</string>
     <string name="faq_1_text">您可以单击搜索栏附近的当前或最大持续时间文本，这将向后或向前移动歌曲。</string>
-    <string name="trackID">Track Number</string>
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res

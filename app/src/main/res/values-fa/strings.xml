@@ -55,6 +55,7 @@
     <string name="album_count">تعداد آلبوم ها</string>
     <string name="artist_name">نام خواننده</string>
     <string name="year">سال</string>
+    <string name="trackID">Track Number</string>
     <!-- Artists -->
     <string name="artists">هنرمندان</string>
     <string name="folders">Folders</string>
@@ -80,7 +81,6 @@
     <!-- FAQ -->
     <string name="faq_1_title">چطور می توانم آهنگ ها را سریع ارسال کنم؟</string>
     <string name="faq_1_text">می توانید بر روی متون فعلی یا حداکثر مدت زمان نزدیک نوار جستجو کلیک کنید ، که آهنگ را به عقب یا جلو منتقل می کند.</string>
-    <string name="trackID">Track Number</string>
     <!--
        Haven't found some strings? There's more at
        https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res

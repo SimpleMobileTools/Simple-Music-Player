@@ -55,6 +55,7 @@
     <string name="album_count">Колькасць альбомаў</string>
     <string name="artist_name">Імя выканаўцы</string>
     <string name="year">Год</string>
+    <string name="trackID">Track Number</string>
     <!-- Artists -->
     <string name="artists">Выканаўцы</string>
     <string name="folders">Папкі</string>
@@ -84,7 +85,6 @@
     <!-- FAQ -->
     <string name="faq_1_title">Як змяніць пазіцыю прайгравання кампазіцыі\?</string>
     <string name="faq_1_text">Вы можаце націснуць на тэкст бягучай альбо максімальнай працягласці побач з паўзунком. Гэта перамясціць прайграванне кампазіцыі назад альбо наперад.</string>
-    <string name="trackID">Track Number</string>
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res

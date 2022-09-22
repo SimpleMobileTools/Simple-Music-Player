@@ -55,6 +55,7 @@
     <string name="album_count">Αριθμός άλμπουμ</string>
     <string name="artist_name">Όνομα καλλιτέχνη</string>
     <string name="year">Έτος</string>
+    <string name="trackID">Track Number</string>
     <!-- Artists -->
     <string name="artists">Καλλιτέχνες</string>
     <string name="folders">Φάκελοι</string>
@@ -80,7 +81,6 @@
     <!-- FAQ -->
     <string name="faq_1_title">Πώς μπορώ να προωθήσω γρήγορα τα τραγούδια;</string>
     <string name="faq_1_text">Μπορείτε να κάνετε κλικ στο τρέχον ή μέγιστης διάρκειας κείμενο κοντά στη γραμμή προόδου, το οποίο θα μετακινήσει το τραγούδι πίσω ή εμπρός.</string>
-    <string name="trackID">Track Number</string>
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res

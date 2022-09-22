@@ -55,6 +55,7 @@
     <string name="album_count">Nombre d\'albums</string>
     <string name="artist_name">Nom de l\'artiste</string>
     <string name="year">Année</string>
+    <string name="trackID">Track Number</string>
     <!-- Artists -->
     <string name="artists">Artistes</string>
     <string name="folders">Dossiers</string>
@@ -80,7 +81,6 @@
     <!-- FAQ -->
     <string name="faq_1_title">Comment puis-je faire avancer rapidement les chansons \?</string>
     <string name="faq_1_text">Vous pouvez cliquer sur le texte de la durée actuelle ou de la durée maximale près de la barre de recherche, ce qui fera avancer ou reculer la chanson.</string>
-    <string name="trackID">Track Number</string>
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res

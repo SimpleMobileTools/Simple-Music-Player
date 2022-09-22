@@ -55,6 +55,7 @@
     <string name="album_count">アルバム数</string>
     <string name="artist_name">アーティスト名</string>
     <string name="year">年</string>
+    <string name="trackID">Track Number</string>
     <!-- Artists -->
     <string name="artists">アーティスト</string>
     <string name="folders">フォルダ</string>
@@ -78,7 +79,6 @@
     <!-- FAQ -->
     <string name="faq_1_title">曲を早送りするにはどうすればよいですか？</string>
     <string name="faq_1_text">シークバーの近くにある[再生中]または[再生時間]をタップすると、曲の巻戻しまたは早送りをすることができます。</string>
-    <string name="trackID">Track Number</string>
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res

@@ -55,6 +55,7 @@
     <string name="album_count">Albüm Sayısı</string>
     <string name="artist_name">Sanatçı Adı</string>
     <string name="year">Yıl</string>
+    <string name="trackID">Track Number</string>
     <!-- Artists -->
     <string name="artists">Sanatçılar</string>
     <string name="folders">Klasörler</string>
@@ -80,7 +81,6 @@
     <!-- FAQ -->
     <string name="faq_1_title">Şarkıları nasıl hızlıca ileri sarabilirim\?</string>
     <string name="faq_1_text">Arama çubuğunun yanındaki geçerli veya maksimum süre metinlerini tıklayabilir, şarkıyı geriye ya da ileriye sarabilirsiniz.</string>
-    <string name="trackID">Track Number</string>
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res

@@ -55,6 +55,7 @@
     <string name="album_count">Kiraan Album</string>
     <string name="artist_name">Nama Artis</string>
     <string name="year">Tahun</string>
+    <string name="trackID">Track Number</string>
     <!-- Artists -->
     <string name="artists">Artis</string>
     <string name="folders">Folders</string>
@@ -78,7 +79,6 @@
     <!-- FAQ -->
     <string name="faq_1_title">Bagaimana saya boleh meneruskan lagu\?</string>
     <string name="faq_1_text">Anda boleh mengklik pada teks semasa atau maksimum yang berada di dekat bar carian, yang akan menggerakkan lagu itu ke belakang atau ke hadapan.</string>
-    <string name="trackID">Track Number</string>
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res

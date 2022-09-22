@@ -55,6 +55,7 @@
     <string name="album_count">Comptador d\'àlbums</string>
     <string name="artist_name">Nom de l\'artista</string>
     <string name="year">Any</string>
+    <string name="trackID">Track Number</string>
     <!-- Artists -->
     <string name="artists">Artistes</string>
     <string name="folders">Carpetes</string>
@@ -80,7 +81,6 @@
     <!-- FAQ -->
     <string name="faq_1_title">Com puc avançar ràpidament les cançons\?</string>
     <string name="faq_1_text">Podeu fer clic als textos de durada actual o màxima a prop de la barra de cerca, que mouran la cançó cap enrere o cap endavant.</string>
-    <string name="trackID">Track Number</string>
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res

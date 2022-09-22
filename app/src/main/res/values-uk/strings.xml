@@ -55,6 +55,7 @@
     <string name="album_count">Кількість альбомів</string>
     <string name="artist_name">Ім\'я виконавця</string>
     <string name="year">Рік</string>
+    <string name="trackID">Track Number</string>
     <!-- Artists -->
     <string name="artists">Виконавці</string>
     <string name="folders">Теки</string>
@@ -84,7 +85,6 @@
     <!-- FAQ -->
     <string name="faq_1_title">Як я можу змінити позицію відтворення композиції\?</string>
     <string name="faq_1_text">Ви можете натиснути на текст поточної або загальної тривалості відтворення поруч із ковзним елементом відтворення, це перемістить програвання композиції або назад, або вперед.</string>
-    <string name="trackID">Track Number</string>
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res

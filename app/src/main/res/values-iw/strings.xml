@@ -55,6 +55,7 @@
     <string name="album_count">ספירת אלבומים</string>
     <string name="artist_name">שם אמן</string>
     <string name="year">שנה</string>
+    <string name="trackID">Track Number</string>
     <!-- Artists -->
     <string name="artists">אמנים</string>
     <string name="folders">תקיות</string>
@@ -84,7 +85,6 @@
     <!-- FAQ -->
     <string name="faq_1_title">איך אני יכול להריץ שירים קדימה\?</string>
     <string name="faq_1_text">אתה יכול ללחוץ על הטקסטים הנוכחיים או המשך המקסימלי ליד סרגל החיפוש, שיעביר את השיר אחורה או קדימה.</string>
-    <string name="trackID">Track Number</string>
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
