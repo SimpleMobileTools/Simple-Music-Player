@@ -1,10 +1,55 @@
-Az állapotsorról, kezdőképernyő widgetről vagy a fejhallgató hardveres gombjaival könnyen vezérelhető zenelejátszó. Rendezheti a számait cím vagy előadó szerint, és módosíthatja a hangszínszabályzót. Egyelőre még nem támogatja az előadó vagy album szerinti szűrést.
+🎧 Hallgasd kedvenc zenéidet hirdetések nélkül 🎧
 
-Egy testreszabható widgetet tartalmaz, amelynek a szövegszínét, átlátszóságát, és háttérszínét lehet állítani.
+Nagyon jól tudjuk, hogy mennyire fontos az időd. Ez az oka annak, hogy nem teszünk hirdetéseket az alkalmazásunkba. A reklámok idegesítőek és az emberek utálják a reklámokat.
 
-Nem tartalmaz reklámokat, és nem kér szükségtelen engedélyeket. Teljesen nyílt forráskódú, és testreszabhatóak a színei.
+A Simple Music Player egy dologra koncentrál, élvezd a zenédet mindenféle zavaró tényező nélkül. Használd alkalmazásunkat, miközben otthon pihensz, dolgozol vagy esetleg vezetés közben az autódban.
 
-Ez az app egy nagyobb appsorozat része. A többit itt megtalálja: 
+A legjobb az egészben, hogy INGYENES a telepítése.
+
+Mindenhová magaddal viheted a zenédet: sétálhatsz az utcán, vagy túrázhatsz a hegyekben. Ez az MP3 lejátszó offline, ami azt jelenti, hogy nincs szükséged internetre a használatához.
+
+Ráadásul a Simple Music Player egyedülálló akkumulátorkímélő funkcióval rendelkezik. Új technológiánknak köszönhetően nem kell többé aggódnod, hogy napközben lemerül az akkumulátor. Hallgasd kedvenc dalaidat ezzel az intelligens zenelejátszóval. 
+
+👉 Mire vársz, töltsd le zenelejátszónkat!
+Irányítsd a zenét az állapotsorból, a widgetből vagy a fejhallgatón található hardveres gombokból. Soha nem volt még ilyen egyszerű a kezelése. 
+
+Ezenkívül testre szabhatod a widgetet. Változtasd meg a szöveget és a háttérszínt a könnyű hozzáférés és vezérlés érdekében.
+
+Hallgasd kedvenc zenéidet más hanganyagokat vagy podcastokat ezzel az ingyenes zenelejátszóval. Testreszabhatod a kezelőfelület színeit is. 
+
+Az alvásidőzítő funkció segítségével beprogramozhatod, hogy melyik zenével szeretnél elaludni. Lehet jazz, chill, zen, akár természet hangjai, válaszd ki a zenék közül, hogy melyik illik hozzád a legjobban. És, élvezd az álmaidat!
+
+Emeld a hangminőség szintjét a kiegyenlítőnkkel. Ez a hanglejátszó lehetőséget ad arra, hogy a zenei hatásokat a hallgatott zenetípusnak megfelelően változtasd meg (klasszikus, pop, rock, dance, techno, latino, flat stb.). Még a hangszórók szerint is (Fejhallgató, sztereó, surround és még sok más). Mostantól a hangok ereje a füledben lesz. 
+
+A Simple Music Player lehetőséget ad arra is, hogy az alkalmazáson belül összeállítsd a zenelistádat. Hozz létre és kezeld lejátszási listádat, ahogyan szeretnéd. A dalokat a telefonodról és az SD-kártyáról is átveheted. 
+
+Ez a lejátszó támogatja a keverést, egy adott dal ismétlését, a kihagyást és a továbbítást.
+
+Nem tetszik, ahogy a dalok fel vannak címkézve? Szerkeszd tetszésed szerint, módosítsd a dalok, előadók, csoportok stb. nevét.
+
+Jellemzők
+⭐️ Szép és gyönyörű kezelőfelület
+⭐️ Színek testreszabása
+⭐️ Akkumulátorkímélő
+⭐️ Alvásidőzítő
+⭐️ Erőteljes kiegyenlítő egy előbeállítással
+⭐️ Lejátszás widget
+⭐️ Lejátszási lista kezelése
+⭐️ Többnyelvű
+⭐️ Fájlok tulajdonságainak kezelése
+⭐️ Dalcímkék kezelése
+⭐️ Adatvédelem
+⭐️ Zene megosztása 
+
+👉 Nagyon komolyan vesszük felhasználóink adatvédelmét. Nem osztunk meg semmilyen információt másokkal.
+
+🎧 Élvezd a zenét reklámok nélkül 🎧
+
+Alapértelmezés szerint anyagi dizájnnal és sötét témával érkezik, nagyszerű felhasználói élményt nyújt a könnyű használathoz. Az internet-hozzáférés hiánya nagyobb magánéletet, biztonságot és stabilitást biztosít, mint más alkalmazások.
+
+Nem tartalmaz hirdetéseket vagy felesleges engedélyeket. Teljesen nyílt forráskódú, testreszabható színeket biztosít.
+
+Nézd meg a Simple Tools teljes csomagját itt:
 https://www.simplemobiletools.com
 
 Facebook:

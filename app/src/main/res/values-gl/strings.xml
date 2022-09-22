@@ -35,7 +35,7 @@
     <string name="open_playlist">Abrir lista de reprodución</string>
     <string name="all_songs_cannot_be_deleted">Non se poden borrar \'todas as cancións\' da lista</string>
     <string name="empty_playlist">A lista actual está baleira</string>
-    <string name="fetching_songs">Buscando cancións_</string>
+    <string name="fetching_songs">Buscando cancións…</string>
     <string name="all_songs">Todas as cancións</string>
     <string name="create_playlist_from_folder">Crear nova lista de reprodución desde cartafol</string>
     <string name="folder_contains_no_audio">O cartafol seleccionado non contén ficheiros de audio</string>

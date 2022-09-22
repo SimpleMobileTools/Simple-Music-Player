@@ -79,7 +79,7 @@
     <string name="swap_prev_next">Размяна на бутоните за предишно/следващо на слушалките</string>
     <!-- FAQ -->
     <string name="faq_1_title">Как мога да превъртам песни\?</string>
-    <string name="faq_1_text">You can click on the current or max duration texts near the seekbar, that will move the song either backward, or forward.</string>
+    <string name="faq_1_text">Можете да щракнете върху текстовете за текущата или максималната продължителност в близост до лентата за търсене, което ще придвижи песента назад или напред.</string>
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
