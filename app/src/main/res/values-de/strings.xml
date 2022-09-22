@@ -80,6 +80,7 @@
     <!-- FAQ -->
     <string name="faq_1_title">Wie kann ich Lieder vor- oder zurückspulen\?</string>
     <string name="faq_1_text">Du kannst während der Wiedergabe schnell vor- oder zurückspulen, indem du neben der Fortschrittsanzeige entweder die Gesamtdauer oder die aktuelle Dauer des Liedes antippst. Alternativ kannst du auch den Schieber der Fortschrittsanzeige direkt zur gewünschten Stelle ziehen.</string>
+    <string name="trackID">Track Number</string>
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res

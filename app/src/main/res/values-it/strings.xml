@@ -80,6 +80,7 @@
     <!-- FAQ -->
     <string name="faq_1_title">Come posso avanzare rapidamente nei brani\?</string>
     <string name="faq_1_text">Si può premere rapidamente sui testi accanto alla barra di avanzamento, questi faranno spostare il brano in avanti o all\'indietro.</string>
+    <string name="trackID">Track Number</string>
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res

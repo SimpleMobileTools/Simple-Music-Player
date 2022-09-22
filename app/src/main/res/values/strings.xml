@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <string name="app_name">Simple Music Player</string>
     <string name="app_launcher_name">Music Player</string>
     <string name="playlist_empty">Your playlist is empty</string>
@@ -50,7 +50,7 @@
     <string name="export_playlist">Export playlist</string>
     <string name="import_playlist">Import playlist</string>
     <string name="filename_without_m3u">Filename (without .m3u)</string>
-    <string name="trackID" tools:ignore="MissingTranslation">Track Number</string>
+    <string name="trackID">Track Number</string>
     <!-- Sorting -->
     <string name="track_count">Track Count</string>
     <string name="album_count">Album Count</string>

@@ -80,6 +80,7 @@
     <!-- FAQ -->
     <string name="faq_1_title">Como posso avançar/recuar rapidamente uma faixa\?</string>
     <string name="faq_1_text">Toque nos textos de duração máxima/atual junto à barra de progresso para avançar ou recuar a posição na faixa.</string>
+    <string name="trackID">Track Number</string>
     <!--
         Não encontrou todas as cadeias a traduzir? Existem mais algumas em:
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res

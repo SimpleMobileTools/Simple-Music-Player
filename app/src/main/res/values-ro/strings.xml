@@ -82,6 +82,7 @@
     <!-- FAQ -->
     <string name="faq_1_title">Cum pot să avansez rapid melodiile\?</string>
     <string name="faq_1_text">Puteți face clic pe textele de durată curentă sau maximă de lângă bara de căutare, care vor muta melodia fie înapoi, fie înainte.</string>
+    <string name="trackID">Track Number</string>
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res

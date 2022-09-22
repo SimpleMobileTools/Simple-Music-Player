@@ -80,6 +80,7 @@
     <!-- FAQ -->
     <string name="faq_1_title">¿Cómo puedo avanzar canciones\?</string>
     <string name="faq_1_text">Puedes tocar los textos de la duración actual o máxima cerca de la barra de búsqueda, eso hará que la canción avance o retroceda.</string>
+    <string name="trackID">Track Number</string>
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res

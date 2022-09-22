@@ -82,6 +82,7 @@
     <!-- FAQ -->
     <string name="faq_1_title">Jak mohu rychle posunout skladbu vpřed\?</string>
     <string name="faq_1_text">Můžete klepnout na texty aktuální nebo celkové délky skladby, které jsou vedle indikátoru průběhu přehrávání. To posune skladbu vpřed nebo vzad.</string>
+    <string name="trackID">Track Number</string>
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res

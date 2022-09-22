@@ -80,6 +80,7 @@
     <!-- FAQ -->
     <string name="faq_1_title">Kuidas ma saan palasid kiiresti edasi kerida\?</string>
     <string name="faq_1_text">Klõpsi esitusribal kas esituse aega või pala pikkust ning sellega hüppad loos tagasi või edasi.</string>
+    <string name="trackID">Track Number</string>
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res

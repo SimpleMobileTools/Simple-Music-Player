@@ -82,6 +82,7 @@
     <!-- FAQ -->
     <string name="faq_1_title">Ako viem posunúť skladbu vpred\?</string>
     <string name="faq_1_text">Môžete kliknúť na texty súčasnej, alebo maximálnej dĺžky skladby, ktoré sú vedľa indikátora súčasného progresu. To posunie skladbu buď vpred, alebo vzad.</string>
+    <string name="trackID">Track Number</string>
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res

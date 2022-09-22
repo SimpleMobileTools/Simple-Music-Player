@@ -80,6 +80,7 @@
     <!-- FAQ -->
     <string name="faq_1_title">Kuinka voin kelata kappaleita eteenpäin\?</string>
     <string name="faq_1_text">Voit napsauttaa hakupalkin lähellä olevia nykyisiä tai enimmäiskestoisia tekstejä, jotka siirtävät kappaleen joko taaksepäin tai eteenpäin.</string>
+    <string name="trackID">Track Number</string>
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res

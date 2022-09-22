@@ -80,6 +80,7 @@
     <!-- FAQ -->
     <string name="faq_1_title">Hvordan kan jeg spole fremover sanger\?</string>
     <string name="faq_1_text">Du kan klikke på gjeldende eller maksimale varighetstekster nær søkefeltet, som vil flytte sangen enten bakover eller fremover.</string>
+    <string name="trackID">Track Number</string>
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res

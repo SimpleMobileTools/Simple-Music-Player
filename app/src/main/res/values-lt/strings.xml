@@ -82,6 +82,7 @@
     <!-- FAQ -->
     <string name="faq_1_title">Kaip greitai persukti dainas į priekį\?</string>
     <string name="faq_1_text">Galite spustelėti esamos arba maksimalios trukmės tekstus, esančius šalia paieškos juostos, ir daina bus perkelta atgal arba į priekį.</string>
+    <string name="trackID">Track Number</string>
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res

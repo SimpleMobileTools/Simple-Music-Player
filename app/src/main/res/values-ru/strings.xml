@@ -84,6 +84,7 @@
     <!-- FAQ -->
     <string name="faq_1_title">Как я могу перемотать композицию\?</string>
     <string name="faq_1_text">Вы можете нажать на текст текущей или общей длительности воспроизведения рядом с ползунком — это переместит воспроизведение либо назад, либо вперёд.</string>
+    <string name="trackID">Track Number</string>
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
