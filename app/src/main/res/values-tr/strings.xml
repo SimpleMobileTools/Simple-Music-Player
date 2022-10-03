@@ -47,8 +47,8 @@
     <string name="all_tracks">Tüm parçalar</string>
     <string name="add_to_playlist">Çalma listesine ekle</string>
     <string name="create_playlist_label">İstediğiniz sanatçıları, albümleri veya parçaları seçip Menü -&gt; Çalma listesine ekle\'yi kullanarak yeni bir çalma listesi oluşturabilirsiniz.</string>
-    <string name="export_playlist">Export playlist</string>
-    <string name="import_playlist">Import playlist</string>
+    <string name="export_playlist">Çalma listesini dışa aktar</string>
+    <string name="import_playlist">Çalma listesini içe aktar</string>
     <string name="filename_without_m3u">Dosya adı (.m3u olmadan)</string>
     <!-- Sorting -->
     <string name="track_count">Parça Sayısı</string>
