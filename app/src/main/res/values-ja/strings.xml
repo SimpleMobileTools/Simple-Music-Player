@@ -37,7 +37,7 @@
     <string name="empty_playlist">プレイリストは空です</string>
     <string name="fetching_songs">曲を取得中…</string>
     <string name="all_songs">すべての曲</string>
-    <string name="create_playlist_from_folder">フォルダから新しいプレイリストを作成</string>
+    <string name="create_playlist_from_folder">フォルダからプレイリストを作成</string>
     <string name="folder_contains_no_audio">選択したフォルダにはオーディオファイルが含まれていません</string>
     <string name="delete_current_song">現在の曲を削除</string>
     <string name="remove_current_song">プレイリストから現在の曲を削除</string>
@@ -46,10 +46,10 @@
     <string name="show_album_cover">メイン画面にアルバムカバーを表示する</string>
     <string name="all_tracks">全てのトラック</string>
     <string name="add_to_playlist">プレイリストに追加</string>
-    <string name="create_playlist_label">アーティスト、アルバム、トラックを選択してメニュー→プレイリストに追加することで、新しいプレイリストを追加できます。</string>
+    <string name="create_playlist_label">アーティスト、アルバム、トラックを選択して [メニュー] → [プレイリストに追加] を実行することで、新しいプレイリストを追加できます。</string>
     <string name="export_playlist">プレイリストのエクスポート</string>
     <string name="import_playlist">プレイリストのインポート</string>
-    <string name="filename_without_m3u">Filename (without .m3u)</string>
+    <string name="filename_without_m3u">ファイル名 (.m3uを除く)</string>
     <!-- Sorting -->
     <string name="track_count">トラック数</string>
     <string name="album_count">アルバム数</string>
@@ -77,7 +77,7 @@
     <string name="swap_prev_next">ヘッドフォンの 前へ/次へ ボタンを入れ替える</string>
     <!-- FAQ -->
     <string name="faq_1_title">曲を早送りするにはどうすればよいですか？</string>
-    <string name="faq_1_text">シークバーの近くにある[再生中]または[再生時間]をタップすると、曲の巻戻しまたは早送りをすることができます。</string>
+    <string name="faq_1_text">シークバーの近くにある[現在の再生位置]または[曲の長さ]を示すテキストをタップすると、曲の巻戻しまたは早送りをすることができます。</string>
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res

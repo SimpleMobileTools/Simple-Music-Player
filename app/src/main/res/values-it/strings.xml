@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Semplice Riproduttore Musicale</string>
-    <string name="app_launcher_name">Riproduttore musicale</string>
+    <string name="app_name">Lettore Musicale Semplice</string>
+    <string name="app_launcher_name">Lettore Musicale</string>
     <string name="playlist_empty">La scaletta è vuota</string>
     <string name="rename_song">Rinomina brano</string>
     <string name="rename_song_error">Si è verificato un errore durante la ridenominazione</string>
