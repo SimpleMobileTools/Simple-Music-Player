@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">シンプル ミュージック プレイヤー</string>
-    <string name="app_launcher_name">ミュージック プレイヤー</string>
+    <string name="app_name">シンプル ミュージック プレーヤー</string>
+    <string name="app_launcher_name">ミュージック プレーヤー</string>
     <string name="playlist_empty">プレイリストは空です</string>
     <string name="rename_song">曲の名前を変更</string>
     <string name="rename_song_error">名前の変更中にエラーが発生しました</string>
