@@ -291,10 +291,10 @@ class TrackActivity : SimpleActivity(), PlaybackSpeedListener {
                     overridePendingTransition(0, R.anim.slide_down)
                 } else
                 {
-                    var ratio:Double = (e2.x - e1.x)*10.0/activity_track_progressbar.width;
-                    activity_track_progressbar.progress += (sign(ratio)* abs(ratio).pow(2.8)).toInt();
+                    var ratio = (e2.x - e1.x) * 10.0 / activity_track_progressbar.width
+                    var newProgress = activity_track_progressbar.progress + (sign(ratio) * abs(ratio).pow(2.8)).toInt()
                     Intent(this@TrackActivity, MusicService::class.java).apply {
-                        putExtra(PROGRESS, activity_track_progressbar.progress)
+                        putExtra(PROGRESS, newProgress)
                         action = SET_PROGRESS
                         startService(this)
                     }
