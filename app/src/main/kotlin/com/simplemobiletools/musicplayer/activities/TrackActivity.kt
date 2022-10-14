@@ -43,7 +43,11 @@ import kotlinx.android.synthetic.main.activity_track.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import java.lang.Math.pow
 import java.text.DecimalFormat
+import kotlin.math.abs
+import kotlin.math.pow
+import kotlin.math.sign
 
 class TrackActivity : SimpleActivity(), PlaybackSpeedListener {
     private val SWIPE_DOWN_THRESHOLD = 100
@@ -286,6 +290,15 @@ class TrackActivity : SimpleActivity(), PlaybackSpeedListener {
                     finish()
                     activity_track_top_shadow.animate().alpha(0f).start()
                     overridePendingTransition(0, R.anim.slide_down)
+                } else
+                {
+                    var ratio:Double = (e2.x - e1.x)*10.0/activity_track_progressbar.width;
+                    activity_track_progressbar.progress += (sign(ratio)* abs(ratio).pow(2.8)).toInt();
+                    Intent(this@TrackActivity, MusicService::class.java).apply {
+                        putExtra(PROGRESS, activity_track_progressbar.progress)
+                        action = SET_PROGRESS
+                        startService(this)
+                    }
                 }
                 return super.onFling(e1, e2, velocityX, velocityY)
             }
