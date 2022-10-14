@@ -43,7 +43,6 @@ import kotlinx.android.synthetic.main.activity_track.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
-import java.lang.Math.pow
 import java.text.DecimalFormat
 import kotlin.math.abs
 import kotlin.math.pow
