@@ -32,12 +32,13 @@ import com.simplemobiletools.musicplayer.services.MusicService
 import kotlinx.android.synthetic.main.item_track_queue.view.*
 import java.util.*
 
-class QueueAdapter(activity: SimpleActivity, val items: ArrayList<Track>, recyclerView: MyRecyclerView, itemClick: (Any) -> Unit) :
+class QueueAdapter(activity: SimpleActivity, var items: ArrayList<Track>, recyclerView: MyRecyclerView, itemClick: (Any) -> Unit) :
     MyRecyclerViewAdapter(activity, recyclerView, itemClick), ItemTouchHelperContract, RecyclerViewFastScroller.OnPopupTextUpdate {
 
     private val placeholder = resources.getColoredDrawableWithColor(R.drawable.ic_headset, textColor)
     private var startReorderDragListener: StartReorderDragListener
     private val cornerRadius = resources.getDimension(R.dimen.rounded_corner_radius_small).toInt()
+    private var textToHighlight = ""
 
     init {
         setupDragListener(true)
@@ -136,7 +137,7 @@ class QueueAdapter(activity: SimpleActivity, val items: ArrayList<Track>, recycl
     private fun setupView(view: View, track: Track, holder: ViewHolder) {
         view.apply {
             track_queue_frame?.isSelected = selectedKeys.contains(track.hashCode())
-            track_queue_title.text = track.title
+            track_queue_title.text = if (textToHighlight.isEmpty()) track.title else track.title.highlightTextPart(textToHighlight, properPrimaryColor)
 
             arrayOf(track_queue_title, track_queue_duration).forEach {
                 val color = if (track == MusicService.mCurrTrack) context.getProperPrimaryColor() else textColor
@@ -186,4 +187,17 @@ class QueueAdapter(activity: SimpleActivity, val items: ArrayList<Track>, recycl
     override fun onRowSelected(myViewHolder: ViewHolder?) {}
 
     override fun onChange(position: Int) = items.getOrNull(position)?.getBubbleText() ?: ""
+
+    fun updateItems(newItems: ArrayList<Track>, highlightText: String = "", forceUpdate: Boolean = false) {
+        if (forceUpdate || newItems.hashCode() != items.hashCode()) {
+            items = newItems.clone() as ArrayList<Track>
+            textToHighlight = highlightText
+            notifyDataSetChanged()
+            finishActMode()
+        } else if (textToHighlight != highlightText) {
+            textToHighlight = highlightText
+            notifyDataSetChanged()
+        }
+    }
+
 }
