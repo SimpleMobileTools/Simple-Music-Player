@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Enostaven predvajalnik glasbe</string>
+    <string name="app_launcher_name">Predvajalnik glasbe</string>
+    <string name="playlist_empty">Seznam predvajanja prazen</string>
+    <string name="rename_song">Preimenuj pesem</string>
+    <string name="rename_song_error">Med preimenovanjem prišlo do napake</string>
+    <string name="rename_song_empty">Izpolnite vsa polja</string>
+    <string name="repeat_off">Ponovite izklop</string>
+    <string name="repeat_song">Ponovitev trenutne skladbe</string>
+    <string name="repeat_playlist">Ponovite vse</string>
+    <string name="stop_playback_after_current_song">Ustavite predvajanje po trenutni skladbi</string>
+    <string name="enable_shuffle">Omogočite naključno predvajanje</string>
+    <string name="disable_shuffle">Onemogočite naključno predvajanje</string>
+    <string name="shuffle_enabled">Omogočite naključno predvajanje</string>
+    <string name="shuffle_disabled">Onemogočite naključno predvajanje</string>
+    <string name="sleep_timer">Časovnik za spanje</string>
+    <string name="volume">Obseg</string>
+    <string name="playback_speed">Hitrost predvajanja</string>
+    <string name="loading_files">Nalaganje datotek…</string>
+    <!-- Playlists -->
+    <string name="add_file_to_playlist">Dodajte datoteke na seznam predvajanja</string>
+    <string name="add_folder_to_playlist">Dodajte mape na seznam predvajanja</string>
+    <string name="manage_playlists">Upravljajte seznam predvajanja</string>
+    <string name="playlists">Seznami predvajanja</string>
+    <string name="create_new_playlist">Ustvarite nov seznam predvajanja</string>
+    <string name="rename_playlist">Preimenujte seznam predvajanja</string>
+    <string name="playlist_name_exists">Seznam predvajanja z imenom že obstaja</string>
+    <string name="remove_playlist">Odstranite seznam predvajanja</string>
+    <string name="remove_playlist_description">Tako boste odstranili samo izbrane sezname predvajanja. Dejanske datoteke ne bodo izbrisane.</string>
+    <string name="remove_playlist_description_placeholder">To bo odstranilo le seznam predvajanja \"%s\". Dejanske datoteke ne bodo izbrisane.</string>
+    <string name="remove_from_playlist">Odstranite s seznama predvajanja</string>
+    <string name="remove_from_playlist_description">To bo odstranilo samo elemente s seznama predvajanja. \"%s\". Dejanske datoteke ne bodo izbrisane.</string>
+    <string name="delete_the_files_too">Izbrišite tudi datoteke</string>
+    <string name="open_playlist">Odprite seznam predvajanja</string>
+    <string name="all_songs_cannot_be_deleted">Seznam predvajanja \"Vse pesmi\" ni mogoče izbrisati</string>
+    <string name="empty_playlist">Trenutni seznam predvajanja je prazen</string>
+    <string name="fetching_songs">Prikupne pesmi…</string>
+    <string name="all_songs">Vse pesmi</string>
+    <string name="create_playlist_from_folder">Ustvarite nov seznam predvajanja iz mape</string>
+    <string name="folder_contains_no_audio">Izbrana mapa ne vsebuje zvočnih datotek</string>
+    <string name="delete_current_song">Izbrišite trenutne skladbe</string>
+    <string name="remove_current_song">Odstranite trenutne skladbe s seznama predvajanja</string>
+    <string name="show_filename">Prikažite ime datoteke kot naslov skladbe</string>
+    <string name="title_is_not_available">Če naslov ni na voljo</string>
+    <string name="show_album_cover">Prikažite naslovnico albuma na glavnem zaslonu</string>
+    <string name="all_tracks">Vse skladbe</string>
+    <string name="add_to_playlist">Dodajte na seznam predvajanja</string>
+    <string name="create_playlist_label">Nov seznam predvajanja ustvarite, da izberete želene izvajalce, albume ali skladbe in uporabite Meni -&gt; Dodajte na seznam predvajanja.</string>
+    <string name="export_playlist">Izvozite seznam predvajanja</string>
+    <string name="import_playlist">Uvozite seznam predvajanja</string>
+    <string name="filename_without_m3u">Ime datoteke (brez .m3u)</string>
+    <!-- Sorting -->
+    <string name="track_count">Število sledi</string>
+    <string name="album_count">Število albumov</string>
+    <string name="artist_name">Ime izvajalca</string>
+    <string name="year">Leto</string>
+    <!-- Artists -->
+    <string name="artists">Umetniki</string>
+    <string name="folders">Mape</string>
+    <string name="albums">Albumi</string>
+    <plurals name="albums_plural">
+        <item quantity="one">%d Album</item>
+        <item quantity="two">%d Albuma</item>
+        <item quantity="few">%d Albumov</item>
+        <item quantity="other">%d Albumi</item>
+    </plurals>
+    <string name="tracks">Skladbe</string>
+    <plurals name="tracks_plural">
+        <item quantity="one">%d Melodija</item>
+        <item quantity="two">%d Melodiji</item>
+        <item quantity="few">%d Melodij</item>
+        <item quantity="other">%d Melodije</item>
+    </plurals>
+    <!-- Queue -->
+    <string name="next_track">Naslednji:</string>
+    <string name="track_queue">Vrstni red melodij</string>
+    <string name="add_to_queue">Dodajte v vrsto</string>
+    <string name="remove_from_queue">Odstranite iz vrste</string>
+    <string name="create_playlist_from_queue">Ustvarite seznam predvajanja iz vrste</string>
+    <!-- Settings -->
+    <string name="equalizer">Izenačevalnik</string>
+    <string name="swap_prev_next">Zamenjava prejšnjih/naslednjih gumbov za slušalke</string>
+    <!-- FAQ -->
+    <string name="faq_1_title">Kako lahko pesmi prestavim naprej\?</string>
+    <string name="faq_1_text">Kliknete na besedilo trenutnega ali največjega trajanja v bližini iskalne vrstice, kar bo premaknilo skladbo nazaj ali naprej.</string>
+</resources>
