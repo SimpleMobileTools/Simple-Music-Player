@@ -30,10 +30,7 @@ import androidx.media.session.MediaButtonReceiver
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.simplemobiletools.commons.extensions.*
-import com.simplemobiletools.commons.helpers.ensureBackgroundThread
-import com.simplemobiletools.commons.helpers.isMarshmallowPlus
-import com.simplemobiletools.commons.helpers.isOreoPlus
-import com.simplemobiletools.commons.helpers.isQPlus
+import com.simplemobiletools.commons.helpers.*
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.MainActivity
 import com.simplemobiletools.musicplayer.databases.SongsDatabase
@@ -236,7 +233,16 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             mTracks = getQueuedTracks()
 
             val wantedTrackId = intent?.getLongExtra(TRACK_ID, -1L)
-            mCurrTrack = mTracks.firstOrNull { it.mediaStoreId == wantedTrackId }
+
+            // use an oldschool loop to avoid ConcurrentModificationException
+            for (i in 0 until mTracks.size) {
+                val track = mTracks[i]
+                if (track.mediaStoreId == wantedTrackId) {
+                    mCurrTrack = track
+                    break
+                }
+            }
+
             checkTrackOrder()
         }
 
