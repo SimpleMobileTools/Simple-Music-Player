@@ -55,7 +55,7 @@
     <string name="album_count">Albüm Sayısı</string>
     <string name="artist_name">Sanatçı Adı</string>
     <string name="year">Yıl</string>
-    <string name="track_number">Track Number</string>
+    <string name="track_number">Track number</string>
     <!-- Artists -->
     <string name="artists">Sanatçılar</string>
     <string name="folders">Klasörler</string>

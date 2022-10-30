@@ -55,7 +55,7 @@
     <string name="album_count">Albumeid</string>
     <string name="artist_name">Kunstniku nimi</string>
     <string name="year">Aasta</string>
-    <string name="track_number">Track Number</string>
+    <string name="track_number">Track number</string>
     <!-- Artists -->
     <string name="artists">Kunstnik</string>
     <string name="folders">Kaustad</string>

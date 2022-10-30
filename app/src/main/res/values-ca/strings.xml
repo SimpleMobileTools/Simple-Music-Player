@@ -55,7 +55,7 @@
     <string name="album_count">Comptador d\'àlbums</string>
     <string name="artist_name">Nom de l\'artista</string>
     <string name="year">Any</string>
-    <string name="track_number">Track Number</string>
+    <string name="track_number">Track number</string>
     <!-- Artists -->
     <string name="artists">Artistes</string>
     <string name="folders">Carpetes</string>

@@ -55,7 +55,7 @@
     <string name="album_count">Брой албуми</string>
     <string name="artist_name">Име на изпълнител</string>
     <string name="year">Година</string>
-    <string name="track_number">Track Number</string>
+    <string name="track_number">Track number</string>
     <!-- Artists -->
     <string name="artists">Изпълнители</string>
     <string name="folders">Папки</string>

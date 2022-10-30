@@ -55,7 +55,7 @@
     <string name="album_count">Albumok</string>
     <string name="artist_name">Előadó neve</string>
     <string name="year">Év</string>
-    <string name="track_number">Track Number</string>
+    <string name="track_number">Track number</string>
     <!-- Artists -->
     <string name="artists">Előadók</string>
     <string name="folders">Mappák</string>

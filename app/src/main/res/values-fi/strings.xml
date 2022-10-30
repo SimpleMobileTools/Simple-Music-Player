@@ -55,7 +55,7 @@
     <string name="album_count">Albumien määrä</string>
     <string name="artist_name">Artistin Nimi</string>
     <string name="year">Vuosi</string>
-    <string name="track_number">Track Number</string>
+    <string name="track_number">Track number</string>
     <!-- Artists -->
     <string name="artists">Artistit</string>
     <string name="folders">Kansiot</string>

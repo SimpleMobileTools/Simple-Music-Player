@@ -55,7 +55,7 @@
     <string name="album_count">Albumų skaičius</string>
     <string name="artist_name">Menininko vardas</string>
     <string name="year">Metai</string>
-    <string name="track_number">Track Number</string>
+    <string name="track_number">Track number</string>
     <!-- Artists -->
     <string name="artists">Menininkai</string>
     <string name="folders">Folders</string>
