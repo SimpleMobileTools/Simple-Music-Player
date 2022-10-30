@@ -85,4 +85,5 @@
     <!-- FAQ -->
     <string name="faq_1_title">Kako lahko pesmi prestavim naprej\?</string>
     <string name="faq_1_text">Kliknete na besedilo trenutnega ali največjega trajanja v bližini iskalne vrstice, kar bo premaknilo skladbo nazaj ali naprej.</string>
+    <string name="trackID">Track Number</string>
 </resources>
