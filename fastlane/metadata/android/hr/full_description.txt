@@ -1,10 +1,56 @@
-Jednostavan glazbeni svirač koji se može lako kontrolirati putem trake za obavijesti, widgeta početnog zaslona ili gumba na slušalicama. Možete sortirati sve pjesme po naslovu ili izvođaču i prilagoditi ekvilajzer. Sortiranje po izvođaču ili albumu još nije podržano, budite u tijeku!
+🎧 Slušajte svoju glazbu bez oglasa 🎧
 
-Aplikacija uključuje widget s prilagodljivom bojom teksta, transparentnošću i bojom pozadine.
+Vrlo dobro znamo koliko je vaše vrijeme važno. To je razlog zašto ne stavljamo oglase u aplikaciju. Oglasi su dosadni, a ljudi ih mrze. Jednostavno kao to.
 
-Ne sadrži oglase ili nepotrebne dozvole. Aplikacije je otvorenog koda, pruža prilagodljive boje.
+Simple Music Player fokusiran je na jednu stvar, uživajte u glazbi bez ikakvih smetnji. Koristite našu aplikaciju dok ste opušteni kod kuće, na poslu ili dok se vozite u svom automobilu.
 
-Check out the full suite of Simple Tools here:
+Najbolji dio toga je BESPLATNA instalacija.
+
+Svoju glazbu možete ponijeti posvuda: u šetnju ulicama, planinarenje na planinu, čak i na Mjesec. Ovaj MP3 player je offline, što znači da vam ne treba internet da biste ga koristili.
+
+Štoviše, Simple Music Player ima jedinstvenu značajku štednje baterije. Zahvaljujući našoj novoj tehnologiji, više nećete morati brinuti da će vam tijekom dana ostati bez baterije. Reproducirajte svoju glazbu bez problema s ovim pametnim glazbenim playerom.
+
+👉 Što čekate da ga preuzmete i uživate u glazbi bez oglasa?
+
+Upravljajte glazbom putem statusne trake, dodatka ili hardverskih gumba na slušalicama. Nikada nije bilo lako rukovati.
+
+Osim toga, možete prilagoditi widget. Promijenite boju teksta i pozadine za pristup i kontrolu.
+
+Slušajte svoje omiljene mp3, druge audio pjesme ili podcaste s ovim besplatnim prekrasnim glazbenim playerom. Unesite stil u aplikaciju prilagođavajući boje sučelja.
+
+Možete programirati uz koju pjesmu/glazbu želite zaspati putem mjerača vremena za spavanje. Možda jazz, chill, zen, čak i zvukovi prirode, odaberite koji vam od vaše glazbe najviše odgovara. I uživajte u svojim snovima!
+
+Podignite razinu kvalitete zvuka s ekvilajzerom. Ovaj audio player vam daje priliku mijenjati glazbene efekte prema vrsti glazbe koju slušate (klasična, pop, rock, dance, techno, latino, ravna, itd.). Čak i prema zvučnicima koje imate (slušalice, stereo, naokolo i drugi). Sada ćete imati snagu zvukova u ušima.
+
+Simple Music Player također vam daje priliku da napravite svoj glazbeni popis unutar aplikacije. Izradite i upravljajte svojim popisom pjesama kako želite. Svoje pjesme možete preuzeti sa svog telefona i SD kartice. Nadalje, možete jednostavno dodavati mape.
+
+Ovaj player podržava nasumičnu reprodukciju, ponavljanje određene pjesme, preskakanje i prosljeđivanje. Miksajte glazbu poput profesionalnog DJ-a.
+
+Ne sviđa vam se kako je pjesma označena? Uredite ga kako želite, promijenite nazive pjesama, izvođača, grupa itd.
+
+Značajke
+⭐️ Lijepo i lijepo sučelje
+⭐️ Prilagodba boja
+⭐️ Štednja baterije
+⭐️ Tajmer za spavanje
+⭐️ Snažan ekvilajzer s pregršt unaprijed postavljenih postavki
+⭐️ Widget za reprodukciju
+⭐️ Upravljanje popisima za reprodukciju
+⭐️ Višejezičnost
+⭐️ Upravljanje svojstvima datoteke
+⭐️ Upravljanje etiketama pjesama
+⭐️ Privatnost
+⭐️ Dijeljenje glazbe
+
+👉 Privatnost naših korisnika shvaćamo vrlo ozbiljno. Ne dijelimo nikakve informacije s drugima.
+
+🎧 Uživajte u glazbi bez reklama 🎧
+
+Dolazi s materijalnim dizajnom i tamnom temom prema zadanim postavkama, pruža izvrsno korisničko iskustvo za jednostavno korištenje. Nedostatak pristupa internetu daje vam više privatnosti, sigurnosti i stabilnosti od drugih aplikacija.
+
+Ne sadrži oglase niti nepotrebna dopuštenja. Potpuno je otvorenog koda, pruža prilagodljive boje.
+
+Ovdje pogledajte kompletan paket jednostavnih alata:
 https://www.simplemobiletools.com
 
 Facebook:
