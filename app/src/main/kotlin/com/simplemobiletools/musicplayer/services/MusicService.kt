@@ -30,7 +30,10 @@ import androidx.media.session.MediaButtonReceiver
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.simplemobiletools.commons.extensions.*
-import com.simplemobiletools.commons.helpers.*
+import com.simplemobiletools.commons.helpers.ensureBackgroundThread
+import com.simplemobiletools.commons.helpers.isMarshmallowPlus
+import com.simplemobiletools.commons.helpers.isOreoPlus
+import com.simplemobiletools.commons.helpers.isQPlus
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.MainActivity
 import com.simplemobiletools.musicplayer.databases.SongsDatabase
@@ -86,7 +89,13 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
                 PlaybackStateCompat.ACTION_SEEK_TO or
                 PlaybackStateCompat.ACTION_PLAY_PAUSE
 
-        fun getIsPlaying() = mPlayer?.isPlaying == true
+        fun getIsPlaying(): Boolean {
+            return try {
+                mPlayer?.isPlaying == true
+            } catch (e: Exception) {
+                false
+            }
+        }
     }
 
     private var mClicksCnt = 0
@@ -881,7 +890,15 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     private fun broadcastNextTrackChange() {
         setPlaybackSpeed()
         Handler(Looper.getMainLooper()).post {
-            val currentTrackIndex = mTracks.indexOfFirstOrNull { it.mediaStoreId == mCurrTrack?.mediaStoreId }
+            var currentTrackIndex: Int? = null
+            for (i in 0 until mTracks.size) {
+                val track = mTracks[i]
+                if (track.mediaStoreId == mCurrTrack?.mediaStoreId) {
+                    currentTrackIndex = i
+                    break
+                }
+            }
+
             if (currentTrackIndex != null) {
                 val nextTrack = mTracks[(currentTrackIndex + 1) % mTracks.size]
                 EventBus.getDefault().post(Events.NextTrackChanged(nextTrack))

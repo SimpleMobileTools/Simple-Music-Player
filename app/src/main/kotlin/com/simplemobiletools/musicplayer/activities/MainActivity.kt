@@ -219,8 +219,10 @@ class MainActivity : SimpleActivity() {
         }
 
         updateAllDatabases {
-            getAllFragments().forEach {
-                it?.setupFragment(this)
+            runOnUiThread {
+                getAllFragments().forEach {
+                    it?.setupFragment(this)
+                }
             }
         }
     }
