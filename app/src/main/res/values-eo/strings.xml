@@ -55,7 +55,7 @@
     <string name="album_count">Nombro de albumoj</string>
     <string name="artist_name">Nomo de muzikisto</string>
     <string name="year">Jaro</string>
-    <string name="trackID">Track Number</string>
+    <string name="track_number">Track Number</string>
     <!-- Artists -->
     <string name="artists">Muzikistoj</string>
     <string name="folders">Folders</string>

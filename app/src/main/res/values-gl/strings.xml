@@ -55,7 +55,7 @@
     <string name="album_count">Número de álbums</string>
     <string name="artist_name">Artist Name</string>
     <string name="year">Ano</string>
-    <string name="trackID">Track Number</string>
+    <string name="track_number">Track Number</string>
     <!-- Artists -->
     <string name="artists">Artistas</string>
     <string name="folders">Cartafoles</string>

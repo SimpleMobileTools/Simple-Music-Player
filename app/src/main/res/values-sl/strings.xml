@@ -55,6 +55,7 @@
     <string name="album_count">Število albumov</string>
     <string name="artist_name">Ime izvajalca</string>
     <string name="year">Leto</string>
+    <string name="track_number">Track Number</string>
     <!-- Artists -->
     <string name="artists">Umetniki</string>
     <string name="folders">Mape</string>

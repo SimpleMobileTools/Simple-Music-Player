@@ -55,7 +55,7 @@
     <string name="album_count">Kiraan Album</string>
     <string name="artist_name">Nama Artis</string>
     <string name="year">Tahun</string>
-    <string name="trackID">Track Number</string>
+    <string name="track_number">Track Number</string>
     <!-- Artists -->
     <string name="artists">Artis</string>
     <string name="folders">Folders</string>

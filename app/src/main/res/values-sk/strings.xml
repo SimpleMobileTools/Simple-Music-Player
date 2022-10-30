@@ -55,7 +55,7 @@
     <string name="album_count">Počet albumov</string>
     <string name="artist_name">Meno interpreta</string>
     <string name="year">Rok</string>
-    <string name="trackID">Track Number</string>
+    <string name="track_number">Číslo skladby</string>
     <!-- Artists -->
     <string name="artists">Interpreti</string>
     <string name="folders">Priečinky</string>

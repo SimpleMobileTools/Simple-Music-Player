@@ -55,7 +55,7 @@
     <string name="album_count">Conteggio per album</string>
     <string name="artist_name">Nome dell\'artista</string>
     <string name="year">Anno</string>
-    <string name="trackID">Track Number</string>
+    <string name="track_number">Track Number</string>
     <!-- Artists -->
     <string name="artists">Artisti</string>
     <string name="folders">Cartelle</string>
