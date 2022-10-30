@@ -77,6 +77,7 @@
     <!-- Settings -->
     <string name="equalizer">Equalizador</string>
     <string name="swap_prev_next">Trocar os botões anterior/próximo do fone de ouvido</string>
+    <string name="exclude_folder_description">Excluding a folder will prevent the displaying of all audio files within. Files manually added to playlists will not be affected.</string>
     <!-- FAQ -->
     <string name="faq_1_title">Como posso avançar músicas\?</string>
     <string name="faq_1_text">Você pode clicar nos textos de duração atual ou máxima perto da barra de progresso, que moverá a música para trás ou para frente.</string>

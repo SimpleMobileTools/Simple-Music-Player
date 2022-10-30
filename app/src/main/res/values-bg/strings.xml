@@ -77,6 +77,7 @@
     <!-- Settings -->
     <string name="equalizer">Еквалайзер</string>
     <string name="swap_prev_next">Размяна на бутоните за предишно/следващо на слушалките</string>
+    <string name="exclude_folder_description">Excluding a folder will prevent the displaying of all audio files within. Files manually added to playlists will not be affected.</string>
     <!-- FAQ -->
     <string name="faq_1_title">Как мога да превъртам песни\?</string>
     <string name="faq_1_text">Можете да щракнете върху текстовете за текущата или максималната продължителност в близост до лентата за търсене, което ще придвижи песента назад или напред.</string>

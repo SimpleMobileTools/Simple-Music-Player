@@ -75,6 +75,7 @@
     <!-- Settings -->
     <string name="equalizer">イコライザー</string>
     <string name="swap_prev_next">ヘッドフォンの 前へ/次へ ボタンを入れ替える</string>
+    <string name="exclude_folder_description">Excluding a folder will prevent the displaying of all audio files within. Files manually added to playlists will not be affected.</string>
     <!-- FAQ -->
     <string name="faq_1_title">曲を早送りするにはどうすればよいですか？</string>
     <string name="faq_1_text">シークバーの近くにある[現在の再生位置]または[曲の長さ]を示すテキストをタップすると、曲の巻戻しまたは早送りをすることができます。</string>

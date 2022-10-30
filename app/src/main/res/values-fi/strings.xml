@@ -77,6 +77,7 @@
     <!-- Settings -->
     <string name="equalizer">Taajuuskorjain</string>
     <string name="swap_prev_next">Vaihda edellinen/seuraava kuulokepainikkeet</string>
+    <string name="exclude_folder_description">Excluding a folder will prevent the displaying of all audio files within. Files manually added to playlists will not be affected.</string>
     <!-- FAQ -->
     <string name="faq_1_title">Kuinka voin kelata kappaleita eteenpäin\?</string>
     <string name="faq_1_text">Voit napsauttaa nykyistä tai enimmäiskestoa lähellä hakupalkkia olevaa tekstiä, jolloin kappale siirtyy joko taaksepäin tai eteenpäin.</string>

@@ -81,6 +81,7 @@
     <!-- Settings -->
     <string name="equalizer">Izenačevalnik</string>
     <string name="swap_prev_next">Zamenjava prejšnjih/naslednjih gumbov za slušalke</string>
+    <string name="exclude_folder_description">Excluding a folder will prevent the displaying of all audio files within. Files manually added to playlists will not be affected.</string>
     <!-- FAQ -->
     <string name="faq_1_title">Kako lahko pesmi prestavim naprej\?</string>
     <string name="faq_1_text">Kliknete na besedilo trenutnega ali največjega trajanja v bližini iskalne vrstice, kar bo premaknilo skladbo nazaj ali naprej.</string>

@@ -75,6 +75,7 @@
     <!-- Settings -->
     <string name="equalizer">Ekualiser</string>
     <string name="swap_prev_next">Tukar tombol pemilih lagu sebelumnya/berikutnya pada headphone</string>
+    <string name="exclude_folder_description">Excluding a folder will prevent the displaying of all audio files within. Files manually added to playlists will not be affected.</string>
     <!-- FAQ -->
     <string name="faq_1_title">Bagaimana saya memajukan lagu\?</string>
     <string name="faq_1_text">Anda bisa klik teks durasi di dekat bilah laju, tindakan tersebut akan memajukan atau memundurkan lagu.</string>

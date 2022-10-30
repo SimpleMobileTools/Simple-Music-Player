@@ -77,6 +77,7 @@
     <!-- Settings -->
     <string name="equalizer">اکولایزر</string>
     <string name="swap_prev_next">تغییر دکمه های قبلی و بعدی هدفون</string>
+    <string name="exclude_folder_description">Excluding a folder will prevent the displaying of all audio files within. Files manually added to playlists will not be affected.</string>
     <!-- FAQ -->
     <string name="faq_1_title">چطور می توانم آهنگ ها را سریع ارسال کنم؟</string>
     <string name="faq_1_text">می توانید بر روی متون فعلی یا حداکثر مدت زمان نزدیک نوار جستجو کلیک کنید ، که آهنگ را به عقب یا جلو منتقل می کند.</string>

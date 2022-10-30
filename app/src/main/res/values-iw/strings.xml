@@ -81,6 +81,7 @@
     <!-- Settings -->
     <string name="equalizer">שוין</string>
     <string name="swap_prev_next">החלף את לחצני האוזניות הקודמות/הבאות</string>
+    <string name="exclude_folder_description">Excluding a folder will prevent the displaying of all audio files within. Files manually added to playlists will not be affected.</string>
     <!-- FAQ -->
     <string name="faq_1_title">איך אני יכול להריץ שירים קדימה\?</string>
     <string name="faq_1_text">אתה יכול ללחוץ על הטקסטים הנוכחיים או המשך המקסימלי ליד סרגל החיפוש, שיעביר את השיר אחורה או קדימה.</string>

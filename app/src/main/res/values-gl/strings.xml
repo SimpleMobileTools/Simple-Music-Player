@@ -77,6 +77,7 @@
     <!-- Settings -->
     <string name="equalizer">Ecualizador</string>
     <string name="swap_prev_next">Intercambiar os botóns anterior/posterior dos auriculares</string>
+    <string name="exclude_folder_description">Excluding a folder will prevent the displaying of all audio files within. Files manually added to playlists will not be affected.</string>
     <!-- FAQ -->
     <string name="faq_1_title">Como podo avanzar rapidamente as cancións\?</string>
     <string name="faq_1_text">Podes premer nos textos de duración actual ou máxima preto da barra de busca, que moverá a canción cara atrás ou cara adiante.</string>

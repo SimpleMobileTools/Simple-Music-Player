@@ -77,6 +77,7 @@
     <!-- Settings -->
     <string name="equalizer">Ekvalaiser</string>
     <string name="swap_prev_next">Vaheta kõrvaklappide eelmine/järgmine nupud</string>
+    <string name="exclude_folder_description">Excluding a folder will prevent the displaying of all audio files within. Files manually added to playlists will not be affected.</string>
     <!-- FAQ -->
     <string name="faq_1_title">Kuidas ma saan palasid kiiresti edasi kerida\?</string>
     <string name="faq_1_text">Klõpsi esitusribal kas esituse aega või pala pikkust ning sellega hüppad loos tagasi või edasi.</string>
