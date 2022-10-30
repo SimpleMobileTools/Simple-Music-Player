@@ -55,6 +55,7 @@
     <string name="album_count">앨범 수</string>
     <string name="artist_name">아티스트 이름</string>
     <string name="year">Year</string>
+    <string name="trackID">Track Number</string>
     <!-- Artists -->
     <string name="artists">Artists</string>
     <string name="folders">Folders</string>

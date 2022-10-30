@@ -55,6 +55,7 @@
     <string name="album_count">Antal albummer</string>
     <string name="artist_name">Kunstnernavn</string>
     <string name="year">År</string>
+    <string name="trackID">Track Number</string>
     <!-- Artists -->
     <string name="artists">Kunstnere</string>
     <string name="folders">Mapper</string>

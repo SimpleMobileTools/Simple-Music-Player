@@ -55,6 +55,7 @@
     <string name="album_count">Broj albuma</string>
     <string name="artist_name">Ime izvođača</string>
     <string name="year">Godina</string>
+    <string name="trackID">Track Number</string>
     <!-- Artists -->
     <string name="artists">Izvođači</string>
     <string name="folders">Mape</string>

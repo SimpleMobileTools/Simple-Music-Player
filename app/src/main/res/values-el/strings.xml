@@ -55,6 +55,7 @@
     <string name="album_count">Αριθμός άλμπουμ</string>
     <string name="artist_name">Όνομα καλλιτέχνη</string>
     <string name="year">Έτος</string>
+    <string name="trackID">Track Number</string>
     <!-- Artists -->
     <string name="artists">Καλλιτέχνες</string>
     <string name="folders">Φάκελοι</string>
