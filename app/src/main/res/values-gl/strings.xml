@@ -4,20 +4,20 @@
     <string name="app_launcher_name">Reprodutor</string>
     <string name="playlist_empty">A lista de reprodución está baleira</string>
     <string name="rename_song">Renomear canción</string>
-    <string name="rename_song_error">Algo fallou ao renomear</string>
+    <string name="rename_song_error">Produciuse un erro durante o cambio de nome</string>
     <string name="rename_song_empty">Por favor complete todos os campos</string>
-    <string name="repeat_off">Repeat off</string>
+    <string name="repeat_off">Desactivar apagado</string>
     <string name="repeat_song">Repetir a canción actual</string>
     <string name="repeat_playlist">Repeat playlist</string>
-    <string name="stop_playback_after_current_song">Stop playback after current song</string>
+    <string name="stop_playback_after_current_song">Detén a reprodución despois da canción actual</string>
     <string name="enable_shuffle">Activa Modo aleatorio</string>
     <string name="disable_shuffle">Desactiva Modo aleatorio</string>
-    <string name="shuffle_enabled">Modo aleatorio activado</string>
-    <string name="shuffle_disabled">Modo aleatorio desactivado</string>
+    <string name="shuffle_enabled">Activouse a función aleatoria</string>
+    <string name="shuffle_disabled">Desactivouse a función aleatoria</string>
     <string name="sleep_timer">Temporizador</string>
     <string name="volume">Volume</string>
-    <string name="playback_speed">Playback speed</string>
-    <string name="loading_files">Loading files…</string>
+    <string name="playback_speed">Velocidade da reprodución</string>
+    <string name="loading_files">Cargando ficheiros…</string>
     <!-- Playlists -->
     <string name="add_file_to_playlist">Engadir ficheiro á lista de reprodución</string>
     <string name="add_folder_to_playlist">Engadir cartafol á lista de reprodución</string>
@@ -35,7 +35,7 @@
     <string name="open_playlist">Abrir lista de reprodución</string>
     <string name="all_songs_cannot_be_deleted">Non se poden borrar \'todas as cancións\' da lista</string>
     <string name="empty_playlist">A lista actual está baleira</string>
-    <string name="fetching_songs">Buscando cancións_</string>
+    <string name="fetching_songs">Buscando cancións…</string>
     <string name="all_songs">Todas as cancións</string>
     <string name="create_playlist_from_folder">Crear nova lista de reprodución desde cartafol</string>
     <string name="folder_contains_no_audio">O cartafol seleccionado non contén ficheiros de audio</string>
@@ -44,43 +44,44 @@
     <string name="show_filename">Amosar o nome de ficheiro como título da canción</string>
     <string name="title_is_not_available">O título non está dispoñible</string>
     <string name="show_album_cover">Amosar a portada do álbum na pantalla principal</string>
-    <string name="all_tracks">All tracks</string>
+    <string name="all_tracks">Todalas pistas</string>
     <string name="add_to_playlist">Add to playlist</string>
-    <string name="create_playlist_label">You can create a new playlist by selecting the wanted artists, albums or tracks and using Menu -&gt; Add to playlist.</string>
+    <string name="create_playlist_label">Podes crear unha nova lista de reprodución seleccionando os artistas, álbums ou pistas desexados ou usando Menú -&gt; Engadir á lista de reprodución.</string>
     <string name="export_playlist">Export playlist</string>
     <string name="import_playlist">Import playlist</string>
-    <string name="filename_without_m3u">Filename (without .m3u)</string>
+    <string name="filename_without_m3u">Nome do ficheiro (sen .m3u)</string>
     <!-- Sorting -->
-    <string name="track_count">Track Count</string>
-    <string name="album_count">Album Count</string>
+    <string name="track_count">Contador das pistas</string>
+    <string name="album_count">Número de álbums</string>
     <string name="artist_name">Artist Name</string>
-    <string name="year">Year</string>
+    <string name="year">Ano</string>
     <string name="trackID">Track Number</string>
     <!-- Artists -->
-    <string name="artists">Artists</string>
-    <string name="folders">Folders</string>
-    <string name="albums">Albums</string>
+    <string name="artists">Artistas</string>
+    <string name="folders">Cartafoles</string>
+    <string name="albums">Álbums</string>
     <plurals name="albums_plural">
-        <item quantity="one">%d Album</item>
-        <item quantity="other">%d Albums</item>
+        <item quantity="one">%d Álbum</item>
+        <item quantity="other">%d Álbums</item>
     </plurals>
-    <string name="tracks">Tracks</string>
+    <string name="tracks">Pistas</string>
     <plurals name="tracks_plural">
-        <item quantity="one">%d Track</item>
-        <item quantity="other">%d Tracks</item>
+        <item quantity="one">%d Pista</item>
+        <item quantity="other">%d Pistas</item>
     </plurals>
     <!-- Queue -->
     <string name="next_track">Next:</string>
-    <string name="track_queue">Track queue</string>
-    <string name="add_to_queue">Add to queue</string>
-    <string name="remove_from_queue">Remove from queue</string>
-    <string name="create_playlist_from_queue">Create playlist from queue</string>
+    <string name="track_queue">Fila de seguimento</string>
+    <string name="add_to_queue">Engadir á cola</string>
+    <string name="remove_from_queue">Eliminar da cola</string>
+    <string name="create_playlist_from_queue">Crear un lista de reprodución desde a cola</string>
     <!-- Settings -->
     <string name="equalizer">Ecualizador</string>
     <string name="swap_prev_next">Intercambiar os botóns anterior/posterior dos auriculares</string>
+    <string name="exclude_folder_description">Excluding a folder will prevent the displaying of all audio files within. Files manually added to playlists will not be affected.</string>
     <!-- FAQ -->
-    <string name="faq_1_title">Como podo facer un avance rápido nas cancións\?</string>
-    <string name="faq_1_text">Preme na duración actual ou máxima dos ficheiros preto da barra de busca, que moverá a canción tanto cara adiante como cara atrás.</string>
+    <string name="faq_1_title">Como podo avanzar rapidamente as cancións\?</string>
+    <string name="faq_1_text">Podes premer nos textos de duración actual ou máxima preto da barra de busca, que moverá a canción cara atrás ou cara adiante.</string>
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res

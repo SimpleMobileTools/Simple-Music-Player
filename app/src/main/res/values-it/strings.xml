@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Semplice Riproduttore Musicale</string>
-    <string name="app_launcher_name">Riproduttore musicale</string>
+    <string name="app_name">Lettore Musicale Semplice</string>
+    <string name="app_launcher_name">Lettore Musicale</string>
     <string name="playlist_empty">La scaletta è vuota</string>
     <string name="rename_song">Rinomina brano</string>
     <string name="rename_song_error">Si è verificato un errore durante la ridenominazione</string>
@@ -78,6 +78,7 @@
     <!-- Settings -->
     <string name="equalizer">Equalizzatore</string>
     <string name="swap_prev_next">Inverti i pulsanti successivo/precedente delle cuffiette</string>
+    <string name="exclude_folder_description">Excluding a folder will prevent the displaying of all audio files within. Files manually added to playlists will not be affected.</string>
     <!-- FAQ -->
     <string name="faq_1_title">Come posso avanzare rapidamente nei brani\?</string>
     <string name="faq_1_text">Si può premere rapidamente sui testi accanto alla barra di avanzamento, questi faranno spostare il brano in avanti o all\'indietro.</string>

@@ -50,14 +50,14 @@ Simple Music Player также дает вам возможность созда
 
 Не содержит рекламы и ненужных разрешений. Является полностью открытым исходным кодом, обеспечивает настраиваемые цвета.
 
-Ознакомьтесь с полным набором простых инструментов здесь:
+Ознакомьтесь с полным набором Простых Инструментов здесь:
 https://www.simplemobiletools.com
 
 Фейсбук:
 https://www.facebook.com/simplemobiletools
 
-Реддит:
+Reddit:
 https://www.reddit.com/r/SimpleMobileTools
 
-Телеграмма:
+Telegram:
 https://t.me/SimpleMobileTools

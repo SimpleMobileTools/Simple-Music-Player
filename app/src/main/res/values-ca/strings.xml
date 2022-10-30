@@ -78,6 +78,7 @@
     <!-- Settings -->
     <string name="equalizer">Equalitzador</string>
     <string name="swap_prev_next">Intercanvia els botons anterior/següent dels auriculars</string>
+    <string name="exclude_folder_description">Excluding a folder will prevent the displaying of all audio files within. Files manually added to playlists will not be affected.</string>
     <!-- FAQ -->
     <string name="faq_1_title">Com puc avançar ràpidament les cançons\?</string>
     <string name="faq_1_text">Podeu fer clic als textos de durada actual o màxima a prop de la barra de cerca, que mouran la cançó cap enrere o cap endavant.</string>

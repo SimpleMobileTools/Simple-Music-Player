@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">سادہ سنگیت</string>
+    <string name="app_launcher_name">سنگیت</string>
+    <string name="playlist_empty">تہادے پلےلسٹ وچ کوئی نہیں اے</string>
+    <string name="rename_song">ناں بدلو</string>
+    <string name="rename_song_error">ناں بدل نہیں سکیا</string>
+    <string name="rename_song_empty">اِتھے سارے پایو</string>
+    <string name="repeat_off">دہراوݨ نہیں چالو</string>
+    <string name="repeat_song">موجودہ گیت دہراؤ</string>
+    <string name="repeat_playlist">سبھ دہراؤ</string>
+    <string name="stop_playback_after_current_song">ایہہ توں بعد پلے بند کرو</string>
+    <string name="enable_shuffle">رلؕا چالو کرو</string>
+    <string name="disable_shuffle">رلؕا بند کرو</string>
+    <string name="shuffle_enabled">رلؕاۓ رِہے اے</string>
+    <string name="shuffle_disabled">رلؕا بند کیتے</string>
+    <string name="sleep_timer">سوتے دی گھڑی</string>
+    <string name="volume">آواز</string>
+    <string name="playback_speed">گیت دی گتی</string>
+    <string name="loading_files">فائلاں لوڈ کریاں جا رِہیاں ہن…</string>
+    <!-- Playlists -->
+    <string name="add_file_to_playlist">پلےلِسٹ وچ فائل پایو</string>
+    <string name="add_folder_to_playlist">پلےلِسٹ وچ فولڈر پایو</string>
+    <string name="manage_playlists">پلےلِسٹاں پربند کرو</string>
+    <string name="playlists">پلےلِسٹاں</string>
+    <string name="create_new_playlist">نویں پلےلِسٹ بݨاؤ</string>
+    <string name="rename_playlist">پلےلِسٹ لئی نواں ناں بݨاؤ</string>
+    <string name="playlist_name_exists">ایہہ ناں پہلاں ہی ورتیا</string>
+    <string name="remove_playlist">پلےلِسٹ مٹاؤ</string>
+    <string name="remove_playlist_description">صرف چݨیاں پلےلِسٹاں مٹائیاں جاݨ‌گیاں۔ اوہ فائلاں نوں مٹایا نہیں جاوےگا۔</string>
+    <string name="remove_playlist_description_placeholder">صرف «%s» پلےلِسٹاں مٹائیاں جاݨ‌گیاں۔ اوہ فائلاں نوں مٹایا نہیں جاوےگا۔</string>
+    <string name="remove_from_playlist">پلےلِسٹ توں ہٹاؤ</string>
+    <string name="remove_from_playlist_description">صرف پلےلِسٹ وچ حصیاں نوں ہی مٹایا جاوےگا۔ اصلی فائیلاں نوں مٹایا نہیں جاوےگا۔</string>
+    <string name="delete_the_files_too">فائلاں وی مٹاؤ</string>
+    <string name="open_playlist">پلےلِسٹ کھولھو</string>
+    <string name="all_songs_cannot_be_deleted">”سارے گیت“ پلےلِسٹ مٹا نہیں جا سکدی</string>
+    <string name="empty_playlist">ایس پلےلِسٹ وچ کوئی گیت نہیں اے</string>
+    <string name="fetching_songs">گیت لئے جا رہے ہن…</string>
+    <string name="all_songs">سارے گیت</string>
+    <string name="create_playlist_from_folder">فولڈر توں نویں پلےلِسٹ بݨاؤ</string>
+    <string name="folder_contains_no_audio">ایس چݨی فولڈر وچ کوئی آڈیو دیاں فائلاں نہیں اے</string>
+    <string name="delete_current_song">موجودہ گیت مٹاؤ</string>
+    <string name="remove_current_song">پلےلِسٹ وچ موجودہ گیت ہٹاؤ</string>
+    <string name="show_filename">گیت دے سرلیکھ لئی فائل دق ناں ویکھو</string>
+    <string name="title_is_not_available">جے سرلیکھ اُپلبدھ نہیں اے</string>
+    <string name="show_album_cover">مکھ سکرین تے البم دی تصویر ویکھو</string>
+    <string name="all_tracks">سارے ٹریک</string>
+    <string name="add_to_playlist">پلےلِسٹ وچ پایو</string>
+    <string name="create_playlist_label">تہاڈے چݨیاں آرٹسٹاں، البماں یا ٹریکاں لئی تسیں نویں پلےلِسٹ بݨا سکدے؛ پہلا مینو چݨو تاں پلےلِسٹ وچ پاؤݨ چݨو۔</string>
+    <string name="export_playlist">پلےلِسٹ ایکسپورٹ کرو</string>
+    <string name="import_playlist">پلےلِسٹ ایمپورٹ کرو</string>
+    <string name="filename_without_m3u">فائل دا ناں (`.m3u` نہیں ورتو)</string>
+    <!-- Sorting -->
+    <string name="track_count">ٹریکاں دی گتی</string>
+    <string name="album_count">البماں دی گتی</string>
+    <string name="artist_name">آرٹسٹ دا ناں</string>
+    <string name="year">سال</string>
+    <!-- Artists -->
+    <string name="artists">آرٹسٹ</string>
+    <string name="folders">فولڈر</string>
+    <string name="albums">البم</string>
+    <plurals name="albums_plural">
+        <item quantity="one">%d البم</item>
+        <item quantity="other">%d البم</item>
+    </plurals>
+    <string name="tracks">ٹریک</string>
+    <plurals name="tracks_plural">
+        <item quantity="one">%d ٹریک</item>
+        <item quantity="other">%d ٹریک</item>
+    </plurals>
+    <!-- Queue -->
+    <string name="next_track">اگے:</string>
+    <string name="track_queue">ٹریک کتار</string>
+    <string name="add_to_queue">کتار وچ پایو</string>
+    <string name="remove_from_queue">کتار وچ ہٹاؤ</string>
+    <string name="create_playlist_from_queue">کتار نال پلےلِسٹ بݨاؤ</string>
+    <!-- Settings -->
+    <string name="equalizer">برابری کرن والا</string>
+    <string name="swap_prev_next">ہیڈفون دے پچھلے بٹن تے اگے بٹن سویپ کرو</string>
+    <string name="exclude_folder_description">Excluding a folder will prevent the displaying of all audio files within. Files manually added to playlists will not be affected.</string>
+    <!-- FAQ -->
+    <string name="faq_1_title">میں گیتاں نوں کیویں تیزی نال اگے ودھا سکدا ہاں؟</string>
+    <string name="faq_1_text">You can click on the current or max duration texts near the seekbar, that will move the song either backward, or forward.</string>
+</resources>

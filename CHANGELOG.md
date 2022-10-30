@@ -1,6 +1,12 @@
 Changelog
 ==========
 
+Version 5.14.1 *(2022-10-03)*
+----------------------------
+
+ * Adding a Get Simple Phone button into the About section
+ * Added some translation and UX improvements
+
 Version 5.14.0 *(2022-09-02)*
 ----------------------------
 

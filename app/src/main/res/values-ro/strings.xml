@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Simple Music Player</string>
+    <string name="app_name">Player muzical simplu</string>
     <string name="app_launcher_name">Muzică</string>
     <string name="playlist_empty">Lista dvs. de redare este goală</string>
     <string name="rename_song">Redenumiți melodia</string>
@@ -47,8 +47,8 @@
     <string name="all_tracks">Toate piesele</string>
     <string name="add_to_playlist">Adăugați la lista de redare</string>
     <string name="create_playlist_label">Puteți crea o nouă listă de redare selectând artiștii, albumele sau piesele dorite și folosind Meniu -&gt; Adaugaţi la lista de redare.</string>
-    <string name="export_playlist">Export playlist</string>
-    <string name="import_playlist">Import playlist</string>
+    <string name="export_playlist">Exportă lista de redare</string>
+    <string name="import_playlist">Importă lista de redare</string>
     <string name="filename_without_m3u">Numele fișierului (fără .m3u)</string>
     <!-- Sorting -->
     <string name="track_count">Număr de piese</string>
@@ -80,6 +80,7 @@
     <!-- Settings -->
     <string name="equalizer">Egalizator</string>
     <string name="swap_prev_next">Inversaţi butoanele anterior/următor pentru căști</string>
+    <string name="exclude_folder_description">Excluding a folder will prevent the displaying of all audio files within. Files manually added to playlists will not be affected.</string>
     <!-- FAQ -->
     <string name="faq_1_title">Cum pot să avansez rapid melodiile\?</string>
     <string name="faq_1_text">Puteți face clic pe textele de durată curentă sau maximă de lângă bara de căutare, care vor muta melodia fie înapoi, fie înainte.</string>

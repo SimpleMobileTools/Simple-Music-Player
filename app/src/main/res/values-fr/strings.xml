@@ -78,6 +78,7 @@
     <!-- Settings -->
     <string name="equalizer">Égaliseur</string>
     <string name="swap_prev_next">Remplacer les boutons des écouteurs précédents/suivants</string>
+    <string name="exclude_folder_description">Excluding a folder will prevent the displaying of all audio files within. Files manually added to playlists will not be affected.</string>
     <!-- FAQ -->
     <string name="faq_1_title">Comment puis-je faire avancer rapidement les chansons \?</string>
     <string name="faq_1_text">Vous pouvez cliquer sur le texte de la durée actuelle ou de la durée maximale près de la barre de recherche, ce qui fera avancer ou reculer la chanson.</string>
