@@ -55,7 +55,7 @@
     <string name="album_count">Количество альбомов</string>
     <string name="artist_name">Имя исполнителя</string>
     <string name="year">Год</string>
-    <string name="track_number">Track number</string>
+    <string name="track_number">Номер композиции</string>
     <!-- Artists -->
     <string name="artists">Исполнители</string>
     <string name="folders">Папки</string>
@@ -82,7 +82,7 @@
     <!-- Settings -->
     <string name="equalizer">Эквалайзер</string>
     <string name="swap_prev_next">Поменять местами кнопки \"Previous\"/\"Next\" на гарнитуре</string>
-    <string name="exclude_folder_description">Excluding a folder will prevent the displaying of all audio files within. Files manually added to playlists will not be affected.</string>
+    <string name="exclude_folder_description">Исключение папки предотвратит отображение всех аудиофайлов внутри неё. Файлы, добавленные вручную в списки воспроизведения, не будут затронуты.</string>
     <!-- FAQ -->
     <string name="faq_1_title">Как я могу перемотать композицию\?</string>
     <string name="faq_1_text">Вы можете нажать на текст текущей или общей длительности воспроизведения рядом с ползунком — это переместит воспроизведение либо назад, либо вперёд.</string>
