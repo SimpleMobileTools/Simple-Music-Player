@@ -189,6 +189,18 @@ class TracksActivity : SimpleActivity() {
         bus?.unregister(this)
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, resultData: Intent?) {
+        super.onActivityResult(requestCode, resultCode, resultData)
+        if (requestCode == PICK_EXPORT_FILE_INTENT && resultCode == Activity.RESULT_OK && resultData != null && resultData.data != null) {
+            try {
+                val outputStream = contentResolver.openOutputStream(resultData.data!!)
+                exportPlaylistTo(outputStream)
+            } catch (e: Exception) {
+                showErrorToast(e)
+            }
+        }
+    }
+
     private fun refreshMenuItems() {
         tracks_toolbar.menu.apply {
             findItem(R.id.search).isVisible = tracksType != TYPE_ALBUM
@@ -391,18 +403,6 @@ class TracksActivity : SimpleActivity() {
                         }
                     }
                 }
-            }
-        }
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, resultData: Intent?) {
-        super.onActivityResult(requestCode, resultCode, resultData)
-        if (requestCode == PICK_EXPORT_FILE_INTENT && resultCode == Activity.RESULT_OK && resultData != null && resultData.data != null) {
-            try {
-                val outputStream = contentResolver.openOutputStream(resultData.data!!)
-                exportPlaylistTo(outputStream)
-            } catch (e: Exception) {
-                showErrorToast(e)
             }
         }
     }
