@@ -29,20 +29,41 @@
         android:scrollbars="none"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <com.qtalk.recyclerviewfastscroller.RecyclerViewFastScroller
-            android:id="@+id/queue_fastscroller"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_height="wrap_content">
 
-            <com.simplemobiletools.commons.views.MyRecyclerView
-                android:id="@+id/queue_list"
+            <com.qtalk.recyclerviewfastscroller.RecyclerViewFastScroller
+                android:id="@+id/queue_fastscroller"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:clipToPadding="false"
-                android:layoutAnimation="@anim/layout_animation"
-                app:layoutManager="com.simplemobiletools.commons.views.MyLinearLayoutManager" />
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent">
 
-        </com.qtalk.recyclerviewfastscroller.RecyclerViewFastScroller>
+                <com.simplemobiletools.commons.views.MyRecyclerView
+                    android:id="@+id/queue_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clipToPadding="false"
+                    android:layoutAnimation="@anim/layout_animation"
+                    app:layoutManager="com.simplemobiletools.commons.views.MyLinearLayoutManager" />
+
+            </com.qtalk.recyclerviewfastscroller.RecyclerViewFastScroller>
+
+            <com.simplemobiletools.commons.views.MyTextView
+                android:id="@+id/queue_placeholder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:alpha="0.8"
+                android:gravity="center"
+                android:paddingStart="@dimen/activity_margin"
+                android:paddingTop="@dimen/activity_margin"
+                android:paddingEnd="@dimen/activity_margin"
+                android:text="@string/no_items_found"
+                android:textSize="@dimen/bigger_text_size"
+                android:textStyle="italic"
+                android:visibility="gone" />
+        </RelativeLayout>
+
     </androidx.core.widget.NestedScrollView>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

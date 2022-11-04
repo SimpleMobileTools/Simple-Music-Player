@@ -1,8 +1,15 @@
 package com.simplemobiletools.musicplayer.activities
 
+import android.app.SearchManager
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
+import androidx.appcompat.widget.SearchView
+import androidx.core.view.MenuItemCompat
 import com.simplemobiletools.commons.extensions.areSystemAnimationsEnabled
+import com.simplemobiletools.commons.extensions.beGoneIf
 import com.simplemobiletools.commons.extensions.getProperPrimaryColor
 import com.simplemobiletools.commons.helpers.NavigationIcon
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
@@ -23,6 +30,9 @@ import org.greenrobot.eventbus.ThreadMode
 
 class QueueActivity : SimpleActivity() {
     private var bus: EventBus? = null
+    private var searchMenuItem: MenuItem? = null
+    private var isSearchOpen = false
+    private var tracksIgnoringSearch = ArrayList<Track>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,7 +47,7 @@ class QueueActivity : SimpleActivity() {
 
     override fun onResume() {
         super.onResume()
-        setupToolbar(queue_toolbar, NavigationIcon.Arrow)
+        setupToolbar(queue_toolbar, NavigationIcon.Arrow, searchMenuItem = searchMenuItem)
     }
 
     override fun onDestroy() {
@@ -45,7 +55,16 @@ class QueueActivity : SimpleActivity() {
         bus?.unregister(this)
     }
 
+    override fun onBackPressed() {
+        if (isSearchOpen && searchMenuItem != null) {
+            searchMenuItem!!.collapseActionView()
+        } else {
+            super.onBackPressed()
+        }
+    }
+
     private fun setupOptionsMenu() {
+        setupSearch(queue_toolbar.menu)
         queue_toolbar.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.create_playlist_from_queue -> createPlaylistFromQueue()
@@ -53,6 +72,59 @@ class QueueActivity : SimpleActivity() {
             }
             return@setOnMenuItemClickListener true
         }
+    }
+
+    private fun setupSearch(menu: Menu) {
+        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        searchMenuItem = menu.findItem(R.id.search)
+        (searchMenuItem!!.actionView as SearchView).apply {
+            setSearchableInfo(searchManager.getSearchableInfo(componentName))
+            isSubmitButtonEnabled = false
+            setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String) = false
+
+                override fun onQueryTextChange(newText: String): Boolean {
+                    if (isSearchOpen) {
+                        onSearchQueryChanged(newText)
+                    }
+                    return true
+                }
+            })
+        }
+
+        MenuItemCompat.setOnActionExpandListener(searchMenuItem, object : MenuItemCompat.OnActionExpandListener {
+            override fun onMenuItemActionExpand(item: MenuItem?): Boolean {
+                onSearchOpened()
+                isSearchOpen = true
+                return true
+            }
+
+            override fun onMenuItemActionCollapse(item: MenuItem?): Boolean {
+                onSearchClosed()
+                isSearchOpen = false
+                return true
+            }
+        })
+    }
+
+    private fun onSearchOpened() {
+        val adapter = (queue_list.adapter as? QueueAdapter) ?: return
+        tracksIgnoringSearch = adapter.items
+        adapter.isSearchOpen = true
+        adapter.updateItems(tracksIgnoringSearch, forceUpdate = true)
+    }
+
+    private fun onSearchClosed() {
+        val adapter = (queue_list.adapter as? QueueAdapter) ?: return
+        adapter.isSearchOpen = false
+        adapter.updateItems(tracksIgnoringSearch, forceUpdate = true)
+        queue_placeholder.beGoneIf(tracksIgnoringSearch.isNotEmpty())
+    }
+
+    private fun onSearchQueryChanged(text: String) {
+        val filtered = tracksIgnoringSearch.filter { it.title.contains(text, true) }.toMutableList() as ArrayList<Track>
+        (queue_list.adapter as? QueueAdapter)?.updateItems(filtered, text)
+        queue_placeholder.beGoneIf(filtered.isNotEmpty())
     }
 
     private fun setupAdapter() {
