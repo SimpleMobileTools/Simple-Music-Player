@@ -241,18 +241,30 @@ class TracksActivity : SimpleActivity() {
             }
 
             runOnUiThread {
-                val adapter = if (tracksType == TYPE_ALBUM) {
-                    TracksHeaderAdapter(this, listItems, tracks_list) {
-                        itemClicked(it as Track)
+                if (tracksType == TYPE_ALBUM) {
+                    val currAdapter = tracks_list.adapter
+                    if (currAdapter == null) {
+                        TracksHeaderAdapter(this, listItems, tracks_list) {
+                            itemClicked(it as Track)
+                        }.apply {
+                            tracks_list.adapter = this
+                        }
+                    } else {
+                        (currAdapter as TracksHeaderAdapter).updateItems(listItems)
                     }
                 } else {
                     val isPlaylistContent = tracksType == TYPE_PLAYLIST
-                    TracksAdapter(this, tracks, isPlaylistContent, tracks_list) {
-                        itemClicked(it as Track)
+                    val currAdapter = tracks_list.adapter
+                    if (currAdapter == null) {
+                        TracksAdapter(this, tracks, isPlaylistContent, tracks_list) {
+                            itemClicked(it as Track)
+                        }.apply {
+                            tracks_list.adapter = this
+                        }
+                    } else {
+                        (currAdapter as TracksAdapter).updateItems(tracks)
                     }
                 }
-
-                tracks_list.adapter = adapter
 
                 if (areSystemAnimationsEnabled) {
                     tracks_list.scheduleLayoutAnimation()

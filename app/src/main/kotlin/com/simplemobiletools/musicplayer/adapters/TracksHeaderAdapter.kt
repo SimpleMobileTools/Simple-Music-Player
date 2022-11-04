@@ -26,9 +26,8 @@ import com.simplemobiletools.musicplayer.models.ListItem
 import com.simplemobiletools.musicplayer.models.Track
 import kotlinx.android.synthetic.main.item_album_header.view.*
 import kotlinx.android.synthetic.main.item_track.view.*
-import java.util.*
 
-class TracksHeaderAdapter(activity: SimpleActivity, val items: ArrayList<ListItem>, recyclerView: MyRecyclerView, itemClick: (Any) -> Unit) :
+class TracksHeaderAdapter(activity: SimpleActivity, var items: ArrayList<ListItem>, recyclerView: MyRecyclerView, itemClick: (Any) -> Unit) :
     MyRecyclerViewAdapter(activity, recyclerView, itemClick), RecyclerViewFastScroller.OnPopupTextUpdate {
 
     private val ITEM_HEADER = 0
@@ -153,6 +152,14 @@ class TracksHeaderAdapter(activity: SimpleActivity, val items: ArrayList<ListIte
     }
 
     private fun getSelectedTracks(): List<Track> = items.filter { it is Track && selectedKeys.contains(it.hashCode()) }.toList() as List<Track>
+
+    fun updateItems(newItems: ArrayList<ListItem>) {
+        if (newItems.hashCode() != items.hashCode()) {
+            items = newItems.clone() as ArrayList<ListItem>
+            notifyDataSetChanged()
+            finishActMode()
+        }
+    }
 
     private fun setupTrack(view: View, track: Track) {
         view.apply {
