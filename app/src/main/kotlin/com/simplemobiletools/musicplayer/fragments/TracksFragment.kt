@@ -40,6 +40,11 @@ class TracksFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
 
             tracks = tracks.distinctBy { "${it.path}/${it.mediaStoreId}" }.toMutableList() as ArrayList<Track>
 
+            val excludedFolders = context.config.excludedFolders
+            tracks = tracks.filter {
+                !excludedFolders.contains(it.path.getParentPath())
+            }.toMutableList() as ArrayList<Track>
+
             Track.sorting = context.config.trackSorting
             tracks.sort()
             tracksIgnoringSearch = tracks

@@ -145,8 +145,10 @@ fun Context.getAlbumsSync(artist: Artist): ArrayList<Album> {
         val coverArt = ContentUris.withAppendedId(artworkUri, id).toString()
         val year = cursor.getIntValue(Audio.Albums.FIRST_YEAR)
         val trackCnt = getAlbumTracksCount(id)
-        val album = Album(id, artistName, title, coverArt, year, trackCnt, artist.id)
-        albums.add(album)
+        if (trackCnt > 0) {
+            val album = Album(id, artistName, title, coverArt, year, trackCnt, artist.id)
+            albums.add(album)
+        }
     }
 
     return albums
@@ -222,20 +224,20 @@ fun Context.getAlbumTracksSync(albumId: Long): ArrayList<Track> {
 
 fun Context.getAlbumTracksCount(albumId: Long): Int {
     val uri = Audio.Media.EXTERNAL_CONTENT_URI
-    val projection = arrayOf(Audio.Media._ID)
+    val projection = arrayOf(Audio.Media._ID, Audio.Media.DATA)
     val selection = "${Audio.Albums.ALBUM_ID} = ?"
     val selectionArgs = arrayOf(albumId.toString())
+    var validTracks = 0
+    val excludedFolders = config.excludedFolders
 
-    try {
-        val cursor = contentResolver.query(uri, projection, selection, selectionArgs, null)
-        cursor?.use {
-            return cursor.count
+    queryCursor(uri, projection, selection, selectionArgs, showErrors = true) { cursor ->
+        val path = cursor.getStringValue(Audio.Media.DATA)
+        if (!excludedFolders.contains(path.getParentPath())) {
+            validTracks++
         }
-    } catch (e: Exception) {
-        showErrorToast(e)
     }
 
-    return 0
+    return validTracks
 }
 
 fun Context.resetQueueItems(newTracks: List<Track>, callback: () -> Unit) {

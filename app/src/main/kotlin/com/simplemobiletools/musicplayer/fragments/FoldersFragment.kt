@@ -50,7 +50,7 @@ class FoldersFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
             val folders = ArrayList<Folder>()
             val excludedFolders = activity.config.excludedFolders
             for ((title, folderTracks) in foldersMap) {
-                val path = (folderTracks.firstOrNull()?.path?.getParentPath() ?: "").removeSuffix("/") + "/"
+                val path = (folderTracks.firstOrNull()?.path?.getParentPath() ?: "").removeSuffix("/")
                 if (excludedFolders.contains(path)) {
                     continue
                 }

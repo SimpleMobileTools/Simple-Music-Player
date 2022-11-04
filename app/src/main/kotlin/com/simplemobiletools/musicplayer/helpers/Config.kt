@@ -103,7 +103,7 @@ class Config(context: Context) : BaseConfig(context) {
 
     fun addExcludedFolders(paths: Set<String>) {
         val currExcludedFolders = HashSet(excludedFolders)
-        currExcludedFolders.addAll(paths.map { it.removeSuffix("/") + "/" })
+        currExcludedFolders.addAll(paths.map { it.removeSuffix("/") })
         excludedFolders = currExcludedFolders.filter { it.isNotEmpty() }.toHashSet()
     }
 

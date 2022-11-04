@@ -67,7 +67,7 @@ class ExcludedFoldersAdapter(
         view.apply {
             excluded_folder_holder?.isSelected = selectedKeys.contains(folder.hashCode())
             excluded_folder_title.apply {
-                text = context.humanizePath(folder)
+                text = context.humanizePath(folder) + "/"
                 setTextColor(context.getProperTextColor())
             }
 
