@@ -43,7 +43,6 @@ class FoldersAdapter(
     override fun actionItemPressed(id: Int) {
         when (id) {
             R.id.cab_exclude_folders -> excludeFolders()
-            R.id.cab_select_all -> selectAll()
         }
     }
 
