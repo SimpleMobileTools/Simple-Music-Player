@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.util.AttributeSet
 import com.google.gson.Gson
+import com.simplemobiletools.commons.activities.BaseSimpleActivity
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
@@ -26,7 +27,7 @@ import org.greenrobot.eventbus.EventBus
 class PlaylistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPagerFragment(context, attributeSet) {
     private var playlistsIgnoringSearch = ArrayList<Playlist>()
 
-    override fun setupFragment(activity: SimpleActivity) {
+    override fun setupFragment(activity: BaseSimpleActivity) {
         playlists_placeholder_2.underlineText()
         playlists_placeholder_2.setOnClickListener {
             NewPlaylistDialog(activity) {

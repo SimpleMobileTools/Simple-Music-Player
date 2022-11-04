@@ -4,15 +4,20 @@ import android.content.Context
 import android.content.Intent
 import android.util.AttributeSet
 import com.google.gson.Gson
+import com.simplemobiletools.commons.activities.BaseSimpleActivity
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
-import com.simplemobiletools.commons.extensions.*
+import com.simplemobiletools.commons.extensions.areSystemAnimationsEnabled
+import com.simplemobiletools.commons.extensions.beGoneIf
+import com.simplemobiletools.commons.extensions.beVisibleIf
+import com.simplemobiletools.commons.extensions.hideKeyboard
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
 import com.simplemobiletools.musicplayer.activities.TracksActivity
 import com.simplemobiletools.musicplayer.adapters.AlbumsAdapter
 import com.simplemobiletools.musicplayer.dialogs.ChangeSortingDialog
-import com.simplemobiletools.musicplayer.extensions.*
+import com.simplemobiletools.musicplayer.extensions.albumsDAO
+import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.helpers.ALBUM
 import com.simplemobiletools.musicplayer.helpers.TAB_ALBUMS
 import com.simplemobiletools.musicplayer.models.Album
@@ -22,7 +27,7 @@ import kotlinx.android.synthetic.main.fragment_albums.view.*
 class AlbumsFragment(context: Context, attributeSet: AttributeSet) : MyViewPagerFragment(context, attributeSet) {
     private var albumsIgnoringSearch = ArrayList<Album>()
 
-    override fun setupFragment(activity: SimpleActivity) {
+    override fun setupFragment(activity: BaseSimpleActivity) {
         Album.sorting = context.config.albumSorting
         ensureBackgroundThread {
             val cachedAlbums = activity.albumsDAO.getAll() as ArrayList<Album>
@@ -32,7 +37,7 @@ class AlbumsFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
         }
     }
 
-    private fun gotAlbums(activity: SimpleActivity, albums: ArrayList<Album>) {
+    private fun gotAlbums(activity: BaseSimpleActivity, albums: ArrayList<Album>) {
         albums.sort()
         albumsIgnoringSearch = albums
 

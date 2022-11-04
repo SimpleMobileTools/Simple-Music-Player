@@ -3,29 +3,31 @@ package com.simplemobiletools.musicplayer.fragments
 import android.content.Context
 import android.content.Intent
 import android.util.AttributeSet
+import com.simplemobiletools.commons.activities.BaseSimpleActivity
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
-import com.simplemobiletools.commons.extensions.areSystemAnimationsEnabled
-import com.simplemobiletools.commons.extensions.beGoneIf
-import com.simplemobiletools.commons.extensions.beVisibleIf
-import com.simplemobiletools.commons.extensions.hideKeyboard
+import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
 import com.simplemobiletools.musicplayer.activities.TracksActivity
 import com.simplemobiletools.musicplayer.adapters.FoldersAdapter
 import com.simplemobiletools.musicplayer.dialogs.ChangeSortingDialog
-import com.simplemobiletools.musicplayer.extensions.*
+import com.simplemobiletools.musicplayer.extensions.albumsDAO
+import com.simplemobiletools.musicplayer.extensions.artistDAO
+import com.simplemobiletools.musicplayer.extensions.config
+import com.simplemobiletools.musicplayer.extensions.tracksDAO
 import com.simplemobiletools.musicplayer.helpers.FOLDER
 import com.simplemobiletools.musicplayer.helpers.TAB_FOLDERS
+import com.simplemobiletools.musicplayer.interfaces.RefreshFragmentListener
 import com.simplemobiletools.musicplayer.models.Album
 import com.simplemobiletools.musicplayer.models.Folder
 import com.simplemobiletools.musicplayer.models.Track
 import kotlinx.android.synthetic.main.fragment_folders.view.*
 
-class FoldersFragment(context: Context, attributeSet: AttributeSet) : MyViewPagerFragment(context, attributeSet) {
+class FoldersFragment(context: Context, attributeSet: AttributeSet) : MyViewPagerFragment(context, attributeSet), RefreshFragmentListener {
     private var foldersIgnoringSearch = ArrayList<Folder>()
 
-    override fun setupFragment(activity: SimpleActivity) {
+    override fun setupFragment(activity: BaseSimpleActivity) {
         ensureBackgroundThread {
             val albums = ArrayList<Album>()
             val artists = context.artistDAO.getAll()
@@ -45,8 +47,14 @@ class FoldersFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
 
             val foldersMap = tracks.groupBy { it.folderName }
             val folders = ArrayList<Folder>()
+            val excludedFolders = activity.config.excludedFolders
             for ((title, folderTracks) in foldersMap) {
-                val folder = Folder(title, folderTracks.size)
+                val path = (folderTracks.firstOrNull()?.path?.getParentPath() ?: "").removeSuffix("/") + "/"
+                if (excludedFolders.contains(path)) {
+                    continue
+                }
+
+                val folder = Folder(title, folderTracks.size, path)
                 folders.add(folder)
 
                 if (!context.config.wereTrackFoldersAdded) {
@@ -68,7 +76,7 @@ class FoldersFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
 
                 val adapter = folders_list.adapter
                 if (adapter == null) {
-                    FoldersAdapter(activity, folders, folders_list) {
+                    FoldersAdapter(activity, folders, folders_list, this) {
                         activity.hideKeyboard()
                         Intent(activity, TracksActivity::class.java).apply {
                             putExtra(FOLDER, (it as Folder).title)
@@ -120,5 +128,9 @@ class FoldersFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
     override fun setupColors(textColor: Int, adjustedPrimaryColor: Int) {
         folders_placeholder.setTextColor(textColor)
         folders_fastscroller.updateColors(adjustedPrimaryColor)
+    }
+
+    override fun refreshItems(activity: BaseSimpleActivity) {
+        setupFragment(activity)
     }
 }

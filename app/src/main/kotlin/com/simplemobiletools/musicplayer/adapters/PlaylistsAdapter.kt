@@ -4,6 +4,7 @@ import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import com.qtalk.recyclerviewfastscroller.RecyclerViewFastScroller
+import com.simplemobiletools.commons.activities.BaseSimpleActivity
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
 import com.simplemobiletools.commons.extensions.deleteFiles
 import com.simplemobiletools.commons.extensions.getFilenameFromPath
@@ -12,7 +13,6 @@ import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.commons.models.FileDirItem
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.musicplayer.R
-import com.simplemobiletools.musicplayer.activities.SimpleActivity
 import com.simplemobiletools.musicplayer.dialogs.NewPlaylistDialog
 import com.simplemobiletools.musicplayer.dialogs.RemovePlaylistDialog
 import com.simplemobiletools.musicplayer.extensions.deletePlaylists
@@ -21,10 +21,9 @@ import com.simplemobiletools.musicplayer.models.Events
 import com.simplemobiletools.musicplayer.models.Playlist
 import kotlinx.android.synthetic.main.item_playlist.view.*
 import org.greenrobot.eventbus.EventBus
-import java.util.*
 
 class PlaylistsAdapter(
-    activity: SimpleActivity, var playlists: ArrayList<Playlist>, recyclerView: MyRecyclerView, itemClick: (Any) -> Unit
+    activity: BaseSimpleActivity, var playlists: ArrayList<Playlist>, recyclerView: MyRecyclerView, itemClick: (Any) -> Unit
 ) : MyRecyclerViewAdapter(activity, recyclerView, itemClick), RecyclerViewFastScroller.OnPopupTextUpdate {
 
     private var textToHighlight = ""

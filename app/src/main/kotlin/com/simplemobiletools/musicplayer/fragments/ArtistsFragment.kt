@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.util.AttributeSet
 import com.google.gson.Gson
+import com.simplemobiletools.commons.activities.BaseSimpleActivity
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
 import com.simplemobiletools.commons.extensions.areSystemAnimationsEnabled
 import com.simplemobiletools.commons.extensions.beGoneIf
@@ -26,7 +27,7 @@ import kotlinx.android.synthetic.main.fragment_artists.view.*
 class ArtistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPagerFragment(context, attributeSet) {
     private var artistsIgnoringSearch = ArrayList<Artist>()
 
-    override fun setupFragment(activity: SimpleActivity) {
+    override fun setupFragment(activity: BaseSimpleActivity) {
         Artist.sorting = context.config.artistSorting
         ensureBackgroundThread {
             val cachedArtists = activity.artistDAO.getAll() as ArrayList<Artist>
@@ -36,7 +37,7 @@ class ArtistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
         }
     }
 
-    private fun gotArtists(activity: SimpleActivity, artists: ArrayList<Artist>) {
+    private fun gotArtists(activity: BaseSimpleActivity, artists: ArrayList<Artist>) {
         artists.sort()
 
         artistsIgnoringSearch = artists

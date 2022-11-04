@@ -8,6 +8,7 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.qtalk.recyclerviewfastscroller.RecyclerViewFastScroller
+import com.simplemobiletools.commons.activities.BaseSimpleActivity
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
 import com.simplemobiletools.commons.dialogs.ConfirmationDialog
 import com.simplemobiletools.commons.extensions.*
@@ -24,7 +25,7 @@ import kotlinx.android.synthetic.main.item_track.view.*
 import org.greenrobot.eventbus.EventBus
 
 class TracksAdapter(
-    activity: SimpleActivity, var tracks: ArrayList<Track>, val isPlaylistContent: Boolean, recyclerView: MyRecyclerView, itemClick: (Any) -> Unit
+    activity: BaseSimpleActivity, var tracks: ArrayList<Track>, val isPlaylistContent: Boolean, recyclerView: MyRecyclerView, itemClick: (Any) -> Unit
 ) : MyRecyclerViewAdapter(activity, recyclerView, itemClick), RecyclerViewFastScroller.OnPopupTextUpdate {
 
     private val tagHelper by lazy { TagHelper(activity) }

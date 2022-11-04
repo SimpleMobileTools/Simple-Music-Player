@@ -4,17 +4,18 @@ import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import com.qtalk.recyclerviewfastscroller.RecyclerViewFastScroller
+import com.simplemobiletools.commons.activities.BaseSimpleActivity
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
 import com.simplemobiletools.commons.extensions.highlightTextPart
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.musicplayer.R
-import com.simplemobiletools.musicplayer.activities.SimpleActivity
+import com.simplemobiletools.musicplayer.extensions.config
+import com.simplemobiletools.musicplayer.interfaces.RefreshFragmentListener
 import com.simplemobiletools.musicplayer.models.Folder
 import kotlinx.android.synthetic.main.item_folder.view.*
-import java.util.*
 
 class FoldersAdapter(
-    activity: SimpleActivity, var folders: ArrayList<Folder>, recyclerView: MyRecyclerView, itemClick: (Any) -> Unit
+    activity: BaseSimpleActivity, var folders: ArrayList<Folder>, recyclerView: MyRecyclerView, val listener: RefreshFragmentListener, itemClick: (Any) -> Unit
 ) : MyRecyclerViewAdapter(activity, recyclerView, itemClick), RecyclerViewFastScroller.OnPopupTextUpdate {
 
     private var textToHighlight = ""
@@ -41,6 +42,7 @@ class FoldersAdapter(
 
     override fun actionItemPressed(id: Int) {
         when (id) {
+            R.id.cab_exclude_folders -> excludeFolders()
             R.id.cab_select_all -> selectAll()
         }
     }
@@ -57,7 +59,16 @@ class FoldersAdapter(
 
     override fun onActionModeDestroyed() {}
 
-    private fun getItemWithKey(key: Int): Folder? = folders.firstOrNull { it.hashCode() == key }
+    private fun excludeFolders() {
+        getSelectedFolders().forEach {
+            activity.config.addExcludedFolder(it.path)
+        }
+
+        finishActMode()
+        listener.refreshItems(this.activity)
+    }
+
+    private fun getSelectedFolders(): List<Folder> = folders.filter { selectedKeys.contains(it.hashCode()) }.toList()
 
     fun updateItems(newItems: ArrayList<Folder>, highlightText: String = "", forceUpdate: Boolean = false) {
         if (forceUpdate || newItems.hashCode() != folders.hashCode()) {

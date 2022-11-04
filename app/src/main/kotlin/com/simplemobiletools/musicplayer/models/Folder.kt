@@ -4,7 +4,7 @@ import com.simplemobiletools.commons.helpers.AlphanumericComparator
 import com.simplemobiletools.commons.helpers.SORT_DESCENDING
 import com.simplemobiletools.musicplayer.helpers.PLAYER_SORT_BY_TITLE
 
-data class Folder(val title: String, val trackCount: Int) : Comparable<Folder> {
+data class Folder(val title: String, val trackCount: Int, val path: String) : Comparable<Folder> {
     companion object {
         var sorting = 0
     }
