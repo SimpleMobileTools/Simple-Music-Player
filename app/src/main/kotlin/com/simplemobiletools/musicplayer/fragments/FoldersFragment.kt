@@ -8,6 +8,7 @@ import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.musicplayer.R
+import com.simplemobiletools.musicplayer.activities.ExcludedFoldersActivity
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
 import com.simplemobiletools.musicplayer.activities.TracksActivity
 import com.simplemobiletools.musicplayer.adapters.FoldersAdapter
@@ -69,6 +70,13 @@ class FoldersFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
             activity.runOnUiThread {
                 folders_placeholder.text = context.getString(R.string.no_items_found)
                 folders_placeholder.beVisibleIf(folders.isEmpty())
+                folders_fastscroller.beGoneIf(folders_placeholder.isVisible())
+                folders_placeholder_2.beVisibleIf(folders.isEmpty() && context.config.excludedFolders.isNotEmpty())
+                folders_placeholder_2.underlineText()
+
+                folders_placeholder_2.setOnClickListener {
+                    activity.startActivity(Intent(activity, ExcludedFoldersActivity::class.java))
+                }
 
                 Folder.sorting = activity.config.folderSorting
                 folders.sort()
@@ -128,6 +136,7 @@ class FoldersFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
     override fun setupColors(textColor: Int, adjustedPrimaryColor: Int) {
         folders_placeholder.setTextColor(textColor)
         folders_fastscroller.updateColors(adjustedPrimaryColor)
+        folders_placeholder_2.setTextColor(adjustedPrimaryColor)
     }
 
     override fun refreshItems(activity: BaseSimpleActivity) {
