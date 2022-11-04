@@ -547,15 +547,6 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
         try {
             startForeground(NOTIFICATION_ID, notification.build())
-
-            // delay foreground state updating a bit, so the notification can be swiped away properly after initial display
-            Handler(Looper.getMainLooper()).postDelayed({
-                val isFocusLost = mPrevAudioFocusState == AUDIOFOCUS_LOSS || mPrevAudioFocusState == AUDIOFOCUS_LOSS_TRANSIENT
-                val isPlaybackStoppedAfterFocusLoss = mWasPlayingAtFocusLost && isFocusLost
-                if (!getIsPlaying() && !isPlaybackStoppedAfterFocusLoss) {
-                    stopForeground(false)
-                }
-            }, 200L)
         } catch (ignored: ForegroundServiceStartNotAllowedException) {
         }
     }
@@ -641,6 +632,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         mPlayer!!.pause()
         trackStateChanged(false)
         updateMediaSessionState()
+        stopForeground(false)
     }
 
     private fun resumeTrack() {
