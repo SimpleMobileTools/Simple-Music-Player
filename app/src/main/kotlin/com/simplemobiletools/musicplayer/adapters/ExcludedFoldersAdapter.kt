@@ -6,6 +6,7 @@ import com.simplemobiletools.commons.activities.BaseSimpleActivity
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
 import com.simplemobiletools.commons.extensions.getPopupMenuTheme
 import com.simplemobiletools.commons.extensions.getProperTextColor
+import com.simplemobiletools.commons.extensions.humanizePath
 import com.simplemobiletools.commons.interfaces.RefreshRecyclerViewListener
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.musicplayer.R
@@ -66,7 +67,7 @@ class ExcludedFoldersAdapter(
         view.apply {
             excluded_folder_holder?.isSelected = selectedKeys.contains(folder.hashCode())
             excluded_folder_title.apply {
-                text = folder
+                text = context.humanizePath(folder)
                 setTextColor(context.getProperTextColor())
             }
 

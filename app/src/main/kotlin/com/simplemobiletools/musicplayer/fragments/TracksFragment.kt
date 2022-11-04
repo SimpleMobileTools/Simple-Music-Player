@@ -51,7 +51,7 @@ class TracksFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
                 if (adapter == null) {
                     TracksAdapter(activity, tracks, false, tracks_list) {
                         activity.hideKeyboard()
-                        (activity as BaseSimpleActivity).handleNotificationPermission { granted ->
+                        activity.handleNotificationPermission { granted ->
                             if (granted) {
                                 activity.resetQueueItems(tracks) {
                                     Intent(activity, TrackActivity::class.java).apply {
