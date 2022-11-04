@@ -25,7 +25,8 @@ data class Track(
     @ColumnInfo(name = "playlist_id") var playListId: Int,
     @ColumnInfo(name = "track_id") val trackId: Int,  // order id within the tracks' album
     @ColumnInfo(name = "folder_name") var folderName: String,
-    @ColumnInfo(name = "album_id") val albumId: Long
+    @ColumnInfo(name = "album_id") val albumId: Long,
+    @ColumnInfo(name = "order_in_playlist") val orderInPlaylist: Int
 ) : Serializable, Comparable<Track>, ListItem() {
 
     companion object {

@@ -212,7 +212,7 @@ fun Context.getAlbumTracksSync(albumId: Long): ArrayList<Track> {
             ""
         }
 
-        val track = Track(0, id, title, artist, path, duration, album, coverArt, 0, trackId, folderName, albumId)
+        val track = Track(0, id, title, artist, path, duration, album, coverArt, 0, trackId, folderName, albumId, 0)
         track.title = track.getProperTitle(showFilename)
         tracks.add(track)
     }
