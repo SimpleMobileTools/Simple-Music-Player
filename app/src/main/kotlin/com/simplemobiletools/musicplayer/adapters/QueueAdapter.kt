@@ -13,6 +13,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.qtalk.recyclerviewfastscroller.RecyclerViewFastScroller
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
+import com.simplemobiletools.commons.dialogs.ConfirmationDialog
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.interfaces.ItemMoveCallback
 import com.simplemobiletools.commons.interfaces.ItemTouchHelperContract
@@ -21,6 +22,7 @@ import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
 import com.simplemobiletools.musicplayer.extensions.addTracksToPlaylist
+import com.simplemobiletools.musicplayer.extensions.deleteTracks
 import com.simplemobiletools.musicplayer.extensions.removeQueueItems
 import com.simplemobiletools.musicplayer.extensions.sendIntent
 import com.simplemobiletools.musicplayer.helpers.FINISH
@@ -77,6 +79,7 @@ class QueueAdapter(activity: SimpleActivity, var items: ArrayList<Track>, recycl
 
         when (id) {
             R.id.cab_remove_from_queue -> removeFromQueue()
+            R.id.cab_delete_file -> deleteTracks()
             R.id.cab_add_to_playlist -> addToPlaylist()
             R.id.cab_select_all -> selectAll()
         }
@@ -105,24 +108,45 @@ class QueueAdapter(activity: SimpleActivity, var items: ArrayList<Track>, recycl
         }
 
         activity.removeQueueItems(selectedTracks) {
-            activity.runOnUiThread {
-                if (selectedTracks.contains(MusicService.mCurrTrack)) {
-                    if (MusicService.mTracks.isEmpty()) {
-                        activity.sendIntent(FINISH)
-                        activity.finish()
-                        return@runOnUiThread
-                    }
+            refreshTracksList(positions, selectedTracks)
+        }
+    }
 
-                    Intent(activity, MusicService::class.java).apply {
-                        action = PLAY_TRACK
-                        putExtra(TRACK_ID, (MusicService.mTracks.first()).mediaStoreId)
-                        activity.startService(this)
-                    }
+    private fun deleteTracks() {
+        ConfirmationDialog(activity, "", R.string.delete_song_warning, R.string.ok, R.string.cancel) {
+            val positions = ArrayList<Int>()
+            val selectedTracks = getSelectedTracks()
+            selectedTracks.forEach { track ->
+                val position = items.indexOfFirst { it.mediaStoreId == track.mediaStoreId }
+                if (position != -1) {
+                    positions.add(position)
+                }
+            }
+
+            activity.deleteTracks(selectedTracks) {
+                refreshTracksList(positions, selectedTracks)
+            }
+        }
+    }
+
+    private fun refreshTracksList(positions: ArrayList<Int>, selectedTracks: List<Track>) {
+        activity.runOnUiThread {
+            if (selectedTracks.contains(MusicService.mCurrTrack)) {
+                if (MusicService.mTracks.isEmpty()) {
+                    activity.sendIntent(FINISH)
+                    activity.finish()
+                    return@runOnUiThread
                 }
 
-                positions.sortDescending()
-                removeSelectedItems(positions)
+                Intent(activity, MusicService::class.java).apply {
+                    action = PLAY_TRACK
+                    putExtra(TRACK_ID, (MusicService.mTracks.first()).mediaStoreId)
+                    activity.startService(this)
+                }
             }
+
+            positions.sortDescending()
+            removeSelectedItems(positions)
         }
     }
 

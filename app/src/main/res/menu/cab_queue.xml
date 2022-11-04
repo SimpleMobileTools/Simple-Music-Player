@@ -9,13 +9,18 @@
         android:title="@string/remove_from_queue"
         app:showAsAction="always" />
     <item
+        android:id="@+id/cab_delete_file"
+        android:showAsAction="never"
+        android:title="@string/delete"
+        app:showAsAction="never" />
+    <item
         android:id="@+id/cab_add_to_playlist"
         android:showAsAction="never"
         android:title="@string/add_to_playlist"
         app:showAsAction="never" />
     <item
         android:id="@+id/cab_select_all"
-        android:icon="@drawable/ic_select_all_vector"
+        android:showAsAction="never"
         android:title="@string/select_all"
-        app:showAsAction="always" />
+        app:showAsAction="never" />
 </menu>
