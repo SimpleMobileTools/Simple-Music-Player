@@ -47,12 +47,20 @@ class QueueActivity : SimpleActivity() {
 
     override fun onResume() {
         super.onResume()
-        setupToolbar(queue_toolbar, NavigationIcon.Arrow)
+        setupToolbar(queue_toolbar, NavigationIcon.Arrow, searchMenuItem = searchMenuItem)
     }
 
     override fun onDestroy() {
         super.onDestroy()
         bus?.unregister(this)
+    }
+
+    override fun onBackPressed() {
+        if (isSearchOpen && searchMenuItem != null) {
+            searchMenuItem!!.collapseActionView()
+        } else {
+            super.onBackPressed()
+        }
     }
 
     private fun setupOptionsMenu() {
@@ -99,13 +107,17 @@ class QueueActivity : SimpleActivity() {
         })
     }
 
-
     private fun onSearchOpened() {
-        tracksIgnoringSearch = (queue_list.adapter as? QueueAdapter)?.items ?: return
+        val adapter = (queue_list.adapter as? QueueAdapter) ?: return
+        tracksIgnoringSearch = adapter.items
+        adapter.isSearchOpen = true
+        adapter.updateItems(tracksIgnoringSearch, forceUpdate = true)
     }
 
     private fun onSearchClosed() {
-        (queue_list.adapter as? QueueAdapter)?.updateItems(tracksIgnoringSearch)
+        val adapter = (queue_list.adapter as? QueueAdapter) ?: return
+        adapter.isSearchOpen = false
+        adapter.updateItems(tracksIgnoringSearch, forceUpdate = true)
         queue_placeholder.beGoneIf(tracksIgnoringSearch.isNotEmpty())
     }
 
