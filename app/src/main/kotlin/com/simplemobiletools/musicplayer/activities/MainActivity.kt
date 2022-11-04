@@ -109,7 +109,13 @@ class MainActivity : SimpleActivity() {
         }
 
         if (storedExcludedFolders != config.excludedFolders.hashCode()) {
-            (folders_fragment_holder as? MyViewPagerFragment)?.setupFragment(this)
+            updateAllDatabases {
+                runOnUiThread {
+                    getAllFragments().forEach {
+                        it?.setupFragment(this)
+                    }
+                }
+            }
         }
     }
 
