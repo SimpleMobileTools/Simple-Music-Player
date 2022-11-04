@@ -40,7 +40,7 @@
     <string name="create_playlist_from_folder">Crea una llista de reproducció nova a partir de la carpeta</string>
     <string name="folder_contains_no_audio">La carpeta seleccionada no conté cap fitxer d\'àudio</string>
     <string name="delete_current_song">Suprimeix la cançó actual</string>
-    <string name="delete_song_warning">WARNING: This will delete the selected files themselves from the device, all playlists included.</string>
+    <string name="delete_song_warning">AVÍS: Això suprimirà els fitxers seleccionats del dispositiu, incloses totes les llistes de reproducció.</string>
     <string name="remove_current_song">Elimina la cançó actual de la llista de reproducció</string>
     <string name="show_filename">Mostra el nom del fitxer com a títol de la cançó</string>
     <string name="title_is_not_available">Si el títol no està disponible</string>
