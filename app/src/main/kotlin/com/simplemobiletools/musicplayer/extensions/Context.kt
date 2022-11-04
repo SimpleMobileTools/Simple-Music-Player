@@ -347,8 +347,9 @@ fun Context.updateCachedTracks(albums: ArrayList<Album>) {
     val cachedTracks = tracksDAO.getAll() as ArrayList<Track>
     val newIds = tracks.map { it.mediaStoreId }
     val idsToRemove = arrayListOf<Long>()
+    val excludedFolders = config.excludedFolders
     cachedTracks.forEach { track ->
-        if (!newIds.contains(track.mediaStoreId)) {
+        if (!newIds.contains(track.mediaStoreId) && !excludedFolders.contains(track.path.getParentPath())) {
             idsToRemove.add(track.mediaStoreId)
         }
     }
