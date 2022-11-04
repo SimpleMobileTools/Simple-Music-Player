@@ -38,6 +38,7 @@ class SettingsActivity : SimpleActivity() {
         setupSwapPrevNext()
         setupReplaceTitle()
         setupManageShownTabs()
+        setupManageExcludedFolders()
         updateTextColors(settings_nested_scrollview)
 
         arrayOf(settings_color_customization_label, settings_general_settings_label).forEach {
@@ -138,6 +139,12 @@ class SettingsActivity : SimpleActivity() {
     private fun setupManageShownTabs() {
         settings_manage_shown_tabs_holder.setOnClickListener {
             ManageVisibleTabsDialog(this)
+        }
+    }
+
+    private fun setupManageExcludedFolders() {
+        settings_manage_excluded_folders_holder.setOnClickListener {
+            startActivity(Intent(this, ExcludedFoldersActivity::class.java))
         }
     }
 }

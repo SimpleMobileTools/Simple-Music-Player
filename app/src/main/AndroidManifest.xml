@@ -89,6 +89,12 @@
         </activity>
 
         <activity
+            android:name=".activities.ExcludedFoldersActivity"
+            android:exported="false"
+            android:label="@string/excluded_folders"
+            android:parentActivityName=".activities.SettingsActivity" />
+
+        <activity
             android:name=".activities.EqualizerActivity"
             android:exported="false"
             android:label="@string/equalizer"
