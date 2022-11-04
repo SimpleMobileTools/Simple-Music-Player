@@ -55,7 +55,7 @@
     <string name="album_count">Broj albuma</string>
     <string name="artist_name">Ime izvođača</string>
     <string name="year">Godina</string>
-    <string name="track_number">Track number</string>
+    <string name="track_number">Broj pjesme</string>
     <!-- Artists -->
     <string name="artists">Izvođači</string>
     <string name="folders">Mape</string>
@@ -80,7 +80,7 @@
     <!-- Settings -->
     <string name="equalizer">Ekvilizator</string>
     <string name="swap_prev_next">Zamijeni gumbe prethodne/sljedeća slušalice</string>
-    <string name="exclude_folder_description">Excluding a folder will prevent the displaying of all audio files within. Files manually added to playlists will not be affected.</string>
+    <string name="exclude_folder_description">Isključivanje mape spriječit će prikazivanje svih audio datoteka u njoj. To neće utjecati na datoteke koje su ručno dodane na popise za reprodukciju.</string>
     <!-- FAQ -->
     <string name="faq_1_title">Kako mogu premotati pjesme\?</string>
     <string name="faq_1_text">Možeš pritisnuti tekst aktualnog ili krajnjeg trajanja pjesme u blizini trake za pretraživanje. Time ćeš premotati pjesmu unatrag ili naprijed.</string>

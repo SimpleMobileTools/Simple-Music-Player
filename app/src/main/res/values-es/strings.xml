@@ -55,18 +55,20 @@
     <string name="album_count">Conteo de álbumes</string>
     <string name="artist_name">Nombre de artista</string>
     <string name="year">Año</string>
-    <string name="track_number">Track number</string>
+    <string name="track_number">Número de la pista</string>
     <!-- Artists -->
     <string name="artists">Artistas</string>
     <string name="folders">Carpetas</string>
     <string name="albums">Álbumes</string>
     <plurals name="albums_plural">
         <item quantity="one">%d Álbum</item>
+        <item quantity="many">%d Álbumes</item>
         <item quantity="other">%d Álbumes</item>
     </plurals>
     <string name="tracks">Canciones</string>
     <plurals name="tracks_plural">
         <item quantity="one">%d Canción</item>
+        <item quantity="many">%d Canciones</item>
         <item quantity="other">%d Canciones</item>
     </plurals>
     <!-- Queue -->
@@ -78,7 +80,7 @@
     <!-- Settings -->
     <string name="equalizer">Ecualizador</string>
     <string name="swap_prev_next">Intercambiar botones de anterior/siguiente de los audífonos</string>
-    <string name="exclude_folder_description">Excluding a folder will prevent the displaying of all audio files within. Files manually added to playlists will not be affected.</string>
+    <string name="exclude_folder_description">Excluir una carpeta impedirá que se muestren todos los archivos de audio que contiene. Los archivos agregados manualmente a las listas de reproducción no se verán afectados.</string>
     <!-- FAQ -->
     <string name="faq_1_title">¿Cómo puedo avanzar canciones\?</string>
     <string name="faq_1_text">Puedes tocar los textos de la duración actual o máxima cerca de la barra de búsqueda, eso hará que la canción avance o retroceda.</string>
