@@ -57,6 +57,7 @@ class MainActivity : SimpleActivity() {
     private var searchMenuItem: MenuItem? = null
     private var bus: EventBus? = null
     private var storedShowTabs = 0
+    private var storedExcludedFolders = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -105,6 +106,10 @@ class MainActivity : SimpleActivity() {
 
         getAllFragments().forEach {
             it?.setupColors(getProperTextColor(), getProperPrimaryColor())
+        }
+
+        if (storedExcludedFolders != config.excludedFolders.hashCode()) {
+            (folders_fragment_holder as? MyViewPagerFragment)?.setupFragment(this)
         }
     }
 
@@ -156,6 +161,7 @@ class MainActivity : SimpleActivity() {
     private fun storeStateVariables() {
         config.apply {
             storedShowTabs = showTabs
+            storedExcludedFolders = config.excludedFolders.hashCode()
         }
     }
 
