@@ -63,28 +63,6 @@ class TracksActivity : SimpleActivity() {
         bus = EventBus.getDefault()
         bus!!.register(this)
 
-        val playlistType = object : TypeToken<Playlist>() {}.type
-        playlist = Gson().fromJson<Playlist>(intent.getStringExtra(PLAYLIST), playlistType)
-        if (playlist != null) {
-            tracksType = TYPE_PLAYLIST
-        }
-
-        val albumType = object : TypeToken<Album>() {}.type
-        val album = Gson().fromJson<Album>(intent.getStringExtra(ALBUM), albumType)
-        if (album != null) {
-            tracksType = TYPE_ALBUM
-        }
-
-        val folder = intent.getStringExtra(FOLDER)
-        if (folder != null) {
-            tracksType = TYPE_FOLDER
-            tracks_placeholder_2.beGone()
-        }
-
-        refreshMenuItems()
-        val titleToUse = playlist?.title ?: album?.title ?: folder ?: ""
-        tracks_toolbar.title = titleToUse
-
         val properPrimaryColor = getProperPrimaryColor()
         tracks_fastscroller.updateColors(properPrimaryColor)
         tracks_placeholder.setTextColor(getProperTextColor())
@@ -92,76 +70,6 @@ class TracksActivity : SimpleActivity() {
         tracks_placeholder_2.underlineText()
         tracks_placeholder_2.setOnClickListener {
             addFolderToPlaylist()
-        }
-
-        ensureBackgroundThread {
-            val showFilename = config.showFilename
-            val tracks = ArrayList<Track>()
-            val listItems = ArrayList<ListItem>()
-            when (tracksType) {
-                TYPE_PLAYLIST -> {
-                    val playlistTracks = tracksDAO.getTracksFromPlaylist(playlist!!.id).map { track ->
-                        track.title = track.getProperTitle(showFilename)
-                        track
-                    } as ArrayList<Track>
-
-                    Track.sorting = config.playlistTracksSorting
-                    playlistTracks.sort()
-
-                    runOnUiThread {
-                        tracks_placeholder.beVisibleIf(playlistTracks.isEmpty())
-                        tracks_placeholder_2.beVisibleIf(playlistTracks.isEmpty())
-                    }
-
-                    tracks.addAll(playlistTracks)
-                    listItems.addAll(tracks)
-                }
-                TYPE_ALBUM -> {
-                    val albumTracks = getAlbumTracksSync(album.id)
-                    albumTracks.sortWith(compareBy({ it.trackId }, { it.title.toLowerCase() }))
-                    tracks.addAll(albumTracks)
-
-                    val coverArt = ContentUris.withAppendedId(artworkUri, album.id).toString()
-                    val header = AlbumHeader(album.title, coverArt, album.year, tracks.size, tracks.sumBy { it.duration }, album.artist)
-                    listItems.add(header)
-                    listItems.addAll(tracks)
-                }
-                else -> {
-                    val folderTracks = tracksDAO.getTracksFromFolder(folder ?: "").map { track ->
-                        track.title = track.getProperTitle(showFilename)
-                        track
-                    } as ArrayList<Track>
-
-                    Track.sorting = config.playlistTracksSorting
-                    folderTracks.sort()
-
-                    runOnUiThread {
-                        tracks_placeholder.beVisibleIf(folderTracks.isEmpty())
-                    }
-
-                    tracks.addAll(folderTracks)
-                    listItems.addAll(tracks)
-                }
-            }
-
-            runOnUiThread {
-                val adapter = if (tracksType == TYPE_ALBUM) {
-                    TracksHeaderAdapter(this, listItems, tracks_list) {
-                        itemClicked(it as Track)
-                    }
-                } else {
-                    val isPlaylistContent = tracksType == TYPE_PLAYLIST
-                    TracksAdapter(this, tracks, isPlaylistContent, tracks_list) {
-                        itemClicked(it as Track)
-                    }
-                }
-
-                tracks_list.adapter = adapter
-
-                if (areSystemAnimationsEnabled) {
-                    tracks_list.scheduleLayoutAnimation()
-                }
-            }
         }
 
         current_track_bar.setOnClickListener {
@@ -182,6 +90,7 @@ class TracksActivity : SimpleActivity() {
         super.onResume()
         updateCurrentTrackBar()
         setupToolbar(tracks_toolbar, NavigationIcon.Arrow, searchMenuItem = searchMenuItem)
+        refreshTracks()
     }
 
     override fun onDestroy() {
@@ -256,6 +165,100 @@ class TracksActivity : SimpleActivity() {
                 return true
             }
         })
+    }
+
+    private fun refreshTracks() {
+        val playlistType = object : TypeToken<Playlist>() {}.type
+        playlist = Gson().fromJson<Playlist>(intent.getStringExtra(PLAYLIST), playlistType)
+        if (playlist != null) {
+            tracksType = TYPE_PLAYLIST
+        }
+
+        val albumType = object : TypeToken<Album>() {}.type
+        val album = Gson().fromJson<Album>(intent.getStringExtra(ALBUM), albumType)
+        if (album != null) {
+            tracksType = TYPE_ALBUM
+        }
+
+        val folder = intent.getStringExtra(FOLDER)
+        if (folder != null) {
+            tracksType = TYPE_FOLDER
+            tracks_placeholder_2.beGone()
+        }
+
+        val titleToUse = playlist?.title ?: album?.title ?: folder ?: ""
+        tracks_toolbar.title = titleToUse
+        refreshMenuItems()
+
+        ensureBackgroundThread {
+            val showFilename = config.showFilename
+            val tracks = ArrayList<Track>()
+            val listItems = ArrayList<ListItem>()
+            when (tracksType) {
+                TYPE_PLAYLIST -> {
+                    val playlistTracks = tracksDAO.getTracksFromPlaylist(playlist!!.id).map { track ->
+                        track.title = track.getProperTitle(showFilename)
+                        track
+                    } as ArrayList<Track>
+
+                    Track.sorting = config.playlistTracksSorting
+                    playlistTracks.sort()
+
+                    runOnUiThread {
+                        tracks_placeholder.beVisibleIf(playlistTracks.isEmpty())
+                        tracks_placeholder_2.beVisibleIf(playlistTracks.isEmpty())
+                    }
+
+                    tracks.addAll(playlistTracks)
+                    listItems.addAll(tracks)
+                }
+                TYPE_ALBUM -> {
+                    val albumTracks = getAlbumTracksSync(album.id)
+                    albumTracks.sortWith(compareBy({ it.trackId }, { it.title.toLowerCase() }))
+                    tracks.addAll(albumTracks)
+
+                    val coverArt = ContentUris.withAppendedId(artworkUri, album.id).toString()
+                    val header = AlbumHeader(album.title, coverArt, album.year, tracks.size, tracks.sumBy { it.duration }, album.artist)
+                    listItems.add(header)
+                    listItems.addAll(tracks)
+                }
+                else -> {
+                    val folderTracks = tracksDAO.getTracksFromFolder(folder ?: "").map { track ->
+                        track.title = track.getProperTitle(showFilename)
+                        track
+                    } as ArrayList<Track>
+
+                    Track.sorting = config.playlistTracksSorting
+                    folderTracks.sort()
+
+                    runOnUiThread {
+                        tracks_placeholder.beVisibleIf(folderTracks.isEmpty())
+                    }
+
+                    tracks.addAll(folderTracks)
+                    listItems.addAll(tracks)
+                }
+            }
+
+            runOnUiThread {
+                val adapter = if (tracksType == TYPE_ALBUM) {
+                    TracksHeaderAdapter(this, listItems, tracks_list) {
+                        itemClicked(it as Track)
+                    }
+                } else {
+                    val isPlaylistContent = tracksType == TYPE_PLAYLIST
+                    TracksAdapter(this, tracks, isPlaylistContent, tracks_list) {
+                        itemClicked(it as Track)
+                    }
+                }
+
+                tracks_list.adapter = adapter
+
+                if (areSystemAnimationsEnabled) {
+                    tracks_list.scheduleLayoutAnimation()
+                }
+            }
+        }
     }
 
     private fun showSortingDialog() {
