@@ -2,6 +2,7 @@ package com.simplemobiletools.musicplayer.helpers
 
 import android.content.Context
 import com.simplemobiletools.commons.helpers.BaseConfig
+import java.util.*
 
 class Config(context: Context) : BaseConfig(context) {
     companion object {
@@ -91,4 +92,24 @@ class Config(context: Context) : BaseConfig(context) {
     var lastExportPath: String
         get() = prefs.getString(LAST_EXPORT_PATH, "")!!
         set(lastExportPath) = prefs.edit().putString(LAST_EXPORT_PATH, lastExportPath).apply()
+
+    var excludedFolders: MutableSet<String>
+        get() = prefs.getStringSet(EXCLUDED_FOLDERS, HashSet())!!
+        set(excludedFolders) = prefs.edit().remove(EXCLUDED_FOLDERS).putStringSet(EXCLUDED_FOLDERS, excludedFolders).apply()
+
+    fun addExcludedFolder(path: String) {
+        addExcludedFolders(HashSet(Arrays.asList(path)))
+    }
+
+    fun addExcludedFolders(paths: Set<String>) {
+        val currExcludedFolders = HashSet(excludedFolders)
+        currExcludedFolders.addAll(paths)
+        excludedFolders = currExcludedFolders.filter { it.isNotEmpty() }.toHashSet()
+    }
+
+    fun removeExcludedFolder(path: String) {
+        val currExcludedFolders = HashSet(excludedFolders)
+        currExcludedFolders.remove(path)
+        excludedFolders = currExcludedFolders
+    }
 }
