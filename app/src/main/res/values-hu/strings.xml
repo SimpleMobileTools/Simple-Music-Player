@@ -40,6 +40,7 @@
     <string name="create_playlist_from_folder">Lejátszólista készítése mappából</string>
     <string name="folder_contains_no_audio">A mappa nem tartalmaz zenefájlokat</string>
     <string name="delete_current_song">Aktuális szám törlése</string>
+    <string name="delete_song_warning">WARNING: This will delete the selected files themselves from the device, all playlists included.</string>
     <string name="remove_current_song">Aktuális szám törlése a lejátszólistából</string>
     <string name="show_filename">Fájlnevet használd számnévnek</string>
     <string name="title_is_not_available">Ha a szám címe nem található</string>

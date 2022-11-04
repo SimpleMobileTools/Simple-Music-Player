@@ -40,6 +40,7 @@
     <string name="create_playlist_from_folder">Crear nova lista de reprodución desde cartafol</string>
     <string name="folder_contains_no_audio">O cartafol seleccionado non contén ficheiros de audio</string>
     <string name="delete_current_song">Eliminar esta canción</string>
+    <string name="delete_song_warning">WARNING: This will delete the selected files themselves from the device, all playlists included.</string>
     <string name="remove_current_song">Eliminar esta canción da lista de reprodución</string>
     <string name="show_filename">Amosar o nome de ficheiro como título da canción</string>
     <string name="title_is_not_available">O título non está dispoñible</string>

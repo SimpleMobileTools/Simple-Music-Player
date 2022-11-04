@@ -40,6 +40,7 @@
     <string name="create_playlist_from_folder">Loo kausta alusel uus esitusloend</string>
     <string name="folder_contains_no_audio">Valitud kaustas ei leidu ühtegi helifaili</string>
     <string name="delete_current_song">Kustuta see pala</string>
+    <string name="delete_song_warning">WARNING: This will delete the selected files themselves from the device, all playlists included.</string>
     <string name="remove_current_song">Eemalda praegune lugu esitusloendist</string>
     <string name="show_filename">Näita faili nime pala pealkirjana</string>
     <string name="title_is_not_available">Kui pealkirja ei leidu</string>

@@ -40,6 +40,7 @@
     <string name="create_playlist_from_folder">폴더를 선택하여 새로운 재생목록 생성</string>
     <string name="folder_contains_no_audio">선택된 폴더에는 오디오파일이 없습니다.</string>
     <string name="delete_current_song">현재 노래를 삭제합니다</string>
+    <string name="delete_song_warning">WARNING: This will delete the selected files themselves from the device, all playlists included.</string>
     <string name="remove_current_song">재생 목록에서 현재 노래를 제거합니다</string>
     <string name="show_filename">파일 이름을 노래 제목으로 표시</string>
     <string name="title_is_not_available">제목을 사용할 수 없는 경우</string>

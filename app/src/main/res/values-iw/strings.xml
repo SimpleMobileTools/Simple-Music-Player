@@ -40,6 +40,7 @@
     <string name="create_playlist_from_folder">צור רשימת השמעה חדשה מהתיקייה</string>
     <string name="folder_contains_no_audio">התיקיה שנבחרה אינה מכילה קבצי שמע</string>
     <string name="delete_current_song">מחק את השיר הנוכחי</string>
+    <string name="delete_song_warning">WARNING: This will delete the selected files themselves from the device, all playlists included.</string>
     <string name="remove_current_song">הסר את השיר הנוכחי מרשימת ההשמעה</string>
     <string name="show_filename">הצג את שם הקובץ ככותרת השיר</string>
     <string name="title_is_not_available">אם הכותרת אינה זמינה</string>

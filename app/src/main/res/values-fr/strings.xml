@@ -40,6 +40,7 @@
     <string name="create_playlist_from_folder">Créer une nouvelle liste de lecture à partir du dossier</string>
     <string name="folder_contains_no_audio">Le dossier sélectionné ne contient aucun fichier audio</string>
     <string name="delete_current_song">Supprimer la chanson actuelle</string>
+    <string name="delete_song_warning">WARNING: This will delete the selected files themselves from the device, all playlists included.</string>
     <string name="remove_current_song">Supprimer la chanson actuelle de la liste de lecture</string>
     <string name="show_filename">Afficher le nom de fichier comme titre de chanson</string>
     <string name="title_is_not_available">Si le titre n\'est pas disponible</string>

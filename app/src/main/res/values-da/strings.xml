@@ -40,6 +40,7 @@
     <string name="create_playlist_from_folder">Opret ny afspilningsliste fra mappe</string>
     <string name="folder_contains_no_audio">Den valgte mappe indeholder ingen musikfiler</string>
     <string name="delete_current_song">Slet valgte sang</string>
+    <string name="delete_song_warning">WARNING: This will delete the selected files themselves from the device, all playlists included.</string>
     <string name="remove_current_song">Fjern valgte sang fra afspilningsliste</string>
     <string name="show_filename">Vis filnavn som sangtitel</string>
     <string name="title_is_not_available">Hvis titel ikke er tilgængelig</string>

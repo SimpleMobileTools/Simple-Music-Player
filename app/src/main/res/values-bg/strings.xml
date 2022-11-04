@@ -40,6 +40,7 @@
     <string name="create_playlist_from_folder">Създаване на нов плейлист от папка</string>
     <string name="folder_contains_no_audio">Избраната папка не съдържа аудио файлове</string>
     <string name="delete_current_song">Изтриване на текущата песен</string>
+    <string name="delete_song_warning">WARNING: This will delete the selected files themselves from the device, all playlists included.</string>
     <string name="remove_current_song">Премахване на текущата песен от плейлист</string>
     <string name="show_filename">Показване на името на файла като заглавие на песента</string>
     <string name="title_is_not_available">Ако заглавието не е налично</string>

@@ -40,6 +40,7 @@
     <string name="create_playlist_from_folder">Criar nova lista de reprodução a partir da pasta</string>
     <string name="folder_contains_no_audio">A pasta selecionada não contém ficheiros de áudio</string>
     <string name="delete_current_song">Apagar faixa atual</string>
+    <string name="delete_song_warning">WARNING: This will delete the selected files themselves from the device, all playlists included.</string>
     <string name="remove_current_song">Remover faixa atual da lista de reprodução</string>
     <string name="show_filename">Mostrar nome do ficheiro como título da faixa</string>
     <string name="title_is_not_available">Se não existir título</string>

@@ -40,6 +40,7 @@
     <string name="create_playlist_from_folder">Δημιουργία νέας λίστας από φάκελο</string>
     <string name="folder_contains_no_audio">Ο επιλεγμένος φάκελος δεν περιέχει αρχεία ήχου</string>
     <string name="delete_current_song">Διαγραφή τρέχοντος τραγουδιού</string>
+    <string name="delete_song_warning">WARNING: This will delete the selected files themselves from the device, all playlists included.</string>
     <string name="remove_current_song">Αφαίρεση τρέχοντος τραγουδιού από τη λίστα</string>
     <string name="show_filename">Εμφάνιση ονόματος αρχείου ως τίτλος τραγουδιού</string>
     <string name="title_is_not_available">Εάν ο τίτλος δεν είναι διαθέσιμος</string>

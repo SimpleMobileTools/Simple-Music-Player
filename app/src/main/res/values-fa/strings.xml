@@ -40,6 +40,7 @@
     <string name="create_playlist_from_folder">ایجاد لیست پخش جدید از پوشه</string>
     <string name="folder_contains_no_audio">پوشه انتخاب شده حاوی هیچ فایل صوتی نیست</string>
     <string name="delete_current_song">حذف آهنگ فعلی</string>
+    <string name="delete_song_warning">WARNING: This will delete the selected files themselves from the device, all playlists included.</string>
     <string name="remove_current_song">حذف آهنگ فعلی از لیست پخش</string>
     <string name="show_filename">نمایش نام فایل به عنوان عنوان آهنگ</string>
     <string name="title_is_not_available">اگر عنوان در دسترس نیست</string>

@@ -40,6 +40,7 @@
     <string name="create_playlist_from_folder">Vytvoriť nový playlist z priečinka</string>
     <string name="folder_contains_no_audio">Zvolený priečinok neobsahuje žiadne audio súbory</string>
     <string name="delete_current_song">Vymazať súčasnú skladbu</string>
+    <string name="delete_song_warning">UPOZORNENIE: Toto odstráni samotné súbory z mobilu, vrátane všetkých playlistov.</string>
     <string name="remove_current_song">Odstrániť súčasnú skladbu z playlistu</string>
     <string name="show_filename">Zobraziť názov súboru namiesto názvu skladby</string>
     <string name="title_is_not_available">Ak názov skladby nie je dostupý</string>

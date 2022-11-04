@@ -40,6 +40,7 @@
     <string name="create_playlist_from_folder">從資料夾建立新的播放清單</string>
     <string name="folder_contains_no_audio">所選的資料夾中沒有音訊檔案</string>
     <string name="delete_current_song">刪除目前歌曲</string>
+    <string name="delete_song_warning">WARNING: This will delete the selected files themselves from the device, all playlists included.</string>
     <string name="remove_current_song">從播放清單移除目前歌曲</string>
     <string name="show_filename">顯示檔案名稱作為歌名</string>
     <string name="title_is_not_available">如果標題不可用</string>

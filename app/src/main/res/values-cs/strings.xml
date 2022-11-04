@@ -40,6 +40,7 @@
     <string name="create_playlist_from_folder">Vytvořit nový seznam skladeb ze složky</string>
     <string name="folder_contains_no_audio">Vybraná složka neobsahuje žádné zvukové soubory</string>
     <string name="delete_current_song">Smazat aktuální skladbu</string>
+    <string name="delete_song_warning">WARNING: This will delete the selected files themselves from the device, all playlists included.</string>
     <string name="remove_current_song">Odstranit aktuální skladbu ze seznamu skladeb</string>
     <string name="show_filename">Zobrazit název souboru místo názvu skladby</string>
     <string name="title_is_not_available">Pokud je název skladby neznámý</string>

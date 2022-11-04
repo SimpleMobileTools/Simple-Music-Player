@@ -40,6 +40,7 @@
     <string name="create_playlist_from_folder">フォルダからプレイリストを作成</string>
     <string name="folder_contains_no_audio">選択したフォルダにはオーディオファイルが含まれていません</string>
     <string name="delete_current_song">現在の曲を削除</string>
+    <string name="delete_song_warning">WARNING: This will delete the selected files themselves from the device, all playlists included.</string>
     <string name="remove_current_song">プレイリストから現在の曲を削除</string>
     <string name="show_filename">ファイル名を曲名として表示</string>
     <string name="title_is_not_available">曲名が使用できない場合</string>
