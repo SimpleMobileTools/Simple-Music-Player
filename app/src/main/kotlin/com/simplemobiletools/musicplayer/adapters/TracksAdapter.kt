@@ -22,7 +22,6 @@ import com.simplemobiletools.musicplayer.models.Events
 import com.simplemobiletools.musicplayer.models.Track
 import kotlinx.android.synthetic.main.item_track.view.*
 import org.greenrobot.eventbus.EventBus
-import java.util.*
 
 class TracksAdapter(
     activity: SimpleActivity, var tracks: ArrayList<Track>, val isPlaylistContent: Boolean, recyclerView: MyRecyclerView, itemClick: (Any) -> Unit

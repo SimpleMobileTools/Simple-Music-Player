@@ -394,7 +394,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         if (mPlayer != null) {
             EventBus.getDefault().post(Events.QueueUpdated(mTracks))
             mCurrTrackCover = getAlbumImage().first
-            broadcastTrackChange()
+            trackChanged()
 
             val secs = mPlayer!!.currentPosition / 1000
             broadcastTrackProgress(secs)
