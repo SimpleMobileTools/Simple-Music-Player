@@ -57,6 +57,8 @@
     <string name="artist_name">Имя исполнителя</string>
     <string name="year">Год</string>
     <string name="track_number">Номер композиции</string>
+    <string name="use_for_this_playlist">Use for this playlist only</string>
+    <string name="use_for_this_album">Use for this album only</string>
     <!-- Artists -->
     <string name="artists">Исполнители</string>
     <string name="folders">Папки</string>

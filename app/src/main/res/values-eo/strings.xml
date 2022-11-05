@@ -57,6 +57,8 @@
     <string name="artist_name">Nomo de muzikisto</string>
     <string name="year">Jaro</string>
     <string name="track_number">Track number</string>
+    <string name="use_for_this_playlist">Use for this playlist only</string>
+    <string name="use_for_this_album">Use for this album only</string>
     <!-- Artists -->
     <string name="artists">Muzikistoj</string>
     <string name="folders">Folders</string>

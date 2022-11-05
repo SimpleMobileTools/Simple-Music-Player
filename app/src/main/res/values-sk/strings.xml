@@ -57,6 +57,8 @@
     <string name="artist_name">Meno interpreta</string>
     <string name="year">Rok</string>
     <string name="track_number">Číslo skladby</string>
+    <string name="use_for_this_playlist">Použiť iba pre tento playlist</string>
+    <string name="use_for_this_album">Použiť iba pre tento album</string>
     <!-- Artists -->
     <string name="artists">Interpreti</string>
     <string name="folders">Priečinky</string>
