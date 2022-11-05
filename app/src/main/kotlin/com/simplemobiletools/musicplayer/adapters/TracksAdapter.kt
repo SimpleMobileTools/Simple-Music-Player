@@ -11,10 +11,7 @@ import com.qtalk.recyclerviewfastscroller.RecyclerViewFastScroller
 import com.simplemobiletools.commons.activities.BaseSimpleActivity
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
 import com.simplemobiletools.commons.dialogs.ConfirmationDialog
-import com.simplemobiletools.commons.extensions.beGone
-import com.simplemobiletools.commons.extensions.beVisible
-import com.simplemobiletools.commons.extensions.getFormattedDuration
-import com.simplemobiletools.commons.extensions.highlightTextPart
+import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.musicplayer.R
@@ -87,9 +84,17 @@ class TracksAdapter(
 
     override fun getItemKeyPosition(key: Int) = tracks.indexOfFirst { it.hashCode() == key }
 
-    override fun onActionModeCreated() {}
+    override fun onActionModeCreated() {
+        if (isPlaylistContent) {
+            notifyDataSetChanged()
+        }
+    }
 
-    override fun onActionModeDestroyed() {}
+    override fun onActionModeDestroyed() {
+        if (isPlaylistContent) {
+            notifyDataSetChanged()
+        }
+    }
 
     private fun addToPlaylist() {
         activity.addTracksToPlaylist(getSelectedTracks()) {
@@ -179,6 +184,7 @@ class TracksAdapter(
         view.apply {
             track_frame?.isSelected = selectedKeys.contains(track.hashCode())
             track_title.text = if (textToHighlight.isEmpty()) track.title else track.title.highlightTextPart(textToHighlight, properPrimaryColor)
+            track_drag_handle.beVisibleIf(isPlaylistContent && selectedKeys.isNotEmpty())
 
             arrayOf(track_id, track_title, track_duration).forEach {
                 it.setTextColor(textColor)
