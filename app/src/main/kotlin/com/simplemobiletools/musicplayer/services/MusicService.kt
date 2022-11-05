@@ -132,8 +132,11 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
                 pauseTrack()
             }
 
+            // this can happen after all notifications have been dismissed, so avoid recreating them
             override fun onStop() {
-                pauseTrack()
+                if (mIsServiceInitialized) {
+                    pauseTrack()
+                }
             }
 
             override fun onSkipToNext() {
