@@ -12,7 +12,6 @@ import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
 import com.simplemobiletools.commons.dialogs.ConfirmationDialog
 import com.simplemobiletools.commons.extensions.beGone
 import com.simplemobiletools.commons.extensions.beVisible
-import com.simplemobiletools.commons.extensions.getColoredDrawableWithColor
 import com.simplemobiletools.commons.extensions.getFormattedDuration
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.commons.views.MyRecyclerView
@@ -27,7 +26,6 @@ import com.simplemobiletools.musicplayer.models.Track
 import kotlinx.android.synthetic.main.item_album.view.*
 import kotlinx.android.synthetic.main.item_section.view.*
 import kotlinx.android.synthetic.main.item_track.view.*
-import java.util.*
 
 // we show both albums and individual tracks here
 class AlbumsTracksAdapter(
@@ -39,8 +37,8 @@ class AlbumsTracksAdapter(
     private val ITEM_ALBUM = 1
     private val ITEM_TRACK = 2
 
-    private val placeholder = resources.getColoredDrawableWithColor(R.drawable.ic_headset_padded, textColor)
-    private val placeholderBig = resources.getColoredDrawableWithColor(R.drawable.ic_headset, textColor)
+    private val placeholder = resources.getSmallPlaceholder(textColor)
+    private val placeholderBig = resources.getBiggerPlaceholder(textColor)
     private val cornerRadius = resources.getDimension(R.dimen.rounded_corner_radius_small).toInt()
 
     init {

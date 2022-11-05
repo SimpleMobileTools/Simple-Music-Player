@@ -11,7 +11,10 @@ import com.qtalk.recyclerviewfastscroller.RecyclerViewFastScroller
 import com.simplemobiletools.commons.activities.BaseSimpleActivity
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
 import com.simplemobiletools.commons.dialogs.ConfirmationDialog
-import com.simplemobiletools.commons.extensions.*
+import com.simplemobiletools.commons.extensions.beGone
+import com.simplemobiletools.commons.extensions.beVisible
+import com.simplemobiletools.commons.extensions.getFormattedDuration
+import com.simplemobiletools.commons.extensions.highlightTextPart
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.musicplayer.R
@@ -19,6 +22,7 @@ import com.simplemobiletools.musicplayer.activities.SimpleActivity
 import com.simplemobiletools.musicplayer.dialogs.EditDialog
 import com.simplemobiletools.musicplayer.extensions.*
 import com.simplemobiletools.musicplayer.helpers.TagHelper
+import com.simplemobiletools.musicplayer.inlines.indexOfFirstOrNull
 import com.simplemobiletools.musicplayer.models.Events
 import com.simplemobiletools.musicplayer.models.Track
 import kotlinx.android.synthetic.main.item_track.view.*
@@ -30,7 +34,7 @@ class TracksAdapter(
 
     private val tagHelper by lazy { TagHelper(activity) }
     private var textToHighlight = ""
-    private val placeholder = resources.getColoredDrawableWithColor(R.drawable.ic_headset, textColor)
+    private val placeholder = resources.getBiggerPlaceholder(textColor)
     private val cornerRadius = resources.getDimension(R.dimen.rounded_corner_radius_small).toInt()
 
     init {
@@ -200,13 +204,10 @@ class TracksAdapter(
     private fun displayEditDialog() {
         getSelectedTracks().firstOrNull()?.let { selectedTrack ->
             EditDialog(activity as SimpleActivity, selectedTrack) { track ->
-                val trackIndex = tracks.indexOfFirst { it.mediaStoreId == track.mediaStoreId }
+                val trackIndex = tracks.indexOfFirstOrNull { it.mediaStoreId == track.mediaStoreId } ?: return@EditDialog
                 tracks[trackIndex] = track
-                if (trackIndex != -1) {
-                    tracks[trackIndex] = track
-                    notifyItemChanged(trackIndex)
-                    finishActMode()
-                }
+                notifyItemChanged(trackIndex)
+                finishActMode()
 
                 activity.refreshAfterEdit(track)
             }

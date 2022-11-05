@@ -12,7 +12,6 @@ import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
 import com.simplemobiletools.commons.dialogs.ConfirmationDialog
 import com.simplemobiletools.commons.extensions.beGone
 import com.simplemobiletools.commons.extensions.beVisible
-import com.simplemobiletools.commons.extensions.getColoredDrawableWithColor
 import com.simplemobiletools.commons.extensions.getFormattedDuration
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.commons.views.MyRecyclerView
@@ -33,7 +32,7 @@ class TracksHeaderAdapter(activity: SimpleActivity, var items: ArrayList<ListIte
     private val ITEM_HEADER = 0
     private val ITEM_TRACK = 1
 
-    private val placeholder = resources.getColoredDrawableWithColor(R.drawable.ic_headset, textColor)
+    private val placeholder = resources.getBiggerPlaceholder(textColor)
     private val cornerRadius = resources.getDimension(R.dimen.rounded_corner_radius_big).toInt()
     private val tagHelper by lazy { TagHelper(activity) }
 

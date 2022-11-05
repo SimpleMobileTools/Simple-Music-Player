@@ -21,10 +21,7 @@ import com.simplemobiletools.commons.interfaces.StartReorderDragListener
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
-import com.simplemobiletools.musicplayer.extensions.addTracksToPlaylist
-import com.simplemobiletools.musicplayer.extensions.deleteTracks
-import com.simplemobiletools.musicplayer.extensions.removeQueueItems
-import com.simplemobiletools.musicplayer.extensions.sendIntent
+import com.simplemobiletools.musicplayer.extensions.*
 import com.simplemobiletools.musicplayer.helpers.FINISH
 import com.simplemobiletools.musicplayer.helpers.PLAY_TRACK
 import com.simplemobiletools.musicplayer.helpers.TRACK_ID
@@ -37,7 +34,7 @@ import java.util.*
 class QueueAdapter(activity: SimpleActivity, var items: ArrayList<Track>, recyclerView: MyRecyclerView, itemClick: (Any) -> Unit) :
     MyRecyclerViewAdapter(activity, recyclerView, itemClick), ItemTouchHelperContract, RecyclerViewFastScroller.OnPopupTextUpdate {
 
-    private val placeholder = resources.getColoredDrawableWithColor(R.drawable.ic_headset, textColor)
+    private val placeholder = resources.getBiggerPlaceholder(textColor)
     private var startReorderDragListener: StartReorderDragListener
     private val cornerRadius = resources.getDimension(R.dimen.rounded_corner_radius_small).toInt()
     private var textToHighlight = ""
