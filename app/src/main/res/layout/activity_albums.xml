@@ -20,41 +20,33 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/albums_nested_scrollview"
+    <RelativeLayout
+        android:id="@+id/albums_holder"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true"
-        android:scrollbars="none"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <RelativeLayout
-            android:id="@+id/albums_holder"
+        <com.qtalk.recyclerviewfastscroller.RecyclerViewFastScroller
+            android:id="@+id/albums_fastscroller"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/current_track_bar">
 
-            <com.qtalk.recyclerviewfastscroller.RecyclerViewFastScroller
-                android:id="@+id/albums_fastscroller"
+            <com.simplemobiletools.commons.views.MyRecyclerView
+                android:id="@+id/albums_list"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_above="@+id/current_track_bar">
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:layoutAnimation="@anim/layout_animation"
+                app:layoutManager="com.simplemobiletools.commons.views.MyLinearLayoutManager" />
 
-                <com.simplemobiletools.commons.views.MyRecyclerView
-                    android:id="@+id/albums_list"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:clipToPadding="false"
-                    android:layoutAnimation="@anim/layout_animation"
-                    app:layoutManager="com.simplemobiletools.commons.views.MyLinearLayoutManager" />
+        </com.qtalk.recyclerviewfastscroller.RecyclerViewFastScroller>
 
-            </com.qtalk.recyclerviewfastscroller.RecyclerViewFastScroller>
+        <include
+            layout="@layout/view_current_track_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true" />
 
-            <include
-                layout="@layout/view_current_track_bar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true" />
-
-        </RelativeLayout>
-    </androidx.core.widget.NestedScrollView>
+    </RelativeLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
