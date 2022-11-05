@@ -256,7 +256,7 @@ class TracksActivity : SimpleActivity() {
                     val isPlaylistContent = tracksType == TYPE_PLAYLIST
                     val currAdapter = tracks_list.adapter
                     if (currAdapter == null) {
-                        TracksAdapter(this, tracks, isPlaylistContent, tracks_list) {
+                        TracksAdapter(this, tracks, isPlaylistContent, tracks_list, playlist) {
                             itemClicked(it as Track)
                         }.apply {
                             tracks_list.adapter = this

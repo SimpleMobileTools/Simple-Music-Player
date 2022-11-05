@@ -1,8 +1,11 @@
 package com.simplemobiletools.musicplayer.adapters
 
 import android.view.Menu
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
@@ -13,29 +16,51 @@ import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
 import com.simplemobiletools.commons.dialogs.ConfirmationDialog
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
+import com.simplemobiletools.commons.interfaces.ItemMoveCallback
+import com.simplemobiletools.commons.interfaces.ItemTouchHelperContract
+import com.simplemobiletools.commons.interfaces.StartReorderDragListener
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
 import com.simplemobiletools.musicplayer.dialogs.EditDialog
 import com.simplemobiletools.musicplayer.extensions.*
+import com.simplemobiletools.musicplayer.helpers.PLAYER_SORT_BY_CUSTOM
 import com.simplemobiletools.musicplayer.helpers.TagHelper
 import com.simplemobiletools.musicplayer.inlines.indexOfFirstOrNull
 import com.simplemobiletools.musicplayer.models.Events
+import com.simplemobiletools.musicplayer.models.Playlist
 import com.simplemobiletools.musicplayer.models.Track
 import kotlinx.android.synthetic.main.item_track.view.*
 import org.greenrobot.eventbus.EventBus
+import java.util.*
 
 class TracksAdapter(
-    activity: BaseSimpleActivity, var tracks: ArrayList<Track>, val isPlaylistContent: Boolean, recyclerView: MyRecyclerView, itemClick: (Any) -> Unit
-) : MyRecyclerViewAdapter(activity, recyclerView, itemClick), RecyclerViewFastScroller.OnPopupTextUpdate {
+    activity: BaseSimpleActivity,
+    var tracks: ArrayList<Track>,
+    val isPlaylistContent: Boolean,
+    recyclerView: MyRecyclerView,
+    val playlist: Playlist? = null,
+    itemClick: (Any) -> Unit
+) : MyRecyclerViewAdapter(activity, recyclerView, itemClick), RecyclerViewFastScroller.OnPopupTextUpdate, ItemTouchHelperContract {
 
     private val tagHelper by lazy { TagHelper(activity) }
     private var textToHighlight = ""
     private val placeholder = resources.getBiggerPlaceholder(textColor)
     private val cornerRadius = resources.getDimension(R.dimen.rounded_corner_radius_small).toInt()
+    private var touchHelper: ItemTouchHelper? = null
+    private var startReorderDragListener: StartReorderDragListener
 
     init {
         setupDragListener(true)
+
+        touchHelper = ItemTouchHelper(ItemMoveCallback(this))
+        touchHelper!!.attachToRecyclerView(recyclerView)
+
+        startReorderDragListener = object : StartReorderDragListener {
+            override fun requestDrag(viewHolder: RecyclerView.ViewHolder) {
+                touchHelper?.startDrag(viewHolder)
+            }
+        }
     }
 
     override fun getActionMenuId() = R.menu.cab_tracks
@@ -45,7 +70,7 @@ class TracksAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val track = tracks.getOrNull(position) ?: return
         holder.bindView(track, true, true) { itemView, layoutPosition ->
-            setupView(itemView, track)
+            setupView(itemView, track, holder)
         }
         bindViewHolder(holder)
     }
@@ -180,11 +205,18 @@ class TracksAdapter(
         }
     }
 
-    private fun setupView(view: View, track: Track) {
+    private fun setupView(view: View, track: Track, holder: ViewHolder) {
         view.apply {
             track_frame?.isSelected = selectedKeys.contains(track.hashCode())
             track_title.text = if (textToHighlight.isEmpty()) track.title else track.title.highlightTextPart(textToHighlight, properPrimaryColor)
             track_drag_handle.beVisibleIf(isPlaylistContent && selectedKeys.isNotEmpty())
+            track_drag_handle.applyColorFilter(textColor)
+            track_drag_handle.setOnTouchListener { v, event ->
+                if (event.action == MotionEvent.ACTION_DOWN) {
+                    startReorderDragListener.requestDrag(holder)
+                }
+                false
+            }
 
             arrayOf(track_id, track_title, track_duration).forEach {
                 it.setTextColor(textColor)
@@ -216,6 +248,32 @@ class TracksAdapter(
                 finishActMode()
 
                 activity.refreshAfterEdit(track)
+            }
+        }
+    }
+
+    override fun onRowMoved(fromPosition: Int, toPosition: Int) {
+        activity.config.saveCustomPlaylistSorting(playlist!!.id, PLAYER_SORT_BY_CUSTOM)
+        if (fromPosition < toPosition) {
+            for (i in fromPosition until toPosition) {
+                Collections.swap(tracks, i, i + 1)
+            }
+        } else {
+            for (i in fromPosition downTo toPosition + 1) {
+                Collections.swap(tracks, i, i - 1)
+            }
+        }
+        notifyItemMoved(fromPosition, toPosition)
+    }
+
+    override fun onRowSelected(myViewHolder: ViewHolder?) {}
+
+    override fun onRowClear(myViewHolder: ViewHolder?) {
+        ensureBackgroundThread {
+            var index = 0
+            tracks.forEach {
+                it.orderInPlaylist = index++
+                activity.tracksDAO.updateOrderInPlaylist(index, it.id)
             }
         }
     }

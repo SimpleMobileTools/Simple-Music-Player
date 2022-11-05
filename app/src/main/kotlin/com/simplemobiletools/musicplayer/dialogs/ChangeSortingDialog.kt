@@ -36,8 +36,12 @@ class ChangeSortingDialog(val activity: Activity, val location: Int, val playlis
             TAB_FOLDERS -> config.folderSorting
             TAB_ARTISTS -> config.artistSorting
             TAB_ALBUMS -> config.albumSorting
-            ACTIVITY_PLAYLIST_FOLDER -> config.getProperPlaylistSorting(playlist?.id!!)
-            else -> config.trackSorting
+            TAB_TRACKS -> config.trackSorting
+            else -> if (playlist != null) {
+                config.getProperPlaylistSorting(playlist.id)
+            } else {
+                config.playlistTracksSorting
+            }
         }
 
         setupSortRadio()
@@ -68,12 +72,27 @@ class ChangeSortingDialog(val activity: Activity, val location: Int, val playlis
                 radioItems.add(RadioItem(1, activity.getString(R.string.artist_name), PLAYER_SORT_BY_ARTIST_TITLE))
                 radioItems.add(RadioItem(2, activity.getString(R.string.year), PLAYER_SORT_BY_YEAR))
             }
-            TAB_TRACKS, ACTIVITY_PLAYLIST_FOLDER -> {
+            TAB_TRACKS -> {
                 radioItems.add(RadioItem(0, activity.getString(R.string.title), PLAYER_SORT_BY_TITLE))
                 radioItems.add(RadioItem(1, activity.getString(R.string.artist), PLAYER_SORT_BY_ARTIST_TITLE))
                 radioItems.add(RadioItem(2, activity.getString(R.string.duration), PLAYER_SORT_BY_DURATION))
                 radioItems.add(RadioItem(3, activity.getString(R.string.track_number), PLAYER_SORT_BY_TRACK_ID))
             }
+            ACTIVITY_PLAYLIST_FOLDER -> {
+                radioItems.add(RadioItem(0, activity.getString(R.string.title), PLAYER_SORT_BY_TITLE))
+                radioItems.add(RadioItem(1, activity.getString(R.string.artist), PLAYER_SORT_BY_ARTIST_TITLE))
+                radioItems.add(RadioItem(2, activity.getString(R.string.duration), PLAYER_SORT_BY_DURATION))
+                radioItems.add(RadioItem(3, activity.getString(R.string.track_number), PLAYER_SORT_BY_TRACK_ID))
+
+                if (playlist != null) {
+                    radioItems.add(RadioItem(4, activity.getString(R.string.custom), PLAYER_SORT_BY_CUSTOM))
+                }
+            }
+        }
+
+        view.sorting_dialog_radio_sorting.setOnCheckedChangeListener { group, checkedId ->
+            view.sorting_order_divider.beVisibleIf(checkedId != PLAYER_SORT_BY_CUSTOM)
+            view.sorting_dialog_radio_order.beVisibleIf(checkedId != PLAYER_SORT_BY_CUSTOM)
         }
 
         radioItems.forEach { radioItem ->
