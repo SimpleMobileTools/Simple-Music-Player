@@ -40,7 +40,7 @@ data class Track(
                 when {
                     title == MediaStore.UNKNOWN_STRING && other.title != MediaStore.UNKNOWN_STRING -> 1
                     title != MediaStore.UNKNOWN_STRING && other.title == MediaStore.UNKNOWN_STRING -> -1
-                    else -> AlphanumericComparator().compare(getProperTitle(SHOW_FILENAME_ALWAYS).toLowerCase(), other.getProperTitle(SHOW_FILENAME_ALWAYS).toLowerCase())
+                    else -> AlphanumericComparator().compare(title.toLowerCase(), other.title.toLowerCase())
                 }
             }
             sorting and PLAYER_SORT_BY_ARTIST_TITLE != 0 -> {
