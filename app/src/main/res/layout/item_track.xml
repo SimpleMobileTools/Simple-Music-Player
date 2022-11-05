@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/track_frame"
     android:layout_width="match_parent"
@@ -10,7 +11,7 @@
     android:foreground="@drawable/selector"
     android:paddingStart="@dimen/medium_margin"
     android:paddingTop="@dimen/activity_margin"
-    android:paddingEnd="@dimen/activity_margin"
+    android:paddingEnd="@dimen/medium_margin"
     android:paddingBottom="@dimen/activity_margin">
 
     <ImageView
@@ -18,41 +19,59 @@
         android:layout_width="@dimen/song_image_size"
         android:layout_height="@dimen/song_image_size"
         android:layout_marginStart="@dimen/small_margin"
-        android:visibility="gone" />
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.simplemobiletools.commons.views.MyTextView
         android:id="@+id/track_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_toEndOf="@+id/track_image"
         android:ems="2"
         android:gravity="end"
         android:paddingEnd="@dimen/small_margin"
         android:textSize="@dimen/bigger_text_size"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/track_image"
+        app:layout_constraintTop_toTopOf="parent"
         tools:text="1" />
 
     <com.simplemobiletools.commons.views.MyTextView
         android:id="@+id/track_title"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_toStartOf="@+id/track_duration"
-        android:layout_toEndOf="@+id/track_id"
         android:ellipsize="end"
         android:maxLines="2"
         android:paddingStart="@dimen/normal_margin"
         android:paddingEnd="@dimen/activity_margin"
         android:textSize="@dimen/bigger_text_size"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/track_duration"
+        app:layout_constraintStart_toEndOf="@+id/track_id"
+        app:layout_constraintTop_toTopOf="parent"
         tools:text="Track title" />
 
     <com.simplemobiletools.commons.views.MyTextView
         android:id="@+id/track_duration"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true"
+        android:paddingEnd="@dimen/medium_margin"
         android:textSize="@dimen/bigger_text_size"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/track_drag_handle"
+        app:layout_constraintTop_toTopOf="parent"
         tools:text="3:45" />
 
-</RelativeLayout>
+    <ImageView
+        android:id="@+id/track_drag_handle"
+        android:layout_width="@dimen/normal_icon_size"
+        android:layout_height="@dimen/normal_icon_size"
+        android:paddingTop="@dimen/medium_margin"
+        android:paddingBottom="@dimen/medium_margin"
+        android:src="@drawable/ic_drag_handle_vector"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
