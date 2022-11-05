@@ -4,6 +4,7 @@ import android.app.Activity
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioGroup
+import com.simplemobiletools.commons.extensions.beVisibleIf
 import com.simplemobiletools.commons.extensions.getAlertDialogBuilder
 import com.simplemobiletools.commons.extensions.setupDialogStuff
 import com.simplemobiletools.commons.helpers.SORT_DESCENDING
@@ -12,20 +13,30 @@ import com.simplemobiletools.commons.views.MyCompatRadioButton
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.helpers.*
+import com.simplemobiletools.musicplayer.models.Playlist
 import kotlinx.android.synthetic.main.dialog_change_sorting.view.*
 
-class ChangeSortingDialog(val activity: Activity, val location: Int, val callback: () -> Unit) {
+class ChangeSortingDialog(val activity: Activity, val location: Int, val playlist: Playlist? = null, val callback: () -> Unit) {
     private val config = activity.config
     private var currSorting = 0
-    var view: View = activity.layoutInflater.inflate(R.layout.dialog_change_sorting, null)
+    private val view: View
 
     init {
+        view = activity.layoutInflater.inflate(R.layout.dialog_change_sorting, null).apply {
+            use_for_this_playlist_divider.beVisibleIf(playlist != null)
+            sorting_dialog_use_for_this_playlist.beVisibleIf(playlist != null)
+
+            if (playlist != null) {
+                sorting_dialog_use_for_this_playlist.isChecked = config.hasCustomPlaylistSorting(playlist.id)
+            }
+        }
+
         currSorting = when (location) {
             TAB_PLAYLISTS -> config.playlistSorting
             TAB_FOLDERS -> config.folderSorting
             TAB_ARTISTS -> config.artistSorting
             TAB_ALBUMS -> config.albumSorting
-            ACTIVITY_PLAYLIST_FOLDER -> config.playlistTracksSorting
+            ACTIVITY_PLAYLIST_FOLDER -> config.getProperPlaylistSorting(playlist?.id!!)
             else -> config.trackSorting
         }
 
@@ -100,14 +111,21 @@ class ChangeSortingDialog(val activity: Activity, val location: Int, val callbac
             sorting = sorting or SORT_DESCENDING
         }
 
-        if (currSorting != sorting) {
+        if (currSorting != sorting || location == ACTIVITY_PLAYLIST_FOLDER) {
             when (location) {
                 TAB_PLAYLISTS -> config.playlistSorting = sorting
                 TAB_FOLDERS -> config.folderSorting = sorting
                 TAB_ARTISTS -> config.artistSorting = sorting
                 TAB_ALBUMS -> config.albumSorting = sorting
                 TAB_TRACKS -> config.trackSorting = sorting
-                ACTIVITY_PLAYLIST_FOLDER -> config.playlistTracksSorting = sorting
+                ACTIVITY_PLAYLIST_FOLDER -> {
+                    if (view.sorting_dialog_use_for_this_playlist.isChecked) {
+                        config.saveCustomPlaylistSorting(playlist!!.id, sorting)
+                    } else {
+                        config.removeCustomPlaylistSorting(playlist!!.id)
+                        config.playlistTracksSorting = sorting
+                    }
+                }
             }
 
             callback()

@@ -201,7 +201,7 @@ class TracksActivity : SimpleActivity() {
                         track
                     } as ArrayList<Track>
 
-                    Track.sorting = config.playlistTracksSorting
+                    Track.sorting = config.getProperPlaylistSorting(playlist!!.id)
                     playlistTracks.sort()
 
                     runOnUiThread {
@@ -274,10 +274,10 @@ class TracksActivity : SimpleActivity() {
     }
 
     private fun showSortingDialog() {
-        ChangeSortingDialog(this, ACTIVITY_PLAYLIST_FOLDER) {
+        ChangeSortingDialog(this, ACTIVITY_PLAYLIST_FOLDER, playlist) {
             val adapter = tracks_list.adapter as? TracksAdapter ?: return@ChangeSortingDialog
             val tracks = adapter.tracks
-            Track.sorting = config.playlistTracksSorting
+            Track.sorting = config.getProperPlaylistSorting(playlist?.id ?: -1)
             tracks.sort()
             adapter.updateItems(tracks, forceUpdate = true)
         }

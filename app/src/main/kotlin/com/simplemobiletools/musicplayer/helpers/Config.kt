@@ -45,6 +45,24 @@ class Config(context: Context) : BaseConfig(context) {
         get() = prefs.getInt(PLAYLIST_TRACKS_SORTING, PLAYER_SORT_BY_TITLE)
         set(playlistTracksSorting) = prefs.edit().putInt(PLAYLIST_TRACKS_SORTING, playlistTracksSorting).apply()
 
+    fun saveCustomPlaylistSorting(playlistId: Int, value: Int) {
+        prefs.edit().putInt(SORT_PLAYLIST_PREFIX + playlistId, value).apply()
+    }
+
+    fun getCustomPlaylistSorting(playlistId: Int) = prefs.getInt(SORT_PLAYLIST_PREFIX + playlistId, sorting)
+
+    fun removeCustomPlaylistSorting(playlistId: Int) {
+        prefs.edit().remove(SORT_PLAYLIST_PREFIX + playlistId).apply()
+    }
+
+    fun hasCustomPlaylistSorting(playlistId: Int) = prefs.contains(SORT_PLAYLIST_PREFIX + playlistId)
+
+    fun getProperPlaylistSorting(playlistId: Int) = if (hasCustomPlaylistSorting(playlistId)) {
+        getCustomPlaylistSorting(playlistId)
+    } else {
+        playlistTracksSorting
+    }
+
     var folderSorting: Int
         get() = prefs.getInt(FOLDER_SORTING, PLAYER_SORT_BY_TITLE)
         set(folderSorting) = prefs.edit().putInt(FOLDER_SORTING, folderSorting).apply()
