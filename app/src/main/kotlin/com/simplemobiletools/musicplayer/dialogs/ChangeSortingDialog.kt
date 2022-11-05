@@ -141,7 +141,9 @@ class ChangeSortingDialog(val activity: Activity, val location: Int, val playlis
                     if (view.sorting_dialog_use_for_this_playlist.isChecked) {
                         config.saveCustomPlaylistSorting(playlist!!.id, sorting)
                     } else {
-                        config.removeCustomPlaylistSorting(playlist!!.id)
+                        if (playlist != null) {
+                            config.removeCustomPlaylistSorting(playlist.id)
+                        }
                         config.playlistTracksSorting = sorting
                     }
                 }

@@ -54,6 +54,7 @@
             android:id="@+id/sorting_dialog_use_for_this_playlist"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:checked="false"
             android:paddingTop="@dimen/activity_margin"
             android:paddingBottom="@dimen/activity_margin"
             android:text="@string/use_for_this_playlist" />
