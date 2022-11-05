@@ -109,13 +109,7 @@ class MainActivity : SimpleActivity() {
         }
 
         if (storedExcludedFolders != config.excludedFolders.hashCode()) {
-            updateAllDatabases {
-                runOnUiThread {
-                    getAllFragments().forEach {
-                        it?.setupFragment(this)
-                    }
-                }
-            }
+            refreshAllFragments()
         }
     }
 
@@ -230,6 +224,10 @@ class MainActivity : SimpleActivity() {
             }
         }
 
+        refreshAllFragments()
+    }
+
+    private fun refreshAllFragments() {
         updateAllDatabases {
             runOnUiThread {
                 getAllFragments().forEach {
@@ -568,12 +566,8 @@ class MainActivity : SimpleActivity() {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun trackDeleted(event: Events.TrackDeleted) {
-        updateAllDatabases {
-            getAllFragments().forEach {
-                it?.setupFragment(this)
-            }
-        }
+    fun shouldRefreshFragments(event: Events.RefreshFragments) {
+        refreshAllFragments()
     }
 
     private fun closeSearch() {

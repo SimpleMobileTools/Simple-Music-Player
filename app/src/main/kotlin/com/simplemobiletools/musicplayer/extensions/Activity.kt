@@ -66,7 +66,7 @@ fun BaseSimpleActivity.deleteTracks(tracks: List<Track>, callback: () -> Unit) {
         deleteSDK30Uris(uris) { success ->
             if (success) {
                 removeQueueItems(tracks) {}
-                EventBus.getDefault().post(Events.TrackDeleted())
+                EventBus.getDefault().post(Events.RefreshFragments())
                 callback()
             } else {
                 toast(R.string.unknown_error_occurred)
@@ -86,7 +86,7 @@ fun BaseSimpleActivity.deleteTracks(tracks: List<Track>, callback: () -> Unit) {
     }
 
     removeQueueItems(tracks) {}
-    EventBus.getDefault().post(Events.TrackDeleted())
+    EventBus.getDefault().post(Events.RefreshFragments())
     callback()
 }
 

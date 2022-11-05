@@ -10,12 +10,13 @@ import com.simplemobiletools.commons.extensions.highlightTextPart
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.extensions.config
-import com.simplemobiletools.musicplayer.interfaces.RefreshFragmentListener
+import com.simplemobiletools.musicplayer.models.Events
 import com.simplemobiletools.musicplayer.models.Folder
 import kotlinx.android.synthetic.main.item_folder.view.*
+import org.greenrobot.eventbus.EventBus
 
 class FoldersAdapter(
-    activity: BaseSimpleActivity, var folders: ArrayList<Folder>, recyclerView: MyRecyclerView, val listener: RefreshFragmentListener, itemClick: (Any) -> Unit
+    activity: BaseSimpleActivity, var folders: ArrayList<Folder>, recyclerView: MyRecyclerView, itemClick: (Any) -> Unit
 ) : MyRecyclerViewAdapter(activity, recyclerView, itemClick), RecyclerViewFastScroller.OnPopupTextUpdate {
 
     private var textToHighlight = ""
@@ -64,7 +65,7 @@ class FoldersAdapter(
         }
 
         finishActMode()
-        listener.refreshItems(this.activity)
+        EventBus.getDefault().post(Events.RefreshFragments())
     }
 
     private fun getSelectedFolders(): List<Folder> = folders.filter { selectedKeys.contains(it.hashCode()) }.toList()

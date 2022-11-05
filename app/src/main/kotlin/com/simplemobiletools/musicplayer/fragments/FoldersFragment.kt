@@ -19,13 +19,12 @@ import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.extensions.tracksDAO
 import com.simplemobiletools.musicplayer.helpers.FOLDER
 import com.simplemobiletools.musicplayer.helpers.TAB_FOLDERS
-import com.simplemobiletools.musicplayer.interfaces.RefreshFragmentListener
 import com.simplemobiletools.musicplayer.models.Album
 import com.simplemobiletools.musicplayer.models.Folder
 import com.simplemobiletools.musicplayer.models.Track
 import kotlinx.android.synthetic.main.fragment_folders.view.*
 
-class FoldersFragment(context: Context, attributeSet: AttributeSet) : MyViewPagerFragment(context, attributeSet), RefreshFragmentListener {
+class FoldersFragment(context: Context, attributeSet: AttributeSet) : MyViewPagerFragment(context, attributeSet) {
     private var foldersIgnoringSearch = ArrayList<Folder>()
 
     override fun setupFragment(activity: BaseSimpleActivity) {
@@ -84,7 +83,7 @@ class FoldersFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
 
                 val adapter = folders_list.adapter
                 if (adapter == null) {
-                    FoldersAdapter(activity, folders, folders_list, this) {
+                    FoldersAdapter(activity, folders, folders_list) {
                         activity.hideKeyboard()
                         Intent(activity, TracksActivity::class.java).apply {
                             putExtra(FOLDER, (it as Folder).title)
@@ -137,9 +136,5 @@ class FoldersFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
         folders_placeholder.setTextColor(textColor)
         folders_fastscroller.updateColors(adjustedPrimaryColor)
         folders_placeholder_2.setTextColor(adjustedPrimaryColor)
-    }
-
-    override fun refreshItems(activity: BaseSimpleActivity) {
-        setupFragment(activity)
     }
 }
