@@ -40,7 +40,7 @@
     <string name="create_playlist_from_folder">Neue Wiedergabeliste aus Ordner erstellen</string>
     <string name="folder_contains_no_audio">Der ausgewählte Ordner enthält keine Audiodateien</string>
     <string name="delete_current_song">Aktuelles Lied löschen</string>
-    <string name="delete_song_warning">WARNING: This will delete the selected files themselves from the device, all playlists included.</string>
+    <string name="delete_song_warning">WARNUNG: Dadurch werden die ausgewählten Dateien selbst vom Gerät gelöscht, einschließlich aller Wiedergabelisten.</string>
     <string name="remove_current_song">Aktuelles Lied aus der Wiedergabeliste entfernen</string>
     <string name="show_filename">Dateiname als Liedtitel anzeigen</string>
     <string name="title_is_not_available">Wenn Titel nicht verfügbar</string>
