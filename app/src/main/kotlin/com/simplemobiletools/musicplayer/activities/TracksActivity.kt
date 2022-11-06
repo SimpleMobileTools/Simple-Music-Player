@@ -51,6 +51,7 @@ class TracksActivity : SimpleActivity() {
     private var tracksIgnoringSearch = ArrayList<Track>()
     private var bus: EventBus? = null
     private var playlist: Playlist? = null
+    private var folder: String? = null
     private var tracksType = 0
     private var lastFilePickerPath = ""
 
@@ -180,7 +181,7 @@ class TracksActivity : SimpleActivity() {
             tracksType = TYPE_ALBUM
         }
 
-        val folder = intent.getStringExtra(FOLDER)
+        folder = intent.getStringExtra(FOLDER)
         if (folder != null) {
             tracksType = TYPE_FOLDER
             tracks_placeholder_2.beGone()
@@ -228,7 +229,7 @@ class TracksActivity : SimpleActivity() {
                         track
                     } as ArrayList<Track>
 
-                    Track.sorting = config.playlistTracksSorting
+                    Track.sorting = config.getProperFolderSorting(folder ?: "")
                     folderTracks.sort()
 
                     runOnUiThread {
@@ -274,10 +275,15 @@ class TracksActivity : SimpleActivity() {
     }
 
     private fun showSortingDialog() {
-        ChangeSortingDialog(this, ACTIVITY_PLAYLIST_FOLDER, playlist) {
+        ChangeSortingDialog(this, ACTIVITY_PLAYLIST_FOLDER, playlist, folder) {
             val adapter = tracks_list.adapter as? TracksAdapter ?: return@ChangeSortingDialog
             val tracks = adapter.tracks
-            Track.sorting = config.getProperPlaylistSorting(playlist?.id ?: -1)
+            Track.sorting = if (playlist != null) {
+                config.getProperPlaylistSorting(playlist?.id ?: -1)
+            } else {
+                config.getProperFolderSorting(folder ?: "")
+            }
+
             tracks.sort()
             adapter.updateItems(tracks, forceUpdate = true)
         }

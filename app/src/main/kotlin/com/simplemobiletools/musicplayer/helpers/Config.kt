@@ -2,6 +2,7 @@ package com.simplemobiletools.musicplayer.helpers
 
 import android.content.Context
 import com.simplemobiletools.commons.helpers.BaseConfig
+import com.simplemobiletools.commons.helpers.SORT_FOLDER_PREFIX
 import java.util.*
 
 class Config(context: Context) : BaseConfig(context) {
@@ -59,6 +60,12 @@ class Config(context: Context) : BaseConfig(context) {
 
     fun getProperPlaylistSorting(playlistId: Int) = if (hasCustomPlaylistSorting(playlistId)) {
         getCustomPlaylistSorting(playlistId)
+    } else {
+        playlistTracksSorting
+    }
+
+    fun getProperFolderSorting(path: String) = if (hasCustomSorting(path)) {
+        getFolderSorting(path)
     } else {
         playlistTracksSorting
     }

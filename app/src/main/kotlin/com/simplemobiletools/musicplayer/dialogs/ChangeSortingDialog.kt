@@ -16,18 +16,21 @@ import com.simplemobiletools.musicplayer.helpers.*
 import com.simplemobiletools.musicplayer.models.Playlist
 import kotlinx.android.synthetic.main.dialog_change_sorting.view.*
 
-class ChangeSortingDialog(val activity: Activity, val location: Int, val playlist: Playlist? = null, val callback: () -> Unit) {
+class ChangeSortingDialog(val activity: Activity, val location: Int, val playlist: Playlist? = null, val path: String? = null, val callback: () -> Unit) {
     private val config = activity.config
     private var currSorting = 0
     private val view: View
 
     init {
         view = activity.layoutInflater.inflate(R.layout.dialog_change_sorting, null).apply {
-            use_for_this_playlist_divider.beVisibleIf(playlist != null)
-            sorting_dialog_use_for_this_playlist.beVisibleIf(playlist != null)
+            use_for_this_playlist_divider.beVisibleIf(playlist != null || path != null)
+            sorting_dialog_use_for_this_only.beVisibleIf(playlist != null || path != null)
 
             if (playlist != null) {
-                sorting_dialog_use_for_this_playlist.isChecked = config.hasCustomPlaylistSorting(playlist.id)
+                sorting_dialog_use_for_this_only.isChecked = config.hasCustomPlaylistSorting(playlist.id)
+            } else if (path != null) {
+                sorting_dialog_use_for_this_only.text = activity.getString(R.string.use_for_this_folder)
+                sorting_dialog_use_for_this_only.isChecked = config.hasCustomSorting(path)
             }
         }
 
@@ -39,6 +42,8 @@ class ChangeSortingDialog(val activity: Activity, val location: Int, val playlis
             TAB_TRACKS -> config.trackSorting
             else -> if (playlist != null) {
                 config.getProperPlaylistSorting(playlist.id)
+            } else if (path != null) {
+                config.getProperFolderSorting(path)
             } else {
                 config.playlistTracksSorting
             }
@@ -138,11 +143,17 @@ class ChangeSortingDialog(val activity: Activity, val location: Int, val playlis
                 TAB_ALBUMS -> config.albumSorting = sorting
                 TAB_TRACKS -> config.trackSorting = sorting
                 ACTIVITY_PLAYLIST_FOLDER -> {
-                    if (view.sorting_dialog_use_for_this_playlist.isChecked) {
-                        config.saveCustomPlaylistSorting(playlist!!.id, sorting)
+                    if (view.sorting_dialog_use_for_this_only.isChecked) {
+                        if (playlist != null) {
+                            config.saveCustomPlaylistSorting(playlist.id, sorting)
+                        } else if (path != null) {
+                            config.saveCustomSorting(path, sorting)
+                        }
                     } else {
                         if (playlist != null) {
                             config.removeCustomPlaylistSorting(playlist.id)
+                        } else if (path != null) {
+                            config.removeCustomSorting(path)
                         }
                         config.playlistTracksSorting = sorting
                     }

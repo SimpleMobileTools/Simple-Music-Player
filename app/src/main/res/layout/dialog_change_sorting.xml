@@ -51,7 +51,7 @@
             layout="@layout/divider" />
 
         <com.simplemobiletools.commons.views.MyAppCompatCheckbox
-            android:id="@+id/sorting_dialog_use_for_this_playlist"
+            android:id="@+id/sorting_dialog_use_for_this_only"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:checked="false"
