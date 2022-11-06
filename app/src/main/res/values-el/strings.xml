@@ -40,7 +40,7 @@
     <string name="create_playlist_from_folder">Δημιουργία νέας λίστας από φάκελο</string>
     <string name="folder_contains_no_audio">Ο επιλεγμένος φάκελος δεν περιέχει αρχεία ήχου</string>
     <string name="delete_current_song">Διαγραφή τρέχοντος τραγουδιού</string>
-    <string name="delete_song_warning">WARNING: This will delete the selected files themselves from the device, all playlists included.</string>
+    <string name="delete_song_warning">ΠΡΟΕΙΔΟΠΟΙΗΣΗ: Αυτό θα διαγράψει τα ίδια τα επιλεγμένα αρχεία από τη συσκευή, και όλων των λιστών αναπαραγωγής.</string>
     <string name="remove_current_song">Αφαίρεση τρέχοντος τραγουδιού από τη λίστα</string>
     <string name="show_filename">Εμφάνιση ονόματος αρχείου ως τίτλος τραγουδιού</string>
     <string name="title_is_not_available">Εάν ο τίτλος δεν είναι διαθέσιμος</string>
@@ -56,9 +56,9 @@
     <string name="album_count">Αριθμός άλμπουμ</string>
     <string name="artist_name">Όνομα καλλιτέχνη</string>
     <string name="year">Έτος</string>
-    <string name="track_number">Track number</string>
-    <string name="use_for_this_playlist">Use for this playlist only</string>
-    <string name="use_for_this_album">Use for this album only</string>
+    <string name="track_number">Αριθμός τραγουδιού</string>
+    <string name="use_for_this_playlist">Χρήση μόνο για αυτή τη λίστα</string>
+    <string name="use_for_this_album">Χρήση μόνο για αυτό το άλμπουμ</string>
     <!-- Artists -->
     <string name="artists">Καλλιτέχνες</string>
     <string name="folders">Φάκελοι</string>
@@ -74,14 +74,14 @@
     </plurals>
     <!-- Queue -->
     <string name="next_track">Επόμενο:</string>
-    <string name="track_queue">Τραγούδια σε ουρά</string>
-    <string name="add_to_queue">Προσθήκη στην ουρά</string>
-    <string name="remove_from_queue">Κατάργηση από την ουρά</string>
+    <string name="track_queue">Τραγούδια σε αναμονή</string>
+    <string name="add_to_queue">Προσθήκη στην αναμονή</string>
+    <string name="remove_from_queue">Κατάργηση από την αναμονή</string>
     <string name="create_playlist_from_queue">Δημιουργία λίστας από την ουρά</string>
     <!-- Settings -->
     <string name="equalizer">Ισοσταθμιστής</string>
     <string name="swap_prev_next">Εναλλαγή κουμπιών ακουστικών Πίσω/Εμπρός</string>
-    <string name="exclude_folder_description">Excluding a folder will prevent the displaying of all audio files within. Files manually added to playlists will not be affected.</string>
+    <string name="exclude_folder_description">Η Εξαίρεση ενός φακέλου θα αποτρέψει την εμφάνιση όλων των αρχείων ήχου εντός του φακέλου. Τα αρχεία που προστίθενται χειροκίνητα σε λίστες αναπαραγωγής δεν θα επηρεαστούν.</string>
     <!-- FAQ -->
     <string name="faq_1_title">Πώς μπορώ να προωθήσω γρήγορα τα τραγούδια;</string>
     <string name="faq_1_text">Μπορείτε να κάνετε κλικ στο τρέχον ή μέγιστης διάρκειας κείμενο κοντά στη γραμμή προόδου, το οποίο θα μετακινήσει το τραγούδι πίσω ή εμπρός.</string>
