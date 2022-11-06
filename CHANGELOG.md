@@ -1,6 +1,16 @@
 Changelog
 ==========
 
+Version 5.15.0 *(2022-11-06)*
+----------------------------
+
+ * Allow excluding unwanted folders
+ * Allow reordering playlist tracks
+ * Allow setting playlist and folder specific sorting
+ * Allow deleting files themselves from the queue view
+ * Added Search at the queue list
+ * Added other stability, translation and UX improvements
+
 Version 5.14.1 *(2022-10-03)*
 ----------------------------
 
