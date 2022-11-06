@@ -38,7 +38,6 @@ class QueueAdapter(activity: SimpleActivity, var items: ArrayList<Track>, recycl
     private var startReorderDragListener: StartReorderDragListener
     private val cornerRadius = resources.getDimension(R.dimen.rounded_corner_radius_small).toInt()
     private var textToHighlight = ""
-    var isSearchOpen = false
 
     init {
         setupDragListener(true)
@@ -90,9 +89,13 @@ class QueueAdapter(activity: SimpleActivity, var items: ArrayList<Track>, recycl
 
     override fun getItemKeyPosition(key: Int) = items.indexOfFirst { it.hashCode() == key }
 
-    override fun onActionModeCreated() {}
+    override fun onActionModeCreated() {
+        notifyDataSetChanged()
+    }
 
-    override fun onActionModeDestroyed() {}
+    override fun onActionModeDestroyed() {
+        notifyDataSetChanged()
+    }
 
     private fun removeFromQueue() {
         val positions = ArrayList<Int>()
@@ -167,7 +170,7 @@ class QueueAdapter(activity: SimpleActivity, var items: ArrayList<Track>, recycl
             }
 
             track_queue_duration.text = track.duration.getFormattedDuration()
-            track_queue_drag_handle.beGoneIf(isSearchOpen)
+            track_queue_drag_handle.beVisibleIf(selectedKeys.isNotEmpty())
             track_queue_drag_handle.applyColorFilter(textColor)
             track_queue_drag_handle.setOnTouchListener { v, event ->
                 if (event.action == MotionEvent.ACTION_DOWN) {

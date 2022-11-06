@@ -110,13 +110,11 @@ class QueueActivity : SimpleActivity() {
     private fun onSearchOpened() {
         val adapter = (queue_list.adapter as? QueueAdapter) ?: return
         tracksIgnoringSearch = adapter.items
-        adapter.isSearchOpen = true
         adapter.updateItems(tracksIgnoringSearch, forceUpdate = true)
     }
 
     private fun onSearchClosed() {
         val adapter = (queue_list.adapter as? QueueAdapter) ?: return
-        adapter.isSearchOpen = false
         adapter.updateItems(tracksIgnoringSearch, forceUpdate = true)
         queue_placeholder.beGoneIf(tracksIgnoringSearch.isNotEmpty())
     }
