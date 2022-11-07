@@ -40,7 +40,7 @@
     <string name="create_playlist_from_folder">Loo kausta alusel uus esitusloend</string>
     <string name="folder_contains_no_audio">Valitud kaustas ei leidu ühtegi helifaili</string>
     <string name="delete_current_song">Kustuta see pala</string>
-    <string name="delete_song_warning">WARNING: This will delete the selected files themselves from the device, all playlists included.</string>
+    <string name="delete_song_warning">HOIATUS: Sellega kustutad valitud failid sellest seadmest, sealhulgas esitusloenditest.</string>
     <string name="remove_current_song">Eemalda praegune lugu esitusloendist</string>
     <string name="show_filename">Näita faili nime pala pealkirjana</string>
     <string name="title_is_not_available">Kui pealkirja ei leidu</string>
@@ -57,8 +57,8 @@
     <string name="artist_name">Kunstniku nimi</string>
     <string name="year">Aasta</string>
     <string name="track_number">Loo number</string>
-    <string name="use_for_this_playlist">Use for this playlist only</string>
-    <string name="use_for_this_album">Use for this album only</string>
+    <string name="use_for_this_playlist">Kasuta ainult selle esitusloendi jaoks</string>
+    <string name="use_for_this_album">Kasuta ainult selle albumi jaoks</string>
     <!-- Artists -->
     <string name="artists">Kunstnik</string>
     <string name="folders">Kaustad</string>
