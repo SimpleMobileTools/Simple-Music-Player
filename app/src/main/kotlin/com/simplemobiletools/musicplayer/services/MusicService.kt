@@ -116,6 +116,19 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     override fun onCreate() {
         super.onCreate()
         mCoverArtHeight = resources.getDimension(R.dimen.top_art_height).toInt()
+        createMediaSession()
+
+        mAudioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager
+        if (isOreoPlus()) {
+            mOreoFocusHandler = OreoAudioFocusHandler(applicationContext)
+        }
+
+        if (!isQPlus() && !hasPermission(getPermissionToRequest())) {
+            EventBus.getDefault().post(Events.NoStoragePermission())
+        }
+    }
+
+    private fun createMediaSession() {
         mMediaSession = MediaSessionCompat(this, "MusicService")
         mMediaSession!!.setFlags(MediaSessionCompat.FLAG_HANDLES_MEDIA_BUTTONS)
         mMediaSession!!.setCallback(object : MediaSessionCompat.Callback() {
@@ -151,21 +164,13 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
                 updateProgress((pos / 1000).toInt())
             }
         })
-
-        mAudioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager
-        if (isOreoPlus()) {
-            mOreoFocusHandler = OreoAudioFocusHandler(applicationContext)
-        }
-
-        if (!isQPlus() && !hasPermission(getPermissionToRequest())) {
-            EventBus.getDefault().post(Events.NoStoragePermission())
-        }
     }
 
     override fun onDestroy() {
         super.onDestroy()
         destroyPlayer()
         mMediaSession?.isActive = false
+        mMediaSession = null
         mEqualizer?.release()
         mEqualizer = null
         mSleepTimer?.cancel()
