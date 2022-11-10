@@ -250,6 +250,10 @@ class TracksActivity : SimpleActivity() {
                         }.apply {
                             tracks_list.adapter = this
                         }
+
+                        if (areSystemAnimationsEnabled) {
+                            tracks_list.scheduleLayoutAnimation()
+                        }
                     } else {
                         (currAdapter as TracksHeaderAdapter).updateItems(listItems)
                     }
@@ -262,13 +266,13 @@ class TracksActivity : SimpleActivity() {
                         }.apply {
                             tracks_list.adapter = this
                         }
+
+                        if (areSystemAnimationsEnabled) {
+                            tracks_list.scheduleLayoutAnimation()
+                        }
                     } else {
                         (currAdapter as TracksAdapter).updateItems(tracks)
                     }
-                }
-
-                if (areSystemAnimationsEnabled) {
-                    tracks_list.scheduleLayoutAnimation()
                 }
             }
         }
