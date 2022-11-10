@@ -4,17 +4,21 @@ import android.content.res.Resources
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
-import com.simplemobiletools.commons.extensions.getColoredDrawableWithColor
+import com.simplemobiletools.commons.extensions.applyColorFilter
 import com.simplemobiletools.musicplayer.R
 
 fun Resources.getSmallPlaceholder(color: Int): Drawable {
-    val placeholder = getColoredDrawableWithColor(R.drawable.ic_headset_padded, color)
-    return resizeDrawable(placeholder, getDimension(R.dimen.song_image_size).toInt())
+    val placeholder = getDrawable(R.drawable.ic_headset_padded)
+    val resized = resizeDrawable(placeholder, getDimension(R.dimen.song_image_size).toInt())
+    resized.applyColorFilter(color)
+    return resized
 }
 
 fun Resources.getBiggerPlaceholder(color: Int): Drawable {
-    val placeholder = getColoredDrawableWithColor(R.drawable.ic_headset, color)
-    return resizeDrawable(placeholder, getDimension(R.dimen.artist_image_size).toInt())
+    val placeholder = getDrawable(R.drawable.ic_headset)
+    val resized = resizeDrawable(placeholder, getDimension(R.dimen.artist_image_size).toInt())
+    resized.applyColorFilter(color)
+    return resized
 }
 
 fun Resources.resizeDrawable(drawable: Drawable, size: Int): Drawable {
