@@ -137,6 +137,7 @@ class MainActivity : SimpleActivity() {
             findItem(R.id.create_new_playlist).isVisible = getCurrentFragment() == playlists_fragment_holder
             findItem(R.id.create_playlist_from_folder).isVisible = getCurrentFragment() == playlists_fragment_holder
             findItem(R.id.import_playlist).isVisible = getCurrentFragment() == playlists_fragment_holder && isOreoPlus()
+            findItem(R.id.more_apps_from_us).isVisible = !resources.getBoolean(R.bool.hide_google_relations)
         }
     }
 
