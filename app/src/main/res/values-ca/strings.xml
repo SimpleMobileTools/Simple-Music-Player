@@ -65,12 +65,12 @@
     <string name="albums">Àlbums</string>
     <plurals name="albums_plural">
         <item quantity="one">%d àlbum</item>
-        <item quantity="other">%d àlbums</item>
+        <item quantity="other">%d d\'àlbums</item>
     </plurals>
     <string name="tracks">Peces</string>
     <plurals name="tracks_plural">
         <item quantity="one">%d peça</item>
-        <item quantity="other">%d peces</item>
+        <item quantity="other">%d de peces</item>
     </plurals>
     <!-- Queue -->
     <string name="next_track">Següent:</string>

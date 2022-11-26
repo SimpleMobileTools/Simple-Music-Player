@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Einfaldur tónlistarspilari</string>
+    <string name="app_launcher_name">Tónlistarspilari</string>
+    <string name="playlist_empty">Lagalistinn þinn er tómur</string>
+    <string name="rename_song">Endurnefna lag</string>
+    <string name="rename_song_error">Villa kom upp við endurnefninguna</string>
+    <string name="rename_song_empty">Vinsamlegast fylltu út alla reiti</string>
+    <string name="repeat_off">Endurtakahamur óvirkur</string>
+    <string name="repeat_song">Endurtaka núverandi lag</string>
+    <string name="repeat_playlist">Endurtaka öll</string>
+    <string name="stop_playback_after_current_song">Stöðva spilun eftir núverandi lag</string>
+    <string name="enable_shuffle">Virkja uppstokkunarham</string>
+    <string name="disable_shuffle">Óvirkja uppstokkunarham</string>
+    <string name="shuffle_enabled">Uppstokkunarhamur virkur</string>
+    <string name="shuffle_disabled">Uppstokkunarhamur óvirkur</string>
+    <string name="sleep_timer">Tímarofi</string>
+    <string name="volume">Hljóðstyrkur</string>
+    <string name="playback_speed">Spilunarhraði</string>
+    <string name="loading_files">Hleður skrám…</string>
+    <!-- Playlists -->
+    <string name="add_file_to_playlist">Bæta skrá við lagalista</string>
+    <string name="add_folder_to_playlist">Bæta möppu við lagalista</string>
+    <string name="manage_playlists">Stjórna lagalistum</string>
+    <string name="playlists">Lagalistar</string>
+    <string name="create_new_playlist">Búa til nýjan lagalista</string>
+    <string name="rename_playlist">Endurnefna lagalista</string>
+    <string name="playlist_name_exists">Lagalisti með því nafni er þegar til</string>
+    <string name="remove_playlist">Fjarlægja lagalista</string>
+    <string name="remove_playlist_description">Þetta fjarlægir aðeins lagalistann. Skrám verður ekki eytt.</string>
+    <string name="remove_playlist_description_placeholder">Þetta fjarlægir aðeins lagalistann „%s“. Skrám verður ekki eytt.</string>
+    <string name="remove_from_playlist">Fjarlægja af lagalista</string>
+    <string name="remove_from_playlist_description">Þetta fjarlægir aðeins atriðin af lagalistanum „%s“. Skrám verður ekki eytt.</string>
+    <string name="delete_the_files_too">Eyða skránum líka</string>
+    <string name="open_playlist">Opna lagalista</string>
+    <string name="all_songs_cannot_be_deleted">Ekki er hægt að eyða lagalistanum „Öll lög“</string>
+    <string name="empty_playlist">Núverandi lagalisti er tómur</string>
+    <string name="fetching_songs">Sækir lög…</string>
+    <string name="all_songs">Öll lög</string>
+    <string name="create_playlist_from_folder">Búa til nýjan lagalista úr möppu</string>
+    <string name="folder_contains_no_audio">Valin mappa inniheldur engar hljóðskrár</string>
+    <string name="delete_current_song">Eyða núverandi lagi</string>
+    <string name="delete_song_warning">ATHUGAÐU: Þetta mun eyða völdum skrám og spilunarlistum úr tækinu.</string>
+    <string name="remove_current_song">Fjarlægja núverandi lag af lagalista</string>
+    <string name="show_filename">Sýna skráarnafn sem lagaheiti</string>
+    <string name="title_is_not_available">Ef lagaheiti er ekki tiltækt</string>
+    <string name="show_album_cover">Sýna plötuumslag á aðalskjá</string>
+    <string name="all_tracks">Öll lög</string>
+    <string name="add_to_playlist">Bæta við á lagalista</string>
+    <string name="create_playlist_label">Þú getur búið til nýjan lagalista með því að velja listamenn, plötur eða lög sem óskað er eftir og nota Valmynd -&gt; Bæta við lagalista.</string>
+    <string name="export_playlist">Flytja út lagalista</string>
+    <string name="import_playlist">Flytja inn lagalista</string>
+    <string name="filename_without_m3u">Skráarnafn (án .m3u)</string>
+    <!-- Sorting -->
+    <string name="track_count">Lagafjöldi</string>
+    <string name="album_count">Plötufjöldi</string>
+    <string name="artist_name">Listamannsnafn</string>
+    <string name="year">Ár</string>
+    <string name="track_number">Laganúmer</string>
+    <string name="use_for_this_playlist">Nota aðeins fyrir þennan spilunarlista</string>
+    <string name="use_for_this_album">Nota aðeins fyrir þessa plötu</string>
+    <!-- Artists -->
+    <string name="artists">Listamenn</string>
+    <string name="folders">Möppur</string>
+    <string name="albums">Plötur</string>
+    <plurals name="albums_plural">
+        <item quantity="one">%d plata</item>
+        <item quantity="other">%d plötur</item>
+    </plurals>
+    <string name="tracks">Lög</string>
+    <plurals name="tracks_plural">
+        <item quantity="one">%d lag</item>
+        <item quantity="other">%d lög</item>
+    </plurals>
+    <!-- Queue -->
+    <string name="next_track">Næsta:</string>
+    <string name="track_queue">Biðröð</string>
+    <string name="add_to_queue">Bæta við biðröð</string>
+    <string name="remove_from_queue">Fjarlægja úr biðröð</string>
+    <string name="create_playlist_from_queue">Búa til lagalista úr biðröð</string>
+    <!-- Settings -->
+    <string name="equalizer">Tónjafnari</string>
+    <string name="swap_prev_next">Skiptu um fyrra/næsta heyrnartólshnappa</string>
+    <string name="exclude_folder_description">Að útiloka möppu kemur í veg fyrir birtingu allra hljóðskráa innan. Skrár sem bætt er handvirkt við lagalista verða ekki fyrir áhrifum.</string>
+    <!-- FAQ -->
+    <string name="faq_1_title">Hvernig get ég hraðspólað lög\?</string>
+    <string name="faq_1_text">Þú getur smellt á núverandi eða hámarkslengd texta nálægt leitarstikunni sem mun færa lagið annað hvort afturábak eða áfram.</string>
+</resources>

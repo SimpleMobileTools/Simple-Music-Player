@@ -8,7 +8,7 @@
     <string name="rename_song_empty">すべてのフィールドを入力してください</string>
     <string name="repeat_off">リピート無効</string>
     <string name="repeat_song">現在の曲を繰り返し</string>
-    <string name="repeat_playlist">再生リストをリピート</string>
+    <string name="repeat_playlist">再生キューを繰り返し</string>
     <string name="stop_playback_after_current_song">現在の曲の後に停止</string>
     <string name="enable_shuffle">シャッフルを有効にする</string>
     <string name="disable_shuffle">シャッフルを無効にする</string>
@@ -72,7 +72,7 @@
     </plurals>
     <!-- Queue -->
     <string name="next_track">次:</string>
-    <string name="track_queue">トラックキュー</string>
+    <string name="track_queue">再生キュー</string>
     <string name="add_to_queue">キューに追加</string>
     <string name="remove_from_queue">キューから削除</string>
     <string name="create_playlist_from_queue">キューからプレイリストを作成</string>

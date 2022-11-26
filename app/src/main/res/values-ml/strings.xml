@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ലളിതമായ മ്യൂസിക് പ്ലെയർ</string>
+    <string name="app_launcher_name">മ്യൂസിക് പ്ലെയർ</string>
+    <string name="playlist_empty">നിങ്ങളുടെ പ്ലേലിസ്റ്റ് ശൂന്യമാണ്</string>
+    <string name="rename_song_empty">എല്ലാ ഫീൽഡുകളും പൂരിപ്പിക്കുക</string>
+    <string name="rename_song">പാട്ടിന്റെ പേര് മാറ്റുക</string>
+    <string name="rename_song_error">പേരുമാറ്റുന്നതിനിടയിൽ ഒരു പിശക് സംഭവിച്ചു</string>
+    <string name="repeat_off">ആവർത്തനം നിർത്തുക</string>
+    <string name="repeat_song">നിലവിലെ ഗാനം ആവർത്തിക്കുക</string>
+    <string name="repeat_playlist">എല്ലാം ആവർത്തിക്കുക</string>
+    <string name="stop_playback_after_current_song">നിലവിലെ പാട്ടിന് ശേഷം പ്ലേബാക്ക് നിർത്തുക</string>
+    <string name="enable_shuffle">ഷഫിൾ പ്രവർത്തനക്ഷമമാക്കുക</string>
+    <string name="disable_shuffle">ഷഫിൾ പ്രവർത്തനരഹിതമാക്കുക</string>
+    <string name="shuffle_enabled">ഷഫിൾ പ്രവർത്തനക്ഷമമാക്കി</string>
+    <string name="shuffle_disabled">ഷഫിൾ പ്രവർത്തനരഹിതമാക്കി</string>
+    <string name="sleep_timer">Sleep timer</string>
+    <string name="volume">വ്യാപ്തം</string>
+    <string name="playback_speed">പ്ലേബാക്ക് വേഗത</string>
+    <string name="loading_files">ഫയലുകൾ ലോഡുചെയ്യുന്നു…</string>
+    <!-- Playlists -->
+    <string name="add_file_to_playlist">പ്ലേലിസ്റ്റിലേക്ക് ഫയൽ ചേർക്കുക</string>
+    <string name="add_folder_to_playlist">പ്ലേലിസ്റ്റിലേക്ക് ഫോൾഡർ ചേർക്കുക</string>
+    <string name="manage_playlists">Manage playlists</string>
+    <string name="playlists">പ്ലേലിസ്റ്റുകൾ</string>
+    <string name="create_new_playlist">പുതിയ പ്ലേലിസ്റ്റ് സൃഷ്ടിക്കുക</string>
+    <string name="rename_playlist">പ്ലേലിസ്റ്റ് പുനർനാമകരണം ചെയ്യുക</string>
+    <string name="playlist_name_exists">ആ പേരുള്ള ഒരു പ്ലേലിസ്റ്റ് ഇതിനകം നിലവിലുണ്ട്</string>
+    <string name="remove_playlist">പ്ലേലിസ്റ്റ് നീക്കം ചെയ്യുക</string>
+    <string name="remove_playlist_description">ഇത് തിരഞ്ഞെടുത്ത പ്ലേലിസ്റ്റുകൾ മാത്രമേ നീക്കംചെയ്യൂ. യഥാർത്ഥ ഫയലുകൾ ഇല്ലാതാക്കില്ല.</string>
+    <string name="remove_playlist_description_placeholder">This will only remove playlist \"%s\". The actual files will not be deleted.</string>
+    <string name="remove_from_playlist">Remove from playlist</string>
+    <string name="remove_from_playlist_description">This will only remove the items from playlist \"%s\". The actual files will not be deleted.</string>
+    <string name="delete_the_files_too">ഫയലുകളും ഇല്ലാതാക്കുക</string>
+    <string name="open_playlist">പ്ലേലിസ്റ്റ് തുറക്കുക</string>
+    <string name="all_songs_cannot_be_deleted">\"All songs\" playlist cannot be deleted</string>
+    <string name="empty_playlist">നിലവിലെ പ്ലേലിസ്റ്റ് ശൂന്യമാണ്</string>
+    <string name="fetching_songs">പാട്ടുകൾ എടുക്കുന്നു…</string>
+    <string name="all_songs">എല്ലാ പാട്ടുകളും</string>
+    <string name="create_playlist_from_folder">Create new playlist from folder</string>
+    <string name="folder_contains_no_audio">The selected folder contains no audio files</string>
+    <string name="delete_current_song">നിലവിലെ ഗാനം ഇല്ലാതാക്കുക</string>
+    <string name="delete_song_warning">WARNING: This will delete the selected files themselves from the device, all playlists included.</string>
+    <string name="remove_current_song">പ്ലേലിസ്റ്റിൽ നിന്ന് നിലവിലെ ഗാനം നീക്കം ചെയ്യുക</string>
+    <string name="show_filename">ഫയലിന്റെ പേര് പാട്ടിന്റെ ശീർഷകമായി കാണിക്കുക</string>
+    <string name="title_is_not_available">ശീർഷകം ലഭ്യമല്ലെങ്കിൽ</string>
+    <string name="show_album_cover">പ്രധാന സ്ക്രീനിൽ ആൽബം കവർ കാണിക്കുക</string>
+    <string name="all_tracks">All tracks</string>
+    <string name="add_to_playlist">Add to playlist</string>
+    <string name="create_playlist_label">You can create a new playlist by selecting the wanted artists, albums or tracks and using Menu -&gt; Add to playlist.</string>
+    <string name="export_playlist">പ്ലേലിസ്റ്റ് കയറ്റുമതി ചെയ്യുക</string>
+    <string name="import_playlist">പ്ലേലിസ്റ്റ് ഇറക്കുമതി ചെയ്യുക</string>
+    <string name="filename_without_m3u">Filename (without .m3u)</string>
+    <!-- Sorting -->
+    <string name="track_count">ട്രാക്ക് എണ്ണം</string>
+    <string name="album_count">ആൽബം എണ്ണം</string>
+    <string name="artist_name">കലാകാരന്റെ പേര്</string>
+    <string name="year">വർഷം</string>
+    <string name="track_number">Track number</string>
+    <string name="use_for_this_playlist">ഈ പ്ലേലിസ്റ്റിനായി മാത്രം ഉപയോഗിക്കുക</string>
+    <string name="use_for_this_album">ഈ ആൽബത്തിന് മാത്രം ഉപയോഗിക്കുക</string>
+    <!-- Artists -->
+    <string name="artists">കലാകാരന്മാർ</string>
+    <string name="folders">ഫോൾഡറുകൾ</string>
+    <string name="albums">ആൽബങ്ങൾ</string>
+    <plurals name="albums_plural">
+        <item quantity="one">%d Album</item>
+        <item quantity="other">%d Albums</item>
+    </plurals>
+    <string name="tracks">Tracks</string>
+    <plurals name="tracks_plural">
+        <item quantity="one">%d Track</item>
+        <item quantity="other">%d Tracks</item>
+    </plurals>
+    <!-- Queue -->
+    <string name="next_track">അടുത്തത്:</string>
+    <string name="track_queue">Track queue</string>
+    <string name="add_to_queue">Add to queue</string>
+    <string name="remove_from_queue">വരിയിൽ നിന്ന് നീക്കം ചെയ്യുക</string>
+    <string name="create_playlist_from_queue">വരിയിൽ നിന്ന് പ്ലേലിസ്റ്റ് സൃഷ്ടിക്കുക</string>
+    <!-- Settings -->
+    <string name="equalizer">സമകാരി</string>
+    <string name="swap_prev_next">മുമ്പത്തെ/അടുത്ത ഹെഡ്‌ഫോൺ ബട്ടണുകൾ മാറ്റുക</string>
+    <string name="exclude_folder_description">ഒരു ഫോൾഡർ ഒഴികെയുള്ള എല്ലാ ഓഡിയോ ഫയലുകളും പ്രദർശിപ്പിക്കുന്നത് തടയും. പ്ലേലിസ്റ്റുകളിലേക്ക് സ്വമേധയാ ചേർത്ത ഫയലുകളെ ബാധിക്കില്ല.</string>
+    <!-- FAQ -->
+    <string name="faq_1_title">എനിക്ക് എങ്ങനെ പാട്ടുകൾ വേഗത്തിൽ മുന്നോട്ട് ചെയ്യാം\?</string>
+    <string name="faq_1_text">നിങ്ങൾക്ക് സീക്ക്ബാറിന് സമീപമുള്ള നിലവിലെ അല്ലെങ്കിൽ പരമാവധി ദൈർഘ്യമുള്ള ടെക്‌സ്‌റ്റുകളിൽ ക്ലിക്കുചെയ്യാം, അത് പാട്ടിനെ പിന്നോട്ടോ മുന്നിലോ നീക്കും.</string>
+</resources>
