@@ -54,13 +54,13 @@
     <!-- Sorting -->
     <string name="track_count">Palade arv</string>
     <string name="album_count">Albumeid</string>
-    <string name="artist_name">Kunstniku nimi</string>
+    <string name="artist_name">Esitaja nimi</string>
     <string name="year">Aasta</string>
     <string name="track_number">Loo number</string>
     <string name="use_for_this_playlist">Kasuta ainult selle esitusloendi jaoks</string>
     <string name="use_for_this_album">Kasuta ainult selle albumi jaoks</string>
     <!-- Artists -->
-    <string name="artists">Kunstnik</string>
+    <string name="artists">Esitaja</string>
     <string name="folders">Kaustad</string>
     <string name="albums">Albumid</string>
     <plurals name="albums_plural">
