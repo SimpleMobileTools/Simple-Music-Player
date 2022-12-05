@@ -40,7 +40,7 @@
     <string name="create_playlist_from_folder">Vytvořit nový seznam skladeb ze složky</string>
     <string name="folder_contains_no_audio">Vybraná složka neobsahuje žádné zvukové soubory</string>
     <string name="delete_current_song">Smazat aktuální skladbu</string>
-    <string name="delete_song_warning">WARNING: This will delete the selected files themselves from the device, all playlists included.</string>
+    <string name="delete_song_warning">VAROVÁNÍ: Toto odstraní ze zařízení vybrané soubory jako takové, včetně všech seznamů skladeb.</string>
     <string name="remove_current_song">Odstranit aktuální skladbu ze seznamu skladeb</string>
     <string name="show_filename">Zobrazit název souboru místo názvu skladby</string>
     <string name="title_is_not_available">Pokud je název skladby neznámý</string>
@@ -56,9 +56,9 @@
     <string name="album_count">Počet alb</string>
     <string name="artist_name">Jméno umělce</string>
     <string name="year">Rok</string>
-    <string name="track_number">Track number</string>
-    <string name="use_for_this_playlist">Use for this playlist only</string>
-    <string name="use_for_this_album">Use for this album only</string>
+    <string name="track_number">Číslo stopy</string>
+    <string name="use_for_this_playlist">Použít pouze pro tento seznam skladeb</string>
+    <string name="use_for_this_album">Použít pouze pro toto album</string>
     <!-- Artists -->
     <string name="artists">Umělci</string>
     <string name="folders">Složky</string>
@@ -83,7 +83,7 @@
     <!-- Settings -->
     <string name="equalizer">Ekvalizér</string>
     <string name="swap_prev_next">Zaměnit tlačítka sluchátek pro předchozí/následující skladbu</string>
-    <string name="exclude_folder_description">Excluding a folder will prevent the displaying of all audio files within. Files manually added to playlists will not be affected.</string>
+    <string name="exclude_folder_description">Vyloučením složky zabráníte zobrazení všech zvukových souborů v ní. Soubory ručně přidané do seznamů skladeb nebudou ovlivněny.</string>
     <!-- FAQ -->
     <string name="faq_1_title">Jak mohu rychle posunout skladbu vpřed\?</string>
     <string name="faq_1_text">Můžete klepnout na texty aktuální nebo celkové délky skladby, které jsou vedle indikátoru průběhu přehrávání. To posune skladbu vpřed nebo vzad.</string>
