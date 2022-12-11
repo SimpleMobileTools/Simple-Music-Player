@@ -32,5 +32,21 @@
             android:layoutAnimation="@anim/layout_animation"
             app:layoutManager="com.simplemobiletools.commons.views.MyLinearLayoutManager" />
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true">
+
+            <com.simplemobiletools.commons.views.MyFloatingActionButton
+                android:id="@+id/fragment_tracks_fab_shuffle_play"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/color_primary"
+                android:contentDescription="@string/play_shuffle"
+                android:src="@drawable/ic_shuffle_vector"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_margin="@dimen/activity_margin" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </com.qtalk.recyclerviewfastscroller.RecyclerViewFastScroller>
 </com.simplemobiletools.musicplayer.fragments.TracksFragment>

@@ -79,6 +79,11 @@ class TracksFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
                 } else {
                     (adapter as TracksAdapter).updateItems(tracks)
                 }
+                fragment_tracks_fab_shuffle_play.setOnClickListener { view ->
+                    if(tracks.isNotEmpty()){
+                        (adapter as TracksAdapter).itemClick(tracks.random())
+                    }
+                }
             }
         }
     }

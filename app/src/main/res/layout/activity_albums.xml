@@ -26,21 +26,41 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <com.qtalk.recyclerviewfastscroller.RecyclerViewFastScroller
-            android:id="@+id/albums_fastscroller"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/current_track_bar">
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_above="@id/current_track_bar">
 
-            <com.simplemobiletools.commons.views.MyRecyclerView
-                android:id="@+id/albums_list"
+            <com.qtalk.recyclerviewfastscroller.RecyclerViewFastScroller
+                android:id="@+id/albums_fastscroller"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:clipToPadding="false"
-                android:layoutAnimation="@anim/layout_animation"
-                app:layoutManager="com.simplemobiletools.commons.views.MyLinearLayoutManager" />
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
 
-        </com.qtalk.recyclerviewfastscroller.RecyclerViewFastScroller>
+                <com.simplemobiletools.commons.views.MyRecyclerView
+                    android:id="@+id/albums_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clipToPadding="false"
+                    android:layoutAnimation="@anim/layout_animation"
+                    app:layoutManager="com.simplemobiletools.commons.views.MyLinearLayoutManager" />
+
+            </com.qtalk.recyclerviewfastscroller.RecyclerViewFastScroller>
+
+            <com.simplemobiletools.commons.views.MyFloatingActionButton
+                android:id="@+id/artist_albums_fab_shuffle_play"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/color_primary"
+                android:contentDescription="@string/play_shuffle"
+                android:src="@drawable/ic_shuffle_vector"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_margin="@dimen/activity_margin"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <include
             layout="@layout/view_current_track_bar"

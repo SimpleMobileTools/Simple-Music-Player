@@ -60,6 +60,25 @@ class AlbumsActivity : SimpleActivity() {
             listItems.add(AlbumSection(tracksSectionLabel))
             listItems.addAll(tracksToAdd)
 
+            artist_albums_fab_shuffle_play.setOnClickListener { view ->
+                if(listItems.isNotEmpty()){
+                    val randomTrack = tracksToAdd.random()
+                    handleNotificationPermission { granted ->
+                        if (granted) {
+                            resetQueueItems(tracksToAdd) {
+                                Intent(this, TrackActivity::class.java).apply {
+                                    putExtra(TRACK, Gson().toJson(randomTrack))
+                                    putExtra(RESTART_PLAYER, true)
+                                    startActivity(this)
+                                }
+                            }
+                        } else {
+                            toast(R.string.no_post_notifications_permissions)
+                        }
+                    }
+                }
+            }
+
             runOnUiThread {
                 AlbumsTracksAdapter(this, listItems, albums_list) {
                     hideKeyboard()

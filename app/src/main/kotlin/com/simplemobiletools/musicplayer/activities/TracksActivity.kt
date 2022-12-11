@@ -61,6 +61,17 @@ class TracksActivity : SimpleActivity() {
         setupOptionsMenu()
         refreshMenuItems()
 
+        tracks_fab_shuffle_play.setOnClickListener { view ->
+            val tracks = when (tracksType) {
+                TYPE_ALBUM -> (tracks_list.adapter as? TracksHeaderAdapter)?.items?.filterIsInstance<Track>()?.toMutableList() as? ArrayList<Track>
+                    ?: ArrayList()
+                else -> (tracks_list.adapter as? TracksAdapter)?.tracks?.toMutableList() as? ArrayList<Track> ?: ArrayList()
+            }
+            if(tracks.isNotEmpty()){
+                itemClicked(tracks.random())
+            }
+        }
+
         bus = EventBus.getDefault()
         bus!!.register(this)
 

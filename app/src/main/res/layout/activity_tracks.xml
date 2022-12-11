@@ -27,21 +27,39 @@
         android:layout_height="wrap_content"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <com.qtalk.recyclerviewfastscroller.RecyclerViewFastScroller
-            android:id="@+id/tracks_fastscroller"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/current_track_bar">
+            android:layout_height="match_parent"
+            android:layout_above="@id/current_track_bar">
 
-            <com.simplemobiletools.commons.views.MyRecyclerView
-                android:id="@+id/tracks_list"
+            <com.qtalk.recyclerviewfastscroller.RecyclerViewFastScroller
+                android:id="@+id/tracks_fastscroller"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:clipToPadding="false"
-                android:layoutAnimation="@anim/layout_animation"
-                app:layoutManager="com.simplemobiletools.commons.views.MyLinearLayoutManager" />
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent">
 
-        </com.qtalk.recyclerviewfastscroller.RecyclerViewFastScroller>
+                <com.simplemobiletools.commons.views.MyRecyclerView
+                    android:id="@+id/tracks_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clipToPadding="false"
+                    android:layoutAnimation="@anim/layout_animation"
+                    app:layoutManager="com.simplemobiletools.commons.views.MyLinearLayoutManager" />
+
+            </com.qtalk.recyclerviewfastscroller.RecyclerViewFastScroller>
+
+            <com.simplemobiletools.commons.views.MyFloatingActionButton
+            android:id="@+id/tracks_fab_shuffle_play"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_shuffle_vector"
+            android:contentDescription="@string/play_shuffle"
+            android:backgroundTint="@color/color_primary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_margin="@dimen/activity_margin" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.simplemobiletools.commons.views.MyTextView
             android:id="@+id/tracks_placeholder"
