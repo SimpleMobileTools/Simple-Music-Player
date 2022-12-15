@@ -1,6 +1,7 @@
 package com.simplemobiletools.musicplayer.helpers
 
 import android.annotation.TargetApi
+import android.app.Application
 import android.content.Context
 import android.media.AudioAttributes
 import android.media.AudioFocusRequest
@@ -8,12 +9,12 @@ import android.media.AudioManager
 import android.os.Build
 
 @TargetApi(Build.VERSION_CODES.O)
-class OreoAudioFocusHandler constructor(val context: Context) {
+class OreoAudioFocusHandler constructor(val app: Application) {
     private var audioFocusRequest: AudioFocusRequest? = null
     private var audioManager: AudioManager? = null
 
     init {
-        audioManager = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
+        audioManager = app.getSystemService(Context.AUDIO_SERVICE) as AudioManager
     }
 
     fun abandonAudioFocus() {

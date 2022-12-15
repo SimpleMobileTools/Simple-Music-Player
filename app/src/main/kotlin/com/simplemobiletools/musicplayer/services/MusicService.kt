@@ -120,7 +120,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
         mAudioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager
         if (isOreoPlus()) {
-            mOreoFocusHandler = OreoAudioFocusHandler(applicationContext)
+            mOreoFocusHandler = OreoAudioFocusHandler(application)
         }
 
         if (!isQPlus() && !hasPermission(getPermissionToRequest())) {
