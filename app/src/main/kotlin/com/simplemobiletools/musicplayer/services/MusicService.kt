@@ -185,12 +185,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
         notifyFocusGained()
 
-        val action = intent.action
-        if (isOreoPlus() && action != NEXT && action != PREVIOUS && action != PLAYPAUSE) {
-            setupFakeNotification()
-        }
-
-        when (action) {
+        when (intent.action) {
             INIT -> handleInit(intent)
             INIT_PATH -> handleInitPath(intent)
             INIT_QUEUE -> handleInitQueue()
@@ -550,7 +545,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
         try {
             notification.setLargeIcon(mCurrTrackCover)
-        } catch (e: OutOfMemoryError) {
+        } catch (ignored: OutOfMemoryError) {
         }
 
         try {
@@ -568,30 +563,6 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         val intent = Intent(this, ControlActionsListener::class.java)
         intent.action = action
         return PendingIntent.getBroadcast(applicationContext, 0, intent, PendingIntent.FLAG_IMMUTABLE)
-    }
-
-    // on Android 8+ the service is launched with startForegroundService(), so startForeground must be called within a few secs
-    @SuppressLint("NewApi")
-    private fun setupFakeNotification() {
-        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        val name = resources.getString(R.string.app_name)
-        val importance = NotificationManager.IMPORTANCE_LOW
-        NotificationChannel(NOTIFICATION_CHANNEL, name, importance).apply {
-            enableLights(false)
-            enableVibration(false)
-            notificationManager.createNotificationChannel(this)
-        }
-
-        val notification = NotificationCompat.Builder(applicationContext, NOTIFICATION_CHANNEL)
-            .setContentTitle("")
-            .setContentText("")
-            .setSmallIcon(R.drawable.ic_headset_small)
-            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
-            .setPriority(NotificationCompat.PRIORITY_MAX)
-            .setChannelId(NOTIFICATION_CHANNEL)
-            .setCategory(Notification.CATEGORY_SERVICE)
-
-        startForeground(NOTIFICATION_ID, notification.build())
     }
 
     private fun getNewTrackId(): Long {
