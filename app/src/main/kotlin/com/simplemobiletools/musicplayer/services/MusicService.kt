@@ -248,6 +248,8 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
                 if (currentQueueItem != null) {
                     wantedTrackId = currentQueueItem.trackId
                     mSetProgressOnPrepare = currentQueueItem.lastPosition
+                } else {
+                    wantedTrackId = getNewTrackId()
                 }
             }
 
@@ -508,7 +510,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
                     val nextTrack = mTracks[(currentTrackIndex + 1) % mTracks.size]
                     nextTrack.mediaStoreId
                 } else {
-                    -1L
+                    mTracks.first().mediaStoreId
                 }
             }
         }
