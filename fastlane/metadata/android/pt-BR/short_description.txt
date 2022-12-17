@@ -1,1 +1,1 @@
-Reprodutor de música e equalizador de som que suporta arquivos mp3.
+Reprodutor de música e equalizador de som que suporta arquivos mp3
