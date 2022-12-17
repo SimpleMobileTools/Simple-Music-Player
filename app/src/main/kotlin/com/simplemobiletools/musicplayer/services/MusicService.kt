@@ -14,10 +14,7 @@ import android.media.MediaMetadataRetriever
 import android.media.MediaPlayer
 import android.media.audiofx.Equalizer
 import android.net.Uri
-import android.os.CountDownTimer
-import android.os.Handler
-import android.os.Looper
-import android.os.PowerManager
+import android.os.*
 import android.provider.MediaStore
 import android.provider.MediaStore.Audio
 import android.support.v4.media.MediaMetadataCompat
@@ -161,6 +158,12 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             override fun onSeekTo(pos: Long) {
                 updateProgress((pos / 1000).toInt())
             }
+
+            override fun onCustomAction(action: String?, extras: Bundle?) {
+                if (action == DISMISS) {
+                    handleDismiss()
+                }
+            }
         })
     }
 
@@ -195,6 +198,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             EDIT -> handleEdit(intent)
             FINISH -> handleFinish()
             FINISH_IF_NOT_PLAYING -> finishIfNotPlaying()
+            DISMISS -> handleDismiss()
             REFRESH_LIST -> handleRefreshList()
             UPDATE_NEXT_TRACK -> broadcastNextTrackChange()
             SET_PROGRESS -> handleSetProgress(intent)
@@ -349,6 +353,10 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     private fun handleFinish() {
         broadcastTrackProgress(0)
         stopSelf()
+    }
+
+    private fun handleDismiss() {
+        pauseTrack(removeNotification = true)
     }
 
     private fun handleRefreshList() {
@@ -541,12 +549,12 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         }
     }
 
-    private fun pauseTrack() {
+    private fun pauseTrack(removeNotification: Boolean = false) {
         initMediaPlayerIfNeeded()
         mPlayer!!.pause()
         trackStateChanged(false)
         updateMediaSessionState()
-        stopForeground(false)
+        stopForeground(removeNotification)
         saveTrackProgress()
     }
 
@@ -749,9 +757,16 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             PlaybackStateCompat.STATE_PAUSED
         }
 
+        val dismissAction = PlaybackStateCompat.CustomAction.Builder(
+            DISMISS,
+            getString(R.string.dismiss),
+            R.drawable.ic_cross_vector
+        ).build()
+
         builder
             .setActions(mMediaSessionActions)
             .setState(playbackState, mPlayer?.currentPosition?.toLong() ?: 0L, mPlaybackSpeed)
+            .addCustomAction(dismissAction)
         try {
             mMediaSession?.setPlaybackState(builder.build())
         } catch (ignored: Exception) {

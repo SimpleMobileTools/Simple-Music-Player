@@ -67,6 +67,12 @@ class NotificationHelper(private val context: Context, private val mediaSessionT
             getIntent(PLAYPAUSE)
         ).build()
 
+        val dismissAction = NotificationCompat.Action.Builder(
+            R.drawable.ic_cross_vector,
+            context.getString(R.string.dismiss),
+            getIntent(DISMISS)
+        ).build()
+
         val notification = NotificationCompat.Builder(context, NOTIFICATION_CHANNEL)
             .setContentTitle(title)
             .setContentText(artist)
@@ -89,6 +95,7 @@ class NotificationHelper(private val context: Context, private val mediaSessionT
             .addAction(previousAction)
             .addAction(playPauseAction)
             .addAction(nextAction)
+            .addAction(dismissAction)
         try {
             notification.setLargeIcon(largeIcon)
         } catch (ignored: OutOfMemoryError) {
