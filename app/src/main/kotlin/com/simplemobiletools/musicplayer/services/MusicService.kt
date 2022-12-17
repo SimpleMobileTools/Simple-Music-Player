@@ -789,9 +789,9 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     }
 
     private fun updateMediaSession() {
-        val albumImage = getAlbumImage()
-        mCurrTrackCover = albumImage.first
-        var lockScreenImage = if (albumImage.second) albumImage.first else null
+        val (albumImage, isPlaceholder) = getAlbumImage()
+        mCurrTrackCover = albumImage
+        var lockScreenImage = if (isPlaceholder) albumImage else null
         if (lockScreenImage == null || lockScreenImage.isRecycled) {
             try {
                 lockScreenImage = resources.getColoredBitmap(R.drawable.ic_headset, getProperTextColor())
