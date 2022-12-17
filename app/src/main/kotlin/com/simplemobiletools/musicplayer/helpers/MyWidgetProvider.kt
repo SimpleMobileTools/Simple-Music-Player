@@ -46,7 +46,7 @@ class MyWidgetProvider : AppWidgetProvider() {
 
     override fun onReceive(context: Context, intent: Intent) {
         when (val action = intent.action) {
-            TRACK_STATE_CHANGED -> songStateChanged(context, intent)
+            TRACK_STATE_CHANGED -> performUpdate(context)
             PREVIOUS, PLAYPAUSE, NEXT -> handlePlayerControls(context, action)
             else -> super.onReceive(context, intent)
         }
@@ -94,18 +94,6 @@ class MyWidgetProvider : AppWidgetProvider() {
         if (currSong != null) {
             views.setTextViewText(R.id.song_info_title, currSong.title)
             views.setTextViewText(R.id.song_info_artist, currSong.artist)
-        }
-    }
-
-    private fun songStateChanged(context: Context, intent: Intent) {
-        val appWidgetManager = AppWidgetManager.getInstance(context) ?: return
-        val track = intent.getSerializableExtra(NEW_TRACK) as? Track
-        val playing = intent.getBooleanExtra(IS_PLAYING, false)
-        appWidgetManager.getAppWidgetIds(getComponentName(context)).forEach {
-            val views = getRemoteViews(appWidgetManager, context, it)
-            updateSongInfo(views, track)
-            updatePlayPauseButton(context, views, playing)
-            appWidgetManager.updateAppWidget(it, views)
         }
     }
 

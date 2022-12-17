@@ -777,7 +777,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
     private fun broadcastTrackChange() {
         Handler(Looper.getMainLooper()).post {
-            broadcastUpdateWidgetTrack(isPlaying(), mCurrTrack)
+            broadcastUpdateWidgetState()
             EventBus.getDefault().post(Events.TrackChanged(mCurrTrack))
             broadcastNextTrackChange()
         }
@@ -785,7 +785,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     }
 
     private fun broadcastTrackStateChange(isPlaying: Boolean) {
-        broadcastUpdateWidgetTrack(isPlaying, mCurrTrack)
+        broadcastUpdateWidgetState()
         EventBus.getDefault().post(Events.TrackStateChanged(isPlaying))
     }
 
