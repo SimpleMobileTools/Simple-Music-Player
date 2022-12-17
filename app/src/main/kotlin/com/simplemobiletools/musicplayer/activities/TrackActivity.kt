@@ -7,7 +7,6 @@ import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.os.Looper
 import android.provider.MediaStore
 import android.view.GestureDetector
 import android.view.MotionEvent
@@ -218,13 +217,15 @@ class TrackActivity : SimpleActivity(), PlaybackSpeedListener {
                             dataSource: DataSource?,
                             isFirstResource: Boolean
                         ): Boolean {
-                            next_track_image.setImageDrawable(resource)
+                            runOnUiThread {
+                                next_track_image.setImageDrawable(resource)
+                            }
                             return false
                         }
                     })
                     .into(wantedSize, wantedSize)
                     .get()
-            } catch (e: Exception) {
+            } catch (ignored: Exception) {
             }
         }
     }
@@ -273,7 +274,7 @@ class TrackActivity : SimpleActivity(), PlaybackSpeedListener {
                     })
                     .into(wantedWidth, wantedHeight)
                     .get()
-            } catch (e: Exception) {
+            } catch (ignored: Exception) {
             }
         }
     }
