@@ -14,7 +14,10 @@ import android.media.MediaMetadataRetriever
 import android.media.MediaPlayer
 import android.media.audiofx.Equalizer
 import android.net.Uri
-import android.os.*
+import android.os.CountDownTimer
+import android.os.Handler
+import android.os.Looper
+import android.os.PowerManager
 import android.provider.MediaStore
 import android.provider.MediaStore.Audio
 import android.support.v4.media.MediaMetadataCompat
@@ -68,7 +71,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         private var mIsThirdPartyIntent = false
         private var mIntentUri: Uri? = null
         private var mMediaSession: MediaSessionCompat? = null
-        private var mIsServiceInitialized = false
+        var mIsServiceInitialized = false
         private var mPrevAudioFocusState = 0
         private var mSetProgressOnPrepare = 0
         private const val mMediaSessionActions =
@@ -126,45 +129,8 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     private fun createMediaSession() {
         mMediaSession = MediaSessionCompat(this, "MusicService")
         mMediaSession!!.setFlags(MediaSessionCompat.FLAG_HANDLES_MEDIA_BUTTONS)
-        mMediaSession!!.setCallback(object : MediaSessionCompat.Callback() {
-            override fun onMediaButtonEvent(mediaButtonEvent: Intent): Boolean {
-                handleMediaButton(mediaButtonEvent)
-                return true
-            }
-
-            override fun onPlay() {
-                resumeTrack()
-            }
-
-            override fun onPause() {
-                pauseTrack()
-            }
-
-            // this can happen after all notifications have been dismissed, so avoid recreating them
-            override fun onStop() {
-                if (mIsServiceInitialized) {
-                    pauseTrack()
-                }
-            }
-
-            override fun onSkipToNext() {
-                handleNext()
-            }
-
-            override fun onSkipToPrevious() {
-                handlePrevious()
-            }
-
-            override fun onSeekTo(pos: Long) {
-                updateProgress((pos / 1000).toInt())
-            }
-
-            override fun onCustomAction(action: String?, extras: Bundle?) {
-                if (action == DISMISS) {
-                    handleDismiss()
-                }
-            }
-        })
+        val mediaSessionCallback = MediaSessionCallback(this)
+        mMediaSession!!.setCallback(mediaSessionCallback)
     }
 
     override fun onDestroy() {
@@ -320,7 +286,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         }
     }
 
-    private fun handlePrevious() {
+    fun handlePrevious() {
         mPlayOnPrepare = true
         playPreviousTrack()
     }
@@ -334,7 +300,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         }
     }
 
-    private fun handleNext() {
+    fun handleNext() {
         mPlayOnPrepare = true
         setupNextTrack()
     }
@@ -355,7 +321,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         stopSelf()
     }
 
-    private fun handleDismiss() {
+    fun handleDismiss() {
         pauseTrack(removeNotification = true)
     }
 
@@ -549,7 +515,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         }
     }
 
-    private fun pauseTrack(removeNotification: Boolean = false) {
+    fun pauseTrack(removeNotification: Boolean = false) {
         initMediaPlayerIfNeeded()
         mPlayer!!.pause()
         trackStateChanged(false)
@@ -558,7 +524,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         saveTrackProgress()
     }
 
-    private fun resumeTrack() {
+    fun resumeTrack() {
         if (mTracks.isEmpty()) {
             handleEmptyPlaylist()
             return
@@ -988,7 +954,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         mPlayer?.setVolume(1f, 1f)
     }
 
-    private fun updateProgress(progress: Int) {
+    fun updateProgress(progress: Int) {
         mPlayer!!.seekTo(progress * 1000)
         saveTrackProgress()
         resumeTrack()
@@ -1066,7 +1032,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         broadcastTrackProgress((mPlayer?.currentPosition ?: 0) / 1000)
     }
 
-    private fun handleMediaButton(mediaButtonEvent: Intent) {
+    fun handleMediaButton(mediaButtonEvent: Intent) {
         if (mediaButtonEvent.action == Intent.ACTION_MEDIA_BUTTON) {
             val swapPrevNext = config.swapPrevNext
             val event = mediaButtonEvent.getParcelableExtra<KeyEvent>(Intent.EXTRA_KEY_EVENT) ?: return
