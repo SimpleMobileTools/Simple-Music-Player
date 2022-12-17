@@ -1,7 +1,7 @@
 package com.simplemobiletools.musicplayer.services
 
 import android.annotation.SuppressLint
-import android.app.*
+import android.app.Service
 import android.content.ContentUris
 import android.content.Context
 import android.content.Intent
@@ -25,7 +25,6 @@ import android.support.v4.media.session.MediaSessionCompat
 import android.support.v4.media.session.PlaybackStateCompat
 import android.util.Size
 import android.view.KeyEvent
-import androidx.core.app.NotificationCompat
 import androidx.media.session.MediaButtonReceiver
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -35,16 +34,13 @@ import com.simplemobiletools.commons.helpers.isMarshmallowPlus
 import com.simplemobiletools.commons.helpers.isOreoPlus
 import com.simplemobiletools.commons.helpers.isQPlus
 import com.simplemobiletools.musicplayer.R
-import com.simplemobiletools.musicplayer.activities.MainActivity
 import com.simplemobiletools.musicplayer.databases.SongsDatabase
 import com.simplemobiletools.musicplayer.extensions.*
 import com.simplemobiletools.musicplayer.helpers.*
 import com.simplemobiletools.musicplayer.inlines.indexOfFirstOrNull
 import com.simplemobiletools.musicplayer.models.Events
 import com.simplemobiletools.musicplayer.models.Track
-import com.simplemobiletools.musicplayer.receivers.ControlActionsListener
 import com.simplemobiletools.musicplayer.receivers.HeadsetPlugReceiver
-import com.simplemobiletools.musicplayer.receivers.NotificationDismissedReceiver
 import org.greenrobot.eventbus.EventBus
 import java.io.File
 import java.io.IOException
@@ -54,8 +50,6 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         private const val PROGRESS_UPDATE_INTERVAL = 1000L
         private const val MAX_CLICK_DURATION = 700L
         private const val FAST_FORWARD_SKIP_MS = 10000
-        private const val NOTIFICATION_CHANNEL = "music_player_channel"
-        private const val NOTIFICATION_ID = 78    // just a random number
 
         var mCurrTrack: Track? = null
         var mTracks = ArrayList<Track>()
@@ -113,6 +107,8 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         mClicksCnt = 0
     }
 
+    private var notificationHelper: NotificationHelper? = null
+
     override fun onCreate() {
         super.onCreate()
         mCoverArtHeight = resources.getDimension(R.dimen.top_art_height).toInt()
@@ -126,6 +122,8 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         if (!isQPlus() && !hasPermission(getPermissionToRequest())) {
             EventBus.getDefault().post(Events.NoStoragePermission())
         }
+
+        notificationHelper = NotificationHelper.from(context = this, mMediaSession!!)
     }
 
     private fun createMediaSession() {
@@ -210,7 +208,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         }
 
         MediaButtonReceiver.handleIntent(mMediaSession!!, intent)
-        setupNotification()
+        updateNotification()
         return START_NOT_STICKY
     }
 
@@ -267,7 +265,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
         mWasPlayingAtFocusLost = false
         initMediaPlayerIfNeeded()
-        setupNotification()
+        updateNotification()
         mIsServiceInitialized = true
     }
 
@@ -488,88 +486,16 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         }
     }
 
-    @SuppressLint("NewApi")
-    private fun setupNotification() {
-        val title = mCurrTrack?.title ?: ""
-        val artist = mCurrTrack?.artist ?: ""
-        val playPauseIcon = if (isPlaying()) R.drawable.ic_pause_vector else R.drawable.ic_play_vector
-
-        var notifWhen = 0L
-        var showWhen = false
-        var usesChronometer = false
-        var ongoing = false
-        if (isPlaying()) {
-            notifWhen = System.currentTimeMillis() - (mPlayer?.currentPosition ?: 0)
-            showWhen = true
-            usesChronometer = true
-            ongoing = true
-        }
-
-        if (isOreoPlus()) {
-            val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            val name = resources.getString(R.string.app_name)
-            val importance = NotificationManager.IMPORTANCE_LOW
-            NotificationChannel(NOTIFICATION_CHANNEL, name, importance).apply {
-                enableLights(false)
-                enableVibration(false)
-                notificationManager.createNotificationChannel(this)
-            }
-        }
-
+    private fun updateNotification() {
         if (mCurrTrackCover?.isRecycled == true) {
             mCurrTrackCover = resources.getColoredBitmap(R.drawable.ic_headset, getProperTextColor())
         }
-
-        val notificationDismissedIntent = Intent(this, NotificationDismissedReceiver::class.java).apply {
-            action = NOTIFICATION_DISMISSED
-        }
-
-        val flags = PendingIntent.FLAG_CANCEL_CURRENT or PendingIntent.FLAG_IMMUTABLE
-        val notificationDismissedPendingIntent = PendingIntent.getBroadcast(this, 0, notificationDismissedIntent, flags)
-
-        val notification = NotificationCompat.Builder(applicationContext, NOTIFICATION_CHANNEL)
-            .setContentTitle(title)
-            .setContentText(artist)
-            .setSmallIcon(R.drawable.ic_headset_small)
-            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
-            .setPriority(NotificationCompat.PRIORITY_MAX)
-            .setWhen(notifWhen)
-            .setShowWhen(showWhen)
-            .setUsesChronometer(usesChronometer)
-            .setContentIntent(getContentIntent())
-            .setOngoing(ongoing)
-            .setChannelId(NOTIFICATION_CHANNEL)
-            .setCategory(Notification.CATEGORY_SERVICE)
-            .setStyle(
-                androidx.media.app.NotificationCompat.MediaStyle()
-                    .setShowActionsInCompactView(0, 1, 2)
-                    .setMediaSession(mMediaSession?.sessionToken)
-            )
-            .setDeleteIntent(notificationDismissedPendingIntent)
-            .addAction(R.drawable.ic_previous_vector, getString(R.string.previous), getIntent(PREVIOUS))
-            .addAction(playPauseIcon, getString(R.string.playpause), getIntent(PLAYPAUSE))
-            .addAction(R.drawable.ic_next_vector, getString(R.string.next), getIntent(NEXT))
-
-        try {
-            notification.setLargeIcon(mCurrTrackCover)
-        } catch (ignored: OutOfMemoryError) {
-        }
-
-        try {
-            startForeground(NOTIFICATION_ID, notification.build())
-        } catch (ignored: ForegroundServiceStartNotAllowedException) {
-        }
-    }
-
-    private fun getContentIntent(): PendingIntent {
-        val contentIntent = Intent(this, MainActivity::class.java)
-        return PendingIntent.getActivity(this, 0, contentIntent, PendingIntent.FLAG_IMMUTABLE)
-    }
-
-    private fun getIntent(action: String): PendingIntent {
-        val intent = Intent(this, ControlActionsListener::class.java)
-        intent.action = action
-        return PendingIntent.getBroadcast(applicationContext, 0, intent, PendingIntent.FLAG_IMMUTABLE)
+        notificationHelper?.showPlaybackNotification(
+            track = mCurrTrack,
+            playing = isPlaying(),
+            largeIcon = mCurrTrackCover,
+            backgroundService = this
+        )
     }
 
     private fun getNewTrackId(): Long {
@@ -779,7 +705,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         }
 
         trackStateChanged(isPlaying())
-        setupNotification()
+        updateNotification()
     }
 
     private fun trackChanged() {
@@ -1053,7 +979,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
     private fun trackStateChanged(isPlaying: Boolean) {
         handleProgressHandler(isPlaying)
-        setupNotification()
+        updateNotification()
         broadcastTrackStateChange(isPlaying)
 
         if (isPlaying) {
