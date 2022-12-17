@@ -795,7 +795,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         if (lockScreenImage == null || lockScreenImage.isRecycled) {
             try {
                 lockScreenImage = resources.getColoredBitmap(R.drawable.ic_headset, getProperTextColor())
-            } catch (e: OutOfMemoryError) {
+            } catch (ignored: OutOfMemoryError) {
             }
         }
 
@@ -911,7 +911,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
                 } catch (ignored: Exception) {
                 }
 
-                val trackParentDirectory = File(mCurrTrack!!.path).parent.trimEnd('/')
+                val trackParentDirectory = File(mCurrTrack!!.path).parent?.trimEnd('/')
                 val albumArtFiles = arrayListOf("folder.jpg", "albumart.jpg", "cover.jpg")
                 albumArtFiles.forEach {
                     val albumArtFilePath = "$trackParentDirectory/$it"
