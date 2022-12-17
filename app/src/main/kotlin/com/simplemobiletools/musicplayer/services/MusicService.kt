@@ -244,9 +244,16 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         } else {
             mTracks = getQueuedTracks()
 
-            val wantedTrackId = intent?.getLongExtra(TRACK_ID, -1L)
+            var wantedTrackId = intent?.getLongExtra(TRACK_ID, -1L) ?: -1L
+            if (wantedTrackId == -1L) {
+                val currentQueueItem = queueDAO.getCurrent()
+                if (currentQueueItem != null) {
+                    wantedTrackId = currentQueueItem.trackId
+                    mSetProgressOnPrepare = currentQueueItem.lastPosition
+                }
+            }
 
-            // use an oldschool loop to avoid ConcurrentModificationException
+            // use an old school loop to avoid ConcurrentModificationException
             for (i in 0 until mTracks.size) {
                 val track = mTracks[i]
                 if (track.mediaStoreId == wantedTrackId) {
@@ -269,7 +276,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         ensureBackgroundThread {
             initService(intent)
 
-            val wantedTrackId = intent?.getLongExtra(TRACK_ID, -1L) ?: -1L
+            val wantedTrackId = mCurrTrack?.mediaStoreId ?: -1L
             mPlayOnPrepare = true
             setTrack(wantedTrackId)
         }
@@ -612,6 +619,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         trackStateChanged(false)
         updateMediaSessionState()
         stopForeground(false)
+        saveTrackProgress()
     }
 
     private fun resumeTrack() {
@@ -763,8 +771,9 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             if (mIsThirdPartyIntent) {
                 trackChanged()
             }
-        } else if (mSetProgressOnPrepare > 0) {
-            mPlayer?.seekTo(mSetProgressOnPrepare)
+        }
+        if (mSetProgressOnPrepare > 0) {
+            mp.seekTo(mSetProgressOnPrepare)
             broadcastTrackProgress(mSetProgressOnPrepare / 1000)
             mSetProgressOnPrepare = 0
         }
@@ -844,13 +853,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             EventBus.getDefault().post(Events.TrackChanged(mCurrTrack))
             broadcastNextTrackChange()
         }
-
-        ensureBackgroundThread {
-            queueDAO.resetCurrent()
-            if (mCurrTrack != null && mPlayer != null) {
-                queueDAO.saveCurrentTrack(mCurrTrack!!.mediaStoreId, 0)
-            }
-        }
+        saveTrackProgress()
     }
 
     private fun broadcastTrackStateChange(isPlaying: Boolean) {
@@ -1050,6 +1053,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
     private fun updateProgress(progress: Int) {
         mPlayer!!.seekTo(progress * 1000)
+        saveTrackProgress()
         resumeTrack()
     }
 
@@ -1147,6 +1151,19 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
                             mRemoteControlHandler.postDelayed(mRunnable, MAX_CLICK_DURATION)
                         }
                     }
+                }
+            }
+        }
+    }
+
+    private fun saveTrackProgress() {
+        if (mCurrTrack != null && mPlayer != null) {
+            ensureBackgroundThread {
+                val trackId = mCurrTrack!!.mediaStoreId
+                val position = mPlayer!!.currentPosition
+                queueDAO.apply {
+                    resetCurrent()
+                    saveCurrentTrack(trackId, position)
                 }
             }
         }
