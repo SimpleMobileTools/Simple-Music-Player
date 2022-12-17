@@ -89,7 +89,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
                 PlaybackStateCompat.ACTION_SEEK_TO or
                 PlaybackStateCompat.ACTION_PLAY_PAUSE
 
-        fun getIsPlaying(): Boolean {
+        fun isPlaying(): Boolean {
             return try {
                 mPlayer?.isPlaying == true
             } catch (e: Exception) {
@@ -323,7 +323,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
     private fun handlePlayPause() {
         mPlayOnPrepare = true
-        if (getIsPlaying()) {
+        if (isPlaying()) {
             pauseTrack()
         } else {
             resumeTrack()
@@ -341,7 +341,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     }
 
     private fun finishIfNotPlaying() {
-        if (!getIsPlaying()) {
+        if (!isPlaying()) {
             handleFinish()
         }
     }
@@ -409,7 +409,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             val secs = mPlayer!!.currentPosition / 1000
             broadcastTrackProgress(secs)
         }
-        trackStateChanged(getIsPlaying())
+        trackStateChanged(isPlaying())
     }
 
     private fun initMediaPlayerIfNeeded() {
@@ -453,7 +453,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
                     }
                 }
             }
-        } catch (e: Exception) {
+        } catch (ignored: Exception) {
         }
     }
 
@@ -492,13 +492,13 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     private fun setupNotification() {
         val title = mCurrTrack?.title ?: ""
         val artist = mCurrTrack?.artist ?: ""
-        val playPauseIcon = if (getIsPlaying()) R.drawable.ic_pause_vector else R.drawable.ic_play_vector
+        val playPauseIcon = if (isPlaying()) R.drawable.ic_pause_vector else R.drawable.ic_play_vector
 
         var notifWhen = 0L
         var showWhen = false
         var usesChronometer = false
         var ongoing = false
-        if (getIsPlaying()) {
+        if (isPlaying()) {
             notifWhen = System.currentTimeMillis() - (mPlayer?.currentPosition ?: 0)
             showWhen = true
             usesChronometer = true
@@ -764,7 +764,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             if (isMarshmallowPlus()) {
                 try {
                     mp.playbackParams = mp.playbackParams.setSpeed(config.playbackSpeed)
-                } catch (e: Exception) {
+                } catch (ignored: Exception) {
                 }
             }
 
@@ -778,7 +778,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             mSetProgressOnPrepare = 0
         }
 
-        trackStateChanged(getIsPlaying())
+        trackStateChanged(isPlaying())
         setupNotification()
     }
 
@@ -815,7 +815,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
     private fun updateMediaSessionState() {
         val builder = PlaybackStateCompat.Builder()
-        val playbackState = if (getIsPlaying()) {
+        val playbackState = if (isPlaying()) {
             PlaybackStateCompat.STATE_PLAYING
         } else {
             PlaybackStateCompat.STATE_PAUSED
@@ -928,8 +928,8 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
                         }
                     }
                 }
-            } catch (e: Exception) {
-            } catch (e: Error) {
+            } catch (ignored: Exception) {
+            } catch (ignored: Error) {
             }
         }
 
@@ -1022,7 +1022,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     }
 
     private fun audioFocusLost() {
-        if (getIsPlaying()) {
+        if (isPlaying()) {
             mWasPlayingAtFocusLost = true
             pauseTrack()
         } else {
@@ -1044,7 +1044,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
     private fun duckAudio() {
         mPlayer?.setVolume(0.3f, 0.3f)
-        mWasPlayingAtFocusLost = getIsPlaying()
+        mWasPlayingAtFocusLost = isPlaying()
     }
 
     private fun unduckAudio() {

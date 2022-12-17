@@ -30,7 +30,7 @@ class MyWidgetProvider : AppWidgetProvider() {
             updateColors(context, views)
             setupButtons(context, views)
             updateSongInfo(views, MusicService.mCurrTrack)
-            updatePlayPauseButton(context, views, MusicService.getIsPlaying())
+            updatePlayPauseButton(context, views, MusicService.isPlaying())
             appWidgetManager.updateAppWidget(it, views)
         }
     }
@@ -83,7 +83,7 @@ class MyWidgetProvider : AppWidgetProvider() {
         appWidgetManager.getAppWidgetIds(getComponentName(context)).forEach {
             val views = getRemoteViews(appWidgetManager, context, it)
             updateSongInfo(views, song)
-            updatePlayPauseButton(context, views, MusicService.getIsPlaying())
+            updatePlayPauseButton(context, views, MusicService.isPlaying())
             appWidgetManager.updateAppWidget(it, views)
         }
     }
