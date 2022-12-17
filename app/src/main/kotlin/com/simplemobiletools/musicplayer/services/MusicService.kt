@@ -961,15 +961,9 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
     private fun destroyPlayer() {
         if (!mIsThirdPartyIntent) {
-            val position = mPlayer?.currentPosition ?: 0
             ensureBackgroundThread {
                 try {
-                    queueDAO.resetCurrent()
-
-                    if (mCurrTrack != null) {
-                        queueDAO.saveCurrentTrack(mCurrTrack!!.mediaStoreId, position)
-                    }
-
+                    saveTrackProgress()
                     mTracks.forEachIndexed { index, track ->
                         queueDAO.setOrder(track.mediaStoreId, index)
                     }
@@ -1157,7 +1151,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     }
 
     private fun saveTrackProgress() {
-        if (mCurrTrack != null && mPlayer != null) {
+        if (mCurrTrack != null && mPlayer != null && mPlayer!!.currentPosition != 0) {
             ensureBackgroundThread {
                 val trackId = mCurrTrack!!.mediaStoreId
                 val position = mPlayer!!.currentPosition
