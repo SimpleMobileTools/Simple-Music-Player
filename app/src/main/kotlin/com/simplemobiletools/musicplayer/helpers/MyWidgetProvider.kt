@@ -40,9 +40,7 @@ class MyWidgetProvider : AppWidgetProvider() {
     }
 
     override fun onReceive(context: Context, intent: Intent) {
-        val action = intent.action
-        when (action) {
-            TRACK_CHANGED -> songChanged(context, intent)
+        when (val action = intent.action) {
             TRACK_STATE_CHANGED -> songStateChanged(context, intent)
             PREVIOUS, PLAYPAUSE, NEXT -> handlePlayerControls(context, action)
             else -> super.onReceive(context, intent)
@@ -77,28 +75,21 @@ class MyWidgetProvider : AppWidgetProvider() {
         views.setOnClickPendingIntent(id, pendingIntent)
     }
 
-    private fun songChanged(context: Context, intent: Intent) {
-        val appWidgetManager = AppWidgetManager.getInstance(context) ?: return
-        val song = intent.getSerializableExtra(NEW_TRACK) as? Track
-        appWidgetManager.getAppWidgetIds(getComponentName(context)).forEach {
-            val views = getRemoteViews(appWidgetManager, context, it)
-            updateSongInfo(views, song)
-            updatePlayPauseButton(context, views, MusicService.isPlaying())
-            appWidgetManager.updateAppWidget(it, views)
+    private fun updateSongInfo(views: RemoteViews, currSong: Track?) {
+        if (currSong != null) {
+            views.setTextViewText(R.id.song_info_title, currSong.title)
+            views.setTextViewText(R.id.song_info_artist, currSong.artist)
         }
     }
 
-    private fun updateSongInfo(views: RemoteViews, currSong: Track?) {
-        views.setTextViewText(R.id.song_info_title, currSong?.title ?: "")
-        views.setTextViewText(R.id.song_info_artist, currSong?.artist ?: "")
-    }
-
     private fun songStateChanged(context: Context, intent: Intent) {
-        val isPlaying = intent.getBooleanExtra(IS_PLAYING, false)
         val appWidgetManager = AppWidgetManager.getInstance(context) ?: return
+        val track = intent.getSerializableExtra(NEW_TRACK) as? Track
+        val playing = intent.getBooleanExtra(IS_PLAYING, false)
         appWidgetManager.getAppWidgetIds(getComponentName(context)).forEach {
             val views = getRemoteViews(appWidgetManager, context, it)
-            updatePlayPauseButton(context, views, isPlaying)
+            updateSongInfo(views, track)
+            updatePlayPauseButton(context, views, playing)
             appWidgetManager.updateAppWidget(it, views)
         }
     }

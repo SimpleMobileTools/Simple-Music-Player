@@ -56,17 +56,10 @@ fun Context.deletePlaylists(playlists: ArrayList<Playlist>) {
     }
 }
 
-fun Context.broadcastUpdateWidgetTrack(newSong: Track?) {
-    Intent(this, MyWidgetProvider::class.java).apply {
-        putExtra(NEW_TRACK, newSong)
-        action = TRACK_CHANGED
-        sendBroadcast(this)
-    }
-}
-
-fun Context.broadcastUpdateWidgetTrackState(isPlaying: Boolean) {
+fun Context.broadcastUpdateWidgetTrack(isPlaying: Boolean, track: Track?) {
     Intent(this, MyWidgetProvider::class.java).apply {
         putExtra(IS_PLAYING, isPlaying)
+        putExtra(NEW_TRACK, track)
         action = TRACK_STATE_CHANGED
         sendBroadcast(this)
     }

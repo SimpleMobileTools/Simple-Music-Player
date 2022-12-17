@@ -47,7 +47,6 @@ const val UPDATE_QUEUE_SIZE = PATH + "UPDATE_QUEUE_SIZE"
 
 const val NEW_TRACK = "NEW_TRACK"
 const val IS_PLAYING = "IS_PLAYING"
-const val TRACK_CHANGED = "TRACK_CHANGED"
 const val TRACK_STATE_CHANGED = "TRACK_STATE_CHANGED"
 
 // shared preferences

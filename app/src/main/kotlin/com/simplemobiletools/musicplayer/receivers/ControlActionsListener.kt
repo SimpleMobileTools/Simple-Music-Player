@@ -12,8 +12,7 @@ import com.simplemobiletools.musicplayer.helpers.PREVIOUS
 class ControlActionsListener : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
-        val action = intent.action
-        when (action) {
+        when (val action = intent.action) {
             PREVIOUS, PLAYPAUSE, NEXT, FINISH -> context.sendIntent(action)
         }
     }
