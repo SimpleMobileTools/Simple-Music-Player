@@ -150,7 +150,8 @@
 
         <service
             android:name=".services.MusicService"
-            android:exported="true">
+            android:exported="true"
+            android:foregroundServiceType="mediaPlayback">
             <intent-filter>
                 <action android:name="com.simplemobiletools.musicplayer.action.INIT" />
                 <action android:name="com.simplemobiletools.musicplayer.action.INIT_PATH" />

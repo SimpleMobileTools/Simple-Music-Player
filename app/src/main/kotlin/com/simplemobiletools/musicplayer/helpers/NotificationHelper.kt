@@ -1,7 +1,10 @@
 package com.simplemobiletools.musicplayer.helpers
 
 import android.annotation.SuppressLint
-import android.app.*
+import android.app.Notification
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
@@ -21,12 +24,9 @@ import com.simplemobiletools.musicplayer.services.MusicService
 @SuppressLint("NewApi")
 class NotificationHelper(private val context: Context, private val mediaSessionToken: MediaSessionCompat.Token) {
 
-    fun showPlaybackNotification(
-        track: Track?,
-        playing: Boolean,
-        largeIcon: Bitmap?,
-        backgroundService: Service
-    ) {
+    private var notificationManager = context.notificationManager
+
+    fun createPlayerNotification(track: Track?, isPlaying: Boolean, largeIcon: Bitmap?, callback: (Notification) -> Unit) {
         val title = track?.title.orEmpty()
         val artist = track?.artist.orEmpty()
 
@@ -34,7 +34,7 @@ class NotificationHelper(private val context: Context, private val mediaSessionT
         var showWhen = false
         var usesChronometer = false
         var ongoing = false
-        if (playing) {
+        if (isPlaying) {
             postTime = System.currentTimeMillis() - (MusicService.mPlayer?.currentPosition ?: 0)
             showWhen = true
             usesChronometer = true
@@ -60,7 +60,7 @@ class NotificationHelper(private val context: Context, private val mediaSessionT
             getIntent(NEXT)
         ).build()
 
-        val playPauseIcon = if (playing) R.drawable.ic_pause_vector else R.drawable.ic_play_vector
+        val playPauseIcon = if (isPlaying) R.drawable.ic_pause_vector else R.drawable.ic_play_vector
         val playPauseAction = NotificationCompat.Action.Builder(
             playPauseIcon,
             context.getString(R.string.playpause),
@@ -73,7 +73,7 @@ class NotificationHelper(private val context: Context, private val mediaSessionT
             getIntent(DISMISS)
         ).build()
 
-        val notification = NotificationCompat.Builder(context, NOTIFICATION_CHANNEL)
+        val builder = NotificationCompat.Builder(context, NOTIFICATION_CHANNEL)
             .setContentTitle(title)
             .setContentText(artist)
             .setSmallIcon(R.drawable.ic_headset_small)
@@ -96,16 +96,18 @@ class NotificationHelper(private val context: Context, private val mediaSessionT
             .addAction(playPauseAction)
             .addAction(nextAction)
             .addAction(dismissAction)
+
         try {
-            notification.setLargeIcon(largeIcon)
+            builder.setLargeIcon(largeIcon)
         } catch (ignored: OutOfMemoryError) {
         }
 
-        try {
-            backgroundService.startForeground(NOTIFICATION_ID, notification.build())
-        } catch (ignored: ForegroundServiceStartNotAllowedException) {
-        }
+        callback(builder.build())
     }
+
+    fun notify(id: Int, notification: Notification) = notificationManager.notify(id, notification)
+
+    fun cancel(id: Int) = notificationManager.cancel(id)
 
     private fun getContentIntent(): PendingIntent {
         val contentIntent = Intent(context, MainActivity::class.java)
@@ -120,7 +122,7 @@ class NotificationHelper(private val context: Context, private val mediaSessionT
 
     companion object {
         private const val NOTIFICATION_CHANNEL = "music_player_channel"
-        private const val NOTIFICATION_ID = 42
+        const val NOTIFICATION_ID = 42
 
         @RequiresApi(26)
         private fun createNotificationChannel(

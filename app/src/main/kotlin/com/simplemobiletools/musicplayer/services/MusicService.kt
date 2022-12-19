@@ -6,6 +6,7 @@ import android.content.ContentUris
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.content.pm.ServiceInfo
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.media.AudioManager
@@ -26,14 +27,12 @@ import androidx.media.session.MediaButtonReceiver
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.simplemobiletools.commons.extensions.*
-import com.simplemobiletools.commons.helpers.ensureBackgroundThread
-import com.simplemobiletools.commons.helpers.isMarshmallowPlus
-import com.simplemobiletools.commons.helpers.isOreoPlus
-import com.simplemobiletools.commons.helpers.isQPlus
+import com.simplemobiletools.commons.helpers.*
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.databases.SongsDatabase
 import com.simplemobiletools.musicplayer.extensions.*
 import com.simplemobiletools.musicplayer.helpers.*
+import com.simplemobiletools.musicplayer.helpers.NotificationHelper.Companion.NOTIFICATION_ID
 import com.simplemobiletools.musicplayer.inlines.indexOfFirstOrNull
 import com.simplemobiletools.musicplayer.models.Events
 import com.simplemobiletools.musicplayer.models.QueueItem
@@ -107,6 +106,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     }
 
     private var notificationHelper: NotificationHelper? = null
+    private var isForeground: Boolean = false
 
     override fun onCreate() {
         super.onCreate()
@@ -151,7 +151,8 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
         notifyFocusGained()
 
-        when (intent.action) {
+        val action = intent.action
+        when (action) {
             INIT -> handleInit(intent)
             INIT_PATH -> handleInitPath(intent)
             INIT_QUEUE -> handleInitQueue()
@@ -177,7 +178,9 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         }
 
         MediaButtonReceiver.handleIntent(mMediaSession!!, intent)
-        updateNotification()
+        if (action != DISMISS && action != FINISH) {
+            startForegroundOrNotify()
+        }
         return START_NOT_STICKY
     }
 
@@ -233,7 +236,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
         mWasPlayingAtFocusLost = false
         initMediaPlayerIfNeeded()
-        updateNotification()
+        startForegroundOrNotify()
         mIsServiceInitialized = true
     }
 
@@ -318,7 +321,8 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     }
 
     fun handleDismiss() {
-        pauseTrack(removeNotification = true)
+        pauseTrack()
+        stopForegroundAndNotification()
     }
 
     private fun handleRefreshList() {
@@ -458,16 +462,38 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         }
     }
 
-    private fun updateNotification() {
+    private fun startForegroundOrNotify() {
         if (mCurrTrackCover?.isRecycled == true) {
             mCurrTrackCover = resources.getColoredBitmap(R.drawable.ic_headset, getProperTextColor())
         }
-        notificationHelper?.showPlaybackNotification(
+        notificationHelper?.createPlayerNotification(
             track = mCurrTrack,
-            playing = isPlaying(),
+            isPlaying = isPlaying(),
             largeIcon = mCurrTrackCover,
-            backgroundService = this
-        )
+        ) {
+            if (!isForeground) {
+                try {
+                    if (isQPlus()) {
+                        startForeground(NOTIFICATION_ID, it, ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PLAYBACK)
+                    } else {
+                        startForeground(NOTIFICATION_ID, it)
+                    }
+                    isForeground = true
+                } catch (ignored: IllegalStateException) {
+                }
+            } else {
+                notificationHelper?.notify(NOTIFICATION_ID, it)
+            }
+        }
+    }
+
+    private fun stopForegroundAndNotification() {
+        if (isNougatPlus()) {
+            @Suppress("DEPRECATION")
+            stopForeground(true)
+        }
+        notificationHelper?.cancel(NOTIFICATION_ID)
+        isForeground = false
     }
 
     private fun getNextQueueItem(): QueueItem {
@@ -511,13 +537,18 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         }
     }
 
-    fun pauseTrack(removeNotification: Boolean = false) {
+    fun pauseTrack() {
         initMediaPlayerIfNeeded()
         mPlayer!!.pause()
         trackStateChanged(false)
         updateMediaSessionState()
-        stopForeground(removeNotification)
         saveTrackProgress()
+        // do not call stopForeground on android 12 as it may cause a crash later
+        if (!isSPlus()) {
+            @Suppress("DEPRECATION")
+            stopForeground(false)
+            isForeground = false
+        }
     }
 
     fun resumeTrack() {
@@ -888,10 +919,10 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         mPlayer?.release()
         mPlayer = null
 
-        trackStateChanged(false)
+        trackStateChanged(isPlaying = false, notify = false)
         trackChanged()
 
-        stopForeground(true)
+        stopForegroundAndNotification()
         stopSelf()
         mIsThirdPartyIntent = false
         mIsServiceInitialized = false
@@ -959,10 +990,12 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         resumeTrack()
     }
 
-    private fun trackStateChanged(isPlaying: Boolean) {
+    private fun trackStateChanged(isPlaying: Boolean, notify: Boolean = true) {
         handleProgressHandler(isPlaying)
-        updateNotification()
         broadcastTrackStateChange(isPlaying)
+        if (notify) {
+            startForegroundOrNotify()
+        }
 
         if (isPlaying) {
             val filter = IntentFilter(Intent.ACTION_HEADSET_PLUG)
@@ -1012,7 +1045,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             override fun onFinish() {
                 EventBus.getDefault().post(Events.SleepTimerChanged(0))
                 config.sleepInTS = 0
-                sendIntent(FINISH)
+                sendIntent(DISMISS)
             }
         }
         mSleepTimer?.start()
