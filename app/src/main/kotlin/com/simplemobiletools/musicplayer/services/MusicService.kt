@@ -14,10 +14,7 @@ import android.media.MediaMetadataRetriever
 import android.media.MediaPlayer
 import android.media.audiofx.Equalizer
 import android.net.Uri
-import android.os.CountDownTimer
-import android.os.Handler
-import android.os.Looper
-import android.os.PowerManager
+import android.os.*
 import android.provider.MediaStore
 import android.provider.MediaStore.Audio
 import android.support.v4.media.MediaMetadataCompat
@@ -39,11 +36,13 @@ import com.simplemobiletools.musicplayer.extensions.*
 import com.simplemobiletools.musicplayer.helpers.*
 import com.simplemobiletools.musicplayer.inlines.indexOfFirstOrNull
 import com.simplemobiletools.musicplayer.models.Events
+import com.simplemobiletools.musicplayer.models.QueueItem
 import com.simplemobiletools.musicplayer.models.Track
 import com.simplemobiletools.musicplayer.receivers.HeadsetPlugReceiver
 import org.greenrobot.eventbus.EventBus
 import java.io.File
 import java.io.IOException
+import kotlin.math.roundToInt
 
 class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnErrorListener, MediaPlayer.OnCompletionListener, OnAudioFocusChangeListener {
     companion object {
@@ -202,7 +201,8 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
                     try {
                         val retriever = MediaMetadataRetriever()
                         retriever.setDataSource(this, mIntentUri)
-                        track.duration = Math.round(retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)!!.toInt() / 1000f)
+                        val duration = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)!!.toInt() / 1000f
+                        track.duration = duration.roundToInt()
                     } catch (ignored: Exception) {
                     }
                 }
@@ -214,13 +214,9 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
             var wantedTrackId = intent?.getLongExtra(TRACK_ID, -1L) ?: -1L
             if (wantedTrackId == -1L) {
-                val currentQueueItem = queueDAO.getCurrent()
-                if (currentQueueItem != null) {
-                    wantedTrackId = currentQueueItem.trackId
-                    mSetProgressOnPrepare = currentQueueItem.lastPosition
-                } else {
-                    wantedTrackId = getNewTrackId()
-                }
+                val currentQueueItem = getNextQueueItem()
+                wantedTrackId = currentQueueItem.trackId
+                mSetProgressOnPrepare = currentQueueItem.lastPosition
             }
 
             // use an old school loop to avoid ConcurrentModificationException
@@ -474,17 +470,17 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         )
     }
 
-    private fun getNewTrackId(): Long {
+    private fun getNextQueueItem(): QueueItem {
         return when (mTracks.size) {
-            0 -> -1L
-            1 -> mTracks.first().mediaStoreId
+            0 -> QueueItem.from(-1L)
+            1 -> QueueItem.from(mTracks.first().mediaStoreId)
             else -> {
                 val currentTrackIndex = mTracks.indexOfFirstOrNull { it.mediaStoreId == mCurrTrack?.mediaStoreId }
                 if (currentTrackIndex != null) {
                     val nextTrack = mTracks[(currentTrackIndex + 1) % mTracks.size]
-                    nextTrack.mediaStoreId
+                    QueueItem.from(nextTrack.mediaStoreId)
                 } else {
-                    mTracks.first().mediaStoreId
+                    queueDAO.getCurrent() ?: QueueItem.from(mTracks.first().mediaStoreId)
                 }
             }
         }
@@ -548,7 +544,11 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         if (mIsThirdPartyIntent) {
             setupTrack()
         } else {
-            setTrack(getNewTrackId())
+            ensureBackgroundThread {
+                val queueItem = getNextQueueItem()
+                mSetProgressOnPrepare = queueItem.lastPosition
+                setTrack(queueItem.trackId)
+            }
         }
     }
 
@@ -619,7 +619,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         }
     }
 
-    override fun onBind(intent: Intent) = null
+    override fun onBind(intent: Intent?): IBinder? = null
 
     override fun onCompletion(mp: MediaPlayer) {
         if (!config.autoplay) {
@@ -681,7 +681,6 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         }
 
         trackStateChanged(isPlaying())
-        updateNotification()
     }
 
     private fun trackChanged() {
