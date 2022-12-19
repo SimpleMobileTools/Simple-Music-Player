@@ -125,10 +125,7 @@ class NotificationHelper(private val context: Context, private val mediaSessionT
         const val NOTIFICATION_ID = 42
 
         @RequiresApi(26)
-        private fun createNotificationChannel(
-            context: Context,
-            notificationManager: NotificationManager
-        ) {
+        private fun createNotificationChannel(context: Context, notificationManager: NotificationManager) {
             var notificationChannel: NotificationChannel? = notificationManager
                 .getNotificationChannel(NOTIFICATION_CHANNEL)
             if (notificationChannel == null) {
@@ -145,10 +142,7 @@ class NotificationHelper(private val context: Context, private val mediaSessionT
             }
         }
 
-        fun from(
-            context: Context,
-            mediaSession: MediaSessionCompat
-        ): NotificationHelper {
+        fun createInstance(context: Context, mediaSession: MediaSessionCompat): NotificationHelper {
             if (isOreoPlus()) {
                 createNotificationChannel(context, context.notificationManager)
             }

@@ -122,7 +122,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             EventBus.getDefault().post(Events.NoStoragePermission())
         }
 
-        notificationHelper = NotificationHelper.from(context = this, mMediaSession!!)
+        notificationHelper = NotificationHelper.createInstance(context = this, mMediaSession!!)
     }
 
     private fun createMediaSession() {
