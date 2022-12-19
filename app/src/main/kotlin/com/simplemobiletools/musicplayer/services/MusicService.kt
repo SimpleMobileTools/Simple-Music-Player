@@ -488,10 +488,8 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     }
 
     private fun stopForegroundAndNotification() {
-        if (isNougatPlus()) {
-            @Suppress("DEPRECATION")
-            stopForeground(true)
-        }
+        @Suppress("DEPRECATION")
+        stopForeground(true)
         notificationHelper?.cancel(NOTIFICATION_ID)
         isForeground = false
     }
