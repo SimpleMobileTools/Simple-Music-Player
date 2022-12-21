@@ -26,11 +26,11 @@ class RemoteControlReceiver : BroadcastReceiver() {
                 return@Runnable
 
             mContext!!.sendIntent(
-                    when (mClicksCnt) {
-                        1 -> PLAYPAUSE
-                        2 -> NEXT
-                        else -> PREVIOUS
-                    }
+                when (mClicksCnt) {
+                    1 -> PLAYPAUSE
+                    2 -> NEXT
+                    else -> PREVIOUS
+                }
             )
             mClicksCnt = 0
         }

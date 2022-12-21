@@ -336,7 +336,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
     private fun handleSetProgress(intent: Intent) {
         if (mPlayer != null) {
-            val progress = intent.getIntExtra(PROGRESS, mPlayer!!.currentPosition / 1000)
+            val progress = intent.getIntExtra(PROGRESS, getPosition()!! / 1000)
             updateProgress(progress)
         }
     }
@@ -380,7 +380,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             mCurrTrackCover = getAlbumImage().first
             trackChanged()
 
-            val secs = mPlayer!!.currentPosition / 1000
+            val secs = getPosition()!! / 1000
             broadcastTrackProgress(secs)
         }
         trackStateChanged(isPlaying())
@@ -527,7 +527,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
         // play the previous track if we are less than 5 secs into it, else restart
         val currentTrackIndex = mTracks.indexOfFirstOrNull { it.mediaStoreId == mCurrTrack?.mediaStoreId } ?: 0
-        if (currentTrackIndex == 0 || mPlayer!!.currentPosition > 5000) {
+        if (currentTrackIndex == 0 || getPosition()!! > 5000) {
             restartTrack()
         } else {
             val previousTrack = mTracks[currentTrackIndex - 1]
@@ -759,7 +759,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
         builder
             .setActions(mMediaSessionActions)
-            .setState(playbackState, mPlayer?.currentPosition?.toLong() ?: 0L, mPlaybackSpeed)
+            .setState(playbackState, getPosition()?.toLong() ?: 0L, mPlaybackSpeed)
             .addCustomAction(dismissAction)
         try {
             mMediaSession?.setPlaybackState(builder.build())
@@ -820,6 +820,10 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     private fun broadcastTrackProgress(progress: Int) {
         EventBus.getDefault().post(Events.ProgressUpdated(progress))
         updateMediaSessionState()
+    }
+
+    private fun getPosition(): Int? {
+        return mPlayer?.currentPosition
     }
 
     // do not just return the album cover, but also a boolean to indicate if it a real cover, or just the placeholder
@@ -1012,7 +1016,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             mProgressHandler.post(object : Runnable {
                 override fun run() {
                     if (mPlayer?.isPlaying == true) {
-                        val secs = mPlayer!!.currentPosition / 1000
+                        val secs = getPosition()!! / 1000
                         broadcastTrackProgress(secs)
                     }
                     mProgressHandler.removeCallbacksAndMessages(null)
@@ -1025,7 +1029,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     }
 
     private fun skip(forward: Boolean) {
-        val curr = mPlayer?.currentPosition ?: return
+        val curr = getPosition() ?: return
         val newProgress = if (forward) curr + FAST_FORWARD_SKIP_MS else curr - FAST_FORWARD_SKIP_MS
         mPlayer!!.seekTo(newProgress)
         resumeTrack()
@@ -1059,7 +1063,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         broadcastTrackStateChange(mPlayer?.isPlaying ?: false)
         broadcastTrackChange()
         broadcastNextTrackChange()
-        broadcastTrackProgress((mPlayer?.currentPosition ?: 0) / 1000)
+        broadcastTrackProgress((getPosition() ?: 0) / 1000)
     }
 
     fun handleMediaButton(mediaButtonEvent: Intent) {
@@ -1090,10 +1094,10 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     }
 
     private fun saveTrackProgress() {
-        if (mCurrTrack != null && mPlayer != null && mPlayer!!.currentPosition != 0) {
+        if (mCurrTrack != null && getPosition() != 0) {
             ensureBackgroundThread {
                 val trackId = mCurrTrack!!.mediaStoreId
-                val position = mPlayer!!.currentPosition
+                val position = getPosition()!!
                 queueDAO.apply {
                     resetCurrent()
                     saveCurrentTrack(trackId, position)
