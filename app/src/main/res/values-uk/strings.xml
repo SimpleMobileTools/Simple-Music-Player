@@ -40,7 +40,7 @@
     <string name="create_playlist_from_folder">Створити новий список відтворення з теки</string>
     <string name="folder_contains_no_audio">Обрана тека не містить аудіофайлів</string>
     <string name="delete_current_song">Видалити поточну композицію</string>
-    <string name="delete_song_warning">WARNING: This will delete the selected files themselves from the device, all playlists included.</string>
+    <string name="delete_song_warning">УВАГА! Вибрані файли буде видалено з пристрою, включно з усіма списками відтворення.</string>
     <string name="remove_current_song">Видалити поточну композицію зі списку відтворення</string>
     <string name="show_filename">Показувати ім\'я файлу як назву композиції</string>
     <string name="title_is_not_available">Якщо назва недоступна</string>
@@ -56,9 +56,9 @@
     <string name="album_count">Кількість альбомів</string>
     <string name="artist_name">Ім\'я виконавця</string>
     <string name="year">Рік</string>
-    <string name="track_number">Track number</string>
-    <string name="use_for_this_playlist">Use for this playlist only</string>
-    <string name="use_for_this_album">Use for this album only</string>
+    <string name="track_number">Номер треку</string>
+    <string name="use_for_this_playlist">Використовувати лише для цього списку відтворення</string>
+    <string name="use_for_this_album">Використовувати лише для цього альбому</string>
     <!-- Artists -->
     <string name="artists">Виконавці</string>
     <string name="folders">Теки</string>
@@ -85,7 +85,7 @@
     <!-- Settings -->
     <string name="equalizer">Еквалайзер</string>
     <string name="swap_prev_next">Змінити призначення кнопок навушників Попередній/Наступний</string>
-    <string name="exclude_folder_description">Excluding a folder will prevent the displaying of all audio files within. Files manually added to playlists will not be affected.</string>
+    <string name="exclude_folder_description">Виключення папки перешкоджатиме відображенню всіх аудіофайлів у ній. Файли, додані до списків відтворення вручну, не постраждають.</string>
     <!-- FAQ -->
     <string name="faq_1_title">Як я можу змінити позицію відтворення композиції\?</string>
     <string name="faq_1_text">Ви можете натиснути на текст поточної або загальної тривалості відтворення поруч із ковзним елементом відтворення, це перемістить програвання композиції або назад, або вперед.</string>
