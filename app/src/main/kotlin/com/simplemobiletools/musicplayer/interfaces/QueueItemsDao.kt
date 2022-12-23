@@ -17,6 +17,9 @@ interface QueueItemsDao {
     @Query("UPDATE queue_items SET is_current = 0")
     fun resetCurrent()
 
+    @Query("SELECT * FROM queue_items WHERE is_current = 1")
+    fun getCurrent(): QueueItem?
+
     @Query("UPDATE queue_items SET is_current = 1, last_position = :lastPosition WHERE track_id = :trackId")
     fun saveCurrentTrack(trackId: Long, lastPosition: Int)
 

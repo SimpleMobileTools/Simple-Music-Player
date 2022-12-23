@@ -8,30 +8,30 @@
 
     <ImageView
         android:id="@+id/previous_btn"
-        style="@style/MyTransparentButton"
         android:layout_width="@dimen/normal_icon_size"
         android:layout_height="@dimen/normal_icon_size"
         android:layout_weight="1"
+        android:background="?android:attr/selectableItemBackgroundBorderless"
         android:paddingTop="@dimen/medium_margin"
         android:paddingBottom="@dimen/medium_margin"
         android:src="@drawable/ic_previous_vector" />
 
     <ImageView
         android:id="@+id/play_pause_btn"
-        style="@style/MyTransparentButton"
         android:layout_width="@dimen/normal_icon_size"
         android:layout_height="@dimen/normal_icon_size"
         android:layout_weight="1"
+        android:background="?android:attr/selectableItemBackgroundBorderless"
         android:paddingTop="@dimen/medium_margin"
         android:paddingBottom="@dimen/medium_margin"
         android:src="@drawable/ic_play_vector" />
 
     <ImageView
         android:id="@+id/next_btn"
-        style="@style/MyTransparentButton"
         android:layout_width="@dimen/normal_icon_size"
         android:layout_height="@dimen/normal_icon_size"
         android:layout_weight="1"
+        android:background="?android:attr/selectableItemBackgroundBorderless"
         android:paddingTop="@dimen/medium_margin"
         android:paddingBottom="@dimen/medium_margin"
         android:src="@drawable/ic_next_vector" />

@@ -6,14 +6,19 @@ import android.appwidget.AppWidgetProvider
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.widget.RemoteViews
 import com.simplemobiletools.commons.extensions.applyColorFilter
 import com.simplemobiletools.commons.extensions.getColoredBitmap
 import com.simplemobiletools.commons.extensions.getLaunchIntent
+import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.SplashActivity
 import com.simplemobiletools.musicplayer.extensions.config
+import com.simplemobiletools.musicplayer.extensions.queueDAO
 import com.simplemobiletools.musicplayer.extensions.sendIntent
 import com.simplemobiletools.musicplayer.models.Track
 import com.simplemobiletools.musicplayer.services.MusicService
@@ -30,7 +35,7 @@ class MyWidgetProvider : AppWidgetProvider() {
             updateColors(context, views)
             setupButtons(context, views)
             updateSongInfo(views, MusicService.mCurrTrack)
-            updatePlayPauseButton(context, views, MusicService.getIsPlaying())
+            updatePlayPauseButton(context, views, MusicService.isPlaying())
             appWidgetManager.updateAppWidget(it, views)
         }
     }
@@ -40,10 +45,8 @@ class MyWidgetProvider : AppWidgetProvider() {
     }
 
     override fun onReceive(context: Context, intent: Intent) {
-        val action = intent.action
-        when (action) {
-            TRACK_CHANGED -> songChanged(context, intent)
-            TRACK_STATE_CHANGED -> songStateChanged(context, intent)
+        when (val action = intent.action) {
+            TRACK_STATE_CHANGED -> performUpdate(context)
             PREVIOUS, PLAYPAUSE, NEXT -> handlePlayerControls(context, action)
             else -> super.onReceive(context, intent)
         }
@@ -51,8 +54,18 @@ class MyWidgetProvider : AppWidgetProvider() {
 
     private fun handlePlayerControls(context: Context, action: String) {
         if (MusicService.mCurrTrack == null) {
-            val intent = context.getLaunchIntent() ?: Intent(context, SplashActivity::class.java)
-            context.startActivity(intent)
+            ensureBackgroundThread {
+                val queueItems = context.queueDAO.getAll()
+                Handler(Looper.getMainLooper()).post {
+                    if (queueItems.isEmpty()) {
+                        val intent = context.getLaunchIntent() ?: Intent(context, SplashActivity::class.java)
+                        intent.addFlags(FLAG_ACTIVITY_NEW_TASK)
+                        context.startActivity(intent)
+                    } else {
+                        context.sendIntent(action)
+                    }
+                }
+            }
         } else {
             context.sendIntent(action)
         }
@@ -77,29 +90,10 @@ class MyWidgetProvider : AppWidgetProvider() {
         views.setOnClickPendingIntent(id, pendingIntent)
     }
 
-    private fun songChanged(context: Context, intent: Intent) {
-        val appWidgetManager = AppWidgetManager.getInstance(context) ?: return
-        val song = intent.getSerializableExtra(NEW_TRACK) as? Track
-        appWidgetManager.getAppWidgetIds(getComponentName(context)).forEach {
-            val views = getRemoteViews(appWidgetManager, context, it)
-            updateSongInfo(views, song)
-            updatePlayPauseButton(context, views, MusicService.getIsPlaying())
-            appWidgetManager.updateAppWidget(it, views)
-        }
-    }
-
     private fun updateSongInfo(views: RemoteViews, currSong: Track?) {
-        views.setTextViewText(R.id.song_info_title, currSong?.title ?: "")
-        views.setTextViewText(R.id.song_info_artist, currSong?.artist ?: "")
-    }
-
-    private fun songStateChanged(context: Context, intent: Intent) {
-        val isPlaying = intent.getBooleanExtra(IS_PLAYING, false)
-        val appWidgetManager = AppWidgetManager.getInstance(context) ?: return
-        appWidgetManager.getAppWidgetIds(getComponentName(context)).forEach {
-            val views = getRemoteViews(appWidgetManager, context, it)
-            updatePlayPauseButton(context, views, isPlaying)
-            appWidgetManager.updateAppWidget(it, views)
+        if (currSong != null) {
+            views.setTextViewText(R.id.song_info_title, currSong.title)
+            views.setTextViewText(R.id.song_info_artist, currSong.artist)
         }
     }
 
