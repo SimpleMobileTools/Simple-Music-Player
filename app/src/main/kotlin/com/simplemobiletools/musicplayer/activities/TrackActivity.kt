@@ -27,7 +27,6 @@ import com.google.gson.reflect.TypeToken
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.MEDIUM_ALPHA
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
-import com.simplemobiletools.commons.helpers.isMarshmallowPlus
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.extensions.sendIntent
@@ -171,11 +170,6 @@ class TrackActivity : SimpleActivity(), PlaybackSpeedListener {
         setupShuffleButton()
         setupPlaybackSettingButton()
         setupSeekbar()
-
-        // constraintlayout with textview wrap_content is broken, so we need to use a more complicated way of drawing speed related things
-        arrayOf(activity_track_speed_icon, activity_track_speed, activity_track_speed_click_area).forEach {
-            it.beVisibleIf(isMarshmallowPlus())
-        }
 
         arrayOf(activity_track_previous, activity_track_play_pause, activity_track_next).forEach {
             it.applyColorFilter(getProperTextColor())
@@ -339,10 +333,8 @@ class TrackActivity : SimpleActivity(), PlaybackSpeedListener {
     }
 
     private fun setupSeekbar() {
-        if (isMarshmallowPlus()) {
-            activity_track_speed_icon.applyColorFilter(getProperTextColor())
-            updatePlaybackSpeed(config.playbackSpeed)
-        }
+        activity_track_speed_icon.applyColorFilter(getProperTextColor())
+        updatePlaybackSpeed(config.playbackSpeed)
 
         activity_track_progressbar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {

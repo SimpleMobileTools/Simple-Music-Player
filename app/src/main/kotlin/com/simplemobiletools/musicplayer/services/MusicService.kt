@@ -27,7 +27,10 @@ import androidx.media.session.MediaButtonReceiver
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.simplemobiletools.commons.extensions.*
-import com.simplemobiletools.commons.helpers.*
+import com.simplemobiletools.commons.helpers.ensureBackgroundThread
+import com.simplemobiletools.commons.helpers.isOreoPlus
+import com.simplemobiletools.commons.helpers.isQPlus
+import com.simplemobiletools.commons.helpers.isSPlus
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.databases.SongsDatabase
 import com.simplemobiletools.musicplayer.extensions.*
@@ -692,11 +695,9 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             mp.start()
             requestAudioFocus()
 
-            if (isMarshmallowPlus()) {
-                try {
-                    mp.playbackParams = mp.playbackParams.setSpeed(config.playbackSpeed)
-                } catch (ignored: Exception) {
-                }
+            try {
+                mp.playbackParams = mp.playbackParams.setSpeed(config.playbackSpeed)
+            } catch (ignored: Exception) {
             }
 
             if (mIsThirdPartyIntent) {
@@ -773,7 +774,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
     @SuppressLint("NewApi")
     private fun setPlaybackSpeed() {
-        if (isMarshmallowPlus() && mPlayer != null) {
+        if (mPlayer != null) {
             mPlaybackSpeed = config.playbackSpeed
             if (mPlayer!!.isPlaying) {
                 try {

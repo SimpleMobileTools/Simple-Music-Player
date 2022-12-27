@@ -14,7 +14,7 @@ android {
 
     defaultConfig {
         applicationId "com.simplemobiletools.musicplayer"
-        minSdkVersion 21
+        minSdkVersion 23
         targetSdkVersion 33
         versionCode 105
         versionName "5.15.0"
@@ -70,7 +70,7 @@ android {
 }
 
 dependencies {
-    implementation 'com.github.SimpleMobileTools:Simple-Commons:60f313270d'
+    implementation 'com.github.SimpleMobileTools:Simple-Commons:f5be433a74'
     implementation 'org.greenrobot:eventbus:3.3.1'
     implementation 'androidx.media:media:1.6.0'
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
