@@ -26,8 +26,12 @@ class EqualizerActivity : SimpleActivity() {
     private var bandSeekBars = ArrayList<MySeekBar>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        isMaterialActivity = true
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_equalizer)
+
+        updateMaterialActivityViews(equalizer_coordinator, equalizer_holder, true)
+        setupMaterialScrollListener(equalizer_nested_scrollview, equalizer_toolbar)
         initMediaPlayer()
     }
 

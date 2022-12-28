@@ -43,9 +43,9 @@
 
         <activity
             android:name=".activities.MainActivity"
+            android:configChanges="orientation"
             android:exported="true"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait">
+            android:launchMode="singleTask">
             <meta-data
                 android:name="android.app.default_searchable"
                 android:resource="@xml/searchable" />
@@ -67,24 +67,24 @@
 
         <activity
             android:name="com.simplemobiletools.commons.activities.AboutActivity"
+            android:configChanges="orientation"
             android:exported="false"
             android:label="@string/about"
-            android:parentActivityName=".activities.MainActivity"
-            android:screenOrientation="portrait" />
+            android:parentActivityName=".activities.MainActivity" />
 
         <activity
             android:name="com.simplemobiletools.commons.activities.CustomizationActivity"
+            android:configChanges="orientation"
             android:exported="false"
             android:label="@string/customize_colors"
-            android:parentActivityName=".activities.SettingsActivity"
-            android:screenOrientation="portrait" />
+            android:parentActivityName=".activities.SettingsActivity" />
 
         <activity
             android:name=".activities.SettingsActivity"
+            android:configChanges="orientation"
             android:exported="true"
             android:label="@string/settings"
-            android:parentActivityName=".activities.MainActivity"
-            android:screenOrientation="portrait">
+            android:parentActivityName=".activities.MainActivity">
 
             <intent-filter>
                 <action android:name="android.intent.action.APPLICATION_PREFERENCES" />
@@ -94,37 +94,37 @@
 
         <activity
             android:name=".activities.ExcludedFoldersActivity"
+            android:configChanges="orientation"
             android:exported="false"
             android:label="@string/excluded_folders"
-            android:parentActivityName=".activities.SettingsActivity"
-            android:screenOrientation="portrait" />
+            android:parentActivityName=".activities.SettingsActivity" />
 
         <activity
             android:name=".activities.EqualizerActivity"
+            android:configChanges="orientation"
             android:exported="false"
             android:label="@string/equalizer"
-            android:parentActivityName=".activities.MainActivity"
-            android:screenOrientation="portrait" />
+            android:parentActivityName=".activities.MainActivity" />
 
         <activity
             android:name=".activities.AlbumsActivity"
+            android:configChanges="orientation"
             android:exported="false"
             android:label="@string/artist"
-            android:parentActivityName=".activities.MainActivity"
-            android:screenOrientation="portrait" />
+            android:parentActivityName=".activities.MainActivity" />
 
         <activity
             android:name=".activities.TracksActivity"
+            android:configChanges="orientation"
             android:exported="false"
             android:label="@string/artist"
-            android:parentActivityName=".activities.AlbumsActivity"
-            android:screenOrientation="portrait" />
+            android:parentActivityName=".activities.AlbumsActivity" />
 
         <activity
             android:name=".activities.TrackActivity"
+            android:configChanges="orientation"
             android:exported="true"
             android:parentActivityName=".activities.MainActivity"
-            android:screenOrientation="portrait"
             android:theme="@style/TranslucentTheme">
 
             <intent-filter>
@@ -153,10 +153,10 @@
 
         <activity
             android:name=".activities.QueueActivity"
+            android:configChanges="orientation"
             android:exported="false"
             android:label="@string/track_queue"
-            android:parentActivityName=".activities.TrackActivity"
-            android:screenOrientation="portrait" />
+            android:parentActivityName=".activities.TrackActivity" />
 
         <service
             android:name=".services.MusicService"
