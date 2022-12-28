@@ -28,8 +28,12 @@ class AlbumsActivity : SimpleActivity() {
     private var bus: EventBus? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        isMaterialActivity = true
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_albums)
+
+        updateMaterialActivityViews(albums_coordinator, albums_holder, true)
+        setupMaterialScrollListener(albums_list, albums_toolbar)
 
         bus = EventBus.getDefault()
         bus!!.register(this)

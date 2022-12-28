@@ -56,10 +56,14 @@ class TracksActivity : SimpleActivity() {
     private var lastFilePickerPath = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        isMaterialActivity = true
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tracks)
         setupOptionsMenu()
         refreshMenuItems()
+
+        updateMaterialActivityViews(tracks_coordinator, tracks_holder, true)
+        setupMaterialScrollListener(tracks_list, tracks_toolbar)
 
         bus = EventBus.getDefault()
         bus!!.register(this)
