@@ -40,10 +40,10 @@ class SettingsActivity : SimpleActivity() {
         setupCustomizeWidgetColors()
         setupUseEnglish()
         setupLanguage()
+        setupManageExcludedFolders()
+        setupManageShownTabs()
         setupSwapPrevNext()
         setupReplaceTitle()
-        setupManageShownTabs()
-        setupManageExcludedFolders()
         updateTextColors(settings_nested_scrollview)
 
         arrayOf(settings_color_customization_section_label, settings_general_settings_label).forEach {

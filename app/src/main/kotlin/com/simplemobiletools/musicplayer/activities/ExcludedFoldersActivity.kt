@@ -12,8 +12,12 @@ import kotlinx.android.synthetic.main.activity_excluded_folders.*
 
 class ExcludedFoldersActivity : SimpleActivity(), RefreshRecyclerViewListener {
     override fun onCreate(savedInstanceState: Bundle?) {
+        isMaterialActivity = true
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_excluded_folders)
+
+        updateMaterialActivityViews(excluded_folders_coordinator, excluded_folders_list, true)
+        setupMaterialScrollListener(excluded_folders_list, excluded_folders_toolbar)
         updateFolders()
     }
 
