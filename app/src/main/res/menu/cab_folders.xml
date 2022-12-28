@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="AppCompatResource,AlwaysShowAction">
     <item
         android:id="@+id/cab_exclude_folders"
         android:icon="@drawable/ic_minus_circle_vector"
+        android:showAsAction="always"
         android:title="@string/exclude_folder"
         app:showAsAction="always" />
 </menu>

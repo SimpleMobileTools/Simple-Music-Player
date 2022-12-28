@@ -60,11 +60,13 @@ class MainActivity : SimpleActivity() {
     private var storedExcludedFolders = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        isMaterialActivity = true
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         appLaunched(BuildConfig.APPLICATION_ID)
         setupOptionsMenu()
         refreshMenuItems()
+        updateMaterialActivityViews(main_coordinator, main_holder, false)
         storeStateVariables()
         setupTabs()
 

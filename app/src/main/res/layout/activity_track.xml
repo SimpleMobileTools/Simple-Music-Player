@@ -265,7 +265,6 @@
                 android:id="@+id/activity_track_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                app:menu="@menu/menu_track"
                 app:navigationIcon="@drawable/ic_arrow_left_vector" />
 
         </com.google.android.material.appbar.AppBarLayout>
