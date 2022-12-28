@@ -35,9 +35,12 @@ class QueueActivity : SimpleActivity() {
     private var tracksIgnoringSearch = ArrayList<Track>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        isMaterialActivity = true
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_queue)
         setupOptionsMenu()
+        updateMaterialActivityViews(queue_coordinator, queue_holder, true)
+        setupMaterialScrollListener(queue_nested_scrollview, queue_toolbar)
 
         bus = EventBus.getDefault()
         bus!!.register(this)
