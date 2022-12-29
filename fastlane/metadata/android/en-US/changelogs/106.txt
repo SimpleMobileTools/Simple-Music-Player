@@ -1,0 +1,5 @@
+ * Added some notification reliability related improvements
+ * Allow stopping the music and dismissing the notification with pressing X
+ * Use Material You theme by default on Android 12+
+ * Increased minimal required Android OS version to 6
+ * Added some UI, translation and stability improvements

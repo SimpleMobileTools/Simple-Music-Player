@@ -1,6 +1,15 @@
 Changelog
 ==========
 
+Version 5.16.0 *(2022-12-29)*
+----------------------------
+
+ * Added some notification reliability related improvements
+ * Allow stopping the music and dismissing the notification with pressing X
+ * Use Material You theme by default on Android 12+
+ * Increased minimal required Android OS version to 6
+ * Added some UI, translation and stability improvements
+
 Version 5.15.0 *(2022-11-06)*
 ----------------------------
 
