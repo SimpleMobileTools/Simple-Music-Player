@@ -255,6 +255,7 @@ class MainActivity : SimpleActivity() {
                     it?.finishActMode()
                 }
                 refreshMenuItems()
+                updateStatusBarChanger()
             }
         })
         view_pager.currentItem = config.lastUsedViewPagerPage
@@ -285,6 +286,14 @@ class MainActivity : SimpleActivity() {
         )
 
         main_tabs_holder.beGoneIf(main_tabs_holder.tabCount == 1)
+        main_tabs_holder.onGlobalLayout {
+            updateStatusBarChanger()
+        }
+    }
+
+    private fun updateStatusBarChanger() {
+        setupMaterialScrollListener(getCurrentFragment()?.getScrollingView(), main_toolbar)
+        updateStatusBarOnPageChange()
     }
 
     private fun setupTabColors() {

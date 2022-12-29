@@ -107,4 +107,6 @@ class PlaylistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPa
         playlists_placeholder_2.setTextColor(adjustedPrimaryColor)
         playlists_fastscroller.updateColors(adjustedPrimaryColor)
     }
+
+    override fun getScrollingView() = playlists_list
 }

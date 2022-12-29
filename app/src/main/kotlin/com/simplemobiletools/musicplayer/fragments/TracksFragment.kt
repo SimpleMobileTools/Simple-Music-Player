@@ -3,6 +3,7 @@ package com.simplemobiletools.musicplayer.fragments
 import android.content.Context
 import android.content.Intent
 import android.util.AttributeSet
+import androidx.core.view.ScrollingView
 import com.google.gson.Gson
 import com.simplemobiletools.commons.activities.BaseSimpleActivity
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
@@ -116,4 +117,6 @@ class TracksFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
         tracks_placeholder.setTextColor(textColor)
         tracks_fastscroller.updateColors(adjustedPrimaryColor)
     }
+
+    override fun getScrollingView() = tracks_list
 }

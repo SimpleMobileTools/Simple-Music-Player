@@ -137,4 +137,6 @@ class FoldersFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
         folders_fastscroller.updateColors(adjustedPrimaryColor)
         folders_placeholder_2.setTextColor(adjustedPrimaryColor)
     }
+
+    override fun getScrollingView() = folders_list
 }
