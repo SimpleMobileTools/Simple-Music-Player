@@ -1098,7 +1098,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         if (mCurrTrack != null && getPosition() != 0) {
             ensureBackgroundThread {
                 val trackId = mCurrTrack!!.mediaStoreId
-                val position = getPosition()!!
+                val position = getPosition() ?: return@ensureBackgroundThread
                 queueDAO.apply {
                     resetCurrent()
                     saveCurrentTrack(trackId, position)
