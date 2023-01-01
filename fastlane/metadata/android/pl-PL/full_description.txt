@@ -26,7 +26,7 @@ Prosty odtwarzacz muzyki daje również możliwość utworzenia listy muzycznej 
 
 Ten odtwarzacz obsługuje odtwarzanie losowe, powtarzanie określonego utworu, pomijanie i przewijanie do przodu. Miksuj muzykę jak profesjonalny DJ.
 
-Nie podoba Ci się, jak utwór jest otagowany? Zedytuj go wedle własnego uznania; modyfikuj nazwy utworów, wykonawców, grup itp.
+Nie podoba Ci się, jak utwór jest otagowany? Zedytuj go wedle własnego uznania; modyfikuj nazwy utworów, artystów, grup itp.
 
 Cechy:
 ⭐️ Przyjemny i piękny interfejs
