@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Jednostavan glazbeni svirač</string>
-    <string name="app_launcher_name">Glazbeni svirač</string>
+    <string name="app_name">Jednostavan player glazbe</string>
+    <string name="app_launcher_name">Player glazbe</string>
     <string name="playlist_empty">Tvoj popis pjesama je prazan</string>
     <string name="rename_song">Preimenuj pjesmu</string>
     <string name="rename_song_error">Dogodila se greška tijekom preimenovanja</string>
@@ -40,7 +40,7 @@
     <string name="create_playlist_from_folder">Izradi novi popis pjesama iz mape</string>
     <string name="folder_contains_no_audio">Odabrana mapa ne sadrži audio datoteke</string>
     <string name="delete_current_song">Izbriši aktualnu pjesmu</string>
-    <string name="delete_song_warning">WARNING: This will delete the selected files themselves from the device, all playlists included.</string>
+    <string name="delete_song_warning">UPOZORENJE: Ovo će izbrisati odabrane datoteke s uređaja, uključujući sve playliste.</string>
     <string name="remove_current_song">Ukloni aktualnu pjesmu iz popisa pjesama</string>
     <string name="show_filename">Prikaži ime datoteke kao naslov pjesme</string>
     <string name="title_is_not_available">Ako naslov nije dostupan</string>
@@ -57,8 +57,8 @@
     <string name="artist_name">Ime izvođača</string>
     <string name="year">Godina</string>
     <string name="track_number">Broj pjesme</string>
-    <string name="use_for_this_playlist">Use for this playlist only</string>
-    <string name="use_for_this_album">Use for this album only</string>
+    <string name="use_for_this_playlist">Koristi samo za ovu playlistu</string>
+    <string name="use_for_this_album">Koristi samo za ovaj album</string>
     <!-- Artists -->
     <string name="artists">Izvođači</string>
     <string name="folders">Mape</string>
