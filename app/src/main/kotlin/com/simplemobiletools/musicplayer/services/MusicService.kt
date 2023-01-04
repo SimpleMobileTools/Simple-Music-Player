@@ -181,7 +181,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         }
 
         MediaButtonReceiver.handleIntent(mMediaSession!!, intent)
-        if (action != DISMISS && action != FINISH) {
+        if (action != DISMISS && action != FINISH && action != FINISH_IF_NOT_PLAYING) {
             startForegroundOrNotify()
         }
         return START_NOT_STICKY
@@ -469,6 +469,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         if (mCurrTrackCover?.isRecycled == true) {
             mCurrTrackCover = resources.getColoredBitmap(R.drawable.ic_headset, getProperTextColor())
         }
+
         notificationHelper?.createPlayerNotification(
             track = mCurrTrack,
             isPlaying = isPlaying(),
@@ -1097,7 +1098,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     private fun saveTrackProgress() {
         if (mCurrTrack != null && getPosition() != 0) {
             ensureBackgroundThread {
-                val trackId = mCurrTrack!!.mediaStoreId
+                val trackId = mCurrTrack?.mediaStoreId ?: return@ensureBackgroundThread
                 val position = getPosition() ?: return@ensureBackgroundThread
                 queueDAO.apply {
                     resetCurrent()
