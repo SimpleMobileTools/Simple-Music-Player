@@ -47,7 +47,7 @@
     <string name="show_album_cover">Pokazuj okładkę albumu na ekranie głównym</string>
     <string name="all_tracks">Wszystkie utwory</string>
     <string name="add_to_playlist">Dodaj do playlisty</string>
-    <string name="create_playlist_label">Możesz utworzyć nową playlistę, wybierając wykonawców, albumy lub utwory i używając Menu -&gt; Dodaj do playlisty.</string>
+    <string name="create_playlist_label">Możesz utworzyć nową playlistę, wybierając artystów, albumy lub utwory i używając Menu -&gt; Dodaj do playlisty.</string>
     <string name="export_playlist">Eksportuj playlistę</string>
     <string name="import_playlist">Importuj playlistę</string>
     <string name="filename_without_m3u">Nazwa pliku (bez .m3u)</string>
