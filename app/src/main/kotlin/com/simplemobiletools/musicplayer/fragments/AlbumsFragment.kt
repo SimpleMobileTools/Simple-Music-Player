@@ -102,6 +102,4 @@ class AlbumsFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
         albums_placeholder.setTextColor(textColor)
         albums_fastscroller.updateColors(adjustedPrimaryColor)
     }
-
-    override fun getScrollingView() = albums_list
 }

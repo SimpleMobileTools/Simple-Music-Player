@@ -102,6 +102,4 @@ class ArtistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
         artists_placeholder.setTextColor(textColor)
         artists_fastscroller.updateColors(adjustedPrimaryColor)
     }
-
-    override fun getScrollingView() = artists_list
 }
