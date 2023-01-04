@@ -66,7 +66,7 @@ class MainActivity : SimpleActivity() {
         appLaunched(BuildConfig.APPLICATION_ID)
         setupOptionsMenu()
         refreshMenuItems()
-        updateMaterialActivityViews(main_coordinator, main_holder, false)
+        updateMaterialActivityViews(main_coordinator, main_holder, useTransparentNavigation = false, useTopSearchMenu = false)
         storeStateVariables()
         setupTabs()
 

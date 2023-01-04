@@ -16,7 +16,7 @@ class ExcludedFoldersActivity : SimpleActivity(), RefreshRecyclerViewListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_excluded_folders)
 
-        updateMaterialActivityViews(excluded_folders_coordinator, excluded_folders_list, true)
+        updateMaterialActivityViews(excluded_folders_coordinator, excluded_folders_list, useTransparentNavigation = true, useTopSearchMenu = false)
         setupMaterialScrollListener(excluded_folders_list, excluded_folders_toolbar)
         updateFolders()
     }

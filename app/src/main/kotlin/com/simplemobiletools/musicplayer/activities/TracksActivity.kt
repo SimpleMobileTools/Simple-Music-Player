@@ -62,7 +62,7 @@ class TracksActivity : SimpleActivity() {
         setupOptionsMenu()
         refreshMenuItems()
 
-        updateMaterialActivityViews(tracks_coordinator, tracks_holder, true)
+        updateMaterialActivityViews(tracks_coordinator, tracks_holder, useTransparentNavigation = true, useTopSearchMenu = false)
         setupMaterialScrollListener(tracks_list, tracks_toolbar)
 
         bus = EventBus.getDefault()

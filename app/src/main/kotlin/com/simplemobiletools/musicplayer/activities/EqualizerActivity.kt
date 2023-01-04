@@ -30,7 +30,7 @@ class EqualizerActivity : SimpleActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_equalizer)
 
-        updateMaterialActivityViews(equalizer_coordinator, equalizer_holder, true)
+        updateMaterialActivityViews(equalizer_coordinator, equalizer_holder, useTransparentNavigation = true, useTopSearchMenu = false)
         setupMaterialScrollListener(equalizer_nested_scrollview, equalizer_toolbar)
         initMediaPlayer()
     }

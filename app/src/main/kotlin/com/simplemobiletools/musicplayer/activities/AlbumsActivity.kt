@@ -32,7 +32,7 @@ class AlbumsActivity : SimpleActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_albums)
 
-        updateMaterialActivityViews(albums_coordinator, albums_holder, true)
+        updateMaterialActivityViews(albums_coordinator, albums_holder, useTransparentNavigation = true, useTopSearchMenu = false)
         setupMaterialScrollListener(albums_list, albums_toolbar)
 
         bus = EventBus.getDefault()
