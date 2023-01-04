@@ -79,10 +79,6 @@ class ArtistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
         artists_placeholder.beVisibleIf(filtered.isEmpty())
     }
 
-    override fun onSearchOpened() {
-        artistsIgnoringSearch = (artists_list?.adapter as? ArtistsAdapter)?.artists ?: ArrayList()
-    }
-
     override fun onSearchClosed() {
         (artists_list.adapter as? ArtistsAdapter)?.updateItems(artistsIgnoringSearch)
         artists_placeholder.beGoneIf(artistsIgnoringSearch.isNotEmpty())

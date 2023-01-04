@@ -79,10 +79,6 @@ class AlbumsFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
         albums_placeholder.beVisibleIf(filtered.isEmpty())
     }
 
-    override fun onSearchOpened() {
-        albumsIgnoringSearch = (albums_list?.adapter as? AlbumsAdapter)?.albums ?: ArrayList()
-    }
-
     override fun onSearchClosed() {
         (albums_list.adapter as? AlbumsAdapter)?.updateItems(albumsIgnoringSearch)
         albums_placeholder.beGoneIf(albumsIgnoringSearch.isNotEmpty())

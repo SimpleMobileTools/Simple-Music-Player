@@ -93,10 +93,6 @@ class TracksFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
         tracks_placeholder.beVisibleIf(filtered.isEmpty())
     }
 
-    override fun onSearchOpened() {
-        tracksIgnoringSearch = (tracks_list?.adapter as? TracksAdapter)?.tracks ?: ArrayList()
-    }
-
     override fun onSearchClosed() {
         (tracks_list.adapter as? TracksAdapter)?.updateItems(tracksIgnoringSearch)
         tracks_placeholder.beGoneIf(tracksIgnoringSearch.isNotEmpty())

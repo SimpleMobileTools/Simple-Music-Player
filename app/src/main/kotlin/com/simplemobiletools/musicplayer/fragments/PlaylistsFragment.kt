@@ -82,10 +82,6 @@ class PlaylistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPa
         playlists_placeholder_2.beVisibleIf(filtered.isEmpty())
     }
 
-    override fun onSearchOpened() {
-        playlistsIgnoringSearch = (playlists_list?.adapter as? PlaylistsAdapter)?.playlists ?: ArrayList()
-    }
-
     override fun onSearchClosed() {
         (playlists_list.adapter as? PlaylistsAdapter)?.updateItems(playlistsIgnoringSearch)
         playlists_placeholder.beGoneIf(playlistsIgnoringSearch.isNotEmpty())

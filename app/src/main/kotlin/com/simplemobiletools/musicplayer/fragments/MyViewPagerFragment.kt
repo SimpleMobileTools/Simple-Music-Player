@@ -13,8 +13,6 @@ abstract class MyViewPagerFragment(context: Context, attributeSet: AttributeSet)
 
     abstract fun onSearchQueryChanged(text: String)
 
-    abstract fun onSearchOpened()
-
     abstract fun onSearchClosed()
 
     abstract fun onSortOpen(activity: SimpleActivity)

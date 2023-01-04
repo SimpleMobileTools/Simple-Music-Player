@@ -113,10 +113,6 @@ class FoldersFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
         folders_placeholder.beVisibleIf(filtered.isEmpty())
     }
 
-    override fun onSearchOpened() {
-        foldersIgnoringSearch = (folders_list?.adapter as? FoldersAdapter)?.folders ?: ArrayList()
-    }
-
     override fun onSearchClosed() {
         (folders_list.adapter as? FoldersAdapter)?.updateItems(foldersIgnoringSearch)
         folders_placeholder.beGoneIf(foldersIgnoringSearch.isNotEmpty())

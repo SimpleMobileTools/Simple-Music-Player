@@ -1,22 +1,16 @@
 package com.simplemobiletools.musicplayer.activities
 
 import android.app.Activity
-import android.app.SearchManager
 import android.content.ActivityNotFoundException
-import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.media.AudioManager
 import android.net.Uri
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.widget.SearchView
-import androidx.core.view.MenuItemCompat
 import androidx.viewpager.widget.ViewPager
 import com.simplemobiletools.commons.dialogs.FilePickerDialog
 import com.simplemobiletools.commons.dialogs.RadioGroupDialog
@@ -53,8 +47,6 @@ import java.io.FileOutputStream
 class MainActivity : SimpleActivity() {
     private val PICK_IMPORT_SOURCE_INTENT = 1
 
-    private var isSearchOpen = false
-    private var searchMenuItem: MenuItem? = null
     private var bus: EventBus? = null
     private var storedShowTabs = 0
     private var storedExcludedFolders = 0
@@ -66,7 +58,7 @@ class MainActivity : SimpleActivity() {
         appLaunched(BuildConfig.APPLICATION_ID)
         setupOptionsMenu()
         refreshMenuItems()
-        updateMaterialActivityViews(main_coordinator, main_holder, useTransparentNavigation = false, useTopSearchMenu = false)
+        updateMaterialActivityViews(main_coordinator, main_holder, useTransparentNavigation = false, useTopSearchMenu = true)
         storeStateVariables()
         setupTabs()
 
@@ -93,19 +85,13 @@ class MainActivity : SimpleActivity() {
 
     override fun onResume() {
         super.onResume()
-        val statusBarColor = if (getCurrentFragment()?.getScrollingView() == null) {
-            getProperBackgroundColor()
-        } else {
-            window.statusBarColor
-        }
-
-        setupToolbar(main_toolbar, statusBarColor = statusBarColor, searchMenuItem = searchMenuItem)
         if (storedShowTabs != config.showTabs) {
             config.lastUsedViewPagerPage = 0
             System.exit(0)
             return
         }
 
+        updateMenuColors()
         updateTextColors(main_holder)
         setupTabColors()
         sleep_timer_holder.background = ColorDrawable(getProperBackgroundColor())
@@ -133,15 +119,15 @@ class MainActivity : SimpleActivity() {
     }
 
     override fun onBackPressed() {
-        if (isSearchOpen && searchMenuItem != null) {
-            searchMenuItem!!.collapseActionView()
+        if (main_menu.isSearchOpen) {
+            main_menu.closeSearch()
         } else {
             super.onBackPressed()
         }
     }
 
     private fun refreshMenuItems() {
-        main_toolbar.menu.apply {
+        main_menu.getToolbar().menu.apply {
             findItem(R.id.create_new_playlist).isVisible = getCurrentFragment() == playlists_fragment_holder
             findItem(R.id.create_playlist_from_folder).isVisible = getCurrentFragment() == playlists_fragment_holder
             findItem(R.id.import_playlist).isVisible = getCurrentFragment() == playlists_fragment_holder && isOreoPlus()
@@ -150,8 +136,21 @@ class MainActivity : SimpleActivity() {
     }
 
     private fun setupOptionsMenu() {
-        setupSearch(main_toolbar.menu)
-        main_toolbar.setOnMenuItemClickListener { menuItem ->
+        main_menu.getToolbar().inflateMenu(R.menu.menu_main)
+        main_menu.toggleHideOnScroll(false)
+        main_menu.setupMenu()
+
+        main_menu.onSearchClosedListener = {
+            getAllFragments().forEach {
+                it?.onSearchClosed()
+            }
+        }
+
+        main_menu.onSearchTextChangedListener = { text ->
+            getCurrentFragment()?.onSearchQueryChanged(text)
+        }
+
+        main_menu.getToolbar().setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.sort -> showSortingDialog()
                 R.id.sleep_timer -> showSleepTimer()
@@ -168,44 +167,16 @@ class MainActivity : SimpleActivity() {
         }
     }
 
+    private fun updateMenuColors() {
+        updateStatusbarColor(getProperBackgroundColor())
+        main_menu.updateColors()
+    }
+
     private fun storeStateVariables() {
         config.apply {
             storedShowTabs = showTabs
             storedExcludedFolders = config.excludedFolders.hashCode()
         }
-    }
-
-    private fun setupSearch(menu: Menu) {
-        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
-        searchMenuItem = menu.findItem(R.id.search)
-        (searchMenuItem!!.actionView as SearchView).apply {
-            setSearchableInfo(searchManager.getSearchableInfo(componentName))
-            isSubmitButtonEnabled = false
-            setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-                override fun onQueryTextSubmit(query: String) = false
-
-                override fun onQueryTextChange(newText: String): Boolean {
-                    if (isSearchOpen) {
-                        getCurrentFragment()?.onSearchQueryChanged(newText)
-                    }
-                    return true
-                }
-            })
-        }
-
-        MenuItemCompat.setOnActionExpandListener(searchMenuItem, object : MenuItemCompat.OnActionExpandListener {
-            override fun onMenuItemActionExpand(item: MenuItem?): Boolean {
-                getCurrentFragment()?.onSearchOpened()
-                isSearchOpen = true
-                return true
-            }
-
-            override fun onMenuItemActionCollapse(item: MenuItem?): Boolean {
-                getCurrentFragment()?.onSearchClosed()
-                isSearchOpen = false
-                return true
-            }
-        })
     }
 
     private fun initActivity() {
@@ -284,7 +255,7 @@ class MainActivity : SimpleActivity() {
                 updateBottomTabItemColors(it.customView, false)
             },
             tabSelectedAction = {
-                closeSearch()
+                main_menu.closeSearch()
                 view_pager.currentItem = it.position
                 updateBottomTabItemColors(it.customView, true)
             }
@@ -580,23 +551,12 @@ class MainActivity : SimpleActivity() {
         refreshAllFragments()
     }
 
-    private fun closeSearch() {
-        if (isSearchOpen) {
-            getAllFragments().forEach {
-                it?.onSearchClosed()
-            }
-            searchMenuItem?.collapseActionView()
-        }
-    }
-
     private fun launchEqualizer() {
-        closeSearch()
         hideKeyboard()
         startActivity(Intent(applicationContext, EqualizerActivity::class.java))
     }
 
     private fun launchSettings() {
-        closeSearch()
         hideKeyboard()
         startActivity(Intent(applicationContext, SettingsActivity::class.java))
     }
