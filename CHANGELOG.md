@@ -1,6 +1,12 @@
 Changelog
 ==========
 
+Version 5.16.2 *(2023-01-04)*
+----------------------------
+
+ * Added the new search bar at the top menu
+ * Added some stability, translation and UI improvements
+
 Version 5.16.1 *(2022-12-30)*
 ----------------------------
 
