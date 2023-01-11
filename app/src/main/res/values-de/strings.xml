@@ -8,7 +8,7 @@
     <string name="rename_song_empty">Fülle bitte alle Felder aus</string>
     <string name="repeat_off">Wiederholung aus</string>
     <string name="repeat_song">Aktuelles Lied wiederholen</string>
-    <string name="repeat_playlist">Repeat playlist</string>
+    <string name="repeat_playlist">Wiedergabeliste wiederholen</string>
     <string name="stop_playback_after_current_song">Wiedergabe nach dem aktuellen Lied stoppen</string>
     <string name="enable_shuffle">Zufällige Wiedergabe aktivieren</string>
     <string name="disable_shuffle">Zufällige Wiedergabe deaktivieren</string>
