@@ -40,7 +40,7 @@
     <string name="create_playlist_from_folder">Luo uusi soittolista kansiosta</string>
     <string name="folder_contains_no_audio">Valittu kansio ei sisällä äänitiedostoja</string>
     <string name="delete_current_song">Poista nykyinen kappale</string>
-    <string name="delete_song_warning">WARNING: This will delete the selected files themselves from the device, all playlists included.</string>
+    <string name="delete_song_warning">VAROITUS: Tämä poistaa itse valitut tiedostot laitteesta, kaikki soittolistat mukaan lukien.</string>
     <string name="remove_current_song">Poista nykyinen kappale soittolistalta</string>
     <string name="show_filename">Näytä tiedostonimi kappaleen otsikkona</string>
     <string name="title_is_not_available">Jos kappaleen nimeä ei ole saatavana</string>
@@ -56,9 +56,9 @@
     <string name="album_count">Albumien määrä</string>
     <string name="artist_name">Artistin Nimi</string>
     <string name="year">Vuosi</string>
-    <string name="track_number">Track number</string>
-    <string name="use_for_this_playlist">Use for this playlist only</string>
-    <string name="use_for_this_album">Use for this album only</string>
+    <string name="track_number">Kappaleen numero</string>
+    <string name="use_for_this_playlist">Käytä vain tälle soittolistalle</string>
+    <string name="use_for_this_album">Käytä vain tähän albumiin</string>
     <!-- Artists -->
     <string name="artists">Artistit</string>
     <string name="folders">Kansiot</string>
@@ -81,7 +81,7 @@
     <!-- Settings -->
     <string name="equalizer">Taajuuskorjain</string>
     <string name="swap_prev_next">Vaihda edellinen/seuraava kuulokepainikkeet</string>
-    <string name="exclude_folder_description">Excluding a folder will prevent the displaying of all audio files within. Files manually added to playlists will not be affected.</string>
+    <string name="exclude_folder_description">Kansion poistaminen estää kaikkien kansiossa olevien äänitiedostojen näyttämisen. Tämä ei vaikuta soittolistoihin manuaalisesti lisättyihin tiedostoihin.</string>
     <!-- FAQ -->
     <string name="faq_1_title">Kuinka voin kelata kappaleita eteenpäin\?</string>
     <string name="faq_1_text">Voit napsauttaa nykyistä tai enimmäiskestoa lähellä hakupalkkia olevaa tekstiä, jolloin kappale siirtyy joko taaksepäin tai eteenpäin.</string>
