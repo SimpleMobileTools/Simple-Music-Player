@@ -8,7 +8,7 @@
     <string name="rename_song_empty">Fülle bitte alle Felder aus</string>
     <string name="repeat_off">Wiederholung aus</string>
     <string name="repeat_song">Aktuelles Lied wiederholen</string>
-    <string name="repeat_playlist">Repeat playlist</string>
+    <string name="repeat_playlist">Wiedergabeliste wiederholen</string>
     <string name="stop_playback_after_current_song">Wiedergabe nach dem aktuellen Lied stoppen</string>
     <string name="enable_shuffle">Zufällige Wiedergabe aktivieren</string>
     <string name="disable_shuffle">Zufällige Wiedergabe deaktivieren</string>
@@ -57,8 +57,8 @@
     <string name="artist_name">Künstlername</string>
     <string name="year">Jahr</string>
     <string name="track_number">Titelnummer</string>
-    <string name="use_for_this_playlist">Use for this playlist only</string>
-    <string name="use_for_this_album">Use for this album only</string>
+    <string name="use_for_this_playlist">Nur für diese Wiedergabeliste verwenden</string>
+    <string name="use_for_this_album">Nur für dieses Album verwenden</string>
     <!-- Artists -->
     <string name="artists">Künstler</string>
     <string name="folders">Ordner</string>

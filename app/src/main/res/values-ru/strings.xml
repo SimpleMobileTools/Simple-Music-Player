@@ -84,7 +84,7 @@
     <string name="create_playlist_from_queue">Создать плейлист из очереди</string>
     <!-- Settings -->
     <string name="equalizer">Эквалайзер</string>
-    <string name="swap_prev_next">Поменять местами кнопки \"Previous\"/\"Next\" на гарнитуре</string>
+    <string name="swap_prev_next">Поменять местами кнопки \"Предыдущая\"/\"Следующая\" на гарнитуре</string>
     <string name="exclude_folder_description">Исключение папки предотвратит отображение всех аудиофайлов внутри неё. Файлы, добавленные вручную в списки воспроизведения, не будут затронуты.</string>
     <!-- FAQ -->
     <string name="faq_1_title">Как я могу перемотать композицию\?</string>
