@@ -40,7 +40,7 @@
     <string name="create_playlist_from_folder">Créer une nouvelle liste de lecture à partir du dossier</string>
     <string name="folder_contains_no_audio">Le dossier sélectionné ne contient aucun fichier audio</string>
     <string name="delete_current_song">Supprimer la chanson actuelle</string>
-    <string name="delete_song_warning">WARNING: This will delete the selected files themselves from the device, all playlists included.</string>
+    <string name="delete_song_warning">ATTENTION : Ceci supprimera les fichiers séléctionés de l\'appareil, y compris toutes les listes de lecture.</string>
     <string name="remove_current_song">Supprimer la chanson actuelle de la liste de lecture</string>
     <string name="show_filename">Afficher le nom de fichier comme titre de chanson</string>
     <string name="title_is_not_available">Si le titre n\'est pas disponible</string>
@@ -56,20 +56,22 @@
     <string name="album_count">Nombre d\'albums</string>
     <string name="artist_name">Nom de l\'artiste</string>
     <string name="year">Année</string>
-    <string name="track_number">Track number</string>
-    <string name="use_for_this_playlist">Use for this playlist only</string>
-    <string name="use_for_this_album">Use for this album only</string>
+    <string name="track_number">Numéro de piste</string>
+    <string name="use_for_this_playlist">Utiliser uniquement pour cette liste de lecture</string>
+    <string name="use_for_this_album">Utiliser uniquement pour cet album</string>
     <!-- Artists -->
     <string name="artists">Artistes</string>
     <string name="folders">Dossiers</string>
     <string name="albums">Albums</string>
     <plurals name="albums_plural">
         <item quantity="one">%d album</item>
+        <item quantity="many">%d albums</item>
         <item quantity="other">%d albums</item>
     </plurals>
     <string name="tracks">Pistes</string>
     <plurals name="tracks_plural">
         <item quantity="one">%d piste</item>
+        <item quantity="many">%d pistes</item>
         <item quantity="other">%d pistes</item>
     </plurals>
     <!-- Queue -->
@@ -81,7 +83,7 @@
     <!-- Settings -->
     <string name="equalizer">Égaliseur</string>
     <string name="swap_prev_next">Remplacer les boutons des écouteurs précédents/suivants</string>
-    <string name="exclude_folder_description">Excluding a folder will prevent the displaying of all audio files within. Files manually added to playlists will not be affected.</string>
+    <string name="exclude_folder_description">L\'exclusion d\'un dossier empêchera l\'affichage de tous les fichiers audio qu\'il contient. Les fichiers ajoutés manuellement aux listes de lecture ne seront pas affectés.</string>
     <!-- FAQ -->
     <string name="faq_1_title">Comment puis-je faire avancer rapidement les chansons \?</string>
     <string name="faq_1_text">Vous pouvez cliquer sur le texte de la durée actuelle ou de la durée maximale près de la barre de recherche, ce qui fera avancer ou reculer la chanson.</string>

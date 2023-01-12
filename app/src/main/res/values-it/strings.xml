@@ -40,7 +40,7 @@
     <string name="create_playlist_from_folder">Crea una nuova scaletta dalla cartella</string>
     <string name="folder_contains_no_audio">La cartella selezionata non contiene file audio</string>
     <string name="delete_current_song">Rimuovi il brano attuale</string>
-    <string name="delete_song_warning">WARNING: This will delete the selected files themselves from the device, all playlists included.</string>
+    <string name="delete_song_warning">ATTENZIONE: Questa operazione eliminerà i file selezionati dal dispositivo, comprese tutte le playlist.</string>
     <string name="remove_current_song">Rimuovi il brano attuale dalla scaletta</string>
     <string name="show_filename">Mostra il nome del file come titolo del brano</string>
     <string name="title_is_not_available">Se il titolo non è disponibile</string>
@@ -56,20 +56,22 @@
     <string name="album_count">Conteggio per album</string>
     <string name="artist_name">Nome dell\'artista</string>
     <string name="year">Anno</string>
-    <string name="track_number">Track number</string>
-    <string name="use_for_this_playlist">Use for this playlist only</string>
-    <string name="use_for_this_album">Use for this album only</string>
+    <string name="track_number">Numero di traccia</string>
+    <string name="use_for_this_playlist">Usa solo per questa playlist</string>
+    <string name="use_for_this_album">Usa solo per questo album</string>
     <!-- Artists -->
     <string name="artists">Artisti</string>
     <string name="folders">Cartelle</string>
     <string name="albums">Album</string>
     <plurals name="albums_plural">
         <item quantity="one">%d album</item>
+        <item quantity="many">%d album</item>
         <item quantity="other">%d album</item>
     </plurals>
     <string name="tracks">Tracce</string>
     <plurals name="tracks_plural">
-        <item quantity="one">%d Traccia</item>
+        <item quantity="one">%d traccia</item>
+        <item quantity="many">%d tracce</item>
         <item quantity="other">%d tracce</item>
     </plurals>
     <!-- Queue -->
@@ -81,7 +83,7 @@
     <!-- Settings -->
     <string name="equalizer">Equalizzatore</string>
     <string name="swap_prev_next">Inverti i pulsanti successivo/precedente delle cuffiette</string>
-    <string name="exclude_folder_description">Excluding a folder will prevent the displaying of all audio files within. Files manually added to playlists will not be affected.</string>
+    <string name="exclude_folder_description">L\'esclusione di una cartella impedisce la visualizzazione di tutti i file audio al suo interno. I file aggiunti manualmente alle playlist non saranno interessati.</string>
     <!-- FAQ -->
     <string name="faq_1_title">Come posso avanzare rapidamente nei brani\?</string>
     <string name="faq_1_text">Si può premere rapidamente sui testi accanto alla barra di avanzamento, questi faranno spostare il brano in avanti o all\'indietro.</string>
