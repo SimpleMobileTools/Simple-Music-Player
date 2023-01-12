@@ -1,6 +1,11 @@
 Changelog
 ==========
 
+Version 5.16.3 *(2023-01-12)*
+----------------------------
+
+ * Fixed a search menu glitch on some devices
+
 Version 5.16.2 *(2023-01-04)*
 ----------------------------
 
