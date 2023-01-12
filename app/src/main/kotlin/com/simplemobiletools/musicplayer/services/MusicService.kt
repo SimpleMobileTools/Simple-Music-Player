@@ -181,7 +181,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         }
 
         MediaButtonReceiver.handleIntent(mMediaSession!!, intent)
-        if (action != DISMISS && action != FINISH && action != FINISH_IF_NOT_PLAYING) {
+        if (action != DISMISS && action != FINISH) {
             startForegroundOrNotify()
         }
         return START_NOT_STICKY
