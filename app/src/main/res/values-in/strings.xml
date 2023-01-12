@@ -40,7 +40,7 @@
     <string name="create_playlist_from_folder">Buat daftar putar baru dari folder</string>
     <string name="folder_contains_no_audio">Folder yang dipilih tidak berisi berkas audio</string>
     <string name="delete_current_song">Hapus lagu ini</string>
-    <string name="delete_song_warning">WARNING: This will delete the selected files themselves from the device, all playlists included.</string>
+    <string name="delete_song_warning">PERINGATAN: Ini akan menghapus berkas yang dipilih dari perangkat, termasuk semua daftar putar.</string>
     <string name="remove_current_song">Hapus lagu ini dari daftar putar</string>
     <string name="show_filename">Tampilkan nama berkas sebagai judul lagu</string>
     <string name="title_is_not_available">Jika judul tidak tersedia</string>
@@ -50,15 +50,15 @@
     <string name="create_playlist_label">Anda dapat membuat sebuah daftar putar baru dengan memilih artis, album atau trek yang diinginkan dengan menggunakan Menu -&gt; Tambahkan ke daftar putar.</string>
     <string name="export_playlist">Export playlist</string>
     <string name="import_playlist">Import playlist</string>
-    <string name="filename_without_m3u">Filename (without .m3u)</string>
+    <string name="filename_without_m3u">Nama berkas (tanpa .m3u)</string>
     <!-- Sorting -->
     <string name="track_count">Hitungan Trek</string>
     <string name="album_count">Hitungan Album</string>
     <string name="artist_name">Artist Name</string>
     <string name="year">Tahun</string>
-    <string name="track_number">Track number</string>
-    <string name="use_for_this_playlist">Use for this playlist only</string>
-    <string name="use_for_this_album">Use for this album only</string>
+    <string name="track_number">Nomor trek</string>
+    <string name="use_for_this_playlist">Gunakan untuk daftar putar ini saja</string>
+    <string name="use_for_this_album">Gunakan untuk album ini saja</string>
     <!-- Artists -->
     <string name="artists">Artis</string>
     <string name="folders">Folder</string>
@@ -79,7 +79,7 @@
     <!-- Settings -->
     <string name="equalizer">Ekualiser</string>
     <string name="swap_prev_next">Tukar tombol pemilih lagu sebelumnya/berikutnya pada headphone</string>
-    <string name="exclude_folder_description">Excluding a folder will prevent the displaying of all audio files within. Files manually added to playlists will not be affected.</string>
+    <string name="exclude_folder_description">Tidak menyertakan folder akan mencegah penampilan semua berkas audio yang di dalamnya. Berkas yang ditambahkan secara manual ke daftar putar tidak berpengaruh.</string>
     <!-- FAQ -->
     <string name="faq_1_title">Bagaimana saya memajukan lagu\?</string>
     <string name="faq_1_text">Anda bisa klik teks durasi di dekat bilah laju, tindakan tersebut akan memajukan atau memundurkan lagu.</string>
