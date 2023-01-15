@@ -27,8 +27,8 @@
     <string name="rename_playlist">Renomear lista de reprodução</string>
     <string name="playlist_name_exists">Já existe uma lista de reprodução com este nome</string>
     <string name="remove_playlist">Remover lista de reprodução</string>
-    <string name="remove_playlist_description">Esta acção remove as listas de reprodução selecionadas mas não apaga os ficheiros.</string>
-    <string name="remove_playlist_description_placeholder">Esta acção remove a lista de reprodução \"%s\" mas não apaga os ficheiros.</string>
+    <string name="remove_playlist_description">Esta ação remove as listas de reprodução selecionadas mas não apaga os ficheiros.</string>
+    <string name="remove_playlist_description_placeholder">Esta ação remove a lista de reprodução \"%s\" mas não apaga os ficheiros.</string>
     <string name="remove_from_playlist">Remover da lista de reprodução</string>
     <string name="remove_from_playlist_description">Esta ação remove os elementos da lista de reprodução \"%s\" mas não apaga os ficheiros.</string>
     <string name="delete_the_files_too">Apagar também os ficheiros</string>
@@ -40,7 +40,7 @@
     <string name="create_playlist_from_folder">Criar nova lista de reprodução a partir da pasta</string>
     <string name="folder_contains_no_audio">A pasta selecionada não contém ficheiros de áudio</string>
     <string name="delete_current_song">Apagar faixa atual</string>
-    <string name="delete_song_warning">WARNING: This will delete the selected files themselves from the device, all playlists included.</string>
+    <string name="delete_song_warning">Aviso: esta ação elimina os ficheiros do seu dispositivo, incluindo todas as listas de reprodução.</string>
     <string name="remove_current_song">Remover faixa atual da lista de reprodução</string>
     <string name="show_filename">Mostrar nome do ficheiro como título da faixa</string>
     <string name="title_is_not_available">Se não existir título</string>
@@ -48,28 +48,30 @@
     <string name="all_tracks">Todas as faixas</string>
     <string name="add_to_playlist">Adicionar à lista de reprodução</string>
     <string name="create_playlist_label">Pode criar listas de reprodução em Menu -&gt; Adicionar à lista de reprodução.</string>
-    <string name="export_playlist">Export playlist</string>
-    <string name="import_playlist">Import playlist</string>
-    <string name="filename_without_m3u">Filename (without .m3u)</string>
+    <string name="export_playlist">Exportar lista de reprodução</string>
+    <string name="import_playlist">Importar lista de reprodução</string>
+    <string name="filename_without_m3u">Nome do ficheiro (sem .m3u)</string>
     <!-- Sorting -->
     <string name="track_count">Número de faixas</string>
     <string name="album_count">Número de álbuns</string>
     <string name="artist_name">Nome do artista</string>
     <string name="year">Ano</string>
-    <string name="track_number">Track number</string>
-    <string name="use_for_this_playlist">Use for this playlist only</string>
-    <string name="use_for_this_album">Use for this album only</string>
+    <string name="track_number">Número da faixa</string>
+    <string name="use_for_this_playlist">Utilizar apenas para esta lista de reprodução</string>
+    <string name="use_for_this_album">Utilizar apenas para este álbum</string>
     <!-- Artists -->
     <string name="artists">Artistas</string>
     <string name="folders">Pastas</string>
     <string name="albums">Álbuns</string>
     <plurals name="albums_plural">
         <item quantity="one">%d álbum</item>
+        <item quantity="many">%d álbuns</item>
         <item quantity="other">%d álbuns</item>
     </plurals>
     <string name="tracks">Faixas</string>
     <plurals name="tracks_plural">
         <item quantity="one">%d faixa</item>
+        <item quantity="many">%d faixas</item>
         <item quantity="other">%d faixas</item>
     </plurals>
     <!-- Queue -->
@@ -81,10 +83,10 @@
     <!-- Settings -->
     <string name="equalizer">Equalizador</string>
     <string name="swap_prev_next">Trocar de faixa com os botões do auricular</string>
-    <string name="exclude_folder_description">Excluding a folder will prevent the displaying of all audio files within. Files manually added to playlists will not be affected.</string>
+    <string name="exclude_folder_description">Se excluir uma pasta, não conseguirá ver os ficheiros lá existentes. Os ficheiros adicionados manualmente a uma lista de reprodução não serão afetados.</string>
     <!-- FAQ -->
-    <string name="faq_1_title">Como posso avançar/recuar rapidamente uma faixa\?</string>
-    <string name="faq_1_text">Toque nos textos de duração máxima/atual junto à barra de progresso para avançar ou recuar a posição na faixa.</string>
+    <string name="faq_1_title">Posso avançar/recuar rapidamente uma faixa\?</string>
+    <string name="faq_1_text">Toque nos textos de duração máxima/atual junto à barra de progresso para avançar ou recuar na posição da faixa.</string>
     <!--
         Não encontrou todas as cadeias a traduzir? Existem mais algumas em:
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
