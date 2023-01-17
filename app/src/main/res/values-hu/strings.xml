@@ -2,14 +2,14 @@
 <resources>
     <string name="app_name">Egyszerű zenelejátszó</string>
     <string name="app_launcher_name">Zenelejátszó</string>
-    <string name="playlist_empty">A lejátszólista üres</string>
+    <string name="playlist_empty">A lejátszási lista üres</string>
     <string name="rename_song">Szám átnevezése</string>
     <string name="rename_song_error">Hiba történt az átnevezés során</string>
     <string name="rename_song_empty">Töltse ki az összes mezőt</string>
     <string name="repeat_off">Ismétlés ki</string>
     <string name="repeat_song">Jelenlegi szám ismétlése</string>
     <string name="repeat_playlist">Lista ismétlése</string>
-    <string name="stop_playback_after_current_song">Lejátszás leállítása e szám után</string>
+    <string name="stop_playback_after_current_song">Lejátszás leállítása a jelenlegi szám után</string>
     <string name="enable_shuffle">Véletlenszerű lejátszás engedélyezése</string>
     <string name="disable_shuffle">Véletlenszerű lejátszás letiltása</string>
     <string name="shuffle_enabled">Véletlenszerű lejátszás engedélyezve</string>
@@ -19,17 +19,17 @@
     <string name="playback_speed">Lejátszási sebesség</string>
     <string name="loading_files">Fájlok betöltése…</string>
     <!-- Playlists -->
-    <string name="add_file_to_playlist">Fájl hozzáadása a lejátszólistához</string>
-    <string name="add_folder_to_playlist">Mappa hozzáadása a lejátszólistához</string>
-    <string name="manage_playlists">Lejátszólisták kezelése</string>
-    <string name="playlists">Lejátszólisták</string>
-    <string name="create_new_playlist">Lejátszólista létrehozása</string>
-    <string name="rename_playlist">Lejátszólista átnevezése</string>
-    <string name="playlist_name_exists">Már létezik lejátszólista ezzel a névvel</string>
-    <string name="remove_playlist">Lejátszólista eltávolítása</string>
-    <string name="remove_playlist_description">Ez csak a kiválasztott lejátszólistát távolítja el, nem magukat a fájlokat.</string>
-    <string name="remove_playlist_description_placeholder">Ez csak a(z) „%s” lejátszólistát törli, nem magukat a fájlokat.</string>
-    <string name="remove_from_playlist">Eltávolítás a lejátszólistából</string>
+    <string name="add_file_to_playlist">Fájl hozzáadása a lejátszási listához</string>
+    <string name="add_folder_to_playlist">Mappa hozzáadása a lejátszási listához</string>
+    <string name="manage_playlists">Lejátszási listák kezelése</string>
+    <string name="playlists">Lejátszási listák</string>
+    <string name="create_new_playlist">Lejátszási lista létrehozása</string>
+    <string name="rename_playlist">Lejátszási lista átnevezése</string>
+    <string name="playlist_name_exists">Már létezik ilyen nevű lejátszási lista</string>
+    <string name="remove_playlist">Lejátszási lista eltávolítása</string>
+    <string name="remove_playlist_description">Ez csak a kiválasztott lejátszási listát távolítja el, nem magukat a fájlokat.</string>
+    <string name="remove_playlist_description_placeholder">Ez csak a(z) „%s” lejátszási listát törli, nem magukat a fájlokat.</string>
+    <string name="remove_from_playlist">Eltávolítás a lejátszási listából</string>
     <string name="remove_from_playlist_description">Ez csak az elemeket törli ki a(z) „%s” lejátszási listából, nem magukat a fájlokat.</string>
     <string name="delete_the_files_too">A fájlok is kerüljenek törlésre</string>
     <string name="open_playlist">Lejátszási lista megnyitása</string>
@@ -42,23 +42,23 @@
     <string name="delete_current_song">Jelenlegi szám törlése</string>
     <string name="delete_song_warning">FIGYELEM: Ez törli az összes kiválasztott fájlt az eszközről, a lejátszási listákkal együtt.</string>
     <string name="remove_current_song">Jelenlegi szám törlése a lejátszási listából</string>
-    <string name="show_filename">Fájlnevet használd számnévnek</string>
+    <string name="show_filename">A fájlnév használata számcímként</string>
     <string name="title_is_not_available">Ha a szám címe nem található</string>
-    <string name="show_album_cover">Címlapborító mutatása a főképernyőn</string>
-    <string name="all_tracks">Minden szám</string>
-    <string name="add_to_playlist">Lejátszólistához adás</string>
-    <string name="create_playlist_label">Lejátszólistát a Menü -&gt; Lejátszólistához adás lehetőséggel tud létrehozni, ha kiválasztja az előadót, albumot vagy számot.</string>
-    <string name="export_playlist">Export playlist</string>
-    <string name="import_playlist">Import playlist</string>
+    <string name="show_album_cover">Albumborító megjelenítése a főképernyőn</string>
+    <string name="all_tracks">Összes szám</string>
+    <string name="add_to_playlist">Lejátszási listához adás</string>
+    <string name="create_playlist_label">Lejátszási lista a Menü -&gt; Lejátszási listához adás lehetőséggel hozható létre az előadó, album vagy szám kiválasztásával.</string>
+    <string name="export_playlist">Lejátszási lista exportálása</string>
+    <string name="import_playlist">Lejátszási lista importálása</string>
     <string name="filename_without_m3u">Fájlnév (.m3u nélkül)</string>
     <!-- Sorting -->
-    <string name="track_count">Számok</string>
-    <string name="album_count">Albumok</string>
+    <string name="track_count">Számok száma</string>
+    <string name="album_count">Albumok száma</string>
     <string name="artist_name">Előadó neve</string>
     <string name="year">Év</string>
-    <string name="track_number">Track number</string>
-    <string name="use_for_this_playlist">Use for this playlist only</string>
-    <string name="use_for_this_album">Use for this album only</string>
+    <string name="track_number">Szám sorszáma</string>
+    <string name="use_for_this_playlist">Használat csak ehhez a lejátszási listához</string>
+    <string name="use_for_this_album">Használat csak ehhez az albumhoz</string>
     <!-- Artists -->
     <string name="artists">Előadók</string>
     <string name="folders">Mappák</string>
@@ -74,14 +74,14 @@
     </plurals>
     <!-- Queue -->
     <string name="next_track">Következő:</string>
-    <string name="track_queue">Szám várólista</string>
-    <string name="add_to_queue">Várólistához adás</string>
-    <string name="remove_from_queue">Várólistából törlés</string>
-    <string name="create_playlist_from_queue">Lejátszólista a várólistából</string>
+    <string name="track_queue">Várólista</string>
+    <string name="add_to_queue">Hozzáadás a várólistához</string>
+    <string name="remove_from_queue">Eltávolítás a várólistából</string>
+    <string name="create_playlist_from_queue">Lejátszási lista készítése a várólistából</string>
     <!-- Settings -->
     <string name="equalizer">Hangszínszabályzó</string>
-    <string name="swap_prev_next">Fülhallgató számváltó gombok felcserélése</string>
-    <string name="exclude_folder_description">Excluding a folder will prevent the displaying of all audio files within. Files manually added to playlists will not be affected.</string>
+    <string name="swap_prev_next">Fejhallgató számváltó gombjainak felcserélése</string>
+    <string name="exclude_folder_description">A mappa kihagyása megakadályozza a benne lévő összes hangfájl megjelenítését. A lejátszási listákhoz kézileg hozzáadott fájlokat ez nem érinti.</string>
     <!-- FAQ -->
     <string name="faq_1_title">Hogy tudom a számot előre tekerni\?</string>
     <string name="faq_1_text">A keresősáv melletti jelenlegi vagy maximális hossz szövegekre kattintva tud előre és hátra tekerni.</string>
