@@ -10,6 +10,7 @@ import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.commons.helpers.isOreoPlus
 import com.simplemobiletools.commons.helpers.isQPlus
+import com.simplemobiletools.commons.helpers.isRPlus
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.databases.SongsDatabase
 import com.simplemobiletools.musicplayer.helpers.*
@@ -185,6 +186,10 @@ fun Context.getAlbumTracksSync(albumId: Long): ArrayList<Track> {
         projection.add(Audio.Media.BUCKET_DISPLAY_NAME)
     }
 
+    if (isRPlus()) {
+        projection.add(Audio.Media.DISC_NUMBER)
+    }
+
     val selection = "${Audio.Albums.ALBUM_ID} = ?"
     val selectionArgs = arrayOf(albumId.toString())
     val coverUri = ContentUris.withAppendedId(artworkUri, albumId)
@@ -204,8 +209,13 @@ fun Context.getAlbumTracksSync(albumId: Long): ArrayList<Track> {
         } else {
             ""
         }
+        val discNumber = if (isRPlus()) {
+            cursor.getIntValue(Audio.Media.DISC_NUMBER)
+        } else {
+            0
+        }
 
-        val track = Track(0, id, title, artist, path, duration, album, coverArt, 0, trackId, folderName, albumId, 0)
+        val track = Track(0, id, title, artist, path, duration, album, coverArt, 0, trackId, folderName, albumId, 0, discNumber)
         track.title = track.getProperTitle(showFilename)
         tracks.add(track)
     }

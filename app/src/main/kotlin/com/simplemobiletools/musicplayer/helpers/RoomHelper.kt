@@ -6,6 +6,7 @@ import android.provider.MediaStore
 import android.provider.MediaStore.Audio
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.isQPlus
+import com.simplemobiletools.commons.helpers.isRPlus
 import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.extensions.tracksDAO
 import com.simplemobiletools.musicplayer.models.Events
@@ -39,6 +40,10 @@ class RoomHelper(val context: Context) {
             projection.add(Audio.Media.BUCKET_DISPLAY_NAME)
         }
 
+        if (isRPlus()) {
+            projection.add(Audio.Media.DISC_NUMBER)
+        }
+
         val pathsMap = HashSet<String>()
         paths.mapTo(pathsMap) { it }
 
@@ -61,6 +66,11 @@ class RoomHelper(val context: Context) {
                 val duration = cursor.getIntValue(Audio.Media.DURATION) / 1000
                 val album = cursor.getStringValue(Audio.Media.ALBUM)
                 val albumId = cursor.getLongValue(Audio.Media.ALBUM_ID)
+                val discNumber = if (isRPlus()) {
+                    cursor.getIntValue(Audio.Media.DISC_NUMBER)
+                } else {
+                    0
+                }
                 val coverArt = ContentUris.withAppendedId(artworkUri, albumId).toString()
                 val folderName = if (isQPlus()) {
                     cursor.getStringValue(Audio.Media.BUCKET_DISPLAY_NAME) ?: MediaStore.UNKNOWN_STRING
@@ -68,7 +78,7 @@ class RoomHelper(val context: Context) {
                     ""
                 }
 
-                val song = Track(0, mediaStoreId, title, artist, path, duration, album, coverArt, playlistId, 0, folderName, albumId, 0)
+                val song = Track(0, mediaStoreId, title, artist, path, duration, album, coverArt, playlistId, 0, folderName, albumId, 0, discNumber)
                 song.title = song.getProperTitle(showFilename)
                 songs.add(song)
                 pathsMap.remove(path)
@@ -78,7 +88,7 @@ class RoomHelper(val context: Context) {
         pathsMap.forEach {
             val unknown = MediaStore.UNKNOWN_STRING
             val title = context.getTitle(it) ?: unknown
-            val song = Track(0, 0, title, context.getArtist(it) ?: unknown, it, context.getDuration(it) ?: 0, "", "", playlistId, 0, "", 0, 0)
+            val song = Track(0, 0, title, context.getArtist(it) ?: unknown, it, context.getDuration(it) ?: 0, "", "", playlistId, 0, "", 0, 0, 0)
             song.title = song.getProperTitle(showFilename)
             songs.add(song)
         }

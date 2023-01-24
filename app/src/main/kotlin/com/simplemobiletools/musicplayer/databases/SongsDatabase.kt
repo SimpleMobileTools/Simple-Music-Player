@@ -10,7 +10,7 @@ import com.simplemobiletools.musicplayer.interfaces.*
 import com.simplemobiletools.musicplayer.models.*
 import com.simplemobiletools.musicplayer.objects.MyExecutor
 
-@Database(entities = [Track::class, Playlist::class, QueueItem::class, Artist::class, Album::class], version = 11)
+@Database(entities = [Track::class, Playlist::class, QueueItem::class, Artist::class, Album::class], version = 12)
 abstract class SongsDatabase : RoomDatabase() {
 
     abstract fun SongsDao(): SongsDao
@@ -42,6 +42,7 @@ abstract class SongsDatabase : RoomDatabase() {
                             .addMigrations(MIGRATION_8_9)
                             .addMigrations(MIGRATION_9_10)
                             .addMigrations(MIGRATION_10_11)
+                            .addMigrations(MIGRATION_11_12)
                             .build()
                     }
                 }
@@ -164,6 +165,12 @@ abstract class SongsDatabase : RoomDatabase() {
         private val MIGRATION_10_11 = object : Migration(10, 11) {
             override fun migrate(database: SupportSQLiteDatabase) {
                 database.execSQL("ALTER TABLE tracks ADD COLUMN order_in_playlist INTEGER NOT NULL DEFAULT 0")
+            }
+        }
+
+        private val MIGRATION_11_12 = object : Migration(11, 12) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL("ALTER TABLE tracks ADD COLUMN disc_number INTEGER NOT NULL DEFAULT 0")
             }
         }
     }
