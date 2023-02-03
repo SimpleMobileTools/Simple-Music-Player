@@ -63,7 +63,7 @@
 
         <ImageView
             android:id="@+id/activity_track_speed_icon"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:scaleType="fitEnd"
             android:src="@drawable/ic_playback_speed_vector"
@@ -75,7 +75,7 @@
 
         <com.simplemobiletools.commons.views.MyTextView
             android:id="@+id/activity_track_speed"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="start"
             android:paddingTop="@dimen/normal_margin"
