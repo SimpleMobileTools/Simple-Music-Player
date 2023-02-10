@@ -1,16 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="delete_current_song">Slett noverande låt</string>
-    <string name="delete_song_warning">Merk: dette vil slette dei valde filene ifrå eininga.</string>
-    <string name="remove_current_song">Tak bort noverande låt ifrå ei speleliste</string>
-    <string name="show_filename">Vis filnamn som låtnamn</string>
-    <string name="title_is_not_available">Om namn ikkje er tilgjengeleg</string>
-    <string name="open_playlist">Opne spelelista</string>
-    <string name="remove_from_playlist">Tak bort ifrå spelelista</string>
-    <string name="remove_from_playlist_description">This will only remove the items from playlist \"%s\". The actual files will not be deleted.</string>
     <string name="app_name">Einfelt ljodavspelar</string>
     <string name="app_launcher_name">Ljodavspelar</string>
-    <string name="delete_the_files_too">Slett filene au</string>
     <string name="playlist_empty">Spelelista di er tom</string>
     <string name="rename_song">Døyp om låta</string>
     <string name="rename_song_error">Kunne ikkje døypa om låta</string>
@@ -27,6 +18,7 @@
     <string name="volume">Ljodstyrk</string>
     <string name="playback_speed">Avspelingssnøggleiken</string>
     <string name="loading_files">Leitar fram filer …</string>
+    <!-- Playlists -->
     <string name="add_file_to_playlist">Legg til ei fil i spelelista</string>
     <string name="add_folder_to_playlist">Legg til ei mappe i spelelista</string>
     <string name="manage_playlists">Handsam spelelister</string>
@@ -37,15 +29,21 @@
     <string name="remove_playlist">Slett spelelista</string>
     <string name="remove_playlist_description">Berre dei valde spelelistene vert sletta. Filene/låtene i dei vert ikkje sletta.</string>
     <string name="remove_playlist_description_placeholder">Berre «%s»-spelelista vert sletta. Filene/låtene vert ikkje sletta.</string>
+    <string name="remove_from_playlist">Tak bort ifrå spelelista</string>
+    <string name="remove_from_playlist_description">This will only remove the items from playlist \"%s\". The actual files will not be deleted.</string>
+    <string name="delete_the_files_too">Slett filene au</string>
+    <string name="open_playlist">Opne spelelista</string>
     <string name="all_songs_cannot_be_deleted">Kan ikkje slette «Alle låter»-spelelista</string>
     <string name="empty_playlist">Noverande speleliste er tom</string>
-    <string name="artist_name">Artist Name</string>
     <string name="fetching_songs">Hentar låter …</string>
     <string name="all_songs">Alle låter</string>
     <string name="create_playlist_from_folder">Lag ei ny speleliste ifrå ei mappe</string>
-    <string name="year">Year</string>
-    <string name="track_number">Track number</string>
     <string name="folder_contains_no_audio">Den valde mappa har ingen ljodfiler</string>
+    <string name="delete_current_song">Slett noverande låt</string>
+    <string name="delete_song_warning">Merk: dette vil slette dei valde filene ifrå eininga.</string>
+    <string name="remove_current_song">Tak bort noverande låt ifrå ei speleliste</string>
+    <string name="show_filename">Vis filnamn som låtnamn</string>
+    <string name="title_is_not_available">Om namn ikkje er tilgjengeleg</string>
     <string name="show_album_cover">Vis albumsomslag på hovudskjermen</string>
     <string name="all_tracks">Alle låter</string>
     <string name="add_to_playlist">Add to playlist</string>
@@ -53,10 +51,15 @@
     <string name="export_playlist">Export playlist</string>
     <string name="import_playlist">Import playlist</string>
     <string name="filename_without_m3u">Filename (without .m3u)</string>
+    <!-- Sorting -->
     <string name="track_count">Track Count</string>
     <string name="album_count">Album Count</string>
+    <string name="artist_name">Artist Name</string>
+    <string name="year">Year</string>
+    <string name="track_number">Track number</string>
     <string name="use_for_this_playlist">Use for this playlist only</string>
     <string name="use_for_this_album">Use for this album only</string>
+    <!-- Artists -->
     <string name="artists">Artists</string>
     <string name="folders">Folders</string>
     <string name="albums">Albums</string>
@@ -69,14 +72,21 @@
         <item quantity="one">%d Track</item>
         <item quantity="other">%d Tracks</item>
     </plurals>
-    <string name="remove_from_queue">Remove from queue</string>
-    <string name="create_playlist_from_queue">Create playlist from queue</string>
-    <string name="equalizer">Equalizer</string>
+    <!-- Queue -->
     <string name="next_track">Next:</string>
     <string name="track_queue">Track queue</string>
     <string name="add_to_queue">Add to queue</string>
+    <string name="remove_from_queue">Remove from queue</string>
+    <string name="create_playlist_from_queue">Create playlist from queue</string>
+    <!-- Settings -->
+    <string name="equalizer">Equalizer</string>
     <string name="swap_prev_next">Swap previous/next headphone buttons</string>
     <string name="exclude_folder_description">Excluding a folder will prevent the displaying of all audio files within. Files manually added to playlists will not be affected.</string>
+    <!-- FAQ -->
     <string name="faq_1_title">How can I fast-forward songs\?</string>
     <string name="faq_1_text">You can click on the current or max duration texts near the seekbar, that will move the song either backward, or forward.</string>
+    <!--
+        Haven't found some strings? There's more at
+        https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
+    -->
 </resources>
