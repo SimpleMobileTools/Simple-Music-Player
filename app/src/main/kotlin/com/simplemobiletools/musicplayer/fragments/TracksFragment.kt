@@ -25,6 +25,8 @@ import kotlinx.android.synthetic.main.fragment_tracks.view.*
 class TracksFragment(context: Context, attributeSet: AttributeSet) : MyViewPagerFragment(context, attributeSet) {
     private var tracksIgnoringSearch = ArrayList<Track>()
 
+    private var mTracks:MutableList<Track> = mutableListOf()
+
     override fun setupFragment(activity: BaseSimpleActivity) {
         ensureBackgroundThread {
             val albums = ArrayList<Album>()
@@ -54,11 +56,12 @@ class TracksFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
                 tracks_placeholder.beVisibleIf(tracks.isEmpty())
                 val adapter = tracks_list.adapter
                 if (adapter == null) {
+                    mTracks = tracks
                     TracksAdapter(activity, tracks, false, tracks_list) {
                         activity.hideKeyboard()
                         activity.handleNotificationPermission { granted ->
                             if (granted) {
-                                activity.resetQueueItems(tracks) {
+                                activity.resetQueueItems(mTracks) {
                                     Intent(activity, TrackActivity::class.java).apply {
                                         putExtra(TRACK, Gson().toJson(it))
                                         putExtra(RESTART_PLAYER, true)
@@ -77,6 +80,7 @@ class TracksFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
                         tracks_list.scheduleLayoutAnimation()
                     }
                 } else {
+                    mTracks = tracks
                     (adapter as TracksAdapter).updateItems(tracks)
                 }
             }
