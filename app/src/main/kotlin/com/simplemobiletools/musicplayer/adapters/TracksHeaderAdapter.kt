@@ -164,6 +164,7 @@ class TracksHeaderAdapter(activity: SimpleActivity, var items: ArrayList<ListIte
         view.apply {
             track_frame?.isSelected = selectedKeys.contains(track.hashCode())
             track_title.text = track.title
+            track_info.beGone()
 
             arrayOf(track_id, track_title, track_duration).forEach {
                 it.setTextColor(textColor)
