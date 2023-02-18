@@ -46,45 +46,45 @@
     <string name="title_is_not_available">Om namn ikkje er tilgjengeleg</string>
     <string name="show_album_cover">Vis albumsomslag på hovudskjermen</string>
     <string name="all_tracks">Alle låter</string>
-    <string name="add_to_playlist">Add to playlist</string>
-    <string name="create_playlist_label">You can create a new playlist by selecting the wanted artists, albums or tracks and using Menu -&gt; Add to playlist.</string>
-    <string name="export_playlist">Export playlist</string>
-    <string name="import_playlist">Import playlist</string>
-    <string name="filename_without_m3u">Filename (without .m3u)</string>
+    <string name="add_to_playlist">Legg til i ei speleliste</string>
+    <string name="create_playlist_label">Du kan lage ei ny speleliste ved å velja artistar, album eller låter, og trykkja på Meny → Legg til i ei speleliste.</string>
+    <string name="export_playlist">Før ut spelelista</string>
+    <string name="import_playlist">Før inn ei speleliste</string>
+    <string name="filename_without_m3u">Filnamn (utan .m3u)</string>
     <!-- Sorting -->
-    <string name="track_count">Track Count</string>
-    <string name="album_count">Album Count</string>
-    <string name="artist_name">Artist Name</string>
-    <string name="year">Year</string>
-    <string name="track_number">Track number</string>
-    <string name="use_for_this_playlist">Use for this playlist only</string>
-    <string name="use_for_this_album">Use for this album only</string>
+    <string name="track_count">Mengd låter</string>
+    <string name="album_count">Mengd album</string>
+    <string name="artist_name">Artistnamn</string>
+    <string name="year">År</string>
+    <string name="track_number">Låtnummer</string>
+    <string name="use_for_this_playlist">Berre i denne spelelista</string>
+    <string name="use_for_this_album">Berre i dette albumet</string>
     <!-- Artists -->
-    <string name="artists">Artists</string>
-    <string name="folders">Folders</string>
-    <string name="albums">Albums</string>
+    <string name="artists">Artistar</string>
+    <string name="folders">Mapper</string>
+    <string name="albums">Album</string>
     <plurals name="albums_plural">
-        <item quantity="one">%d Album</item>
-        <item quantity="other">%d Albums</item>
+        <item quantity="one">%d album</item>
+        <item quantity="other">%d album</item>
     </plurals>
-    <string name="tracks">Tracks</string>
+    <string name="tracks">Låter</string>
     <plurals name="tracks_plural">
-        <item quantity="one">%d Track</item>
-        <item quantity="other">%d Tracks</item>
+        <item quantity="one">%d låt</item>
+        <item quantity="other">%d låter</item>
     </plurals>
     <!-- Queue -->
-    <string name="next_track">Next:</string>
-    <string name="track_queue">Track queue</string>
-    <string name="add_to_queue">Add to queue</string>
-    <string name="remove_from_queue">Remove from queue</string>
-    <string name="create_playlist_from_queue">Create playlist from queue</string>
+    <string name="next_track">Neste:</string>
+    <string name="track_queue">Kø</string>
+    <string name="add_to_queue">Legg til i køen</string>
+    <string name="remove_from_queue">Tak bort ifrå køen</string>
+    <string name="create_playlist_from_queue">Lag ei speleliste med køen</string>
     <!-- Settings -->
-    <string name="equalizer">Equalizer</string>
-    <string name="swap_prev_next">Swap previous/next headphone buttons</string>
-    <string name="exclude_folder_description">Excluding a folder will prevent the displaying of all audio files within. Files manually added to playlists will not be affected.</string>
+    <string name="equalizer">Tonejamnar</string>
+    <string name="swap_prev_next">Byt om på høyretelefonknappane for førre/neste</string>
+    <string name="exclude_folder_description">Steng ut ei mappa for å hindre hennar ljodfiler ifrå å verta viste. Filer lagde til i spelelister for hand, vert ikkje påverka.</string>
     <!-- FAQ -->
     <string name="faq_1_title">How can I fast-forward songs\?</string>
-    <string name="faq_1_text">You can click on the current or max duration texts near the seekbar, that will move the song either backward, or forward.</string>
+    <string name="faq_1_text">Trykk på noverande tid eller fulltid under framgangslina for å hoppe framover eller bakover i låta.</string>
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
