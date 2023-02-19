@@ -40,7 +40,7 @@
     <string name="create_playlist_from_folder">Skapa ny spellista från mapp</string>
     <string name="folder_contains_no_audio">Den valda mappen innehåller inga ljudfiler</string>
     <string name="delete_current_song">Ta bort aktuell låt</string>
-    <string name="delete_song_warning">WARNING: This will delete the selected files themselves from the device, all playlists included.</string>
+    <string name="delete_song_warning">VARNING! Detta tar bort själva filerna från enheten, inklusive alla spellistor.</string>
     <string name="remove_current_song">Ta bort aktuell låt från spellista</string>
     <string name="show_filename">Ersätt låttitel med filnamn</string>
     <string name="title_is_not_available">Om titeln inte är tillgänglig</string>
@@ -56,21 +56,21 @@
     <string name="album_count">Antal album</string>
     <string name="artist_name">Artistnamn</string>
     <string name="year">År</string>
-    <string name="track_number">Track number</string>
-    <string name="use_for_this_playlist">Use for this playlist only</string>
-    <string name="use_for_this_album">Use for this album only</string>
+    <string name="track_number">Låtnummer</string>
+    <string name="use_for_this_playlist">Använd bara för den här spellistan</string>
+    <string name="use_for_this_album">Använd bara för det här albumet</string>
     <!-- Artists -->
     <string name="artists">Artister</string>
     <string name="folders">Mappar</string>
     <string name="albums">Album</string>
     <plurals name="albums_plural">
-        <item quantity="one">%d Album</item>
-        <item quantity="other">%d Album</item>
+        <item quantity="one">%d album</item>
+        <item quantity="other">%d album</item>
     </plurals>
     <string name="tracks">Spår</string>
     <plurals name="tracks_plural">
-        <item quantity="one">%d S pår</item>
-        <item quantity="other">%d Spår</item>
+        <item quantity="one">%d låt</item>
+        <item quantity="other">%d låtar</item>
     </plurals>
     <!-- Queue -->
     <string name="next_track">Nästa:</string>
