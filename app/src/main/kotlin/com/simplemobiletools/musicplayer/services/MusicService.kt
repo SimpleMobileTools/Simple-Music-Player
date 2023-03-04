@@ -108,6 +108,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         mClicksCnt = 0
     }
 
+    private val notificationHandler = Handler()
     private var notificationHelper: NotificationHelper? = null
 
     override fun onCreate() {
@@ -324,7 +325,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     }
 
     fun handleDismiss() {
-        pauseTrack()
+        pauseTrack(false)
         stopForegroundAndNotification()
     }
 
@@ -466,25 +467,28 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     }
 
     private fun startForegroundAndNotify() {
-        if (mCurrTrackCover?.isRecycled == true) {
-            mCurrTrackCover = resources.getColoredBitmap(R.drawable.ic_headset, getProperTextColor())
-        }
-
-        notificationHelper?.createPlayerNotification(
-            track = mCurrTrack,
-            isPlaying = isPlaying(),
-            largeIcon = mCurrTrackCover,
-        ) {
-            notificationHelper?.notify(NOTIFICATION_ID, it)
-            try {
-                if (isQPlus()) {
-                    startForeground(NOTIFICATION_ID, it, ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PLAYBACK)
-                } else {
-                    startForeground(NOTIFICATION_ID, it)
-                }
-            } catch (ignored: IllegalStateException) {
+        notificationHandler.removeCallbacksAndMessages(null)
+        notificationHandler.postDelayed({
+            if (mCurrTrackCover?.isRecycled == true) {
+                mCurrTrackCover = resources.getColoredBitmap(R.drawable.ic_headset, getProperTextColor())
             }
-        }
+
+            notificationHelper?.createPlayerNotification(
+                track = mCurrTrack,
+                isPlaying = isPlaying(),
+                largeIcon = mCurrTrackCover,
+            ) {
+                notificationHelper?.notify(NOTIFICATION_ID, it)
+                try {
+                    if (isQPlus()) {
+                        startForeground(NOTIFICATION_ID, it, ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PLAYBACK)
+                    } else {
+                        startForeground(NOTIFICATION_ID, it)
+                    }
+                } catch (ignored: IllegalStateException) {
+                }
+            }
+        }, 200L)
     }
 
     private fun stopForegroundAndNotification() {
@@ -534,10 +538,10 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         }
     }
 
-    fun pauseTrack() {
+    fun pauseTrack(notify: Boolean = true) {
         initMediaPlayerIfNeeded()
         mPlayer!!.pause()
-        trackStateChanged(false)
+        trackStateChanged(false, notify = notify)
         updateMediaSessionState()
         saveTrackProgress()
         // do not call stopForeground on android 12 as it may cause a crash later
