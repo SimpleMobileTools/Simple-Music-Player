@@ -109,7 +109,6 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     }
 
     private var notificationHelper: NotificationHelper? = null
-    private var isForeground: Boolean = false
 
     override fun onCreate() {
         super.onCreate()
@@ -117,7 +116,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         createMediaSession()
 
         notificationHelper = NotificationHelper.createInstance(context = this, mMediaSession!!)
-        startForegroundOrNotify()
+        startForegroundAndNotify()
 
         mAudioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager
         if (isOreoPlus()) {
@@ -183,7 +182,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
         MediaButtonReceiver.handleIntent(mMediaSession!!, intent)
         if (action != DISMISS && action != FINISH) {
-            startForegroundOrNotify()
+            startForegroundAndNotify()
         }
         return START_NOT_STICKY
     }
@@ -240,7 +239,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
         mWasPlayingAtFocusLost = false
         initMediaPlayerIfNeeded()
-        startForegroundOrNotify()
+        startForegroundAndNotify()
         mIsServiceInitialized = true
     }
 
@@ -466,7 +465,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         }
     }
 
-    private fun startForegroundOrNotify() {
+    private fun startForegroundAndNotify() {
         if (mCurrTrackCover?.isRecycled == true) {
             mCurrTrackCover = resources.getColoredBitmap(R.drawable.ic_headset, getProperTextColor())
         }
@@ -476,18 +475,14 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             isPlaying = isPlaying(),
             largeIcon = mCurrTrackCover,
         ) {
-            if (!isForeground) {
-                try {
-                    if (isQPlus()) {
-                        startForeground(NOTIFICATION_ID, it, ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PLAYBACK)
-                    } else {
-                        startForeground(NOTIFICATION_ID, it)
-                    }
-                    isForeground = true
-                } catch (ignored: IllegalStateException) {
+            notificationHelper?.notify(NOTIFICATION_ID, it)
+            try {
+                if (isQPlus()) {
+                    startForeground(NOTIFICATION_ID, it, ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PLAYBACK)
+                } else {
+                    startForeground(NOTIFICATION_ID, it)
                 }
-            } else {
-                notificationHelper?.notify(NOTIFICATION_ID, it)
+            } catch (ignored: IllegalStateException) {
             }
         }
     }
@@ -496,7 +491,6 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         @Suppress("DEPRECATION")
         stopForeground(true)
         notificationHelper?.cancel(NOTIFICATION_ID)
-        isForeground = false
     }
 
     private fun getNextQueueItem(): QueueItem {
@@ -550,7 +544,6 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         if (!isSPlus()) {
             @Suppress("DEPRECATION")
             stopForeground(false)
-            isForeground = false
         }
     }
 
@@ -999,7 +992,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         handleProgressHandler(isPlaying)
         broadcastTrackStateChange(isPlaying)
         if (notify) {
-            startForegroundOrNotify()
+            startForegroundAndNotify()
         }
 
         if (isPlaying) {
