@@ -262,7 +262,9 @@ class TrackActivity : SimpleActivity(), PlaybackSpeedListener {
                                 activity_track_image.layoutParams.height = coverHeight
                             }
 
-                            activity_track_image.setImageDrawable(resource)
+                            runOnUiThread {
+                                activity_track_image.setImageDrawable(resource)
+                            }
                             return false
                         }
                     })
