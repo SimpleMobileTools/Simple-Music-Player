@@ -116,6 +116,9 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         mCoverArtHeight = resources.getDimension(R.dimen.top_art_height).toInt()
         createMediaSession()
 
+        notificationHelper = NotificationHelper.createInstance(context = this, mMediaSession!!)
+        startForegroundOrNotify()
+
         mAudioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager
         if (isOreoPlus()) {
             mOreoFocusHandler = OreoAudioFocusHandler(application)
@@ -124,8 +127,6 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         if (!isQPlus() && !hasPermission(getPermissionToRequest())) {
             EventBus.getDefault().post(Events.NoStoragePermission())
         }
-
-        notificationHelper = NotificationHelper.createInstance(context = this, mMediaSession!!)
     }
 
     private fun createMediaSession() {
