@@ -325,7 +325,9 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     }
 
     fun handleDismiss() {
-        pauseTrack(false)
+        if (isPlaying()) {
+            pauseTrack(false)
+        }
         stopForegroundAndNotification()
     }
 
