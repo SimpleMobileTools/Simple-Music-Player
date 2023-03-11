@@ -108,13 +108,16 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         mClicksCnt = 0
     }
 
+    private val notificationHandler = Handler()
     private var notificationHelper: NotificationHelper? = null
-    private var isForeground: Boolean = false
 
     override fun onCreate() {
         super.onCreate()
         mCoverArtHeight = resources.getDimension(R.dimen.top_art_height).toInt()
         createMediaSession()
+
+        notificationHelper = NotificationHelper.createInstance(context = this, mMediaSession!!)
+        startForegroundAndNotify()
 
         mAudioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager
         if (isOreoPlus()) {
@@ -124,8 +127,6 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         if (!isQPlus() && !hasPermission(getPermissionToRequest())) {
             EventBus.getDefault().post(Events.NoStoragePermission())
         }
-
-        notificationHelper = NotificationHelper.createInstance(context = this, mMediaSession!!)
     }
 
     private fun createMediaSession() {
@@ -182,7 +183,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
         MediaButtonReceiver.handleIntent(mMediaSession!!, intent)
         if (action != DISMISS && action != FINISH) {
-            startForegroundOrNotify()
+            startForegroundAndNotify()
         }
         return START_NOT_STICKY
     }
@@ -239,7 +240,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
         mWasPlayingAtFocusLost = false
         initMediaPlayerIfNeeded()
-        startForegroundOrNotify()
+        startForegroundAndNotify()
         mIsServiceInitialized = true
     }
 
@@ -324,7 +325,9 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     }
 
     fun handleDismiss() {
-        pauseTrack()
+        if (isPlaying()) {
+            pauseTrack(false)
+        }
         stopForegroundAndNotification()
     }
 
@@ -377,16 +380,19 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         updateUI()
     }
 
+    @Synchronized
     private fun updateUI() {
-        if (mPlayer != null) {
-            EventBus.getDefault().post(Events.QueueUpdated(mTracks))
-            mCurrTrackCover = getAlbumImage().first
-            trackChanged()
+        ensureBackgroundThread {
+            if (mPlayer != null) {
+                EventBus.getDefault().post(Events.QueueUpdated(mTracks))
+                mCurrTrackCover = getAlbumImage().first
+                trackChanged()
 
-            val secs = getPosition()!! / 1000
-            broadcastTrackProgress(secs)
+                val secs = getPosition()!! / 1000
+                broadcastTrackProgress(secs)
+            }
+            trackStateChanged(isPlaying())
         }
-        trackStateChanged(isPlaying())
     }
 
     private fun initMediaPlayerIfNeeded() {
@@ -465,37 +471,36 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         }
     }
 
-    private fun startForegroundOrNotify() {
-        if (mCurrTrackCover?.isRecycled == true) {
-            mCurrTrackCover = resources.getColoredBitmap(R.drawable.ic_headset, getProperTextColor())
-        }
+    private fun startForegroundAndNotify() {
+        notificationHandler.removeCallbacksAndMessages(null)
+        notificationHandler.postDelayed({
+            if (mCurrTrackCover?.isRecycled == true) {
+                mCurrTrackCover = resources.getColoredBitmap(R.drawable.ic_headset, getProperTextColor())
+            }
 
-        notificationHelper?.createPlayerNotification(
-            track = mCurrTrack,
-            isPlaying = isPlaying(),
-            largeIcon = mCurrTrackCover,
-        ) {
-            if (!isForeground) {
+            notificationHelper?.createPlayerNotification(
+                track = mCurrTrack,
+                isPlaying = isPlaying(),
+                largeIcon = mCurrTrackCover,
+            ) {
+                notificationHelper?.notify(NOTIFICATION_ID, it)
                 try {
                     if (isQPlus()) {
                         startForeground(NOTIFICATION_ID, it, ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PLAYBACK)
                     } else {
                         startForeground(NOTIFICATION_ID, it)
                     }
-                    isForeground = true
                 } catch (ignored: IllegalStateException) {
                 }
-            } else {
-                notificationHelper?.notify(NOTIFICATION_ID, it)
             }
-        }
+        }, 200L)
     }
 
     private fun stopForegroundAndNotification() {
+        notificationHandler.removeCallbacksAndMessages(null)
         @Suppress("DEPRECATION")
         stopForeground(true)
         notificationHelper?.cancel(NOTIFICATION_ID)
-        isForeground = false
     }
 
     private fun getNextQueueItem(): QueueItem {
@@ -539,17 +544,16 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         }
     }
 
-    fun pauseTrack() {
+    fun pauseTrack(notify: Boolean = true) {
         initMediaPlayerIfNeeded()
         mPlayer!!.pause()
-        trackStateChanged(false)
+        trackStateChanged(false, notify = notify)
         updateMediaSessionState()
         saveTrackProgress()
         // do not call stopForeground on android 12 as it may cause a crash later
         if (!isSPlus()) {
             @Suppress("DEPRECATION")
             stopForeground(false)
-            isForeground = false
         }
     }
 
@@ -998,7 +1002,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         handleProgressHandler(isPlaying)
         broadcastTrackStateChange(isPlaying)
         if (notify) {
-            startForegroundOrNotify()
+            startForegroundAndNotify()
         }
 
         if (isPlaying) {
@@ -1096,13 +1100,17 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     }
 
     private fun saveTrackProgress() {
-        if (mCurrTrack != null && getPosition() != 0) {
+        if (mCurrTrack != null) {
             ensureBackgroundThread {
                 val trackId = mCurrTrack?.mediaStoreId ?: return@ensureBackgroundThread
-                val position = getPosition() ?: return@ensureBackgroundThread
+                val position = getPosition()
                 queueDAO.apply {
                     resetCurrent()
-                    saveCurrentTrack(trackId, position)
+                    if (position == null || position == 0) {
+                        saveCurrentTrack(trackId)
+                    } else {
+                        saveCurrentTrackProgress(trackId, position)
+                    }
                 }
             }
         }
