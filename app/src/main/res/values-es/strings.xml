@@ -5,8 +5,8 @@
     <string name="playlist_empty">Tu lista de reproducción está vacía</string>
     <string name="rename_song">Cambiar el nombre de la canción</string>
     <string name="rename_song_error">Se ha producido un error durante el cambio de nombre</string>
-    <string name="rename_song_empty">Por favor, rellene todos los campos</string>
-    <string name="repeat_off">Repetir apagado</string>
+    <string name="rename_song_empty">Por favor, rellena todos los campos</string>
+    <string name="repeat_off">Repetición desactivada</string>
     <string name="repeat_song">Repetir la canción actual</string>
     <string name="repeat_playlist">Repetir todo</string>
     <string name="stop_playback_after_current_song">Detener la reproducción después de la canción actual</string>
@@ -45,15 +45,15 @@
     <string name="show_filename">Mostrar los nombres de los archivos como títulos de las canciones</string>
     <string name="title_is_not_available">Si el título no está disponible</string>
     <string name="show_album_cover">Mostrar portada de álbum en la pantalla principal</string>
-    <string name="all_tracks">Todas las canciones</string>
+    <string name="all_tracks">Todas las pistas</string>
     <string name="add_to_playlist">Añadir a lista de reproducción</string>
     <string name="create_playlist_label">Puedes crear una nueva lista de reproducción seleccionando los artistas deseados, álbumes o canciones y seleccionando Menú -&gt; Añadir a lista de reproducción.</string>
-    <string name="export_playlist">Export playlist</string>
-    <string name="import_playlist">Import playlist</string>
+    <string name="export_playlist">Exportar la lista de reproducción</string>
+    <string name="import_playlist">Importar la lista de reproducción</string>
     <string name="filename_without_m3u">Nombre del archivo (sin .m3u)</string>
     <!-- Sorting -->
-    <string name="track_count">Conteo de canciones</string>
-    <string name="album_count">Conteo de álbumes</string>
+    <string name="track_count">Número de pistas</string>
+    <string name="album_count">Recuento de álbumes</string>
     <string name="artist_name">Nombre de artista</string>
     <string name="year">Año</string>
     <string name="track_number">Número de la pista</string>
@@ -85,8 +85,8 @@
     <string name="swap_prev_next">Intercambiar botones de anterior/siguiente de los audífonos</string>
     <string name="exclude_folder_description">Excluir una carpeta impedirá que se muestren todos los archivos de audio que contiene. Los archivos agregados manualmente a las listas de reproducción no se verán afectados.</string>
     <!-- FAQ -->
-    <string name="faq_1_title">¿Cómo puedo avanzar canciones\?</string>
-    <string name="faq_1_text">Puedes tocar los textos de la duración actual o máxima cerca de la barra de búsqueda, eso hará que la canción avance o retroceda.</string>
+    <string name="faq_1_title">¿Cómo puedo avanzar en las canciones\?</string>
+    <string name="faq_1_text">Puedes hacer clic en los textos de duración actual o máxima, cerca de la barra de búsqueda, para avanzar o retroceder la canción.</string>
     <!--
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res

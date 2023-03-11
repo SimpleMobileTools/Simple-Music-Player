@@ -1,1 +1,1 @@
-Simpel musikspelare
+Simple Music Player

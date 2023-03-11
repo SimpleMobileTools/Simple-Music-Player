@@ -40,7 +40,7 @@
     <string name="create_playlist_from_folder">Criar nova playlist a partir de uma pasta</string>
     <string name="folder_contains_no_audio">A pasta selecionada não contém arquivos de áudio</string>
     <string name="delete_current_song">Excluir música atual</string>
-    <string name="delete_song_warning">WARNING: This will delete the selected files themselves from the device, all playlists included.</string>
+    <string name="delete_song_warning">AVISO: Isso excluirá os arquivos selecionados do dispositivo, incluindo todas as listas de reprodução.</string>
     <string name="remove_current_song">Remover a música atual da playlist</string>
     <string name="show_filename">Mostrar o nome do arquivo como título da música</string>
     <string name="title_is_not_available">Se o título não estiver disponível</string>
@@ -56,9 +56,9 @@
     <string name="album_count">Número de álbuns</string>
     <string name="artist_name">Artist Name</string>
     <string name="year">Ano</string>
-    <string name="track_number">Track number</string>
-    <string name="use_for_this_playlist">Use for this playlist only</string>
-    <string name="use_for_this_album">Use for this album only</string>
+    <string name="track_number">Número da faixa</string>
+    <string name="use_for_this_playlist">Use apenas para esta lista de reprodução</string>
+    <string name="use_for_this_album">Use apenas para este álbum</string>
     <!-- Artists -->
     <string name="artists">Artistas</string>
     <string name="folders">Pastas</string>
@@ -81,7 +81,7 @@
     <!-- Settings -->
     <string name="equalizer">Equalizador</string>
     <string name="swap_prev_next">Trocar os botões anterior/próximo do fone de ouvido</string>
-    <string name="exclude_folder_description">Excluding a folder will prevent the displaying of all audio files within. Files manually added to playlists will not be affected.</string>
+    <string name="exclude_folder_description">A exclusão de uma pasta impedirá a exibição de todos os arquivos de áudio dentro dela. Os arquivos adicionados manualmente às listas de reprodução não serão afetados.</string>
     <!-- FAQ -->
     <string name="faq_1_title">Como posso avançar músicas\?</string>
     <string name="faq_1_text">Você pode clicar nos textos de duração atual ou máxima perto da barra de progresso, que moverá a música para trás ou para frente.</string>
