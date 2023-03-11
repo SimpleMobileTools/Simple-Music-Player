@@ -378,16 +378,19 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         updateUI()
     }
 
+    @Synchronized
     private fun updateUI() {
-        if (mPlayer != null) {
-            EventBus.getDefault().post(Events.QueueUpdated(mTracks))
-            mCurrTrackCover = getAlbumImage().first
-            trackChanged()
+        ensureBackgroundThread {
+            if (mPlayer != null) {
+                EventBus.getDefault().post(Events.QueueUpdated(mTracks))
+                mCurrTrackCover = getAlbumImage().first
+                trackChanged()
 
-            val secs = getPosition()!! / 1000
-            broadcastTrackProgress(secs)
+                val secs = getPosition()!! / 1000
+                broadcastTrackProgress(secs)
+            }
+            trackStateChanged(isPlaying())
         }
-        trackStateChanged(isPlaying())
     }
 
     private fun initMediaPlayerIfNeeded() {
