@@ -20,8 +20,11 @@ interface QueueItemsDao {
     @Query("SELECT * FROM queue_items WHERE is_current = 1")
     fun getCurrent(): QueueItem?
 
+    @Query("UPDATE queue_items SET is_current = 1 WHERE track_id = :trackId")
+    fun saveCurrentTrack(trackId: Long)
+    
     @Query("UPDATE queue_items SET is_current = 1, last_position = :lastPosition WHERE track_id = :trackId")
-    fun saveCurrentTrack(trackId: Long, lastPosition: Int)
+    fun saveCurrentTrackProgress(trackId: Long, lastPosition: Int)
 
     @Query("UPDATE queue_items SET track_order = :order WHERE track_id = :trackId")
     fun setOrder(trackId: Long, order: Int)
