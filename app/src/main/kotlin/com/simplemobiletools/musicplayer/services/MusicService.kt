@@ -495,6 +495,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     }
 
     private fun stopForegroundAndNotification() {
+        notificationHandler.removeCallbacksAndMessages(null)
         @Suppress("DEPRECATION")
         stopForeground(true)
         notificationHelper?.cancel(NOTIFICATION_ID)
