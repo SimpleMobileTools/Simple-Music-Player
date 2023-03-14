@@ -209,7 +209,11 @@ class TracksAdapter(
         view.apply {
             track_frame?.isSelected = selectedKeys.contains(track.hashCode())
             track_title.text = if (textToHighlight.isEmpty()) track.title else track.title.highlightTextPart(textToHighlight, properPrimaryColor)
-            track_info.text = if (textToHighlight.isEmpty()) track.artist + " - " + track.album else ( track.artist + " - " + track.album ).highlightTextPart(textToHighlight, properPrimaryColor)
+            track_info.text = if (textToHighlight.isEmpty()) {
+                track.artist + " - " + track.album
+            } else {
+                ( track.artist + " - " + track.album ).highlightTextPart(textToHighlight, properPrimaryColor)
+            }
             track_drag_handle.beVisibleIf(isPlaylistContent && selectedKeys.isNotEmpty())
             track_drag_handle.applyColorFilter(textColor)
             track_drag_handle.setOnTouchListener { v, event ->

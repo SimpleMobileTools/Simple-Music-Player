@@ -88,7 +88,10 @@ class TracksFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
     }
 
     override fun onSearchQueryChanged(text: String) {
-        val filtered = tracksIgnoringSearch.filter { it.title.contains(text, true) || ( it.artist + " - " + it.album ).contains(text, true) }.toMutableList() as ArrayList<Track>
+        val filtered = tracksIgnoringSearch.filter {
+            it.title.contains(text, true) ||
+            ( it.artist + " - " + it.album ).contains(text, true)
+        }.toMutableList() as ArrayList<Track>
         (tracks_list.adapter as? TracksAdapter)?.updateItems(filtered, text)
         tracks_placeholder.beVisibleIf(filtered.isEmpty())
     }
