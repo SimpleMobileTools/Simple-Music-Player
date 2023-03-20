@@ -1,1 +1,1 @@
-Übersichtlicher Musik-Player mit anpassbarem Widget, Sleep-Timer, Batteriesparer
+Übersichtlicher Musikplayer mit anpassbarem Widget, Sleeptimer, Batteriesparer
