@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Schlichter Musik-Player</string>
-    <string name="app_launcher_name">Musik-Player</string>
+    <string name="app_name">Schlichter Musikplayer</string>
+    <string name="app_launcher_name">Musikplayer</string>
     <string name="playlist_empty">Deine Wiedergabeliste ist leer</string>
     <string name="rename_song">Lied umbenennen</string>
     <string name="rename_song_error">Bei der Umbenennung ist ein Fehler aufgetreten</string>
@@ -14,7 +14,7 @@
     <string name="disable_shuffle">Zufällige Wiedergabe deaktivieren</string>
     <string name="shuffle_enabled">Zufällige Wiedergabe aktiviert</string>
     <string name="shuffle_disabled">Zufällige Wiedergabe deaktiviert</string>
-    <string name="sleep_timer">Sleep-Timer</string>
+    <string name="sleep_timer">Sleeptimer</string>
     <string name="volume">Lautstärke</string>
     <string name="playback_speed">Wiedergabegeschwindigkeit</string>
     <string name="loading_files">Dateien werden geladen …</string>
@@ -44,7 +44,7 @@
     <string name="remove_current_song">Aktuelles Lied aus der Wiedergabeliste entfernen</string>
     <string name="show_filename">Dateiname als Liedtitel anzeigen</string>
     <string name="title_is_not_available">Wenn Titel nicht verfügbar</string>
-    <string name="show_album_cover">Album-Cover im Hauptbildschirm anzeigen</string>
+    <string name="show_album_cover">Albumcover auf dem Hauptbildschirm anzeigen</string>
     <string name="all_tracks">Alle Titel</string>
     <string name="add_to_playlist">Zur Wiedergabeliste hinzufügen</string>
     <string name="create_playlist_label">Um eine neue Wiedergabeliste zu erstellen, wähle Künstler, Album oder Titel aus und nutze das Menü -&gt; Zur Wiedergabeliste hinzufügen.</string>
