@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Simple Music Player</string>
-    <string name="app_launcher_name">Music Player</string>
+    <string name="app_name">مشغل موسيقى بسيط</string>
+    <string name="app_launcher_name">مشغل الموسيقى</string>
     <string name="playlist_empty">Your playlist is empty</string>
     <string name="rename_song">Rename song</string>
     <string name="rename_song_error">An error occurred during the renaming</string>
