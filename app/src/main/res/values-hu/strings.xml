@@ -82,6 +82,7 @@
     <string name="equalizer">Hangszínszabályzó</string>
     <string name="swap_prev_next">Fejhallgató számváltó gombjainak felcserélése</string>
     <string name="exclude_folder_description">A mappa kihagyása megakadályozza a benne lévő összes hangfájl megjelenítését. A lejátszási listákhoz kézileg hozzáadott fájlokat ez nem érinti.</string>
+    <string name="gapless_playback">Gapless playback</string>
     <!-- FAQ -->
     <string name="faq_1_title">Hogy tudom a számot előre tekerni\?</string>
     <string name="faq_1_text">A keresősáv melletti jelenlegi vagy maximális hossz szövegekre kattintva tud előre és hátra tekerni.</string>
