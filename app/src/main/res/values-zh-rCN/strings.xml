@@ -81,6 +81,7 @@
     <string name="swap_prev_next">交换耳机上的上一首/下一首按钮</string>
     <string name="exclude_folder_description">排除一个文件夹将阻止显示其中所有的音频文件。手动添加到播放列表的文件不会受到影响。</string>
     <string name="gapless_playback">Gapless playback</string>
+    <string name="audio">Audio</string>
     <!-- FAQ -->
     <string name="faq_1_title">我如何快进歌曲？</string>
     <string name="faq_1_text">您可以单击搜索栏附近的当前或最大持续时间文本，这将向后或向前移动歌曲。</string>

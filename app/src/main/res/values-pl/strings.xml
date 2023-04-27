@@ -87,6 +87,7 @@
     <string name="swap_prev_next">Zamień przyciski słuchawek poprzedni/następny</string>
     <string name="exclude_folder_description">Wykluczenie folderu uniemożliwi wyświetlanie wszystkich znajdujących się w nim plików audio. Nie wpłynie to na pliki ręcznie dodane do playlist.</string>
     <string name="gapless_playback">Gapless playback</string>
+    <string name="audio">Audio</string>
     <!-- FAQ -->
     <string name="faq_1_title">Jak mogę przewijać utwory do przodu\?</string>
     <string name="faq_1_text">Możesz nacisnąć tekst bieżącego lub całkowitego czasu trwania w pobliżu paska przewijania — przewinie to utwór do tyłu lub do przodu.</string>

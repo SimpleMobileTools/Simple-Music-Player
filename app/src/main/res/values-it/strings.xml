@@ -85,6 +85,7 @@
     <string name="swap_prev_next">Inverti i pulsanti successivo/precedente delle cuffiette</string>
     <string name="exclude_folder_description">L\'esclusione di una cartella impedisce la visualizzazione di tutti i file audio al suo interno. I file aggiunti manualmente alle playlist non saranno interessati.</string>
     <string name="gapless_playback">Gapless playback</string>
+    <string name="audio">Audio</string>
     <!-- FAQ -->
     <string name="faq_1_title">Come posso avanzare rapidamente nei brani\?</string>
     <string name="faq_1_text">Si può premere rapidamente sui testi accanto alla barra di avanzamento, questi faranno spostare il brano in avanti o all\'indietro.</string>
