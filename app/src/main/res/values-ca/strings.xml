@@ -83,7 +83,6 @@
     <string name="swap_prev_next">Intercanvia els botons anterior/següent dels auriculars</string>
     <string name="exclude_folder_description">L\'exclusió d\'una carpeta impedirà que es mostrin tots els seus fitxers d\'àudio. Els fitxers afegits manualment a les llistes de reproducció no es veuran afectats.</string>
     <string name="gapless_playback">Gapless playback</string>
-    <string name="audio">Audio</string>
     <!-- FAQ -->
     <string name="faq_1_title">Com puc avançar ràpidament les cançons\?</string>
     <string name="faq_1_text">Podeu fer clic als textos de durada actual o màxima a prop de la barra de cerca, que mouran la cançó cap enrere o cap endavant.</string>

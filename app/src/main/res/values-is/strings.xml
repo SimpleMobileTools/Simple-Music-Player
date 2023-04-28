@@ -83,7 +83,6 @@
     <string name="swap_prev_next">Skiptu um fyrra/næsta heyrnartólshnappa</string>
     <string name="exclude_folder_description">Að útiloka möppu kemur í veg fyrir birtingu allra hljóðskráa innan. Skrár sem bætt er handvirkt við lagalista verða ekki fyrir áhrifum.</string>
     <string name="gapless_playback">Gapless playback</string>
-    <string name="audio">Audio</string>
     <!-- FAQ -->
     <string name="faq_1_title">Hvernig get ég hraðspólað lög\?</string>
     <string name="faq_1_text">Þú getur smellt á núverandi eða hámarkslengd texta nálægt leitarstikunni sem mun færa lagið annað hvort afturábak eða áfram.</string>

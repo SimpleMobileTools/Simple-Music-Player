@@ -81,7 +81,6 @@
     <string name="swap_prev_next">Tukar butang fon kepala sebelumnya/seterusnya</string>
     <string name="exclude_folder_description">Excluding a folder will prevent the displaying of all audio files within. Files manually added to playlists will not be affected.</string>
     <string name="gapless_playback">Gapless playback</string>
-    <string name="audio">Audio</string>
     <!-- FAQ -->
     <string name="faq_1_title">Bagaimana saya boleh meneruskan lagu\?</string>
     <string name="faq_1_text">Anda boleh mengklik pada teks semasa atau maksimum yang berada di dekat bar carian, yang akan menggerakkan lagu itu ke belakang atau ke hadapan.</string>
