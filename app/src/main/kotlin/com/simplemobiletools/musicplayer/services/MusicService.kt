@@ -1,23 +1,18 @@
 package com.simplemobiletools.musicplayer.services
 
 import android.annotation.SuppressLint
+import android.app.Application
 import android.app.Service
-import android.content.ContentUris
-import android.content.Context
 import android.content.Intent
-import android.content.IntentFilter
 import android.content.pm.ServiceInfo
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.media.AudioManager
 import android.media.AudioManager.*
 import android.media.MediaMetadataRetriever
-import android.media.MediaPlayer
 import android.media.audiofx.Equalizer
 import android.net.Uri
 import android.os.*
 import android.provider.MediaStore
-import android.provider.MediaStore.Audio
 import android.support.v4.media.MediaMetadataCompat
 import android.support.v4.media.session.MediaSessionCompat
 import android.support.v4.media.session.PlaybackStateCompat
@@ -28,7 +23,6 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
-import com.simplemobiletools.commons.helpers.isOreoPlus
 import com.simplemobiletools.commons.helpers.isQPlus
 import com.simplemobiletools.commons.helpers.isSPlus
 import com.simplemobiletools.musicplayer.R
@@ -36,44 +30,43 @@ import com.simplemobiletools.musicplayer.databases.SongsDatabase
 import com.simplemobiletools.musicplayer.extensions.*
 import com.simplemobiletools.musicplayer.helpers.*
 import com.simplemobiletools.musicplayer.helpers.NotificationHelper.Companion.NOTIFICATION_ID
+import com.simplemobiletools.musicplayer.helpers.PlaybackSetting.REPEAT_OFF
+import com.simplemobiletools.musicplayer.helpers.PlaybackSetting.REPEAT_PLAYLIST
+import com.simplemobiletools.musicplayer.helpers.PlaybackSetting.REPEAT_TRACK
+import com.simplemobiletools.musicplayer.helpers.PlaybackSetting.STOP_AFTER_CURRENT_TRACK
 import com.simplemobiletools.musicplayer.inlines.indexOfFirstOrNull
 import com.simplemobiletools.musicplayer.models.Events
 import com.simplemobiletools.musicplayer.models.QueueItem
 import com.simplemobiletools.musicplayer.models.Track
-import com.simplemobiletools.musicplayer.receivers.HeadsetPlugReceiver
 import org.greenrobot.eventbus.EventBus
 import java.io.File
 import java.io.IOException
 import kotlin.math.roundToInt
 
-class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnErrorListener, MediaPlayer.OnCompletionListener, OnAudioFocusChangeListener {
+class MusicService : Service(), MultiPlayer.PlaybackCallbacks {
     companion object {
         private const val PROGRESS_UPDATE_INTERVAL = 1000L
         private const val MAX_CLICK_DURATION = 700L
         private const val FAST_FORWARD_SKIP_MS = 10000
 
         var mCurrTrack: Track? = null
+        var mNextTrack: Track? = null
         var mTracks = ArrayList<Track>()
-        var mPlayer: MediaPlayer? = null
+        var mPlayer: MultiPlayer? = null
         var mEqualizer: Equalizer? = null
         private var mCurrTrackCover: Bitmap? = null
         private var mHeadsetPlaceholder: Bitmap? = null
-        private var mHeadsetPlugReceiver = HeadsetPlugReceiver()
         private var mProgressHandler = Handler()
         private var mSleepTimer: CountDownTimer? = null
-        private var mAudioManager: AudioManager? = null
         private var mCoverArtHeight = 0
         private var mRetriedTrackCount = 0
         private var mPlaybackSpeed = 1f
-        private var mOreoFocusHandler: OreoAudioFocusHandler? = null
 
-        private var mWasPlayingAtFocusLost = false
         private var mPlayOnPrepare = true
         private var mIsThirdPartyIntent = false
         private var mIntentUri: Uri? = null
         private var mMediaSession: MediaSessionCompat? = null
         var mIsServiceInitialized = false
-        private var mPrevAudioFocusState = 0
         private var mSetProgressOnPrepare = 0
         private const val mMediaSessionActions =
             PlaybackStateCompat.ACTION_STOP or
@@ -85,11 +78,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
                 PlaybackStateCompat.ACTION_PLAY_PAUSE
 
         fun isPlaying(): Boolean {
-            return try {
-                mPlayer?.isPlaying == true
-            } catch (e: Exception) {
-                false
-            }
+            return mPlayer != null && mPlayer!!.isPlaying()
         }
     }
 
@@ -114,15 +103,11 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     override fun onCreate() {
         super.onCreate()
         mCoverArtHeight = resources.getDimension(R.dimen.top_art_height).toInt()
+        initMediaPlayerIfNeeded()
         createMediaSession()
 
         notificationHelper = NotificationHelper.createInstance(context = this, mMediaSession!!)
         startForegroundAndNotify()
-
-        mAudioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager
-        if (isOreoPlus()) {
-            mOreoFocusHandler = OreoAudioFocusHandler(application)
-        }
 
         if (!isQPlus() && !hasPermission(getPermissionToRequest())) {
             EventBus.getDefault().post(Events.NoStoragePermission())
@@ -152,8 +137,6 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         if (!isQPlus() && !hasPermission(getPermissionToRequest())) {
             return START_NOT_STICKY
         }
-
-        notifyFocusGained()
 
         val action = intent.action
         when (action) {
@@ -186,11 +169,6 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             startForegroundAndNotify()
         }
         return START_NOT_STICKY
-    }
-
-    private fun notifyFocusGained() {
-        mWasPlayingAtFocusLost = false
-        mPrevAudioFocusState = AUDIOFOCUS_GAIN
     }
 
     private fun initService(intent: Intent?) {
@@ -238,7 +216,6 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             checkTrackOrder()
         }
 
-        mWasPlayingAtFocusLost = false
         initMediaPlayerIfNeeded()
         startForegroundAndNotify()
         mIsServiceInitialized = true
@@ -281,7 +258,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             checkTrackOrder()
             val currentQueueItem = queuedItems.firstOrNull { it.isCurrent } ?: queuedItems.firstOrNull()
             if (currentQueueItem != null) {
-                mCurrTrack = mTracks.firstOrNull { it.mediaStoreId == currentQueueItem.trackId } ?: return@ensureBackgroundThread
+                mCurrTrack = getTrackWithId(currentQueueItem.trackId) ?: return@ensureBackgroundThread
                 mPlayOnPrepare = false
                 mSetProgressOnPrepare = currentQueueItem.lastPosition
                 setTrack(mCurrTrack!!.mediaStoreId)
@@ -350,16 +327,9 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     private fun setupTrack() {
         if (mIsThirdPartyIntent) {
             initMediaPlayerIfNeeded()
-
+            mPlayOnPrepare = true
             try {
-                mPlayer!!.apply {
-                    reset()
-                    setDataSource(applicationContext, mIntentUri!!)
-                    prepare()
-                    start()
-                }
-                requestAudioFocus()
-
+                mPlayer!!.setDataSource(mIntentUri!!)
                 val track = mTracks.first()
                 mTracks.clear()
                 mTracks.add(track)
@@ -391,23 +361,15 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
                 val secs = getPosition()!! / 1000
                 broadcastTrackProgress(secs)
             }
-            trackStateChanged(isPlaying())
+            trackStateChanged()
         }
     }
 
     private fun initMediaPlayerIfNeeded() {
-        if (mPlayer != null) {
-            return
+        if (mPlayer == null) {
+            mPlayer = MultiPlayer(app = applicationContext as Application, callbacks = this)
+            setupEqualizer()
         }
-
-        mPlayer = MediaPlayer().apply {
-            setWakeMode(applicationContext, PowerManager.PARTIAL_WAKE_LOCK)
-            setAudioStreamType(STREAM_MUSIC)
-            setOnPreparedListener(this@MusicService)
-            setOnCompletionListener(this@MusicService)
-            setOnErrorListener(this@MusicService)
-        }
-        setupEqualizer()
     }
 
     private fun setupEqualizer() {
@@ -417,7 +379,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
         try {
             val preset = config.equalizerPreset
-            mEqualizer = Equalizer(0, mPlayer!!.audioSessionId)
+            mEqualizer = Equalizer(0, mPlayer!!.getAudioSessionId())
             if (!mEqualizer!!.enabled) {
                 mEqualizer!!.enabled = true
             }
@@ -503,6 +465,10 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         notificationHelper?.cancel(NOTIFICATION_ID)
     }
 
+    private fun getTrackWithId(trackId: Long): Track? {
+        return mTracks.firstOrNull { it.mediaStoreId == trackId }
+    }
+
     private fun getNextQueueItem(): QueueItem {
         return when (mTracks.size) {
             0 -> QueueItem.from(-1L)
@@ -569,7 +535,6 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             setupNextTrack()
         } else {
             mPlayer!!.start()
-            requestAudioFocus()
         }
 
         setupEqualizer()
@@ -615,18 +580,11 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         }
 
         initMediaPlayerIfNeeded()
-        mPlayer?.reset() ?: return
-        mCurrTrack = mTracks.firstOrNull { it.mediaStoreId == wantedTrackId } ?: return
+        mCurrTrack = getTrackWithId(wantedTrackId) ?: return
 
         try {
-            val trackUri = if (mCurrTrack!!.mediaStoreId == 0L) {
-                Uri.fromFile(File(mCurrTrack!!.path))
-            } else {
-                ContentUris.withAppendedId(Audio.Media.EXTERNAL_CONTENT_URI, mCurrTrack!!.mediaStoreId)
-            }
-
-            mPlayer!!.setDataSource(applicationContext, trackUri)
-            mPlayer!!.prepareAsync()
+            val trackUri = mCurrTrack!!.getUri()
+            mPlayer!!.setDataSource(trackUri)
             trackChanged()
         } catch (e: IOException) {
             if (mCurrTrack != null) {
@@ -644,9 +602,45 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         }
     }
 
+    private fun maybePrepareNext() {
+        val isGapLess = config.gapLessPlayback
+        val playbackSetting = config.playbackSetting
+        val isPlayerInitialized = mPlayer != null && mPlayer!!.isInitialized
+        val playOnce = playbackSetting == STOP_AFTER_CURRENT_TRACK
+
+        if (!isGapLess || !isPlayerInitialized || playOnce) {
+            return
+        }
+
+        if (playbackSetting == REPEAT_OFF && isEndOfPlaylist()) {
+            mPlayer!!.setNextDataSource(null)
+            trackChanged()
+        } else if (playbackSetting == REPEAT_TRACK) {
+            prepareNext(nextTrack = mCurrTrack)
+        } else {
+            prepareNext()
+        }
+    }
+
+    private fun prepareNext(nextTrack: Track? = null) {
+        mNextTrack = if (nextTrack != null) {
+            nextTrack
+        } else {
+            val queueItem = getNextQueueItem()
+            getTrackWithId(queueItem.trackId) ?: return
+        }
+
+        try {
+            val trackUri = mNextTrack!!.getUri()
+            mPlayer!!.setNextDataSource(trackUri) {
+                trackChanged()
+            }
+        } catch (ignored: Exception) {
+        }
+    }
+
     private fun handleEmptyPlaylist() {
         mPlayer?.pause()
-        abandonAudioFocus()
         mCurrTrack = null
         trackChanged()
         trackStateChanged(false)
@@ -658,7 +652,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
     override fun onBind(intent: Intent?): IBinder? = null
 
-    override fun onCompletion(mp: MediaPlayer) {
+    override fun onTrackEnded() {
         if (!config.autoplay) {
             return
         }
@@ -666,13 +660,13 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         val playbackSetting = config.playbackSetting
 
         mPlayOnPrepare = when (playbackSetting) {
-            PlaybackSetting.REPEAT_OFF -> !isEndOfPlaylist()
-            PlaybackSetting.REPEAT_PLAYLIST, PlaybackSetting.REPEAT_TRACK -> true
-            PlaybackSetting.STOP_AFTER_CURRENT_TRACK -> false
+            REPEAT_OFF -> !isEndOfPlaylist()
+            REPEAT_PLAYLIST, REPEAT_TRACK -> true
+            STOP_AFTER_CURRENT_TRACK -> false
         }
 
-        when (config.playbackSetting) {
-            PlaybackSetting.REPEAT_OFF -> {
+        when (playbackSetting) {
+            REPEAT_OFF -> {
                 if (isEndOfPlaylist()) {
                     broadcastTrackProgress(0)
                     setupNextTrack()
@@ -680,42 +674,41 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
                     setupNextTrack()
                 }
             }
-            PlaybackSetting.REPEAT_PLAYLIST -> setupNextTrack()
-            PlaybackSetting.REPEAT_TRACK -> restartTrack()
-            PlaybackSetting.STOP_AFTER_CURRENT_TRACK -> {
+            REPEAT_PLAYLIST -> setupNextTrack()
+            REPEAT_TRACK -> restartTrack()
+            STOP_AFTER_CURRENT_TRACK -> {
                 broadcastTrackProgress(0)
                 restartTrack()
             }
         }
     }
 
-    override fun onError(mp: MediaPlayer, what: Int, extra: Int): Boolean {
-        mPlayer!!.reset()
-        return false
+    override fun onTrackWentToNext() {
+        mCurrTrack = mNextTrack
+        maybePrepareNext()
+        trackStateChanged()
     }
 
-    override fun onPrepared(mp: MediaPlayer) {
+    override fun onPrepared() {
         mRetriedTrackCount = 0
         if (mPlayOnPrepare) {
-            mp.start()
-            requestAudioFocus()
-
-            try {
-                mp.playbackParams = mp.playbackParams.setSpeed(config.playbackSpeed)
-            } catch (ignored: Exception) {
-            }
-
+            mPlayer!!.start()
             if (mIsThirdPartyIntent) {
                 trackChanged()
             }
         }
         if (mSetProgressOnPrepare > 0) {
-            mp.seekTo(mSetProgressOnPrepare)
+            mPlayer!!.seek(mSetProgressOnPrepare)
             broadcastTrackProgress(mSetProgressOnPrepare / 1000)
             mSetProgressOnPrepare = 0
         }
 
-        trackStateChanged(isPlaying())
+        maybePrepareNext()
+        trackStateChanged()
+    }
+
+    override fun onPlayStateChanged() {
+        trackStateChanged()
     }
 
     private fun trackChanged() {
@@ -781,9 +774,9 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     private fun setPlaybackSpeed() {
         if (mPlayer != null) {
             mPlaybackSpeed = config.playbackSpeed
-            if (mPlayer!!.isPlaying) {
+            if (isPlaying()) {
                 try {
-                    mPlayer!!.playbackParams = mPlayer!!.playbackParams.setSpeed(config.playbackSpeed)
+                    mPlayer!!.setPlaybackSpeed(mPlaybackSpeed)
                 } catch (ignored: Exception) {
                 }
             }
@@ -829,7 +822,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     }
 
     private fun getPosition(): Int? {
-        return mPlayer?.currentPosition
+        return mPlayer?.position()
     }
 
     // do not just return the album cover, but also a boolean to indicate if it a real cover, or just the placeholder
@@ -923,7 +916,6 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
             mCurrTrack = null
         }
 
-        mPlayer?.stop()
         mPlayer?.release()
         mPlayer = null
 
@@ -934,86 +926,19 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         stopSelf()
         mIsThirdPartyIntent = false
         mIsServiceInitialized = false
-        abandonAudioFocus()
-    }
-
-    private fun requestAudioFocus() {
-        if (isOreoPlus()) {
-            mOreoFocusHandler?.requestAudioFocus(this)
-        } else {
-            mAudioManager?.requestAudioFocus(this, STREAM_MUSIC, AUDIOFOCUS_GAIN)
-        }
-    }
-
-    private fun abandonAudioFocus() {
-        if (isOreoPlus()) {
-            mOreoFocusHandler?.abandonAudioFocus()
-        } else {
-            mAudioManager?.abandonAudioFocus(this)
-        }
-    }
-
-    override fun onAudioFocusChange(focusChange: Int) {
-        when (focusChange) {
-            AUDIOFOCUS_GAIN -> audioFocusGained()
-            AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK -> duckAudio()
-            AUDIOFOCUS_LOSS, AUDIOFOCUS_LOSS_TRANSIENT -> audioFocusLost()
-        }
-        mPrevAudioFocusState = focusChange
-    }
-
-    private fun audioFocusLost() {
-        if (isPlaying()) {
-            mWasPlayingAtFocusLost = true
-            pauseTrack()
-        } else {
-            mWasPlayingAtFocusLost = false
-        }
-    }
-
-    private fun audioFocusGained() {
-        if (mWasPlayingAtFocusLost) {
-            if (mPrevAudioFocusState == AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK) {
-                unduckAudio()
-            } else {
-                resumeTrack()
-            }
-        }
-
-        mWasPlayingAtFocusLost = false
-    }
-
-    private fun duckAudio() {
-        mPlayer?.setVolume(0.3f, 0.3f)
-        mWasPlayingAtFocusLost = isPlaying()
-    }
-
-    private fun unduckAudio() {
-        mPlayer?.setVolume(1f, 1f)
     }
 
     fun updateProgress(progress: Int) {
-        mPlayer!!.seekTo(progress * 1000)
+        mPlayer!!.seek(progress * 1000)
         saveTrackProgress()
         resumeTrack()
     }
 
-    private fun trackStateChanged(isPlaying: Boolean, notify: Boolean = true) {
+    private fun trackStateChanged(isPlaying: Boolean = isPlaying(), notify: Boolean = true) {
         handleProgressHandler(isPlaying)
         broadcastTrackStateChange(isPlaying)
         if (notify) {
             startForegroundAndNotify()
-        }
-
-        if (isPlaying) {
-            val filter = IntentFilter(Intent.ACTION_HEADSET_PLUG)
-            filter.addAction(ACTION_AUDIO_BECOMING_NOISY)
-            registerReceiver(mHeadsetPlugReceiver, filter)
-        } else {
-            try {
-                unregisterReceiver(mHeadsetPlugReceiver)
-            } catch (ignored: IllegalArgumentException) {
-            }
         }
     }
 
@@ -1021,7 +946,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         if (isPlaying) {
             mProgressHandler.post(object : Runnable {
                 override fun run() {
-                    if (mPlayer?.isPlaying == true) {
+                    if (isPlaying()) {
                         val secs = getPosition()!! / 1000
                         broadcastTrackProgress(secs)
                     }
@@ -1037,7 +962,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     private fun skip(forward: Boolean) {
         val curr = getPosition() ?: return
         val newProgress = if (forward) curr + FAST_FORWARD_SKIP_MS else curr - FAST_FORWARD_SKIP_MS
-        mPlayer!!.seekTo(newProgress)
+        mPlayer!!.seek(newProgress)
         resumeTrack()
     }
 
@@ -1066,7 +991,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
     // used at updating the widget at create or resize
     private fun broadcastPlayerStatus() {
-        broadcastTrackStateChange(mPlayer?.isPlaying ?: false)
+        broadcastTrackStateChange(isPlaying())
         broadcastTrackChange()
         broadcastNextTrackChange()
         broadcastTrackProgress((getPosition() ?: 0) / 1000)
