@@ -605,15 +605,13 @@ class MusicService : Service(), MultiPlayer.PlaybackCallbacks {
 
     private fun maybePrepareNext() {
         val isGapLess = config.gapLessPlayback
-        val playbackSetting = config.playbackSetting
         val isPlayerInitialized = mPlayer != null && mPlayer!!.isInitialized
-        val playOnce = playbackSetting == STOP_AFTER_CURRENT_TRACK
-
-        if (!isGapLess || !isPlayerInitialized || playOnce) {
+        if (!isGapLess || !isPlayerInitialized) {
             return
         }
 
-        if (playbackSetting == REPEAT_OFF && isEndOfPlaylist()) {
+        val playbackSetting = config.playbackSetting
+        if (playbackSetting == REPEAT_OFF && isEndOfPlaylist() || playbackSetting == STOP_AFTER_CURRENT_TRACK) {
             mPlayer!!.setNextDataSource(null)
             trackChanged()
         } else if (playbackSetting == REPEAT_TRACK) {
@@ -773,17 +771,7 @@ class MusicService : Service(), MultiPlayer.PlaybackCallbacks {
     }
 
     private fun updatePlaybackSetting() {
-        if (config.gapLessPlayback) {
-            val playbackSetting = config.playbackSetting
-            if (playbackSetting == REPEAT_OFF && isEndOfPlaylist() || playbackSetting == STOP_AFTER_CURRENT_TRACK) {
-                mPlayer!!.setNextDataSource(null)
-                trackChanged()
-            } else if (playbackSetting == REPEAT_TRACK) {
-                prepareNext(nextTrack = mCurrTrack)
-            } else {
-                prepareNext()
-            }
-        }
+        maybePrepareNext()
     }
 
     @SuppressLint("NewApi")
