@@ -12,10 +12,7 @@ import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.dialogs.ManageVisibleTabsDialog
 import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.extensions.sendIntent
-import com.simplemobiletools.musicplayer.helpers.REFRESH_LIST
-import com.simplemobiletools.musicplayer.helpers.SHOW_FILENAME_ALWAYS
-import com.simplemobiletools.musicplayer.helpers.SHOW_FILENAME_IF_UNAVAILABLE
-import com.simplemobiletools.musicplayer.helpers.SHOW_FILENAME_NEVER
+import com.simplemobiletools.musicplayer.helpers.*
 import kotlinx.android.synthetic.main.activity_settings.*
 import java.util.*
 import kotlin.system.exitProcess
@@ -143,6 +140,7 @@ class SettingsActivity : SimpleActivity() {
         settings_gapless_playback_holder.setOnClickListener {
             settings_gapless_playback.toggle()
             config.gapLessPlayback = settings_gapless_playback.isChecked
+            sendIntent(UPDATE_GAPLESS_PLAYBACK)
         }
     }
 }

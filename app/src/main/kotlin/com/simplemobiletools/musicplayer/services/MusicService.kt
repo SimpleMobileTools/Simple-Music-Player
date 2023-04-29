@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.Application
 import android.app.Service
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.ServiceInfo
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -162,7 +163,7 @@ class MusicService : Service(), MultiPlayer.PlaybackCallbacks {
             BROADCAST_STATUS -> broadcastPlayerStatus()
             SET_PLAYBACK_SPEED -> setPlaybackSpeed()
             UPDATE_QUEUE_SIZE -> updateQueueSize()
-            UPDATE_PLAYBACK_SETTING -> updatePlaybackSetting()
+            UPDATE_GAPLESS_PLAYBACK -> updateGaplessPlayback()
         }
 
         MediaButtonReceiver.handleIntent(mMediaSession!!, intent)
@@ -770,7 +771,7 @@ class MusicService : Service(), MultiPlayer.PlaybackCallbacks {
         updateMediaSession()
     }
 
-    private fun updatePlaybackSetting() {
+    private fun updateGaplessPlayback() {
         maybePrepareNext()
     }
 

@@ -319,7 +319,7 @@ class TrackActivity : SimpleActivity(), PlaybackSpeedListener {
         toast(newPlaybackSetting.descriptionStringRes)
 
         setupPlaybackSettingButton()
-        sendIntent(UPDATE_PLAYBACK_SETTING)
+        sendIntent(UPDATE_GAPLESS_PLAYBACK)
     }
 
     private fun setupPlaybackSettingButton() {
