@@ -162,6 +162,7 @@ class MusicService : Service(), MultiPlayer.PlaybackCallbacks {
             BROADCAST_STATUS -> broadcastPlayerStatus()
             SET_PLAYBACK_SPEED -> setPlaybackSpeed()
             UPDATE_QUEUE_SIZE -> updateQueueSize()
+            UPDATE_PLAYBACK_SETTING -> updatePlaybackSetting()
         }
 
         MediaButtonReceiver.handleIntent(mMediaSession!!, intent)
@@ -674,6 +675,7 @@ class MusicService : Service(), MultiPlayer.PlaybackCallbacks {
                     setupNextTrack()
                 }
             }
+
             REPEAT_PLAYLIST -> setupNextTrack()
             REPEAT_TRACK -> restartTrack()
             STOP_AFTER_CURRENT_TRACK -> {
@@ -768,6 +770,20 @@ class MusicService : Service(), MultiPlayer.PlaybackCallbacks {
 
     private fun updateQueueSize() {
         updateMediaSession()
+    }
+
+    private fun updatePlaybackSetting() {
+        if (config.gapLessPlayback) {
+            val playbackSetting = config.playbackSetting
+            if (playbackSetting == REPEAT_OFF && isEndOfPlaylist() || playbackSetting == STOP_AFTER_CURRENT_TRACK) {
+                mPlayer!!.setNextDataSource(null)
+                trackChanged()
+            } else if (playbackSetting == REPEAT_TRACK) {
+                prepareNext(nextTrack = mCurrTrack)
+            } else {
+                prepareNext()
+            }
+        }
     }
 
     @SuppressLint("NewApi")

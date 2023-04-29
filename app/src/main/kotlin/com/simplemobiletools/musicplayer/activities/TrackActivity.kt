@@ -319,6 +319,7 @@ class TrackActivity : SimpleActivity(), PlaybackSpeedListener {
         toast(newPlaybackSetting.descriptionStringRes)
 
         setupPlaybackSettingButton()
+        sendIntent(UPDATE_PLAYBACK_SETTING)
     }
 
     private fun setupPlaybackSettingButton() {
