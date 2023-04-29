@@ -44,6 +44,7 @@ class SettingsActivity : SimpleActivity() {
         setupManageShownTabs()
         setupSwapPrevNext()
         setupReplaceTitle()
+        setupGaplessPlayback()
         updateTextColors(settings_nested_scrollview)
 
         arrayOf(settings_color_customization_section_label, settings_general_settings_label).forEach {
@@ -134,6 +135,14 @@ class SettingsActivity : SimpleActivity() {
     private fun setupManageExcludedFolders() {
         settings_manage_excluded_folders_holder.setOnClickListener {
             startActivity(Intent(this, ExcludedFoldersActivity::class.java))
+        }
+    }
+
+    private fun setupGaplessPlayback() {
+        settings_gapless_playback.isChecked = config.gapLessPlayback
+        settings_gapless_playback_holder.setOnClickListener {
+            settings_gapless_playback.toggle()
+            config.gapLessPlayback = settings_gapless_playback.isChecked
         }
     }
 }
