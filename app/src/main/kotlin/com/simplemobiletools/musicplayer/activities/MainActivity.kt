@@ -13,6 +13,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.viewpager.widget.ViewPager
 import com.simplemobiletools.commons.dialogs.FilePickerDialog
+import com.simplemobiletools.commons.dialogs.PermissionRequiredDialog
 import com.simplemobiletools.commons.dialogs.RadioGroupDialog
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.*
@@ -192,7 +193,12 @@ class MainActivity : SimpleActivity() {
                         startActivity(this)
                     }
                 } else {
-                    toast(R.string.no_post_notifications_permissions)
+                    PermissionRequiredDialog(
+                        this,
+                        messageId = com.simplemobiletools.commons.R.string.no_post_notifications_permissions,
+                    ) {
+                        openNotificationSettings()
+                    }
                 }
             }
         }
