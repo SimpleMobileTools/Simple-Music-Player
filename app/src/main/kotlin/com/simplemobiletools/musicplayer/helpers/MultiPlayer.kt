@@ -19,7 +19,6 @@ class MultiPlayer(private val app: Application, private val callbacks: PlaybackC
     private var mNextMediaPlayer: MediaPlayer? = null
 
     var isInitialized: Boolean = false
-        private set
 
     private var becomingNoisyReceiverRegistered = false
     private val becomingNoisyReceiver = HeadsetPlugReceiver()
