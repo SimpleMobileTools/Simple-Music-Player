@@ -97,8 +97,8 @@ class MultiPlayer(private val app: Application, private val callbacks: PlaybackC
         }
         if (app.config.gaplessPlayback) {
             mNextMediaPlayer = MediaPlayer()
-            mNextMediaPlayer?.setWakeMode(app, PowerManager.PARTIAL_WAKE_LOCK)
-            mNextMediaPlayer?.audioSessionId = mCurrentMediaPlayer.audioSessionId
+            mNextMediaPlayer!!.setWakeMode(app, PowerManager.PARTIAL_WAKE_LOCK)
+            mNextMediaPlayer!!.audioSessionId = mCurrentMediaPlayer.audioSessionId
             setDataSourceImpl(mNextMediaPlayer!!, trackUri) { result ->
                 if (result.isSuccess) {
                     try {
