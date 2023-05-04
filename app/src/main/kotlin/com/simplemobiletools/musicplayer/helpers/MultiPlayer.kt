@@ -39,19 +39,16 @@ class MultiPlayer(private val app: Application, private val callbacks: PlaybackC
                 }
                 setVolume(Volume.NORMAL)
             }
-
             AudioManager.AUDIOFOCUS_LOSS -> {
                 pause()
                 callbacks.onPlayStateChanged()
             }
-
             AudioManager.AUDIOFOCUS_LOSS_TRANSIENT -> {
                 val wasPlaying = isPlaying()
                 pause()
                 callbacks.onPlayStateChanged()
                 isPausedByTransientLossOfFocus = wasPlaying
             }
-
             AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK -> {
                 setVolume(Volume.DUCK)
             }
