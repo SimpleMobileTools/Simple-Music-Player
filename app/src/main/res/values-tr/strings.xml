@@ -82,7 +82,7 @@
     <string name="equalizer">Ekolayzır</string>
     <string name="swap_prev_next">Önceki/sonraki kulaklık düğmelerini değiştir</string>
     <string name="exclude_folder_description">Bir klasörün hariç tutulması, içindeki tüm ses dosyalarının görüntülenmesini engelleyecektir. Çalma listelerine elle eklenen dosyalar etkilenmeyecektir.</string>
-    <string name="gapless_playback">Gapless playback</string>
+    <string name="gapless_playback">Aralıksız oynatım</string>
     <!-- FAQ -->
     <string name="faq_1_title">Şarkıları nasıl hızlıca ileri sarabilirim\?</string>
     <string name="faq_1_text">Arama çubuğunun yanındaki geçerli veya maksimum süre metinlerini tıklayabilir, şarkıyı geriye ya da ileriye sarabilirsiniz.</string>
