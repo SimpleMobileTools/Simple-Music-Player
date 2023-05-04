@@ -136,10 +136,10 @@ class SettingsActivity : SimpleActivity() {
     }
 
     private fun setupGaplessPlayback() {
-        settings_gapless_playback.isChecked = config.gapLessPlayback
+        settings_gapless_playback.isChecked = config.gaplessPlayback
         settings_gapless_playback_holder.setOnClickListener {
             settings_gapless_playback.toggle()
-            config.gapLessPlayback = settings_gapless_playback.isChecked
+            config.gaplessPlayback = settings_gapless_playback.isChecked
             sendIntent(UPDATE_GAPLESS_PLAYBACK)
         }
     }

@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.app.Application
 import android.app.Service
 import android.content.Intent
-import android.content.SharedPreferences
 import android.content.pm.ServiceInfo
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -605,7 +604,7 @@ class MusicService : Service(), MultiPlayer.PlaybackCallbacks {
     }
 
     private fun maybePrepareNext() {
-        val isGapLess = config.gapLessPlayback
+        val isGapLess = config.gaplessPlayback
         val isPlayerInitialized = mPlayer != null && mPlayer!!.isInitialized
         if (!isGapLess || !isPlayerInitialized) {
             return

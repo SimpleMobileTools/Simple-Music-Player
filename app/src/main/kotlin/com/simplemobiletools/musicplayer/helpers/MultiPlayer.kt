@@ -95,7 +95,7 @@ class MultiPlayer(private val app: Application, private val callbacks: PlaybackC
         if (trackUri == null) {
             return
         }
-        if (app.config.gapLessPlayback) {
+        if (app.config.gaplessPlayback) {
             mNextMediaPlayer = MediaPlayer()
             mNextMediaPlayer?.setWakeMode(app, PowerManager.PARTIAL_WAKE_LOCK)
             mNextMediaPlayer?.audioSessionId = mCurrentMediaPlayer.audioSessionId
@@ -205,7 +205,7 @@ class MultiPlayer(private val app: Application, private val callbacks: PlaybackC
     }
 
     override fun onCompletion(mp: MediaPlayer) {
-        if (app.config.gapLessPlayback && mp == mCurrentMediaPlayer && mNextMediaPlayer != null) {
+        if (app.config.gaplessPlayback && mp == mCurrentMediaPlayer && mNextMediaPlayer != null) {
             isInitialized = false
             mCurrentMediaPlayer.reset()
             mCurrentMediaPlayer.release()
