@@ -38,29 +38,26 @@ class MultiPlayer(private val app: Application, private val callbacks: PlaybackC
                 }
                 setVolume(Volume.NORMAL)
             }
+
             AudioManager.AUDIOFOCUS_LOSS -> {
                 pause()
                 callbacks.onPlayStateChanged()
             }
+
             AudioManager.AUDIOFOCUS_LOSS_TRANSIENT -> {
                 val wasPlaying = isPlaying()
                 pause()
                 callbacks.onPlayStateChanged()
                 isPausedByTransientLossOfFocus = wasPlaying
             }
+
             AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK -> {
                 setVolume(Volume.DUCK)
             }
         }
     }
 
-    private val audioFocusRequest = AudioFocusRequestCompat.Builder(AudioManagerCompat.AUDIOFOCUS_GAIN)
-        .setOnAudioFocusChangeListener(audioFocusListener)
-        .setAudioAttributes(
-            AudioAttributesCompat.Builder()
-                .setContentType(AudioAttributesCompat.CONTENT_TYPE_MUSIC)
-                .build()
-        ).build()
+    private var audioFocusRequest: AudioFocusRequestCompat? = null
 
     init {
         mCurrentMediaPlayer.setWakeMode(app, PowerManager.PARTIAL_WAKE_LOCK)
@@ -254,12 +251,25 @@ class MultiPlayer(private val app: Application, private val callbacks: PlaybackC
         }
     }
 
+    private fun getAudioFocusRequest(): AudioFocusRequestCompat {
+        if (audioFocusRequest == null) {
+            val audioAttributes = AudioAttributesCompat.Builder()
+                .setContentType(AudioAttributesCompat.CONTENT_TYPE_MUSIC)
+                .build()
+            audioFocusRequest = AudioFocusRequestCompat.Builder(AudioManagerCompat.AUDIOFOCUS_GAIN)
+                .setOnAudioFocusChangeListener(audioFocusListener)
+                .setAudioAttributes(audioAttributes)
+                .build()
+        }
+        return audioFocusRequest!!
+    }
+
     private fun requestFocus(): Boolean {
-        return AudioManagerCompat.requestAudioFocus(audioManager!!, audioFocusRequest) == AudioManager.AUDIOFOCUS_REQUEST_GRANTED
+        return AudioManagerCompat.requestAudioFocus(audioManager!!, getAudioFocusRequest()) == AudioManager.AUDIOFOCUS_REQUEST_GRANTED
     }
 
     private fun abandonFocus() {
-        AudioManagerCompat.abandonAudioFocusRequest(audioManager!!, audioFocusRequest)
+        AudioManagerCompat.abandonAudioFocusRequest(audioManager!!, getAudioFocusRequest())
     }
 
     fun setPlaybackSpeed(speed: Float) {
