@@ -41,7 +41,7 @@
     <string name="folder_contains_no_audio">Den valde mappa har ingen ljodfiler</string>
     <string name="delete_current_song">Slett noverande låt</string>
     <string name="delete_song_warning">Merk: dette vil slette dei valde filene ifrå eininga.</string>
-    <string name="remove_current_song">Tak bort noverande låt ifrå ei speleliste</string>
+    <string name="remove_current_song">Tak bort noverande låt ifrå spelelista</string>
     <string name="show_filename">Vis filnamn som låtnamn</string>
     <string name="title_is_not_available">Om namn ikkje er tilgjengeleg</string>
     <string name="show_album_cover">Vis albumsomslag på hovudskjermen</string>
@@ -84,7 +84,7 @@
     <string name="exclude_folder_description">Steng ut ei mappa for å hindre hennar ljodfiler ifrå å verta viste. Filer lagde til i spelelister for hand, vert ikkje påverka.</string>
     <string name="gapless_playback">Gapless playback</string>
     <!-- FAQ -->
-    <string name="faq_1_title">How can I fast-forward songs\?</string>
+    <string name="faq_1_title">Brigde av snøggleiken til låter</string>
     <string name="faq_1_text">Trykk på noverande tid eller fulltid under framgangslina for å hoppe framover eller bakover i låta.</string>
     <!--
         Haven't found some strings? There's more at
