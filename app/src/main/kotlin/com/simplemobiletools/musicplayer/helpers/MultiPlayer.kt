@@ -54,9 +54,12 @@ class MultiPlayer(private val app: Application, private val callbacks: PlaybackC
         }
     }
 
-    private val audioFocusRequest: AudioFocusRequestCompat =
-        AudioFocusRequestCompat.Builder(AudioManagerCompat.AUDIOFOCUS_GAIN).setOnAudioFocusChangeListener(audioFocusListener).setAudioAttributes(
-            AudioAttributesCompat.Builder().setContentType(AudioAttributesCompat.CONTENT_TYPE_MUSIC).build()
+    private val audioFocusRequest = AudioFocusRequestCompat.Builder(AudioManagerCompat.AUDIOFOCUS_GAIN)
+        .setOnAudioFocusChangeListener(audioFocusListener)
+        .setAudioAttributes(
+            AudioAttributesCompat.Builder()
+                .setContentType(AudioAttributesCompat.CONTENT_TYPE_MUSIC)
+                .build()
         ).build()
 
     init {
