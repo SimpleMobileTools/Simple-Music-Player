@@ -82,7 +82,7 @@
     <string name="equalizer">Equalizer</string>
     <string name="swap_prev_next">Vertausche die Kopfhörerknöpfe Vorheriger/Nächster Titel</string>
     <string name="exclude_folder_description">Das Ausschließen eines Ordner verhindert die Anzeige aller darin enthaltenen Audiodateien. Dateien, die manuell zu Wiedergabelisten hinzugefügt wurden, sind davon nicht betroffen.</string>
-    <string name="gapless_playback">Gapless playback</string>
+    <string name="gapless_playback">Lückenlose Wiedergabe</string>
     <!-- FAQ -->
     <string name="faq_1_title">Wie kann ich Lieder vor- oder zurückspulen\?</string>
     <string name="faq_1_text">Du kannst während der Wiedergabe schnell vor- oder zurückspulen, indem du neben der Fortschrittsanzeige entweder die Gesamtdauer oder die aktuelle Dauer des Liedes antippst. Alternativ kannst du auch den Schieber der Fortschrittsanzeige direkt zur gewünschten Stelle ziehen.</string>
