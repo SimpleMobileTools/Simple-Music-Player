@@ -39,16 +39,19 @@ class MultiPlayer(private val app: Application, private val callbacks: PlaybackC
                 }
                 setVolume(Volume.NORMAL)
             }
+
             AudioManager.AUDIOFOCUS_LOSS -> {
                 pause()
                 callbacks.onPlayStateChanged()
             }
+
             AudioManager.AUDIOFOCUS_LOSS_TRANSIENT -> {
                 val wasPlaying = isPlaying()
                 pause()
                 callbacks.onPlayStateChanged()
                 isPausedByTransientLossOfFocus = wasPlaying
             }
+
             AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK -> {
                 setVolume(Volume.DUCK)
             }
@@ -88,10 +91,7 @@ class MultiPlayer(private val app: Application, private val callbacks: PlaybackC
         } catch (e: IllegalStateException) {
             return
         }
-        if (mNextMediaPlayer != null) {
-            mNextMediaPlayer?.release()
-            mNextMediaPlayer = null
-        }
+        releaseNextPlayer()
         if (trackUri == null) {
             return
         }
@@ -105,21 +105,12 @@ class MultiPlayer(private val app: Application, private val callbacks: PlaybackC
                         mCurrentMediaPlayer.setNextMediaPlayer(mNextMediaPlayer)
                         onPrepared?.invoke()
                     } catch (e: IllegalArgumentException) {
-                        if (mNextMediaPlayer != null) {
-                            mNextMediaPlayer?.release()
-                            mNextMediaPlayer = null
-                        }
+                        releaseNextPlayer()
                     } catch (e: IllegalStateException) {
-                        if (mNextMediaPlayer != null) {
-                            mNextMediaPlayer?.release()
-                            mNextMediaPlayer = null
-                        }
+                        releaseNextPlayer()
                     }
                 } else {
-                    if (mNextMediaPlayer != null) {
-                        mNextMediaPlayer?.release()
-                        mNextMediaPlayer = null
-                    }
+                    releaseNextPlayer()
                     throw result.exceptionOrNull()!!
                 }
             }
@@ -241,6 +232,11 @@ class MultiPlayer(private val app: Application, private val callbacks: PlaybackC
         }
         player.setOnCompletionListener(this)
         player.setOnErrorListener(this)
+    }
+
+    private fun releaseNextPlayer() {
+        mNextMediaPlayer?.release()
+        mNextMediaPlayer = null
     }
 
     private fun unregisterBecomingNoisyReceiver() {
