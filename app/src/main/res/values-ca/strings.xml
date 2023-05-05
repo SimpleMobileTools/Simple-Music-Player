@@ -65,12 +65,12 @@
     <string name="albums">Àlbums</string>
     <plurals name="albums_plural">
         <item quantity="one">%d àlbum</item>
-        <item quantity="other">%d d\'àlbums</item>
+        <item quantity="other">%d àlbums</item>
     </plurals>
     <string name="tracks">Peces</string>
     <plurals name="tracks_plural">
         <item quantity="one">%d peça</item>
-        <item quantity="other">%d de peces</item>
+        <item quantity="other">%d peces</item>
     </plurals>
     <!-- Queue -->
     <string name="next_track">Següent:</string>
@@ -82,7 +82,7 @@
     <string name="equalizer">Equalitzador</string>
     <string name="swap_prev_next">Intercanvia els botons anterior/següent dels auriculars</string>
     <string name="exclude_folder_description">L\'exclusió d\'una carpeta impedirà que es mostrin tots els seus fitxers d\'àudio. Els fitxers afegits manualment a les llistes de reproducció no es veuran afectats.</string>
-    <string name="gapless_playback">Gapless playback</string>
+    <string name="gapless_playback">Reproducció sense buits</string>
     <!-- FAQ -->
     <string name="faq_1_title">Com puc avançar ràpidament les cançons\?</string>
     <string name="faq_1_text">Podeu fer clic als textos de durada actual o màxima a prop de la barra de cerca, que mouran la cançó cap enrere o cap endavant.</string>
