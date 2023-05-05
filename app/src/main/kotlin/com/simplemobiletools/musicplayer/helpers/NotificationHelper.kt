@@ -35,7 +35,8 @@ class NotificationHelper(private val context: Context, private val mediaSessionT
         var usesChronometer = false
         var ongoing = false
         if (isPlaying) {
-            postTime = System.currentTimeMillis() - (MusicService.mPlayer?.currentPosition ?: 0)
+            val position = MusicService.mPlayer!!.position()
+            postTime = System.currentTimeMillis() - maxOf(position, 0)
             showWhen = true
             usesChronometer = true
             ongoing = true

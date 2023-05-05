@@ -45,7 +45,7 @@ const val BROADCAST_STATUS = PATH + "BROADCAST_STATUS"
 const val NOTIFICATION_DISMISSED = PATH + "NOTIFICATION_DISMISSED"
 const val SET_PLAYBACK_SPEED = PATH + "SET_PLAYBACK_SPEED"
 const val UPDATE_QUEUE_SIZE = PATH + "UPDATE_QUEUE_SIZE"
-
+const val UPDATE_GAPLESS_PLAYBACK = PATH + "UPDATE_GAPLESS_PLAYBACK"
 const val TRACK_STATE_CHANGED = "TRACK_STATE_CHANGED"
 
 // shared preferences
@@ -67,6 +67,7 @@ const val WAS_ALL_TRACKS_PLAYLIST_CREATED = "was_all_tracks_playlist_created"
 const val LAST_EXPORT_PATH = "last_export_path"
 const val EXCLUDED_FOLDERS = "excluded_folders"
 const val SORT_PLAYLIST_PREFIX = "sort_playlist_"
+const val GAPLESS_PLAYBACK = "gapless_playback"
 
 const val SHOW_FILENAME_NEVER = 1
 const val SHOW_FILENAME_IF_UNAVAILABLE = 2

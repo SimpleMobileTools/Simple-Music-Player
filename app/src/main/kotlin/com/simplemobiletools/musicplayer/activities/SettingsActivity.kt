@@ -12,10 +12,7 @@ import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.dialogs.ManageVisibleTabsDialog
 import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.extensions.sendIntent
-import com.simplemobiletools.musicplayer.helpers.REFRESH_LIST
-import com.simplemobiletools.musicplayer.helpers.SHOW_FILENAME_ALWAYS
-import com.simplemobiletools.musicplayer.helpers.SHOW_FILENAME_IF_UNAVAILABLE
-import com.simplemobiletools.musicplayer.helpers.SHOW_FILENAME_NEVER
+import com.simplemobiletools.musicplayer.helpers.*
 import kotlinx.android.synthetic.main.activity_settings.*
 import java.util.*
 import kotlin.system.exitProcess
@@ -44,6 +41,7 @@ class SettingsActivity : SimpleActivity() {
         setupManageShownTabs()
         setupSwapPrevNext()
         setupReplaceTitle()
+        setupGaplessPlayback()
         updateTextColors(settings_nested_scrollview)
 
         arrayOf(settings_color_customization_section_label, settings_general_settings_label).forEach {
@@ -134,6 +132,15 @@ class SettingsActivity : SimpleActivity() {
     private fun setupManageExcludedFolders() {
         settings_manage_excluded_folders_holder.setOnClickListener {
             startActivity(Intent(this, ExcludedFoldersActivity::class.java))
+        }
+    }
+
+    private fun setupGaplessPlayback() {
+        settings_gapless_playback.isChecked = config.gaplessPlayback
+        settings_gapless_playback_holder.setOnClickListener {
+            settings_gapless_playback.toggle()
+            config.gaplessPlayback = settings_gapless_playback.isChecked
+            sendIntent(UPDATE_GAPLESS_PLAYBACK)
         }
     }
 }

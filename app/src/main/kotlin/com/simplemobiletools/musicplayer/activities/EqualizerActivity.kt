@@ -42,8 +42,10 @@ class EqualizerActivity : SimpleActivity() {
 
     @SuppressLint("SetTextI18n")
     private fun initMediaPlayer() {
-        val player = MusicService.mPlayer ?: MediaPlayer()
-        val equalizer = MusicService.mEqualizer ?: Equalizer(0, player.audioSessionId)
+        val equalizer = MusicService.mEqualizer ?: run {
+            val audioSessionId = MusicService.mPlayer?.getAudioSessionId() ?: MediaPlayer().audioSessionId
+            Equalizer(0, audioSessionId)
+        }
         try {
             if (!equalizer.enabled) {
                 equalizer.enabled = true

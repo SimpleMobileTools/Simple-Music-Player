@@ -1,5 +1,7 @@
 package com.simplemobiletools.musicplayer.models
 
+import android.content.ContentUris
+import android.net.Uri
 import android.provider.MediaStore
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -10,6 +12,7 @@ import com.simplemobiletools.commons.extensions.getFormattedDuration
 import com.simplemobiletools.commons.helpers.AlphanumericComparator
 import com.simplemobiletools.commons.helpers.SORT_DESCENDING
 import com.simplemobiletools.musicplayer.helpers.*
+import java.io.File
 import java.io.Serializable
 
 @Entity(tableName = "tracks", indices = [Index(value = ["media_store_id", "playlist_id"], unique = true)])
@@ -82,5 +85,11 @@ data class Track(
             SHOW_FILENAME_IF_UNAVAILABLE -> if (title == MediaStore.UNKNOWN_STRING) path.getFilenameFromPath() else title
             else -> path.getFilenameFromPath()
         }
+    }
+
+    fun getUri(): Uri = if (mediaStoreId == 0L) {
+        Uri.fromFile(File(path))
+    } else {
+        ContentUris.withAppendedId(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, mediaStoreId)
     }
 }
