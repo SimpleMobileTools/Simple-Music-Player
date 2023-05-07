@@ -15,6 +15,7 @@ import androidx.core.view.MenuItemCompat
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.simplemobiletools.commons.dialogs.FilePickerDialog
+import com.simplemobiletools.commons.dialogs.PermissionRequiredDialog
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.NavigationIcon
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
@@ -85,7 +86,12 @@ class TracksActivity : SimpleActivity() {
                         startActivity(this)
                     }
                 } else {
-                    toast(R.string.no_post_notifications_permissions)
+                    PermissionRequiredDialog(
+                        this,
+                        messageId = com.simplemobiletools.commons.R.string.no_post_notifications_permissions,
+                    ) {
+                        openNotificationSettings()
+                    }
                 }
             }
         }
@@ -401,7 +407,12 @@ class TracksActivity : SimpleActivity() {
 
                 }
             } else {
-                toast(R.string.no_post_notifications_permissions)
+                PermissionRequiredDialog(
+                    this,
+                    messageId = com.simplemobiletools.commons.R.string.no_post_notifications_permissions,
+                ) {
+                    openNotificationSettings()
+                }
             }
         }
     }

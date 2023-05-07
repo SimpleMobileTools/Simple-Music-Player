@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.simplemobiletools.commons.dialogs.PermissionRequiredDialog
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.NavigationIcon
 import com.simplemobiletools.musicplayer.R
@@ -83,7 +84,12 @@ class AlbumsActivity : SimpleActivity() {
                                     }
                                 }
                             } else {
-                                toast(R.string.no_post_notifications_permissions)
+                                PermissionRequiredDialog(
+                                    this,
+                                    messageId = com.simplemobiletools.commons.R.string.no_post_notifications_permissions,
+                                ) {
+                                    openNotificationSettings()
+                                }
                             }
                         }
                     }
@@ -105,7 +111,12 @@ class AlbumsActivity : SimpleActivity() {
                         startActivity(this)
                     }
                 } else {
-                    toast(R.string.no_post_notifications_permissions)
+                    PermissionRequiredDialog(
+                        this,
+                        messageId = com.simplemobiletools.commons.R.string.no_post_notifications_permissions,
+                    ) {
+                        openNotificationSettings()
+                    }
                 }
             }
         }
