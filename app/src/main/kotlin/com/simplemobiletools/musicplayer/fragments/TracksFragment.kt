@@ -69,12 +69,7 @@ class TracksFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
                                 }
                             } else {
                                 if (context is Activity) {
-                                    PermissionRequiredDialog(
-                                        context as Activity,
-                                        messageId = com.simplemobiletools.commons.R.string.no_post_notifications_permissions,
-                                    ) {
-                                        context.openNotificationSettings()
-                                    }
+                                    PermissionRequiredDialog(activity, R.string.allow_notifications_music_player)
                                 }
                             }
                         }

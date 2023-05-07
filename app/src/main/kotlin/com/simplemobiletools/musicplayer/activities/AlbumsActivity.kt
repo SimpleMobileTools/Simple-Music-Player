@@ -84,12 +84,7 @@ class AlbumsActivity : SimpleActivity() {
                                     }
                                 }
                             } else {
-                                PermissionRequiredDialog(
-                                    this,
-                                    messageId = com.simplemobiletools.commons.R.string.no_post_notifications_permissions,
-                                ) {
-                                    openNotificationSettings()
-                                }
+                                PermissionRequiredDialog(this, R.string.allow_notifications_music_player)
                             }
                         }
                     }
@@ -111,12 +106,7 @@ class AlbumsActivity : SimpleActivity() {
                         startActivity(this)
                     }
                 } else {
-                    PermissionRequiredDialog(
-                        this,
-                        messageId = com.simplemobiletools.commons.R.string.no_post_notifications_permissions,
-                    ) {
-                        openNotificationSettings()
-                    }
+                    PermissionRequiredDialog(this, R.string.allow_notifications_music_player)
                 }
             }
         }
