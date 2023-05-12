@@ -220,7 +220,7 @@ class TracksActivity : SimpleActivity() {
                 }
                 TYPE_ALBUM -> {
                     val albumTracks = getAlbumTracksSync(album.id)
-                    albumTracks.sortWith(compareBy({ it.trackId }, { it.title.toLowerCase() }))
+                    albumTracks.sortWith(compareBy({ it.trackId }, { it.title.lowercase() }))
                     tracks.addAll(albumTracks)
 
                     val coverArt = ContentUris.withAppendedId(artworkUri, album.id).toString()
