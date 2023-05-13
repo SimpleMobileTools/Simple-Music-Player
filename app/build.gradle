@@ -70,7 +70,7 @@ android {
 }
 
 dependencies {
-    implementation 'com.github.SimpleMobileTools:Simple-Commons:6ed2cb04b7'
+    implementation 'com.github.SimpleMobileTools:Simple-Commons:8a1114e683'
     implementation 'org.greenrobot:eventbus:3.3.1'
     implementation 'androidx.media:media:1.6.0'
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
@@ -84,7 +84,7 @@ dependencies {
     // higher versions of jaudiotagger not compatible with <= API 25 devices
     // https://bitbucket.org/ijabz/jaudiotagger/issues/149/some-nio-classes-are-unavailable-while
     implementation "net.jthink:jaudiotagger:2.2.5"
-    kapt "androidx.room:room-compiler:2.5.0"
-    implementation "androidx.room:room-runtime:2.5.0"
-    annotationProcessor "androidx.room:room-compiler:2.5.0"
+    kapt "androidx.room:room-compiler:2.5.1"
+    implementation "androidx.room:room-runtime:2.5.1"
+    annotationProcessor "androidx.room:room-compiler:2.5.1"
 }
