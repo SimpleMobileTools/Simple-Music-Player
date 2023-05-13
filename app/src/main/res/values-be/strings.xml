@@ -40,7 +40,7 @@
     <string name="create_playlist_from_folder">Стварыць новы спіс прайгравання з папкі</string>
     <string name="folder_contains_no_audio">Выбраная папка не ўтрымлівае аўдыяфайлаў</string>
     <string name="delete_current_song">Выдаліць бягучую кампазіцыю</string>
-    <string name="delete_song_warning">WARNING: This will delete the selected files themselves from the device, all playlists included.</string>
+    <string name="delete_song_warning">ПАПЯРЭДЖАННЕ: гэта прывядзе да выдалення саміх выбраных файлаў з прылады, уключаючы ўсе спісы прайгравання.</string>
     <string name="remove_current_song">Выдаліць бягучую кампазіцыю са спіса прайгравання</string>
     <string name="show_filename">Паказваць назву файла замест назвы кампазіцыі</string>
     <string name="title_is_not_available">Калі назва недаступная</string>
@@ -56,9 +56,9 @@
     <string name="album_count">Колькасць альбомаў</string>
     <string name="artist_name">Імя выканаўцы</string>
     <string name="year">Год</string>
-    <string name="track_number">Track number</string>
-    <string name="use_for_this_playlist">Use for this playlist only</string>
-    <string name="use_for_this_album">Use for this album only</string>
+    <string name="track_number">Нумар дарожкі</string>
+    <string name="use_for_this_playlist">Выкарыстоўвайць толькі для гэтага плэйліста</string>
+    <string name="use_for_this_album">Выкарыстоўвайць толькі для гэтага альбома</string>
     <!-- Artists -->
     <string name="artists">Выканаўцы</string>
     <string name="folders">Папкі</string>
@@ -85,8 +85,8 @@
     <!-- Settings -->
     <string name="equalizer">Эквалайзер</string>
     <string name="swap_prev_next">Абмяняць прызначэнне кнопак навушнікаў \"Папярэдні\"/\"Наступны\"</string>
-    <string name="exclude_folder_description">Excluding a folder will prevent the displaying of all audio files within. Files manually added to playlists will not be affected.</string>
-    <string name="gapless_playback">Gapless playback</string>
+    <string name="exclude_folder_description">Выключэнне папкі прадухіліць адлюстраванне ўсіх аўдыяфайлаў у ёй. Файлы, дададзеныя ў спісы прайгравання ўручную, не будуць закрануты.</string>
+    <string name="gapless_playback">Прайграванне без паўз</string>
     <!-- FAQ -->
     <string name="faq_1_title">Як змяніць пазіцыю прайгравання кампазіцыі\?</string>
     <string name="faq_1_text">Вы можаце націснуць на тэкст бягучай альбо максімальнай працягласці побач з паўзунком. Гэта перамясціць прайграванне кампазіцыі назад альбо наперад.</string>
