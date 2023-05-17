@@ -1,6 +1,12 @@
 Changelog
 ==========
 
+Version 5.16.5 *(2023-05-17)*
+----------------------------
+
+ * Added gapless playback
+ * Added some stability, translation and UI improvements
+
 Version 5.16.4 *(2023-03-14)*
 ----------------------------
 
