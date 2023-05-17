@@ -30,14 +30,14 @@ data class Album(
                 when {
                     title == MediaStore.UNKNOWN_STRING && other.title != MediaStore.UNKNOWN_STRING -> 1
                     title != MediaStore.UNKNOWN_STRING && other.title == MediaStore.UNKNOWN_STRING -> -1
-                    else -> AlphanumericComparator().compare(title.toLowerCase(), other.title.toLowerCase())
+                    else -> AlphanumericComparator().compare(title.lowercase(), other.title.lowercase())
                 }
             }
             sorting and PLAYER_SORT_BY_ARTIST_TITLE != 0 -> {
                 when {
                     artist == MediaStore.UNKNOWN_STRING && other.artist != MediaStore.UNKNOWN_STRING -> 1
                     artist != MediaStore.UNKNOWN_STRING && other.artist == MediaStore.UNKNOWN_STRING -> -1
-                    else -> AlphanumericComparator().compare(artist.toLowerCase(), other.artist.toLowerCase())
+                    else -> AlphanumericComparator().compare(artist.lowercase(), other.artist.lowercase())
                 }
             }
             else -> year.compareTo(other.year)

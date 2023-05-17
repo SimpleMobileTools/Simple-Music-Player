@@ -20,7 +20,7 @@ data class Playlist(
 
     override fun compareTo(other: Playlist): Int {
         var result = when {
-            sorting and PLAYER_SORT_BY_TITLE != 0 -> AlphanumericComparator().compare(title.toLowerCase(), other.title.toLowerCase())
+            sorting and PLAYER_SORT_BY_TITLE != 0 -> AlphanumericComparator().compare(title.lowercase(), other.title.lowercase())
             else -> trackCount.compareTo(other.trackCount)
         }
 

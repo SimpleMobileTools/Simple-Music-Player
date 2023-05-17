@@ -11,7 +11,7 @@ data class Folder(val title: String, val trackCount: Int, val path: String) : Co
 
     override fun compareTo(other: Folder): Int {
         var result = when {
-            sorting and PLAYER_SORT_BY_TITLE != 0 -> AlphanumericComparator().compare(title.toLowerCase(), other.title.toLowerCase())
+            sorting and PLAYER_SORT_BY_TITLE != 0 -> AlphanumericComparator().compare(title.lowercase(), other.title.lowercase())
             else -> trackCount.compareTo(other.trackCount)
         }
 

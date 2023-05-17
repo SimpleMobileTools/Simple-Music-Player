@@ -55,7 +55,7 @@ class AlbumsActivity : SimpleActivity() {
             val tracksToAdd = ArrayList<Track>()
             albums.forEach {
                 val tracks = getAlbumTracksSync(it.id)
-                tracks.sortWith(compareBy({ it.trackId }, { it.title.toLowerCase() }))
+                tracks.sortWith(compareBy({ it.trackId }, { it.title.lowercase() }))
                 trackFullDuration += tracks.sumBy { it.duration }
                 tracksToAdd.addAll(tracks)
             }

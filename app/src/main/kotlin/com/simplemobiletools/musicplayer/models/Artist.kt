@@ -27,7 +27,7 @@ data class Artist(
                 when {
                     title == MediaStore.UNKNOWN_STRING && other.title != MediaStore.UNKNOWN_STRING -> 1
                     title != MediaStore.UNKNOWN_STRING && other.title == MediaStore.UNKNOWN_STRING -> -1
-                    else -> AlphanumericComparator().compare(title.toLowerCase(), other.title.toLowerCase())
+                    else -> AlphanumericComparator().compare(title.lowercase(), other.title.lowercase())
                 }
             }
             sorting and PLAYER_SORT_BY_ALBUM_COUNT != 0 -> albumCnt.compareTo(other.albumCnt)
