@@ -45,18 +45,18 @@
     <string name="show_filename">أظهِر اسم الملف كعنوان الأغنية</string>
     <string name="title_is_not_available">إذا لم يكن العنوان متاحا</string>
     <string name="show_album_cover">أظهر غلاف الألبوم على الشاشة الرئيسية</string>
-    <string name="all_tracks">جميع مقاطع الصوت</string>
+    <string name="all_tracks">جميع المقاطع</string>
     <string name="add_to_playlist">أضِف إلى قائمة تشغيل</string>
-    <string name="create_playlist_label">يمكنك إنشاء قائمة تشغيل جديدة عن طريق تحديد الفنانين أو الألبومات أو مقاطع الصوت واستخدام القائمة -&gt; أضف إلى قائمة تشغيل.</string>
+    <string name="create_playlist_label">يمكنك إنشاء قائمة تشغيل جديدة عن طريق تحديد الفنانين أو الألبومات أو المقاطع واستخدام القائمة -&gt; أضف إلى قائمة تشغيل.</string>
     <string name="export_playlist">صدِّر قائمةَ تشغيل</string>
     <string name="import_playlist">اِستورد قائمةَ تشغيل</string>
     <string name="filename_without_m3u">اسم الملف (بدون m3u.)</string>
     <!-- Sorting -->
-    <string name="track_count">عدد مقاطع الصوت</string>
+    <string name="track_count">عدد المقاطع</string>
     <string name="album_count">عدد الألبومات</string>
     <string name="artist_name">اسم الفنان</string>
     <string name="year">السنة</string>
-    <string name="track_number">رقم مقطع الصوت</string>
+    <string name="track_number">رقم المقطع</string>
     <string name="use_for_this_playlist">استخدم لقائمة التشغيل هذه فقط</string>
     <string name="use_for_this_album">استخدم للألبوم هذا فقط</string>
     <!-- Artists -->
@@ -64,25 +64,25 @@
     <string name="folders">المجلدات</string>
     <string name="albums">الألبومات</string>
     <plurals name="albums_plural">
-        <item quantity="zero">لا يوجد ألبوم(%d)</item>
-        <item quantity="one">ألبوم واحد(%d)</item>
-        <item quantity="two">ألبومان(%d)</item>
+        <item quantity="zero">لا يوجد ألبوم</item>
+        <item quantity="one">ألبوم واحد</item>
+        <item quantity="two">ألبومان</item>
         <item quantity="few">%d ألبومات</item>
         <item quantity="many">%d ألبوم</item>
         <item quantity="other">%d ألبوم</item>
     </plurals>
-    <string name="tracks">مقاطع الصوت</string>
+    <string name="tracks">المقاطع</string>
     <plurals name="tracks_plural">
-        <item quantity="zero">لا يوجد مقاطع صوت(%d)</item>
-        <item quantity="one">مقطع صوت واحد(%d)</item>
-        <item quantity="two">مقطعان صوتيان(%d)</item>
-        <item quantity="few">%d مقاطع صوتية</item>
-        <item quantity="many">%d مقطع صوتي</item>
-        <item quantity="other">%d مقطع صوتي</item>
+        <item quantity="zero">لا يوجد مقاطع</item>
+        <item quantity="one">مقطع واحد</item>
+        <item quantity="two">مقطعان</item>
+        <item quantity="few">%d مقاطع</item>
+        <item quantity="many">%d مقطع</item>
+        <item quantity="other">%d مقطع</item>
     </plurals>
     <!-- Queue -->
     <string name="next_track">التالي:</string>
-    <string name="track_queue">لائحة الاستماع لمقاطع الصوت</string>
+    <string name="track_queue">لائحة الاستماع</string>
     <string name="add_to_queue">أضِف إلى لائحة الاستماع</string>
     <string name="remove_from_queue">أزِل من لائحة الاستماع</string>
     <string name="create_playlist_from_queue">أنشِئ قائمةَ تشغيل من لائحة الاستماع</string>
