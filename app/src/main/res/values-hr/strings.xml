@@ -6,13 +6,13 @@
     <string name="rename_song">Preimenuj pjesmu</string>
     <string name="rename_song_error">Dogodila se greška tijekom preimenovanja</string>
     <string name="rename_song_empty">Ispuni sva polja</string>
-    <string name="repeat_off">Ponavljanje isključeno</string>
+    <string name="repeat_off">Ponavljanje je isključeno</string>
     <string name="repeat_song">Ponovi aktualnu pjesmu</string>
     <string name="repeat_playlist">Ponovi sve</string>
     <string name="stop_playback_after_current_song">Prekini reprodukciju nakon aktualne pjesme</string>
-    <string name="enable_shuffle">Omogući slučajnu reprodukciju</string>
+    <string name="enable_shuffle">Aktiviraj slučajnu reprodukciju</string>
     <string name="disable_shuffle">Onemogući slučajnu reprodukciju</string>
-    <string name="shuffle_enabled">Omogućena je slučajna reprodukcija</string>
+    <string name="shuffle_enabled">Slučajna reprodukcija je aktivirana</string>
     <string name="shuffle_disabled">Onemogućena je slučajna reprodukcija</string>
     <string name="sleep_timer">Mjerač vremena za isključivanje</string>
     <string name="volume">Glasnoća</string>
