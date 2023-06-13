@@ -11,63 +11,98 @@
     android:paddingEnd="@dimen/medium_margin"
     android:paddingBottom="@dimen/activity_margin">
 
-    <ImageView
-        android:id="@+id/track_image"
-        android:layout_width="@dimen/song_image_size"
-        android:layout_height="@dimen/song_image_size"
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_marginStart="@dimen/small_margin"
-        android:visibility="gone"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent">
 
-    <com.simplemobiletools.commons.views.MyTextView
-        android:id="@+id/track_id"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="2"
-        android:gravity="end"
-        android:paddingEnd="@dimen/small_margin"
-        android:textSize="@dimen/bigger_text_size"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/track_image"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="1" />
+        <ImageView
+            android:id="@+id/track_image"
+            android:layout_width="@dimen/song_image_size"
+            android:layout_height="@dimen/song_image_size"
+            android:layout_centerVertical="true"
+            android:visibility="gone" />
 
-    <com.simplemobiletools.commons.views.MyTextView
-        android:id="@+id/track_title"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:ellipsize="end"
-        android:maxLines="2"
-        android:paddingStart="@dimen/normal_margin"
-        android:textSize="@dimen/bigger_text_size"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/track_duration"
-        app:layout_constraintStart_toEndOf="@+id/track_id"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Track title" />
+        <com.simplemobiletools.commons.views.MyTextView
+            android:id="@+id/track_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@id/track_image"
+            android:ems="2"
+            android:gravity="end"
+            android:paddingEnd="@dimen/small_margin"
+            android:textSize="@dimen/bigger_text_size"
+            tools:text="1" />
 
-    <com.simplemobiletools.commons.views.MyTextView
-        android:id="@+id/track_duration"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingStart="@dimen/normal_margin"
-        android:paddingEnd="@dimen/medium_margin"
-        android:textSize="@dimen/bigger_text_size"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/track_drag_handle"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="3:45" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toStartOf="@id/layout_duration_handle"
+            android:layout_toEndOf="@id/track_id"
+            android:paddingStart="@dimen/normal_margin"
+            android:paddingEnd="@dimen/normal_margin">
 
-    <ImageView
-        android:id="@+id/track_drag_handle"
-        android:layout_width="@dimen/song_image_size"
-        android:layout_height="@dimen/song_image_size"
-        android:padding="@dimen/medium_margin"
-        android:src="@drawable/ic_drag_handle_vector"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+            <com.simplemobiletools.commons.views.MyTextView
+                android:id="@+id/track_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:textSize="@dimen/bigger_text_size"
+                app:layout_constraintBottom_toTopOf="@id/track_info"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Track title" />
 
+            <com.simplemobiletools.commons.views.MyTextView
+                android:id="@+id/track_info"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:alpha="0.6"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textSize="@dimen/normal_text_size"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/track_title"
+                tools:text="Track artist" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_duration_handle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true">
+
+            <com.simplemobiletools.commons.views.MyTextView
+                android:id="@+id/track_duration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/normal_margin"
+                android:paddingEnd="@dimen/medium_margin"
+                android:textSize="@dimen/bigger_text_size"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/track_drag_handle"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="3:45" />
+
+            <ImageView
+                android:id="@+id/track_drag_handle"
+                android:layout_width="@dimen/song_image_size"
+                android:layout_height="@dimen/song_image_size"
+                android:padding="@dimen/medium_margin"
+                android:src="@drawable/ic_drag_handle_vector"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

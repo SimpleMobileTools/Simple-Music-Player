@@ -209,6 +209,8 @@ class AlbumsTracksAdapter(
             track_frame?.isSelected = selectedKeys.contains(track.hashCode())
             track_title.text = track.title
             track_title.setTextColor(textColor)
+            track_info.text = track.album
+            track_info.setTextColor(textColor)
 
             track_id.beGone()
             track_image.beVisible()
