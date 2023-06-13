@@ -15,6 +15,7 @@ import androidx.core.view.MenuItemCompat
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.simplemobiletools.commons.dialogs.FilePickerDialog
+import com.simplemobiletools.commons.dialogs.PermissionRequiredDialog
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.NavigationIcon
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
@@ -85,7 +86,7 @@ class TracksActivity : SimpleActivity() {
                         startActivity(this)
                     }
                 } else {
-                    toast(R.string.no_post_notifications_permissions)
+                    PermissionRequiredDialog(this, R.string.allow_notifications_music_player)
                 }
             }
         }
@@ -219,11 +220,11 @@ class TracksActivity : SimpleActivity() {
                 }
                 TYPE_ALBUM -> {
                     val albumTracks = getAlbumTracksSync(album.id)
-                    albumTracks.sortWith(compareBy({ it.trackId }, { it.title.toLowerCase() }))
+                    albumTracks.sortWith(compareBy({ it.trackId }, { it.title.lowercase() }))
                     tracks.addAll(albumTracks)
 
                     val coverArt = ContentUris.withAppendedId(artworkUri, album.id).toString()
-                    val header = AlbumHeader(album.title, coverArt, album.year, tracks.size, tracks.sumBy { it.duration }, album.artist)
+                    val header = AlbumHeader(album.title, coverArt, album.year, tracks.size, tracks.sumOf { it.duration }, album.artist)
                     listItems.add(header)
                     listItems.addAll(tracks)
                 }
@@ -361,8 +362,7 @@ class TracksActivity : SimpleActivity() {
 
     private fun onSearchQueryChanged(text: String) {
         val filtered = tracksIgnoringSearch.filter {
-            it.title.contains(text, true) ||
-            (it.artist + " - " + it.album).contains(text, true)
+            it.title.contains(text, true) || ("${it.artist} - ${it.album}").contains(text, true)
         }.toMutableList() as ArrayList<Track>
         (tracks_list.adapter as? TracksAdapter)?.updateItems(filtered, text)
         tracks_placeholder.beGoneIf(filtered.isNotEmpty())
@@ -404,7 +404,7 @@ class TracksActivity : SimpleActivity() {
 
                 }
             } else {
-                toast(R.string.no_post_notifications_permissions)
+                PermissionRequiredDialog(this, R.string.allow_notifications_music_player)
             }
         }
     }
