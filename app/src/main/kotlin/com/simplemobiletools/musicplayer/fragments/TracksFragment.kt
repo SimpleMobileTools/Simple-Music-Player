@@ -1,11 +1,13 @@
 package com.simplemobiletools.musicplayer.fragments
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.util.AttributeSet
 import com.google.gson.Gson
 import com.simplemobiletools.commons.activities.BaseSimpleActivity
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
+import com.simplemobiletools.commons.dialogs.PermissionRequiredDialog
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.musicplayer.R
@@ -66,7 +68,9 @@ class TracksFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
                                     }
                                 }
                             } else {
-                                context.toast(R.string.no_post_notifications_permissions)
+                                if (context is Activity) {
+                                    PermissionRequiredDialog(activity, R.string.allow_notifications_music_player)
+                                }
                             }
                         }
                     }.apply {
@@ -89,8 +93,7 @@ class TracksFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
 
     override fun onSearchQueryChanged(text: String) {
         val filtered = tracksIgnoringSearch.filter {
-            it.title.contains(text, true) ||
-            ( it.artist + " - " + it.album ).contains(text, true)
+            it.title.contains(text, true) || ("${it.artist} - ${it.album}").contains(text, true)
         }.toMutableList() as ArrayList<Track>
         (tracks_list.adapter as? TracksAdapter)?.updateItems(filtered, text)
         tracks_placeholder.beVisibleIf(filtered.isEmpty())
