@@ -44,7 +44,7 @@ class SettingsActivity : SimpleActivity() {
         setupGaplessPlayback()
         updateTextColors(settings_nested_scrollview)
 
-        arrayOf(settings_color_customization_section_label, settings_general_settings_label).forEach {
+        arrayOf(settings_color_customization_section_label, settings_general_settings_label, settings_playback_section_label).forEach {
             it.setTextColor(getProperPrimaryColor())
         }
     }

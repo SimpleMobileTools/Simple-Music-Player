@@ -13,6 +13,7 @@ import com.simplemobiletools.commons.dialogs.ConfirmationDialog
 import com.simplemobiletools.commons.extensions.beGone
 import com.simplemobiletools.commons.extensions.beVisible
 import com.simplemobiletools.commons.extensions.getFormattedDuration
+import com.simplemobiletools.commons.extensions.setupViewBackground
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.musicplayer.R
@@ -162,6 +163,7 @@ class TracksHeaderAdapter(activity: SimpleActivity, var items: ArrayList<ListIte
 
     private fun setupTrack(view: View, track: Track) {
         view.apply {
+            setupViewBackground(activity)
             track_frame?.isSelected = selectedKeys.contains(track.hashCode())
             track_title.text = track.title
 

@@ -14,6 +14,7 @@ import com.simplemobiletools.commons.activities.BaseSimpleActivity
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
 import com.simplemobiletools.commons.dialogs.ConfirmationDialog
 import com.simplemobiletools.commons.extensions.highlightTextPart
+import com.simplemobiletools.commons.extensions.setupViewBackground
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.musicplayer.R
@@ -156,6 +157,7 @@ class ArtistsAdapter(activity: BaseSimpleActivity, var artists: ArrayList<Artist
 
     private fun setupView(view: View, artist: Artist) {
         view.apply {
+            setupViewBackground(activity)
             artist_frame?.isSelected = selectedKeys.contains(artist.hashCode())
             artist_title.text = if (textToHighlight.isEmpty()) artist.title else artist.title.highlightTextPart(textToHighlight, properPrimaryColor)
             artist_title.setTextColor(textColor)

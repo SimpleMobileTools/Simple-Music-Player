@@ -161,6 +161,7 @@ class QueueAdapter(activity: SimpleActivity, var items: ArrayList<Track>, recycl
 
     private fun setupView(view: View, track: Track, holder: ViewHolder) {
         view.apply {
+            setupViewBackground(activity)
             track_queue_frame?.isSelected = selectedKeys.contains(track.hashCode())
             track_queue_title.text = if (textToHighlight.isEmpty()) track.title else track.title.highlightTextPart(textToHighlight, properPrimaryColor)
 

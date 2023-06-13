@@ -207,6 +207,7 @@ class TracksAdapter(
 
     private fun setupView(view: View, track: Track, holder: ViewHolder) {
         view.apply {
+            setupViewBackground(activity)
             track_frame?.isSelected = selectedKeys.contains(track.hashCode())
             track_title.text = if (textToHighlight.isEmpty()) track.title else track.title.highlightTextPart(textToHighlight, properPrimaryColor)
             track_drag_handle.beVisibleIf(isPlaylistContent && selectedKeys.isNotEmpty())

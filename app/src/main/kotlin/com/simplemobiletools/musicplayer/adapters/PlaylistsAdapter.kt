@@ -9,6 +9,7 @@ import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
 import com.simplemobiletools.commons.extensions.deleteFiles
 import com.simplemobiletools.commons.extensions.getFilenameFromPath
 import com.simplemobiletools.commons.extensions.highlightTextPart
+import com.simplemobiletools.commons.extensions.setupViewBackground
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.commons.models.FileDirItem
 import com.simplemobiletools.commons.views.MyRecyclerView
@@ -150,6 +151,7 @@ class PlaylistsAdapter(
 
     private fun setupView(view: View, playlist: Playlist) {
         view.apply {
+            setupViewBackground(activity)
             playlist_frame?.isSelected = selectedKeys.contains(playlist.id)
             playlist_title.text = if (textToHighlight.isEmpty()) playlist.title else playlist.title.highlightTextPart(textToHighlight, properPrimaryColor)
             playlist_title.setTextColor(textColor)

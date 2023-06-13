@@ -7,6 +7,7 @@ import com.qtalk.recyclerviewfastscroller.RecyclerViewFastScroller
 import com.simplemobiletools.commons.activities.BaseSimpleActivity
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
 import com.simplemobiletools.commons.extensions.highlightTextPart
+import com.simplemobiletools.commons.extensions.setupViewBackground
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.extensions.config
@@ -84,6 +85,7 @@ class FoldersAdapter(
 
     private fun setupView(view: View, folder: Folder) {
         view.apply {
+            setupViewBackground(activity)
             folder_frame?.isSelected = selectedKeys.contains(folder.hashCode())
             folder_title.text = if (textToHighlight.isEmpty()) folder.title else folder.title.highlightTextPart(textToHighlight, properPrimaryColor)
             folder_title.setTextColor(textColor)
