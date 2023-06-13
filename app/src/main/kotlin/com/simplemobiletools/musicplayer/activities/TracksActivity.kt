@@ -224,7 +224,7 @@ class TracksActivity : SimpleActivity() {
                     tracks.addAll(albumTracks)
 
                     val coverArt = ContentUris.withAppendedId(artworkUri, album.id).toString()
-                    val header = AlbumHeader(album.title, coverArt, album.year, tracks.size, tracks.sumBy { it.duration }, album.artist)
+                    val header = AlbumHeader(album.title, coverArt, album.year, tracks.size, tracks.sumOf { it.duration }, album.artist)
                     listItems.add(header)
                     listItems.addAll(tracks)
                 }
