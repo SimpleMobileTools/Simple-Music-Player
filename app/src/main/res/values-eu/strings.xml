@@ -6,18 +6,18 @@
     <string name="rename_song">Abestia berrizendatu</string>
     <string name="rename_song_error">Akats bat gertatu da berrizendatzerakoan</string>
     <string name="rename_song_empty">Mesedez, eremu guztiak bete itzazu</string>
-    <string name="repeat_off">Repeat off</string>
+    <string name="repeat_off">Ez errepikatu</string>
     <string name="repeat_song">Uneko abestia errepikatu</string>
     <string name="repeat_playlist">Repeat playlist</string>
-    <string name="stop_playback_after_current_song">Stop playback after current song</string>
+    <string name="stop_playback_after_current_song">Gelditu erreprodukzioa uneko abestiaren ondoren</string>
     <string name="enable_shuffle">Nahastea gaitu</string>
     <string name="disable_shuffle">Nahastea ezgaitu</string>
     <string name="shuffle_enabled">Nahastea gaituta</string>
     <string name="shuffle_disabled">Nahastea ezgaituta</string>
-    <string name="sleep_timer">Sleep timer</string>
+    <string name="sleep_timer">Lo egiteko tenporizadorea</string>
     <string name="volume">Volume</string>
-    <string name="playback_speed">Playback speed</string>
-    <string name="loading_files">Loading files…</string>
+    <string name="playback_speed">Erreprodukzio abiadura</string>
+    <string name="loading_files">Fitxategiak kargatzen…</string>
     <!-- Playlists -->
     <string name="add_file_to_playlist">Fitxategia erreprodukzio zerrendara gehitu</string>
     <string name="add_folder_to_playlist">Karpeta erreprodukzio zerrendara gehitu</string>
@@ -35,54 +35,54 @@
     <string name="open_playlist">Erreprodukzio zerrenda ireki</string>
     <string name="all_songs_cannot_be_deleted">\'Abesti guztiak\' erreprodukzio zerrenda ezin da ezabatu</string>
     <string name="empty_playlist">Uneko erreprodukzio zerrenda hutsik dago</string>
-    <string name="fetching_songs">Abestiak eskuratzenâ€¦</string>
+    <string name="fetching_songs">Abestiak eskuratzen…</string>
     <string name="all_songs">Abesti guztiak</string>
     <string name="create_playlist_from_folder">Erreprodukzio zerrenda berria sortu karpetatik</string>
     <string name="folder_contains_no_audio">Hautatutako karpetak ez du audio fitxategirik barruan</string>
     <string name="delete_current_song">Uneko abestia ezabatu</string>
-    <string name="delete_song_warning">WARNING: This will delete the selected files themselves from the device, all playlists included.</string>
+    <string name="delete_song_warning">OHARRA: Honek hautatutako fitxategiak ezabatuko ditu gailutik, erreprodukzio-zerrenda guztiak barne.</string>
     <string name="remove_current_song">Uneko abestia erreprodukzio zerrendatik kendu</string>
     <string name="show_filename">Fitxategiaren izena abestiaren izenburu gisa erakutsi</string>
     <string name="title_is_not_available">Izenburua eskuragarri ez badago</string>
     <string name="show_album_cover">Albumaren azala pantaila nagusian erakutsi</string>
-    <string name="all_tracks">All tracks</string>
+    <string name="all_tracks">Pista guztiak</string>
     <string name="add_to_playlist">Add to playlist</string>
-    <string name="create_playlist_label">You can create a new playlist by selecting the wanted artists, albums or tracks and using Menu -&gt; Add to playlist.</string>
+    <string name="create_playlist_label">Erreprodukzio-zerrenda berri bat sor dezakezu nahi dituzun artistak, albumak edo pistak hautatuz eta Menua -&gt; Gehitu erreprodukzio zerrendara erabiliz.</string>
     <string name="export_playlist">Export playlist</string>
     <string name="import_playlist">Import playlist</string>
-    <string name="filename_without_m3u">Filename (without .m3u)</string>
+    <string name="filename_without_m3u">Fitxategi izena (.m3u gabe)</string>
     <!-- Sorting -->
-    <string name="track_count">Track Count</string>
-    <string name="album_count">Album Count</string>
+    <string name="track_count">Pisten zenbaketa</string>
+    <string name="album_count">Album kopurua</string>
     <string name="artist_name">Artist Name</string>
-    <string name="year">Year</string>
-    <string name="track_number">Track number</string>
-    <string name="use_for_this_playlist">Use for this playlist only</string>
-    <string name="use_for_this_album">Use for this album only</string>
+    <string name="year">Urtea</string>
+    <string name="track_number">Pistaren zenbakia</string>
+    <string name="use_for_this_playlist">Erabili erreprodukzio-zerrenda honetarako soilik</string>
+    <string name="use_for_this_album">Erabili album honetarako soilik</string>
     <!-- Artists -->
-    <string name="artists">Artists</string>
-    <string name="folders">Folders</string>
-    <string name="albums">Albums</string>
+    <string name="artists">Artistak</string>
+    <string name="folders">Karpetak</string>
+    <string name="albums">Albumak</string>
     <plurals name="albums_plural">
-        <item quantity="one">%d Album</item>
-        <item quantity="other">%d Albums</item>
+        <item quantity="one">Album %d</item>
+        <item quantity="other">%d album</item>
     </plurals>
-    <string name="tracks">Tracks</string>
+    <string name="tracks">Pistak</string>
     <plurals name="tracks_plural">
-        <item quantity="one">%d Track</item>
-        <item quantity="other">%d Tracks</item>
+        <item quantity="one">pista %d</item>
+        <item quantity="other">%d pista</item>
     </plurals>
     <!-- Queue -->
-    <string name="next_track">Next:</string>
-    <string name="track_queue">Track queue</string>
-    <string name="add_to_queue">Add to queue</string>
-    <string name="remove_from_queue">Remove from queue</string>
-    <string name="create_playlist_from_queue">Create playlist from queue</string>
+    <string name="next_track">Hurrengoa:</string>
+    <string name="track_queue">Pisten ilara</string>
+    <string name="add_to_queue">Gehitu ilarara</string>
+    <string name="remove_from_queue">Kendu ilaratik</string>
+    <string name="create_playlist_from_queue">Sortu erreprodukzio-zerrenda ilaratik</string>
     <!-- Settings -->
     <string name="equalizer">Ekualizadorea</string>
-    <string name="swap_prev_next">Swap previous/next headphone buttons</string>
-    <string name="exclude_folder_description">Excluding a folder will prevent the displaying of all audio files within. Files manually added to playlists will not be affected.</string>
-    <string name="gapless_playback">Gapless playback</string>
+    <string name="swap_prev_next">Trukatu aurreko/hurrengo entzungailuen botoiak</string>
+    <string name="exclude_folder_description">Karpeta bat baztertzeak barruan dauden audio-fitxategi guztiak bistaratzea eragotziko du. Erreprodukzio-zerrendetan eskuz gehitutako fitxategiek ez dute eraginik izango.</string>
+    <string name="gapless_playback">Erreprodukzio jarraia</string>
     <!-- FAQ -->
     <string name="faq_1_title">Nola aurreratu ditzaket azkar abestiak\?</string>
     <string name="faq_1_text">Uneko edo gehienezko iraupen testuetan klik egin dezakezu bilatze barraren ondoan, horrek abestia atzera mugituko du, edo aurrera.</string>
