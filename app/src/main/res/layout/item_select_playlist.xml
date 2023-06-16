@@ -4,7 +4,10 @@
     android:id="@+id/select_playlist_item_holder"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/normal_margin">
+    android:paddingStart="@dimen/normal_margin"
+    android:paddingTop="@dimen/small_margin"
+    android:paddingEnd="@dimen/normal_margin"
+    android:paddingBottom="@dimen/small_margin">
 
     <com.simplemobiletools.commons.views.MyCompatRadioButton
         android:id="@+id/select_playlist_item_radio_button"

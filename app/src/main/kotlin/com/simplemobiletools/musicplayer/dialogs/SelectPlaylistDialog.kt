@@ -12,7 +12,7 @@ import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.extensions.playlistDAO
 import com.simplemobiletools.musicplayer.models.Playlist
 import kotlinx.android.synthetic.main.dialog_select_playlist.view.*
-import kotlinx.android.synthetic.main.select_playlist_item.view.*
+import kotlinx.android.synthetic.main.item_select_playlist.view.*
 
 class SelectPlaylistDialog(val activity: Activity, val callback: (playlistId: Int) -> Unit) {
     private var dialog: AlertDialog? = null
@@ -38,7 +38,7 @@ class SelectPlaylistDialog(val activity: Activity, val callback: (playlistId: In
 
     private fun initDialog(playlists: ArrayList<Playlist>, view: View) {
         playlists.forEach {
-            activity.layoutInflater.inflate(R.layout.select_playlist_item, null).apply {
+            activity.layoutInflater.inflate(R.layout.item_select_playlist, null).apply {
                 val playlist = it
                 select_playlist_item_radio_button.apply {
                     text = playlist.title

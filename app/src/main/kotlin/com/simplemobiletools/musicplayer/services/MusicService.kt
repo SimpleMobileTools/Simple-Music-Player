@@ -7,11 +7,13 @@ import android.content.Intent
 import android.content.pm.ServiceInfo
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.media.AudioManager.*
 import android.media.MediaMetadataRetriever
 import android.media.audiofx.Equalizer
 import android.net.Uri
-import android.os.*
+import android.os.CountDownTimer
+import android.os.Handler
+import android.os.IBinder
+import android.os.Looper
 import android.provider.MediaStore
 import android.support.v4.media.MediaMetadataCompat
 import android.support.v4.media.session.MediaSessionCompat

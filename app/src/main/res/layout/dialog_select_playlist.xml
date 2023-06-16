@@ -29,14 +29,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/dialog_select_playlist_divider"
-            android:padding="@dimen/normal_margin">
+            android:paddingStart="@dimen/normal_margin"
+            android:paddingTop="@dimen/small_margin"
+            android:paddingEnd="@dimen/normal_margin"
+            android:paddingBottom="@dimen/small_margin">
 
             <com.simplemobiletools.commons.views.MyCompatRadioButton
                 android:id="@+id/dialog_select_playlist_new_radio"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="@dimen/normal_margin"
-                android:paddingBottom="@dimen/normal_margin"
+                android:paddingTop="@dimen/small_margin"
+                android:paddingBottom="@dimen/small_margin"
                 android:text="@string/create_new_playlist" />
 
         </RadioGroup>
