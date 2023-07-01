@@ -40,13 +40,15 @@ class MultiPlayer(private val app: Application, private val callbacks: PlaybackC
             }
 
             AudioManager.AUDIOFOCUS_LOSS -> {
-                pause()
+                if (app.config.audioFocusEnabled)
+                    pause()
                 callbacks.onPlayStateChanged()
             }
 
             AudioManager.AUDIOFOCUS_LOSS_TRANSIENT -> {
                 val wasPlaying = isPlaying()
-                pause()
+                if (app.config.audioFocusEnabled)
+                    pause()
                 callbacks.onPlayStateChanged()
                 isPausedByTransientLossOfFocus = wasPlaying
             }

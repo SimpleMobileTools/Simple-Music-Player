@@ -83,6 +83,7 @@
     <string name="swap_prev_next">Trocar os botões anterior/próximo do fone de ouvido</string>
     <string name="exclude_folder_description">A exclusão de uma pasta impedirá a exibição de todos os arquivos de áudio dentro dela. Os arquivos adicionados manualmente às listas de reprodução não serão afetados.</string>
     <string name="gapless_playback">Gapless playback</string>
+    <string name="require_audio_focus">Exigir foco de áudio</string>
     <!-- FAQ -->
     <string name="faq_1_title">Como posso avançar músicas\?</string>
     <string name="faq_1_text">Você pode clicar nos textos de duração atual ou máxima perto da barra de progresso, que moverá a música para trás ou para frente.</string>

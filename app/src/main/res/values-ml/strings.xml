@@ -83,6 +83,7 @@
     <string name="swap_prev_next">മുമ്പത്തെ/അടുത്ത ഹെഡ്‌ഫോൺ ബട്ടണുകൾ മാറ്റുക</string>
     <string name="exclude_folder_description">ഒരു ഫോൾഡർ ഒഴികെയുള്ള എല്ലാ ഓഡിയോ ഫയലുകളും പ്രദർശിപ്പിക്കുന്നത് തടയും. പ്ലേലിസ്റ്റുകളിലേക്ക് സ്വമേധയാ ചേർത്ത ഫയലുകളെ ബാധിക്കില്ല.</string>
     <string name="gapless_playback">Gapless playback</string>
+    <string name="require_audio_focus">ഓഡിയോ ഫോക്കസ് ആവശ്യമാണ്</string>
     <!-- FAQ -->
     <string name="faq_1_title">എനിക്ക് എങ്ങനെ പാട്ടുകൾ വേഗത്തിൽ മുന്നോട്ട് ചെയ്യാം\?</string>
     <string name="faq_1_text">നിങ്ങൾക്ക് സീക്ക്ബാറിന് സമീപമുള്ള നിലവിലെ അല്ലെങ്കിൽ പരമാവധി ദൈർഘ്യമുള്ള ടെക്‌സ്‌റ്റുകളിൽ ക്ലിക്കുചെയ്യാം, അത് പാട്ടിനെ പിന്നോട്ടോ മുന്നിലോ നീക്കും.</string>

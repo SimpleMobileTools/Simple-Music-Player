@@ -85,6 +85,7 @@
     <string name="swap_prev_next">Замените претходне/следеће дугме на слушалицама</string>
     <string name="exclude_folder_description">Изузимање фасцикле ће спречити приказивање свих аудио датотека у њему. То неће утицати на датотеке које су ручно додате на плејлисте.</string>
     <string name="gapless_playback">Gapless playback</string>
+    <string name="require_audio_focus">Захтева аудио фокус</string>
     <!-- FAQ -->
     <string name="faq_1_title">Како могу да премотам песме унапред\?</string>
     <string name="faq_1_text">Можете кликнути на текст тренутног или максималног трајања у близини траке за тражење, што ће померити песму уназад или унапред.</string>

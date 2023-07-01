@@ -83,6 +83,7 @@
     <string name="swap_prev_next">Bytt hodetelefonknapper for forrige/neste</string>
     <string name="exclude_folder_description">Excluding a folder will prevent the displaying of all audio files within. Files manually added to playlists will not be affected.</string>
     <string name="gapless_playback">Gapless playback</string>
+    <string name="require_audio_focus">Krev lydfokus</string>
     <!-- FAQ -->
     <string name="faq_1_title">Hvordan kan jeg spole fremover sanger\?</string>
     <string name="faq_1_text">Du kan klikke på gjeldende eller maksimale varighetstekster nær søkefeltet, som vil flytte sangen enten bakover eller fremover.</string>

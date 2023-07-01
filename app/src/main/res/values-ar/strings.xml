@@ -91,6 +91,7 @@
     <string name="swap_prev_next">تبديل أزرار السابق/التالي لسماعة الرأس</string>
     <string name="exclude_folder_description">إذا استبعدت مجلدا، فسيقوم ذلك على منع عرض جميع الملفات الصوتية فيه. لن تتأثر الملفات المضافة يدويا إلى قوائم التشغيل.</string>
     <string name="gapless_playback">تشغيل بدون فجوات</string>
+    <string name="require_audio_focus">تتطلب التركيز الصوتي</string>
     <!-- FAQ -->
     <string name="faq_1_title">كيف يمكنني التقدم أو الرجوع في الأغاني؟</string>
     <string name="faq_1_text">يمكنك النقر على نص المدة الحالية أو المدة القصوى بالقرب من شريط البحث، سيمكنك هذا من التقدم أو التراجع في الأغنية.</string>
