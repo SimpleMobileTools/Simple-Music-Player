@@ -85,6 +85,7 @@
     <string name="swap_prev_next">Inversaţi butoanele anterior/următor pentru căști</string>
     <string name="exclude_folder_description">Excluding a folder will prevent the displaying of all audio files within. Files manually added to playlists will not be affected.</string>
     <string name="gapless_playback">Gapless playback</string>
+    <string name="require_audio_focus">Require audio focus</string>
     <!-- FAQ -->
     <string name="faq_1_title">Cum pot să avansez rapid melodiile\?</string>
     <string name="faq_1_text">Puteți face clic pe textele de durată curentă sau maximă de lângă bara de căutare, care vor muta melodia fie înapoi, fie înainte.</string>

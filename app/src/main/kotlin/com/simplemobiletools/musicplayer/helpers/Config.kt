@@ -136,4 +136,8 @@ class Config(context: Context) : BaseConfig(context) {
     var gaplessPlayback: Boolean
         get() = prefs.getBoolean(GAPLESS_PLAYBACK, false)
         set(gaplessPlayback) = prefs.edit().putBoolean(GAPLESS_PLAYBACK, gaplessPlayback).apply()
+
+    var audioFocusEnabled: Boolean
+        get() = prefs.getBoolean(REQUIRE_AUDIO_FOCUS, true)
+        set(audioFocusEnabled) = prefs.edit().putBoolean(REQUIRE_AUDIO_FOCUS, audioFocusEnabled).apply()
 }

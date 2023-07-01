@@ -81,6 +81,7 @@
     <string name="swap_prev_next">交換耳機按鈕的 上一首/下一首</string>
     <string name="exclude_folder_description">Excluding a folder will prevent the displaying of all audio files within. Files manually added to playlists will not be affected.</string>
     <string name="gapless_playback">Gapless playback</string>
+    <string name="require_audio_focus">Require audio focus</string>
     <!-- FAQ -->
     <string name="faq_1_title">要怎麼快轉歌曲？</string>
     <string name="faq_1_text">點一下進度條旁邊的目前或總時長文字，歌曲就會倒帶或快轉。</string>
