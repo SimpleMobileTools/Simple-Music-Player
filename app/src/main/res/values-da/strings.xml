@@ -83,6 +83,7 @@
     <string name="swap_prev_next">Ombyt forrige/næste hovedtelefonknapper</string>
     <string name="exclude_folder_description">Excluding a folder will prevent the displaying of all audio files within. Files manually added to playlists will not be affected.</string>
     <string name="gapless_playback">Gapless playback</string>
+    <string name="audio_focus">Audio focus</string>
     <!-- FAQ -->
     <string name="faq_1_title">Hvordan kan jeg spole frem i sange\?</string>
     <string name="faq_1_text">Du kan klikke på de to tidsangivelser (aktuel spilletid og total varighed af nummeret) nær søgefeltet, der bevæger sangen enten bagud eller fremad.</string>

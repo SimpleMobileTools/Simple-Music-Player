@@ -85,6 +85,7 @@
     <string name="swap_prev_next">Intercambiar botones de anterior/siguiente de los audífonos</string>
     <string name="exclude_folder_description">Excluir una carpeta impedirá que se muestren todos los archivos de audio que contiene. Los archivos agregados manualmente a las listas de reproducción no se verán afectados.</string>
     <string name="gapless_playback">Reproducción continua</string>
+    <string name="audio_focus">Audio focus</string>
     <!-- FAQ -->
     <string name="faq_1_title">¿Cómo puedo avanzar en las canciones\?</string>
     <string name="faq_1_text">Puedes hacer clic en los textos de duración actual o máxima, cerca de la barra de búsqueda, para avanzar o retroceder la canción.</string>

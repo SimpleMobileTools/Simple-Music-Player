@@ -81,6 +81,7 @@
     <string name="swap_prev_next">ヘッドフォンの 前へ/次へ ボタンを入れ替える</string>
     <string name="exclude_folder_description">フォルダを除外すると、フォルダ内のすべてのオーディオファイルが表示されなくなります。プレイリストに手動で追加したファイルは影響を受けません。</string>
     <string name="gapless_playback">Gapless playback</string>
+    <string name="audio_focus">Audio focus</string>
     <!-- FAQ -->
     <string name="faq_1_title">曲を早送りするにはどうすればよいですか？</string>
     <string name="faq_1_text">シークバーの近くにある [曲の長さ] を示すテキストをタップすると、曲の早送りをすることができます（ [現在の再生位置] を示すテキストをタップすると、曲の早戻しをすることができます）。</string>

@@ -85,6 +85,7 @@
     <string name="swap_prev_next">Trocar de faixa com os botões do auricular</string>
     <string name="exclude_folder_description">Se excluir uma pasta, não conseguirá ver os ficheiros lá existentes. Os ficheiros adicionados manualmente a uma lista de reprodução não serão afetados.</string>
     <string name="gapless_playback">Reprodução sem pausas</string>
+    <string name="audio_focus">Audio focus</string>
     <!-- FAQ -->
     <string name="faq_1_title">Posso avançar/recuar rapidamente uma faixa\?</string>
     <string name="faq_1_text">Toque nos textos de duração máxima/atual junto à barra de progresso para avançar ou recuar na posição da faixa.</string>

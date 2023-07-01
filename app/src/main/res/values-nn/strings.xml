@@ -83,6 +83,7 @@
     <string name="swap_prev_next">Byt om på høyretelefonknappane for førre/neste</string>
     <string name="exclude_folder_description">Steng ut ei mappa for å hindre hennar ljodfiler ifrå å verta viste. Filer lagde til i spelelister for hand, vert ikkje påverka.</string>
     <string name="gapless_playback">Gapless playback</string>
+    <string name="audio_focus">Audio focus</string>
     <!-- FAQ -->
     <string name="faq_1_title">Brigde av snøggleiken til låter</string>
     <string name="faq_1_text">Trykk på noverande tid eller fulltid under framgangslina for å hoppe framover eller bakover i låta.</string>
