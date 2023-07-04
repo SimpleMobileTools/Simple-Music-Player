@@ -254,12 +254,18 @@ fun Context.loadTrackCoverArt(track: Track?): Bitmap? {
             }
         }
 
+        val size = Size(512, 512)
         if (path.startsWith("content://")) {
             try {
-                val size = Size(512, 512)
                 return contentResolver.loadThumbnail(Uri.parse(path), size, null)
             } catch (ignored: Exception) {
             }
+        }
+
+        try {
+            // ThumbnailUtils.createAudioThumbnail() has better logic for searching thumbnails
+            return ThumbnailUtils.createAudioThumbnail(File(path), size, null)
+        } catch (ignored: Exception) {
         }
     }
 
