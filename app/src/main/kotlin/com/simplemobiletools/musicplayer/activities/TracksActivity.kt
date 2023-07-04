@@ -219,7 +219,7 @@ class TracksActivity : SimpleActivity() {
                     listItems.addAll(tracks)
                 }
                 TYPE_ALBUM -> {
-                    val albumTracks = getAlbumTracksSync(album.id)
+                    val albumTracks = mediaScanner.getAlbumTracksSync(album.id)
                     albumTracks.sortWith(compareBy({ it.trackId }, { it.title.lowercase() }))
                     tracks.addAll(albumTracks)
 

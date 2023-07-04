@@ -156,7 +156,7 @@ class AlbumsTracksAdapter(
                     if (position != -1) {
                         positions.add(position)
                     }
-                    selectedTracks.addAll(activity.getAlbumTracksSync(album.id))
+                    selectedTracks.addAll(activity.mediaScanner.getAlbumTracksSync(album.id))
                 }
 
                 activity.deleteTracks(selectedTracks) {
@@ -175,7 +175,7 @@ class AlbumsTracksAdapter(
     private fun getAllSelectedTracks(): ArrayList<Track> {
         val tracks = getSelectedTracks()
         getSelectedAlbums().forEach {
-            tracks.addAll(activity.getAlbumTracksSync(it.id))
+            tracks.addAll(activity.mediaScanner.getAlbumTracksSync(it.id))
         }
         return tracks
     }

@@ -210,7 +210,7 @@ class MainActivity : SimpleActivity() {
     }
 
     private fun refreshAllFragments() {
-        updateAllDatabases {
+        mediaScanner.updateAllDatabases {
             runOnUiThread {
                 getAllFragments().forEach {
                     it?.setupFragment(this)

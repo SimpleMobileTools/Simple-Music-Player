@@ -98,9 +98,9 @@ class ArtistsAdapter(activity: BaseSimpleActivity, var artists: ArrayList<Artist
     private fun getAllSelectedTracks(): ArrayList<Track> {
         val tracks = ArrayList<Track>()
         getSelectedArtists().forEach { artist ->
-            val albums = activity.getAlbumsSync(artist)
+            val albums = activity.mediaScanner.getAlbumsSync(artist)
             albums.forEach {
-                tracks.addAll(activity.getAlbumTracksSync(it.id))
+                tracks.addAll(activity.mediaScanner.getAlbumTracksSync(it.id))
             }
         }
         return tracks
@@ -118,9 +118,9 @@ class ArtistsAdapter(activity: BaseSimpleActivity, var artists: ArrayList<Artist
                         positions.add(position)
                     }
 
-                    val albums = activity.getAlbumsSync(artist)
+                    val albums = activity.mediaScanner.getAlbumsSync(artist)
                     albums.forEach { album ->
-                        tracks.addAll(activity.getAlbumTracksSync(album.id))
+                        tracks.addAll(activity.mediaScanner.getAlbumTracksSync(album.id))
                     }
 
                     activity.artistDAO.deleteArtist(artist.id)

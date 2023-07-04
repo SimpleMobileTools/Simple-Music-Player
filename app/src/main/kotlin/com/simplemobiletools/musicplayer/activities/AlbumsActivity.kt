@@ -9,8 +9,7 @@ import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.NavigationIcon
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.adapters.AlbumsTracksAdapter
-import com.simplemobiletools.musicplayer.extensions.getAlbumTracksSync
-import com.simplemobiletools.musicplayer.extensions.getAlbums
+import com.simplemobiletools.musicplayer.extensions.mediaScanner
 import com.simplemobiletools.musicplayer.extensions.resetQueueItems
 import com.simplemobiletools.musicplayer.helpers.ALBUM
 import com.simplemobiletools.musicplayer.helpers.ARTIST
@@ -45,7 +44,7 @@ class AlbumsActivity : SimpleActivity() {
         val artist = Gson().fromJson<Artist>(intent.getStringExtra(ARTIST), artistType)
         albums_toolbar.title = artist.title
 
-        getAlbums(artist) { albums ->
+        mediaScanner.getAlbums(artist) { albums ->
             val listItems = ArrayList<ListItem>()
             val albumsSectionLabel = resources.getQuantityString(R.plurals.albums_plural, albums.size, albums.size)
             listItems.add(AlbumSection(albumsSectionLabel))
@@ -54,7 +53,7 @@ class AlbumsActivity : SimpleActivity() {
             var trackFullDuration = 0
             val tracksToAdd = ArrayList<Track>()
             albums.forEach {
-                val tracks = getAlbumTracksSync(it.id)
+                val tracks = mediaScanner.getAlbumTracksSync(it.id)
                 tracks.sortWith(compareBy({ it.trackId }, { it.title.lowercase() }))
                 trackFullDuration += tracks.sumOf { it.duration }
                 tracksToAdd.addAll(tracks)
