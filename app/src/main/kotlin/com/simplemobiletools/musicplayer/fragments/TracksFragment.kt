@@ -19,7 +19,6 @@ import com.simplemobiletools.musicplayer.extensions.*
 import com.simplemobiletools.musicplayer.helpers.RESTART_PLAYER
 import com.simplemobiletools.musicplayer.helpers.TAB_TRACKS
 import com.simplemobiletools.musicplayer.helpers.TRACK
-import com.simplemobiletools.musicplayer.models.Album
 import com.simplemobiletools.musicplayer.models.Track
 import kotlinx.android.synthetic.main.fragment_tracks.view.*
 
@@ -29,17 +28,7 @@ class TracksFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
 
     override fun setupFragment(activity: BaseSimpleActivity) {
         ensureBackgroundThread {
-            val albums = ArrayList<Album>()
-            val artists = context.artistDAO.getAll()
-            artists.forEach { artist ->
-                albums.addAll(context.albumsDAO.getArtistAlbums(artist.id))
-            }
-
-            var tracks = ArrayList<Track>()
-            albums.forEach { album ->
-                tracks.addAll(context.tracksDAO.getTracksFromAlbum(album.id))
-            }
-
+            var tracks = context.tracksDAO.getAll()
             tracks = tracks.distinctBy { "${it.path}/${it.mediaStoreId}" }.toMutableList() as ArrayList<Track>
 
             val excludedFolders = context.config.excludedFolders
