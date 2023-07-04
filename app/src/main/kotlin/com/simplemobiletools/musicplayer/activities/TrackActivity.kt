@@ -26,11 +26,8 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.MEDIUM_ALPHA
-import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.musicplayer.R
-import com.simplemobiletools.musicplayer.extensions.config
-import com.simplemobiletools.musicplayer.extensions.sendIntent
-import com.simplemobiletools.musicplayer.extensions.updatePlayPauseIcon
+import com.simplemobiletools.musicplayer.extensions.*
 import com.simplemobiletools.musicplayer.fragments.PlaybackSpeedFragment
 import com.simplemobiletools.musicplayer.helpers.*
 import com.simplemobiletools.musicplayer.interfaces.PlaybackSpeedListener
@@ -42,6 +39,7 @@ import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import java.text.DecimalFormat
+import kotlin.math.min
 
 class TrackActivity : SimpleActivity(), PlaybackSpeedListener {
     private val SWIPE_DOWN_THRESHOLD = 100
@@ -125,7 +123,7 @@ class TrackActivity : SimpleActivity(), PlaybackSpeedListener {
     }
 
     private fun setupTrackInfo(track: Track) {
-        setupTopArt(track.coverArt)
+        setupTopArt(track)
         activity_track_title.text = track.title
         activity_track_artist.text = track.artist
 
@@ -185,7 +183,7 @@ class TrackActivity : SimpleActivity(), PlaybackSpeedListener {
 
         next_track_label.text = "${getString(R.string.next_track)} ${track?.title}$artist"
 
-        ensureBackgroundThread {
+        getTrackCoverArt(track) { coverArt ->
             val cornerRadius = resources.getDimension(R.dimen.rounded_corner_radius_small).toInt()
             val wantedSize = resources.getDimension(R.dimen.song_image_size).toInt()
             val options = RequestOptions()
@@ -194,7 +192,7 @@ class TrackActivity : SimpleActivity(), PlaybackSpeedListener {
             try {
                 // change cover image manually only once loaded successfully to avoid blinking at fails and placeholders
                 Glide.with(this)
-                    .load(track?.coverArt)
+                    .load(coverArt)
                     .apply(options)
                     .listener(object : RequestListener<Drawable> {
                         override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
@@ -224,16 +222,15 @@ class TrackActivity : SimpleActivity(), PlaybackSpeedListener {
         }
     }
 
-    private fun setupTopArt(coverArt: String) {
-        var wantedHeight = resources.getDimension(R.dimen.top_art_height).toInt()
-        wantedHeight = Math.min(wantedHeight, realScreenSize.y / 2)
-
-        ensureBackgroundThread {
+    private fun setupTopArt(track: Track) {
+        getTrackCoverArt(track) { coverArt ->
+            var wantedHeight = resources.getCoverArtHeight()
+            wantedHeight = min(wantedHeight, realScreenSize.y / 2)
             val wantedWidth = realScreenSize.x
-            val options = RequestOptions().centerCrop()
 
+            // change cover image manually only once loaded successfully to avoid blinking at fails and placeholders
             try {
-                // change cover image manually only once loaded successfully to avoid blinking at fails and placeholders
+                val options = RequestOptions().centerCrop()
                 Glide.with(this)
                     .load(coverArt)
                     .apply(options)

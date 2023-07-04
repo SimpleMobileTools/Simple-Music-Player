@@ -4,13 +4,17 @@ import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.media.MediaMetadataRetriever
+import android.net.Uri
 import android.provider.MediaStore
 import android.provider.MediaStore.Audio
+import android.util.Size
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.commons.helpers.isOreoPlus
 import com.simplemobiletools.commons.helpers.isQPlus
-import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.databases.SongsDatabase
 import com.simplemobiletools.musicplayer.helpers.*
 import com.simplemobiletools.musicplayer.interfaces.*
@@ -170,4 +174,83 @@ private fun getFolderTrackPaths(folder: File): ArrayList<String> {
         }
     }
     return trackFiles
+}
+
+fun Context.getTrackCoverArt(track: Track?, callback: (coverArt: Any?) -> Unit) {
+    ensureBackgroundThread {
+        val coverArt = track?.coverArt?.ifEmpty {
+            loadTrackCoverArt(track)
+        }
+
+        callback(coverArt)
+    }
+}
+
+fun Context.loadTrackCoverArt(track: Track): Bitmap? {
+    if (File(track.path).exists()) {
+        val coverArtHeight = resources.getCoverArtHeight()
+        try {
+            try {
+                val mediaMetadataRetriever = MediaMetadataRetriever()
+                mediaMetadataRetriever.setDataSource(track.path)
+                val rawArt = mediaMetadataRetriever.embeddedPicture
+                if (rawArt != null) {
+                    val options = BitmapFactory.Options()
+                    val bitmap = BitmapFactory.decodeByteArray(rawArt, 0, rawArt.size, options)
+                    if (bitmap != null) {
+                        val resultBitmap = if (bitmap.height > coverArtHeight * 2) {
+                            val ratio = bitmap.width / bitmap.height.toFloat()
+                            Bitmap.createScaledBitmap(bitmap, (coverArtHeight * ratio).toInt(), coverArtHeight, false)
+                        } else {
+                            bitmap
+                        }
+
+                        return resultBitmap
+                    }
+                }
+            } catch (ignored: OutOfMemoryError) {
+            } catch (ignored: Exception) {
+            }
+
+            val trackParentDirectory = File(track.path).parent?.trimEnd('/')
+            val albumArtFiles = arrayListOf("folder.jpg", "albumart.jpg", "cover.jpg")
+            albumArtFiles.forEach {
+                val albumArtFilePath = "$trackParentDirectory/$it"
+                if (File(albumArtFilePath).exists()) {
+                    val bitmap = BitmapFactory.decodeFile(albumArtFilePath)
+                    if (bitmap != null) {
+                        val resultBitmap = if (bitmap.height > coverArtHeight * 2) {
+                            val ratio = bitmap.width / bitmap.height.toFloat()
+                            Bitmap.createScaledBitmap(bitmap, (coverArtHeight * ratio).toInt(), coverArtHeight, false)
+                        } else {
+                            bitmap
+                        }
+
+                        return resultBitmap
+                    }
+                }
+            }
+        } catch (ignored: Exception) {
+        } catch (ignored: Error) {
+        }
+    }
+
+    if (isQPlus()) {
+        if (track.coverArt.startsWith("content://")) {
+            try {
+                return MediaStore.Images.Media.getBitmap(contentResolver, Uri.parse(track.coverArt))
+            } catch (ignored: Exception) {
+            }
+        }
+
+        if (track.path.startsWith("content://")) {
+            try {
+                val size = Size(512, 512)
+                return contentResolver.loadThumbnail(Uri.parse(track.path), size, null)
+            } catch (ignored: Exception) {
+            }
+        }
+    }
+
+    return null
 }

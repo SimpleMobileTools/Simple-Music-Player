@@ -180,17 +180,17 @@ class QueueAdapter(activity: SimpleActivity, var items: ArrayList<Track>, recycl
                 false
             }
 
-            if (track.coverArt.isEmpty()) {
-                track_queue_image.setImageDrawable(placeholder)
-            } else {
-                val options = RequestOptions()
-                    .error(placeholder)
-                    .transform(CenterCrop(), RoundedCorners(cornerRadius))
+            activity.getTrackCoverArt(track) { coverArt ->
+                activity.runOnUiThread {
+                    val options = RequestOptions()
+                        .error(placeholder)
+                        .transform(CenterCrop(), RoundedCorners(cornerRadius))
 
-                Glide.with(activity)
-                    .load(track.coverArt)
-                    .apply(options)
-                    .into(findViewById(R.id.track_queue_image))
+                    Glide.with(activity)
+                        .load(coverArt)
+                        .apply(options)
+                        .into(findViewById(R.id.track_queue_image))
+                }
             }
         }
     }

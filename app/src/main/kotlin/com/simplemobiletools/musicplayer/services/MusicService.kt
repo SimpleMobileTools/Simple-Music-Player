@@ -6,7 +6,6 @@ import android.app.Service
 import android.content.Intent
 import android.content.pm.ServiceInfo
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.media.MediaMetadataRetriever
 import android.media.audiofx.Equalizer
 import android.net.Uri
@@ -14,11 +13,9 @@ import android.os.CountDownTimer
 import android.os.Handler
 import android.os.IBinder
 import android.os.Looper
-import android.provider.MediaStore
 import android.support.v4.media.MediaMetadataCompat
 import android.support.v4.media.session.MediaSessionCompat
 import android.support.v4.media.session.PlaybackStateCompat
-import android.util.Size
 import android.view.KeyEvent
 import androidx.media.session.MediaButtonReceiver
 import com.google.gson.Gson
@@ -41,7 +38,6 @@ import com.simplemobiletools.musicplayer.models.Events
 import com.simplemobiletools.musicplayer.models.QueueItem
 import com.simplemobiletools.musicplayer.models.Track
 import org.greenrobot.eventbus.EventBus
-import java.io.File
 import java.io.IOException
 import kotlin.math.roundToInt
 
@@ -60,7 +56,6 @@ class MusicService : Service(), MultiPlayer.PlaybackCallbacks {
         private var mHeadsetPlaceholder: Bitmap? = null
         private var mProgressHandler = Handler()
         private var mSleepTimer: CountDownTimer? = null
-        private var mCoverArtHeight = 0
         private var mRetriedTrackCount = 0
         private var mPlaybackSpeed = 1f
 
@@ -104,7 +99,6 @@ class MusicService : Service(), MultiPlayer.PlaybackCallbacks {
 
     override fun onCreate() {
         super.onCreate()
-        mCoverArtHeight = resources.getDimension(R.dimen.top_art_height).toInt()
         initMediaPlayerIfNeeded()
         createMediaSession()
 
@@ -834,68 +828,9 @@ class MusicService : Service(), MultiPlayer.PlaybackCallbacks {
     // do not just return the album cover, but also a boolean to indicate if it a real cover, or just the placeholder
     @SuppressLint("NewApi")
     private fun getAlbumImage(): Pair<Bitmap, Boolean> {
-        if (File(mCurrTrack?.path ?: "").exists()) {
-            try {
-                try {
-                    val mediaMetadataRetriever = MediaMetadataRetriever()
-                    mediaMetadataRetriever.setDataSource(mCurrTrack!!.path)
-                    val rawArt = mediaMetadataRetriever.embeddedPicture
-                    if (rawArt != null) {
-                        val options = BitmapFactory.Options()
-                        val bitmap = BitmapFactory.decodeByteArray(rawArt, 0, rawArt.size, options)
-                        if (bitmap != null) {
-                            val resultBitmap = if (bitmap.height > mCoverArtHeight * 2) {
-                                val ratio = bitmap.width / bitmap.height.toFloat()
-                                Bitmap.createScaledBitmap(bitmap, (mCoverArtHeight * ratio).toInt(), mCoverArtHeight, false)
-                            } else {
-                                bitmap
-                            }
-                            return Pair(resultBitmap, true)
-                        }
-                    }
-                } catch (ignored: OutOfMemoryError) {
-                } catch (ignored: Exception) {
-                }
-
-                val trackParentDirectory = File(mCurrTrack!!.path).parent?.trimEnd('/')
-                val albumArtFiles = arrayListOf("folder.jpg", "albumart.jpg", "cover.jpg")
-                albumArtFiles.forEach {
-                    val albumArtFilePath = "$trackParentDirectory/$it"
-                    if (File(albumArtFilePath).exists()) {
-                        val bitmap = BitmapFactory.decodeFile(albumArtFilePath)
-                        if (bitmap != null) {
-                            val resultBitmap = if (bitmap.height > mCoverArtHeight * 2) {
-                                val ratio = bitmap.width / bitmap.height.toFloat()
-                                Bitmap.createScaledBitmap(bitmap, (mCoverArtHeight * ratio).toInt(), mCoverArtHeight, false)
-                            } else {
-                                bitmap
-                            }
-                            return Pair(resultBitmap, true)
-                        }
-                    }
-                }
-            } catch (ignored: Exception) {
-            } catch (ignored: Error) {
-            }
-        }
-
-        if (isQPlus()) {
-            if (mCurrTrack?.coverArt?.startsWith("content://") == true) {
-                try {
-                    val thumbnail = MediaStore.Images.Media.getBitmap(contentResolver, Uri.parse(mCurrTrack!!.coverArt))
-                    return Pair(thumbnail, true)
-                } catch (ignored: Exception) {
-                }
-            }
-
-            if (mCurrTrack?.path?.startsWith("content://") == true) {
-                try {
-                    val size = Size(512, 512)
-                    val thumbnail = contentResolver.loadThumbnail(Uri.parse(mCurrTrack!!.path), size, null)
-                    return Pair(thumbnail, true)
-                } catch (ignored: Exception) {
-                }
-            }
+        val coverArt = loadTrackCoverArt(mCurrTrack!!)
+        if (coverArt != null) {
+            return Pair(coverArt, true)
         }
 
         if (mHeadsetPlaceholder == null) {

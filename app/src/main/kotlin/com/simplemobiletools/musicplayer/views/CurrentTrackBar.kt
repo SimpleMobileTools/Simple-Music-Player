@@ -2,6 +2,8 @@ package com.simplemobiletools.musicplayer.views
 
 import android.content.Context
 import android.graphics.drawable.ColorDrawable
+import android.os.Handler
+import android.os.Looper
 import android.provider.MediaStore
 import android.util.AttributeSet
 import android.widget.RelativeLayout
@@ -11,7 +13,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.musicplayer.R
-import com.simplemobiletools.musicplayer.extensions.config
+import com.simplemobiletools.musicplayer.extensions.getTrackCoverArt
 import com.simplemobiletools.musicplayer.extensions.sendIntent
 import com.simplemobiletools.musicplayer.extensions.updatePlayPauseIcon
 import com.simplemobiletools.musicplayer.helpers.PLAYPAUSE
@@ -48,10 +50,14 @@ class CurrentTrackBar(context: Context, attributeSet: AttributeSet) : RelativeLa
             .error(currentTrackPlaceholder)
             .transform(CenterCrop(), RoundedCorners(cornerRadius))
 
-        Glide.with(this)
-            .load(track.coverArt)
-            .apply(options)
-            .into(findViewById(R.id.current_track_image))
+        context.getTrackCoverArt(track) { coverArt ->
+            Handler(Looper.getMainLooper()).post {
+                Glide.with(this)
+                    .load(coverArt)
+                    .apply(options)
+                    .into(findViewById(R.id.current_track_image))
+            }
+        }
     }
 
     fun updateTrackState(isPlaying: Boolean) {
