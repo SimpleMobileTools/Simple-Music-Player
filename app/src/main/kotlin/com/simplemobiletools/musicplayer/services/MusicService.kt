@@ -828,7 +828,7 @@ class MusicService : Service(), MultiPlayer.PlaybackCallbacks {
     // do not just return the album cover, but also a boolean to indicate if it a real cover, or just the placeholder
     @SuppressLint("NewApi")
     private fun getAlbumImage(): Pair<Bitmap, Boolean> {
-        val coverArt = loadTrackCoverArt(mCurrTrack!!)
+        val coverArt = loadTrackCoverArt(mCurrTrack)
         if (coverArt != null) {
             return Pair(coverArt, true)
         }

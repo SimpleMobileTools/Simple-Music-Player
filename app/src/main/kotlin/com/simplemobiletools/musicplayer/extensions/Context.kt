@@ -7,6 +7,7 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.media.MediaMetadataRetriever
+import android.media.ThumbnailUtils
 import android.net.Uri
 import android.provider.MediaStore
 import android.provider.MediaStore.Audio
@@ -178,7 +179,12 @@ private fun getFolderTrackPaths(folder: File): ArrayList<String> {
 
 fun Context.getTrackCoverArt(track: Track?, callback: (coverArt: Any?) -> Unit) {
     ensureBackgroundThread {
-        val coverArt = track?.coverArt?.ifEmpty {
+        if (track == null) {
+            callback(null)
+            return@ensureBackgroundThread
+        }
+
+        val coverArt = track.coverArt.ifEmpty {
             loadTrackCoverArt(track)
         }
 
@@ -186,13 +192,18 @@ fun Context.getTrackCoverArt(track: Track?, callback: (coverArt: Any?) -> Unit) 
     }
 }
 
-fun Context.loadTrackCoverArt(track: Track): Bitmap? {
-    if (File(track.path).exists()) {
+fun Context.loadTrackCoverArt(track: Track?): Bitmap? {
+    if (track == null) {
+        return null
+    }
+
+    val path = track.path
+    if (path.isNotEmpty() && File(path).exists()) {
         val coverArtHeight = resources.getCoverArtHeight()
         try {
             try {
                 val mediaMetadataRetriever = MediaMetadataRetriever()
-                mediaMetadataRetriever.setDataSource(track.path)
+                mediaMetadataRetriever.setDataSource(path)
                 val rawArt = mediaMetadataRetriever.embeddedPicture
                 if (rawArt != null) {
                     val options = BitmapFactory.Options()
@@ -212,7 +223,7 @@ fun Context.loadTrackCoverArt(track: Track): Bitmap? {
             } catch (ignored: Exception) {
             }
 
-            val trackParentDirectory = File(track.path).parent?.trimEnd('/')
+            val trackParentDirectory = File(path).parent?.trimEnd('/')
             val albumArtFiles = arrayListOf("folder.jpg", "albumart.jpg", "cover.jpg")
             albumArtFiles.forEach {
                 val albumArtFilePath = "$trackParentDirectory/$it"
@@ -243,10 +254,10 @@ fun Context.loadTrackCoverArt(track: Track): Bitmap? {
             }
         }
 
-        if (track.path.startsWith("content://")) {
+        if (path.startsWith("content://")) {
             try {
                 val size = Size(512, 512)
-                return contentResolver.loadThumbnail(Uri.parse(track.path), size, null)
+                return contentResolver.loadThumbnail(Uri.parse(path), size, null)
             } catch (ignored: Exception) {
             }
         }
