@@ -122,14 +122,7 @@ class SimpleMediaScanner(private val context: Application) {
         callback(albums)
     }
 
-    fun getAlbums(artist: Artist, callback: (artists: ArrayList<Album>) -> Unit) {
-        ensureBackgroundThread {
-            val albums = getAlbumsSync(artist)
-            callback(albums)
-        }
-    }
-
-    fun getAlbumsSync(artist: Artist): ArrayList<Album> {
+    private fun getAlbumsSync(artist: Artist): ArrayList<Album> {
         val albums = ArrayList<Album>()
         val uri = MediaStore.Audio.Albums.EXTERNAL_CONTENT_URI
         val projection = arrayOf(
@@ -186,7 +179,7 @@ class SimpleMediaScanner(private val context: Application) {
         return 0
     }
 
-    fun getAlbumTracksSync(albumId: Long): ArrayList<Track> {
+    private fun getAlbumTracksSync(albumId: Long): ArrayList<Track> {
         val tracks = ArrayList<Track>()
         val uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
         val projection = arrayListOf(

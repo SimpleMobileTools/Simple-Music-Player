@@ -7,10 +7,12 @@ import com.google.gson.reflect.TypeToken
 import com.simplemobiletools.commons.dialogs.PermissionRequiredDialog
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.NavigationIcon
+import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.adapters.AlbumsTracksAdapter
-import com.simplemobiletools.musicplayer.extensions.mediaScanner
+import com.simplemobiletools.musicplayer.extensions.albumsDAO
 import com.simplemobiletools.musicplayer.extensions.resetQueueItems
+import com.simplemobiletools.musicplayer.extensions.tracksDAO
 import com.simplemobiletools.musicplayer.helpers.ALBUM
 import com.simplemobiletools.musicplayer.helpers.ARTIST
 import com.simplemobiletools.musicplayer.helpers.RESTART_PLAYER
@@ -44,7 +46,8 @@ class AlbumsActivity : SimpleActivity() {
         val artist = Gson().fromJson<Artist>(intent.getStringExtra(ARTIST), artistType)
         albums_toolbar.title = artist.title
 
-        mediaScanner.getAlbums(artist) { albums ->
+        ensureBackgroundThread {
+            val albums = albumsDAO.getArtistAlbums(artist.id)
             val listItems = ArrayList<ListItem>()
             val albumsSectionLabel = resources.getQuantityString(R.plurals.albums_plural, albums.size, albums.size)
             listItems.add(AlbumSection(albumsSectionLabel))
@@ -53,7 +56,7 @@ class AlbumsActivity : SimpleActivity() {
             var trackFullDuration = 0
             val tracksToAdd = ArrayList<Track>()
             albums.forEach {
-                val tracks = mediaScanner.getAlbumTracksSync(it.id)
+                val tracks = tracksDAO.getTracksFromAlbum(it.id) as ArrayList<Track>
                 tracks.sortWith(compareBy({ it.trackId }, { it.title.lowercase() }))
                 trackFullDuration += tracks.sumOf { it.duration }
                 tracksToAdd.addAll(tracks)
