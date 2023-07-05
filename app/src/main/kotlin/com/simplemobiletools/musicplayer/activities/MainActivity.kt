@@ -103,9 +103,7 @@ class MainActivity : SimpleActivity() {
             it?.setupColors(getProperTextColor(), getProperPrimaryColor())
         }
 
-        if (storedExcludedFolders != config.excludedFolders.hashCode()) {
-            refreshAllFragments()
-        }
+        refreshAllFragments()
     }
 
     override fun onPause() {
