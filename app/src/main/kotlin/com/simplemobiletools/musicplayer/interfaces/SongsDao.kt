@@ -30,7 +30,7 @@ interface SongsDao {
     fun getTrackWithMediaStoreId(mediaStoreId: Long): Track?
 
     @Delete
-    fun removeSongsFromPlaylists(songs: List<Track>)
+    fun removeTracks(songs: List<Track>)
 
     @Query("DELETE FROM tracks WHERE media_store_id = :mediaStoreId")
     fun removeTrack(mediaStoreId: Long)

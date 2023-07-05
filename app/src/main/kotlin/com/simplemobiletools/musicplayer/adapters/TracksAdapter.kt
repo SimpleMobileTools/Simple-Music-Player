@@ -150,7 +150,7 @@ class TracksAdapter(
                 }
             }
 
-            activity.tracksDAO.removeSongsFromPlaylists(selectedTracks)
+            activity.tracksDAO.removeTracks(selectedTracks)
             EventBus.getDefault().post(Events.PlaylistsUpdated())
             activity.runOnUiThread {
                 positions.sortDescending()

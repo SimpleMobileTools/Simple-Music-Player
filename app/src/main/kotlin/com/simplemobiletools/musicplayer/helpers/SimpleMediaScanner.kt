@@ -242,7 +242,7 @@ class SimpleMediaScanner(private val context: Application) {
         return validTracks
     }
 
-    private fun updateCachedTracks(albums: ArrayList<Album>): ArrayList<Track> {
+    private fun updateCachedTracks(albums: ArrayList<Album>) {
         val tracks = albums.flatMap { getAlbumTracksSync(it.id) } as ArrayList<Track>
         val newIds = tracks.map { it.mediaStoreId } as ArrayList<Long>
 
@@ -255,24 +255,10 @@ class SimpleMediaScanner(private val context: Application) {
             }
         }
 
-        tracks.forEach { track ->
-            context.tracksDAO.insert(track)
-        }
-
-
-        // remove invalid tracks from cache
-        val cachedTracks = context.tracksDAO.getAll() as ArrayList<Track>
-        val idsToRemove = arrayListOf<Long>()
-        val excludedFolders = config.excludedFolders
-        cachedTracks.forEach { track ->
-            if (track.mediaStoreId !in newIds && track.path.getParentPath() !in excludedFolders) {
-                idsToRemove.add(track.mediaStoreId)
-            }
-        }
-
-        idsToRemove.forEach {
-            context.tracksDAO.removeTrack(it)
-        }
+        // insert all tracks and remove any invalid tracks from cache
+        context.tracksDAO.insertAll(tracks)
+        val invalidTracks = context.tracksDAO.getAll().filter { it.mediaStoreId !in newIds }
+        context.tracksDAO.removeTracks(invalidTracks)
 
         if (!config.wasAllTracksPlaylistCreated) {
             val allTracksLabel = context.resources.getString(R.string.all_tracks)
@@ -284,8 +270,6 @@ class SimpleMediaScanner(private val context: Application) {
             RoomHelper(context).insertTracksWithPlaylist(tracks)
             config.wasAllTracksPlaylistCreated = true
         }
-
-        return tracks
     }
 
     private fun getAllAudioFiles(): ArrayList<Track> {
