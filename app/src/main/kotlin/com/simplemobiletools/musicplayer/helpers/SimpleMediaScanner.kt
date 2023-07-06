@@ -39,15 +39,11 @@ class SimpleMediaScanner(private val context: Application) {
         // remove invalid artists from cache
         val cachedArtists = context.artistDAO.getAll() as ArrayList<Artist>
         val newIds = artists.map { it.id }
-        val idsToRemove = arrayListOf<Long>()
         cachedArtists.forEach { artist ->
-            if (!newIds.contains(artist.id)) {
-                idsToRemove.add(artist.id)
+            val id = artist.id
+            if (id !in newIds) {
+                context.artistDAO.deleteArtist(id)
             }
-        }
-
-        idsToRemove.forEach {
-            context.artistDAO.deleteArtist(it)
         }
 
         callback(artists)
@@ -108,15 +104,11 @@ class SimpleMediaScanner(private val context: Application) {
         // remove invalid albums from cache
         val cachedAlbums = context.albumsDAO.getAll() as ArrayList<Album>
         val newIds = albums.map { it.id }
-        val idsToRemove = arrayListOf<Long>()
         cachedAlbums.forEach { album ->
-            if (!newIds.contains(album.id)) {
-                idsToRemove.add(album.id)
+            val id = album.id
+            if (id !in newIds) {
+                context.albumsDAO.deleteAlbum(id)
             }
-        }
-
-        idsToRemove.forEach {
-            context.albumsDAO.deleteAlbum(it)
         }
 
         callback(albums)
@@ -271,7 +263,7 @@ class SimpleMediaScanner(private val context: Application) {
         val excludedFolders = config.excludedFolders
         val tracksRemovedFromAllTracks = config.tracksRemovedFromAllTracksPlaylist.map { it.toLong() }
         val tracksWithPlaylist = tracks
-            .filter { it.mediaStoreId !in tracksRemovedFromAllTracks && it.playListId == 0  && it.path.getParentPath() !in excludedFolders }
+            .filter { it.mediaStoreId !in tracksRemovedFromAllTracks && it.playListId == 0 && it.path.getParentPath() !in excludedFolders }
             .onEach { it.playListId = ALL_TRACKS_PLAYLIST_ID }
         RoomHelper(context).insertTracksWithPlaylist(tracksWithPlaylist as ArrayList<Track>)
     }
