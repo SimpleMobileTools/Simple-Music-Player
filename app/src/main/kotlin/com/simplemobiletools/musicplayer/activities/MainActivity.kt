@@ -208,10 +208,19 @@ class MainActivity : SimpleActivity() {
     }
 
     private fun refreshAllFragments() {
-        mediaScanner.updateAllDatabases {
+        val firstRun = config.appRunCount == 1
+        if (firstRun) {
+            loading_progress_bar.show()
+        }
+
+        mediaScanner.scan {
             runOnUiThread {
                 getAllFragments().forEach {
                     it?.setupFragment(this)
+                }
+
+                if (firstRun) {
+                    loading_progress_bar.hide()
                 }
             }
         }
