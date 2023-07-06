@@ -224,7 +224,7 @@ class TracksAdapter(
                 false
             }
 
-            arrayOf(track_id, track_title, track_duration).forEach {
+            arrayOf(track_id, track_title, track_info, track_duration).forEach {
                 it.setTextColor(textColor)
             }
 
