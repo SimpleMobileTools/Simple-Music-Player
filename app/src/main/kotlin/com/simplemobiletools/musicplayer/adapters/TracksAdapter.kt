@@ -24,6 +24,7 @@ import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
 import com.simplemobiletools.musicplayer.dialogs.EditDialog
 import com.simplemobiletools.musicplayer.extensions.*
+import com.simplemobiletools.musicplayer.helpers.ALL_TRACKS_PLAYLIST_ID
 import com.simplemobiletools.musicplayer.helpers.PLAYER_SORT_BY_CUSTOM
 import com.simplemobiletools.musicplayer.helpers.TagHelper
 import com.simplemobiletools.musicplayer.inlines.indexOfFirstOrNull
@@ -151,6 +152,15 @@ class TracksAdapter(
             }
 
             activity.tracksDAO.removeTracks(selectedTracks)
+            // this is to make sure these tracks aren't automatically re-added to the 'All tracks' playlist on rescan
+            val removedTrackIds = selectedTracks.filter { it.playListId == ALL_TRACKS_PLAYLIST_ID }.map { it.mediaStoreId.toString() }
+            if (removedTrackIds.isNotEmpty()) {
+                val config = activity.config
+                config.tracksRemovedFromAllTracksPlaylist = config.tracksRemovedFromAllTracksPlaylist.apply {
+                    addAll(removedTrackIds)
+                }
+            }
+
             EventBus.getDefault().post(Events.PlaylistsUpdated())
             activity.runOnUiThread {
                 positions.sortDescending()
@@ -234,12 +244,12 @@ class TracksAdapter(
                 .transform(CenterCrop(), RoundedCorners(cornerRadius))
 
             context.getTrackCoverArt(track) { coverArt ->
-               activity.runOnUiThread {
-                   Glide.with(activity)
-                       .load(coverArt)
-                       .apply(options)
-                       .into(findViewById(R.id.track_image))
-               }
+                activity.runOnUiThread {
+                    Glide.with(activity)
+                        .load(coverArt)
+                        .apply(options)
+                        .into(findViewById(R.id.track_image))
+                }
             }
 
             track_image.beVisible()

@@ -264,12 +264,16 @@ class SimpleMediaScanner(private val context: Application) {
             val allTracksLabel = context.resources.getString(R.string.all_tracks)
             val playlist = Playlist(ALL_TRACKS_PLAYLIST_ID, allTracksLabel)
             context.playlistDAO.insert(playlist)
-            tracks.forEach {
-                it.playListId = ALL_TRACKS_PLAYLIST_ID
-            }
-            RoomHelper(context).insertTracksWithPlaylist(tracks)
             config.wasAllTracksPlaylistCreated = true
         }
+
+        // avoid re-adding tracks that have been explicitly removed from 'All tracks' playlist
+        val excludedFolders = config.excludedFolders
+        val tracksRemovedFromAllTracks = config.tracksRemovedFromAllTracksPlaylist.map { it.toLong() }
+        val tracksWithPlaylist = tracks
+            .filter { it.mediaStoreId !in tracksRemovedFromAllTracks && it.playListId == 0  && it.path.getParentPath() !in excludedFolders }
+            .onEach { it.playListId = ALL_TRACKS_PLAYLIST_ID }
+        RoomHelper(context).insertTracksWithPlaylist(tracksWithPlaylist as ArrayList<Track>)
     }
 
     private fun getAllAudioFiles(): ArrayList<Track> {
