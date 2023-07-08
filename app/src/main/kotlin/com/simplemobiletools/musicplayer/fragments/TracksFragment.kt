@@ -24,11 +24,11 @@ import kotlinx.android.synthetic.main.fragment_tracks.view.*
 
 // Artists -> Albums -> Tracks
 class TracksFragment(context: Context, attributeSet: AttributeSet) : MyViewPagerFragment(context, attributeSet) {
-    private var tracksIgnoringSearch = ArrayList<Track>()
+    private var tracks = ArrayList<Track>()
 
     override fun setupFragment(activity: BaseSimpleActivity) {
         ensureBackgroundThread {
-            var tracks = context.tracksDAO.getAll()
+            tracks = context.tracksDAO.getAll() as ArrayList<Track>
             tracks = tracks.distinctBy { "${it.path}/${it.mediaStoreId}" }.toMutableList() as ArrayList<Track>
 
             val excludedFolders = context.config.excludedFolders
@@ -38,7 +38,6 @@ class TracksFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
 
             Track.sorting = context.config.trackSorting
             tracks.sort()
-            tracksIgnoringSearch = tracks
 
             activity.runOnUiThread {
                 tracks_placeholder.text = context.getString(R.string.no_items_found)
@@ -81,7 +80,7 @@ class TracksFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
     }
 
     override fun onSearchQueryChanged(text: String) {
-        val filtered = tracksIgnoringSearch.filter {
+        val filtered = tracks.filter {
             it.title.contains(text, true) || ("${it.artist} - ${it.album}").contains(text, true)
         }.toMutableList() as ArrayList<Track>
         (tracks_list.adapter as? TracksAdapter)?.updateItems(filtered, text)
@@ -89,8 +88,8 @@ class TracksFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
     }
 
     override fun onSearchClosed() {
-        (tracks_list.adapter as? TracksAdapter)?.updateItems(tracksIgnoringSearch)
-        tracks_placeholder.beGoneIf(tracksIgnoringSearch.isNotEmpty())
+        (tracks_list.adapter as? TracksAdapter)?.updateItems(tracks)
+        tracks_placeholder.beGoneIf(tracks.isNotEmpty())
     }
 
     override fun onSortOpen(activity: SimpleActivity) {
