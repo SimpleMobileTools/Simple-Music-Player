@@ -131,7 +131,7 @@ class SimpleMediaScanner(private val context: Application) {
             return
         }
 
-        if (file.isFile && file.isAudioSlow()) {
+        if (file.isFile) {
             if (file.isAudioSlow()) {
                 destination.add(file)
             }
