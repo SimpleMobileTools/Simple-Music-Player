@@ -200,10 +200,15 @@ class TracksHeaderAdapter(activity: SimpleActivity, var items: ArrayList<ListIte
                 .error(placeholder)
                 .transform(CenterCrop(), RoundedCorners(cornerRadius))
 
-            Glide.with(activity)
-                .load(header.coverArt)
-                .apply(options)
-                .into(findViewById(R.id.album_image))
+            ensureBackgroundThread {
+                val album = activity.albumsDAO.getAlbumWithId(header.id)
+                activity.getAlbumCoverArt(album) { coverArt ->
+                    Glide.with(activity)
+                        .load(coverArt)
+                        .apply(options)
+                        .into(findViewById(R.id.album_image))
+                }
+            }
         }
     }
 

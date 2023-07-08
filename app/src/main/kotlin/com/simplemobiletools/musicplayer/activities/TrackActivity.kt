@@ -26,6 +26,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.MEDIUM_ALPHA
+import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.extensions.*
 import com.simplemobiletools.musicplayer.fragments.PlaybackSpeedFragment
@@ -189,36 +190,38 @@ class TrackActivity : SimpleActivity(), PlaybackSpeedListener {
             val options = RequestOptions()
                 .transform(CenterCrop(), RoundedCorners(cornerRadius))
 
-            try {
-                // change cover image manually only once loaded successfully to avoid blinking at fails and placeholders
-                Glide.with(this)
-                    .load(coverArt)
-                    .apply(options)
-                    .listener(object : RequestListener<Drawable> {
-                        override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
-                            runOnUiThread {
-                                next_track_image.setImageDrawable(nextTrackPlaceholder)
-                            }
-                            return true
-                        }
+           ensureBackgroundThread {
+               try {
+                   // change cover image manually only once loaded successfully to avoid blinking at fails and placeholders
+                   Glide.with(this)
+                       .load(coverArt)
+                       .apply(options)
+                       .listener(object : RequestListener<Drawable> {
+                           override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
+                               runOnUiThread {
+                                   next_track_image.setImageDrawable(nextTrackPlaceholder)
+                               }
+                               return true
+                           }
 
-                        override fun onResourceReady(
-                            resource: Drawable,
-                            model: Any?,
-                            target: Target<Drawable>?,
-                            dataSource: DataSource?,
-                            isFirstResource: Boolean
-                        ): Boolean {
-                            runOnUiThread {
-                                next_track_image.setImageDrawable(resource)
-                            }
-                            return false
-                        }
-                    })
-                    .into(wantedSize, wantedSize)
-                    .get()
-            } catch (ignored: Exception) {
-            }
+                           override fun onResourceReady(
+                               resource: Drawable,
+                               model: Any?,
+                               target: Target<Drawable>?,
+                               dataSource: DataSource?,
+                               isFirstResource: Boolean
+                           ): Boolean {
+                               runOnUiThread {
+                                   next_track_image.setImageDrawable(resource)
+                               }
+                               return false
+                           }
+                       })
+                       .into(wantedSize, wantedSize)
+                       .get()
+               } catch (ignored: Exception) {
+               }
+           }
         }
     }
 
@@ -229,45 +232,47 @@ class TrackActivity : SimpleActivity(), PlaybackSpeedListener {
             val wantedWidth = realScreenSize.x
 
             // change cover image manually only once loaded successfully to avoid blinking at fails and placeholders
-            try {
-                val options = RequestOptions().centerCrop()
-                Glide.with(this)
-                    .load(coverArt)
-                    .apply(options)
-                    .listener(object : RequestListener<Drawable> {
-                        override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
-                            val drawable = resources.getDrawable(R.drawable.ic_headset)
-                            val placeholder = getResizedDrawable(drawable, wantedHeight)
-                            placeholder.applyColorFilter(getProperTextColor())
+            ensureBackgroundThread {
+                try {
+                    val options = RequestOptions().centerCrop()
+                    Glide.with(this)
+                        .load(coverArt)
+                        .apply(options)
+                        .listener(object : RequestListener<Drawable> {
+                            override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
+                                val drawable = resources.getDrawable(R.drawable.ic_headset)
+                                val placeholder = getResizedDrawable(drawable, wantedHeight)
+                                placeholder.applyColorFilter(getProperTextColor())
 
-                            runOnUiThread {
-                                activity_track_image.setImageDrawable(placeholder)
+                                runOnUiThread {
+                                    activity_track_image.setImageDrawable(placeholder)
+                                }
+
+                                return true
                             }
 
-                            return true
-                        }
+                            override fun onResourceReady(
+                                resource: Drawable,
+                                model: Any?,
+                                target: Target<Drawable>?,
+                                dataSource: DataSource?,
+                                isFirstResource: Boolean
+                            ): Boolean {
+                                val coverHeight = resource.intrinsicHeight
+                                if (coverHeight > 0 && activity_track_image.height != coverHeight) {
+                                    activity_track_image.layoutParams.height = coverHeight
+                                }
 
-                        override fun onResourceReady(
-                            resource: Drawable,
-                            model: Any?,
-                            target: Target<Drawable>?,
-                            dataSource: DataSource?,
-                            isFirstResource: Boolean
-                        ): Boolean {
-                            val coverHeight = resource.intrinsicHeight
-                            if (coverHeight > 0 && activity_track_image.height != coverHeight) {
-                                activity_track_image.layoutParams.height = coverHeight
+                                runOnUiThread {
+                                    activity_track_image.setImageDrawable(resource)
+                                }
+                                return false
                             }
-
-                            runOnUiThread {
-                                activity_track_image.setImageDrawable(resource)
-                            }
-                            return false
-                        }
-                    })
-                    .into(wantedWidth, wantedHeight)
-                    .get()
-            } catch (ignored: Exception) {
+                        })
+                        .into(wantedWidth, wantedHeight)
+                        .get()
+                } catch (ignored: Exception) {
+                }
             }
         }
     }

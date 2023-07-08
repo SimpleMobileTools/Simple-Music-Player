@@ -158,14 +158,16 @@ class AlbumsAdapter(activity: BaseSimpleActivity, var albums: ArrayList<Album>, 
             album_tracks.text = tracks
             album_tracks.setTextColor(textColor)
 
-            val options = RequestOptions()
-                .error(placeholderBig)
-                .transform(CenterCrop(), RoundedCorners(cornerRadius))
+            activity.getAlbumCoverArt(album) { coverArt ->
+                val options = RequestOptions()
+                    .error(placeholderBig)
+                    .transform(CenterCrop(), RoundedCorners(cornerRadius))
 
-            Glide.with(activity)
-                .load(album.coverArt)
-                .apply(options)
-                .into(findViewById(R.id.album_image))
+                Glide.with(activity)
+                    .load(coverArt)
+                    .apply(options)
+                    .into(findViewById(R.id.album_image))
+            }
         }
     }
 

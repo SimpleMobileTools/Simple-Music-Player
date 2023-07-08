@@ -192,14 +192,16 @@ class AlbumsTracksAdapter(
             album_tracks.text = resources.getQuantityString(R.plurals.tracks_plural, album.trackCnt, album.trackCnt)
             album_tracks.setTextColor(textColor)
 
-            val options = RequestOptions()
-                .error(placeholderBig)
-                .transform(CenterCrop(), RoundedCorners(cornerRadius))
+            activity.getAlbumCoverArt(album) { coverArt ->
+                val options = RequestOptions()
+                    .error(placeholderBig)
+                    .transform(CenterCrop(), RoundedCorners(cornerRadius))
 
-            Glide.with(activity)
-                .load(album.coverArt)
-                .apply(options)
-                .into(findViewById(R.id.album_image))
+                Glide.with(activity)
+                    .load(coverArt)
+                    .apply(options)
+                    .into(findViewById(R.id.album_image))
+            }
         }
     }
 
@@ -217,15 +219,13 @@ class AlbumsTracksAdapter(
             track_duration.text = track.duration.getFormattedDuration()
             track_duration.setTextColor(textColor)
 
-            if (track.coverArt.isEmpty()) {
-                track_image.setImageDrawable(placeholder)
-            } else {
+            activity.getTrackCoverArt(track) { coverArt ->
                 val options = RequestOptions()
                     .error(placeholder)
                     .transform(CenterCrop(), RoundedCorners(cornerRadius))
 
                 Glide.with(activity)
-                    .load(track.coverArt)
+                    .load(coverArt)
                     .apply(options)
                     .into(findViewById(R.id.track_image))
             }

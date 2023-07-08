@@ -181,16 +181,14 @@ class QueueAdapter(activity: SimpleActivity, var items: ArrayList<Track>, recycl
             }
 
             activity.getTrackCoverArt(track) { coverArt ->
-                activity.runOnUiThread {
-                    val options = RequestOptions()
-                        .error(placeholder)
-                        .transform(CenterCrop(), RoundedCorners(cornerRadius))
+                val options = RequestOptions()
+                    .error(placeholder)
+                    .transform(CenterCrop(), RoundedCorners(cornerRadius))
 
-                    Glide.with(activity)
-                        .load(coverArt)
-                        .apply(options)
-                        .into(findViewById(R.id.track_queue_image))
-                }
+                Glide.with(activity)
+                    .load(coverArt)
+                    .apply(options)
+                    .into(findViewById(R.id.track_queue_image))
             }
         }
     }

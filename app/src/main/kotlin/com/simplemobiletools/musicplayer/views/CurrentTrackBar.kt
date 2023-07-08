@@ -51,12 +51,10 @@ class CurrentTrackBar(context: Context, attributeSet: AttributeSet) : RelativeLa
             .transform(CenterCrop(), RoundedCorners(cornerRadius))
 
         context.getTrackCoverArt(track) { coverArt ->
-            Handler(Looper.getMainLooper()).post {
-                Glide.with(this)
-                    .load(coverArt)
-                    .apply(options)
-                    .into(findViewById(R.id.current_track_image))
-            }
+            Glide.with(this)
+                .load(coverArt)
+                .apply(options)
+                .into(findViewById(R.id.current_track_image))
         }
     }
 

@@ -2,6 +2,7 @@ package com.simplemobiletools.musicplayer.extensions
 
 import android.annotation.SuppressLint
 import android.app.Application
+import android.content.ContentUris
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
@@ -9,6 +10,8 @@ import android.graphics.BitmapFactory
 import android.media.MediaMetadataRetriever
 import android.media.ThumbnailUtils
 import android.net.Uri
+import android.os.Handler
+import android.os.Looper
 import android.provider.MediaStore
 import android.provider.MediaStore.Audio
 import android.util.Size
@@ -177,10 +180,40 @@ private fun getFolderTrackPaths(folder: File): ArrayList<String> {
     return trackFiles
 }
 
+fun Context.getArtistCoverArt(artist: Artist, callback: (coverArt: Any?) -> Unit) {
+    ensureBackgroundThread {
+        if (artist.albumArtId == 0L) {
+            // this is not okay, find a way to extract the real artists cover
+            val track = tracksDAO.getTracksFromArtist(artist.title).firstOrNull()
+            getTrackCoverArt(track, callback)
+        } else {
+            val albumArtUri = ContentUris.withAppendedId(artworkUri, artist.albumArtId)
+            Handler(Looper.getMainLooper()).post {
+                callback(albumArtUri)
+            }
+        }
+    }
+}
+
+fun Context.getAlbumCoverArt(album: Album, callback: (coverArt: Any?) -> Unit) {
+    ensureBackgroundThread {
+        if (album.coverArt.isEmpty()) {
+            val track = tracksDAO.getTracksFromAlbum(album.id).firstOrNull()
+            getTrackCoverArt(track, callback)
+        } else {
+            Handler(Looper.getMainLooper()).post {
+                callback(album.coverArt)
+            }
+        }
+    }
+}
+
 fun Context.getTrackCoverArt(track: Track?, callback: (coverArt: Any?) -> Unit) {
     ensureBackgroundThread {
         if (track == null) {
-            callback(null)
+            Handler(Looper.getMainLooper()).post {
+                callback(null)
+            }
             return@ensureBackgroundThread
         }
 
@@ -188,7 +221,9 @@ fun Context.getTrackCoverArt(track: Track?, callback: (coverArt: Any?) -> Unit) 
             loadTrackCoverArt(track)
         }
 
-        callback(coverArt)
+        Handler(Looper.getMainLooper()).post {
+            callback(coverArt)
+        }
     }
 }
 
