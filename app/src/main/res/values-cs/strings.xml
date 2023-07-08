@@ -85,6 +85,7 @@
     <string name="swap_prev_next">Zaměnit tlačítka sluchátek pro předchozí/následující skladbu</string>
     <string name="exclude_folder_description">Vyloučením složky zabráníte zobrazení všech zvukových souborů v ní. Soubory ručně přidané do seznamů skladeb nebudou ovlivněny.</string>
     <string name="gapless_playback">Přehrávání bez mezer</string>
+    <string name="scan_files_manually">Scan files manually</string>
     <!-- FAQ -->
     <string name="faq_1_title">Jak mohu rychle posunout skladbu vpřed\?</string>
     <string name="faq_1_text">Můžete klepnout na texty aktuální nebo celkové délky skladby, které jsou vedle indikátoru průběhu přehrávání. To posune skladbu vpřed nebo vzad.</string>

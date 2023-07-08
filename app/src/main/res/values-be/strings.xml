@@ -87,6 +87,7 @@
     <string name="swap_prev_next">Абмяняць прызначэнне кнопак навушнікаў \"Папярэдні\"/\"Наступны\"</string>
     <string name="exclude_folder_description">Выключэнне папкі прадухіліць адлюстраванне ўсіх аўдыяфайлаў у ёй. Файлы, дададзеныя ў спісы прайгравання ўручную, не будуць закрануты.</string>
     <string name="gapless_playback">Прайграванне без паўз</string>
+    <string name="scan_files_manually">Scan files manually</string>
     <!-- FAQ -->
     <string name="faq_1_title">Як змяніць пазіцыю прайгравання кампазіцыі\?</string>
     <string name="faq_1_text">Вы можаце націснуць на тэкст бягучай альбо максімальнай працягласці побач з паўзунком. Гэта перамясціць прайграванне кампазіцыі назад альбо наперад.</string>

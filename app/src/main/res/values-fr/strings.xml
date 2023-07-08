@@ -85,6 +85,7 @@
     <string name="swap_prev_next">Remplacer les boutons des écouteurs précédents/suivants</string>
     <string name="exclude_folder_description">L\'exclusion d\'un dossier empêchera l\'affichage de tous les fichiers audio qu\'il contient. Les fichiers ajoutés manuellement aux listes de lecture ne seront pas affectés.</string>
     <string name="gapless_playback">Lecture sans décalage</string>
+    <string name="scan_files_manually">Scan files manually</string>
     <!-- FAQ -->
     <string name="faq_1_title">Comment puis-je faire avancer rapidement les chansons \?</string>
     <string name="faq_1_text">Vous pouvez cliquer sur le texte de la durée actuelle ou de la durée maximale près de la barre de recherche, ce qui fera avancer ou reculer la chanson.</string>
