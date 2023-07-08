@@ -104,7 +104,7 @@ class MainActivity : SimpleActivity() {
         }
 
         if (config.appRunCount > 1) {
-            refreshAllFragments()
+            refreshAllFragments(progress = false)
         }
     }
 
@@ -210,9 +210,8 @@ class MainActivity : SimpleActivity() {
         refreshAllFragments()
     }
 
-    private fun refreshAllFragments() {
-        val firstRun = config.appRunCount == 1
-        if (firstRun) {
+    private fun refreshAllFragments(progress: Boolean = true) {
+        if (progress) {
             loading_progress_bar.show()
         }
 
@@ -222,9 +221,7 @@ class MainActivity : SimpleActivity() {
                     it?.setupFragment(this)
                 }
 
-                if (firstRun) {
-                    loading_progress_bar.hide()
-                }
+                loading_progress_bar.hide()
             }
         }
     }
