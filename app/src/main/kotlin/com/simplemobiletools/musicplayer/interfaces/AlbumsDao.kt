@@ -15,7 +15,7 @@ interface AlbumsDao {
     fun getAll(): List<Album>
 
     @Query("SELECT * FROM albums WHERE id = :id")
-    fun getAlbumWithId(id: Long): Album
+    fun getAlbumWithId(id: Long): Album?
 
     @Query("SELECT * FROM albums WHERE artist_id = :artistId")
     fun getArtistAlbums(artistId: Long): List<Album>
