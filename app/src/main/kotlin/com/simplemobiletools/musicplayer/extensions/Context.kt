@@ -183,7 +183,6 @@ private fun getFolderTrackPaths(folder: File): ArrayList<String> {
 fun Context.getArtistCoverArt(artist: Artist, callback: (coverArt: Any?) -> Unit) {
     ensureBackgroundThread {
         if (artist.albumArtId == 0L) {
-            // this is not okay, find a way to extract the real artists cover
             val track = tracksDAO.getTracksFromArtist(artist.title).firstOrNull()
             getTrackCoverArt(track, callback)
         } else {

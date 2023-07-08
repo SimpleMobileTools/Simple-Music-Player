@@ -6,6 +6,7 @@ import android.media.MediaMetadataRetriever
 import android.media.MediaMetadataRetriever.*
 import android.provider.MediaStore
 import android.provider.MediaStore.Files
+import android.util.Log
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.commons.helpers.isQPlus
@@ -75,23 +76,27 @@ class SimpleMediaScanner(private val context: Application) {
         val selection = "${Files.FileColumns.MEDIA_TYPE} = ?"
         val selectionArgs = arrayOf(Files.FileColumns.MEDIA_TYPE_AUDIO.toString())
         val showFilename = config.showFilename
+        val excludedFolders = config.excludedFolders
 
         context.queryCursor(uri, projection, selection, selectionArgs, showErrors = true) { cursor ->
             val id = cursor.getLongValue(Files.FileColumns._ID)
             val title = cursor.getStringValue(Files.FileColumns.TITLE)
             val duration = cursor.getIntValue(Files.FileColumns.DURATION) / 1000
             val path = cursor.getStringValue(Files.FileColumns.DATA)
+            val parentPath = path.getParentPath()
             val artist = cursor.getStringValue(Files.FileColumns.ALBUM_ARTIST) ?: cursor.getStringValue(Files.FileColumns.ARTIST) ?: MediaStore.UNKNOWN_STRING
             val folderName = if (isQPlus()) {
                 cursor.getStringValue(Files.FileColumns.BUCKET_DISPLAY_NAME) ?: MediaStore.UNKNOWN_STRING
             } else {
-                path.getParentPath().getFilenameFromPath()
+                parentPath.getFilenameFromPath()
             }
-            val album = cursor.getStringValue(Files.FileColumns.ALBUM) ?: folderName
 
-            val track = Track(0, id, title, artist, path, duration, album, "", 0, 0, folderName, 0, 0)
-            track.title = track.getProperTitle(showFilename)
-            allTracks.add(track)
+            val album = cursor.getStringValue(Files.FileColumns.ALBUM) ?: folderName
+            if (parentPath !in excludedFolders) {
+                val track = Track(0, id, title, artist, path, duration, album, "", 0, 0, folderName, 0, 0)
+                track.title = track.getProperTitle(showFilename)
+                allTracks.add(track)
+            }
         }
     }
 
@@ -128,7 +133,7 @@ class SimpleMediaScanner(private val context: Application) {
     }
 
     private fun findAudioFiles(file: File, destination: ArrayList<File>) {
-        if (file.isHidden) {
+        if (file.isHidden || file.absolutePath.getParentPath() in config.excludedFolders) {
             return
         }
 
@@ -330,7 +335,7 @@ class SimpleMediaScanner(private val context: Application) {
         val selectionArgs = arrayOf(albumId.toString())
         val coverUri = ContentUris.withAppendedId(artworkUri, albumId)
         val coverArt = coverUri.toString()
-        val showFilename = context.config.showFilename
+        val showFilename = config.showFilename
 
         context.queryCursor(uri, projection.toTypedArray(), selection, selectionArgs, showErrors = true) { cursor ->
             val id = cursor.getLongValue(MediaStore.Audio.Media._ID)
@@ -377,7 +382,7 @@ class SimpleMediaScanner(private val context: Application) {
         val selection = "${MediaStore.Audio.Albums.ALBUM_ID} = ?"
         val selectionArgs = arrayOf(albumId.toString())
         var validTracks = 0
-        val excludedFolders = context.config.excludedFolders
+        val excludedFolders = config.excludedFolders
 
         context.queryCursor(uri, projection, selection, selectionArgs, showErrors = true) { cursor ->
             val path = cursor.getStringValue(MediaStore.Audio.Media.DATA)
