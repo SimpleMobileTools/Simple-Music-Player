@@ -6,7 +6,6 @@ import android.media.MediaMetadataRetriever
 import android.media.MediaMetadataRetriever.*
 import android.provider.MediaStore
 import android.provider.MediaStore.Files
-import android.util.Log
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.commons.helpers.isQPlus
@@ -41,22 +40,17 @@ class SimpleMediaScanner(private val context: Application) {
                 scanMediaStoreFiles()
             }
 
+            tracksGroupedByArtists.putAll(allTracks.groupBy { it.artist })
+            tracksGroupedByAlbums.putAll(allTracks.groupBy { it.album })
             updateAllDatabases(callback)
         }
     }
 
     private fun updateAllDatabases(callback: () -> Unit) {
-        tracksGroupedByArtists.putAll(allTracks.groupBy { it.artist })
-        tracksGroupedByAlbums.putAll(allTracks.groupBy { it.album })
-
         val artists = updateCachedArtists()
         val albums = updateCachedAlbums(artists)
-        updateCachedTracks(albums)
-
-        allTracks.clear()
-        tracksGroupedByArtists.clear()
-        tracksGroupedByAlbums.clear()
-        scanning = false
+        val tracks = updateCachedTracks(albums)
+        performCleanup(artists, albums, tracks)
         callback()
     }
 
@@ -394,7 +388,7 @@ class SimpleMediaScanner(private val context: Application) {
         return validTracks
     }
 
-    private fun updateCachedTracks(albums: ArrayList<Album>) {
+    private fun updateCachedTracks(albums: ArrayList<Album>): ArrayList<Track> {
         val tracks = albums.flatMap { getAlbumTracksSync(it.id) } as ArrayList<Track>
         val trackIds = tracks.map { it.mediaStoreId } as ArrayList<Long>
         val trackPaths = tracks.map { it.path } as ArrayList<String>
@@ -415,6 +409,7 @@ class SimpleMediaScanner(private val context: Application) {
         context.tracksDAO.insertAll(tracks)
         val invalidTracks = context.tracksDAO.getAll().filter { it.mediaStoreId !in trackIds || it.path !in trackPaths }
         context.tracksDAO.removeTracks(invalidTracks)
+        tracks.removeAll(invalidTracks.toSet())
 
         if (!config.wasAllTracksPlaylistCreated) {
             val allTracksLabel = context.resources.getString(R.string.all_tracks)
@@ -430,6 +425,46 @@ class SimpleMediaScanner(private val context: Application) {
             .filter { it.mediaStoreId !in tracksRemovedFromAllTracks && it.playListId == 0 && it.path.getParentPath() !in excludedFolders }
             .onEach { it.playListId = ALL_TRACKS_PLAYLIST_ID }
         RoomHelper(context).insertTracksWithPlaylist(tracksWithPlaylist as ArrayList<Track>)
+
+        return tracks
+    }
+
+    private fun performCleanup(artists: ArrayList<Artist>, albums: ArrayList<Album>, tracks: ArrayList<Track>) {
+        allTracks.clear()
+        tracksGroupedByArtists.clear()
+        tracksGroupedByAlbums.clear()
+        scanning = false
+
+        // remove albums without any tracks
+        val invalidAlbums = mutableSetOf<Album>()
+        for (album in albums) {
+            val albumId = album.id
+            val albumTracks = tracks.filter { it.albumId == albumId }
+            if (albumTracks.isEmpty())  {
+                invalidAlbums.add(album)
+                context.albumsDAO.deleteAlbum(albumId)
+            }
+        }
+        albums.removeAll(invalidAlbums)
+
+        // remove artists without any albums
+        for (artist in artists) {
+            val artistId = artist.id
+            val albumsByArtist = albums.filter { it.artistId == artistId }
+            if (albumsByArtist.isEmpty()) {
+                context.artistDAO.deleteArtist(artistId)
+                continue
+            }
+
+            // update album, track counts
+            val albumCnt = albumsByArtist.size
+            val trackCnt = albumsByArtist.sumOf { it.trackCnt }
+            if (trackCnt != artist.trackCnt || albumCnt != artist.albumCnt) {
+                context.artistDAO.deleteArtist(artistId)
+                val updated = artist.copy(trackCnt = trackCnt, albumCnt = albumCnt)
+                context.artistDAO.insert(updated)
+            }
+        }
     }
 
     companion object {
