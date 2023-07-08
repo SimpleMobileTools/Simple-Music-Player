@@ -81,13 +81,13 @@ class SimpleMediaScanner(private val context: Application) {
             val title = cursor.getStringValue(Files.FileColumns.TITLE)
             val duration = cursor.getIntValue(Files.FileColumns.DURATION) / 1000
             val path = cursor.getStringValue(Files.FileColumns.DATA)
-            val artist = cursor.getStringValue(Files.FileColumns.ALBUM_ARTIST) ?: cursor.getStringValue(Files.FileColumns.ARTIST)  ?: MediaStore.UNKNOWN_STRING
-            val album = cursor.getStringValue(Files.FileColumns.ALBUM)
+            val artist = cursor.getStringValue(Files.FileColumns.ALBUM_ARTIST) ?: cursor.getStringValue(Files.FileColumns.ARTIST) ?: MediaStore.UNKNOWN_STRING
             val folderName = if (isQPlus()) {
                 cursor.getStringValue(Files.FileColumns.BUCKET_DISPLAY_NAME) ?: MediaStore.UNKNOWN_STRING
             } else {
-                ""
+                path.getParentPath().getFilenameFromPath()
             }
+            val album = cursor.getStringValue(Files.FileColumns.ALBUM) ?: folderName
 
             val track = Track(0, id, title, artist, path, duration, album, "", 0, 0, folderName, 0, 0)
             track.title = track.getProperTitle(showFilename)
@@ -115,13 +115,13 @@ class SimpleMediaScanner(private val context: Application) {
             val title = retriever.extractMetadata(METADATA_KEY_TITLE) ?: path.getFilenameFromPath()
             val artist = retriever.extractMetadata(METADATA_KEY_ALBUMARTIST) ?: retriever.extractMetadata(METADATA_KEY_ARTIST) ?: MediaStore.UNKNOWN_STRING
             val duration = retriever.extractMetadata(METADATA_KEY_DURATION)?.toLong()?.div(1000)?.toInt() ?: 0
-            val folder = file.parent?.getFilenameFromPath()
-            val album = retriever.extractMetadata(METADATA_KEY_ALBUM) ?: folder ?: MediaStore.UNKNOWN_STRING
+            val folderName = file.parent?.getFilenameFromPath()
+            val album = retriever.extractMetadata(METADATA_KEY_ALBUM) ?: folderName ?: MediaStore.UNKNOWN_STRING
             val trackNumber = retriever.extractMetadata(METADATA_KEY_CD_TRACK_NUMBER)
             val trackId = trackNumber?.split("/")?.first()?.toInt() ?: 0
 
-            if (title.isNotEmpty() && folder != null) {
-                val track = Track(0, id, title, artist, path, duration, album, "", 0, trackId, folder, 0, 0, FLAG_MANUAL_CACHE)
+            if (title.isNotEmpty() && folderName != null) {
+                val track = Track(0, id, title, artist, path, duration, album, "", 0, trackId, folderName, 0, 0, FLAG_MANUAL_CACHE)
                 allTracks.add(track)
             }
         }
