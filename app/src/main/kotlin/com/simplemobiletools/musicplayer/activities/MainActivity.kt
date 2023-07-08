@@ -103,7 +103,9 @@ class MainActivity : SimpleActivity() {
             it?.setupColors(getProperTextColor(), getProperPrimaryColor())
         }
 
-        refreshAllFragments()
+        if (config.appRunCount > 1) {
+            refreshAllFragments()
+        }
     }
 
     override fun onPause() {
@@ -181,6 +183,7 @@ class MainActivity : SimpleActivity() {
     private fun initActivity() {
         bus = EventBus.getDefault()
         bus!!.register(this)
+        mediaScanner.scan()
         initFragments()
         sleep_timer_stop.setOnClickListener { stopSleepTimer() }
 

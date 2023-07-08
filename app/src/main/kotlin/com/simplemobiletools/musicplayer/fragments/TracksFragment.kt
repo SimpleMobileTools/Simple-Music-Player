@@ -40,7 +40,12 @@ class TracksFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
             tracks.sort()
 
             activity.runOnUiThread {
-                tracks_placeholder.text = context.getString(R.string.no_items_found)
+                val scanning = activity.mediaScanner.isScanning()
+                tracks_placeholder.text = if (scanning) {
+                    context.getString(R.string.loading_files)
+                } else {
+                    context.getString(R.string.no_items_found)
+                }
                 tracks_placeholder.beVisibleIf(tracks.isEmpty())
                 val adapter = tracks_list.adapter
                 if (adapter == null) {

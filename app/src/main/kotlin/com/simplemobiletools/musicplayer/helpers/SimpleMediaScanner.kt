@@ -21,13 +21,16 @@ class SimpleMediaScanner(private val context: Application) {
 
     private val config = context.config
     private var scanning = false
+    private var onScanComplete: (() -> Unit)? = null
 
     private val allTracks = arrayListOf<Track>()
     private val tracksGroupedByArtists = mutableMapOf<String, List<Track>>()
     private val tracksGroupedByAlbums = mutableMapOf<String, List<Track>>()
 
     // store new artists, albums and tracks into our local db, delete invalid items
-    fun scan(callback: () -> Unit) {
+    @Synchronized
+    fun scan(callback: (() -> Unit)? = null) {
+        onScanComplete = callback
         if (scanning) {
             return
         }
@@ -42,16 +45,18 @@ class SimpleMediaScanner(private val context: Application) {
 
             tracksGroupedByArtists.putAll(allTracks.groupBy { it.artist })
             tracksGroupedByAlbums.putAll(allTracks.groupBy { it.album })
-            updateAllDatabases(callback)
+            updateAllDatabases()
         }
     }
 
-    private fun updateAllDatabases(callback: () -> Unit) {
+    fun isScanning(): Boolean = scanning
+
+    private fun updateAllDatabases() {
         val artists = updateCachedArtists()
         val albums = updateCachedAlbums(artists)
         val tracks = updateCachedTracks(albums)
         performCleanup(artists, albums, tracks)
-        callback()
+        onScanComplete?.invoke()
     }
 
     private fun scanMediaStoreFiles() {
@@ -135,7 +140,7 @@ class SimpleMediaScanner(private val context: Application) {
             if (file.isAudioSlow()) {
                 destination.add(file)
             }
-        } else if (!file.containsNoMedia()){
+        } else if (!file.containsNoMedia()) {
             file.listFiles().orEmpty().forEach { child ->
                 findAudioFiles(child, destination)
             }
@@ -440,7 +445,7 @@ class SimpleMediaScanner(private val context: Application) {
         for (album in albums) {
             val albumId = album.id
             val albumTracks = tracks.filter { it.albumId == albumId }
-            if (albumTracks.isEmpty())  {
+            if (albumTracks.isEmpty()) {
                 invalidAlbums.add(album)
                 context.albumsDAO.deleteAlbum(albumId)
             }

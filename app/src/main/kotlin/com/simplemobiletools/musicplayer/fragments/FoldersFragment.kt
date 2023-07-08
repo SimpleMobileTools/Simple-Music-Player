@@ -14,6 +14,7 @@ import com.simplemobiletools.musicplayer.activities.TracksActivity
 import com.simplemobiletools.musicplayer.adapters.FoldersAdapter
 import com.simplemobiletools.musicplayer.dialogs.ChangeSortingDialog
 import com.simplemobiletools.musicplayer.extensions.config
+import com.simplemobiletools.musicplayer.extensions.mediaScanner
 import com.simplemobiletools.musicplayer.extensions.tracksDAO
 import com.simplemobiletools.musicplayer.helpers.FOLDER
 import com.simplemobiletools.musicplayer.helpers.TAB_FOLDERS
@@ -54,10 +55,15 @@ class FoldersFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
             context.config.wereTrackFoldersAdded = true
 
             activity.runOnUiThread {
-                folders_placeholder.text = context.getString(R.string.no_items_found)
+                val scanning = activity.mediaScanner.isScanning()
+                folders_placeholder.text = if (scanning) {
+                    context.getString(R.string.loading_files)
+                } else {
+                    context.getString(R.string.no_items_found)
+                }
                 folders_placeholder.beVisibleIf(folders.isEmpty())
                 folders_fastscroller.beGoneIf(folders_placeholder.isVisible())
-                folders_placeholder_2.beVisibleIf(folders.isEmpty() && context.config.excludedFolders.isNotEmpty())
+                folders_placeholder_2.beVisibleIf(folders.isEmpty() && context.config.excludedFolders.isNotEmpty() && !scanning)
                 folders_placeholder_2.underlineText()
 
                 folders_placeholder_2.setOnClickListener {
