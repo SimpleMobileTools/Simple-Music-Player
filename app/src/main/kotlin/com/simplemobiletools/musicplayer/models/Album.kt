@@ -12,7 +12,7 @@ import com.simplemobiletools.musicplayer.helpers.PLAYER_SORT_BY_TITLE
 
 @Entity(tableName = "albums", indices = [(Index(value = ["id"], unique = true))])
 data class Album(
-    @PrimaryKey(autoGenerate = true) val id: Long,
+    @PrimaryKey(autoGenerate = true) var id: Long,
     @ColumnInfo(name = "artist") val artist: String,
     @ColumnInfo(name = "title") val title: String,
     @ColumnInfo(name = "cover_art") val coverArt: String,

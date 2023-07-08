@@ -2,7 +2,10 @@ package com.simplemobiletools.musicplayer.helpers
 
 import android.app.Application
 import android.content.ContentUris
+import android.media.MediaMetadataRetriever
+import android.media.MediaMetadataRetriever.*
 import android.provider.MediaStore
+import android.provider.MediaStore.Files
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.commons.helpers.isQPlus
@@ -12,25 +15,135 @@ import com.simplemobiletools.musicplayer.models.Album
 import com.simplemobiletools.musicplayer.models.Artist
 import com.simplemobiletools.musicplayer.models.Playlist
 import com.simplemobiletools.musicplayer.models.Track
+import java.io.File
 
 class SimpleMediaScanner(private val context: Application) {
 
     private val config = context.config
+    private var scanning = false
+
+    private val allTracks = arrayListOf<Track>()
+    private val tracksGroupedByArtists = mutableMapOf<String, List<Track>>()
+    private val tracksGroupedByAlbums = mutableMapOf<String, List<Track>>()
 
     // store new artists, albums and tracks into our local db, delete invalid items
-    fun updateAllDatabases(callback: () -> Unit) {
+    fun scan(callback: () -> Unit) {
+        if (scanning) {
+            return
+        }
+
+        scanning = true
         ensureBackgroundThread {
-            updateCachedArtists { artists ->
-                updateCachedAlbums(artists) { albums ->
-                    updateCachedTracks(albums)
-                }
+            if (config.scanFilesManually) {
+                scanFilesManually()
+            } else {
+                scanMediaStoreFiles()
             }
 
-            callback()
+            updateAllDatabases(callback)
         }
     }
 
-    private fun updateCachedArtists(callback: (artists: ArrayList<Artist>) -> Unit) {
+    private fun updateAllDatabases(callback: () -> Unit) {
+        tracksGroupedByArtists.putAll(allTracks.groupBy { it.artist })
+        tracksGroupedByAlbums.putAll(allTracks.groupBy { it.album })
+
+        val artists = updateCachedArtists()
+        val albums = updateCachedAlbums(artists)
+        updateCachedTracks(albums)
+
+        allTracks.clear()
+        tracksGroupedByArtists.clear()
+        tracksGroupedByAlbums.clear()
+        scanning = false
+        callback()
+    }
+
+    private fun scanMediaStoreFiles() {
+        val uri = Files.getContentUri("external")
+        val projection = arrayOf(
+            Files.FileColumns._ID,
+            Files.FileColumns.DURATION,
+            Files.FileColumns.DATA,
+            Files.FileColumns.TITLE,
+            Files.FileColumns.ARTIST,
+            Files.FileColumns.ALBUM_ARTIST,
+            Files.FileColumns.ALBUM,
+            Files.FileColumns.BUCKET_DISPLAY_NAME
+        )
+
+        val selection = "${Files.FileColumns.MEDIA_TYPE} = ?"
+        val selectionArgs = arrayOf(Files.FileColumns.MEDIA_TYPE_AUDIO.toString())
+        val showFilename = config.showFilename
+
+        context.queryCursor(uri, projection, selection, selectionArgs, showErrors = true) { cursor ->
+            val id = cursor.getLongValue(Files.FileColumns._ID)
+            val title = cursor.getStringValue(Files.FileColumns.TITLE)
+            val duration = cursor.getIntValue(Files.FileColumns.DURATION) / 1000
+            val path = cursor.getStringValue(Files.FileColumns.DATA)
+            val artist = cursor.getStringValue(Files.FileColumns.ALBUM_ARTIST) ?: cursor.getStringValue(Files.FileColumns.ARTIST)  ?: MediaStore.UNKNOWN_STRING
+            val album = cursor.getStringValue(Files.FileColumns.ALBUM)
+            val folderName = if (isQPlus()) {
+                cursor.getStringValue(Files.FileColumns.BUCKET_DISPLAY_NAME) ?: MediaStore.UNKNOWN_STRING
+            } else {
+                ""
+            }
+
+            val track = Track(0, id, title, artist, path, duration, album, "", 0, 0, folderName, 0, 0)
+            track.title = track.getProperTitle(showFilename)
+            allTracks.add(track)
+        }
+    }
+
+    private fun scanFilesManually() {
+        val audioFiles = arrayListOf<File>()
+        for (rootPath in arrayOf(context.internalStoragePath, context.sdCardPath)) {
+            if (rootPath.isEmpty()) {
+                continue
+            }
+
+            val rootFile = File(rootPath)
+            findAudioFiles(rootFile, audioFiles)
+        }
+
+        val retriever = MediaMetadataRetriever()
+        for (file in audioFiles) {
+            val path = file.absolutePath
+            retriever.setDataSource(path)
+
+            val id = 0L
+            val title = retriever.extractMetadata(METADATA_KEY_TITLE) ?: path.getFilenameFromPath()
+            val artist = retriever.extractMetadata(METADATA_KEY_ALBUMARTIST) ?: retriever.extractMetadata(METADATA_KEY_ARTIST) ?: MediaStore.UNKNOWN_STRING
+            val duration = retriever.extractMetadata(METADATA_KEY_DURATION)?.toLong()?.div(1000)?.toInt() ?: 0
+            val folder = file.parent?.getFilenameFromPath()
+            val album = retriever.extractMetadata(METADATA_KEY_ALBUM) ?: folder ?: MediaStore.UNKNOWN_STRING
+            val trackNumber = retriever.extractMetadata(METADATA_KEY_CD_TRACK_NUMBER)
+            val trackId = trackNumber?.split("/")?.first()?.toInt() ?: 0
+
+            if (title.isNotEmpty() && folder != null) {
+                val track = Track(0, id, title, artist, path, duration, album, "", 0, trackId, folder, 0, 0, FLAG_MANUAL_CACHE)
+                allTracks.add(track)
+            }
+        }
+    }
+
+    private fun findAudioFiles(file: File, destination: ArrayList<File>) {
+        if (file.isHidden) {
+            return
+        }
+
+        if (file.isFile && file.isAudioSlow()) {
+            if (file.isAudioSlow()) {
+                destination.add(file)
+            }
+        } else {
+            file.listFiles().orEmpty().forEach { child ->
+                findAudioFiles(child, destination)
+            }
+        }
+    }
+
+    private fun updateCachedArtists(): ArrayList<Artist> {
         val artists = getArtistsSync()
         artists.forEach { artist ->
             context.artistDAO.insert(artist)
@@ -46,7 +159,7 @@ class SimpleMediaScanner(private val context: Application) {
             }
         }
 
-        callback(artists)
+        return artists
     }
 
     private fun getArtistsSync(): ArrayList<Artist> {
@@ -63,6 +176,18 @@ class SimpleMediaScanner(private val context: Application) {
             var artist = Artist(id, title, 0, 0, 0)
             artist = fillArtistExtras(artist)
             if (artist.albumCnt > 0 && artist.trackCnt > 0) {
+                artists.add(artist)
+            }
+        }
+
+        // get artists from other sources (e.g. MediaStore.Files)
+        val foundArtists = artists.map { it.title }
+        for ((artistName, tracks) in tracksGroupedByArtists) {
+            val albumCnt = tracks.groupBy { it.album }.size
+            val trackCnt = tracks.size
+            val artist = Artist(0, artistName, albumCnt, trackCnt, 0)
+            if (artistName !in foundArtists) {
+                artist.id = artist.hashCode().toLong()
                 artists.add(artist)
             }
         }
@@ -90,7 +215,7 @@ class SimpleMediaScanner(private val context: Application) {
         return artist
     }
 
-    private fun updateCachedAlbums(artists: ArrayList<Artist>, callback: (albums: ArrayList<Album>) -> Unit) {
+    private fun updateCachedAlbums(artists: ArrayList<Artist>): ArrayList<Album> {
         val albums = ArrayList<Album>()
         artists.forEach { artist ->
             val albumsByArtist = getAlbumsSync(artist)
@@ -111,7 +236,7 @@ class SimpleMediaScanner(private val context: Application) {
             }
         }
 
-        callback(albums)
+        return albums
     }
 
     private fun getAlbumsSync(artist: Artist): ArrayList<Album> {
@@ -141,6 +266,19 @@ class SimpleMediaScanner(private val context: Application) {
             val trackCnt = getAlbumTracksCount(id)
             if (trackCnt > 0) {
                 val album = Album(id, artistName, title, coverArt, year, trackCnt, artist.id)
+                albums.add(album)
+            }
+        }
+
+        // get albums from other sources (e.g. MediaStore.Files)
+        val foundAlbums = albums.map { it.title }
+        val tracksByArtist = tracksGroupedByArtists[artist.title] ?: return albums
+        val groupedByAlbums = tracksByArtist.groupBy { it.album }
+        for ((albumName, tracks) in groupedByAlbums) {
+            val trackCnt = tracks.size
+            val album = Album(0, artist.title, albumName, "", 0, trackCnt, artist.id)
+            if (albumName !in foundAlbums) {
+                album.id = album.hashCode().toLong()
                 albums.add(album)
             }
         }
@@ -216,6 +354,23 @@ class SimpleMediaScanner(private val context: Application) {
         return tracks
     }
 
+    private fun getAlbumTracksFromOtherSources(album: Album): ArrayList<Track> {
+        val tracks = arrayListOf<Track>()
+        val albumId = album.id
+        val albumTracks = tracksGroupedByAlbums[album.title] ?: return tracks
+        albumTracks.forEach { track ->
+            track.albumId = albumId
+            if (track.mediaStoreId == 0L) {
+                // use hashCode as id for tracking purposes, there's a very slim chance of collision
+                val trackId = track.hashCode().toLong()
+                track.mediaStoreId = trackId
+            }
+            tracks.add(track)
+        }
+
+        return tracks
+    }
+
     private fun getAlbumTracksCount(albumId: Long): Int {
         val uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
         val projection = arrayOf(MediaStore.Audio.Media._ID, MediaStore.Audio.Media.DATA)
@@ -235,21 +390,26 @@ class SimpleMediaScanner(private val context: Application) {
     }
 
     private fun updateCachedTracks(albums: ArrayList<Album>) {
-        val tracks = albums.flatMap { getAlbumTracksSync(it.id) } as ArrayList<Track>
-        val newIds = tracks.map { it.mediaStoreId } as ArrayList<Long>
+        var tracks = albums.flatMap { getAlbumTracksSync(it.id) } as ArrayList<Track>
+        val trackIds = tracks.map { it.mediaStoreId } as ArrayList<Long>
+        val trackPaths = tracks.map { it.path } as ArrayList<String>
 
-        // get tracks from MediaStore.Files table as well
-        getAllAudioFiles().forEach { track ->
+        // get tracks from other sources e.g. MediaStore.Files table or directly from storage files if manual scan is enabled
+        val tracksFromOtherSources = albums.flatMap { getAlbumTracksFromOtherSources(it) } as ArrayList<Track>
+        tracksFromOtherSources.forEach { track ->
             val trackId = track.mediaStoreId
-            if (trackId !in newIds) {
+            val trackPath = track.path
+            if (trackId !in trackIds && trackPath !in trackPaths) {
                 tracks.add(track)
-                newIds.add(trackId)
+                trackIds.add(trackId)
+                trackPaths.add(trackPath)
             }
         }
 
         // insert all tracks and remove any invalid tracks from cache
+        tracks = tracks.filter { it.duration >= MIN_TRACK_DURATION_SECONDS } as ArrayList<Track>
         context.tracksDAO.insertAll(tracks)
-        val invalidTracks = context.tracksDAO.getAll().filter { it.mediaStoreId !in newIds }
+        val invalidTracks = context.tracksDAO.getAll().filter { it.mediaStoreId !in trackIds || it.path !in trackPaths }
         context.tracksDAO.removeTracks(invalidTracks)
 
         if (!config.wasAllTracksPlaylistCreated) {
@@ -268,43 +428,16 @@ class SimpleMediaScanner(private val context: Application) {
         RoomHelper(context).insertTracksWithPlaylist(tracksWithPlaylist as ArrayList<Track>)
     }
 
-    private fun getAllAudioFiles(): ArrayList<Track> {
-        val tracks = arrayListOf<Track>()
-        val uri = MediaStore.Files.getContentUri("external")
-        val projection = arrayOf(
-            MediaStore.Files.FileColumns._ID,
-            MediaStore.Files.FileColumns.DURATION,
-            MediaStore.Files.FileColumns.DATA,
-            MediaStore.Files.FileColumns.TITLE,
-            MediaStore.Files.FileColumns.ARTIST,
-            MediaStore.Files.FileColumns.ALBUM,
-            MediaStore.Files.FileColumns.BUCKET_DISPLAY_NAME
-        )
+    companion object {
+        private var instance: SimpleMediaScanner? = null
 
-        val selection = "${MediaStore.Files.FileColumns.MEDIA_TYPE} = ?"
-        val selectionArgs = arrayOf(MediaStore.Files.FileColumns.MEDIA_TYPE_AUDIO.toString())
-        val showFilename = config.showFilename
-
-        context.queryCursor(uri, projection, selection, selectionArgs, showErrors = true) { cursor ->
-            val id = cursor.getLongValue(MediaStore.Files.FileColumns._ID)
-            val title = cursor.getStringValue(MediaStore.Files.FileColumns.TITLE)
-            val duration = cursor.getIntValue(MediaStore.Files.FileColumns.DURATION) / 1000
-            val path = cursor.getStringValue(MediaStore.Files.FileColumns.DATA)
-            val artist = cursor.getStringValue(MediaStore.Files.FileColumns.ARTIST) ?: MediaStore.UNKNOWN_STRING
-            val album = cursor.getStringValue(MediaStore.Files.FileColumns.ALBUM)
-            val folderName = if (isQPlus()) {
-                cursor.getStringValue(MediaStore.Files.FileColumns.BUCKET_DISPLAY_NAME) ?: MediaStore.UNKNOWN_STRING
+        fun getInstance(app: Application): SimpleMediaScanner {
+            return if (instance != null) {
+                instance!!
             } else {
-                ""
-            }
-
-            if (duration > 5) {
-                val track = Track(0, id, title, artist, path, duration, album, "", 0, 0, folderName, 0, 0)
-                track.title = track.getProperTitle(showFilename)
-                tracks.add(track)
+                instance = SimpleMediaScanner(app)
+                instance!!
             }
         }
-
-        return tracks
     }
 }

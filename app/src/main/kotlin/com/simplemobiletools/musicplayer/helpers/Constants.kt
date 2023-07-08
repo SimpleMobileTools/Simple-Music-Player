@@ -69,6 +69,7 @@ const val LAST_EXPORT_PATH = "last_export_path"
 const val EXCLUDED_FOLDERS = "excluded_folders"
 const val SORT_PLAYLIST_PREFIX = "sort_playlist_"
 const val GAPLESS_PLAYBACK = "gapless_playback"
+const val SCAN_FILES_MANUALLY = "scan_files_manually"
 
 const val SHOW_FILENAME_NEVER = 1
 const val SHOW_FILENAME_IF_UNAVAILABLE = 2
@@ -80,6 +81,8 @@ const val TAB_ARTISTS = 4
 const val TAB_ALBUMS = 8
 const val TAB_TRACKS = 16
 const val ACTIVITY_PLAYLIST_FOLDER = 32
+
+const val FLAG_MANUAL_CACHE = 1
 
 // show Folders tab only on Android Q+, BUCKET_DISPLAY_NAME hasn't been available before that
 val allTabsMask = if (isQPlus()) {
@@ -127,5 +130,7 @@ const val MIME_TYPE_M3U = "audio/x-mpegurl"
 const val M3U_HEADER = "#EXTM3U"
 const val M3U_ENTRY = "#EXTINF:"
 const val M3U_DURATION_SEPARATOR = ","
+
+const val MIN_TRACK_DURATION_SECONDS = 5
 
 fun getPermissionToRequest() = if (isTiramisuPlus()) PERMISSION_READ_MEDIA_AUDIO else PERMISSION_WRITE_STORAGE

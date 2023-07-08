@@ -50,7 +50,7 @@ val Context.artistDAO: ArtistsDao get() = getTracksDB().ArtistsDao()
 
 val Context.albumsDAO: AlbumsDao get() = getTracksDB().AlbumsDao()
 
-val Context.mediaScanner: SimpleMediaScanner get() = SimpleMediaScanner(applicationContext as Application)
+val Context.mediaScanner: SimpleMediaScanner get() = SimpleMediaScanner.getInstance(applicationContext as Application)
 
 fun Context.getTracksDB() = SongsDatabase.getInstance(this)
 
