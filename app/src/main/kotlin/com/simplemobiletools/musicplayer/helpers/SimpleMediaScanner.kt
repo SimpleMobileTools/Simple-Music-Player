@@ -136,7 +136,7 @@ class SimpleMediaScanner(private val context: Application) {
             if (file.isAudioSlow()) {
                 destination.add(file)
             }
-        } else {
+        } else if (!file.containsNoMedia()){
             file.listFiles().orEmpty().forEach { child ->
                 findAudioFiles(child, destination)
             }
@@ -390,7 +390,7 @@ class SimpleMediaScanner(private val context: Application) {
     }
 
     private fun updateCachedTracks(albums: ArrayList<Album>) {
-        var tracks = albums.flatMap { getAlbumTracksSync(it.id) } as ArrayList<Track>
+        val tracks = albums.flatMap { getAlbumTracksSync(it.id) } as ArrayList<Track>
         val trackIds = tracks.map { it.mediaStoreId } as ArrayList<Long>
         val trackPaths = tracks.map { it.path } as ArrayList<String>
 
@@ -407,7 +407,6 @@ class SimpleMediaScanner(private val context: Application) {
         }
 
         // insert all tracks and remove any invalid tracks from cache
-        tracks = tracks.filter { it.duration >= MIN_TRACK_DURATION_SECONDS } as ArrayList<Track>
         context.tracksDAO.insertAll(tracks)
         val invalidTracks = context.tracksDAO.getAll().filter { it.mediaStoreId !in trackIds || it.path !in trackPaths }
         context.tracksDAO.removeTracks(invalidTracks)
