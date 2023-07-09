@@ -83,7 +83,6 @@
     <string name="swap_prev_next">Vaihda edellinen/seuraava kuulokepainikkeet</string>
     <string name="exclude_folder_description">Kansion poistaminen estää kaikkien kansiossa olevien äänitiedostojen näyttämisen. Tämä ei vaikuta soittolistoihin manuaalisesti lisättyihin tiedostoihin.</string>
     <string name="gapless_playback">Gapless playback</string>
-    <string name="scan_files_manually">Scan files manually</string>
     <!-- FAQ -->
     <string name="faq_1_title">Kuinka voin kelata kappaleita eteenpäin\?</string>
     <string name="faq_1_text">Voit napsauttaa nykyistä tai enimmäiskestoa lähellä hakupalkkia olevaa tekstiä, jolloin kappale siirtyy joko taaksepäin tai eteenpäin.</string>
