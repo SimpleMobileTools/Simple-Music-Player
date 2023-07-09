@@ -88,7 +88,7 @@
     <string name="exclude_folder_description">Excluding a folder will prevent the displaying of all audio files within. Files manually added to playlists will not be affected.</string>
     <string name="gapless_playback">Gapless playback</string>
     <string name="rescan_media">Rescan media</string>
-    <string name="audio_focus">Audio focus</string>
+    <string name="allow_concurrent_playback">Allow concurrent playback with other apps</string>
     <!-- FAQ -->
     <string name="faq_1_title">איך אני יכול להריץ שירים קדימה\?</string>
     <string name="faq_1_text">אתה יכול ללחוץ על הטקסטים הנוכחיים או המשך המקסימלי ליד סרגל החיפוש, שיעביר את השיר אחורה או קדימה.</string>

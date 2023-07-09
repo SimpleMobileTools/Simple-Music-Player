@@ -228,17 +228,17 @@
             </RelativeLayout>
 
             <RelativeLayout
-                android:id="@+id/settings_audio_focus_holder"
+                android:id="@+id/settings_concurrent_playback_holder"
                 style="@style/SettingsHolderCheckboxStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <com.simplemobiletools.commons.views.MyAppCompatCheckbox
-                    android:id="@+id/settings_audio_focus"
+                    android:id="@+id/settings_concurrent_playback"
                     style="@style/SettingsCheckboxStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/audio_focus" />
+                    android:text="@string/allow_concurrent_playback" />
 
             </RelativeLayout>
         </LinearLayout>

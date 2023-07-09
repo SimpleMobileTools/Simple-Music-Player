@@ -88,7 +88,7 @@
     <string name="exclude_folder_description">Виключення папки перешкоджатиме відображенню всіх аудіофайлів у ній. Файли, додані до списків відтворення вручну, не постраждають.</string>
     <string name="gapless_playback">Відтворення без пауз</string>
     <string name="rescan_media">Rescan media</string>
-    <string name="audio_focus">Audio focus</string>
+    <string name="allow_concurrent_playback">Allow concurrent playback with other apps</string>
     <!-- FAQ -->
     <string name="faq_1_title">Як я можу змінити позицію відтворення композиції\?</string>
     <string name="faq_1_text">Ви можете натиснути на текст поточної або загальної тривалості відтворення поруч із ковзним елементом відтворення, це перемістить програвання композиції або назад, або вперед.</string>

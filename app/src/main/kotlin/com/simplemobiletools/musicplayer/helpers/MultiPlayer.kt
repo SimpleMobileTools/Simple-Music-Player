@@ -40,7 +40,7 @@ class MultiPlayer(private val app: Application, private val callbacks: PlaybackC
             }
 
             AudioManager.AUDIOFOCUS_LOSS -> {
-                if (app.config.audioFocusEnabled) {
+                if (!app.config.allowConcurrentPlayback) {
                     pause()
                 }
                 callbacks.onPlayStateChanged()
@@ -48,7 +48,7 @@ class MultiPlayer(private val app: Application, private val callbacks: PlaybackC
 
             AudioManager.AUDIOFOCUS_LOSS_TRANSIENT -> {
                 val wasPlaying = isPlaying()
-                if (app.config.audioFocusEnabled) {
+                if (!app.config.allowConcurrentPlayback) {
                     pause()
                 }
                 callbacks.onPlayStateChanged()

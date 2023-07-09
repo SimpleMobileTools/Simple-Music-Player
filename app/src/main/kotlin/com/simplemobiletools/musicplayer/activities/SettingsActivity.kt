@@ -42,7 +42,7 @@ class SettingsActivity : SimpleActivity() {
         setupSwapPrevNext()
         setupReplaceTitle()
         setupGaplessPlayback()
-        setupAudioFocus()
+        setupConcurrentPlayback()
         updateTextColors(settings_nested_scrollview)
 
         arrayOf(settings_color_customization_section_label, settings_general_settings_label, settings_playback_section_label).forEach {
@@ -145,11 +145,11 @@ class SettingsActivity : SimpleActivity() {
         }
     }
 
-    private fun setupAudioFocus() {
-        settings_audio_focus.isChecked = config.audioFocusEnabled
-        settings_audio_focus_holder.setOnClickListener {
-            settings_audio_focus.toggle()
-            config.audioFocusEnabled = settings_audio_focus.isChecked
+    private fun setupConcurrentPlayback() {
+        settings_concurrent_playback.isChecked = config.allowConcurrentPlayback
+        settings_concurrent_playback_holder.setOnClickListener {
+            settings_concurrent_playback.toggle()
+            config.allowConcurrentPlayback = settings_concurrent_playback.isChecked
         }
     }
 }
