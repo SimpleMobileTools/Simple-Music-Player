@@ -16,6 +16,7 @@ import com.simplemobiletools.musicplayer.models.Artist
 import com.simplemobiletools.musicplayer.models.Playlist
 import com.simplemobiletools.musicplayer.models.Track
 import java.io.File
+import java.io.FileInputStream
 
 class SimpleMediaScanner(private val context: Application) {
 
@@ -110,24 +111,45 @@ class SimpleMediaScanner(private val context: Application) {
             findAudioFiles(rootFile, audioFiles)
         }
 
-        val retriever = MediaMetadataRetriever()
-        for (file in audioFiles) {
-            val path = file.absolutePath
-            retriever.setDataSource(path)
+        try {
+            val retriever = MediaMetadataRetriever()
+            for (file in audioFiles) {
+                val path = file.absolutePath
+                var inputStream: FileInputStream? = null
 
-            val id = 0L
-            val title = retriever.extractMetadata(METADATA_KEY_TITLE) ?: path.getFilenameFromPath()
-            val artist = retriever.extractMetadata(METADATA_KEY_ALBUMARTIST) ?: retriever.extractMetadata(METADATA_KEY_ARTIST) ?: MediaStore.UNKNOWN_STRING
-            val duration = retriever.extractMetadata(METADATA_KEY_DURATION)?.toLong()?.div(1000)?.toInt() ?: 0
-            val folderName = file.parent?.getFilenameFromPath()
-            val album = retriever.extractMetadata(METADATA_KEY_ALBUM) ?: folderName ?: MediaStore.UNKNOWN_STRING
-            val trackNumber = retriever.extractMetadata(METADATA_KEY_CD_TRACK_NUMBER)
-            val trackId = trackNumber?.split("/")?.first()?.toInt() ?: 0
+                try {
+                    retriever.setDataSource(path)
+                } catch (ignored: Exception) {
+                    try {
+                        inputStream = file.inputStream()
+                        retriever.setDataSource(inputStream.fd)
+                    } catch (ignored: Exception) {
+                        continue
+                    }
+                }
 
-            if (title.isNotEmpty() && folderName != null) {
-                val track = Track(0, id, title, artist, path, duration, album, "", 0, trackId, folderName, 0, 0, FLAG_MANUAL_CACHE)
-                allTracks.add(track)
+                val id = 0L
+                val title = retriever.extractMetadata(METADATA_KEY_TITLE) ?: path.getFilenameFromPath()
+                val artist = retriever.extractMetadata(METADATA_KEY_ALBUMARTIST) ?: retriever.extractMetadata(METADATA_KEY_ARTIST) ?: MediaStore.UNKNOWN_STRING
+                val duration = retriever.extractMetadata(METADATA_KEY_DURATION)?.toLong()?.div(1000)?.toInt() ?: 0
+                val folderName = file.parent?.getFilenameFromPath()
+                val album = retriever.extractMetadata(METADATA_KEY_ALBUM) ?: folderName ?: MediaStore.UNKNOWN_STRING
+                val trackNumber = retriever.extractMetadata(METADATA_KEY_CD_TRACK_NUMBER)
+                val trackId = trackNumber?.split("/")?.first()?.toInt() ?: 0
+
+                if (title.isNotEmpty() && folderName != null) {
+                    val track = Track(0, id, title, artist, path, duration, album, "", 0, trackId, folderName, 0, 0, FLAG_MANUAL_CACHE)
+                    allTracks.add(track)
+                }
+
+                try {
+                    inputStream?.close()
+                } catch (ignored: Exception) {
+                }
             }
+
+            retriever.release()
+        } catch (ignored: Exception) {
         }
     }
 
