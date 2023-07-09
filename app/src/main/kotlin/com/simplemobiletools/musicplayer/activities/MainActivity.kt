@@ -103,7 +103,7 @@ class MainActivity : SimpleActivity() {
             it?.setupColors(getProperTextColor(), getProperPrimaryColor())
         }
 
-        if (config.appRunCount > 1) {
+        if (storedExcludedFolders != config.excludedFolders.hashCode()) {
             refreshAllFragments(progress = false)
         }
     }
