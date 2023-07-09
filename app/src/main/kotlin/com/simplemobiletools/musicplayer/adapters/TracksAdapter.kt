@@ -244,10 +244,12 @@ class TracksAdapter(
                 .transform(CenterCrop(), RoundedCorners(cornerRadius))
 
             context.getTrackCoverArt(track) { coverArt ->
-                Glide.with(activity)
-                    .load(coverArt)
-                    .apply(options)
-                    .into(findViewById(R.id.track_image))
+                if (!activity.isDestroyed || !activity.isFinishing) {
+                    Glide.with(activity)
+                        .load(coverArt)
+                        .apply(options)
+                        .into(findViewById(R.id.track_image))
+                }
             }
 
             track_image.beVisible()
