@@ -86,6 +86,7 @@
     <string name="exclude_folder_description">Isključivanje mape spriječit će prikazivanje svih audio datoteka u njoj. To neće utjecati na datoteke koje su ručno dodane na popise za reprodukciju.</string>
     <string name="gapless_playback">Reprodukcija bez prekida</string>
     <string name="rescan_media">Rescan media</string>
+    <string name="audio_focus">Audio focus</string>
     <!-- FAQ -->
     <string name="faq_1_title">Kako mogu premotati pjesme\?</string>
     <string name="faq_1_text">Možeš pritisnuti tekst aktualnog ili krajnjeg trajanja pjesme u blizini trake za pretraživanje. Time ćeš premotati pjesmu unatrag ili naprijed.</string>

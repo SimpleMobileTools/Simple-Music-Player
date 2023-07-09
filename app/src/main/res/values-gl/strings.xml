@@ -84,6 +84,7 @@
     <string name="exclude_folder_description">A exclusión dun cartafol impedirá que se mostren todolos ficheiros de audio que hai. Os ficheiros engadidos manualmente ás listas de reprodución non se verán afectados.</string>
     <string name="gapless_playback">Gapless playback</string>
     <string name="rescan_media">Rescan media</string>
+    <string name="audio_focus">Audio focus</string>
     <!-- FAQ -->
     <string name="faq_1_title">Como podo avanzar rapidamente as cancións\?</string>
     <string name="faq_1_text">Podes premer nos textos de duración actual ou máxima preto da barra de busca, que moverá a canción cara atrás ou cara adiante.</string>

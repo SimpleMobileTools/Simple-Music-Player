@@ -84,6 +84,7 @@
     <string name="exclude_folder_description">Að útiloka möppu kemur í veg fyrir birtingu allra hljóðskráa innan. Skrár sem bætt er handvirkt við lagalista verða ekki fyrir áhrifum.</string>
     <string name="gapless_playback">Gapless playback</string>
     <string name="rescan_media">Rescan media</string>
+    <string name="audio_focus">Audio focus</string>
     <!-- FAQ -->
     <string name="faq_1_title">Hvernig get ég hraðspólað lög\?</string>
     <string name="faq_1_text">Þú getur smellt á núverandi eða hámarkslengd texta nálægt leitarstikunni sem mun færa lagið annað hvort afturábak eða áfram.</string>
