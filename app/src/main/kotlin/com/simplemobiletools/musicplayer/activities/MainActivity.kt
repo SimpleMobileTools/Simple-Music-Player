@@ -108,7 +108,7 @@ class MainActivity : SimpleActivity() {
         }
 
         if (storedExcludedFolders != config.excludedFolders.hashCode()) {
-            refreshAllFragments(progress = false)
+            refreshAllFragments()
         }
     }
 
@@ -158,7 +158,7 @@ class MainActivity : SimpleActivity() {
         main_menu.getToolbar().setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.sort -> showSortingDialog()
-                R.id.rescan_media -> refreshAllFragments()
+                R.id.rescan_media -> refreshAllFragments(showProgress = true)
                 R.id.sleep_timer -> showSleepTimer()
                 R.id.create_new_playlist -> createNewPlaylist()
                 R.id.create_playlist_from_folder -> createPlaylistFromFolder()
@@ -215,8 +215,8 @@ class MainActivity : SimpleActivity() {
         refreshAllFragments()
     }
 
-    private fun refreshAllFragments(progress: Boolean = true) {
-        if (progress) {
+    private fun refreshAllFragments(showProgress: Boolean = config.appRunCount == 1) {
+        if (showProgress) {
             loading_progress_bar.show()
         }
 
