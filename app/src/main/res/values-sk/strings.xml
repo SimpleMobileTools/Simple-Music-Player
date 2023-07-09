@@ -85,7 +85,7 @@
     <string name="swap_prev_next">Vymeniť slúchadlové tlačidlá pre ďalšiu/predošlú skladbu</string>
     <string name="exclude_folder_description">Vylúčenie priečinka spôsobí ukrytie daných audio súborov. Súbory ručne pridané do playlistov nebudú ovplyvnené.</string>
     <string name="gapless_playback">Prehrávanie bez medzier</string>
-    <string name="audio_focus">Audio focus</string>
+    <string name="rescan_media">Preskenovať médiá</string>
     <!-- FAQ -->
     <string name="faq_1_title">Ako viem posunúť skladbu vpred\?</string>
     <string name="faq_1_text">Môžete kliknúť na texty súčasnej, alebo maximálnej dĺžky skladby, ktoré sú vedľa indikátora súčasného progresu. To posunie skladbu buď vpred, alebo vzad.</string>

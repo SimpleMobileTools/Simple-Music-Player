@@ -83,7 +83,7 @@
     <string name="swap_prev_next">Växla hörlurars föregående- och nästaknappar</string>
     <string name="exclude_folder_description">Exkludera en mapp kommer förhindra visningar av alla ljudfiler inuti. Filer manuellt tillagda filer till spellistor påverkas inte.</string>
     <string name="gapless_playback">Gapless playback</string>
-    <string name="audio_focus">Audio focus</string>
+    <string name="rescan_media">Rescan media</string>
     <!-- FAQ -->
     <string name="faq_1_title">Hur kan jag snabbspola låtar\?</string>
     <string name="faq_1_text">Du kan klicka på låtens nuvarande tid eller längd nära sökfältet, vilket kommer att spola låten antingen bakåt eller framåt.</string>
