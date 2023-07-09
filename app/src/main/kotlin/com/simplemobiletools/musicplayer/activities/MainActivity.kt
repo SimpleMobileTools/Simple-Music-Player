@@ -188,6 +188,7 @@ class MainActivity : SimpleActivity() {
     private fun initActivity() {
         bus = EventBus.getDefault()
         bus!!.register(this)
+        // trigger a scan first so that the fragments will accurately reflect the scanning state
         mediaScanner.scan()
         initFragments()
         sleep_timer_stop.setOnClickListener { stopSleepTimer() }
