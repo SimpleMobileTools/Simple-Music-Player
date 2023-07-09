@@ -154,6 +154,7 @@ class MainActivity : SimpleActivity() {
         main_menu.getToolbar().setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.sort -> showSortingDialog()
+                R.id.rescan_media -> refreshAllFragments()
                 R.id.sleep_timer -> showSleepTimer()
                 R.id.create_new_playlist -> createNewPlaylist()
                 R.id.create_playlist_from_folder -> createPlaylistFromFolder()
