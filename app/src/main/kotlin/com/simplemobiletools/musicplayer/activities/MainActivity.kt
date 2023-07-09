@@ -95,12 +95,16 @@ class MainActivity : SimpleActivity() {
         updateMenuColors()
         updateTextColors(main_holder)
         setupTabColors()
+        val properTextColor = getProperTextColor()
+        val properPrimaryColor = getProperPrimaryColor()
         sleep_timer_holder.background = ColorDrawable(getProperBackgroundColor())
-        sleep_timer_stop.applyColorFilter(getProperTextColor())
+        sleep_timer_stop.applyColorFilter(properTextColor)
         updateCurrentTrackBar()
+        loading_progress_bar.setIndicatorColor(properPrimaryColor)
+        loading_progress_bar.trackColor = properPrimaryColor.adjustAlpha(LOWER_ALPHA)
 
         getAllFragments().forEach {
-            it?.setupColors(getProperTextColor(), getProperPrimaryColor())
+            it?.setupColors(properTextColor, properPrimaryColor)
         }
 
         if (storedExcludedFolders != config.excludedFolders.hashCode()) {
