@@ -13,9 +13,7 @@ import com.simplemobiletools.musicplayer.dialogs.ManageVisibleTabsDialog
 import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.extensions.sendIntent
 import com.simplemobiletools.musicplayer.helpers.*
-import com.simplemobiletools.musicplayer.models.Events
 import kotlinx.android.synthetic.main.activity_settings.*
-import org.greenrobot.eventbus.EventBus
 import java.util.*
 import kotlin.system.exitProcess
 
@@ -43,7 +41,6 @@ class SettingsActivity : SimpleActivity() {
         setupManageShownTabs()
         setupSwapPrevNext()
         setupReplaceTitle()
-        setupManualScanning()
         setupGaplessPlayback()
         updateTextColors(settings_nested_scrollview)
 
@@ -135,15 +132,6 @@ class SettingsActivity : SimpleActivity() {
     private fun setupManageExcludedFolders() {
         settings_manage_excluded_folders_holder.setOnClickListener {
             startActivity(Intent(this, ExcludedFoldersActivity::class.java))
-        }
-    }
-
-    private fun setupManualScanning() {
-        settings_scan_files_manually.isChecked = config.scanFilesManually
-        settings_scan_files_manually_holder.setOnClickListener {
-            settings_scan_files_manually.toggle()
-            config.scanFilesManually = settings_scan_files_manually.isChecked
-            EventBus.getDefault().post(Events.RefreshFragments())
         }
     }
 

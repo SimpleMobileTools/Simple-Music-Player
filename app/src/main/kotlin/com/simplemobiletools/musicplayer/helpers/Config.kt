@@ -142,8 +142,4 @@ class Config(context: Context) : BaseConfig(context) {
     var gaplessPlayback: Boolean
         get() = prefs.getBoolean(GAPLESS_PLAYBACK, false)
         set(gaplessPlayback) = prefs.edit().putBoolean(GAPLESS_PLAYBACK, gaplessPlayback).apply()
-
-    var scanFilesManually: Boolean
-        get() = prefs.getBoolean(SCAN_FILES_MANUALLY, false)
-        set(scanFilesManually) = prefs.edit().putBoolean(SCAN_FILES_MANUALLY, scanFilesManually).apply()
 }
