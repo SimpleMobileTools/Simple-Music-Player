@@ -14,7 +14,7 @@ const val STOP_SLEEP_TIMER = "stop_sleep_timer"
 const val TRACK_ID = "track_id"
 const val RESTART_PLAYER = "RESTART_PLAYER"
 const val EQUALIZER_PRESET_CUSTOM = -1
-
+const val VOLUME = "volume"
 const val ARTIST = "artist"
 const val ALBUM = "album"
 const val TRACK = "track"
@@ -47,6 +47,7 @@ const val SET_PLAYBACK_SPEED = PATH + "SET_PLAYBACK_SPEED"
 const val UPDATE_QUEUE_SIZE = PATH + "UPDATE_QUEUE_SIZE"
 const val UPDATE_GAPLESS_PLAYBACK = PATH + "UPDATE_GAPLESS_PLAYBACK"
 const val TRACK_STATE_CHANGED = "TRACK_STATE_CHANGED"
+const val SET_VOLUME = PATH + "SET_VOLUME"
 
 // shared preferences
 const val SHUFFLE = "shuffle"
@@ -68,6 +69,7 @@ const val LAST_EXPORT_PATH = "last_export_path"
 const val EXCLUDED_FOLDERS = "excluded_folders"
 const val SORT_PLAYLIST_PREFIX = "sort_playlist_"
 const val GAPLESS_PLAYBACK = "gapless_playback"
+const val CURRENT_VOLUME = "current_volume"
 
 const val SHOW_FILENAME_NEVER = 1
 const val SHOW_FILENAME_IF_UNAVAILABLE = 2

@@ -185,6 +185,10 @@ class MultiPlayer(private val app: Application, private val callbacks: PlaybackC
         }
     }
 
+    fun getCurrentVolume(): Float {
+        return audioManager!!.getStreamVolume(AudioManager.STREAM_MUSIC).toFloat()
+    }
+
     override fun onError(mp: MediaPlayer, what: Int, extra: Int): Boolean {
         isInitialized = false
         mCurrentMediaPlayer.reset()

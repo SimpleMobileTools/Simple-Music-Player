@@ -165,6 +165,7 @@ class MusicService : Service(), MultiPlayer.PlaybackCallbacks {
             SET_PLAYBACK_SPEED -> setPlaybackSpeed()
             UPDATE_QUEUE_SIZE -> updateQueueSize()
             UPDATE_GAPLESS_PLAYBACK -> updateGaplessPlayback()
+            SET_VOLUME -> changeVolumeTo(intent)
         }
 
         MediaButtonReceiver.handleIntent(mMediaSession!!, intent)
@@ -938,6 +939,11 @@ class MusicService : Service(), MultiPlayer.PlaybackCallbacks {
         mPlayer!!.seek(progress * 1000)
         saveTrackProgress()
         resumeTrack()
+    }
+
+    private fun changeVolumeTo(intent: Intent) {
+        val volume = intent.getFloatExtra(VOLUME, mPlayer!!.getCurrentVolume() / 100)
+        mPlayer!!.setVolume(volume / 100)
     }
 
     private fun trackStateChanged(isPlaying: Boolean = isPlaying(), notify: Boolean = true) {

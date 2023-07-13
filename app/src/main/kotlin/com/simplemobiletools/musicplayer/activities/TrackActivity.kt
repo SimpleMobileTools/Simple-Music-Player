@@ -110,6 +110,7 @@ class TrackActivity : SimpleActivity(), PlaybackSpeedListener {
 
     override fun onResume() {
         super.onResume()
+        activity_volume_bar.progress = config.currentVolume
         updateTextColors(activity_track_holder)
         activity_track_title.setTextColor(getProperTextColor())
         activity_track_artist.setTextColor(getProperTextColor())
@@ -170,7 +171,7 @@ class TrackActivity : SimpleActivity(), PlaybackSpeedListener {
         setupShuffleButton()
         setupPlaybackSettingButton()
         setupSeekbar()
-
+        setupVolumeBar()
         arrayOf(activity_track_previous, activity_track_play_pause, activity_track_next).forEach {
             it.applyColorFilter(getProperTextColor())
         }
@@ -357,6 +358,25 @@ class TrackActivity : SimpleActivity(), PlaybackSpeedListener {
         })
     }
 
+    private fun setupVolumeBar(){
+        activity_volume_image_icon.applyColorFilter(getProperTextColor())
+        activity_volume_bar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener{
+            override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
+
+                Intent(this@TrackActivity, MusicService::class.java).apply {
+                    putExtra(VOLUME, seekBar.progress.toFloat())
+                    action = SET_VOLUME
+                    startService(this)
+                }
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar?) { }
+
+            override fun onStopTrackingTouch(seekBar: SeekBar) {
+                config.currentVolume = seekBar.progress
+            }
+        })
+    }
     private fun showPlaybackSpeedPicker() {
         val fragment = PlaybackSpeedFragment()
         fragment.show(supportFragmentManager, PlaybackSpeedFragment::class.java.simpleName)

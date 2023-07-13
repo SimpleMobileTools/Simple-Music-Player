@@ -136,4 +136,8 @@ class Config(context: Context) : BaseConfig(context) {
     var gaplessPlayback: Boolean
         get() = prefs.getBoolean(GAPLESS_PLAYBACK, false)
         set(gaplessPlayback) = prefs.edit().putBoolean(GAPLESS_PLAYBACK, gaplessPlayback).apply()
+
+    var currentVolume: Int
+        get() = prefs.getInt(CURRENT_VOLUME, 25)
+        set(currentVolume) = prefs.edit().putInt(CURRENT_VOLUME, currentVolume).apply()
 }
