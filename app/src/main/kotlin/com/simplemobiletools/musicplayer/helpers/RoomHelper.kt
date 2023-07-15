@@ -32,7 +32,8 @@ class RoomHelper(val context: Context) {
             Audio.Media.DATA,
             Audio.Media.DURATION,
             Audio.Media.ALBUM,
-            Audio.Media.ALBUM_ID
+            Audio.Media.ALBUM_ID,
+            Audio.Media.YEAR
         )
 
         if (isQPlus()) {
@@ -57,18 +58,20 @@ class RoomHelper(val context: Context) {
                 val mediaStoreId = cursor.getLongValue(Audio.Media._ID)
                 val title = cursor.getStringValue(Audio.Media.TITLE)
                 val artist = cursor.getStringValue(Audio.Media.ARTIST)
+                val artistId = cursor.getLongValue(Audio.Media.ARTIST_ID)
                 val path = cursor.getStringValue(Audio.Media.DATA)
                 val duration = cursor.getIntValue(Audio.Media.DURATION) / 1000
                 val album = cursor.getStringValue(Audio.Media.ALBUM)
                 val albumId = cursor.getLongValue(Audio.Media.ALBUM_ID)
                 val coverArt = ContentUris.withAppendedId(artworkUri, albumId).toString()
+                val year = cursor.getIntValue(Audio.Media.YEAR)
                 val folderName = if (isQPlus()) {
                     cursor.getStringValue(Audio.Media.BUCKET_DISPLAY_NAME) ?: MediaStore.UNKNOWN_STRING
                 } else {
                     ""
                 }
 
-                val song = Track(0, mediaStoreId, title, artist, path, duration, album, coverArt, playlistId, 0, folderName, albumId, 0)
+                val song = Track(0, mediaStoreId, title, artist, path, duration, album, coverArt, playlistId, 0, folderName, albumId, artistId, year, 0)
                 song.title = song.getProperTitle(showFilename)
                 songs.add(song)
                 pathsMap.remove(path)
@@ -78,7 +81,8 @@ class RoomHelper(val context: Context) {
         pathsMap.forEach {
             val unknown = MediaStore.UNKNOWN_STRING
             val title = context.getTitle(it) ?: unknown
-            val song = Track(0, 0, title, context.getArtist(it) ?: unknown, it, context.getDuration(it) ?: 0, "", "", playlistId, 0, "", 0, 0)
+            val artist = context.getArtist(it) ?: unknown
+            val song = Track(0, 0, title, artist, it, context.getDuration(it) ?: 0, "", "", playlistId, 0, "", 0, 0, 0,0)
             song.title = song.getProperTitle(showFilename)
             songs.add(song)
         }

@@ -17,8 +17,8 @@ interface SongsDao {
     @Query("SELECT * FROM tracks WHERE playlist_id = :playlistId")
     fun getTracksFromPlaylist(playlistId: Int): List<Track>
 
-    @Query("SELECT * FROM tracks WHERE artist = :artist")
-    fun getTracksFromArtist(artist: String): List<Track>
+    @Query("SELECT * FROM tracks WHERE artist_id = :artistId")
+    fun getTracksFromArtist(artistId: Long): List<Track>
 
     @Query("SELECT * FROM tracks WHERE album_id = :albumId")
     fun getTracksFromAlbum(albumId: Long): List<Track>
