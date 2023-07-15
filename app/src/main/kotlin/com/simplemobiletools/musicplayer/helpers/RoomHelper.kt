@@ -33,6 +33,7 @@ class RoomHelper(val context: Context) {
             Audio.Media.DURATION,
             Audio.Media.ALBUM,
             Audio.Media.ALBUM_ID,
+            Audio.Media.ARTIST_ID,
             Audio.Media.YEAR
         )
 
