@@ -80,6 +80,7 @@
     <string name="next_track">Naslednji:</string>
     <string name="track_queue">Vrstni red melodij</string>
     <string name="add_to_queue">Dodajte v vrsto</string>
+    <string name="play_next">Play next</string>
     <string name="remove_from_queue">Odstranite iz vrste</string>
     <string name="create_playlist_from_queue">Ustvarite seznam predvajanja iz vrste</string>
     <!-- Settings -->

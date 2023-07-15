@@ -76,6 +76,7 @@
     <string name="next_track">Következő:</string>
     <string name="track_queue">Várólista</string>
     <string name="add_to_queue">Hozzáadás a várólistához</string>
+    <string name="play_next">Play next</string>
     <string name="remove_from_queue">Eltávolítás a várólistából</string>
     <string name="create_playlist_from_queue">Lejátszási lista készítése a várólistából</string>
     <!-- Settings -->

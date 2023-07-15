@@ -76,6 +76,7 @@
     <string name="next_track">Sonraki:</string>
     <string name="track_queue">Parça kuyruğu</string>
     <string name="add_to_queue">Kuyruğa ekle</string>
+    <string name="play_next">Play next</string>
     <string name="remove_from_queue">Kuyruktan kaldır</string>
     <string name="create_playlist_from_queue">Kuyruktan çalma listesi oluştur</string>
     <!-- Settings -->

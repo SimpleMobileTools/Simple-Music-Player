@@ -80,6 +80,7 @@
     <string name="next_track">Следующее:</string>
     <string name="track_queue">Очередь композиций</string>
     <string name="add_to_queue">Добавить в очередь</string>
+    <string name="play_next">Play next</string>
     <string name="remove_from_queue">Удалить из очереди</string>
     <string name="create_playlist_from_queue">Создать плейлист из очереди</string>
     <!-- Settings -->

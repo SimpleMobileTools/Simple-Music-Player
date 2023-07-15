@@ -81,7 +81,11 @@ class AlbumsTracksAdapter(
         }
     }
 
-    override fun prepareActionMode(menu: Menu) {}
+    override fun prepareActionMode(menu: Menu) {
+        menu.apply {
+            findItem(R.id.cab_play_next).isVisible = isOneItemSelected()
+        }
+    }
 
     override fun actionItemPressed(id: Int) {
         if (selectedKeys.isEmpty()) {
@@ -95,6 +99,7 @@ class AlbumsTracksAdapter(
             R.id.cab_delete -> askConfirmDelete()
             R.id.cab_rename -> displayEditDialog()
             R.id.cab_select_all -> selectAll()
+            R.id.cab_play_next -> playNext()
         }
     }
 
@@ -125,6 +130,14 @@ class AlbumsTracksAdapter(
     private fun addToQueue() {
         ensureBackgroundThread {
             activity.addTracksToQueue(getAllSelectedTracks()) {
+                finishActMode()
+            }
+        }
+    }
+
+    private fun playNext() {
+        getSelectedTracks().firstOrNull()?.let { selectedTrack ->
+            activity.playNextInQueue(selectedTrack) {
                 finishActMode()
             }
         }

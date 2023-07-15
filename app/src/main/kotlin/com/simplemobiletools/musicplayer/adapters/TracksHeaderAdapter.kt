@@ -78,6 +78,7 @@ class TracksHeaderAdapter(activity: SimpleActivity, var items: ArrayList<ListIte
             val oneItemsSelected = isOneItemSelected()
             val selected = getSelectedTracks().firstOrNull()?.let { !it.path.startsWith("content://") && tagHelper.isEditTagSupported(it) } == true
             findItem(R.id.cab_rename).isVisible = oneItemsSelected && selected
+            findItem(R.id.cab_play_next).isVisible = isOneItemSelected()
         }
     }
 
@@ -93,6 +94,7 @@ class TracksHeaderAdapter(activity: SimpleActivity, var items: ArrayList<ListIte
             R.id.cab_delete -> askConfirmDelete()
             R.id.cab_rename -> displayEditDialog()
             R.id.cab_select_all -> selectAll()
+            R.id.cab_play_next -> playNext()
         }
     }
 
@@ -118,6 +120,14 @@ class TracksHeaderAdapter(activity: SimpleActivity, var items: ArrayList<ListIte
     private fun addToQueue() {
         activity.addTracksToQueue(getSelectedTracks()) {
             finishActMode()
+        }
+    }
+
+    private fun playNext() {
+        getSelectedTracks().firstOrNull()?.let { selectedTrack ->
+            activity.playNextInQueue(selectedTrack) {
+                finishActMode()
+            }
         }
     }
 

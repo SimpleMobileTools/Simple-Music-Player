@@ -82,6 +82,7 @@ class TracksAdapter(
             findItem(R.id.cab_remove_from_playlist).isVisible = isPlaylistContent
             findItem(R.id.cab_rename).isVisible =
                 isOneItemSelected() && getSelectedTracks().firstOrNull()?.let { !it.path.startsWith("content://") && tagHelper.isEditTagSupported(it) } == true
+            findItem(R.id.cab_play_next).isVisible = isOneItemSelected()
         }
     }
 
@@ -98,6 +99,7 @@ class TracksAdapter(
             R.id.cab_remove_from_playlist -> removeFromPlaylist()
             R.id.cab_delete -> askConfirmDelete()
             R.id.cab_select_all -> selectAll()
+            R.id.cab_play_next -> playNext()
         }
     }
 
@@ -131,6 +133,14 @@ class TracksAdapter(
     private fun addToQueue() {
         activity.addTracksToQueue(getSelectedTracks()) {
             finishActMode()
+        }
+    }
+
+    private fun playNext() {
+        getSelectedTracks().firstOrNull()?.let { selectedTrack ->
+            activity.playNextInQueue(selectedTrack) {
+                finishActMode()
+            }
         }
     }
 

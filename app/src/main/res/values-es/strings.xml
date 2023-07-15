@@ -78,6 +78,7 @@
     <string name="next_track">Siguiente:</string>
     <string name="track_queue">Cola de canciones</string>
     <string name="add_to_queue">Añadir a la cola</string>
+    <string name="play_next">Play next</string>
     <string name="remove_from_queue">Quitar de la cola</string>
     <string name="create_playlist_from_queue">Crear lista de reproducción de la cola</string>
     <!-- Settings -->
