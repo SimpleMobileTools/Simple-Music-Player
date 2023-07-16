@@ -20,6 +20,10 @@ import java.io.FileInputStream
 import java.util.Arrays
 import java.util.concurrent.ConcurrentHashMap
 
+/**
+ * This singleton class manages the process of querying [MediaStore] for new audio files, manually scanning storage for missing audio files, and removing outdated
+ * files from the local cache. It ensures that only one scan is running at a time to avoid unnecessary expenses and conflicts.
+ */
 class SimpleMediaScanner(private val context: Application) {
 
     private val config = context.config
@@ -32,7 +36,10 @@ class SimpleMediaScanner(private val context: Application) {
 
     fun isScanning(): Boolean = scanning
 
-    // store new artists, albums and tracks into our local db, delete invalid items
+    /**
+     * Initiates the scanning process for new audio files, artists, and albums. Since the manual scan can be a slow process, the [callback] parameter is
+     * triggered in two stages to ensure that the UI is updated as soon as possible.
+     */
     @Synchronized
     fun scan(callback: ((complete: Boolean) -> Unit)? = null) {
         onScanComplete = callback
@@ -45,7 +52,6 @@ class SimpleMediaScanner(private val context: Application) {
             try {
                 scanMediaStore()
                 onScanComplete?.invoke(false)
-                // scan storage files directly because some files just don't show up in MediaStore
                 scanFilesManually()
 
                 cleanupDatabase()
@@ -60,6 +66,12 @@ class SimpleMediaScanner(private val context: Application) {
         }
     }
 
+    /**
+     * Scans [MediaStore] for audio files. Querying [MediaStore.Audio.Artists] and [MediaStore.Audio.Albums] is not necessary in this context, we
+     * can manually group tracks by artist and album as done in [scanFilesManually]. However, this approach would require fetching album art bitmaps repeatedly
+     * using [MediaMetadataRetriever] instead of utilizing the cached version provided by [MediaStore]. This may become a necessity when we add more nuanced
+     * features e.g. group albums by `ALBUM-ARTIST` instead of `ARTIST`
+     */
     private fun scanMediaStore() {
         newTracks += getTracksSync()
         newArtists += getArtistsSync()
@@ -100,6 +112,30 @@ class SimpleMediaScanner(private val context: Application) {
         newArtists.removeAll { it.trackCnt == 0 || it.albumCnt == 0 }
 
         updateAllDatabases()
+    }
+
+    /**
+     * Manually scans the storage for audio files. This method is used to find audio files that may not be available in the [MediaStore] database,
+     * as well as files added through unconventional methods (e.g. `adb push`) that may take longer to appear in [MediaStore]. By performing a manual scan,
+     * any new audio files can be immediately detected and made visible within the app. Existing paths already available in [MediaStore] are ignored to optimize
+     * the scanning process for efficiency.
+     */
+    private fun scanFilesManually() {
+        val trackPaths = newTracks.map { it.path }
+        val artistNames = newArtists.map { it.title }
+        val albumNames = newAlbums.map { it.title }
+
+        val tracks = findTracksManually(pathsToIgnore = trackPaths)
+        if (tracks.isNotEmpty()) {
+            val artists = splitIntoArtists(tracks)
+            val albums = splitIntoAlbums(tracks)
+
+            newTracks += tracks.filter { it.path !in trackPaths }
+            newAlbums += albums.filter { it.title !in albumNames }
+            newArtists += artists.filter { it.title !in artistNames }
+
+            updateAllDatabases()
+        }
     }
 
     private fun updateAllDatabases() {
@@ -236,24 +272,6 @@ class SimpleMediaScanner(private val context: Application) {
         return albums
     }
 
-    private fun scanFilesManually() {
-        val trackPaths = newTracks.map { it.path }
-        val artistNames = newArtists.map { it.title }
-        val albumNames = newAlbums.map { it.title }
-
-        val tracks = findTracksManually(pathsToIgnore = trackPaths)
-        if (tracks.isNotEmpty()) {
-            val artists = splitIntoArtists(tracks)
-            val albums = splitIntoAlbums(tracks)
-
-            newTracks += tracks.filter { it.path !in trackPaths }
-            newAlbums += albums.filter { it.title !in albumNames }
-            newArtists += artists.filter { it.title !in artistNames }
-
-            updateAllDatabases()
-        }
-    }
-
     private fun findTracksManually(pathsToIgnore: List<String>): ArrayList<Track> {
         val audioFilePaths = arrayListOf<String>()
         val excludedPaths = pathsToIgnore.toMutableList().apply { addAll(0, config.excludedFolders) }
@@ -269,6 +287,7 @@ class SimpleMediaScanner(private val context: Application) {
 
         val tracksSet = ConcurrentHashMap.newKeySet<Track>()
         val paths = audioFilePaths.toTypedArray()
+        // running metadata retriever in parallel significantly reduces the required time
         Arrays.stream(paths).parallel().forEach { path ->
             val retriever = MediaMetadataRetriever()
             var inputStream: FileInputStream? = null
