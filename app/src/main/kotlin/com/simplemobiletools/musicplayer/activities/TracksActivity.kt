@@ -223,8 +223,7 @@ class TracksActivity : SimpleActivity() {
                     albumTracks.sortWith(compareBy({ it.trackId }, { it.title.lowercase() }))
                     tracks.addAll(albumTracks)
 
-                    val coverArt = ContentUris.withAppendedId(artworkUri, album.id).toString()
-                    val header = AlbumHeader(album.id, album.title, coverArt, album.year, tracks.size, tracks.sumOf { it.duration }, album.artist)
+                    val header = AlbumHeader(album.id, album.title, album.coverArt, album.year, tracks.size, tracks.sumOf { it.duration }, album.artist)
                     listItems.add(header)
                     listItems.addAll(tracks)
                 }
