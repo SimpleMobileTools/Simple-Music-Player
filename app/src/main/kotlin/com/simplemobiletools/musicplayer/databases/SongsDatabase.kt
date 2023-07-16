@@ -170,9 +170,17 @@ abstract class SongsDatabase : RoomDatabase() {
 
         private val MIGRATION_11_12 = object : Migration(11, 12) {
             override fun migrate(database: SupportSQLiteDatabase) {
-                database.execSQL("ALTER TABLE tracks ADD COLUMN artist_id INTEGER NOT NULL DEFAULT 0")
-                database.execSQL("ALTER TABLE tracks ADD COLUMN year INTEGER NOT NULL DEFAULT 0")
-                database.execSQL("ALTER TABLE tracks ADD COLUMN flags INTEGER NOT NULL DEFAULT 0")
+                database.apply {
+                    execSQL("ALTER TABLE tracks ADD COLUMN artist_id INTEGER NOT NULL DEFAULT 0")
+                    execSQL("ALTER TABLE tracks ADD COLUMN year INTEGER NOT NULL DEFAULT 0")
+                    execSQL("ALTER TABLE tracks ADD COLUMN flags INTEGER NOT NULL DEFAULT 0")
+
+                    execSQL("CREATE TABLE `artists_new` (`id` INTEGER NOT NULL PRIMARY KEY, `title` TEXT NOT NULL, `album_cnt` INTEGER NOT NULL, `track_cnt` INTEGER NOT NULL, `album_art` TEXT NOT NULL)")
+                    execSQL("INSERT OR IGNORE INTO artists_new (id, title, album_cnt, track_cnt) SELECT id, title, album_cnt, track_cnt FROM artists")
+                    execSQL("DROP TABLE artists")
+                    execSQL("ALTER TABLE artists_new RENAME TO artists")
+                    execSQL("CREATE UNIQUE INDEX IF NOT EXISTS `index_artists_id` ON `artists` (`id`)")
+                }
             }
         }
     }

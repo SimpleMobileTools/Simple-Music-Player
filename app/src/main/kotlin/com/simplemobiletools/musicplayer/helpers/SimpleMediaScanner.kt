@@ -90,7 +90,9 @@ class SimpleMediaScanner(private val context: Application) {
 
         for (artist in newArtists) {
             artist.trackCnt = newTracks.filter { it.artistId == artist.id }.size
-            artist.albumCnt = newAlbums.filter { it.artistId == artist.id }.size
+            val albumsByArtist = newAlbums.filter { it.artistId == artist.id }
+            artist.albumCnt = albumsByArtist.size
+            artist.albumArt = albumsByArtist.firstOrNull { it.coverArt.isNotEmpty() }?.coverArt.orEmpty()
         }
 
         // remove invalid albums, artists
@@ -188,7 +190,7 @@ class SimpleMediaScanner(private val context: Application) {
             val title = cursor.getStringValue(Audio.Artists.ARTIST) ?: MediaStore.UNKNOWN_STRING
             val albumCnt = cursor.getIntValue(Audio.Artists.NUMBER_OF_TRACKS)
             val trackCnt = cursor.getIntValue(Audio.Artists.NUMBER_OF_ALBUMS)
-            val artist = Artist(id, title, albumCnt, trackCnt, 0)
+            val artist = Artist(id, title, albumCnt, trackCnt, "")
             if (artist.albumCnt > 0 && artist.trackCnt > 0) {
                 newArtists.add(artist)
             }
@@ -344,7 +346,7 @@ class SimpleMediaScanner(private val context: Application) {
             val trackCnt = tracksByArtist.size
             if (trackCnt > 0) {
                 val albumCnt = tracksByArtist.groupBy { it.album }.size
-                val artist = Artist(0, artistName, albumCnt, trackCnt, 0)
+                val artist = Artist(0, artistName, albumCnt, trackCnt, "")
                 val artistId = artist.hashCode().toLong()
                 artist.id = artistId
                 tracksByArtist.onEach { it.artistId = artistId }
