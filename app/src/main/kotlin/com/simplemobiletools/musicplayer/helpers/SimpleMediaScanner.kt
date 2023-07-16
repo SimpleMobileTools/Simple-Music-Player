@@ -48,7 +48,7 @@ class SimpleMediaScanner(private val context: Application) {
                 // scan storage files directly because some files just don't show up in MediaStore
                 scanFilesManually()
 
-                performCleanup()
+                cleanupDatabase()
                 onScanComplete?.invoke(true)
             } catch (ignored: Exception) {
             } finally {
@@ -63,7 +63,7 @@ class SimpleMediaScanner(private val context: Application) {
     private fun scanMediaStore() {
         newTracks += getTracksSync()
         newArtists += getArtistsSync()
-        newAlbums += getAlbumsSync()
+        newAlbums += getAlbumsSync(newArtists)
 
         // ignore tracks from excluded folders and tracks with no albums, artists
         val albumIds = newAlbums.map { it.id }
@@ -92,6 +92,10 @@ class SimpleMediaScanner(private val context: Application) {
             artist.trackCnt = newTracks.filter { it.artistId == artist.id }.size
             artist.albumCnt = newAlbums.filter { it.artistId == artist.id }.size
         }
+
+        // remove invalid albums, artists
+        newAlbums.removeAll { it.trackCnt == 0 }
+        newArtists.removeAll { it.trackCnt == 0 || it.albumCnt == 0 }
 
         updateAllDatabases()
     }
@@ -193,7 +197,7 @@ class SimpleMediaScanner(private val context: Application) {
         return artists
     }
 
-    private fun getAlbumsSync(): ArrayList<Album> {
+    private fun getAlbumsSync(artists: ArrayList<Artist>): ArrayList<Album> {
         val albums = arrayListOf<Album>()
         val uri = Audio.Albums.EXTERNAL_CONTENT_URI
         val projection = arrayListOf(
@@ -218,7 +222,7 @@ class SimpleMediaScanner(private val context: Application) {
             val artistId = if (isQPlus()) {
                 cursor.getLongValue(Audio.Albums.ARTIST_ID)
             } else {
-                0
+                artists.first { it.title == artistName }.id
             }
 
             if (trackCnt > 0) {
@@ -371,7 +375,7 @@ class SimpleMediaScanner(private val context: Application) {
         return albums
     }
 
-    private fun performCleanup() {
+    private fun cleanupDatabase() {
         // remove invalid tracks
         val newTrackIds = newTracks.map { it.mediaStoreId } as ArrayList<Long>
         val newTrackPaths = newTracks.map { it.path } as ArrayList<String>
