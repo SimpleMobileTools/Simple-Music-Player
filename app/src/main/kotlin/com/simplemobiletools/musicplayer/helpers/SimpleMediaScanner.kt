@@ -1,20 +1,30 @@
 package com.simplemobiletools.musicplayer.helpers
 
 import android.app.Application
+import android.app.Notification
+import android.app.PendingIntent
+import android.app.PendingIntent.FLAG_CANCEL_CURRENT
+import android.app.PendingIntent.FLAG_IMMUTABLE
 import android.content.ContentUris
+import android.content.Intent
 import android.media.MediaMetadataRetriever
 import android.media.MediaMetadataRetriever.*
+import android.os.Handler
+import android.os.Looper
 import android.provider.MediaStore
 import android.provider.MediaStore.Audio
+import androidx.core.app.NotificationCompat
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.commons.helpers.isQPlus
 import com.simplemobiletools.musicplayer.R
+import com.simplemobiletools.musicplayer.activities.MainActivity
 import com.simplemobiletools.musicplayer.extensions.*
 import com.simplemobiletools.musicplayer.models.Album
 import com.simplemobiletools.musicplayer.models.Artist
 import com.simplemobiletools.musicplayer.models.Playlist
 import com.simplemobiletools.musicplayer.models.Track
+import com.simplemobiletools.musicplayer.receivers.NotificationDismissedReceiver
 import java.io.File
 import java.io.FileInputStream
 import java.util.Arrays
@@ -28,11 +38,15 @@ class SimpleMediaScanner(private val context: Application) {
 
     private val config = context.config
     private var scanning = false
+    private var showProgress = false
     private var onScanComplete: ((complete: Boolean) -> Unit)? = null
 
     private val newTracks = arrayListOf<Track>()
     private val newAlbums = arrayListOf<Album>()
     private val newArtists = arrayListOf<Artist>()
+
+    private var notificationHandler: Handler? = null
+    private var lastProgressUpdateMs = 0L
 
     fun isScanning(): Boolean = scanning
 
@@ -41,8 +55,11 @@ class SimpleMediaScanner(private val context: Application) {
      * triggered in two stages to ensure that the UI is updated as soon as possible.
      */
     @Synchronized
-    fun scan(callback: ((complete: Boolean) -> Unit)? = null) {
+    fun scan(progress: Boolean = false, callback: ((complete: Boolean) -> Unit)? = null) {
         onScanComplete = callback
+        showProgress = progress
+        maybeShowScanProgress()
+
         if (scanning) {
             return
         }
@@ -62,6 +79,7 @@ class SimpleMediaScanner(private val context: Application) {
                 newAlbums.clear()
                 newArtists.clear()
                 scanning = false
+                hideScanProgress()
             }
         }
     }
@@ -287,8 +305,18 @@ class SimpleMediaScanner(private val context: Application) {
 
         val tracksSet = ConcurrentHashMap.newKeySet<Track>()
         val paths = audioFilePaths.toTypedArray()
+        val totalPaths = paths.size
+        var pathsScanned = 0
+
         // running metadata retriever in parallel significantly reduces the required time
         Arrays.stream(paths).parallel().forEach { path ->
+            pathsScanned += 1
+            maybeShowScanProgress(
+                pathBeingScanned = path,
+                progress = pathsScanned,
+                max = totalPaths
+            )
+
             val retriever = MediaMetadataRetriever()
             var inputStream: FileInputStream? = null
 
@@ -441,7 +469,71 @@ class SimpleMediaScanner(private val context: Application) {
         context.artistDAO.deleteAll(invalidArtists)
     }
 
+    @Synchronized
+    private fun maybeShowScanProgress(pathBeingScanned: String = "", progress: Int = 0, max: Int = 0) {
+        if (!showProgress) {
+            return
+        }
+
+        if (notificationHandler == null) {
+            notificationHandler = Handler(Looper.getMainLooper())
+        }
+
+        // avoid showing notification for a short duration
+        val delayNotification = pathBeingScanned.isEmpty()
+        if (delayNotification) {
+            notificationHandler?.postDelayed({
+                context.notificationManager.notify(
+                    SCANNER_NOTIFICATION_ID, createMediaScannerNotification(pathBeingScanned, progress, max)
+                )
+            }, SCANNER_NOTIFICATION_DELAY)
+        } else {
+            if (System.currentTimeMillis() - lastProgressUpdateMs > 100L) {
+                lastProgressUpdateMs = System.currentTimeMillis()
+                context.notificationManager.notify(
+                    SCANNER_NOTIFICATION_ID, createMediaScannerNotification(pathBeingScanned, progress, max)
+                )
+            }
+        }
+    }
+
+    private fun createMediaScannerNotification(contentText: String, progress: Int, max: Int): Notification {
+        val title = context.getString(R.string.loading_files)
+        val contentIntent = Intent(context, MainActivity::class.java)
+        val contentPendingIntent = PendingIntent.getActivity(context, 0, contentIntent, FLAG_CANCEL_CURRENT or FLAG_IMMUTABLE)
+        val dismissedIntent = Intent(context, NotificationDismissedReceiver::class.java).setAction(NOTIFICATION_DISMISSED)
+        val dismissedPendingIntent = PendingIntent.getBroadcast(context, 0, dismissedIntent, FLAG_CANCEL_CURRENT or FLAG_IMMUTABLE)
+
+        return NotificationCompat.Builder(context, NotificationHelper.NOTIFICATION_CHANNEL)
+            .setContentTitle(title)
+            .setSmallIcon(R.drawable.ic_headset_small)
+            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+            .setPriority(NotificationCompat.PRIORITY_MAX)
+            .setContentIntent(contentPendingIntent)
+            .setChannelId(NotificationHelper.NOTIFICATION_CHANNEL)
+            .setCategory(Notification.CATEGORY_PROGRESS)
+            .setDeleteIntent(dismissedPendingIntent)
+            .setOngoing(true)
+            .setProgress(max, progress, progress == 0)
+            .apply {
+                if (contentText.isNotEmpty()) {
+                    setContentText(contentText)
+                }
+            }.build()
+    }
+
+    private fun hideScanProgress() {
+        if (showProgress) {
+            notificationHandler?.removeCallbacksAndMessages(null)
+            notificationHandler = null
+            context.notificationManager.cancel(SCANNER_NOTIFICATION_ID)
+        }
+    }
+
     companion object {
+        private const val SCANNER_NOTIFICATION_ID = 43
+        private const val SCANNER_NOTIFICATION_DELAY = 500L
+
         private var instance: SimpleMediaScanner? = null
 
         fun getInstance(app: Application): SimpleMediaScanner {

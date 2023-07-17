@@ -221,14 +221,16 @@ class MainActivity : SimpleActivity() {
             loading_progress_bar.show()
         }
 
-        mediaScanner.scan { complete ->
-            runOnUiThread {
-                getAllFragments().forEach {
-                    it?.setupFragment(this)
-                }
+        handleNotificationPermission { granted ->
+            mediaScanner.scan(progress = showProgress && granted) { complete ->
+                runOnUiThread {
+                    getAllFragments().forEach {
+                        it?.setupFragment(this)
+                    }
 
-                if (complete) {
-                    loading_progress_bar.hide()
+                    if (complete) {
+                        loading_progress_bar.hide()
+                    }
                 }
             }
         }
