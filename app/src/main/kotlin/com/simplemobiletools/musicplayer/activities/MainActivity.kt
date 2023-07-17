@@ -200,7 +200,7 @@ class MainActivity : SimpleActivity() {
                         startActivity(this)
                     }
                 } else {
-                    PermissionRequiredDialog(this, R.string.allow_notifications_music_player)
+                    PermissionRequiredDialog(this, R.string.allow_notifications_music_player, { openNotificationSettings() })
                 }
             }
         }

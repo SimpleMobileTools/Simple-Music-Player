@@ -86,7 +86,7 @@ class AlbumsActivity : SimpleActivity() {
                                     }
                                 }
                             } else {
-                                PermissionRequiredDialog(this, R.string.allow_notifications_music_player)
+                                PermissionRequiredDialog(this, R.string.allow_notifications_music_player, { openNotificationSettings() })
                             }
                         }
                     }
@@ -108,7 +108,7 @@ class AlbumsActivity : SimpleActivity() {
                         startActivity(this)
                     }
                 } else {
-                    PermissionRequiredDialog(this, R.string.allow_notifications_music_player)
+                    PermissionRequiredDialog(this, R.string.allow_notifications_music_player, { openNotificationSettings() })
                 }
             }
         }

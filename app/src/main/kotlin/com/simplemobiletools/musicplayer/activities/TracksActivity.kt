@@ -3,7 +3,6 @@ package com.simplemobiletools.musicplayer.activities
 import android.app.Activity
 import android.app.SearchManager
 import android.content.ActivityNotFoundException
-import android.content.ContentUris
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -32,7 +31,7 @@ import com.simplemobiletools.musicplayer.helpers.M3uExporter.ExportResult
 import com.simplemobiletools.musicplayer.models.*
 import com.simplemobiletools.musicplayer.services.MusicService
 import kotlinx.android.synthetic.main.activity_tracks.*
-import kotlinx.android.synthetic.main.view_current_track_bar.*
+import kotlinx.android.synthetic.main.view_current_track_bar.current_track_bar
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -86,7 +85,7 @@ class TracksActivity : SimpleActivity() {
                         startActivity(this)
                     }
                 } else {
-                    PermissionRequiredDialog(this, R.string.allow_notifications_music_player)
+                    PermissionRequiredDialog(this, R.string.allow_notifications_music_player, { openNotificationSettings() })
                 }
             }
         }
@@ -218,6 +217,7 @@ class TracksActivity : SimpleActivity() {
                     tracks.addAll(playlistTracks)
                     listItems.addAll(tracks)
                 }
+
                 TYPE_ALBUM -> {
                     val albumTracks = tracksDAO.getTracksFromAlbum(album.id).distinctBy { "${it.path}/${it.mediaStoreId}" } as ArrayList<Track>
                     albumTracks.sortWith(compareBy({ it.trackId }, { it.title.lowercase() }))
@@ -227,6 +227,7 @@ class TracksActivity : SimpleActivity() {
                     listItems.add(header)
                     listItems.addAll(tracks)
                 }
+
                 else -> {
                     val folderTracks = tracksDAO.getTracksFromFolder(folder ?: "")
                         .distinctBy { "${it.path}/${it.mediaStoreId}" }
@@ -403,7 +404,7 @@ class TracksActivity : SimpleActivity() {
 
                 }
             } else {
-                PermissionRequiredDialog(this, R.string.allow_notifications_music_player)
+                PermissionRequiredDialog(this, R.string.allow_notifications_music_player, { openNotificationSettings() })
             }
         }
     }

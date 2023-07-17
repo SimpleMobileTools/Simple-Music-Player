@@ -15,12 +15,17 @@ import com.simplemobiletools.musicplayer.activities.SimpleActivity
 import com.simplemobiletools.musicplayer.activities.TrackActivity
 import com.simplemobiletools.musicplayer.adapters.TracksAdapter
 import com.simplemobiletools.musicplayer.dialogs.ChangeSortingDialog
-import com.simplemobiletools.musicplayer.extensions.*
+import com.simplemobiletools.musicplayer.extensions.config
+import com.simplemobiletools.musicplayer.extensions.mediaScanner
+import com.simplemobiletools.musicplayer.extensions.resetQueueItems
+import com.simplemobiletools.musicplayer.extensions.tracksDAO
 import com.simplemobiletools.musicplayer.helpers.RESTART_PLAYER
 import com.simplemobiletools.musicplayer.helpers.TAB_TRACKS
 import com.simplemobiletools.musicplayer.helpers.TRACK
 import com.simplemobiletools.musicplayer.models.Track
-import kotlinx.android.synthetic.main.fragment_tracks.view.*
+import kotlinx.android.synthetic.main.fragment_tracks.view.tracks_fastscroller
+import kotlinx.android.synthetic.main.fragment_tracks.view.tracks_list
+import kotlinx.android.synthetic.main.fragment_tracks.view.tracks_placeholder
 
 // Artists -> Albums -> Tracks
 class TracksFragment(context: Context, attributeSet: AttributeSet) : MyViewPagerFragment(context, attributeSet) {
@@ -62,7 +67,7 @@ class TracksFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
                                 }
                             } else {
                                 if (context is Activity) {
-                                    PermissionRequiredDialog(activity, R.string.allow_notifications_music_player)
+                                    PermissionRequiredDialog(activity, R.string.allow_notifications_music_player, { activity.openNotificationSettings() })
                                 }
                             }
                         }
