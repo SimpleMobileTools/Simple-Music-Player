@@ -18,6 +18,7 @@
     <string name="volume">Lautstärke</string>
     <string name="playback_speed">Wiedergabegeschwindigkeit</string>
     <string name="loading_files">Dateien werden geladen …</string>
+    <string name="scanning">Scanning…</string>
     <!-- Playlists -->
     <string name="add_file_to_playlist">Datei zu Wiedergabeliste hinzufügen</string>
     <string name="add_folder_to_playlist">Ordner zu Wiedergabeliste hinzufügen</string>

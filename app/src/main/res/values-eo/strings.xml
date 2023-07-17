@@ -18,6 +18,7 @@
     <string name="volume">Laŭto</string>
     <string name="playback_speed">Playback speed</string>
     <string name="loading_files">Ŝargante dosierojn…</string>
+    <string name="scanning">Scanning…</string>
     <!-- Playlists -->
     <string name="add_file_to_playlist">Add file to playlist</string>
     <string name="add_folder_to_playlist">Add folder to playlist</string>

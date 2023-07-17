@@ -18,6 +18,7 @@
     <string name="volume">Hlasitost</string>
     <string name="playback_speed">Rychlost přehrávání</string>
     <string name="loading_files">Načítaní souborů…</string>
+    <string name="scanning">Scanning…</string>
     <!-- Playlists -->
     <string name="add_file_to_playlist">Přidat soubor do seznamu skladeb</string>
     <string name="add_folder_to_playlist">Přidat složku do seznamu skladeb</string>

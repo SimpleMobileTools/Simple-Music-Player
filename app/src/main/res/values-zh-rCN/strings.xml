@@ -18,6 +18,7 @@
     <string name="volume">音量</string>
     <string name="playback_speed">播放速度</string>
     <string name="loading_files">加载文件中…</string>
+    <string name="scanning">Scanning…</string>
     <!-- Playlists -->
     <string name="add_file_to_playlist">添加文件至播放列表</string>
     <string name="add_folder_to_playlist">添加文件夹至播放列表</string>

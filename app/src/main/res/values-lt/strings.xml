@@ -18,6 +18,7 @@
     <string name="volume">Apimtis</string>
     <string name="playback_speed">Atkūrimo greitis</string>
     <string name="loading_files">Loading files…</string>
+    <string name="scanning">Scanning…</string>
     <!-- Playlists -->
     <string name="add_file_to_playlist">Pridėti bylą į grojaraštį</string>
     <string name="add_folder_to_playlist">Pridėti aplanką į grojaraštį</string>

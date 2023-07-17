@@ -18,6 +18,7 @@
     <string name="volume">Ljodstyrk</string>
     <string name="playback_speed">Avspelingssnøggleiken</string>
     <string name="loading_files">Leitar fram filer …</string>
+    <string name="scanning">Scanning…</string>
     <!-- Playlists -->
     <string name="add_file_to_playlist">Legg til ei fil i spelelista</string>
     <string name="add_folder_to_playlist">Legg til ei mappe i spelelista</string>

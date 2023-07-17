@@ -18,6 +18,7 @@
     <string name="volume">ווליום</string>
     <string name="playback_speed">מהירות השמעה</string>
     <string name="loading_files">טוען קבצים…</string>
+    <string name="scanning">Scanning…</string>
     <!-- Playlists -->
     <string name="add_file_to_playlist">הוסף קובץ לפלייליסט</string>
     <string name="add_folder_to_playlist">הוסף תיקיה לרשימת ההשמעה</string>

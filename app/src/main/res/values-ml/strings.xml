@@ -18,6 +18,7 @@
     <string name="volume">വ്യാപ്തം</string>
     <string name="playback_speed">പ്ലേബാക്ക് വേഗത</string>
     <string name="loading_files">ഫയലുകൾ ലോഡുചെയ്യുന്നു…</string>
+    <string name="scanning">Scanning…</string>
     <!-- Playlists -->
     <string name="add_file_to_playlist">പ്ലേലിസ്റ്റിലേക്ക് ഫയൽ ചേർക്കുക</string>
     <string name="add_folder_to_playlist">പ്ലേലിസ്റ്റിലേക്ക് ഫോൾഡർ ചേർക്കുക</string>

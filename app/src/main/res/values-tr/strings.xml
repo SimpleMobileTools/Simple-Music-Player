@@ -18,6 +18,7 @@
     <string name="volume">Ses seviyesi</string>
     <string name="playback_speed">Oynatma hızı</string>
     <string name="loading_files">Dosyalar yükleniyor…</string>
+    <string name="scanning">Scanning…</string>
     <!-- Playlists -->
     <string name="add_file_to_playlist">Çalma listesine dosya ekle</string>
     <string name="add_folder_to_playlist">Çalma listesine klasör ekle</string>

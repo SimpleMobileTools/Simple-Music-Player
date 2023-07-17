@@ -18,6 +18,7 @@
     <string name="volume">Гучнасць</string>
     <string name="playback_speed">Хуткасць прайгравання</string>
     <string name="loading_files">Загрузка файлаў…</string>
+    <string name="scanning">Scanning…</string>
     <!-- Playlists -->
     <string name="add_file_to_playlist">Дадаць файл у спіс прайгравання</string>
     <string name="add_folder_to_playlist">Дадаць папку ў спіс прайгравання</string>

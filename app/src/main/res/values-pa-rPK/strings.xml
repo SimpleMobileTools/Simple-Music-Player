@@ -18,6 +18,7 @@
     <string name="volume">آواز</string>
     <string name="playback_speed">گیت دی گتی</string>
     <string name="loading_files">فائلاں لوڈ کریاں جا رِہیاں ہن…</string>
+    <string name="scanning">Scanning…</string>
     <!-- Playlists -->
     <string name="add_file_to_playlist">پلےلِسٹ وچ فائل پایو</string>
     <string name="add_folder_to_playlist">پلےلِسٹ وچ فولڈر پایو</string>

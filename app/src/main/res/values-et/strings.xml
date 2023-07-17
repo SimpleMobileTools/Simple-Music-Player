@@ -18,6 +18,7 @@
     <string name="volume">Helitugevus</string>
     <string name="playback_speed">Taasesituse kiirus</string>
     <string name="loading_files">Laadin faile…</string>
+    <string name="scanning">Scanning…</string>
     <!-- Playlists -->
     <string name="add_file_to_playlist">Lisa fail esitusloendisse</string>
     <string name="add_folder_to_playlist">Lisa kaust esitusloendisse</string>

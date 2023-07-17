@@ -18,6 +18,7 @@
     <string name="volume">Hangerő</string>
     <string name="playback_speed">Lejátszási sebesség</string>
     <string name="loading_files">Fájlok betöltése…</string>
+    <string name="scanning">Scanning…</string>
     <!-- Playlists -->
     <string name="add_file_to_playlist">Fájl hozzáadása a lejátszási listához</string>
     <string name="add_folder_to_playlist">Mappa hozzáadása a lejátszási listához</string>

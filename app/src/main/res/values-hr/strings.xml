@@ -18,6 +18,7 @@
     <string name="volume">Glasnoća</string>
     <string name="playback_speed">Brzina reprodukcije</string>
     <string name="loading_files">Učitavanje datoteka …</string>
+    <string name="scanning">Scanning…</string>
     <!-- Playlists -->
     <string name="add_file_to_playlist">Dodaj datoteku u popis pjesama</string>
     <string name="add_folder_to_playlist">Dodaj mapu u popis pjesama</string>

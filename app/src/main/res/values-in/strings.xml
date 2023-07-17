@@ -18,6 +18,7 @@
     <string name="volume">Volume</string>
     <string name="playback_speed">Kecepatan playback</string>
     <string name="loading_files">Memuat file…</string>
+    <string name="scanning">Scanning…</string>
     <!-- Playlists -->
     <string name="add_file_to_playlist">Tambah berkas ke daftar putar</string>
     <string name="add_folder_to_playlist">Tambah folder ke daftar putar</string>
