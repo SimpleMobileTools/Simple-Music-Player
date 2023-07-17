@@ -435,19 +435,13 @@ class SimpleMediaScanner(private val context: Application) {
         // remove invalid albums
         val newAlbumIds = newAlbums.map { it.id }
         val invalidAlbums = context.albumsDAO.getAll().filter { it.id !in newAlbumIds }.toMutableList()
-        for (album in newAlbums) {
-            val albumId = album.id
-            val albumTracks = newTracks.filter { it.albumId == albumId }
-            if (albumTracks.isEmpty()) {
-                invalidAlbums.add(album)
-            }
-        }
+        invalidAlbums += newAlbums.filter { album -> newTracks.none { it.albumId == album.id } }
         context.albumsDAO.deleteAll(invalidAlbums)
         newAlbums.removeAll(invalidAlbums.toSet())
 
         // remove invalid artists
         val newArtistIds = newArtists.map { it.id }
-        val invalidArtists = context.artistDAO.getAll().filter { it.id !in newArtistIds } as ArrayList<Artist>
+        val invalidArtists = context.artistDAO.getAll().filter { it.id !in newArtistIds }.toMutableList()
         for (artist in newArtists) {
             val artistId = artist.id
             val albumsByArtist = newAlbums.filter { it.artistId == artistId }
