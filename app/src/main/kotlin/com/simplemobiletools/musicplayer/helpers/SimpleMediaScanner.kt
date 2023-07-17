@@ -388,8 +388,8 @@ class SimpleMediaScanner(private val context: Application) {
 
     private fun splitIntoArtists(tracks: ArrayList<Track>): ArrayList<Artist> {
         val artists = arrayListOf<Artist>()
-        val artistsGroupedByTracks = tracks.groupBy { it.artist }
-        for ((artistName, tracksByArtist) in artistsGroupedByTracks) {
+        val tracksGroupedByArtist = tracks.groupBy { it.artist }
+        for ((artistName, tracksByArtist) in tracksGroupedByArtist) {
             val trackCnt = tracksByArtist.size
             if (trackCnt > 0) {
                 val albumCnt = tracksByArtist.groupBy { it.album }.size
