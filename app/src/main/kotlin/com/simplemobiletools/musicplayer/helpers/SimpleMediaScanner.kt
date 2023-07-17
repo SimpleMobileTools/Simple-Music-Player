@@ -492,7 +492,7 @@ class SimpleMediaScanner(private val context: Application) {
     }
 
     private fun createMediaScannerNotification(contentText: String, progress: Int, max: Int): Notification {
-        val title = context.getString(R.string.loading_files)
+        val title = context.getString(R.string.scanning)
         val contentIntent = Intent(context, MainActivity::class.java)
         val contentPendingIntent = PendingIntent.getActivity(context, 0, contentIntent, FLAG_CANCEL_CURRENT or FLAG_IMMUTABLE)
         val dismissedIntent = Intent(context, NotificationDismissedReceiver::class.java).setAction(NOTIFICATION_DISMISSED)
