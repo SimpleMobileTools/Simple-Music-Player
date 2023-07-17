@@ -40,7 +40,7 @@ class QueueActivity : SimpleActivity() {
         setContentView(R.layout.activity_queue)
         setupOptionsMenu()
         updateMaterialActivityViews(queue_coordinator, queue_holder, useTransparentNavigation = true, useTopSearchMenu = false)
-        setupMaterialScrollListener(queue_nested_scrollview, queue_toolbar)
+        setupMaterialScrollListener(queue_list, queue_toolbar)
 
         bus = EventBus.getDefault()
         bus!!.register(this)
