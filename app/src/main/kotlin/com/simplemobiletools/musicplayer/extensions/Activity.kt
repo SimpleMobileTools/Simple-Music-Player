@@ -20,6 +20,7 @@ import com.simplemobiletools.musicplayer.models.Events
 import com.simplemobiletools.musicplayer.models.Track
 import com.simplemobiletools.musicplayer.services.MusicService
 import org.greenrobot.eventbus.EventBus
+import java.io.File
 
 fun Activity.addTracksToPlaylist(tracks: List<Track>, callback: () -> Unit) {
     SelectPlaylistDialog(this) { playlistId ->
@@ -81,6 +82,7 @@ fun BaseSimpleActivity.deleteTracks(tracks: List<Track>, callback: () -> Unit) {
             val args = arrayOf(track.mediaStoreId.toString())
             contentResolver.delete(uri, where, args)
             tracksDAO.removeTrack(track.mediaStoreId)
+            File(track.path).delete()
         } catch (ignored: Exception) {
         }
     }
