@@ -18,6 +18,7 @@ import com.simplemobiletools.musicplayer.adapters.ArtistsAdapter
 import com.simplemobiletools.musicplayer.dialogs.ChangeSortingDialog
 import com.simplemobiletools.musicplayer.extensions.artistDAO
 import com.simplemobiletools.musicplayer.extensions.config
+import com.simplemobiletools.musicplayer.extensions.mediaScanner
 import com.simplemobiletools.musicplayer.helpers.ARTIST
 import com.simplemobiletools.musicplayer.helpers.TAB_ARTISTS
 import com.simplemobiletools.musicplayer.models.Artist
@@ -42,7 +43,12 @@ class ArtistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
 
         artistsIgnoringSearch = artists
         activity.runOnUiThread {
-            artists_placeholder.text = context.getString(R.string.no_items_found)
+            val scanning = activity.mediaScanner.isScanning()
+            artists_placeholder.text = if (scanning) {
+                context.getString(R.string.loading_files)
+            } else {
+                context.getString(R.string.no_items_found)
+            }
             artists_placeholder.beVisibleIf(artists.isEmpty())
 
             val adapter = artists_list.adapter

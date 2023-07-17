@@ -1,7 +1,5 @@
 package com.simplemobiletools.musicplayer.adapters
 
-import android.content.ContentUris
-import android.net.Uri
 import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
@@ -98,9 +96,9 @@ class ArtistsAdapter(activity: BaseSimpleActivity, var artists: ArrayList<Artist
     private fun getAllSelectedTracks(): ArrayList<Track> {
         val tracks = ArrayList<Track>()
         getSelectedArtists().forEach { artist ->
-            val albums = activity.getAlbumsSync(artist)
+            val albums = activity.albumsDAO.getArtistAlbums(artist.id)
             albums.forEach {
-                tracks.addAll(activity.getAlbumTracksSync(it.id))
+                tracks.addAll(activity.tracksDAO.getTracksFromAlbum(it.id))
             }
         }
         return tracks
@@ -118,9 +116,9 @@ class ArtistsAdapter(activity: BaseSimpleActivity, var artists: ArrayList<Artist
                         positions.add(position)
                     }
 
-                    val albums = activity.getAlbumsSync(artist)
+                    val albums = activity.albumsDAO.getArtistAlbums(artist.id)
                     albums.forEach { album ->
-                        tracks.addAll(activity.getAlbumTracksSync(album.id))
+                        tracks.addAll(activity.tracksDAO.getTracksFromAlbum(album.id))
                     }
 
                     activity.artistDAO.deleteArtist(artist.id)
@@ -167,17 +165,16 @@ class ArtistsAdapter(activity: BaseSimpleActivity, var artists: ArrayList<Artist
             artist_albums_tracks.text = "$albums, $tracks"
             artist_albums_tracks.setTextColor(textColor)
 
-            val artworkUri = Uri.parse("content://media/external/audio/albumart")
-            val albumArtUri = ContentUris.withAppendedId(artworkUri, artist.albumArtId)
+            activity.getArtistCoverArt(artist) { coverArt ->
+                val options = RequestOptions()
+                    .error(placeholder)
+                    .transform(CenterCrop(), RoundedCorners(cornerRadius))
 
-            val options = RequestOptions()
-                .error(placeholder)
-                .transform(CenterCrop(), RoundedCorners(cornerRadius))
-
-            Glide.with(activity)
-                .load(albumArtUri)
-                .apply(options)
-                .into(findViewById(R.id.artist_image))
+                Glide.with(activity)
+                    .load(coverArt)
+                    .apply(options)
+                    .into(findViewById(R.id.artist_image))
+            }
         }
     }
 

@@ -13,13 +13,11 @@ import com.simplemobiletools.musicplayer.activities.SimpleActivity
 import com.simplemobiletools.musicplayer.activities.TracksActivity
 import com.simplemobiletools.musicplayer.adapters.FoldersAdapter
 import com.simplemobiletools.musicplayer.dialogs.ChangeSortingDialog
-import com.simplemobiletools.musicplayer.extensions.albumsDAO
-import com.simplemobiletools.musicplayer.extensions.artistDAO
 import com.simplemobiletools.musicplayer.extensions.config
+import com.simplemobiletools.musicplayer.extensions.mediaScanner
 import com.simplemobiletools.musicplayer.extensions.tracksDAO
 import com.simplemobiletools.musicplayer.helpers.FOLDER
 import com.simplemobiletools.musicplayer.helpers.TAB_FOLDERS
-import com.simplemobiletools.musicplayer.models.Album
 import com.simplemobiletools.musicplayer.models.Folder
 import com.simplemobiletools.musicplayer.models.Track
 import kotlinx.android.synthetic.main.fragment_folders.view.*
@@ -29,17 +27,7 @@ class FoldersFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
 
     override fun setupFragment(activity: BaseSimpleActivity) {
         ensureBackgroundThread {
-            val albums = ArrayList<Album>()
-            val artists = context.artistDAO.getAll()
-            artists.forEach { artist ->
-                albums.addAll(context.albumsDAO.getArtistAlbums(artist.id))
-            }
-
-            var tracks = ArrayList<Track>()
-            albums.forEach { album ->
-                tracks.addAll(context.tracksDAO.getTracksFromAlbum(album.id))
-            }
-
+            var tracks = context.tracksDAO.getAll()
             tracks = tracks.distinctBy { "${it.path}/${it.mediaStoreId}" }.toMutableList() as ArrayList<Track>
 
             Track.sorting = context.config.trackSorting
@@ -67,10 +55,15 @@ class FoldersFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
             context.config.wereTrackFoldersAdded = true
 
             activity.runOnUiThread {
-                folders_placeholder.text = context.getString(R.string.no_items_found)
+                val scanning = activity.mediaScanner.isScanning()
+                folders_placeholder.text = if (scanning) {
+                    context.getString(R.string.loading_files)
+                } else {
+                    context.getString(R.string.no_items_found)
+                }
                 folders_placeholder.beVisibleIf(folders.isEmpty())
                 folders_fastscroller.beGoneIf(folders_placeholder.isVisible())
-                folders_placeholder_2.beVisibleIf(folders.isEmpty() && context.config.excludedFolders.isNotEmpty())
+                folders_placeholder_2.beVisibleIf(folders.isEmpty() && context.config.excludedFolders.isNotEmpty() && !scanning)
                 folders_placeholder_2.underlineText()
 
                 folders_placeholder_2.setOnClickListener {

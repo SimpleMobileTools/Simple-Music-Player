@@ -219,20 +219,20 @@ class TracksActivity : SimpleActivity() {
                     listItems.addAll(tracks)
                 }
                 TYPE_ALBUM -> {
-                    val albumTracks = getAlbumTracksSync(album.id)
+                    val albumTracks = tracksDAO.getTracksFromAlbum(album.id).distinctBy { "${it.path}/${it.mediaStoreId}" } as ArrayList<Track>
                     albumTracks.sortWith(compareBy({ it.trackId }, { it.title.lowercase() }))
                     tracks.addAll(albumTracks)
 
-                    val coverArt = ContentUris.withAppendedId(artworkUri, album.id).toString()
-                    val header = AlbumHeader(album.title, coverArt, album.year, tracks.size, tracks.sumOf { it.duration }, album.artist)
+                    val header = AlbumHeader(album.id, album.title, album.coverArt, album.year, tracks.size, tracks.sumOf { it.duration }, album.artist)
                     listItems.add(header)
                     listItems.addAll(tracks)
                 }
                 else -> {
-                    val folderTracks = tracksDAO.getTracksFromFolder(folder ?: "").map { track ->
-                        track.title = track.getProperTitle(showFilename)
-                        track
-                    } as ArrayList<Track>
+                    val folderTracks = tracksDAO.getTracksFromFolder(folder ?: "")
+                        .distinctBy { "${it.path}/${it.mediaStoreId}" }
+                        .onEach {
+                            it.title = it.getProperTitle(showFilename)
+                        } as ArrayList<Track>
 
                     Track.sorting = config.getProperFolderSorting(folder ?: "")
                     folderTracks.sort()
@@ -387,10 +387,9 @@ class TracksActivity : SimpleActivity() {
 
     private fun itemClicked(track: Track) {
         val tracks = when (tracksType) {
-            TYPE_ALBUM -> (tracks_list.adapter as? TracksHeaderAdapter)?.items?.filterIsInstance<Track>()?.toMutableList() as? ArrayList<Track>
-                ?: ArrayList()
-            else -> (tracks_list.adapter as? TracksAdapter)?.tracks?.toMutableList() as? ArrayList<Track> ?: ArrayList()
-        }
+            TYPE_ALBUM -> (tracks_list.adapter as? TracksHeaderAdapter)?.items?.filterIsInstance<Track>()
+            else -> (tracks_list.adapter as? TracksAdapter)?.tracks
+        } ?: ArrayList()
 
         handleNotificationPermission { granted ->
             if (granted) {

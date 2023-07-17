@@ -18,6 +18,7 @@ import com.simplemobiletools.musicplayer.adapters.AlbumsAdapter
 import com.simplemobiletools.musicplayer.dialogs.ChangeSortingDialog
 import com.simplemobiletools.musicplayer.extensions.albumsDAO
 import com.simplemobiletools.musicplayer.extensions.config
+import com.simplemobiletools.musicplayer.extensions.mediaScanner
 import com.simplemobiletools.musicplayer.helpers.ALBUM
 import com.simplemobiletools.musicplayer.helpers.TAB_ALBUMS
 import com.simplemobiletools.musicplayer.models.Album
@@ -42,7 +43,12 @@ class AlbumsFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
         albumsIgnoringSearch = albums
 
         activity.runOnUiThread {
-            albums_placeholder.text = context.getString(R.string.no_items_found)
+            val scanning = activity.mediaScanner.isScanning()
+            albums_placeholder.text = if (scanning) {
+                context.getString(R.string.loading_files)
+            } else {
+                context.getString(R.string.no_items_found)
+            }
             albums_placeholder.beVisibleIf(albums.isEmpty())
 
             val adapter = albums_list.adapter

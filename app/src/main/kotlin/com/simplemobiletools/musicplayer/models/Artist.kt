@@ -12,11 +12,11 @@ import com.simplemobiletools.musicplayer.helpers.PLAYER_SORT_BY_TITLE
 
 @Entity(tableName = "artists", indices = [(Index(value = ["id"], unique = true))])
 data class Artist(
-    @PrimaryKey(autoGenerate = true) val id: Long,
+    @PrimaryKey(autoGenerate = true) var id: Long,
     @ColumnInfo(name = "title") val title: String,
     @ColumnInfo(name = "album_cnt") var albumCnt: Int,
     @ColumnInfo(name = "track_cnt") var trackCnt: Int,
-    @ColumnInfo(name = "album_art_id") var albumArtId: Long) : Comparable<Artist> {
+    @ColumnInfo(name = "album_art") var albumArt: String) : Comparable<Artist> {
     companion object {
         var sorting = 0
     }

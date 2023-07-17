@@ -24,6 +24,11 @@
         android:title="@string/import_playlist"
         app:showAsAction="never" />
     <item
+        android:id="@+id/rescan_media"
+        android:showAsAction="never"
+        android:title="@string/rescan_media"
+        app:showAsAction="never" />
+    <item
         android:id="@+id/sleep_timer"
         android:showAsAction="never"
         android:title="@string/sleep_timer"

@@ -19,27 +19,16 @@ import com.simplemobiletools.musicplayer.extensions.*
 import com.simplemobiletools.musicplayer.helpers.RESTART_PLAYER
 import com.simplemobiletools.musicplayer.helpers.TAB_TRACKS
 import com.simplemobiletools.musicplayer.helpers.TRACK
-import com.simplemobiletools.musicplayer.models.Album
 import com.simplemobiletools.musicplayer.models.Track
 import kotlinx.android.synthetic.main.fragment_tracks.view.*
 
 // Artists -> Albums -> Tracks
 class TracksFragment(context: Context, attributeSet: AttributeSet) : MyViewPagerFragment(context, attributeSet) {
-    private var tracksIgnoringSearch = ArrayList<Track>()
+    private var tracks = ArrayList<Track>()
 
     override fun setupFragment(activity: BaseSimpleActivity) {
         ensureBackgroundThread {
-            val albums = ArrayList<Album>()
-            val artists = context.artistDAO.getAll()
-            artists.forEach { artist ->
-                albums.addAll(context.albumsDAO.getArtistAlbums(artist.id))
-            }
-
-            var tracks = ArrayList<Track>()
-            albums.forEach { album ->
-                tracks.addAll(context.tracksDAO.getTracksFromAlbum(album.id))
-            }
-
+            tracks = context.tracksDAO.getAll() as ArrayList<Track>
             tracks = tracks.distinctBy { "${it.path}/${it.mediaStoreId}" }.toMutableList() as ArrayList<Track>
 
             val excludedFolders = context.config.excludedFolders
@@ -49,10 +38,14 @@ class TracksFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
 
             Track.sorting = context.config.trackSorting
             tracks.sort()
-            tracksIgnoringSearch = tracks
 
             activity.runOnUiThread {
-                tracks_placeholder.text = context.getString(R.string.no_items_found)
+                val scanning = activity.mediaScanner.isScanning()
+                tracks_placeholder.text = if (scanning) {
+                    context.getString(R.string.loading_files)
+                } else {
+                    context.getString(R.string.no_items_found)
+                }
                 tracks_placeholder.beVisibleIf(tracks.isEmpty())
                 val adapter = tracks_list.adapter
                 if (adapter == null) {
@@ -92,7 +85,7 @@ class TracksFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
     }
 
     override fun onSearchQueryChanged(text: String) {
-        val filtered = tracksIgnoringSearch.filter {
+        val filtered = tracks.filter {
             it.title.contains(text, true) || ("${it.artist} - ${it.album}").contains(text, true)
         }.toMutableList() as ArrayList<Track>
         (tracks_list.adapter as? TracksAdapter)?.updateItems(filtered, text)
@@ -100,8 +93,8 @@ class TracksFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
     }
 
     override fun onSearchClosed() {
-        (tracks_list.adapter as? TracksAdapter)?.updateItems(tracksIgnoringSearch)
-        tracks_placeholder.beGoneIf(tracksIgnoringSearch.isNotEmpty())
+        (tracks_list.adapter as? TracksAdapter)?.updateItems(tracks)
+        tracks_placeholder.beGoneIf(tracks.isNotEmpty())
     }
 
     override fun onSortOpen(activity: SimpleActivity) {

@@ -15,6 +15,7 @@ import com.simplemobiletools.musicplayer.adapters.PlaylistsAdapter
 import com.simplemobiletools.musicplayer.dialogs.ChangeSortingDialog
 import com.simplemobiletools.musicplayer.dialogs.NewPlaylistDialog
 import com.simplemobiletools.musicplayer.extensions.config
+import com.simplemobiletools.musicplayer.extensions.mediaScanner
 import com.simplemobiletools.musicplayer.extensions.playlistDAO
 import com.simplemobiletools.musicplayer.extensions.tracksDAO
 import com.simplemobiletools.musicplayer.helpers.PLAYLIST
@@ -46,9 +47,15 @@ class PlaylistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPa
             playlistsIgnoringSearch = playlists
 
             activity.runOnUiThread {
-                playlists_placeholder.text = context.getString(R.string.no_items_found)
+                val scanning = activity.mediaScanner.isScanning()
+                playlists_placeholder.text = if (scanning) {
+                    context.getString(R.string.loading_files)
+                } else {
+                    context.getString(R.string.no_items_found)
+                }
                 playlists_placeholder.beVisibleIf(playlists.isEmpty())
-                playlists_placeholder_2.beVisibleIf(playlists.isEmpty())
+                playlists_placeholder_2.beVisibleIf(playlists.isEmpty() && !scanning)
+
                 val adapter = playlists_list.adapter
                 if (adapter == null) {
                     PlaylistsAdapter(activity, playlists, playlists_list) {

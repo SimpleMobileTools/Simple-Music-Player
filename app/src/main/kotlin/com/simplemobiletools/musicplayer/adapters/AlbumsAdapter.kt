@@ -96,7 +96,7 @@ class AlbumsAdapter(activity: BaseSimpleActivity, var albums: ArrayList<Album>, 
     private fun getAllSelectedTracks(): ArrayList<Track> {
         val tracks = ArrayList<Track>()
         getSelectedAlbums().forEach {
-            tracks.addAll(activity.getAlbumTracksSync(it.id))
+            tracks.addAll(activity.tracksDAO.getTracksFromAlbum(it.id))
         }
         return tracks
     }
@@ -113,7 +113,7 @@ class AlbumsAdapter(activity: BaseSimpleActivity, var albums: ArrayList<Album>, 
                         positions.add(position)
                     }
 
-                    tracks.addAll(activity.getAlbumTracksSync(album.id))
+                    tracks.addAll(activity.tracksDAO.getTracksFromAlbum(album.id))
 
                     activity.albumsDAO.deleteAlbum(album.id)
                 }
@@ -158,14 +158,16 @@ class AlbumsAdapter(activity: BaseSimpleActivity, var albums: ArrayList<Album>, 
             album_tracks.text = tracks
             album_tracks.setTextColor(textColor)
 
-            val options = RequestOptions()
-                .error(placeholderBig)
-                .transform(CenterCrop(), RoundedCorners(cornerRadius))
+            activity.getAlbumCoverArt(album) { coverArt ->
+                val options = RequestOptions()
+                    .error(placeholderBig)
+                    .transform(CenterCrop(), RoundedCorners(cornerRadius))
 
-            Glide.with(activity)
-                .load(album.coverArt)
-                .apply(options)
-                .into(findViewById(R.id.album_image))
+                Glide.with(activity)
+                    .load(coverArt)
+                    .apply(options)
+                    .into(findViewById(R.id.album_image))
+            }
         }
     }
 

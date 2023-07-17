@@ -17,6 +17,9 @@ interface SongsDao {
     @Query("SELECT * FROM tracks WHERE playlist_id = :playlistId")
     fun getTracksFromPlaylist(playlistId: Int): List<Track>
 
+    @Query("SELECT * FROM tracks WHERE artist_id = :artistId")
+    fun getTracksFromArtist(artistId: Long): List<Track>
+
     @Query("SELECT * FROM tracks WHERE album_id = :albumId")
     fun getTracksFromAlbum(albumId: Long): List<Track>
 
@@ -30,7 +33,7 @@ interface SongsDao {
     fun getTrackWithMediaStoreId(mediaStoreId: Long): Track?
 
     @Delete
-    fun removeSongsFromPlaylists(songs: List<Track>)
+    fun removeTracks(songs: List<Track>)
 
     @Query("DELETE FROM tracks WHERE media_store_id = :mediaStoreId")
     fun removeTrack(mediaStoreId: Long)
