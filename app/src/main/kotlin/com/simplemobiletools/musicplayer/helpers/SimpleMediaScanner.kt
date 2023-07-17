@@ -532,7 +532,7 @@ class SimpleMediaScanner(private val context: Application) {
 
     companion object {
         private const val SCANNER_NOTIFICATION_ID = 43
-        private const val SCANNER_NOTIFICATION_DELAY = 500L
+        private const val SCANNER_NOTIFICATION_DELAY = 1500L
 
         private var instance: SimpleMediaScanner? = null
 
