@@ -54,14 +54,13 @@ class AlbumsActivity : SimpleActivity() {
             listItems.addAll(albums)
 
             var trackFullDuration = 0
-            var tracksToAdd = ArrayList<Track>()
-            albums.forEach {
-                val tracks = tracksDAO.getTracksFromAlbum(it.id) as ArrayList<Track>
+            val tracksToAdd = ArrayList<Track>()
+            albums.forEach { album ->
+                val tracks = tracksDAO.getTracksFromAlbum(album.id).distinctBy { "${it.path}/${it.mediaStoreId}" } as ArrayList<Track>
                 tracks.sortWith(compareBy({ it.trackId }, { it.title.lowercase() }))
                 trackFullDuration += tracks.sumOf { it.duration }
                 tracksToAdd.addAll(tracks)
             }
-            tracksToAdd = tracksToAdd.distinctBy { "${it.path}/${it.mediaStoreId}" } as ArrayList<Track>
 
             var tracksSectionLabel = resources.getQuantityString(R.plurals.tracks_plural, tracksToAdd.size, tracksToAdd.size)
             tracksSectionLabel += " • ${trackFullDuration.getFormattedDuration(true)}"
