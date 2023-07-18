@@ -46,11 +46,7 @@ class AlbumsAdapter(activity: BaseSimpleActivity, var albums: ArrayList<Album>, 
 
     override fun getItemCount() = albums.size
 
-    override fun prepareActionMode(menu: Menu) {
-        menu.apply {
-            findItem(R.id.cab_play_next).isVisible = isOneItemSelected()
-        }
-    }
+    override fun prepareActionMode(menu: Menu) {}
 
     override fun actionItemPressed(id: Int) {
         if (selectedKeys.isEmpty()) {
@@ -62,7 +58,6 @@ class AlbumsAdapter(activity: BaseSimpleActivity, var albums: ArrayList<Album>, 
             R.id.cab_add_to_queue -> addToQueue()
             R.id.cab_delete -> askConfirmDelete()
             R.id.cab_select_all -> selectAll()
-            R.id.cab_play_next -> playNext()
         }
     }
 
@@ -93,14 +88,6 @@ class AlbumsAdapter(activity: BaseSimpleActivity, var albums: ArrayList<Album>, 
     private fun addToQueue() {
         ensureBackgroundThread {
             activity.addTracksToQueue(getAllSelectedTracks()) {
-                finishActMode()
-            }
-        }
-    }
-
-    private fun playNext() {
-        getAllSelectedTracks().firstOrNull()?.let { selectedTrack ->
-            activity.playNextInQueue(selectedTrack) {
                 finishActMode()
             }
         }
