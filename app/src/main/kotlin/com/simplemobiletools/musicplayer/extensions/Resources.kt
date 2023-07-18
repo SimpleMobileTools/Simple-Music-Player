@@ -26,3 +26,12 @@ fun Resources.resizeDrawable(drawable: Drawable, size: Int): Drawable {
     val bitmapResized = Bitmap.createScaledBitmap(bitmap, size, size, false)
     return BitmapDrawable(this, bitmapResized)
 }
+
+private var coverArtHeight: Int = 0
+fun Resources.getCoverArtHeight(): Int {
+    return if (coverArtHeight == 0) {
+        getDimension(R.dimen.top_art_height).toInt()
+    } else {
+        coverArtHeight
+    }
+}

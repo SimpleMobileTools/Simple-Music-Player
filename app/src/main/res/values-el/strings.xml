@@ -84,7 +84,7 @@
     <string name="swap_prev_next">Εναλλαγή κουμπιών ακουστικών Πίσω/Εμπρός</string>
     <string name="exclude_folder_description">Η Εξαίρεση ενός φακέλου θα αποτρέψει την εμφάνιση όλων των αρχείων ήχου εντός του φακέλου. Τα αρχεία που προστίθενται χειροκίνητα σε λίστες αναπαραγωγής δεν θα επηρεαστούν.</string>
     <string name="gapless_playback">Αναπαραγωγή χωρίς κενά</string>
-    <string name="rescan_media">Rescan media</string>
+    <string name="rescan_media">Επανασάρωση πολυμέσων</string>
     <!-- FAQ -->
     <string name="faq_1_title">Πώς μπορώ να προωθήσω γρήγορα τα τραγούδια;</string>
     <string name="faq_1_text">Μπορείτε να κάνετε κλικ στο τρέχον ή μέγιστης διάρκειας κείμενο κοντά στη γραμμή προόδου, το οποίο θα μετακινήσει το τραγούδι πίσω ή εμπρός.</string>

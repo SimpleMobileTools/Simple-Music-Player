@@ -18,7 +18,7 @@ import java.io.Serializable
 @Entity(tableName = "tracks", indices = [Index(value = ["media_store_id", "playlist_id"], unique = true)])
 data class Track(
     @PrimaryKey(autoGenerate = true) var id: Long,
-    @ColumnInfo(name = "media_store_id") val mediaStoreId: Long,
+    @ColumnInfo(name = "media_store_id") var mediaStoreId: Long,
     @ColumnInfo(name = "title") var title: String,
     @ColumnInfo(name = "artist") var artist: String,
     @ColumnInfo(name = "path") var path: String,
@@ -28,8 +28,11 @@ data class Track(
     @ColumnInfo(name = "playlist_id") var playListId: Int,
     @ColumnInfo(name = "track_id") val trackId: Int,  // order id within the tracks' album
     @ColumnInfo(name = "folder_name") var folderName: String,
-    @ColumnInfo(name = "album_id") val albumId: Long,
-    @ColumnInfo(name = "order_in_playlist") var orderInPlaylist: Int
+    @ColumnInfo(name = "album_id") var albumId: Long,
+    @ColumnInfo(name = "artist_id") var artistId: Long,
+    @ColumnInfo(name = "year") var year: Int,
+    @ColumnInfo(name = "order_in_playlist") var orderInPlaylist: Int,
+    @ColumnInfo(name = "flags") var flags: Int = 0
 ) : Serializable, Comparable<Track>, ListItem() {
 
     companion object {
@@ -87,7 +90,7 @@ data class Track(
         }
     }
 
-    fun getUri(): Uri = if (mediaStoreId == 0L) {
+    fun getUri(): Uri = if (mediaStoreId == 0L || flags and FLAG_MANUAL_CACHE != 0) {
         Uri.fromFile(File(path))
     } else {
         ContentUris.withAppendedId(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, mediaStoreId)

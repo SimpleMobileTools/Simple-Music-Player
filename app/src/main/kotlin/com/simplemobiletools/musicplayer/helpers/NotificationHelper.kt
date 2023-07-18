@@ -122,7 +122,7 @@ class NotificationHelper(private val context: Context, private val mediaSessionT
     }
 
     companion object {
-        private const val NOTIFICATION_CHANNEL = "music_player_channel"
+        const val NOTIFICATION_CHANNEL = "music_player_channel"
         const val NOTIFICATION_ID = 42
 
         @RequiresApi(26)

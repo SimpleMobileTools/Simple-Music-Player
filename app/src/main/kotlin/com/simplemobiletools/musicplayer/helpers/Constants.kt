@@ -64,6 +64,7 @@ const val PLAYBACK_SPEED_PROGRESS = "PLAYBACK_SPEED_PROGRESS"
 const val WERE_TRACK_FOLDERS_ADDED = "were_track_folders_added"
 const val SHOW_TABS = "show_tabs"
 const val WAS_ALL_TRACKS_PLAYLIST_CREATED = "was_all_tracks_playlist_created"
+const val TRACKS_REMOVED_FROM_ALL_TRACKS_PLAYLIST = "tracks_removed_from_all_tracks_playlist"
 const val LAST_EXPORT_PATH = "last_export_path"
 const val EXCLUDED_FOLDERS = "excluded_folders"
 const val SORT_PLAYLIST_PREFIX = "sort_playlist_"
@@ -79,6 +80,8 @@ const val TAB_ARTISTS = 4
 const val TAB_ALBUMS = 8
 const val TAB_TRACKS = 16
 const val ACTIVITY_PLAYLIST_FOLDER = 32
+
+const val FLAG_MANUAL_CACHE = 1
 
 // show Folders tab only on Android Q+, BUCKET_DISPLAY_NAME hasn't been available before that
 val allTabsMask = if (isQPlus()) {

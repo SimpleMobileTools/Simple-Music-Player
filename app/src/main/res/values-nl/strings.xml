@@ -84,7 +84,7 @@
     <string name="swap_prev_next">Knoppen Vorige/Volgende op koptelefoon omdraaien</string>
     <string name="exclude_folder_description">Het uitsluiten van een map zorgt ervoor dat alle geluidsbestanden in deze map worden genegeerd. Dit heeft geen gevolgen voor bestanden die handmatig zijn toegevoegd aan afspeellijsten.</string>
     <string name="gapless_playback">Gapless afspelen</string>
-    <string name="rescan_media">Rescan media</string>
+    <string name="rescan_media">Media doorzoeken</string>
     <!-- FAQ -->
     <string name="faq_1_title">Hoe kan ik een nummer vooruitspoelen\?</string>
     <string name="faq_1_text">Klik op de tijdsindicatoren voor de voortgang of de looptijd om resp. terug of vooruit te spoelen.</string>

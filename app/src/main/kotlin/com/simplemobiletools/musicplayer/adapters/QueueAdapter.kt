@@ -180,15 +180,13 @@ class QueueAdapter(activity: SimpleActivity, var items: ArrayList<Track>, recycl
                 false
             }
 
-            if (track.coverArt.isEmpty()) {
-                track_queue_image.setImageDrawable(placeholder)
-            } else {
+            activity.getTrackCoverArt(track) { coverArt ->
                 val options = RequestOptions()
                     .error(placeholder)
                     .transform(CenterCrop(), RoundedCorners(cornerRadius))
 
                 Glide.with(activity)
-                    .load(track.coverArt)
+                    .load(coverArt)
                     .apply(options)
                     .into(findViewById(R.id.track_queue_image))
             }

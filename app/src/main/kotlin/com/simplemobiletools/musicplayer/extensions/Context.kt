@@ -1,16 +1,24 @@
 package com.simplemobiletools.musicplayer.extensions
 
 import android.annotation.SuppressLint
+import android.app.Application
 import android.content.ContentUris
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.media.MediaMetadataRetriever
+import android.media.ThumbnailUtils
+import android.net.Uri
+import android.os.Handler
+import android.os.Looper
 import android.provider.MediaStore
 import android.provider.MediaStore.Audio
+import android.util.Size
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.commons.helpers.isOreoPlus
 import com.simplemobiletools.commons.helpers.isQPlus
-import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.databases.SongsDatabase
 import com.simplemobiletools.musicplayer.helpers.*
 import com.simplemobiletools.musicplayer.interfaces.*
@@ -45,6 +53,8 @@ val Context.artistDAO: ArtistsDao get() = getTracksDB().ArtistsDao()
 
 val Context.albumsDAO: AlbumsDao get() = getTracksDB().AlbumsDao()
 
+val Context.mediaScanner: SimpleMediaScanner get() = SimpleMediaScanner.getInstance(applicationContext as Application)
+
 fun Context.getTracksDB() = SongsDatabase.getInstance(this)
 
 fun Context.getPlaylistIdWithTitle(title: String) = playlistDAO.getPlaylistWithTitle(title)?.id ?: -1
@@ -61,174 +71,6 @@ fun Context.broadcastUpdateWidgetState() {
         action = TRACK_STATE_CHANGED
         sendBroadcast(this)
     }
-}
-
-fun Context.getArtistsSync(): ArrayList<Artist> {
-    val artists = ArrayList<Artist>()
-    val uri = Audio.Artists.EXTERNAL_CONTENT_URI
-    val projection = arrayOf(
-        Audio.Artists._ID,
-        Audio.Artists.ARTIST
-    )
-
-    queryCursor(uri, projection, showErrors = true) { cursor ->
-        val id = cursor.getLongValue(Audio.Artists._ID)
-        val title = cursor.getStringValue(Audio.Artists.ARTIST) ?: MediaStore.UNKNOWN_STRING
-        var artist = Artist(id, title, 0, 0, 0)
-        artist = fillArtistExtras(this, artist)
-        if (artist.albumCnt > 0 && artist.trackCnt > 0) {
-            artists.add(artist)
-        }
-    }
-
-    return artists
-}
-
-private fun fillArtistExtras(context: Context, artist: Artist): Artist {
-    val uri = Audio.Albums.EXTERNAL_CONTENT_URI
-    val projection = arrayOf(Audio.Albums._ID)
-    val selection = "${Audio.Albums.ARTIST_ID} = ?"
-    val selectionArgs = arrayOf(artist.id.toString())
-
-    artist.albumCnt = context.getAlbumsCount(artist)
-
-    context.queryCursor(uri, projection, selection, selectionArgs) { cursor ->
-        val albumId = cursor.getLongValue(Audio.Albums._ID)
-        if (artist.albumArtId == 0L) {
-            artist.albumArtId = albumId
-        }
-
-        artist.trackCnt += context.getAlbumTracksCount(albumId)
-    }
-
-    return artist
-}
-
-fun Context.getAlbums(artist: Artist, callback: (artists: ArrayList<Album>) -> Unit) {
-    ensureBackgroundThread {
-        val albums = getAlbumsSync(artist)
-        callback(albums)
-    }
-}
-
-fun Context.getAlbumsSync(artist: Artist): ArrayList<Album> {
-    val albums = ArrayList<Album>()
-    val uri = Audio.Albums.EXTERNAL_CONTENT_URI
-    val projection = arrayOf(
-        Audio.Albums._ID,
-        Audio.Albums.ARTIST,
-        Audio.Albums.FIRST_YEAR,
-        Audio.Albums.ALBUM
-    )
-
-    var selection = "${Audio.Albums.ARTIST} = ?"
-    var selectionArgs = arrayOf(artist.title)
-
-    if (isQPlus()) {
-        selection = "${Audio.Albums.ARTIST_ID} = ?"
-        selectionArgs = arrayOf(artist.id.toString())
-    }
-
-    queryCursor(uri, projection, selection, selectionArgs, showErrors = true) { cursor ->
-        val id = cursor.getLongValue(Audio.Albums._ID)
-        val artistName = cursor.getStringValue(Audio.Albums.ARTIST) ?: MediaStore.UNKNOWN_STRING
-        val title = cursor.getStringValue(Audio.Albums.ALBUM)
-        val coverArt = ContentUris.withAppendedId(artworkUri, id).toString()
-        val year = cursor.getIntValue(Audio.Albums.FIRST_YEAR)
-        val trackCnt = getAlbumTracksCount(id)
-        if (trackCnt > 0) {
-            val album = Album(id, artistName, title, coverArt, year, trackCnt, artist.id)
-            albums.add(album)
-        }
-    }
-
-    return albums
-}
-
-fun Context.getAlbumsCount(artist: Artist): Int {
-    val uri = Audio.Albums.EXTERNAL_CONTENT_URI
-    val projection = arrayOf(Audio.Albums._ID)
-    var selection = "${Audio.Albums.ARTIST} = ?"
-    var selectionArgs = arrayOf(artist.title)
-
-    if (isQPlus()) {
-        selection = "${Audio.Albums.ARTIST_ID} = ?"
-        selectionArgs = arrayOf(artist.id.toString())
-    }
-
-    try {
-        val cursor = contentResolver.query(uri, projection, selection, selectionArgs, null)
-        cursor?.use {
-            return cursor.count
-        }
-    } catch (e: Exception) {
-        showErrorToast(e)
-    }
-
-    return 0
-}
-
-fun Context.getAlbumTracksSync(albumId: Long): ArrayList<Track> {
-    val tracks = ArrayList<Track>()
-    val uri = Audio.Media.EXTERNAL_CONTENT_URI
-    val projection = arrayListOf(
-        Audio.Media._ID,
-        Audio.Media.DURATION,
-        Audio.Media.DATA,
-        Audio.Media.TITLE,
-        Audio.Media.ARTIST,
-        Audio.Media.ALBUM,
-        Audio.Media.TRACK
-    )
-
-    if (isQPlus()) {
-        projection.add(Audio.Media.BUCKET_DISPLAY_NAME)
-    }
-
-    val selection = "${Audio.Albums.ALBUM_ID} = ?"
-    val selectionArgs = arrayOf(albumId.toString())
-    val coverUri = ContentUris.withAppendedId(artworkUri, albumId)
-    val coverArt = coverUri.toString()
-    val showFilename = config.showFilename
-
-    queryCursor(uri, projection.toTypedArray(), selection, selectionArgs, showErrors = true) { cursor ->
-        val id = cursor.getLongValue(Audio.Media._ID)
-        val title = cursor.getStringValue(Audio.Media.TITLE)
-        val duration = cursor.getIntValue(Audio.Media.DURATION) / 1000
-        val trackId = cursor.getIntValue(Audio.Media.TRACK) % 1000
-        val path = cursor.getStringValue(Audio.Media.DATA)
-        val artist = cursor.getStringValue(Audio.Media.ARTIST) ?: MediaStore.UNKNOWN_STRING
-        val album = cursor.getStringValue(Audio.Media.ALBUM)
-        val folderName = if (isQPlus()) {
-            cursor.getStringValue(Audio.Media.BUCKET_DISPLAY_NAME) ?: MediaStore.UNKNOWN_STRING
-        } else {
-            ""
-        }
-
-        val track = Track(0, id, title, artist, path, duration, album, coverArt, 0, trackId, folderName, albumId, 0)
-        track.title = track.getProperTitle(showFilename)
-        tracks.add(track)
-    }
-
-    return tracks
-}
-
-fun Context.getAlbumTracksCount(albumId: Long): Int {
-    val uri = Audio.Media.EXTERNAL_CONTENT_URI
-    val projection = arrayOf(Audio.Media._ID, Audio.Media.DATA)
-    val selection = "${Audio.Albums.ALBUM_ID} = ?"
-    val selectionArgs = arrayOf(albumId.toString())
-    var validTracks = 0
-    val excludedFolders = config.excludedFolders
-
-    queryCursor(uri, projection, selection, selectionArgs, showErrors = true) { cursor ->
-        val path = cursor.getStringValue(Audio.Media.DATA)
-        if (!excludedFolders.contains(path.getParentPath())) {
-            validTracks++
-        }
-    }
-
-    return validTracks
 }
 
 fun Context.resetQueueItems(newTracks: List<Track>, callback: () -> Unit) {
@@ -289,103 +131,6 @@ fun Context.removeQueueItem(track: Track, callback: () -> Unit) {
         queueDAO.removeQueueItem(track.mediaStoreId)
         MusicService.mTracks.remove(track)
         callback()
-    }
-}
-
-// store new artists, albums and tracks into our local db, delete invalid items
-fun Context.updateAllDatabases(callback: () -> Unit) {
-    ensureBackgroundThread {
-        updateCachedArtists { artists ->
-            updateCachedAlbums(artists)
-            callback()
-        }
-    }
-}
-
-fun Context.updateCachedArtists(callback: (artists: ArrayList<Artist>) -> Unit) {
-    val artists = getArtistsSync()
-    artists.forEach { artist ->
-        artistDAO.insert(artist)
-    }
-
-    // remove invalid artists from cache
-    val cachedArtists = artistDAO.getAll() as ArrayList<Artist>
-    val newIds = artists.map { it.id }
-    val idsToRemove = arrayListOf<Long>()
-    cachedArtists.forEach { artist ->
-        if (!newIds.contains(artist.id)) {
-            idsToRemove.add(artist.id)
-        }
-    }
-
-    idsToRemove.forEach {
-        artistDAO.deleteArtist(it)
-    }
-
-    callback(artists)
-}
-
-fun Context.updateCachedAlbums(artists: ArrayList<Artist>) {
-    val albums = ArrayList<Album>()
-    artists.forEach { artist ->
-        albums.addAll(getAlbumsSync(artist))
-    }
-
-    albums.forEach { album ->
-        albumsDAO.insert(album)
-    }
-
-    // remove invalid albums from cache
-    val cachedAlbums = albumsDAO.getAll() as ArrayList<Album>
-    val newIds = albums.map { it.id }
-    val idsToRemove = arrayListOf<Long>()
-    cachedAlbums.forEach { album ->
-        if (!newIds.contains(album.id)) {
-            idsToRemove.add(album.id)
-        }
-    }
-
-    idsToRemove.forEach {
-        albumsDAO.deleteAlbum(it)
-    }
-
-    updateCachedTracks(albums)
-}
-
-fun Context.updateCachedTracks(albums: ArrayList<Album>) {
-    val tracks = ArrayList<Track>()
-    albums.forEach { album ->
-        tracks.addAll(getAlbumTracksSync(album.id))
-    }
-
-    tracks.forEach { track ->
-        tracksDAO.insert(track)
-    }
-
-    // remove invalid tracks from cache
-    val cachedTracks = tracksDAO.getAll() as ArrayList<Track>
-    val newIds = tracks.map { it.mediaStoreId }
-    val idsToRemove = arrayListOf<Long>()
-    val excludedFolders = config.excludedFolders
-    cachedTracks.forEach { track ->
-        if (!newIds.contains(track.mediaStoreId) && !excludedFolders.contains(track.path.getParentPath())) {
-            idsToRemove.add(track.mediaStoreId)
-        }
-    }
-
-    idsToRemove.forEach {
-        tracksDAO.removeTrack(it)
-    }
-
-    if (!config.wasAllTracksPlaylistCreated) {
-        val allTracksLabel = resources.getString(R.string.all_tracks)
-        val playlist = Playlist(ALL_TRACKS_PLAYLIST_ID, allTracksLabel)
-        playlistDAO.insert(playlist)
-        tracks.forEach {
-            it.playListId = ALL_TRACKS_PLAYLIST_ID
-        }
-        RoomHelper(this).insertTracksWithPlaylist(tracks)
-        config.wasAllTracksPlaylistCreated = true
     }
 }
 
@@ -461,4 +206,129 @@ private fun getFolderTrackPaths(folder: File): ArrayList<String> {
         }
     }
     return trackFiles
+}
+
+fun Context.getArtistCoverArt(artist: Artist, callback: (coverArt: Any?) -> Unit) {
+    ensureBackgroundThread {
+        if (artist.albumArt.isEmpty()) {
+            val track = tracksDAO.getTracksFromArtist(artist.id).firstOrNull()
+            getTrackCoverArt(track, callback)
+        } else {
+            Handler(Looper.getMainLooper()).post {
+                callback(artist.albumArt)
+            }
+        }
+    }
+}
+
+fun Context.getAlbumCoverArt(album: Album, callback: (coverArt: Any?) -> Unit) {
+    ensureBackgroundThread {
+        if (album.coverArt.isEmpty()) {
+            val track = tracksDAO.getTracksFromAlbum(album.id).firstOrNull()
+            getTrackCoverArt(track, callback)
+        } else {
+            Handler(Looper.getMainLooper()).post {
+                callback(album.coverArt)
+            }
+        }
+    }
+}
+
+fun Context.getTrackCoverArt(track: Track?, callback: (coverArt: Any?) -> Unit) {
+    ensureBackgroundThread {
+        if (track == null) {
+            Handler(Looper.getMainLooper()).post {
+                callback(null)
+            }
+            return@ensureBackgroundThread
+        }
+
+        val coverArt = track.coverArt.ifEmpty {
+            loadTrackCoverArt(track)
+        }
+
+        Handler(Looper.getMainLooper()).post {
+            callback(coverArt)
+        }
+    }
+}
+
+fun Context.loadTrackCoverArt(track: Track?): Bitmap? {
+    if (track == null) {
+        return null
+    }
+
+    val path = track.path
+    if (path.isNotEmpty() && File(path).exists()) {
+        val coverArtHeight = resources.getCoverArtHeight()
+        try {
+            try {
+                val mediaMetadataRetriever = MediaMetadataRetriever()
+                mediaMetadataRetriever.setDataSource(path)
+                val rawArt = mediaMetadataRetriever.embeddedPicture
+                if (rawArt != null) {
+                    val options = BitmapFactory.Options()
+                    val bitmap = BitmapFactory.decodeByteArray(rawArt, 0, rawArt.size, options)
+                    if (bitmap != null) {
+                        val resultBitmap = if (bitmap.height > coverArtHeight * 2) {
+                            val ratio = bitmap.width / bitmap.height.toFloat()
+                            Bitmap.createScaledBitmap(bitmap, (coverArtHeight * ratio).toInt(), coverArtHeight, false)
+                        } else {
+                            bitmap
+                        }
+
+                        return resultBitmap
+                    }
+                }
+            } catch (ignored: OutOfMemoryError) {
+            } catch (ignored: Exception) {
+            }
+
+            val trackParentDirectory = File(path).parent?.trimEnd('/')
+            val albumArtFiles = arrayListOf("folder.jpg", "albumart.jpg", "cover.jpg")
+            albumArtFiles.forEach {
+                val albumArtFilePath = "$trackParentDirectory/$it"
+                if (File(albumArtFilePath).exists()) {
+                    val bitmap = BitmapFactory.decodeFile(albumArtFilePath)
+                    if (bitmap != null) {
+                        val resultBitmap = if (bitmap.height > coverArtHeight * 2) {
+                            val ratio = bitmap.width / bitmap.height.toFloat()
+                            Bitmap.createScaledBitmap(bitmap, (coverArtHeight * ratio).toInt(), coverArtHeight, false)
+                        } else {
+                            bitmap
+                        }
+
+                        return resultBitmap
+                    }
+                }
+            }
+        } catch (ignored: Exception) {
+        } catch (ignored: Error) {
+        }
+    }
+
+    if (isQPlus()) {
+        if (track.coverArt.startsWith("content://")) {
+            try {
+                return MediaStore.Images.Media.getBitmap(contentResolver, Uri.parse(track.coverArt))
+            } catch (ignored: Exception) {
+            }
+        }
+
+        val size = Size(512, 512)
+        if (path.startsWith("content://")) {
+            try {
+                return contentResolver.loadThumbnail(Uri.parse(path), size, null)
+            } catch (ignored: Exception) {
+            }
+        }
+
+        try {
+            // ThumbnailUtils.createAudioThumbnail() has better logic for searching thumbnails
+            return ThumbnailUtils.createAudioThumbnail(File(path), size, null)
+        } catch (ignored: Exception) {
+        }
+    }
+
+    return null
 }

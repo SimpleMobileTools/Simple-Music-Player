@@ -95,12 +95,16 @@ class MainActivity : SimpleActivity() {
         updateMenuColors()
         updateTextColors(main_holder)
         setupTabColors()
+        val properTextColor = getProperTextColor()
+        val properPrimaryColor = getProperPrimaryColor()
         sleep_timer_holder.background = ColorDrawable(getProperBackgroundColor())
-        sleep_timer_stop.applyColorFilter(getProperTextColor())
+        sleep_timer_stop.applyColorFilter(properTextColor)
         updateCurrentTrackBar()
+        loading_progress_bar.setIndicatorColor(properPrimaryColor)
+        loading_progress_bar.trackColor = properPrimaryColor.adjustAlpha(LOWER_ALPHA)
 
         getAllFragments().forEach {
-            it?.setupColors(getProperTextColor(), getProperPrimaryColor())
+            it?.setupColors(properTextColor, properPrimaryColor)
         }
 
         if (storedExcludedFolders != config.excludedFolders.hashCode()) {
@@ -154,6 +158,7 @@ class MainActivity : SimpleActivity() {
         main_menu.getToolbar().setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.sort -> showSortingDialog()
+                R.id.rescan_media -> refreshAllFragments(showProgress = true)
                 R.id.sleep_timer -> showSleepTimer()
                 R.id.create_new_playlist -> createNewPlaylist()
                 R.id.create_playlist_from_folder -> createPlaylistFromFolder()
@@ -183,6 +188,8 @@ class MainActivity : SimpleActivity() {
     private fun initActivity() {
         bus = EventBus.getDefault()
         bus!!.register(this)
+        // trigger a scan first so that the fragments will accurately reflect the scanning state
+        mediaScanner.scan()
         initFragments()
         sleep_timer_stop.setOnClickListener { stopSleepTimer() }
 
@@ -193,7 +200,7 @@ class MainActivity : SimpleActivity() {
                         startActivity(this)
                     }
                 } else {
-                    PermissionRequiredDialog(this, R.string.allow_notifications_music_player)
+                    PermissionRequiredDialog(this, R.string.allow_notifications_music_player, { openNotificationSettings() })
                 }
             }
         }
@@ -209,11 +216,21 @@ class MainActivity : SimpleActivity() {
         refreshAllFragments()
     }
 
-    private fun refreshAllFragments() {
-        updateAllDatabases {
-            runOnUiThread {
-                getAllFragments().forEach {
-                    it?.setupFragment(this)
+    private fun refreshAllFragments(showProgress: Boolean = config.appRunCount == 1) {
+        if (showProgress) {
+            loading_progress_bar.show()
+        }
+
+        handleNotificationPermission { granted ->
+            mediaScanner.scan(progress = showProgress && granted) { complete ->
+                runOnUiThread {
+                    getAllFragments().forEach {
+                        it?.setupFragment(this)
+                    }
+
+                    if (complete) {
+                        loading_progress_bar.hide()
+                    }
                 }
             }
         }
