@@ -118,3 +118,9 @@ fun Activity.showTrackProperties(selectedTracks: List<Track>) {
         PropertiesDialog(this, selectedPaths, false)
     }
 }
+
+fun Activity.ensureActivityNotDestroyed(callback: () -> Unit) {
+    if (!isFinishing && !isDestroyed) {
+        callback()
+    }
+}

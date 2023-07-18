@@ -185,10 +185,12 @@ class QueueAdapter(activity: SimpleActivity, var items: ArrayList<Track>, recycl
                     .error(placeholder)
                     .transform(CenterCrop(), RoundedCorners(cornerRadius))
 
-                Glide.with(activity)
-                    .load(coverArt)
-                    .apply(options)
-                    .into(findViewById(R.id.track_queue_image))
+                activity.ensureActivityNotDestroyed {
+                    Glide.with(activity)
+                        .load(coverArt)
+                        .apply(options)
+                        .into(findViewById(R.id.track_queue_image))
+                }
             }
         }
     }
