@@ -22,6 +22,7 @@ import com.simplemobiletools.musicplayer.helpers.TagHelper
 import com.simplemobiletools.musicplayer.models.AlbumHeader
 import com.simplemobiletools.musicplayer.models.ListItem
 import com.simplemobiletools.musicplayer.models.Track
+import com.simplemobiletools.musicplayer.services.MusicService
 import kotlinx.android.synthetic.main.item_album_header.view.*
 import kotlinx.android.synthetic.main.item_track.view.*
 
@@ -76,7 +77,7 @@ class TracksHeaderAdapter(activity: SimpleActivity, var items: ArrayList<ListIte
             val oneItemsSelected = isOneItemSelected()
             val selected = getSelectedTracks().firstOrNull()?.let { !it.path.startsWith("content://") && tagHelper.isEditTagSupported(it) } == true
             findItem(R.id.cab_rename).isVisible = oneItemsSelected && selected
-            findItem(R.id.cab_play_next).isVisible = isOneItemSelected()
+            findItem(R.id.cab_play_next).isVisible = isOneItemSelected() && MusicService.mCurrTrack != getSelectedTracks().firstOrNull()
         }
     }
 

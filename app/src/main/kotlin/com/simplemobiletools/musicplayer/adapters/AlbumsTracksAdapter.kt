@@ -24,6 +24,7 @@ import com.simplemobiletools.musicplayer.models.Album
 import com.simplemobiletools.musicplayer.models.AlbumSection
 import com.simplemobiletools.musicplayer.models.ListItem
 import com.simplemobiletools.musicplayer.models.Track
+import com.simplemobiletools.musicplayer.services.MusicService
 import kotlinx.android.synthetic.main.item_album.view.*
 import kotlinx.android.synthetic.main.item_section.view.*
 import kotlinx.android.synthetic.main.item_track.view.*
@@ -83,7 +84,7 @@ class AlbumsTracksAdapter(
 
     override fun prepareActionMode(menu: Menu) {
         menu.apply {
-            findItem(R.id.cab_play_next).isVisible = isOneItemSelected()
+            findItem(R.id.cab_play_next).isVisible = isOneItemSelected() && MusicService.mCurrTrack != getSelectedTracks().firstOrNull() && isATrack()
         }
     }
 
@@ -143,6 +144,14 @@ class AlbumsTracksAdapter(
         }
     }
 
+    private fun isATrack(): Boolean {
+        getSelectedItems().forEach {
+            if (it !is Track)
+                return false
+        }
+        return true
+    }
+
     private fun showProperties() {
         val selectedTracks = getSelectedTracks()
         if (selectedTracks.isEmpty()) {
@@ -196,6 +205,8 @@ class AlbumsTracksAdapter(
     private fun getSelectedAlbums(): List<Album> = items.filter { it is Album && selectedKeys.contains(it.hashCode()) }.toList() as List<Album>
 
     private fun getSelectedTracks(): ArrayList<Track> = items.filter { it is Track && selectedKeys.contains(it.hashCode()) }.toMutableList() as ArrayList<Track>
+
+    private fun getSelectedItems(): List<ListItem> = items.filter { selectedKeys.contains(it.hashCode()) }
 
     private fun setupAlbum(view: View, album: Album) {
         view.apply {
