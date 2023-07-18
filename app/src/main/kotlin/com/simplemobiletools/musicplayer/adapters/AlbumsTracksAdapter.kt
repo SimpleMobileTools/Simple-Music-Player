@@ -84,7 +84,8 @@ class AlbumsTracksAdapter(
 
     override fun prepareActionMode(menu: Menu) {
         menu.apply {
-            findItem(R.id.cab_play_next).isVisible = isOneItemSelected() && MusicService.mCurrTrack != getSelectedTracks().firstOrNull() && isATrack()
+            findItem(R.id.cab_play_next).isVisible =
+                isOneItemSelected() && MusicService.mCurrTrack != getSelectedTracks().firstOrNull() && isATrack() && MusicService.mCurrTrack !== null
         }
     }
 

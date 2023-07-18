@@ -84,7 +84,8 @@ class TracksAdapter(
             findItem(R.id.cab_remove_from_playlist).isVisible = isPlaylistContent
             findItem(R.id.cab_rename).isVisible =
                 isOneItemSelected() && getSelectedTracks().firstOrNull()?.let { !it.path.startsWith("content://") && tagHelper.isEditTagSupported(it) } == true
-            findItem(R.id.cab_play_next).isVisible = isOneItemSelected() && MusicService.mCurrTrack != getSelectedTracks().firstOrNull()
+            findItem(R.id.cab_play_next).isVisible =
+                isOneItemSelected() && MusicService.mCurrTrack != getSelectedTracks().firstOrNull() && MusicService.mCurrTrack !== null
         }
     }
 

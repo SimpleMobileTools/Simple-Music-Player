@@ -77,7 +77,8 @@ class TracksHeaderAdapter(activity: SimpleActivity, var items: ArrayList<ListIte
             val oneItemsSelected = isOneItemSelected()
             val selected = getSelectedTracks().firstOrNull()?.let { !it.path.startsWith("content://") && tagHelper.isEditTagSupported(it) } == true
             findItem(R.id.cab_rename).isVisible = oneItemsSelected && selected
-            findItem(R.id.cab_play_next).isVisible = isOneItemSelected() && MusicService.mCurrTrack != getSelectedTracks().firstOrNull()
+            findItem(R.id.cab_play_next).isVisible =
+                isOneItemSelected() && MusicService.mCurrTrack != getSelectedTracks().firstOrNull() && MusicService.mCurrTrack !== null
         }
     }
 
