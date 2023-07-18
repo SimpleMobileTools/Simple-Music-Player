@@ -2,7 +2,6 @@ package com.simplemobiletools.musicplayer.extensions
 
 import android.annotation.SuppressLint
 import android.app.Application
-import android.content.ContentUris
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
