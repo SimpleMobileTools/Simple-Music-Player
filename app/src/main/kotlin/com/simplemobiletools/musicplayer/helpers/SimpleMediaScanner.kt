@@ -1,30 +1,22 @@
 package com.simplemobiletools.musicplayer.helpers
 
 import android.app.Application
-import android.app.Notification
-import android.app.PendingIntent
-import android.app.PendingIntent.FLAG_CANCEL_CURRENT
-import android.app.PendingIntent.FLAG_IMMUTABLE
 import android.content.ContentUris
-import android.content.Intent
 import android.media.MediaMetadataRetriever
 import android.media.MediaMetadataRetriever.*
 import android.os.Handler
 import android.os.Looper
 import android.provider.MediaStore
 import android.provider.MediaStore.Audio
-import androidx.core.app.NotificationCompat
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.commons.helpers.isQPlus
 import com.simplemobiletools.musicplayer.R
-import com.simplemobiletools.musicplayer.activities.MainActivity
 import com.simplemobiletools.musicplayer.extensions.*
 import com.simplemobiletools.musicplayer.models.Album
 import com.simplemobiletools.musicplayer.models.Artist
 import com.simplemobiletools.musicplayer.models.Playlist
 import com.simplemobiletools.musicplayer.models.Track
-import com.simplemobiletools.musicplayer.receivers.NotificationDismissedReceiver
 import java.io.File
 import java.io.FileInputStream
 import java.util.Arrays
@@ -45,6 +37,7 @@ class SimpleMediaScanner(private val context: Application) {
     private val newAlbums = arrayListOf<Album>()
     private val newArtists = arrayListOf<Artist>()
 
+    private var notificationHelper: NotificationHelper? = null
     private var notificationHandler: Handler? = null
     private var lastProgressUpdateMs = 0L
 
@@ -477,47 +470,24 @@ class SimpleMediaScanner(private val context: Application) {
             notificationHandler = Handler(Looper.getMainLooper())
         }
 
+        if (notificationHelper == null) {
+            notificationHelper = NotificationHelper.createInstance(context, null)
+        }
+
         // avoid showing notification for a short duration
         val delayNotification = pathBeingScanned.isEmpty()
         if (delayNotification) {
             notificationHandler?.postDelayed({
-                context.notificationManager.notify(
-                    SCANNER_NOTIFICATION_ID, createMediaScannerNotification(pathBeingScanned, progress, max)
-                )
+                val notification = notificationHelper!!.createMediaScannerNotification(pathBeingScanned, progress, max)
+                notificationHelper!!.notify(SCANNER_NOTIFICATION_ID, notification)
             }, SCANNER_NOTIFICATION_DELAY)
         } else {
             if (System.currentTimeMillis() - lastProgressUpdateMs > 100L) {
                 lastProgressUpdateMs = System.currentTimeMillis()
-                context.notificationManager.notify(
-                    SCANNER_NOTIFICATION_ID, createMediaScannerNotification(pathBeingScanned, progress, max)
-                )
+                val notification = notificationHelper!!.createMediaScannerNotification(pathBeingScanned, progress, max)
+                notificationHelper!!.notify(SCANNER_NOTIFICATION_ID, notification)
             }
         }
-    }
-
-    private fun createMediaScannerNotification(contentText: String, progress: Int, max: Int): Notification {
-        val title = context.getString(R.string.scanning)
-        val contentIntent = Intent(context, MainActivity::class.java)
-        val contentPendingIntent = PendingIntent.getActivity(context, 0, contentIntent, FLAG_CANCEL_CURRENT or FLAG_IMMUTABLE)
-        val dismissedIntent = Intent(context, NotificationDismissedReceiver::class.java).setAction(NOTIFICATION_DISMISSED)
-        val dismissedPendingIntent = PendingIntent.getBroadcast(context, 0, dismissedIntent, FLAG_CANCEL_CURRENT or FLAG_IMMUTABLE)
-
-        return NotificationCompat.Builder(context, NotificationHelper.NOTIFICATION_CHANNEL)
-            .setContentTitle(title)
-            .setSmallIcon(R.drawable.ic_headset_small)
-            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
-            .setPriority(NotificationCompat.PRIORITY_MAX)
-            .setContentIntent(contentPendingIntent)
-            .setChannelId(NotificationHelper.NOTIFICATION_CHANNEL)
-            .setCategory(Notification.CATEGORY_PROGRESS)
-            .setDeleteIntent(dismissedPendingIntent)
-            .setOngoing(true)
-            .setProgress(max, progress, progress == 0)
-            .apply {
-                if (contentText.isNotEmpty()) {
-                    setContentText(contentText)
-                }
-            }.build()
     }
 
     private fun hideScanProgress() {
