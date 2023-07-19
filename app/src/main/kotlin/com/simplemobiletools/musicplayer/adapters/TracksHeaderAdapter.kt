@@ -25,6 +25,7 @@ import com.simplemobiletools.musicplayer.helpers.TagHelper
 import com.simplemobiletools.musicplayer.models.AlbumHeader
 import com.simplemobiletools.musicplayer.models.ListItem
 import com.simplemobiletools.musicplayer.models.Track
+import com.simplemobiletools.musicplayer.services.MusicService
 import kotlinx.android.synthetic.main.item_album_header.view.album_artist
 import kotlinx.android.synthetic.main.item_album_header.view.album_meta
 import kotlinx.android.synthetic.main.item_album_header.view.album_title
@@ -81,6 +82,8 @@ class TracksHeaderAdapter(activity: SimpleActivity, var items: ArrayList<ListIte
             val oneItemsSelected = isOneItemSelected()
             val selected = getSelectedTracks().firstOrNull()?.let { !it.path.startsWith("content://") && tagHelper.isEditTagSupported(it) } == true
             findItem(R.id.cab_rename).isVisible = oneItemsSelected && selected
+            findItem(R.id.cab_play_next).isVisible =
+                isOneItemSelected() && MusicService.mCurrTrack != getSelectedTracks().firstOrNull() && MusicService.mCurrTrack !== null
         }
     }
 
@@ -96,6 +99,7 @@ class TracksHeaderAdapter(activity: SimpleActivity, var items: ArrayList<ListIte
             R.id.cab_delete -> askConfirmDelete()
             R.id.cab_rename -> displayEditDialog()
             R.id.cab_select_all -> selectAll()
+            R.id.cab_play_next -> playNext()
         }
     }
 
@@ -121,6 +125,14 @@ class TracksHeaderAdapter(activity: SimpleActivity, var items: ArrayList<ListIte
     private fun addToQueue() {
         activity.addTracksToQueue(getSelectedTracks()) {
             finishActMode()
+        }
+    }
+
+    private fun playNext() {
+        getSelectedTracks().firstOrNull()?.let { selectedTrack ->
+            activity.playNextInQueue(selectedTrack) {
+                finishActMode()
+            }
         }
     }
 

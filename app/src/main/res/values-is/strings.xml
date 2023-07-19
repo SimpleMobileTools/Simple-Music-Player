@@ -76,6 +76,7 @@
     <string name="next_track">Næsta:</string>
     <string name="track_queue">Biðröð</string>
     <string name="add_to_queue">Bæta við biðröð</string>
+    <string name="play_next">Play next</string>
     <string name="remove_from_queue">Fjarlægja úr biðröð</string>
     <string name="create_playlist_from_queue">Búa til lagalista úr biðröð</string>
     <!-- Settings -->

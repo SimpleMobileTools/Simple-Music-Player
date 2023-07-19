@@ -53,6 +53,20 @@ fun Activity.addTracksToQueue(tracks: List<Track>, callback: () -> Unit) {
     }
 }
 
+fun Activity.playNextInQueue(track: Track, callback: () -> Unit) {
+    if (!MusicService.mTracks.none { it.mediaStoreId == track.mediaStoreId }) {
+        removeQueueItem(track) { }
+    }
+    addNextQueueItem(track) {
+        val currentTrackPosition = MusicService.mTracks.indexOf(MusicService.mCurrTrack)
+        MusicService.mTracks.add(currentTrackPosition + 1, track)
+
+        runOnUiThread {
+            callback()
+        }
+    }
+}
+
 fun BaseSimpleActivity.deleteTracks(tracks: List<Track>, callback: () -> Unit) {
     val uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
     if (isRPlus()) {

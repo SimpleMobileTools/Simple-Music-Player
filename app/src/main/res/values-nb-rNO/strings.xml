@@ -76,6 +76,7 @@
     <string name="next_track">Neste:</string>
     <string name="track_queue">Sporkø</string>
     <string name="add_to_queue">Legg til i kø</string>
+    <string name="play_next">Play next</string>
     <string name="remove_from_queue">Fjern fra kø</string>
     <string name="create_playlist_from_queue">Opprett spilleliste fra kø</string>
     <!-- Settings -->

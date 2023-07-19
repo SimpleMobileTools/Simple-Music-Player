@@ -76,6 +76,7 @@
     <string name="next_track">Seuraava:</string>
     <string name="track_queue">Kappalejono</string>
     <string name="add_to_queue">Lisää jonoon</string>
+    <string name="play_next">Play next</string>
     <string name="remove_from_queue">Poista jonosta</string>
     <string name="create_playlist_from_queue">Luo soittolista jonosta</string>
     <!-- Settings -->

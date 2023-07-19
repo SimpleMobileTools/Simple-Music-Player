@@ -76,6 +76,7 @@
     <string name="next_track">Next:</string>
     <string name="track_queue">Fila de seguimento</string>
     <string name="add_to_queue">Engadir á cola</string>
+    <string name="play_next">Play next</string>
     <string name="remove_from_queue">Eliminar da cola</string>
     <string name="create_playlist_from_queue">Crear un lista de reprodución desde a cola</string>
     <!-- Settings -->

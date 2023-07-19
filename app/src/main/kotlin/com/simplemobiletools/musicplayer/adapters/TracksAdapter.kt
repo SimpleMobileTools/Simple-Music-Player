@@ -31,6 +31,7 @@ import com.simplemobiletools.musicplayer.inlines.indexOfFirstOrNull
 import com.simplemobiletools.musicplayer.models.Events
 import com.simplemobiletools.musicplayer.models.Playlist
 import com.simplemobiletools.musicplayer.models.Track
+import com.simplemobiletools.musicplayer.services.MusicService
 import kotlinx.android.synthetic.main.item_track.view.*
 import org.greenrobot.eventbus.EventBus
 import java.util.Collections
@@ -83,6 +84,8 @@ class TracksAdapter(
             findItem(R.id.cab_remove_from_playlist).isVisible = isPlaylistContent
             findItem(R.id.cab_rename).isVisible =
                 isOneItemSelected() && getSelectedTracks().firstOrNull()?.let { !it.path.startsWith("content://") && tagHelper.isEditTagSupported(it) } == true
+            findItem(R.id.cab_play_next).isVisible =
+                isOneItemSelected() && MusicService.mCurrTrack != getSelectedTracks().firstOrNull() && MusicService.mCurrTrack !== null
         }
     }
 
@@ -99,6 +102,7 @@ class TracksAdapter(
             R.id.cab_remove_from_playlist -> removeFromPlaylist()
             R.id.cab_delete -> askConfirmDelete()
             R.id.cab_select_all -> selectAll()
+            R.id.cab_play_next -> playNext()
         }
     }
 
@@ -132,6 +136,14 @@ class TracksAdapter(
     private fun addToQueue() {
         activity.addTracksToQueue(getSelectedTracks()) {
             finishActMode()
+        }
+    }
+
+    private fun playNext() {
+        getSelectedTracks().firstOrNull()?.let { selectedTrack ->
+            activity.playNextInQueue(selectedTrack) {
+                finishActMode()
+            }
         }
     }
 
