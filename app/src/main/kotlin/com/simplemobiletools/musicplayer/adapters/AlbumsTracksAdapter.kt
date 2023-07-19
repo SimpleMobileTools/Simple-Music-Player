@@ -195,8 +195,6 @@ class AlbumsTracksAdapter(
 
     private fun getSelectedTracks(): ArrayList<Track> = items.filter { it is Track && selectedKeys.contains(it.hashCode()) }.toMutableList() as ArrayList<Track>
 
-    private fun getSelectedItems(): List<ListItem> = items.filter { selectedKeys.contains(it.hashCode()) }
-
     private fun setupAlbum(view: View, album: Album) {
         view.apply {
             album_frame?.isSelected = selectedKeys.contains(album.hashCode())
