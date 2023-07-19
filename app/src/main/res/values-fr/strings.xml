@@ -78,6 +78,7 @@
     <string name="next_track">Suivant :</string>
     <string name="track_queue">File des pistes</string>
     <string name="add_to_queue">Ajouter à la file</string>
+    <string name="play_next">Play next</string>
     <string name="remove_from_queue">Supprimer de la file</string>
     <string name="create_playlist_from_queue">Créer une liste de lecture depuis la file</string>
     <!-- Settings -->

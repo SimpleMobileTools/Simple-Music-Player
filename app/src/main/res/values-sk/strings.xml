@@ -78,6 +78,7 @@
     <string name="next_track">Nasleduje:</string>
     <string name="track_queue">Poradie skladieb</string>
     <string name="add_to_queue">Pridať do poradia skladieb</string>
+    <string name="play_next">Hrať ako ďalšiu</string>
     <string name="remove_from_queue">Odstrániť z poradia skladieb</string>
     <string name="create_playlist_from_queue">Vytvoriť playlist z poradia</string>
     <!-- Settings -->

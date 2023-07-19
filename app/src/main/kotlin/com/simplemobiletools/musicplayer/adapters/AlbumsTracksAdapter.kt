@@ -24,8 +24,11 @@ import com.simplemobiletools.musicplayer.models.Album
 import com.simplemobiletools.musicplayer.models.AlbumSection
 import com.simplemobiletools.musicplayer.models.ListItem
 import com.simplemobiletools.musicplayer.models.Track
-import kotlinx.android.synthetic.main.item_album.view.*
-import kotlinx.android.synthetic.main.item_section.view.*
+import com.simplemobiletools.musicplayer.services.MusicService
+import kotlinx.android.synthetic.main.item_album.view.album_frame
+import kotlinx.android.synthetic.main.item_album.view.album_title
+import kotlinx.android.synthetic.main.item_album.view.album_tracks
+import kotlinx.android.synthetic.main.item_section.view.item_section
 import kotlinx.android.synthetic.main.item_track.view.*
 
 // we show both albums and individual tracks here
@@ -81,7 +84,16 @@ class AlbumsTracksAdapter(
         }
     }
 
-    override fun prepareActionMode(menu: Menu) {}
+    override fun prepareActionMode(menu: Menu) {
+        val firstTrack = getSelectedTracks().firstOrNull()
+        menu.apply {
+            findItem(R.id.cab_play_next).isVisible =
+                isOneItemSelected() &&
+                    MusicService.mCurrTrack !== null &&
+                    MusicService.mCurrTrack != firstTrack &&
+                    firstTrack is Track
+        }
+    }
 
     override fun actionItemPressed(id: Int) {
         if (selectedKeys.isEmpty()) {
@@ -95,6 +107,7 @@ class AlbumsTracksAdapter(
             R.id.cab_delete -> askConfirmDelete()
             R.id.cab_rename -> displayEditDialog()
             R.id.cab_select_all -> selectAll()
+            R.id.cab_play_next -> playNext()
         }
     }
 
@@ -125,6 +138,14 @@ class AlbumsTracksAdapter(
     private fun addToQueue() {
         ensureBackgroundThread {
             activity.addTracksToQueue(getAllSelectedTracks()) {
+                finishActMode()
+            }
+        }
+    }
+
+    private fun playNext() {
+        getSelectedTracks().firstOrNull()?.let { selectedTrack ->
+            activity.playNextInQueue(selectedTrack) {
                 finishActMode()
             }
         }
@@ -183,6 +204,8 @@ class AlbumsTracksAdapter(
     private fun getSelectedAlbums(): List<Album> = items.filter { it is Album && selectedKeys.contains(it.hashCode()) }.toList() as List<Album>
 
     private fun getSelectedTracks(): ArrayList<Track> = items.filter { it is Track && selectedKeys.contains(it.hashCode()) }.toMutableList() as ArrayList<Track>
+
+    private fun getSelectedItems(): List<ListItem> = items.filter { selectedKeys.contains(it.hashCode()) }
 
     private fun setupAlbum(view: View, album: Album) {
         view.apply {
