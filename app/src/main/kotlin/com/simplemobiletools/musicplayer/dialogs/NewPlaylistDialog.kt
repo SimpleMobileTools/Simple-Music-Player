@@ -5,10 +5,10 @@ import androidx.appcompat.app.AlertDialog
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.musicplayer.R
+import com.simplemobiletools.musicplayer.extensions.audioHelper
 import com.simplemobiletools.musicplayer.extensions.getPlaylistIdWithTitle
-import com.simplemobiletools.musicplayer.extensions.playlistDAO
 import com.simplemobiletools.musicplayer.models.Playlist
-import kotlinx.android.synthetic.main.dialog_new_playlist.view.*
+import kotlinx.android.synthetic.main.dialog_new_playlist.view.new_playlist_title
 
 class NewPlaylistDialog(val activity: Activity, var playlist: Playlist? = null, val callback: (playlistId: Int) -> Unit) {
     var isNewPlaylist = playlist == null
@@ -49,9 +49,9 @@ class NewPlaylistDialog(val activity: Activity, var playlist: Playlist? = null, 
                             playlist!!.title = title
 
                             val eventTypeId = if (isNewPlaylist) {
-                                activity.playlistDAO.insert(playlist!!).toInt()
+                                activity.audioHelper.insertPlaylist(playlist!!).toInt()
                             } else {
-                                activity.playlistDAO.update(playlist!!)
+                                activity.audioHelper.updatePlaylist(playlist!!)
                                 playlist!!.id
                             }
 

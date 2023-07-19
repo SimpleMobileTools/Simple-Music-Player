@@ -13,21 +13,24 @@ import com.simplemobiletools.musicplayer.activities.SimpleActivity
 import com.simplemobiletools.musicplayer.activities.TracksActivity
 import com.simplemobiletools.musicplayer.adapters.FoldersAdapter
 import com.simplemobiletools.musicplayer.dialogs.ChangeSortingDialog
+import com.simplemobiletools.musicplayer.extensions.audioHelper
 import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.extensions.mediaScanner
-import com.simplemobiletools.musicplayer.extensions.tracksDAO
 import com.simplemobiletools.musicplayer.helpers.FOLDER
 import com.simplemobiletools.musicplayer.helpers.TAB_FOLDERS
 import com.simplemobiletools.musicplayer.models.Folder
 import com.simplemobiletools.musicplayer.models.Track
-import kotlinx.android.synthetic.main.fragment_folders.view.*
+import kotlinx.android.synthetic.main.fragment_folders.view.folders_fastscroller
+import kotlinx.android.synthetic.main.fragment_folders.view.folders_list
+import kotlinx.android.synthetic.main.fragment_folders.view.folders_placeholder
+import kotlinx.android.synthetic.main.fragment_folders.view.folders_placeholder_2
 
 class FoldersFragment(context: Context, attributeSet: AttributeSet) : MyViewPagerFragment(context, attributeSet) {
     private var foldersIgnoringSearch = ArrayList<Folder>()
 
     override fun setupFragment(activity: BaseSimpleActivity) {
         ensureBackgroundThread {
-            var tracks = context.tracksDAO.getAll()
+            var tracks = context.audioHelper.getAllTracks()
             tracks = tracks.distinctBy { "${it.path}/${it.mediaStoreId}" }.toMutableList() as ArrayList<Track>
 
             Track.sorting = context.config.trackSorting
@@ -47,7 +50,7 @@ class FoldersFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
 
                 if (!context.config.wereTrackFoldersAdded) {
                     folderTracks.forEach {
-                        context.tracksDAO.updateFolderName(title, it.mediaStoreId)
+                        context.audioHelper.updateTrackFolder(title, it.mediaStoreId)
                     }
                 }
             }

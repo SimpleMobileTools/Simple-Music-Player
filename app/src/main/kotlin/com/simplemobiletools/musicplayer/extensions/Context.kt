@@ -52,18 +52,13 @@ val Context.artistDAO: ArtistsDao get() = getTracksDB().ArtistsDao()
 
 val Context.albumsDAO: AlbumsDao get() = getTracksDB().AlbumsDao()
 
+val Context.audioHelper: AudioHelper get() = AudioHelper(this)
+
 val Context.mediaScanner: SimpleMediaScanner get() = SimpleMediaScanner.getInstance(applicationContext as Application)
 
 fun Context.getTracksDB() = SongsDatabase.getInstance(this)
 
 fun Context.getPlaylistIdWithTitle(title: String) = playlistDAO.getPlaylistWithTitle(title)?.id ?: -1
-
-fun Context.deletePlaylists(playlists: ArrayList<Playlist>) {
-    playlistDAO.deletePlaylists(playlists)
-    playlists.forEach {
-        tracksDAO.removePlaylistSongs(it.id)
-    }
-}
 
 fun Context.broadcastUpdateWidgetState() {
     Intent(this, MyWidgetProvider::class.java).apply {
@@ -88,7 +83,7 @@ fun Context.addQueueItems(newTracks: List<Track>, callback: () -> Unit) {
             itemsToInsert.add(queueItem)
         }
 
-        tracksDAO.insertAll(newTracks)
+        audioHelper.insertTracks(newTracks)
         queueDAO.insertAll(itemsToInsert)
         sendIntent(UPDATE_QUEUE_SIZE)
         callback()
@@ -115,21 +110,13 @@ fun Context.addNextQueueItem(nextTrack: Track, callback: () -> Unit) {
     }
 }
 
-fun Context.removeQueueItems(tracks: List<Track>, callback: () -> Unit) {
+fun Context.removeQueueItems(tracks: List<Track>, callback: (() -> Unit)? = null) {
     ensureBackgroundThread {
         tracks.forEach {
             queueDAO.removeQueueItem(it.mediaStoreId)
             MusicService.mTracks.remove(it)
         }
-        callback()
-    }
-}
-
-fun Context.removeQueueItem(track: Track, callback: () -> Unit) {
-    ensureBackgroundThread {
-        queueDAO.removeQueueItem(track.mediaStoreId)
-        MusicService.mTracks.remove(track)
-        callback()
+        callback?.invoke()
     }
 }
 
@@ -158,7 +145,7 @@ fun Context.getMediaStoreIdFromPath(path: String): Long {
 
 fun Context.getFolderTracks(path: String, rescanWrongPaths: Boolean, callback: (tracks: ArrayList<Track>) -> Unit) {
     val folderTracks = getFolderTrackPaths(File(path))
-    val allTracks = tracksDAO.getAll()
+    val allTracks = audioHelper.getAllTracks()
     val wantedTracks = ArrayList<Track>()
     val wrongPaths = ArrayList<String>()    // rescan paths that are not present in the MediaStore
 
@@ -210,7 +197,7 @@ private fun getFolderTrackPaths(folder: File): ArrayList<String> {
 fun Context.getArtistCoverArt(artist: Artist, callback: (coverArt: Any?) -> Unit) {
     ensureBackgroundThread {
         if (artist.albumArt.isEmpty()) {
-            val track = tracksDAO.getTracksFromArtist(artist.id).firstOrNull()
+            val track = audioHelper.getArtistTracks(artist.id).firstOrNull()
             getTrackCoverArt(track, callback)
         } else {
             Handler(Looper.getMainLooper()).post {
@@ -223,7 +210,7 @@ fun Context.getArtistCoverArt(artist: Artist, callback: (coverArt: Any?) -> Unit
 fun Context.getAlbumCoverArt(album: Album, callback: (coverArt: Any?) -> Unit) {
     ensureBackgroundThread {
         if (album.coverArt.isEmpty()) {
-            val track = tracksDAO.getTracksFromAlbum(album.id).firstOrNull()
+            val track = audioHelper.getAlbumTracks(album.id).firstOrNull()
             getTrackCoverArt(track, callback)
         } else {
             Handler(Looper.getMainLooper()).post {

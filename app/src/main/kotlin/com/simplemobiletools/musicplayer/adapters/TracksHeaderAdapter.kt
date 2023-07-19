@@ -11,7 +11,10 @@ import com.bumptech.glide.request.RequestOptions
 import com.qtalk.recyclerviewfastscroller.RecyclerViewFastScroller
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
 import com.simplemobiletools.commons.dialogs.ConfirmationDialog
-import com.simplemobiletools.commons.extensions.*
+import com.simplemobiletools.commons.extensions.beGone
+import com.simplemobiletools.commons.extensions.beVisible
+import com.simplemobiletools.commons.extensions.getFormattedDuration
+import com.simplemobiletools.commons.extensions.setupViewBackground
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.musicplayer.R
@@ -23,7 +26,9 @@ import com.simplemobiletools.musicplayer.models.AlbumHeader
 import com.simplemobiletools.musicplayer.models.ListItem
 import com.simplemobiletools.musicplayer.models.Track
 import com.simplemobiletools.musicplayer.services.MusicService
-import kotlinx.android.synthetic.main.item_album_header.view.*
+import kotlinx.android.synthetic.main.item_album_header.view.album_artist
+import kotlinx.android.synthetic.main.item_album_header.view.album_meta
+import kotlinx.android.synthetic.main.item_album_header.view.album_title
 import kotlinx.android.synthetic.main.item_track.view.*
 
 class TracksHeaderAdapter(activity: SimpleActivity, var items: ArrayList<ListItem>, recyclerView: MyRecyclerView, itemClick: (Any) -> Unit) :
@@ -211,7 +216,7 @@ class TracksHeaderAdapter(activity: SimpleActivity, var items: ArrayList<ListIte
                 .transform(CenterCrop(), RoundedCorners(cornerRadius))
 
             ensureBackgroundThread {
-                val album = activity.albumsDAO.getAlbumWithId(header.id)
+                val album = activity.audioHelper.getAlbum(header.id)
                 if (album != null) {
                     activity.getAlbumCoverArt(album) { coverArt ->
                         activity.ensureActivityNotDestroyed {

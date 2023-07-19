@@ -9,10 +9,11 @@ import com.simplemobiletools.commons.extensions.getAlertDialogBuilder
 import com.simplemobiletools.commons.extensions.setupDialogStuff
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.musicplayer.R
-import com.simplemobiletools.musicplayer.extensions.playlistDAO
+import com.simplemobiletools.musicplayer.extensions.audioHelper
 import com.simplemobiletools.musicplayer.models.Playlist
-import kotlinx.android.synthetic.main.dialog_select_playlist.view.*
-import kotlinx.android.synthetic.main.item_select_playlist.view.*
+import kotlinx.android.synthetic.main.dialog_select_playlist.view.dialog_select_playlist_linear
+import kotlinx.android.synthetic.main.dialog_select_playlist.view.dialog_select_playlist_new_radio
+import kotlinx.android.synthetic.main.item_select_playlist.view.select_playlist_item_radio_button
 
 class SelectPlaylistDialog(val activity: Activity, val callback: (playlistId: Int) -> Unit) {
     private var dialog: AlertDialog? = null
@@ -20,7 +21,7 @@ class SelectPlaylistDialog(val activity: Activity, val callback: (playlistId: In
     init {
         val view = activity.layoutInflater.inflate(R.layout.dialog_select_playlist, null)
         ensureBackgroundThread {
-            val playlists = activity.playlistDAO.getAll() as ArrayList<Playlist>
+            val playlists = activity.audioHelper.getAllPlaylists()
             activity.runOnUiThread {
                 initDialog(playlists, view)
 

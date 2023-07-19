@@ -54,9 +54,11 @@ fun Activity.addTracksToQueue(tracks: List<Track>, callback: () -> Unit) {
 }
 
 fun Activity.playNextInQueue(track: Track, callback: () -> Unit) {
-    if (!MusicService.mTracks.none { it.mediaStoreId == track.mediaStoreId }) {
-        removeQueueItem(track) { }
+    val isTrackQueued = MusicService.mTracks.any { it.mediaStoreId == track.mediaStoreId }
+    if (isTrackQueued) {
+        removeQueueItems(listOf(track))
     }
+
     addNextQueueItem(track) {
         val currentTrackPosition = MusicService.mTracks.indexOf(MusicService.mCurrTrack)
         MusicService.mTracks.add(currentTrackPosition + 1, track)
@@ -78,7 +80,7 @@ fun BaseSimpleActivity.deleteTracks(tracks: List<Track>, callback: () -> Unit) {
 
         deleteSDK30Uris(uris) { success ->
             if (success) {
-                removeQueueItems(tracks) {}
+                removeQueueItems(tracks)
                 EventBus.getDefault().post(Events.RefreshFragments())
                 callback()
             } else {
@@ -93,13 +95,13 @@ fun BaseSimpleActivity.deleteTracks(tracks: List<Track>, callback: () -> Unit) {
             val where = "${MediaStore.Audio.Media._ID} = ?"
             val args = arrayOf(track.mediaStoreId.toString())
             contentResolver.delete(uri, where, args)
-            tracksDAO.removeTrack(track.mediaStoreId)
+            audioHelper.deleteTrack(track.mediaStoreId)
             File(track.path).delete()
         } catch (ignored: Exception) {
         }
     }
 
-    removeQueueItems(tracks) {}
+    removeQueueItems(tracks)
     EventBus.getDefault().post(Events.RefreshFragments())
     callback()
 }

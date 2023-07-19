@@ -5,6 +5,8 @@ import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
+import android.app.PendingIntent.FLAG_CANCEL_CURRENT
+import android.app.PendingIntent.FLAG_IMMUTABLE
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
@@ -22,7 +24,7 @@ import com.simplemobiletools.musicplayer.services.MusicService
 
 /** Helper class to manage all-things-notification. */
 @SuppressLint("NewApi")
-class NotificationHelper(private val context: Context, private val mediaSessionToken: MediaSessionCompat.Token) {
+class NotificationHelper(private val context: Context, private val mediaSessionToken: MediaSessionCompat.Token? = null) {
 
     private var notificationManager = context.notificationManager
 
@@ -41,13 +43,6 @@ class NotificationHelper(private val context: Context, private val mediaSessionT
             usesChronometer = true
             ongoing = true
         }
-
-        val notificationDismissedIntent = Intent(context, NotificationDismissedReceiver::class.java).apply {
-            action = NOTIFICATION_DISMISSED
-        }
-
-        val flags = PendingIntent.FLAG_CANCEL_CURRENT or PendingIntent.FLAG_IMMUTABLE
-        val notificationDismissedPendingIntent = PendingIntent.getBroadcast(context, 0, notificationDismissedIntent, flags)
 
         val previousAction = NotificationCompat.Action.Builder(
             R.drawable.ic_previous_vector,
@@ -90,9 +85,9 @@ class NotificationHelper(private val context: Context, private val mediaSessionT
             .setStyle(
                 androidx.media.app.NotificationCompat.MediaStyle()
                     .setShowActionsInCompactView(0, 1, 2)
-                    .setMediaSession(mediaSessionToken)
+                    .setMediaSession(mediaSessionToken!!)
             )
-            .setDeleteIntent(notificationDismissedPendingIntent)
+            .setDeleteIntent(getDismissedIntent())
             .addAction(previousAction)
             .addAction(playPauseAction)
             .addAction(nextAction)
@@ -106,19 +101,44 @@ class NotificationHelper(private val context: Context, private val mediaSessionT
         callback(builder.build())
     }
 
+    fun createMediaScannerNotification(contentText: String, progress: Int, max: Int): Notification {
+        val title = context.getString(R.string.scanning)
+        return NotificationCompat.Builder(context, NOTIFICATION_CHANNEL)
+            .setContentTitle(title)
+            .setSmallIcon(R.drawable.ic_headset_small)
+            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+            .setPriority(NotificationCompat.PRIORITY_MAX)
+            .setContentIntent(getContentIntent())
+            .setChannelId(NOTIFICATION_CHANNEL)
+            .setCategory(Notification.CATEGORY_PROGRESS)
+            .setDeleteIntent(getDismissedIntent())
+            .setOngoing(true)
+            .setProgress(max, progress, progress == 0)
+            .apply {
+                if (contentText.isNotEmpty()) {
+                    setContentText(contentText)
+                }
+            }.build()
+    }
+
+
     fun notify(id: Int, notification: Notification) = notificationManager.notify(id, notification)
 
     fun cancel(id: Int) = notificationManager.cancel(id)
 
     private fun getContentIntent(): PendingIntent {
         val contentIntent = Intent(context, MainActivity::class.java)
-        return PendingIntent.getActivity(context, 0, contentIntent, PendingIntent.FLAG_IMMUTABLE)
+        return PendingIntent.getActivity(context, 0, contentIntent, FLAG_IMMUTABLE)
+    }
+
+    private fun getDismissedIntent(): PendingIntent {
+        val notificationDismissedIntent = Intent(context, NotificationDismissedReceiver::class.java).setAction(NOTIFICATION_DISMISSED)
+        return PendingIntent.getBroadcast(context, 0, notificationDismissedIntent, FLAG_CANCEL_CURRENT or FLAG_IMMUTABLE)
     }
 
     private fun getIntent(action: String): PendingIntent {
-        val intent = Intent(context, ControlActionsListener::class.java)
-        intent.action = action
-        return PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
+        val intent = Intent(context, ControlActionsListener::class.java).setAction(action)
+        return PendingIntent.getBroadcast(context, 0, intent, FLAG_IMMUTABLE)
     }
 
     companion object {
@@ -143,11 +163,11 @@ class NotificationHelper(private val context: Context, private val mediaSessionT
             }
         }
 
-        fun createInstance(context: Context, mediaSession: MediaSessionCompat): NotificationHelper {
+        fun createInstance(context: Context, mediaSession: MediaSessionCompat? = null): NotificationHelper {
             if (isOreoPlus()) {
                 createNotificationChannel(context, context.notificationManager)
             }
-            return NotificationHelper(context, mediaSession.sessionToken)
+            return NotificationHelper(context, mediaSession?.sessionToken)
         }
     }
 }

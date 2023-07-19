@@ -6,15 +6,15 @@ import android.provider.MediaStore
 import android.provider.MediaStore.Audio
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.isQPlus
+import com.simplemobiletools.musicplayer.extensions.audioHelper
 import com.simplemobiletools.musicplayer.extensions.config
-import com.simplemobiletools.musicplayer.extensions.tracksDAO
 import com.simplemobiletools.musicplayer.models.Events
 import com.simplemobiletools.musicplayer.models.Track
 import org.greenrobot.eventbus.EventBus
 
 class RoomHelper(val context: Context) {
     fun insertTracksWithPlaylist(tracks: ArrayList<Track>) {
-        context.tracksDAO.insertAll(tracks)
+        context.audioHelper.insertTracks(tracks)
         EventBus.getDefault().post(Events.PlaylistsUpdated())
     }
 
@@ -83,7 +83,7 @@ class RoomHelper(val context: Context) {
             val unknown = MediaStore.UNKNOWN_STRING
             val title = context.getTitle(it) ?: unknown
             val artist = context.getArtist(it) ?: unknown
-            val song = Track(0, 0, title, artist, it, context.getDuration(it) ?: 0, "", "", playlistId, 0, "", 0, 0, 0,0)
+            val song = Track(0, 0, title, artist, it, context.getDuration(it) ?: 0, "", "", playlistId, 0, "", 0, 0, 0, 0)
             song.title = song.getProperTitle(showFilename)
             songs.add(song)
         }

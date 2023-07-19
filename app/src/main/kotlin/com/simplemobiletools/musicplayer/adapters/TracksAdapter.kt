@@ -34,7 +34,7 @@ import com.simplemobiletools.musicplayer.models.Track
 import com.simplemobiletools.musicplayer.services.MusicService
 import kotlinx.android.synthetic.main.item_track.view.*
 import org.greenrobot.eventbus.EventBus
-import java.util.*
+import java.util.Collections
 
 class TracksAdapter(
     activity: BaseSimpleActivity,
@@ -163,7 +163,7 @@ class TracksAdapter(
                 }
             }
 
-            activity.tracksDAO.removeTracks(selectedTracks)
+            activity.audioHelper.deleteTracks(selectedTracks)
             // this is to make sure these tracks aren't automatically re-added to the 'All tracks' playlist on rescan
             val removedTrackIds = selectedTracks.filter { it.playListId == ALL_TRACKS_PLAYLIST_ID }.map { it.mediaStoreId.toString() }
             if (removedTrackIds.isNotEmpty()) {
@@ -305,7 +305,7 @@ class TracksAdapter(
             var index = 0
             tracks.forEach {
                 it.orderInPlaylist = index++
-                activity.tracksDAO.updateOrderInPlaylist(index, it.id)
+                activity.audioHelper.updateOrderInPlaylist(index, it.id)
             }
         }
     }

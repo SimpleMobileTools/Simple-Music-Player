@@ -16,13 +16,15 @@ import com.simplemobiletools.musicplayer.activities.SimpleActivity
 import com.simplemobiletools.musicplayer.activities.TracksActivity
 import com.simplemobiletools.musicplayer.adapters.AlbumsAdapter
 import com.simplemobiletools.musicplayer.dialogs.ChangeSortingDialog
-import com.simplemobiletools.musicplayer.extensions.albumsDAO
+import com.simplemobiletools.musicplayer.extensions.audioHelper
 import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.extensions.mediaScanner
 import com.simplemobiletools.musicplayer.helpers.ALBUM
 import com.simplemobiletools.musicplayer.helpers.TAB_ALBUMS
 import com.simplemobiletools.musicplayer.models.Album
-import kotlinx.android.synthetic.main.fragment_albums.view.*
+import kotlinx.android.synthetic.main.fragment_albums.view.albums_fastscroller
+import kotlinx.android.synthetic.main.fragment_albums.view.albums_list
+import kotlinx.android.synthetic.main.fragment_albums.view.albums_placeholder
 
 // Artists -> Albums -> Tracks
 class AlbumsFragment(context: Context, attributeSet: AttributeSet) : MyViewPagerFragment(context, attributeSet) {
@@ -31,7 +33,7 @@ class AlbumsFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
     override fun setupFragment(activity: BaseSimpleActivity) {
         Album.sorting = context.config.albumSorting
         ensureBackgroundThread {
-            val cachedAlbums = activity.albumsDAO.getAll() as ArrayList<Album>
+            val cachedAlbums = activity.audioHelper.getAllAlbums()
             activity.runOnUiThread {
                 gotAlbums(activity, cachedAlbums)
             }
@@ -39,7 +41,6 @@ class AlbumsFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
     }
 
     private fun gotAlbums(activity: BaseSimpleActivity, albums: ArrayList<Album>) {
-        albums.sort()
         albumsIgnoringSearch = albums
 
         activity.runOnUiThread {

@@ -33,12 +33,12 @@ import com.simplemobiletools.musicplayer.helpers.M3uImporter.ImportResult
 import com.simplemobiletools.musicplayer.models.Events
 import com.simplemobiletools.musicplayer.services.MusicService
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_albums.*
-import kotlinx.android.synthetic.main.fragment_artists.*
-import kotlinx.android.synthetic.main.fragment_folders.*
-import kotlinx.android.synthetic.main.fragment_playlists.*
-import kotlinx.android.synthetic.main.fragment_tracks.*
-import kotlinx.android.synthetic.main.view_current_track_bar.*
+import kotlinx.android.synthetic.main.fragment_albums.albums_fragment_holder
+import kotlinx.android.synthetic.main.fragment_artists.artists_fragment_holder
+import kotlinx.android.synthetic.main.fragment_folders.folders_fragment_holder
+import kotlinx.android.synthetic.main.fragment_playlists.playlists_fragment_holder
+import kotlinx.android.synthetic.main.fragment_tracks.tracks_fragment_holder
+import kotlinx.android.synthetic.main.view_current_track_bar.current_track_bar
 import me.grantland.widget.AutofitHelper
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -380,7 +380,7 @@ class MainActivity : SimpleActivity() {
                         }
 
                         ensureBackgroundThread {
-                            tracksDAO.insertAll(tracks)
+                            audioHelper.insertTracks(tracks)
                             EventBus.getDefault().post(Events.PlaylistsUpdated())
                         }
                     }
