@@ -25,8 +25,10 @@ import com.simplemobiletools.musicplayer.models.AlbumSection
 import com.simplemobiletools.musicplayer.models.ListItem
 import com.simplemobiletools.musicplayer.models.Track
 import com.simplemobiletools.musicplayer.services.MusicService
-import kotlinx.android.synthetic.main.item_album.view.*
-import kotlinx.android.synthetic.main.item_section.view.*
+import kotlinx.android.synthetic.main.item_album.view.album_frame
+import kotlinx.android.synthetic.main.item_album.view.album_title
+import kotlinx.android.synthetic.main.item_album.view.album_tracks
+import kotlinx.android.synthetic.main.item_section.view.item_section
 import kotlinx.android.synthetic.main.item_track.view.*
 
 // we show both albums and individual tracks here
@@ -83,9 +85,13 @@ class AlbumsTracksAdapter(
     }
 
     override fun prepareActionMode(menu: Menu) {
+        val firstTrack = getSelectedTracks().firstOrNull()
         menu.apply {
             findItem(R.id.cab_play_next).isVisible =
-                isOneItemSelected() && MusicService.mCurrTrack != getSelectedTracks().firstOrNull() && isATrack() && MusicService.mCurrTrack !== null
+                isOneItemSelected() &&
+                    MusicService.mCurrTrack !== null &&
+                    MusicService.mCurrTrack != firstTrack &&
+                    firstTrack is Track
         }
     }
 
@@ -143,14 +149,6 @@ class AlbumsTracksAdapter(
                 finishActMode()
             }
         }
-    }
-
-    private fun isATrack(): Boolean {
-        getSelectedItems().forEach {
-            if (it !is Track)
-                return false
-        }
-        return true
     }
 
     private fun showProperties() {
@@ -222,10 +220,12 @@ class AlbumsTracksAdapter(
                     .error(placeholderBig)
                     .transform(CenterCrop(), RoundedCorners(cornerRadius))
 
-                Glide.with(activity)
-                    .load(coverArt)
-                    .apply(options)
-                    .into(findViewById(R.id.album_image))
+                activity.ensureActivityNotDestroyed {
+                    Glide.with(activity)
+                        .load(coverArt)
+                        .apply(options)
+                        .into(findViewById(R.id.album_image))
+                }
             }
         }
     }
@@ -249,10 +249,12 @@ class AlbumsTracksAdapter(
                     .error(placeholder)
                     .transform(CenterCrop(), RoundedCorners(cornerRadius))
 
-                Glide.with(activity)
-                    .load(coverArt)
-                    .apply(options)
-                    .into(findViewById(R.id.track_image))
+                activity.ensureActivityNotDestroyed {
+                    Glide.with(activity)
+                        .load(coverArt)
+                        .apply(options)
+                        .into(findViewById(R.id.track_image))
+                }
             }
         }
     }
