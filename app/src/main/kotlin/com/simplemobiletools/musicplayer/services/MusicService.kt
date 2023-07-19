@@ -404,7 +404,7 @@ class MusicService : Service(), MultiPlayer.PlaybackCallbacks {
         val tracks = ArrayList<Track>()
         var queueItems = queueDAO.getAll()
         if (queueItems.isEmpty()) {
-            val tracks = tracksDAO.getTracksFromPlaylist(ALL_TRACKS_PLAYLIST_ID) as ArrayList<Track>
+            val tracks = audioHelper.getPlaylistTracks(ALL_TRACKS_PLAYLIST_ID)
             if (tracks.isNotEmpty()) {
                 Track.sorting = config.trackSorting
                 tracks.sort()
