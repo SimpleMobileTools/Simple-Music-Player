@@ -17,9 +17,12 @@ import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.extensions.*
+import com.simplemobiletools.musicplayer.inlines.indexOfFirstOrNull
 import com.simplemobiletools.musicplayer.models.Artist
 import com.simplemobiletools.musicplayer.models.Track
-import kotlinx.android.synthetic.main.item_artist.view.*
+import kotlinx.android.synthetic.main.item_artist.view.artist_albums_tracks
+import kotlinx.android.synthetic.main.item_artist.view.artist_frame
+import kotlinx.android.synthetic.main.item_artist.view.artist_title
 
 class ArtistsAdapter(activity: BaseSimpleActivity, var artists: ArrayList<Artist>, recyclerView: MyRecyclerView, itemClick: (Any) -> Unit) :
     MyRecyclerViewAdapter(activity, recyclerView, itemClick), RecyclerViewFastScroller.OnPopupTextUpdate {
@@ -94,36 +97,18 @@ class ArtistsAdapter(activity: BaseSimpleActivity, var artists: ArrayList<Artist
     }
 
     private fun getAllSelectedTracks(): ArrayList<Track> {
-        val tracks = ArrayList<Track>()
-        getSelectedArtists().forEach { artist ->
-            val albums = activity.albumsDAO.getArtistAlbums(artist.id)
-            albums.forEach {
-                tracks.addAll(activity.tracksDAO.getTracksFromAlbum(it.id))
-            }
-        }
-        return tracks
+        val albums = activity.audioHelper.getArtistAlbums(getSelectedArtists())
+        return activity.audioHelper.getAlbumTracks(albums)
     }
 
     private fun askConfirmDelete() {
         ConfirmationDialog(activity) {
             ensureBackgroundThread {
-                val positions = ArrayList<Int>()
                 val selectedArtists = getSelectedArtists()
-                val tracks = ArrayList<Track>()
-                selectedArtists.forEach { artist ->
-                    val position = artists.indexOfFirst { it.id == artist.id }
-                    if (position != -1) {
-                        positions.add(position)
-                    }
+                val positions = selectedArtists.mapNotNull { artist -> artists.indexOfFirstOrNull { it.id == artist.id } } as ArrayList<Int>
+                val tracks = activity.audioHelper.getArtistTracks(selectedArtists)
 
-                    val albums = activity.albumsDAO.getArtistAlbums(artist.id)
-                    albums.forEach { album ->
-                        tracks.addAll(activity.tracksDAO.getTracksFromAlbum(album.id))
-                    }
-
-                    activity.artistDAO.deleteArtist(artist.id)
-                }
-
+                activity.audioHelper.deleteArtists(selectedArtists)
                 activity.deleteTracks(tracks) {
                     activity.runOnUiThread {
                         positions.sortDescending()

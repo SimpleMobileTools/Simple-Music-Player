@@ -20,12 +20,15 @@ import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
 import com.simplemobiletools.musicplayer.dialogs.EditDialog
 import com.simplemobiletools.musicplayer.extensions.*
+import com.simplemobiletools.musicplayer.inlines.indexOfFirstOrNull
 import com.simplemobiletools.musicplayer.models.Album
 import com.simplemobiletools.musicplayer.models.AlbumSection
 import com.simplemobiletools.musicplayer.models.ListItem
 import com.simplemobiletools.musicplayer.models.Track
-import kotlinx.android.synthetic.main.item_album.view.*
-import kotlinx.android.synthetic.main.item_section.view.*
+import kotlinx.android.synthetic.main.item_album.view.album_frame
+import kotlinx.android.synthetic.main.item_album.view.album_title
+import kotlinx.android.synthetic.main.item_album.view.album_tracks
+import kotlinx.android.synthetic.main.item_section.view.item_section
 import kotlinx.android.synthetic.main.item_track.view.*
 
 // we show both albums and individual tracks here
@@ -144,20 +147,11 @@ class AlbumsTracksAdapter(
             ensureBackgroundThread {
                 val positions = ArrayList<Int>()
                 val selectedTracks = getSelectedTracks()
-                selectedTracks.forEach { track ->
-                    val position = items.indexOfFirst { it is Track && it.mediaStoreId == track.mediaStoreId }
-                    if (position != -1) {
-                        positions.add(position)
-                    }
-                }
+                val selectedAlbums = getSelectedAlbums()
+                selectedTracks.addAll(activity.audioHelper.getAlbumTracks(selectedAlbums))
 
-                getSelectedAlbums().forEach { album ->
-                    val position = items.indexOfFirst { it is Album && it.id == album.id }
-                    if (position != -1) {
-                        positions.add(position)
-                    }
-                    selectedTracks.addAll(activity.tracksDAO.getTracksFromAlbum(album.id))
-                }
+                positions += selectedTracks.mapNotNull { track -> items.indexOfFirstOrNull { it is Track && it.mediaStoreId == track.mediaStoreId } }
+                positions += selectedAlbums.mapNotNull { album -> items.indexOfFirstOrNull { it is Album && it.id == album.id } }
 
                 activity.deleteTracks(selectedTracks) {
                     activity.runOnUiThread {
@@ -174,9 +168,7 @@ class AlbumsTracksAdapter(
 
     private fun getAllSelectedTracks(): ArrayList<Track> {
         val tracks = getSelectedTracks()
-        getSelectedAlbums().forEach {
-            tracks.addAll(activity.tracksDAO.getTracksFromAlbum(it.id))
-        }
+        tracks.addAll(activity.audioHelper.getAlbumTracks(getSelectedAlbums()))
         return tracks
     }
 

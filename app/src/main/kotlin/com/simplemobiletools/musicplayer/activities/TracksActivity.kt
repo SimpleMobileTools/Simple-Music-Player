@@ -196,19 +196,11 @@ class TracksActivity : SimpleActivity() {
         refreshMenuItems()
 
         ensureBackgroundThread {
-            val showFilename = config.showFilename
             val tracks = ArrayList<Track>()
             val listItems = ArrayList<ListItem>()
             when (tracksType) {
                 TYPE_PLAYLIST -> {
-                    val playlistTracks = tracksDAO.getTracksFromPlaylist(playlist!!.id).map { track ->
-                        track.title = track.getProperTitle(showFilename)
-                        track
-                    } as ArrayList<Track>
-
-                    Track.sorting = config.getProperPlaylistSorting(playlist!!.id)
-                    playlistTracks.sort()
-
+                    val playlistTracks = audioHelper.getPlaylistTracks(playlist!!.id)
                     runOnUiThread {
                         tracks_placeholder.beVisibleIf(playlistTracks.isEmpty())
                         tracks_placeholder_2.beVisibleIf(playlistTracks.isEmpty())
@@ -217,27 +209,16 @@ class TracksActivity : SimpleActivity() {
                     tracks.addAll(playlistTracks)
                     listItems.addAll(tracks)
                 }
-
                 TYPE_ALBUM -> {
-                    val albumTracks = tracksDAO.getTracksFromAlbum(album.id).distinctBy { "${it.path}/${it.mediaStoreId}" } as ArrayList<Track>
-                    albumTracks.sortWith(compareBy({ it.trackId }, { it.title.lowercase() }))
+                    val albumTracks = audioHelper.getAlbumTracks(album.id)
                     tracks.addAll(albumTracks)
 
                     val header = AlbumHeader(album.id, album.title, album.coverArt, album.year, tracks.size, tracks.sumOf { it.duration }, album.artist)
                     listItems.add(header)
                     listItems.addAll(tracks)
                 }
-
                 else -> {
-                    val folderTracks = tracksDAO.getTracksFromFolder(folder ?: "")
-                        .distinctBy { "${it.path}/${it.mediaStoreId}" }
-                        .onEach {
-                            it.title = it.getProperTitle(showFilename)
-                        } as ArrayList<Track>
-
-                    Track.sorting = config.getProperFolderSorting(folder ?: "")
-                    folderTracks.sort()
-
+                    val folderTracks = audioHelper.getFolderTracks(folder.orEmpty())
                     runOnUiThread {
                         tracks_placeholder.beVisibleIf(folderTracks.isEmpty())
                     }
@@ -323,7 +304,7 @@ class TracksActivity : SimpleActivity() {
                 toast(R.string.unknown_error_occurred)
             }
         } else {
-            var track = tracksDAO.getTrackWithMediaStoreId(mediaStoreId)
+            var track = audioHelper.getTrack(mediaStoreId)
             if (track == null) {
                 track = RoomHelper(this).getTrackFromPath(path)
             }
@@ -345,7 +326,7 @@ class TracksActivity : SimpleActivity() {
                         it.playListId = playlist!!.id
                     }
 
-                    tracksDAO.insertAll(tracks)
+                    audioHelper.insertTracks(tracks)
                     refreshPlaylist()
                 }
             }
@@ -372,7 +353,7 @@ class TracksActivity : SimpleActivity() {
     private fun refreshPlaylist() {
         EventBus.getDefault().post(Events.PlaylistsUpdated())
 
-        val newTracks = tracksDAO.getTracksFromPlaylist(playlist!!.id).toMutableList() as ArrayList<Track>
+        val newTracks = audioHelper.getPlaylistTracks(playlist!!.id)
         runOnUiThread {
             (tracks_list.adapter as? TracksAdapter)?.updateItems(newTracks)
             tracks_placeholder.beVisibleIf(newTracks.isEmpty())

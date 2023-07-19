@@ -79,7 +79,7 @@ fun BaseSimpleActivity.deleteTracks(tracks: List<Track>, callback: () -> Unit) {
             val where = "${MediaStore.Audio.Media._ID} = ?"
             val args = arrayOf(track.mediaStoreId.toString())
             contentResolver.delete(uri, where, args)
-            tracksDAO.removeTrack(track.mediaStoreId)
+            audioHelper.deleteTrack(track.mediaStoreId)
             File(track.path).delete()
         } catch (ignored: Exception) {
         }

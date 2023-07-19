@@ -14,15 +14,18 @@ import com.simplemobiletools.musicplayer.activities.TracksActivity
 import com.simplemobiletools.musicplayer.adapters.PlaylistsAdapter
 import com.simplemobiletools.musicplayer.dialogs.ChangeSortingDialog
 import com.simplemobiletools.musicplayer.dialogs.NewPlaylistDialog
+import com.simplemobiletools.musicplayer.extensions.audioHelper
 import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.extensions.mediaScanner
 import com.simplemobiletools.musicplayer.extensions.playlistDAO
-import com.simplemobiletools.musicplayer.extensions.tracksDAO
 import com.simplemobiletools.musicplayer.helpers.PLAYLIST
 import com.simplemobiletools.musicplayer.helpers.TAB_PLAYLISTS
 import com.simplemobiletools.musicplayer.models.Events
 import com.simplemobiletools.musicplayer.models.Playlist
-import kotlinx.android.synthetic.main.fragment_playlists.view.*
+import kotlinx.android.synthetic.main.fragment_playlists.view.playlists_fastscroller
+import kotlinx.android.synthetic.main.fragment_playlists.view.playlists_list
+import kotlinx.android.synthetic.main.fragment_playlists.view.playlists_placeholder
+import kotlinx.android.synthetic.main.fragment_playlists.view.playlists_placeholder_2
 import org.greenrobot.eventbus.EventBus
 
 class PlaylistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPagerFragment(context, attributeSet) {
@@ -39,7 +42,7 @@ class PlaylistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPa
         ensureBackgroundThread {
             val playlists = context.playlistDAO.getAll() as ArrayList<Playlist>
             playlists.forEach {
-                it.trackCount = context.tracksDAO.getTracksCountFromPlaylist(it.id)
+                it.trackCount = context.audioHelper.getPlaylistTrackCount(it.id)
             }
 
             Playlist.sorting = context.config.playlistSorting

@@ -16,13 +16,15 @@ import com.simplemobiletools.musicplayer.activities.AlbumsActivity
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
 import com.simplemobiletools.musicplayer.adapters.ArtistsAdapter
 import com.simplemobiletools.musicplayer.dialogs.ChangeSortingDialog
-import com.simplemobiletools.musicplayer.extensions.artistDAO
+import com.simplemobiletools.musicplayer.extensions.audioHelper
 import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.extensions.mediaScanner
 import com.simplemobiletools.musicplayer.helpers.ARTIST
 import com.simplemobiletools.musicplayer.helpers.TAB_ARTISTS
 import com.simplemobiletools.musicplayer.models.Artist
-import kotlinx.android.synthetic.main.fragment_artists.view.*
+import kotlinx.android.synthetic.main.fragment_artists.view.artists_fastscroller
+import kotlinx.android.synthetic.main.fragment_artists.view.artists_list
+import kotlinx.android.synthetic.main.fragment_artists.view.artists_placeholder
 
 // Artists -> Albums -> Tracks
 class ArtistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPagerFragment(context, attributeSet) {
@@ -31,7 +33,7 @@ class ArtistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
     override fun setupFragment(activity: BaseSimpleActivity) {
         Artist.sorting = context.config.artistSorting
         ensureBackgroundThread {
-            val cachedArtists = activity.artistDAO.getAll() as ArrayList<Artist>
+            val cachedArtists = activity.audioHelper.getAllArtists()
             activity.runOnUiThread {
                 gotArtists(activity, cachedArtists)
             }
@@ -39,8 +41,6 @@ class ArtistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
     }
 
     private fun gotArtists(activity: BaseSimpleActivity, artists: ArrayList<Artist>) {
-        artists.sort()
-
         artistsIgnoringSearch = artists
         activity.runOnUiThread {
             val scanning = activity.mediaScanner.isScanning()

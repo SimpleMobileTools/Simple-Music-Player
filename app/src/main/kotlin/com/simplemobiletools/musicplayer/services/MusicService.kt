@@ -413,7 +413,7 @@ class MusicService : Service(), MultiPlayer.PlaybackCallbacks {
             }
         }
 
-        val allTracks =  tracksDAO.getAll()
+        val allTracks = audioHelper.getAllTracks()
 
         // make sure we fetch the songs in the order they were displayed in
         val wantedIds = queueItems.map { it.trackId }
@@ -598,7 +598,7 @@ class MusicService : Service(), MultiPlayer.PlaybackCallbacks {
             if (mCurrTrack != null) {
                 val trackToDelete = mCurrTrack
                 ensureBackgroundThread {
-                    tracksDAO.removeTrack(trackToDelete!!.mediaStoreId)
+                    audioHelper.deleteTrack(trackToDelete!!.mediaStoreId)
                 }
             }
 

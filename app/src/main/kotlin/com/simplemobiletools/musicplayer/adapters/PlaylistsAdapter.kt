@@ -16,11 +16,13 @@ import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.dialogs.NewPlaylistDialog
 import com.simplemobiletools.musicplayer.dialogs.RemovePlaylistDialog
+import com.simplemobiletools.musicplayer.extensions.audioHelper
 import com.simplemobiletools.musicplayer.extensions.deletePlaylists
-import com.simplemobiletools.musicplayer.extensions.tracksDAO
 import com.simplemobiletools.musicplayer.models.Events
 import com.simplemobiletools.musicplayer.models.Playlist
-import kotlinx.android.synthetic.main.item_playlist.view.*
+import kotlinx.android.synthetic.main.item_playlist.view.playlist_frame
+import kotlinx.android.synthetic.main.item_playlist.view.playlist_title
+import kotlinx.android.synthetic.main.item_playlist.view.playlist_tracks
 import org.greenrobot.eventbus.EventBus
 
 class PlaylistsAdapter(
@@ -91,7 +93,7 @@ class PlaylistsAdapter(
     private fun deletePlaylistSongs(ids: ArrayList<Int>, callback: () -> Unit) {
         var cnt = ids.size
         ids.map {
-            val paths = activity.tracksDAO.getTracksFromPlaylist(it).map { it.path }
+            val paths = activity.audioHelper.getPlaylistTracks(it).map { it.path }
             val fileDirItems = paths.map { FileDirItem(it, it.getFilenameFromPath()) } as ArrayList<FileDirItem>
             activity.deleteFiles(fileDirItems) {
                 if (--cnt <= 0) {

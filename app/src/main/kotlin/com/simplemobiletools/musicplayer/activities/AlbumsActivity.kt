@@ -10,9 +10,8 @@ import com.simplemobiletools.commons.helpers.NavigationIcon
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.adapters.AlbumsTracksAdapter
-import com.simplemobiletools.musicplayer.extensions.albumsDAO
+import com.simplemobiletools.musicplayer.extensions.audioHelper
 import com.simplemobiletools.musicplayer.extensions.resetQueueItems
-import com.simplemobiletools.musicplayer.extensions.tracksDAO
 import com.simplemobiletools.musicplayer.helpers.ALBUM
 import com.simplemobiletools.musicplayer.helpers.ARTIST
 import com.simplemobiletools.musicplayer.helpers.RESTART_PLAYER
@@ -20,7 +19,7 @@ import com.simplemobiletools.musicplayer.helpers.TRACK
 import com.simplemobiletools.musicplayer.models.*
 import com.simplemobiletools.musicplayer.services.MusicService
 import kotlinx.android.synthetic.main.activity_albums.*
-import kotlinx.android.synthetic.main.view_current_track_bar.*
+import kotlinx.android.synthetic.main.view_current_track_bar.current_track_bar
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -47,20 +46,14 @@ class AlbumsActivity : SimpleActivity() {
         albums_toolbar.title = artist.title
 
         ensureBackgroundThread {
-            val albums = albumsDAO.getArtistAlbums(artist.id)
+            val albums = audioHelper.getArtistAlbums(artist.id)
             val listItems = ArrayList<ListItem>()
             val albumsSectionLabel = resources.getQuantityString(R.plurals.albums_plural, albums.size, albums.size)
             listItems.add(AlbumSection(albumsSectionLabel))
             listItems.addAll(albums)
 
-            var trackFullDuration = 0
-            val tracksToAdd = ArrayList<Track>()
-            albums.forEach { album ->
-                val tracks = tracksDAO.getTracksFromAlbum(album.id).distinctBy { "${it.path}/${it.mediaStoreId}" } as ArrayList<Track>
-                tracks.sortWith(compareBy({ it.trackId }, { it.title.lowercase() }))
-                trackFullDuration += tracks.sumOf { it.duration }
-                tracksToAdd.addAll(tracks)
-            }
+            val tracksToAdd = audioHelper.getAlbumTracks(albums)
+            val trackFullDuration = tracksToAdd.sumOf { it.duration }
 
             var tracksSectionLabel = resources.getQuantityString(R.plurals.tracks_plural, tracksToAdd.size, tracksToAdd.size)
             tracksSectionLabel += " • ${trackFullDuration.getFormattedDuration(true)}"
