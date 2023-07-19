@@ -75,7 +75,7 @@ class SimpleMediaScanner(private val context: Application) {
                 onScanComplete?.invoke(true)
             } catch (ignored: Exception) {
             } finally {
-                if (newTracks.isEmpty()) {
+                if (showProgress && newTracks.isEmpty()) {
                     context.toast(R.string.no_items_found)
                 }
 
