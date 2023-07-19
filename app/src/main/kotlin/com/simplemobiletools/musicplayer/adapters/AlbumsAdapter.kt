@@ -104,7 +104,7 @@ class AlbumsAdapter(activity: BaseSimpleActivity, var albums: ArrayList<Album>, 
         ConfirmationDialog(activity) {
             ensureBackgroundThread {
                 val selectedAlbums = getSelectedAlbums()
-                val positions = selectedAlbums.mapNotNull { album -> albums.indexOfFirstOrNull { it.id == album.id } }.filter { it != -1 } as ArrayList<Int>
+                val positions = selectedAlbums.mapNotNull { album -> albums.indexOfFirstOrNull { it.id == album.id } } as ArrayList<Int>
                 val tracks = activity.audioHelper.getAlbumTracks(selectedAlbums)
                 activity.audioHelper.deleteAlbums(selectedAlbums)
 
