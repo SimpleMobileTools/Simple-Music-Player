@@ -75,6 +75,10 @@ class SimpleMediaScanner(private val context: Application) {
                 onScanComplete?.invoke(true)
             } catch (ignored: Exception) {
             } finally {
+                if (newTracks.isEmpty()) {
+                    context.toast(R.string.no_items_found)
+                }
+
                 newTracks.clear()
                 newAlbums.clear()
                 newArtists.clear()
