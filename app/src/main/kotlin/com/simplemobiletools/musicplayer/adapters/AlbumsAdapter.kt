@@ -163,10 +163,12 @@ class AlbumsAdapter(activity: BaseSimpleActivity, var albums: ArrayList<Album>, 
                     .error(placeholderBig)
                     .transform(CenterCrop(), RoundedCorners(cornerRadius))
 
-                Glide.with(activity)
-                    .load(coverArt)
-                    .apply(options)
-                    .into(findViewById(R.id.album_image))
+                activity.ensureActivityNotDestroyed {
+                    Glide.with(activity)
+                        .load(coverArt)
+                        .apply(options)
+                        .into(findViewById(R.id.album_image))
+                }
             }
         }
     }

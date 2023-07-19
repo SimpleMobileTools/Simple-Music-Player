@@ -402,10 +402,21 @@ class MusicService : Service(), MultiPlayer.PlaybackCallbacks {
     // make sure tracks don't get duplicated in the queue, if they exist in multiple playlists
     private fun getQueuedTracks(): ArrayList<Track> {
         val tracks = ArrayList<Track>()
-        val allTracks = tracksDAO.getAll()
-        val wantedIds = queueDAO.getAll().map { it.trackId }
+        var queueItems = queueDAO.getAll()
+        if (queueItems.isEmpty()) {
+            val tracks = tracksDAO.getTracksFromPlaylist(ALL_TRACKS_PLAYLIST_ID) as ArrayList<Track>
+            if (tracks.isNotEmpty()) {
+                Track.sorting = config.trackSorting
+                tracks.sort()
+                addQueueItems(newTracks = tracks) {}
+                queueItems = queueDAO.getAll()
+            }
+        }
+
+        val allTracks =  tracksDAO.getAll()
 
         // make sure we fetch the songs in the order they were displayed in
+        val wantedIds = queueItems.map { it.trackId }
         val wantedTracks = ArrayList<Track>()
         for (wantedId in wantedIds) {
             val wantedTrack = allTracks.firstOrNull { it.mediaStoreId == wantedId }

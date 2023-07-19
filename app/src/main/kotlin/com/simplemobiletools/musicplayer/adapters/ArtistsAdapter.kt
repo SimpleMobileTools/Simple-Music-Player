@@ -170,10 +170,12 @@ class ArtistsAdapter(activity: BaseSimpleActivity, var artists: ArrayList<Artist
                     .error(placeholder)
                     .transform(CenterCrop(), RoundedCorners(cornerRadius))
 
-                Glide.with(activity)
-                    .load(coverArt)
-                    .apply(options)
-                    .into(findViewById(R.id.artist_image))
+                activity.ensureActivityNotDestroyed {
+                    Glide.with(activity)
+                        .load(coverArt)
+                        .apply(options)
+                        .into(findViewById(R.id.artist_image))
+                }
             }
         }
     }

@@ -202,10 +202,12 @@ class TracksHeaderAdapter(activity: SimpleActivity, var items: ArrayList<ListIte
                 val album = activity.albumsDAO.getAlbumWithId(header.id)
                 if (album != null) {
                     activity.getAlbumCoverArt(album) { coverArt ->
-                        Glide.with(activity)
-                            .load(coverArt)
-                            .apply(options)
-                            .into(findViewById(R.id.album_image))
+                        activity.ensureActivityNotDestroyed {
+                            Glide.with(activity)
+                                .load(coverArt)
+                                .apply(options)
+                                .into(findViewById(R.id.album_image))
+                        }
                     }
                 } else {
                     findViewById<ImageView>(R.id.album_image).setImageDrawable(placeholder)
