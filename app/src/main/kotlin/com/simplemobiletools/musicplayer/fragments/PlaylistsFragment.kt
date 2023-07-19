@@ -17,7 +17,6 @@ import com.simplemobiletools.musicplayer.dialogs.NewPlaylistDialog
 import com.simplemobiletools.musicplayer.extensions.audioHelper
 import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.extensions.mediaScanner
-import com.simplemobiletools.musicplayer.extensions.playlistDAO
 import com.simplemobiletools.musicplayer.helpers.PLAYLIST
 import com.simplemobiletools.musicplayer.helpers.TAB_PLAYLISTS
 import com.simplemobiletools.musicplayer.models.Events
@@ -40,7 +39,7 @@ class PlaylistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPa
         }
 
         ensureBackgroundThread {
-            val playlists = context.playlistDAO.getAll() as ArrayList<Playlist>
+            val playlists = context.audioHelper.getAllPlaylists()
             playlists.forEach {
                 it.trackCount = context.audioHelper.getPlaylistTrackCount(it.id)
             }

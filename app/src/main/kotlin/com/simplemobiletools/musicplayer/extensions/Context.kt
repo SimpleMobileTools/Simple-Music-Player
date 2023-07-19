@@ -117,21 +117,13 @@ fun Context.addNextQueueItem(nextTrack: Track, callback: () -> Unit) {
     }
 }
 
-fun Context.removeQueueItems(tracks: List<Track>, callback: () -> Unit) {
+fun Context.removeQueueItems(tracks: List<Track>, callback: (() -> Unit)? = null) {
     ensureBackgroundThread {
         tracks.forEach {
             queueDAO.removeQueueItem(it.mediaStoreId)
             MusicService.mTracks.remove(it)
         }
-        callback()
-    }
-}
-
-fun Context.removeQueueItem(track: Track, callback: () -> Unit) {
-    ensureBackgroundThread {
-        queueDAO.removeQueueItem(track.mediaStoreId)
-        MusicService.mTracks.remove(track)
-        callback()
+        callback?.invoke()
     }
 }
 

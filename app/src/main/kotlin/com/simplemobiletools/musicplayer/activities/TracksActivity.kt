@@ -312,7 +312,7 @@ class TracksActivity : SimpleActivity() {
             if (track != null) {
                 track.id = 0
                 track.playListId = playlist!!.id
-                tracksDAO.insert(track)
+                audioHelper.insertTracks(listOf(track))
                 refreshPlaylist()
             }
         }
