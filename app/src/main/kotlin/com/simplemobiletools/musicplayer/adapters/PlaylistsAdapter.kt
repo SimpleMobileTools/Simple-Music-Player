@@ -17,7 +17,6 @@ import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.dialogs.NewPlaylistDialog
 import com.simplemobiletools.musicplayer.dialogs.RemovePlaylistDialog
 import com.simplemobiletools.musicplayer.extensions.audioHelper
-import com.simplemobiletools.musicplayer.extensions.deletePlaylists
 import com.simplemobiletools.musicplayer.models.Events
 import com.simplemobiletools.musicplayer.models.Playlist
 import kotlinx.android.synthetic.main.item_playlist.view.playlist_frame
@@ -118,7 +117,7 @@ class PlaylistsAdapter(
         playlists.removeAll(playlistsToDelete)
 
         ensureBackgroundThread {
-            activity.deletePlaylists(playlistsToDelete)
+            activity.audioHelper.deletePlaylists(playlistsToDelete)
             activity.runOnUiThread {
                 removeSelectedItems(positions)
             }

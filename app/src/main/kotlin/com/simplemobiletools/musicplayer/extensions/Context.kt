@@ -60,13 +60,6 @@ fun Context.getTracksDB() = SongsDatabase.getInstance(this)
 
 fun Context.getPlaylistIdWithTitle(title: String) = playlistDAO.getPlaylistWithTitle(title)?.id ?: -1
 
-fun Context.deletePlaylists(playlists: ArrayList<Playlist>) {
-    playlistDAO.deletePlaylists(playlists)
-    playlists.forEach {
-        tracksDAO.removePlaylistSongs(it.id)
-    }
-}
-
 fun Context.broadcastUpdateWidgetState() {
     Intent(this, MyWidgetProvider::class.java).apply {
         action = TRACK_STATE_CHANGED

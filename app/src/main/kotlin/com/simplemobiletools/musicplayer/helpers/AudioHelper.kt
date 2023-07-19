@@ -1,7 +1,11 @@
 package com.simplemobiletools.musicplayer.helpers
 
 import android.content.Context
-import com.simplemobiletools.musicplayer.extensions.*
+import com.simplemobiletools.musicplayer.extensions.albumsDAO
+import com.simplemobiletools.musicplayer.extensions.artistDAO
+import com.simplemobiletools.musicplayer.extensions.config
+import com.simplemobiletools.musicplayer.extensions.playlistDAO
+import com.simplemobiletools.musicplayer.extensions.tracksDAO
 import com.simplemobiletools.musicplayer.models.Album
 import com.simplemobiletools.musicplayer.models.Artist
 import com.simplemobiletools.musicplayer.models.Playlist
@@ -135,5 +139,12 @@ class AudioHelper(private val context: Context) {
 
     fun updateOrderInPlaylist(playlistId: Int, trackId: Long) {
         context.tracksDAO.updateOrderInPlaylist(playlistId, trackId)
+    }
+
+    fun deletePlaylists(playlists: ArrayList<Playlist>) {
+        context.playlistDAO.deletePlaylists(playlists)
+        playlists.forEach {
+            context.tracksDAO.removePlaylistSongs(it.id)
+        }
     }
 }
