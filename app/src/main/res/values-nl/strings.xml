@@ -6,10 +6,10 @@
     <string name="rename_song">Nummer hernoemen</string>
     <string name="rename_song_error">Naam kon niet worden gewijzigd</string>
     <string name="rename_song_empty">Vul alle velden in</string>
-    <string name="repeat_off">Repeat off</string>
+    <string name="repeat_off">Niet herhalen</string>
     <string name="repeat_song">Nummer herhalen</string>
     <string name="repeat_playlist">Afspeellijst herhalen</string>
-    <string name="stop_playback_after_current_song">Stop playback after current song</string>
+    <string name="stop_playback_after_current_song">Na huidige nummer stoppen</string>
     <string name="enable_shuffle">Shuffle inschakelen</string>
     <string name="disable_shuffle">Shuffle uitschakelen</string>
     <string name="shuffle_enabled">Shuffle ingeschakeld</string>
@@ -76,7 +76,7 @@
     <string name="next_track">Volgende:</string>
     <string name="track_queue">Wachtrij</string>
     <string name="add_to_queue">Aan wachtrij toevoegen</string>
-    <string name="play_next">Play next</string>
+    <string name="play_next">Hierna afspelen</string>
     <string name="remove_from_queue">Uit wachtrij verwijderen</string>
     <string name="create_playlist_from_queue">Wachtrij opslaan als afspeellijst</string>
     <!-- Settings -->
