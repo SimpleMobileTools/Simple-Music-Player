@@ -157,9 +157,11 @@ class SimpleMediaScanner(private val context: Application) {
     }
 
     private fun updateAllDatabases() {
-        context.tracksDAO.insertAll(newTracks)
-        context.albumsDAO.insertAll(newAlbums)
-        context.artistDAO.insertAll(newArtists)
+        context.audioHelper.apply {
+            insertTracks(newTracks)
+            insertAlbums(newAlbums)
+            insertArtists(newArtists)
+        }
         updateAllTracksPlaylist()
     }
 
@@ -167,7 +169,7 @@ class SimpleMediaScanner(private val context: Application) {
         if (!config.wasAllTracksPlaylistCreated) {
             val allTracksLabel = context.resources.getString(R.string.all_tracks)
             val playlist = Playlist(ALL_TRACKS_PLAYLIST_ID, allTracksLabel)
-            context.playlistDAO.insert(playlist)
+            context.audioHelper.insertPlaylist(playlist)
             config.wasAllTracksPlaylistCreated = true
         }
 
@@ -438,20 +440,20 @@ class SimpleMediaScanner(private val context: Application) {
         // remove invalid tracks
         val newTrackIds = newTracks.map { it.mediaStoreId } as ArrayList<Long>
         val newTrackPaths = newTracks.map { it.path } as ArrayList<String>
-        val invalidTracks = context.tracksDAO.getAll().filter { it.mediaStoreId !in newTrackIds || it.path !in newTrackPaths }
-        context.tracksDAO.removeTracks(invalidTracks)
+        val invalidTracks = context.audioHelper.getAllTracks().filter { it.mediaStoreId !in newTrackIds || it.path !in newTrackPaths }
+        context.audioHelper.deleteTracks(invalidTracks)
         newTracks.removeAll(invalidTracks.toSet())
 
         // remove invalid albums
         val newAlbumIds = newAlbums.map { it.id }
-        val invalidAlbums = context.albumsDAO.getAll().filter { it.id !in newAlbumIds }.toMutableList()
+        val invalidAlbums = context.audioHelper.getAllAlbums().filter { it.id !in newAlbumIds }.toMutableList()
         invalidAlbums += newAlbums.filter { album -> newTracks.none { it.albumId == album.id } }
-        context.albumsDAO.deleteAll(invalidAlbums)
+        context.audioHelper.deleteAlbums(invalidAlbums)
         newAlbums.removeAll(invalidAlbums.toSet())
 
         // remove invalid artists
         val newArtistIds = newArtists.map { it.id }
-        val invalidArtists = context.artistDAO.getAll().filter { it.id !in newArtistIds }.toMutableList()
+        val invalidArtists = context.audioHelper.getAllArtists().filter { it.id !in newArtistIds }.toMutableList()
         for (artist in newArtists) {
             val artistId = artist.id
             val albumsByArtist = newAlbums.filter { it.artistId == artistId }
@@ -464,13 +466,13 @@ class SimpleMediaScanner(private val context: Application) {
             val albumCnt = albumsByArtist.size
             val trackCnt = albumsByArtist.sumOf { it.trackCnt }
             if (trackCnt != artist.trackCnt || albumCnt != artist.albumCnt) {
-                context.artistDAO.deleteArtist(artistId)
+                context.audioHelper.deleteArtist(artistId)
                 val updated = artist.copy(trackCnt = trackCnt, albumCnt = albumCnt)
-                context.artistDAO.insert(updated)
+                context.audioHelper.insertArtists(listOf(updated))
             }
         }
 
-        context.artistDAO.deleteAll(invalidArtists)
+        context.audioHelper.deleteArtists(invalidArtists)
     }
 
     @Synchronized
