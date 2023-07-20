@@ -114,17 +114,9 @@ class TracksAdapter(
 
     override fun getItemKeyPosition(key: Int) = tracks.indexOfFirst { it.hashCode() == key }
 
-    override fun onActionModeCreated() {
-        if (isPlaylistContent) {
-            notifyDataSetChanged()
-        }
-    }
+    override fun onActionModeCreated() {}
 
-    override fun onActionModeDestroyed() {
-        if (isPlaylistContent) {
-            notifyDataSetChanged()
-        }
-    }
+    override fun onActionModeDestroyed() {}
 
     private fun addToPlaylist() {
         activity.addTracksToPlaylist(getSelectedTracks()) {
