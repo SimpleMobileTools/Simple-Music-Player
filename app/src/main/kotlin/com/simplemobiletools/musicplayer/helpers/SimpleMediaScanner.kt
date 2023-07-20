@@ -33,6 +33,7 @@ class SimpleMediaScanner(private val context: Application) {
     private var showProgress = false
     private var onScanComplete: ((complete: Boolean) -> Unit)? = null
 
+    private val mediaStorePaths = arrayListOf<String>()
     private val newTracks = arrayListOf<Track>()
     private val newAlbums = arrayListOf<Album>()
     private val newArtists = arrayListOf<Artist>()
@@ -75,6 +76,7 @@ class SimpleMediaScanner(private val context: Application) {
                 newTracks.clear()
                 newAlbums.clear()
                 newArtists.clear()
+                mediaStorePaths.clear()
                 scanning = false
                 hideScanProgress()
             }
@@ -91,6 +93,7 @@ class SimpleMediaScanner(private val context: Application) {
         newTracks += getTracksSync()
         newArtists += getArtistsSync()
         newAlbums += getAlbumsSync(newArtists)
+        mediaStorePaths += newTracks.map { it.path }
 
         // ignore tracks from excluded folders and tracks with no albums, artists
         val albumIds = newAlbums.map { it.id }
@@ -300,6 +303,10 @@ class SimpleMediaScanner(private val context: Application) {
             findAudioFiles(rootFile, audioFilePaths, excludedPaths)
         }
 
+        if (audioFilePaths.isEmpty()) {
+            return arrayListOf()
+        }
+
         val tracksSet = ConcurrentHashMap.newKeySet<Track>()
         val paths = audioFilePaths.toTypedArray()
         val totalPaths = paths.size
@@ -359,6 +366,7 @@ class SimpleMediaScanner(private val context: Application) {
             tracks.add(it)
         }
 
+        maybeRescanPaths(audioFilePaths)
         return tracks
     }
 
@@ -381,6 +389,11 @@ class SimpleMediaScanner(private val context: Application) {
                 findAudioFiles(child, destination, excludedPaths)
             }
         }
+    }
+
+    private fun maybeRescanPaths(paths: ArrayList<String>) {
+        val pathsToRescan = paths.filter { path -> path !in mediaStorePaths }
+        context.rescanPaths(pathsToRescan)
     }
 
     private fun splitIntoArtists(tracks: ArrayList<Track>): ArrayList<Artist> {

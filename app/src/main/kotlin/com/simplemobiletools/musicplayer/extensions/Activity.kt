@@ -3,11 +3,10 @@ package com.simplemobiletools.musicplayer.extensions
 import android.app.Activity
 import android.content.ContentUris
 import android.content.Intent
-import android.net.Uri
 import android.provider.MediaStore
 import com.simplemobiletools.commons.activities.BaseSimpleActivity
 import com.simplemobiletools.commons.dialogs.PropertiesDialog
-import com.simplemobiletools.commons.extensions.getMediaContent
+import com.simplemobiletools.commons.extensions.rescanPaths
 import com.simplemobiletools.commons.extensions.toast
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.commons.helpers.isRPlus
@@ -70,40 +69,56 @@ fun Activity.playNextInQueue(track: Track, callback: () -> Unit) {
 }
 
 fun BaseSimpleActivity.deleteTracks(tracks: List<Track>, callback: () -> Unit) {
-    val uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
-    if (isRPlus()) {
-        val (tracksWithoutId, tracksWithId) = tracks.partition { (it.flags and FLAG_MANUAL_CACHE) != 0 }
+    val contentUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
+    maybeRescanTrackPaths(tracks) { tracksToDelete ->
+        if (tracksToDelete.isNotEmpty()) {
+            audioHelper.deleteTracks(tracksToDelete)
+            if (isRPlus()) {
+                val uris = tracksToDelete.map { ContentUris.withAppendedId(contentUri, it.mediaStoreId) }
+                deleteSDK30Uris(uris) { success ->
+                    if (success) {
+                        removeQueueItems(tracksToDelete)
+                        EventBus.getDefault().post(Events.RefreshFragments())
+                        callback()
+                    } else {
+                        toast(R.string.unknown_error_occurred)
+                    }
+                }
+            } else {
+                tracksToDelete.forEach { track ->
+                    try {
+                        val where = "${MediaStore.Audio.Media._ID} = ?"
+                        val args = arrayOf(track.mediaStoreId.toString())
+                        contentResolver.delete(contentUri, where, args)
+                        File(track.path).delete()
+                    } catch (ignored: Exception) {
+                    }
+                }
 
-        val uris = tracksWithId.map { ContentUris.withAppendedId(uri, it.mediaStoreId) } as ArrayList<Uri>
-        val contentUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
-        uris += tracksWithoutId.mapNotNull { getMediaContent(it.path, contentUri) }
-
-        deleteSDK30Uris(uris) { success ->
-            if (success) {
-                removeQueueItems(tracks)
+                removeQueueItems(tracksToDelete)
                 EventBus.getDefault().post(Events.RefreshFragments())
                 callback()
-            } else {
-                toast(R.string.unknown_error_occurred)
             }
         }
-        return
     }
+}
 
-    tracks.forEach { track ->
-        try {
-            val where = "${MediaStore.Audio.Media._ID} = ?"
-            val args = arrayOf(track.mediaStoreId.toString())
-            contentResolver.delete(uri, where, args)
-            audioHelper.deleteTrack(track.mediaStoreId)
-            File(track.path).delete()
-        } catch (ignored: Exception) {
+private fun Activity.maybeRescanTrackPaths(tracks: List<Track>, callback: (tracks: List<Track>) -> Unit) {
+    val tracksWithoutId = tracks.filter { it.mediaStoreId == 0L || it.flags and FLAG_MANUAL_CACHE != 0 }
+    if (tracksWithoutId.isNotEmpty()) {
+        val pathsToRescan = tracksWithoutId.map { it.path }
+        rescanPaths(pathsToRescan) {
+            for (track in tracks) {
+                if (track.mediaStoreId == 0L || track.flags and FLAG_MANUAL_CACHE != 0) {
+                    track.mediaStoreId = getMediaStoreIdFromPath(track.path)
+                }
+            }
+
+            callback(tracks)
         }
+    } else {
+        callback(tracks)
     }
-
-    removeQueueItems(tracks)
-    EventBus.getDefault().post(Events.RefreshFragments())
-    callback()
 }
 
 fun Activity.refreshAfterEdit(track: Track) {
