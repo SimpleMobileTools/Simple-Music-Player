@@ -28,7 +28,7 @@ import kotlinx.android.synthetic.main.fragment_playlists.view.playlists_placehol
 import org.greenrobot.eventbus.EventBus
 
 class PlaylistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPagerFragment(context, attributeSet) {
-    private var playlistsIgnoringSearch = ArrayList<Playlist>()
+    private var playlists = ArrayList<Playlist>()
 
     override fun setupFragment(activity: BaseSimpleActivity) {
         playlists_placeholder_2.underlineText()
@@ -46,7 +46,7 @@ class PlaylistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPa
 
             Playlist.sorting = context.config.playlistSorting
             playlists.sort()
-            playlistsIgnoringSearch = playlists
+            this.playlists = playlists
 
             activity.runOnUiThread {
                 val scanning = activity.mediaScanner.isScanning()
@@ -85,22 +85,21 @@ class PlaylistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPa
     }
 
     override fun onSearchQueryChanged(text: String) {
-        val filtered = playlistsIgnoringSearch.filter { it.title.contains(text, true) }.toMutableList() as ArrayList<Playlist>
+        val filtered = playlists.filter { it.title.contains(text, true) }.toMutableList() as ArrayList<Playlist>
         (playlists_list.adapter as? PlaylistsAdapter)?.updateItems(filtered, text)
         playlists_placeholder.beVisibleIf(filtered.isEmpty())
         playlists_placeholder_2.beVisibleIf(filtered.isEmpty())
     }
 
     override fun onSearchClosed() {
-        (playlists_list.adapter as? PlaylistsAdapter)?.updateItems(playlistsIgnoringSearch)
-        playlists_placeholder.beGoneIf(playlistsIgnoringSearch.isNotEmpty())
-        playlists_placeholder_2.beGoneIf(playlistsIgnoringSearch.isNotEmpty())
+        (playlists_list.adapter as? PlaylistsAdapter)?.updateItems(playlists)
+        playlists_placeholder.beGoneIf(playlists.isNotEmpty())
+        playlists_placeholder_2.beGoneIf(playlists.isNotEmpty())
     }
 
     override fun onSortOpen(activity: SimpleActivity) {
         ChangeSortingDialog(activity, TAB_PLAYLISTS) {
             val adapter = playlists_list.adapter as? PlaylistsAdapter ?: return@ChangeSortingDialog
-            val playlists = adapter.playlists
             Playlist.sorting = activity.config.playlistSorting
             playlists.sort()
             adapter.updateItems(playlists, forceUpdate = true)
