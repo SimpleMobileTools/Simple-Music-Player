@@ -11,6 +11,7 @@ import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.models.Events
 import com.simplemobiletools.musicplayer.models.Track
 import org.greenrobot.eventbus.EventBus
+import java.io.File
 
 class RoomHelper(val context: Context) {
     fun insertTracksWithPlaylist(tracks: ArrayList<Track>) {
@@ -66,13 +67,14 @@ class RoomHelper(val context: Context) {
                 val albumId = cursor.getLongValue(Audio.Media.ALBUM_ID)
                 val coverArt = ContentUris.withAppendedId(artworkUri, albumId).toString()
                 val year = cursor.getIntValue(Audio.Media.YEAR)
+                val dateAdded = cursor.getIntValue(Audio.Media.DATE_ADDED)
                 val folderName = if (isQPlus()) {
                     cursor.getStringValue(Audio.Media.BUCKET_DISPLAY_NAME) ?: MediaStore.UNKNOWN_STRING
                 } else {
                     ""
                 }
 
-                val song = Track(0, mediaStoreId, title, artist, path, duration, album, coverArt, playlistId, 0, folderName, albumId, artistId, year, 0)
+                val song = Track(0, mediaStoreId, title, artist, path, duration, album, coverArt, playlistId, 0, folderName, albumId, artistId, year, dateAdded, 0)
                 song.title = song.getProperTitle(showFilename)
                 songs.add(song)
                 pathsMap.remove(path)
@@ -83,7 +85,13 @@ class RoomHelper(val context: Context) {
             val unknown = MediaStore.UNKNOWN_STRING
             val title = context.getTitle(it) ?: unknown
             val artist = context.getArtist(it) ?: unknown
-            val song = Track(0, 0, title, artist, it, context.getDuration(it) ?: 0, "", "", playlistId, 0, "", 0, 0, 0, 0)
+            val dateAdded = try {
+                (File(it).lastModified() / 1000L).toInt()
+            } catch (e: Exception) {
+                0
+            }
+
+            val song = Track(0, 0, title, artist, it, context.getDuration(it) ?: 0, "", "", playlistId, 0, "", 0, 0, 0,dateAdded ,0)
             song.title = song.getProperTitle(showFilename)
             songs.add(song)
         }

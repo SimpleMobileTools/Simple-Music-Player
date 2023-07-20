@@ -115,7 +115,11 @@ class SimpleMediaScanner(private val context: Application) {
 
         // update album, track count if any tracks were excluded
         for (album in newAlbums) {
-            album.trackCnt = newTracks.filter { it.albumId == album.id }.size
+            val tracksInAlbum = newTracks.filter { it.albumId == album.id }
+            album.trackCnt = tracksInAlbum.size
+            if (album.trackCnt > 0) {
+                album.dateAdded = tracksInAlbum.first().dateAdded
+            }
         }
 
         for (artist in newArtists) {
@@ -195,7 +199,8 @@ class SimpleMediaScanner(private val context: Application) {
             Audio.Media.ALBUM_ID,
             Audio.Media.ARTIST_ID,
             Audio.Media.TRACK,
-            Audio.Media.YEAR
+            Audio.Media.YEAR,
+            Audio.Media.DATE_ADDED
         )
 
         if (isQPlus()) {
@@ -214,6 +219,7 @@ class SimpleMediaScanner(private val context: Application) {
             val albumId = cursor.getLongValue(Audio.Media.ALBUM_ID)
             val artistId = cursor.getLongValue(Audio.Media.ARTIST_ID)
             val year = cursor.getIntValue(Audio.Media.YEAR)
+            val dateAdded = cursor.getIntValue(Audio.Media.DATE_ADDED)
             val folderName = if (isQPlus()) {
                 cursor.getStringValue(Audio.Media.BUCKET_DISPLAY_NAME) ?: MediaStore.UNKNOWN_STRING
             } else {
@@ -223,7 +229,7 @@ class SimpleMediaScanner(private val context: Application) {
             val coverUri = ContentUris.withAppendedId(artworkUri, albumId)
             val coverArt = coverUri.toString()
 
-            val track = Track(0, id, title, artist, path, duration, album, coverArt, 0, trackId, folderName, albumId, artistId, year, 0)
+            val track = Track(0, id, title, artist, path, duration, album, coverArt, 0, trackId, folderName, albumId, artistId, year, dateAdded, 0)
             track.title = track.getProperTitle(showFilename)
             tracks.add(track)
         }
@@ -284,7 +290,7 @@ class SimpleMediaScanner(private val context: Application) {
             }
 
             if (trackCnt > 0) {
-                val album = Album(id, artistName, title, coverArt, year, trackCnt, artistId)
+                val album = Album(id, artistName, title, coverArt, year, trackCnt, artistId, 0)
                 albums.add(album)
             }
         }
@@ -348,9 +354,14 @@ class SimpleMediaScanner(private val context: Application) {
             val trackNumber = retriever.extractMetadata(METADATA_KEY_CD_TRACK_NUMBER)
             val trackId = trackNumber?.split("/")?.first()?.toIntOrNull() ?: 0
             val year = retriever.extractMetadata(METADATA_KEY_YEAR)?.toIntOrNull() ?: 0
+            val dateAdded = try {
+                (File(path).lastModified() / 1000L).toInt()
+            } catch (e: Exception) {
+                0
+            }
 
             if (title.isNotEmpty()) {
-                val track = Track(0, id, title, artist, path, duration, album, "", 0, trackId, folderName, 0, 0, year, 0, FLAG_MANUAL_CACHE)
+                val track = Track(0, id, title, artist, path, duration, album, "", 0, trackId, folderName, 0, 0, year, dateAdded, FLAG_MANUAL_CACHE)
                 // use hashCode() as id for tracking purposes, there's a very slim chance of collision
                 track.mediaStoreId = track.hashCode().toLong()
                 tracksSet.add(track)
@@ -425,7 +436,7 @@ class SimpleMediaScanner(private val context: Application) {
                 val track = tracksInAlbum.first()
                 val artistName = track.artist
                 val year = track.year
-                val album = Album(0, artistName, albumName, "", year, trackCnt, track.artistId)
+                val album = Album(0, artistName, albumName, "", year, trackCnt, track.artistId, track.dateAdded)
                 val albumId = album.hashCode().toLong()
                 album.id = albumId
                 tracksInAlbum.onEach { it.albumId = albumId }

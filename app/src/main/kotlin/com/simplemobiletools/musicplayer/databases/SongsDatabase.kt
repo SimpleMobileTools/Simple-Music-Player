@@ -180,6 +180,9 @@ abstract class SongsDatabase : RoomDatabase() {
                     execSQL("DROP TABLE artists")
                     execSQL("ALTER TABLE artists_new RENAME TO artists")
                     execSQL("CREATE UNIQUE INDEX IF NOT EXISTS `index_artists_id` ON `artists` (`id`)")
+
+                    database.execSQL("ALTER TABLE tracks ADD COLUMN date_added INTEGER NOT NULL DEFAULT 0")
+                    database.execSQL("ALTER TABLE albums ADD COLUMN date_added INTEGER NOT NULL DEFAULT 0")
                 }
             }
         }

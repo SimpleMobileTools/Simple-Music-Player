@@ -28,7 +28,7 @@ import kotlinx.android.synthetic.main.fragment_artists.view.artists_placeholder
 
 // Artists -> Albums -> Tracks
 class ArtistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPagerFragment(context, attributeSet) {
-    private var artistsIgnoringSearch = ArrayList<Artist>()
+    private var artists = ArrayList<Artist>()
 
     override fun setupFragment(activity: BaseSimpleActivity) {
         Artist.sorting = context.config.artistSorting
@@ -40,8 +40,8 @@ class ArtistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
         }
     }
 
-    private fun gotArtists(activity: BaseSimpleActivity, artists: ArrayList<Artist>) {
-        artistsIgnoringSearch = artists
+    private fun gotArtists(activity: BaseSimpleActivity, cachedArtists: ArrayList<Artist>) {
+        artists = cachedArtists
         activity.runOnUiThread {
             val scanning = activity.mediaScanner.isScanning()
             artists_placeholder.text = if (scanning) {
@@ -80,20 +80,19 @@ class ArtistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
     }
 
     override fun onSearchQueryChanged(text: String) {
-        val filtered = artistsIgnoringSearch.filter { it.title.contains(text, true) }.toMutableList() as ArrayList<Artist>
+        val filtered = artists.filter { it.title.contains(text, true) }.toMutableList() as ArrayList<Artist>
         (artists_list.adapter as? ArtistsAdapter)?.updateItems(filtered, text)
         artists_placeholder.beVisibleIf(filtered.isEmpty())
     }
 
     override fun onSearchClosed() {
-        (artists_list.adapter as? ArtistsAdapter)?.updateItems(artistsIgnoringSearch)
-        artists_placeholder.beGoneIf(artistsIgnoringSearch.isNotEmpty())
+        (artists_list.adapter as? ArtistsAdapter)?.updateItems(artists)
+        artists_placeholder.beGoneIf(artists.isNotEmpty())
     }
 
     override fun onSortOpen(activity: SimpleActivity) {
         ChangeSortingDialog(activity, TAB_ARTISTS) {
             val adapter = artists_list.adapter as? ArtistsAdapter ?: return@ChangeSortingDialog
-            val artists = adapter.artists
             Artist.sorting = activity.config.artistSorting
             artists.sort()
             adapter.updateItems(artists, forceUpdate = true)

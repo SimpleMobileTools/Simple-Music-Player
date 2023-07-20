@@ -33,15 +33,13 @@ class TracksFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
 
     override fun setupFragment(activity: BaseSimpleActivity) {
         ensureBackgroundThread {
+            Track.sorting = context.config.trackSorting
             tracks = context.audioHelper.getAllTracks()
 
             val excludedFolders = context.config.excludedFolders
             tracks = tracks.filter {
                 !excludedFolders.contains(it.path.getParentPath())
             }.toMutableList() as ArrayList<Track>
-
-            Track.sorting = context.config.trackSorting
-            tracks.sort()
 
             activity.runOnUiThread {
                 val scanning = activity.mediaScanner.isScanning()
@@ -104,7 +102,6 @@ class TracksFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
     override fun onSortOpen(activity: SimpleActivity) {
         ChangeSortingDialog(activity, TAB_TRACKS) {
             val adapter = tracks_list.adapter as? TracksAdapter ?: return@ChangeSortingDialog
-            val tracks = adapter.tracks
             Track.sorting = activity.config.trackSorting
             tracks.sort()
             adapter.updateItems(tracks, forceUpdate = true)

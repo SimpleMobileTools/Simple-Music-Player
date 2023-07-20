@@ -117,6 +117,7 @@ const val PLAYER_SORT_BY_DURATION = 16
 const val PLAYER_SORT_BY_ARTIST_TITLE = 32
 const val PLAYER_SORT_BY_TRACK_ID = 64
 const val PLAYER_SORT_BY_CUSTOM = 128
+const val PLAYER_SORT_BY_DATE_ADDED = 256
 
 const val PLAYLIST_SORTING = "playlist_sorting"
 const val PLAYLIST_TRACKS_SORTING = "playlist_tracks_sorting"

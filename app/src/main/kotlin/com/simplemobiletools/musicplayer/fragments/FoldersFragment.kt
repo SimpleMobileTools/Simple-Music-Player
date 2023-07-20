@@ -19,14 +19,13 @@ import com.simplemobiletools.musicplayer.extensions.mediaScanner
 import com.simplemobiletools.musicplayer.helpers.FOLDER
 import com.simplemobiletools.musicplayer.helpers.TAB_FOLDERS
 import com.simplemobiletools.musicplayer.models.Folder
-import com.simplemobiletools.musicplayer.models.Track
 import kotlinx.android.synthetic.main.fragment_folders.view.folders_fastscroller
 import kotlinx.android.synthetic.main.fragment_folders.view.folders_list
 import kotlinx.android.synthetic.main.fragment_folders.view.folders_placeholder
 import kotlinx.android.synthetic.main.fragment_folders.view.folders_placeholder_2
 
 class FoldersFragment(context: Context, attributeSet: AttributeSet) : MyViewPagerFragment(context, attributeSet) {
-    private var foldersIgnoringSearch = ArrayList<Folder>()
+    private var folders = ArrayList<Folder>()
 
     override fun setupFragment(activity: BaseSimpleActivity) {
         ensureBackgroundThread {
@@ -70,7 +69,7 @@ class FoldersFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
 
                 Folder.sorting = activity.config.folderSorting
                 folders.sort()
-                foldersIgnoringSearch = folders
+                this.folders = folders
 
                 val adapter = folders_list.adapter
                 if (adapter == null) {
@@ -99,20 +98,19 @@ class FoldersFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
     }
 
     override fun onSearchQueryChanged(text: String) {
-        val filtered = foldersIgnoringSearch.filter { it.title.contains(text, true) }.toMutableList() as ArrayList<Folder>
+        val filtered = folders.filter { it.title.contains(text, true) }.toMutableList() as ArrayList<Folder>
         (folders_list.adapter as? FoldersAdapter)?.updateItems(filtered, text)
         folders_placeholder.beVisibleIf(filtered.isEmpty())
     }
 
     override fun onSearchClosed() {
-        (folders_list.adapter as? FoldersAdapter)?.updateItems(foldersIgnoringSearch)
-        folders_placeholder.beGoneIf(foldersIgnoringSearch.isNotEmpty())
+        (folders_list.adapter as? FoldersAdapter)?.updateItems(folders)
+        folders_placeholder.beGoneIf(folders.isNotEmpty())
     }
 
     override fun onSortOpen(activity: SimpleActivity) {
         ChangeSortingDialog(activity, TAB_FOLDERS) {
             val adapter = folders_list.adapter as? FoldersAdapter ?: return@ChangeSortingDialog
-            val folders = adapter.folders
             Folder.sorting = activity.config.folderSorting
             folders.sort()
             adapter.updateItems(folders, forceUpdate = true)

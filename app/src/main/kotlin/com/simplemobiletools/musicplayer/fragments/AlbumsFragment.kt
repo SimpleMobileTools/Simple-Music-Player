@@ -28,7 +28,7 @@ import kotlinx.android.synthetic.main.fragment_albums.view.albums_placeholder
 
 // Artists -> Albums -> Tracks
 class AlbumsFragment(context: Context, attributeSet: AttributeSet) : MyViewPagerFragment(context, attributeSet) {
-    private var albumsIgnoringSearch = ArrayList<Album>()
+    private var albums = ArrayList<Album>()
 
     override fun setupFragment(activity: BaseSimpleActivity) {
         Album.sorting = context.config.albumSorting
@@ -40,8 +40,8 @@ class AlbumsFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
         }
     }
 
-    private fun gotAlbums(activity: BaseSimpleActivity, albums: ArrayList<Album>) {
-        albumsIgnoringSearch = albums
+    private fun gotAlbums(activity: BaseSimpleActivity, cachedAlbums: ArrayList<Album>) {
+        albums = cachedAlbums
 
         activity.runOnUiThread {
             val scanning = activity.mediaScanner.isScanning()
@@ -81,20 +81,19 @@ class AlbumsFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
     }
 
     override fun onSearchQueryChanged(text: String) {
-        val filtered = albumsIgnoringSearch.filter { it.title.contains(text, true) }.toMutableList() as ArrayList<Album>
+        val filtered = albums.filter { it.title.contains(text, true) }.toMutableList() as ArrayList<Album>
         (albums_list.adapter as? AlbumsAdapter)?.updateItems(filtered, text)
         albums_placeholder.beVisibleIf(filtered.isEmpty())
     }
 
     override fun onSearchClosed() {
-        (albums_list.adapter as? AlbumsAdapter)?.updateItems(albumsIgnoringSearch)
-        albums_placeholder.beGoneIf(albumsIgnoringSearch.isNotEmpty())
+        (albums_list.adapter as? AlbumsAdapter)?.updateItems(albums)
+        albums_placeholder.beGoneIf(albums.isNotEmpty())
     }
 
     override fun onSortOpen(activity: SimpleActivity) {
         ChangeSortingDialog(activity, TAB_ALBUMS) {
             val adapter = albums_list.adapter as? AlbumsAdapter ?: return@ChangeSortingDialog
-            val albums = adapter.albums
             Album.sorting = activity.config.albumSorting
             albums.sort()
             adapter.updateItems(albums, forceUpdate = true)
