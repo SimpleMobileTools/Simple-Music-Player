@@ -30,12 +30,7 @@ class FoldersFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
 
     override fun setupFragment(activity: BaseSimpleActivity) {
         ensureBackgroundThread {
-            var tracks = context.audioHelper.getAllTracks()
-            tracks = tracks.distinctBy { "${it.path}/${it.mediaStoreId}" }.toMutableList() as ArrayList<Track>
-
-            Track.sorting = context.config.trackSorting
-            tracks.sort()
-
+            val tracks = context.audioHelper.getAllTracks()
             val foldersMap = tracks.groupBy { it.folderName }
             val folders = ArrayList<Folder>()
             val excludedFolders = activity.config.excludedFolders

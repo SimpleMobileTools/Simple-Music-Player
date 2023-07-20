@@ -25,8 +25,12 @@ class AudioHelper(private val context: Context) {
     }
 
     fun getAllTracks(): ArrayList<Track> {
-        return context.tracksDAO.getAll()
+        val tracks = context.tracksDAO.getAll()
             .distinctBy { "${it.path}/${it.mediaStoreId}" } as ArrayList<Track>
+
+        Track.sorting = config.trackSorting
+        tracks.sort()
+        return tracks
     }
 
     fun getFolderTracks(folder: String): ArrayList<Track> {
