@@ -57,8 +57,14 @@ class AudioHelper(private val context: Context) {
         context.tracksDAO.removeTrack(mediaStoreId)
     }
 
-    fun deleteTracks(albums: List<Track>) {
-        context.tracksDAO.removeTracks(albums.toList())
+    fun deleteTracks(tracks: List<Track>) {
+        tracks.forEach {
+            deleteTrack(it.mediaStoreId)
+        }
+    }
+
+    fun insertArtists(artists: List<Artist>) {
+        context.artistDAO.insertAll(artists)
     }
 
     fun getAllArtists(): ArrayList<Artist> {
@@ -85,8 +91,18 @@ class AudioHelper(private val context: Context) {
         )
     }
 
+    fun deleteArtist(id: Long) {
+        context.artistDAO.deleteArtist(id)
+    }
+
     fun deleteArtists(artists: List<Artist>) {
-        context.artistDAO.deleteAll(artists)
+        artists.forEach {
+            deleteArtist(it.id)
+        }
+    }
+
+    fun insertAlbums(albums: List<Album>) {
+        context.albumsDAO.insertAll(albums)
     }
 
     fun getAlbum(albumId: Long): Album? {
@@ -111,8 +127,14 @@ class AudioHelper(private val context: Context) {
             .distinctBy { "${it.path}/${it.mediaStoreId}" } as ArrayList<Track>
     }
 
+    private fun deleteAlbum(id: Long) {
+        context.albumsDAO.deleteAlbum(id)
+    }
+
     fun deleteAlbums(albums: List<Album>) {
-        context.albumsDAO.deleteAll(albums.toList())
+        albums.forEach {
+            deleteAlbum(it.id)
+        }
     }
 
     fun insertPlaylist(playlist: Playlist): Long {
