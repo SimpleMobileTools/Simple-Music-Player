@@ -201,7 +201,7 @@ class TracksAdapter(
                         finishActMode()
 
                         // finish activity if all tracks are deleted
-                        if (tracks.isEmpty()) {
+                        if (tracks.isEmpty() && !isPlaylistContent) {
                             activity.finish()
                         }
                     }
