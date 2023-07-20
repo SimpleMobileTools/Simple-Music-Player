@@ -173,4 +173,16 @@ class AudioHelper(private val context: Context) {
             context.tracksDAO.removePlaylistSongs(it.id)
         }
     }
+
+    fun removeInvalidAlbumsArtists() {
+        val tracks = context.tracksDAO.getAll()
+        val albums = context.albumsDAO.getAll()
+        val artists = context.artistDAO.getAll()
+
+        val invalidAlbums = albums.filter { album -> tracks.none { it.albumId == album.id } }
+        deleteAlbums(invalidAlbums)
+
+        val invalidArtists = artists.filter { artist -> tracks.none { it.artistId == artist.id } }
+        deleteArtists(invalidArtists)
+    }
 }

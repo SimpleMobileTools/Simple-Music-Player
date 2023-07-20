@@ -199,6 +199,11 @@ class TracksAdapter(
                         }
 
                         finishActMode()
+
+                        // finish activity if all tracks are deleted
+                        if (tracks.isEmpty()) {
+                            activity.finish()
+                        }
                     }
                 }
             }

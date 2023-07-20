@@ -69,10 +69,15 @@ fun Activity.playNextInQueue(track: Track, callback: () -> Unit) {
 }
 
 fun BaseSimpleActivity.deleteTracks(tracks: List<Track>, callback: () -> Unit) {
+    try {
+        audioHelper.deleteTracks(tracks)
+        audioHelper.removeInvalidAlbumsArtists()
+    } catch (ignored: Exception) {
+    }
+
     val contentUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
     maybeRescanTrackPaths(tracks) { tracksToDelete ->
         if (tracksToDelete.isNotEmpty()) {
-            audioHelper.deleteTracks(tracksToDelete)
             if (isRPlus()) {
                 val uris = tracksToDelete.map { ContentUris.withAppendedId(contentUri, it.mediaStoreId) }
                 deleteSDK30Uris(uris) { success ->
