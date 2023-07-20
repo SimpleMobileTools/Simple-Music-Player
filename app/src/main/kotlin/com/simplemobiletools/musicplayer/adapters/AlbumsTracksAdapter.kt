@@ -179,6 +179,11 @@ class AlbumsTracksAdapter(
                         positions.forEach {
                             items.removeAt(it)
                         }
+
+                        // finish activity if all tracks are deleted
+                        if (items.none { it is Track }) {
+                            activity.finish()
+                        }
                     }
                 }
             }

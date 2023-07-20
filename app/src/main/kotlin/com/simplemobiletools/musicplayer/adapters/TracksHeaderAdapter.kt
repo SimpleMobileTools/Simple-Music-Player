@@ -160,6 +160,11 @@ class TracksHeaderAdapter(activity: SimpleActivity, var items: ArrayList<ListIte
                         positions.forEach {
                             items.removeAt(it)
                         }
+
+                        // finish activity if all tracks are deleted
+                        if (items.none { it is Track }) {
+                            activity.finish()
+                        }
                     }
                 }
             }
@@ -227,7 +232,9 @@ class TracksHeaderAdapter(activity: SimpleActivity, var items: ArrayList<ListIte
                         }
                     }
                 } else {
-                    findViewById<ImageView>(R.id.album_image).setImageDrawable(placeholder)
+                    activity.runOnUiThread {
+                        findViewById<ImageView>(R.id.album_image).setImageDrawable(placeholder)
+                    }
                 }
             }
         }

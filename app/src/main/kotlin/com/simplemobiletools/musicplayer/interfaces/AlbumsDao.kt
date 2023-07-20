@@ -22,7 +22,4 @@ interface AlbumsDao {
 
     @Query("DELETE FROM albums WHERE id = :id")
     fun deleteAlbum(id: Long)
-
-    @Delete
-    fun deleteAll(albums: List<Album>)
 }
