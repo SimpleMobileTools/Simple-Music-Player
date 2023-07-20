@@ -33,7 +33,7 @@
     <string name="remove_from_playlist_description">Sellega eemaldad vaid kirjed „%s“ esitusloendist. Tegelikud failid jäävad puutumata.</string>
     <string name="delete_the_files_too">Kustuta ka failid</string>
     <string name="open_playlist">Ava esitusloend</string>
-    <string name="all_songs_cannot_be_deleted">Esitusloendit \"Kõik lood\" ei saa kustutada</string>
+    <string name="all_songs_cannot_be_deleted">Esitusloendit „Kõik lood“ ei saa kustutada</string>
     <string name="empty_playlist">Praegune esitusloend on tühi</string>
     <string name="fetching_songs">Laadin lugusid…</string>
     <string name="all_songs">Kõik lood</string>
@@ -48,11 +48,11 @@
     <string name="all_tracks">Kõik lood</string>
     <string name="add_to_playlist">Lisa esitusloendisse</string>
     <string name="create_playlist_label">Valides Menüü -&gt; Lisa esitusloendisse saad soovitud esitajate, albumite või lugude alusel luua uue esitusloendi.</string>
-    <string name="export_playlist">Esitusloendi eksportimine</string>
-    <string name="import_playlist">Esitusloendi importimine</string>
+    <string name="export_playlist">Ekspordi esitusloend</string>
+    <string name="import_playlist">Impordi esitusloend</string>
     <string name="filename_without_m3u">Faili nimi (ilma .m3u laiendita)</string>
     <!-- Sorting -->
-    <string name="track_count">Palade arv</string>
+    <string name="track_count">Lugude arv</string>
     <string name="album_count">Albumeid</string>
     <string name="artist_name">Esitaja nimi</string>
     <string name="year">Aasta</string>
@@ -67,16 +67,16 @@
         <item quantity="one">%d album</item>
         <item quantity="other">%d albumit</item>
     </plurals>
-    <string name="tracks">Palad</string>
+    <string name="tracks">Lood</string>
     <plurals name="tracks_plural">
-        <item quantity="one">%d pala</item>
-        <item quantity="other">%d pala</item>
+        <item quantity="one">%d lugu</item>
+        <item quantity="other">%d lugu</item>
     </plurals>
     <!-- Queue -->
     <string name="next_track">Järgmine:</string>
-    <string name="track_queue">Esitusjärjekord</string>
+    <string name="track_queue">Lugude esitusjärjekord</string>
     <string name="add_to_queue">Lisa esitusjärjekorda</string>
-    <string name="play_next">Play next</string>
+    <string name="play_next">Esita järgmist</string>
     <string name="remove_from_queue">Eemalda esitusjärjekorrast</string>
     <string name="create_playlist_from_queue">Loo esitusjärjekorra alusel esitusloend</string>
     <!-- Settings -->
@@ -84,7 +84,7 @@
     <string name="swap_prev_next">Vaheta kõrvaklappide eelmine/järgmine nupud</string>
     <string name="exclude_folder_description">Kausta välistamine keelab ka seal asuvate helifailide kuvamise. Käsitsi esitusloendisse lisatud failid jäävad kasutusele.</string>
     <string name="gapless_playback">Lünkadeta taasesitus</string>
-    <string name="rescan_media">Rescan media</string>
+    <string name="rescan_media">Tee meediakogu uus täisanalüüs</string>
     <!-- FAQ -->
     <string name="faq_1_title">Kuidas ma saan palasid kiiresti edasi kerida\?</string>
     <string name="faq_1_text">Klõpsi esitusribal kas esituse aega või pala pikkust ning sellega hüppad loos tagasi või edasi.</string>
