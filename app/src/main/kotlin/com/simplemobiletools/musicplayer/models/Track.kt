@@ -31,6 +31,7 @@ data class Track(
     @ColumnInfo(name = "album_id") var albumId: Long,
     @ColumnInfo(name = "artist_id") var artistId: Long,
     @ColumnInfo(name = "year") var year: Int,
+    @ColumnInfo(name = "date_added") var dateAdded: Int,
     @ColumnInfo(name = "order_in_playlist") var orderInPlaylist: Int,
     @ColumnInfo(name = "flags") var flags: Int = 0
 ) : Serializable, Comparable<Track>, ListItem() {
@@ -61,6 +62,13 @@ data class Track(
                     trackId == -1 && other.trackId != -1 -> 1
                     trackId != -1 && other.trackId == -1 -> -1
                     else -> AlphanumericComparator().compare(trackId.toString(), other.trackId.toString())
+                }
+            }
+            sorting and PLAYER_SORT_BY_DATE_ADDED != 0 -> {
+                when {
+                    dateAdded == 0 && other.dateAdded != 0 -> -1
+                    dateAdded != 0 && other.dateAdded == 0 -> 1
+                    else -> dateAdded.compareTo(other.dateAdded)
                 }
             }
             sorting and PLAYER_SORT_BY_CUSTOM != 0 -> {

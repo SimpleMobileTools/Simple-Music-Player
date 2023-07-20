@@ -8,6 +8,7 @@ import androidx.room.PrimaryKey
 import com.simplemobiletools.commons.helpers.AlphanumericComparator
 import com.simplemobiletools.commons.helpers.SORT_DESCENDING
 import com.simplemobiletools.musicplayer.helpers.PLAYER_SORT_BY_ARTIST_TITLE
+import com.simplemobiletools.musicplayer.helpers.PLAYER_SORT_BY_DATE_ADDED
 import com.simplemobiletools.musicplayer.helpers.PLAYER_SORT_BY_TITLE
 
 @Entity(tableName = "albums", indices = [(Index(value = ["id"], unique = true))])
@@ -18,7 +19,8 @@ data class Album(
     @ColumnInfo(name = "cover_art") val coverArt: String,
     @ColumnInfo(name = "year") val year: Int,
     @ColumnInfo(name = "track_cnt") var trackCnt: Int,
-    @ColumnInfo(name = "artist_id") var artistId: Long
+    @ColumnInfo(name = "artist_id") var artistId: Long,
+    @ColumnInfo(name = "date_added") var dateAdded: Int,
 ) : ListItem(), Comparable<Album> {
     companion object {
         var sorting = 0
@@ -38,6 +40,13 @@ data class Album(
                     artist == MediaStore.UNKNOWN_STRING && other.artist != MediaStore.UNKNOWN_STRING -> 1
                     artist != MediaStore.UNKNOWN_STRING && other.artist == MediaStore.UNKNOWN_STRING -> -1
                     else -> AlphanumericComparator().compare(artist.lowercase(), other.artist.lowercase())
+                }
+            }
+            sorting and PLAYER_SORT_BY_DATE_ADDED != 0 -> {
+                when {
+                    dateAdded == 0 && other.dateAdded != 0 -> -1
+                    dateAdded != 0 && other.dateAdded == 0 -> 1
+                    else -> dateAdded.compareTo(other.dateAdded)
                 }
             }
             else -> year.compareTo(other.year)
