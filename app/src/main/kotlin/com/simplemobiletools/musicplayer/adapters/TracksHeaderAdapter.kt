@@ -227,7 +227,9 @@ class TracksHeaderAdapter(activity: SimpleActivity, var items: ArrayList<ListIte
                         }
                     }
                 } else {
-                    findViewById<ImageView>(R.id.album_image).setImageDrawable(placeholder)
+                    activity.runOnUiThread {
+                        findViewById<ImageView>(R.id.album_image).setImageDrawable(placeholder)
+                    }
                 }
             }
         }
