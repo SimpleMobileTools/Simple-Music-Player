@@ -1,6 +1,15 @@
 Changelog
 ==========
 
+Version 5.17.0 *(2023-07-22)*
+----------------------------
+
+ * Allow queueing tracks as the next queue item
+ * Improved file fetching and performance
+ * Allow triggering folder rescanning
+ * Added sorting by Date Added
+ * Added some stability, translation and UI improvements
+
 Version 5.16.6 *(2023-06-20)*
 ----------------------------
 
