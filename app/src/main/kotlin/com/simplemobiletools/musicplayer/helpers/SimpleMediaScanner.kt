@@ -19,8 +19,6 @@ import com.simplemobiletools.musicplayer.models.Playlist
 import com.simplemobiletools.musicplayer.models.Track
 import java.io.File
 import java.io.FileInputStream
-import java.util.Arrays
-import java.util.concurrent.ConcurrentHashMap
 
 /**
  * This singleton class manages the process of querying [MediaStore] for new audio files, manually scanning storage for missing audio files, and removing outdated
@@ -315,13 +313,11 @@ class SimpleMediaScanner(private val context: Application) {
             return arrayListOf()
         }
 
-        val tracksSet = ConcurrentHashMap.newKeySet<Track>()
-        val paths = audioFilePaths.toTypedArray()
-        val totalPaths = paths.size
+        val tracks = arrayListOf<Track>()
+        val totalPaths = audioFilePaths.size
         var pathsScanned = 0
 
-        // running metadata retriever in parallel significantly reduces the required time
-        Arrays.stream(paths).parallel().forEach { path ->
+        audioFilePaths.forEach { path ->
             pathsScanned += 1
             maybeShowScanProgress(
                 pathBeingScanned = path,
@@ -364,7 +360,7 @@ class SimpleMediaScanner(private val context: Application) {
                 val track = Track(0, id, title, artist, path, duration, album, "", 0, trackId, folderName, 0, 0, year, dateAdded, FLAG_MANUAL_CACHE)
                 // use hashCode() as id for tracking purposes, there's a very slim chance of collision
                 track.mediaStoreId = track.hashCode().toLong()
-                tracksSet.add(track)
+                tracks.add(track)
             }
 
             try {
@@ -372,11 +368,6 @@ class SimpleMediaScanner(private val context: Application) {
                 retriever.release()
             } catch (ignored: Exception) {
             }
-        }
-
-        val tracks = arrayListOf<Track>()
-        tracksSet.stream().forEach {
-            tracks.add(it)
         }
 
         maybeRescanPaths(audioFilePaths)
@@ -486,7 +477,6 @@ class SimpleMediaScanner(private val context: Application) {
         context.audioHelper.deleteArtists(invalidArtists)
     }
 
-    @Synchronized
     private fun maybeShowScanProgress(pathBeingScanned: String = "", progress: Int = 0, max: Int = 0) {
         if (!showProgress) {
             return
