@@ -211,25 +211,27 @@ class SimpleMediaScanner(private val context: Application) {
             val title = cursor.getStringValue(Audio.Media.TITLE)
             val duration = cursor.getIntValue(Audio.Media.DURATION) / 1000
             val trackId = cursor.getIntValue(Audio.Media.TRACK) % 1000
-            val path = cursor.getStringValue(Audio.Media.DATA)
+            val path = cursor.getStringValue(Audio.Media.DATA).orEmpty()
             val artist = cursor.getStringValue(Audio.Media.ARTIST) ?: MediaStore.UNKNOWN_STRING
-            val album = cursor.getStringValue(Audio.Media.ALBUM)
-            val albumId = cursor.getLongValue(Audio.Media.ALBUM_ID)
-            val artistId = cursor.getLongValue(Audio.Media.ARTIST_ID)
-            val year = cursor.getIntValue(Audio.Media.YEAR)
-            val dateAdded = cursor.getIntValue(Audio.Media.DATE_ADDED)
             val folderName = if (isQPlus()) {
                 cursor.getStringValue(Audio.Media.BUCKET_DISPLAY_NAME) ?: MediaStore.UNKNOWN_STRING
             } else {
                 ""
             }
 
+            val album = cursor.getStringValue(Audio.Media.ALBUM) ?: folderName
+            val albumId = cursor.getLongValue(Audio.Media.ALBUM_ID)
+            val artistId = cursor.getLongValue(Audio.Media.ARTIST_ID)
+            val year = cursor.getIntValue(Audio.Media.YEAR)
+            val dateAdded = cursor.getIntValue(Audio.Media.DATE_ADDED)
             val coverUri = ContentUris.withAppendedId(artworkUri, albumId)
             val coverArt = coverUri.toString()
 
-            val track = Track(0, id, title, artist, path, duration, album, coverArt, 0, trackId, folderName, albumId, artistId, year, dateAdded, 0)
-            track.title = track.getProperTitle(showFilename)
-            tracks.add(track)
+            if (!title.isNullOrEmpty()) {
+                val track = Track(0, id, title, artist, path, duration, album, coverArt, 0, trackId, folderName, albumId, artistId, year, dateAdded, 0)
+                track.title = track.getProperTitle(showFilename)
+                tracks.add(track)
+            }
         }
 
         return tracks
@@ -277,7 +279,7 @@ class SimpleMediaScanner(private val context: Application) {
         context.queryCursor(uri, projection.toTypedArray(), null, null, showErrors = true) { cursor ->
             val id = cursor.getLongValue(Audio.Albums._ID)
             val artistName = cursor.getStringValue(Audio.Albums.ARTIST) ?: MediaStore.UNKNOWN_STRING
-            val title = cursor.getStringValue(Audio.Albums.ALBUM)
+            val title = cursor.getStringValue(Audio.Albums.ALBUM) ?: MediaStore.UNKNOWN_STRING
             val coverArt = ContentUris.withAppendedId(artworkUri, id).toString()
             val year = cursor.getIntValue(Audio.Albums.FIRST_YEAR)
             val trackCnt = cursor.getIntValue(Audio.Albums.NUMBER_OF_SONGS)
