@@ -9,7 +9,7 @@
     <string name="repeat_off">Repetera av</string>
     <string name="repeat_song">Repetera nuvarande låt</string>
     <string name="repeat_playlist">Repetera alla</string>
-    <string name="stop_playback_after_current_song">Stopa uppspelning efter nuvarande låt</string>
+    <string name="stop_playback_after_current_song">Stoppa uppspelning efter aktuell låt</string>
     <string name="enable_shuffle">Aktivera blanda</string>
     <string name="disable_shuffle">Inaktivera blanda</string>
     <string name="shuffle_enabled">Blanda aktiverad</string>
@@ -76,15 +76,15 @@
     <string name="next_track">Nästa:</string>
     <string name="track_queue">Spårkö</string>
     <string name="add_to_queue">Lägg till i kö</string>
-    <string name="play_next">Play next</string>
+    <string name="play_next">Spela härnäst</string>
     <string name="remove_from_queue">Ta bort från kö</string>
     <string name="create_playlist_from_queue">Skapa spellista från kö</string>
     <!-- Settings -->
     <string name="equalizer">Frekvenskorrigerare</string>
     <string name="swap_prev_next">Växla hörlurars föregående- och nästaknappar</string>
-    <string name="exclude_folder_description">Exkludera en mapp kommer förhindra visningar av alla ljudfiler inuti. Filer manuellt tillagda filer till spellistor påverkas inte.</string>
-    <string name="gapless_playback">Gapless playback</string>
-    <string name="rescan_media">Rescan media</string>
+    <string name="exclude_folder_description">När du utesluter en mapp hindrar det alla ljudfiler i mappen från att visas. Filer som har lagts till i spellistor manuellt påverkas inte.</string>
+    <string name="gapless_playback">Uppspelning utan avbrott</string>
+    <string name="rescan_media">Skanna media igen</string>
     <!-- FAQ -->
     <string name="faq_1_title">Hur kan jag snabbspola låtar\?</string>
     <string name="faq_1_text">Du kan klicka på låtens nuvarande tid eller längd nära sökfältet, vilket kommer att spola låten antingen bakåt eller framåt.</string>
