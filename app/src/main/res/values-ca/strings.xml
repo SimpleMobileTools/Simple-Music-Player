@@ -62,6 +62,7 @@
     <!-- Artists -->
     <string name="artists">Artistes</string>
     <string name="folders">Carpetes</string>
+    <string name="genres">Genres</string>
     <string name="albums">Àlbums</string>
     <plurals name="albums_plural">
         <item quantity="one">%d àlbum</item>

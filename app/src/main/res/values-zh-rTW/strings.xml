@@ -62,6 +62,7 @@
     <!-- Artists -->
     <string name="artists">演出者</string>
     <string name="folders">資料夾</string>
+    <string name="genres">Genres</string>
     <string name="albums">專輯</string>
     <plurals name="albums_plural">
         <item quantity="other">%d 張專輯</item>

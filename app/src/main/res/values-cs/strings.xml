@@ -62,6 +62,7 @@
     <!-- Artists -->
     <string name="artists">Umělci</string>
     <string name="folders">Složky</string>
+    <string name="genres">Genres</string>
     <string name="albums">Alba</string>
     <plurals name="albums_plural">
         <item quantity="one">%d Album</item>

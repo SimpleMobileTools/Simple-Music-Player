@@ -62,6 +62,7 @@
     <!-- Artists -->
     <string name="artists">Kunstnere</string>
     <string name="folders">Mapper</string>
+    <string name="genres">Genres</string>
     <string name="albums">Albummer</string>
     <plurals name="albums_plural">
         <item quantity="one">%d Album</item>

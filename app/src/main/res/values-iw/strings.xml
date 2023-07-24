@@ -62,6 +62,7 @@
     <!-- Artists -->
     <string name="artists">אמנים</string>
     <string name="folders">תקיות</string>
+    <string name="genres">Genres</string>
     <string name="albums">אלבומים</string>
     <plurals name="albums_plural">
         <item quantity="one">אלבום %d</item>
