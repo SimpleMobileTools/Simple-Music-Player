@@ -40,17 +40,13 @@ class MultiPlayer(private val app: Application, private val callbacks: PlaybackC
             }
 
             AudioManager.AUDIOFOCUS_LOSS -> {
-                if (isPlaying()) {
-                    pause()
-                }
+                pause()
                 callbacks.onPlayStateChanged()
             }
 
             AudioManager.AUDIOFOCUS_LOSS_TRANSIENT -> {
                 val wasPlaying = isPlaying()
-                if (wasPlaying) {
-                    pause()
-                }
+                pause()
                 callbacks.onPlayStateChanged()
                 isPausedByTransientLossOfFocus = wasPlaying
             }
@@ -142,6 +138,10 @@ class MultiPlayer(private val app: Application, private val callbacks: PlaybackC
     }
 
     fun pause(): Boolean {
+        if (!isPlaying()) {
+            return false
+        }
+
         unregisterBecomingNoisyReceiver()
         return try {
             mCurrentMediaPlayer.pause()
