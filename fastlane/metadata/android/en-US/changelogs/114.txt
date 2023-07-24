@@ -1,0 +1,5 @@
+ * Allow queueing tracks as the next queue item
+ * Improved file fetching and performance
+ * Allow triggering folder rescanning
+ * Added sorting by Date Added
+ * Added some stability, translation and UI improvements
