@@ -60,8 +60,10 @@ class SimpleMediaScanner(private val context: Application) {
         ensureBackgroundThread {
             try {
                 scanMediaStore()
-                onScanComplete?.invoke(false)
-                scanFilesManually()
+                if (isQPlus()) {
+                    onScanComplete?.invoke(false)
+                    scanFilesManually()
+                }
 
                 cleanupDatabase()
                 onScanComplete?.invoke(true)
