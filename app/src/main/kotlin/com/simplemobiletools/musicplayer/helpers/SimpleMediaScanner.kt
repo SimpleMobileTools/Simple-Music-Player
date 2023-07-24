@@ -359,7 +359,7 @@ class SimpleMediaScanner(private val context: Application) {
             }
 
             if (title.isNotEmpty()) {
-                val track = Track(0, id, title, artist, path, duration, album, "", 0, trackId, folderName, 0, 0, year, dateAdded, FLAG_MANUAL_CACHE)
+                val track = Track(0, id, title, artist, path, duration, album, "", 0, trackId, folderName, 0, 0, year, dateAdded, 0, FLAG_MANUAL_CACHE)
                 // use hashCode() as id for tracking purposes, there's a very slim chance of collision
                 track.mediaStoreId = track.hashCode().toLong()
                 tracks.add(track)
