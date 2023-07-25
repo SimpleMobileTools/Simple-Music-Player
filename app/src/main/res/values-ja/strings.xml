@@ -62,6 +62,7 @@
     <!-- Artists -->
     <string name="artists">アーティスト</string>
     <string name="folders">フォルダ</string>
+    <string name="genres">Genres</string>
     <string name="albums">アルバム</string>
     <plurals name="albums_plural">
         <item quantity="other">%d 件のアルバム</item>

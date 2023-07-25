@@ -62,6 +62,7 @@
     <!-- Artists -->
     <string name="artists">Artistit</string>
     <string name="folders">Kansiot</string>
+    <string name="genres">Genres</string>
     <string name="albums">Albumit</string>
     <plurals name="albums_plural">
         <item quantity="one">%d Albumi</item>

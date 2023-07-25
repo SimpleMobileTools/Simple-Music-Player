@@ -62,6 +62,7 @@
     <!-- Artists -->
     <string name="artists">Előadók</string>
     <string name="folders">Mappák</string>
+    <string name="genres">Genres</string>
     <string name="albums">Albumok</string>
     <plurals name="albums_plural">
         <item quantity="one">%d album</item>
