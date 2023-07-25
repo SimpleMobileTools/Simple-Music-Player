@@ -46,7 +46,7 @@ class ChangeSortingDialog(val activity: Activity, val location: Int, val playlis
             } else if (path != null) {
                 config.getProperFolderSorting(path)
             } else {
-                config.playlistTracksSorting
+                config.trackSorting
             }
         }
 
@@ -161,10 +161,13 @@ class ChangeSortingDialog(val activity: Activity, val location: Int, val playlis
                     } else {
                         if (playlist != null) {
                             config.removeCustomPlaylistSorting(playlist.id)
+                            config.playlistTracksSorting = sorting
                         } else if (path != null) {
                             config.removeCustomSorting(path)
+                            config.playlistTracksSorting = sorting
+                        } else {
+                            config.trackSorting = sorting
                         }
-                        config.playlistTracksSorting = sorting
                     }
                 }
             }
