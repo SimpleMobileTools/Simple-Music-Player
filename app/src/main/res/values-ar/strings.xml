@@ -62,7 +62,7 @@
     <!-- Artists -->
     <string name="artists">الفنانين</string>
     <string name="folders">المجلدات</string>
-    <string name="genres">Genres</string>
+    <string name="genres">الأنواع</string>
     <string name="albums">الألبومات</string>
     <plurals name="albums_plural">
         <item quantity="zero">لا يوجد ألبوم</item>
