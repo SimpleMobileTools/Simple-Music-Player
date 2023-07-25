@@ -10,6 +10,10 @@
         android:title="@string/delete"
         app:showAsAction="always" />
     <item
+        android:id="@+id/cab_share"
+        android:showAsAction="never"
+        android:title="@string/share" />
+    <item
         android:id="@+id/cab_add_to_playlist"
         android:showAsAction="never"
         android:title="@string/add_to_playlist"

@@ -9,4 +9,8 @@
         android:showAsAction="always"
         android:title="@string/exclude_folder"
         app:showAsAction="always" />
+    <item
+        android:id="@+id/cab_share"
+        android:showAsAction="never"
+        android:title="@string/share" />
 </menu>

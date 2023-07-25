@@ -101,6 +101,7 @@ class TracksAdapter(
             R.id.cab_rename -> displayEditDialog()
             R.id.cab_remove_from_playlist -> removeFromPlaylist()
             R.id.cab_delete -> askConfirmDelete()
+            R.id.cab_share -> activity.shareTracks(getSelectedTracks())
             R.id.cab_select_all -> selectAll()
             R.id.cab_play_next -> playNext()
         }
