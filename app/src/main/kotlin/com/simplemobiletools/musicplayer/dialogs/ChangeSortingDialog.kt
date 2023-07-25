@@ -40,6 +40,7 @@ class ChangeSortingDialog(val activity: Activity, val location: Int, val playlis
             TAB_ARTISTS -> config.artistSorting
             TAB_ALBUMS -> config.albumSorting
             TAB_TRACKS -> config.trackSorting
+            TAB_GENRES -> config.genreSorting
             else -> if (playlist != null) {
                 config.getProperPlaylistSorting(playlist.id)
             } else if (path != null) {
@@ -84,6 +85,10 @@ class ChangeSortingDialog(val activity: Activity, val location: Int, val playlis
                 radioItems.add(RadioItem(2, activity.getString(R.string.duration), PLAYER_SORT_BY_DURATION))
                 radioItems.add(RadioItem(3, activity.getString(R.string.track_number), PLAYER_SORT_BY_TRACK_ID))
                 radioItems.add(RadioItem(4, activity.getString(R.string.date_added), PLAYER_SORT_BY_DATE_ADDED))
+            }
+            TAB_GENRES -> {
+                radioItems.add(RadioItem(0, activity.getString(R.string.title), PLAYER_SORT_BY_TITLE))
+                radioItems.add(RadioItem(2, activity.getString(R.string.track_count), PLAYER_SORT_BY_TRACK_COUNT))
             }
             ACTIVITY_PLAYLIST_FOLDER -> {
                 radioItems.add(RadioItem(0, activity.getString(R.string.title), PLAYER_SORT_BY_TITLE))
@@ -145,6 +150,7 @@ class ChangeSortingDialog(val activity: Activity, val location: Int, val playlis
                 TAB_ARTISTS -> config.artistSorting = sorting
                 TAB_ALBUMS -> config.albumSorting = sorting
                 TAB_TRACKS -> config.trackSorting = sorting
+                TAB_GENRES -> config.genreSorting = sorting
                 ACTIVITY_PLAYLIST_FOLDER -> {
                     if (view.sorting_dialog_use_for_this_only.isChecked) {
                         if (playlist != null) {

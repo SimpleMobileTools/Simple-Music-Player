@@ -9,7 +9,7 @@ import com.simplemobiletools.commons.views.MyAppCompatCheckbox
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.helpers.*
-import kotlinx.android.synthetic.main.dialog_manage_visible_tabs.view.*
+import kotlinx.android.synthetic.main.dialog_manage_visible_tabs.view.manage_visible_tabs_folders
 
 class ManageVisibleTabsDialog(val activity: BaseSimpleActivity) {
     private var view = activity.layoutInflater.inflate(R.layout.dialog_manage_visible_tabs, null)
@@ -22,6 +22,7 @@ class ManageVisibleTabsDialog(val activity: BaseSimpleActivity) {
             put(TAB_ARTISTS, R.id.manage_visible_tabs_artists)
             put(TAB_ALBUMS, R.id.manage_visible_tabs_albums)
             put(TAB_TRACKS, R.id.manage_visible_tabs_tracks)
+            put(TAB_GENRES, R.id.manage_visible_tabs_genres)
         }
 
         if (!isQPlus()) {

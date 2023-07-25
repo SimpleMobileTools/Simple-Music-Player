@@ -57,6 +57,10 @@ class ViewPagerAdapter(val activity: SimpleActivity) : PagerAdapter() {
             fragments.add(R.layout.fragment_tracks)
         }
 
+        if (showTabs and TAB_GENRES != 0) {
+            fragments.add(R.layout.fragment_genres)
+        }
+
         return fragments[position]
     }
 }

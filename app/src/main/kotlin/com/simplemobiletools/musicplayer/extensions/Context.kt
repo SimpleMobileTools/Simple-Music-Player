@@ -52,6 +52,8 @@ val Context.artistDAO: ArtistsDao get() = getTracksDB().ArtistsDao()
 
 val Context.albumsDAO: AlbumsDao get() = getTracksDB().AlbumsDao()
 
+val Context.genresDAO: GenresDao get() = getTracksDB().GenresDao()
+
 val Context.audioHelper: AudioHelper get() = AudioHelper(this)
 
 val Context.mediaScanner: SimpleMediaScanner get() = SimpleMediaScanner.getInstance(applicationContext as Application)
@@ -217,6 +219,13 @@ fun Context.getAlbumCoverArt(album: Album, callback: (coverArt: Any?) -> Unit) {
                 callback(album.coverArt)
             }
         }
+    }
+}
+
+fun Context.getGenreCoverArt(genre: Genre, callback: (coverArt: Any?) -> Unit) {
+    ensureBackgroundThread {
+        val track = audioHelper.getGenreTracks(genre.id).firstOrNull()
+        getTrackCoverArt(track, callback)
     }
 }
 
