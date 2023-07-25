@@ -122,6 +122,7 @@ class TracksAdapter(
         activity.addTracksToPlaylist(getSelectedTracks()) {
             finishActMode()
             notifyDataSetChanged()
+            EventBus.getDefault().post(Events.PlaylistsUpdated())
         }
     }
 

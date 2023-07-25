@@ -159,6 +159,15 @@ class TrackActivity : SimpleActivity(), PlaybackSpeedListener {
 
     private fun setupButtons() {
         activity_track_toggle_shuffle.setOnClickListener { toggleShuffle() }
+            activity_track_toggle_shuffle.setOnLongClickListener {
+                var isLongClickable = false
+                if (!config.isShuffleEnabled) {
+                    isLongClickable = true
+                    toggleShuffle()
+                    sendIntent(NEXT)
+                }
+                isLongClickable
+        }
         activity_track_previous.setOnClickListener { sendIntent(PREVIOUS) }
         activity_track_play_pause.setOnClickListener { sendIntent(PLAYPAUSE) }
         activity_track_next.setOnClickListener { sendIntent(NEXT) }
@@ -190,38 +199,38 @@ class TrackActivity : SimpleActivity(), PlaybackSpeedListener {
             val options = RequestOptions()
                 .transform(CenterCrop(), RoundedCorners(cornerRadius))
 
-           ensureBackgroundThread {
-               try {
-                   // change cover image manually only once loaded successfully to avoid blinking at fails and placeholders
-                   Glide.with(this)
-                       .load(coverArt)
-                       .apply(options)
-                       .listener(object : RequestListener<Drawable> {
-                           override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
-                               runOnUiThread {
-                                   next_track_image.setImageDrawable(nextTrackPlaceholder)
-                               }
-                               return true
-                           }
+            ensureBackgroundThread {
+                try {
+                    // change cover image manually only once loaded successfully to avoid blinking at fails and placeholders
+                    Glide.with(this)
+                        .load(coverArt)
+                        .apply(options)
+                        .listener(object : RequestListener<Drawable> {
+                            override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
+                                runOnUiThread {
+                                    next_track_image.setImageDrawable(nextTrackPlaceholder)
+                                }
+                                return true
+                            }
 
-                           override fun onResourceReady(
-                               resource: Drawable,
-                               model: Any?,
-                               target: Target<Drawable>?,
-                               dataSource: DataSource?,
-                               isFirstResource: Boolean
-                           ): Boolean {
-                               runOnUiThread {
-                                   next_track_image.setImageDrawable(resource)
-                               }
-                               return false
-                           }
-                       })
-                       .into(wantedSize, wantedSize)
-                       .get()
-               } catch (ignored: Exception) {
-               }
-           }
+                            override fun onResourceReady(
+                                resource: Drawable,
+                                model: Any?,
+                                target: Target<Drawable>?,
+                                dataSource: DataSource?,
+                                isFirstResource: Boolean
+                            ): Boolean {
+                                runOnUiThread {
+                                    next_track_image.setImageDrawable(resource)
+                                }
+                                return false
+                            }
+                        })
+                        .into(wantedSize, wantedSize)
+                        .get()
+                } catch (ignored: Exception) {
+                }
+            }
         }
     }
 
