@@ -122,9 +122,7 @@ class PlaylistsAdapter(
                 removeSelectedItems(positions)
             }
 
-            if (playlists.isEmpty()) {
-                EventBus.getDefault().post(Events.PlaylistsUpdated())
-            }
+            EventBus.getDefault().post(Events.PlaylistsUpdated())
         }
     }
 
