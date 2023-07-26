@@ -11,7 +11,8 @@
         app:showAsAction="always" />
     <item
         android:id="@+id/cab_share"
-        android:showAsAction="never"
+        android:icon="@drawable/ic_share_vector"
+        android:showAsAction="ifRoom"
         android:title="@string/share" />
     <item
         android:id="@+id/cab_add_to_playlist"
