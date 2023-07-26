@@ -190,38 +190,38 @@ class TrackActivity : SimpleActivity(), PlaybackSpeedListener {
             val options = RequestOptions()
                 .transform(CenterCrop(), RoundedCorners(cornerRadius))
 
-            ensureBackgroundThread {
-                try {
-                    // change cover image manually only once loaded successfully to avoid blinking at fails and placeholders
-                    Glide.with(this)
-                        .load(coverArt)
-                        .apply(options)
-                        .listener(object : RequestListener<Drawable> {
-                            override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
-                                runOnUiThread {
-                                    next_track_image.setImageDrawable(nextTrackPlaceholder)
-                                }
-                                return true
-                            }
+           ensureBackgroundThread {
+               try {
+                   // change cover image manually only once loaded successfully to avoid blinking at fails and placeholders
+                   Glide.with(this)
+                       .load(coverArt)
+                       .apply(options)
+                       .listener(object : RequestListener<Drawable> {
+                           override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
+                               runOnUiThread {
+                                   next_track_image.setImageDrawable(nextTrackPlaceholder)
+                               }
+                               return true
+                           }
 
-                            override fun onResourceReady(
-                                resource: Drawable,
-                                model: Any?,
-                                target: Target<Drawable>?,
-                                dataSource: DataSource?,
-                                isFirstResource: Boolean
-                            ): Boolean {
-                                runOnUiThread {
-                                    next_track_image.setImageDrawable(resource)
-                                }
-                                return false
-                            }
-                        })
-                        .into(wantedSize, wantedSize)
-                        .get()
-                } catch (ignored: Exception) {
-                }
-            }
+                           override fun onResourceReady(
+                               resource: Drawable,
+                               model: Any?,
+                               target: Target<Drawable>?,
+                               dataSource: DataSource?,
+                               isFirstResource: Boolean
+                           ): Boolean {
+                               runOnUiThread {
+                                   next_track_image.setImageDrawable(resource)
+                               }
+                               return false
+                           }
+                       })
+                       .into(wantedSize, wantedSize)
+                       .get()
+               } catch (ignored: Exception) {
+               }
+           }
         }
     }
 
@@ -310,7 +310,6 @@ class TrackActivity : SimpleActivity(), PlaybackSpeedListener {
 
     private fun setupShuffleButton() {
         val isShuffleEnabled = config.isShuffleEnabled
-
         activity_track_toggle_shuffle.apply {
             applyColorFilter(if (isShuffleEnabled) getProperPrimaryColor() else getProperTextColor())
             alpha = if (isShuffleEnabled) 1f else MEDIUM_ALPHA
