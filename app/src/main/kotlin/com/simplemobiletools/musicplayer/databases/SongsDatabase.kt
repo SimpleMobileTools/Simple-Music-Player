@@ -10,7 +10,7 @@ import com.simplemobiletools.musicplayer.interfaces.*
 import com.simplemobiletools.musicplayer.models.*
 import com.simplemobiletools.musicplayer.objects.MyExecutor
 
-@Database(entities = [Track::class, Playlist::class, QueueItem::class, Artist::class, Album::class], version = 12)
+@Database(entities = [Track::class, Playlist::class, QueueItem::class, Artist::class, Album::class, Genre::class], version = 13)
 abstract class SongsDatabase : RoomDatabase() {
 
     abstract fun SongsDao(): SongsDao
@@ -22,6 +22,8 @@ abstract class SongsDatabase : RoomDatabase() {
     abstract fun ArtistsDao(): ArtistsDao
 
     abstract fun AlbumsDao(): AlbumsDao
+
+    abstract fun GenresDao(): GenresDao
 
     companion object {
         private var db: SongsDatabase? = null
@@ -43,6 +45,7 @@ abstract class SongsDatabase : RoomDatabase() {
                             .addMigrations(MIGRATION_9_10)
                             .addMigrations(MIGRATION_10_11)
                             .addMigrations(MIGRATION_11_12)
+                            .addMigrations(MIGRATION_12_13)
                             .build()
                     }
                 }
@@ -183,6 +186,18 @@ abstract class SongsDatabase : RoomDatabase() {
 
                     database.execSQL("ALTER TABLE tracks ADD COLUMN date_added INTEGER NOT NULL DEFAULT 0")
                     database.execSQL("ALTER TABLE albums ADD COLUMN date_added INTEGER NOT NULL DEFAULT 0")
+                }
+            }
+        }
+
+        private val MIGRATION_12_13 = object : Migration(12, 13) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.apply {
+                    execSQL("ALTER TABLE tracks ADD COLUMN genre TEXT NOT NULL DEFAULT ''")
+                    execSQL("ALTER TABLE tracks ADD COLUMN genre_id INTEGER NOT NULL DEFAULT 0")
+
+                    execSQL("CREATE TABLE `genres` (`id` INTEGER NOT NULL PRIMARY KEY, `title` TEXT NOT NULL, `track_cnt` INTEGER NOT NULL)")
+                    execSQL("CREATE UNIQUE INDEX IF NOT EXISTS `index_genres_id` ON `genres` (`id`)")
                 }
             }
         }
