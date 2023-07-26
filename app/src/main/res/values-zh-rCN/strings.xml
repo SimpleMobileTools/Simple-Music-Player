@@ -62,7 +62,7 @@
     <!-- Artists -->
     <string name="artists">艺术家</string>
     <string name="folders">文件夹</string>
-    <string name="genres">Genres</string>
+    <string name="genres">流派</string>
     <string name="albums">专辑</string>
     <plurals name="albums_plural">
         <item quantity="other">%d 专辑</item>

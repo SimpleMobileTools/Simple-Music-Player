@@ -32,6 +32,9 @@ interface SongsDao {
     @Query("SELECT * FROM tracks WHERE media_store_id = :mediaStoreId")
     fun getTrackWithMediaStoreId(mediaStoreId: Long): Track?
 
+    @Query("SELECT * FROM tracks WHERE genre_id = :genreId")
+    fun getGenreTracks(genreId: Long): List<Track>
+
     @Query("DELETE FROM tracks WHERE media_store_id = :mediaStoreId")
     fun removeTrack(mediaStoreId: Long)
 

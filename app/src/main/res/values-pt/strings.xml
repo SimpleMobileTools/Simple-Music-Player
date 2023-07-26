@@ -79,7 +79,7 @@
     <string name="next_track">Seguinte:</string>
     <string name="track_queue">Fila de reprodução</string>
     <string name="add_to_queue">Adiiconar à fila de reprodução</string>
-    <string name="play_next">Play next</string>
+    <string name="play_next">Reproduzir seguinte</string>
     <string name="remove_from_queue">Remover da fila de reprodução</string>
     <string name="create_playlist_from_queue">Criar lista de reprodução a partir da fila</string>
     <!-- Settings -->

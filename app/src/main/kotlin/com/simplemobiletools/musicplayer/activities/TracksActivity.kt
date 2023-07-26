@@ -43,6 +43,7 @@ class TracksActivity : SimpleActivity() {
     private val TYPE_PLAYLIST = 1
     private val TYPE_FOLDER = 2
     private val TYPE_ALBUM = 3
+    private val TYPE_GENRE = 4
 
     private val PICK_EXPORT_FILE_INTENT = 2
 
@@ -185,13 +186,19 @@ class TracksActivity : SimpleActivity() {
             tracksType = TYPE_ALBUM
         }
 
+        val genreType = object : TypeToken<Genre>() {}.type
+        val genre = Gson().fromJson<Genre>(intent.getStringExtra(GENRE), genreType)
+        if (genre != null) {
+            tracksType = TYPE_GENRE
+        }
+
         folder = intent.getStringExtra(FOLDER)
         if (folder != null) {
             tracksType = TYPE_FOLDER
             tracks_placeholder_2.beGone()
         }
 
-        val titleToUse = playlist?.title ?: album?.title ?: folder ?: ""
+        val titleToUse = playlist?.title ?: album?.title ?: genre?.title ?: folder ?: ""
         tracks_toolbar.title = titleToUse
         refreshMenuItems()
 
@@ -216,6 +223,10 @@ class TracksActivity : SimpleActivity() {
                     val header = AlbumHeader(album.id, album.title, album.coverArt, album.year, tracks.size, tracks.sumOf { it.duration }, album.artist)
                     listItems.add(header)
                     listItems.addAll(tracks)
+                }
+                TYPE_GENRE -> {
+                    val genreTracks = audioHelper.getGenreTracks(genre.id)
+                    tracks.addAll(genreTracks)
                 }
                 else -> {
                     val folderTracks = audioHelper.getFolderTracks(folder.orEmpty())
@@ -269,14 +280,18 @@ class TracksActivity : SimpleActivity() {
         ChangeSortingDialog(this, ACTIVITY_PLAYLIST_FOLDER, playlist, folder) {
             val adapter = tracks_list.adapter as? TracksAdapter ?: return@ChangeSortingDialog
             val tracks = adapter.tracks
-            Track.sorting = if (playlist != null) {
-                config.getProperPlaylistSorting(playlist?.id ?: -1)
-            } else {
-                config.getProperFolderSorting(folder ?: "")
+            Track.sorting = when(tracksType) {
+                TYPE_PLAYLIST -> config.getProperPlaylistSorting(playlist?.id ?: -1)
+                TYPE_GENRE -> config.trackSorting
+                else -> config.getProperFolderSorting(folder ?: "")
             }
 
             tracks.sort()
             adapter.updateItems(tracks, forceUpdate = true)
+
+            if (tracksType == TYPE_GENRE) {
+                EventBus.getDefault().post(Events.RefreshTracks())
+            }
         }
     }
 

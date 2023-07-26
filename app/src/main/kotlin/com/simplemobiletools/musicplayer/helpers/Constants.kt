@@ -20,6 +20,7 @@ const val ALBUM = "album"
 const val TRACK = "track"
 const val PLAYLIST = "playlist"
 const val FOLDER = "folder"
+const val GENRE = "genre"
 
 private const val PATH = "com.simplemobiletools.musicplayer.action."
 val artworkUri = Uri.parse("content://media/external/audio/albumart")
@@ -80,7 +81,8 @@ const val TAB_FOLDERS = 2
 const val TAB_ARTISTS = 4
 const val TAB_ALBUMS = 8
 const val TAB_TRACKS = 16
-const val ACTIVITY_PLAYLIST_FOLDER = 32
+const val TAB_GENRES = 32
+const val ACTIVITY_PLAYLIST_FOLDER = 64
 
 const val FLAG_MANUAL_CACHE = 1
 
@@ -98,14 +100,16 @@ val tabsList: ArrayList<Int>
             TAB_FOLDERS,
             TAB_ARTISTS,
             TAB_ALBUMS,
-            TAB_TRACKS
+            TAB_TRACKS,
+            TAB_GENRES
         )
     } else {
         arrayListOf(
             TAB_PLAYLISTS,
             TAB_ARTISTS,
             TAB_ALBUMS,
-            TAB_TRACKS
+            TAB_TRACKS,
+            TAB_GENRES
         )
     }
 
@@ -126,6 +130,7 @@ const val FOLDER_SORTING = "folder_sorting"
 const val ARTIST_SORTING = "artist_sorting"
 const val ALBUM_SORTING = "album_sorting"
 const val TRACK_SORTING = "track_sorting"
+const val GENRE_SORTING = "genre_sorting"
 
 const val MIME_TYPE_M3U = "audio/x-mpegurl"
 const val M3U_HEADER = "#EXTM3U"
