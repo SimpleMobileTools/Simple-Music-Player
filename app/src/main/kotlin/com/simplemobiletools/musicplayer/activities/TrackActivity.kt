@@ -303,13 +303,14 @@ class TrackActivity : SimpleActivity(), PlaybackSpeedListener {
         toast(if (isShuffleEnabled) R.string.shuffle_enabled else R.string.shuffle_disabled)
         setupShuffleButton()
         sendIntent(REFRESH_LIST)
+        if (config.isShuffleEnabled && config.isShufflePlayEnabled) {
+            sendIntent(NEXT)
+        }
     }
 
     private fun setupShuffleButton() {
         val isShuffleEnabled = config.isShuffleEnabled
-        if (config.isShuffleEnabled and config.isShufflePlayEnabled) {
-            sendIntent(NEXT)
-        }
+
         activity_track_toggle_shuffle.apply {
             applyColorFilter(if (isShuffleEnabled) getProperPrimaryColor() else getProperTextColor())
             alpha = if (isShuffleEnabled) 1f else MEDIUM_ALPHA
