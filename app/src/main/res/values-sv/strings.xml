@@ -86,6 +86,7 @@
     <string name="exclude_folder_description">När du utesluter en mapp hindrar det alla ljudfiler i mappen från att visas. Filer som har lagts till i spellistor manuellt påverkas inte.</string>
     <string name="gapless_playback">Uppspelning utan avbrott</string>
     <string name="rescan_media">Skanna media igen</string>
+    <string name="shuffle_and_play">Shuffle and play</string>
     <!-- FAQ -->
     <string name="faq_1_title">Hur kan jag snabbspola låtar\?</string>
     <string name="faq_1_text">Du kan klicka på låtens nuvarande tid eller längd nära sökfältet, vilket kommer att spola låten antingen bakåt eller framåt.</string>
