@@ -159,15 +159,6 @@ class TrackActivity : SimpleActivity(), PlaybackSpeedListener {
 
     private fun setupButtons() {
         activity_track_toggle_shuffle.setOnClickListener { toggleShuffle() }
-            activity_track_toggle_shuffle.setOnLongClickListener {
-                var isLongClickable = false
-                if (!config.isShuffleEnabled) {
-                    isLongClickable = true
-                    toggleShuffle()
-                    sendIntent(NEXT)
-                }
-                isLongClickable
-        }
         activity_track_previous.setOnClickListener { sendIntent(PREVIOUS) }
         activity_track_play_pause.setOnClickListener { sendIntent(PLAYPAUSE) }
         activity_track_next.setOnClickListener { sendIntent(NEXT) }
@@ -316,6 +307,9 @@ class TrackActivity : SimpleActivity(), PlaybackSpeedListener {
 
     private fun setupShuffleButton() {
         val isShuffleEnabled = config.isShuffleEnabled
+        if (config.isShuffleEnabled and config.isShufflePlayEnabled) {
+            sendIntent(NEXT)
+        }
         activity_track_toggle_shuffle.apply {
             applyColorFilter(if (isShuffleEnabled) getProperPrimaryColor() else getProperTextColor())
             alpha = if (isShuffleEnabled) 1f else MEDIUM_ALPHA

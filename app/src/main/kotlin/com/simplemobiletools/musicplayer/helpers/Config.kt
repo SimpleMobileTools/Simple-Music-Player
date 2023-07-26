@@ -13,6 +13,10 @@ class Config(context: Context) : BaseConfig(context) {
         get() = prefs.getBoolean(SHUFFLE, true)
         set(shuffle) = prefs.edit().putBoolean(SHUFFLE, shuffle).apply()
 
+    var isShufflePlayEnabled: Boolean
+        get() = prefs.getBoolean(SHUFFLE_PLAY,false)
+        set(shufflePlay) = prefs.edit().putBoolean(SHUFFLE_PLAY, shufflePlay).apply()
+
     var playbackSetting: PlaybackSetting
         get() = PlaybackSetting.values()[prefs.getInt(PLAYBACK_SETTING, PlaybackSetting.REPEAT_OFF.ordinal)]
         set(playbackSetting) = prefs.edit().putInt(PLAYBACK_SETTING, playbackSetting.ordinal).apply()

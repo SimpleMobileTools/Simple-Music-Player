@@ -42,6 +42,7 @@ class SettingsActivity : SimpleActivity() {
         setupSwapPrevNext()
         setupReplaceTitle()
         setupGaplessPlayback()
+        setupShuffleAndPlay()
         updateTextColors(settings_nested_scrollview)
 
         arrayOf(settings_color_customization_section_label, settings_general_settings_label, settings_playback_section_label).forEach {
@@ -141,6 +142,14 @@ class SettingsActivity : SimpleActivity() {
             settings_gapless_playback.toggle()
             config.gaplessPlayback = settings_gapless_playback.isChecked
             sendIntent(UPDATE_GAPLESS_PLAYBACK)
+        }
+    }
+
+    private fun setupShuffleAndPlay() {
+        settings_shuffle_and_play.isChecked = config.isShufflePlayEnabled
+        settings_shuffle_and_play_holder.setOnClickListener {
+            settings_shuffle_and_play.toggle()
+            config.isShufflePlayEnabled = settings_shuffle_and_play.isChecked
         }
     }
 }

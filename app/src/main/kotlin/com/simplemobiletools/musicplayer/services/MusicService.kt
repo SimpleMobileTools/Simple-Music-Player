@@ -403,6 +403,7 @@ class MusicService : Service(), MultiPlayer.PlaybackCallbacks {
     private fun getQueuedTracks(): ArrayList<Track> {
         val tracks = ArrayList<Track>()
         var queueItems = queueDAO.getAll()
+
         if (queueItems.isEmpty()) {
             val tracks = audioHelper.getPlaylistTracks(ALL_TRACKS_PLAYLIST_ID)
             if (tracks.isNotEmpty()) {
