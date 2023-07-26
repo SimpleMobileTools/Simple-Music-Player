@@ -60,6 +60,7 @@ class GenresAdapter(activity: BaseSimpleActivity, var genres: ArrayList<Genre>, 
             R.id.cab_add_to_playlist -> addToPlaylist()
             R.id.cab_add_to_queue -> addToQueue()
             R.id.cab_delete -> askConfirmDelete()
+            R.id.cab_share -> shareFiles()
             R.id.cab_select_all -> selectAll()
         }
     }
@@ -120,6 +121,12 @@ class GenresAdapter(activity: BaseSimpleActivity, var genres: ArrayList<Genre>, 
                     }
                 }
             }
+        }
+    }
+
+    private fun shareFiles() {
+        ensureBackgroundThread {
+            activity.shareTracks(getAllSelectedTracks())
         }
     }
 
