@@ -8,12 +8,18 @@ import com.simplemobiletools.commons.activities.BaseSimpleActivity
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
 import com.simplemobiletools.commons.extensions.highlightTextPart
 import com.simplemobiletools.commons.extensions.setupViewBackground
+import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.musicplayer.R
+import com.simplemobiletools.musicplayer.extensions.audioHelper
 import com.simplemobiletools.musicplayer.extensions.config
+import com.simplemobiletools.musicplayer.extensions.shareTracks
 import com.simplemobiletools.musicplayer.models.Events
 import com.simplemobiletools.musicplayer.models.Folder
-import kotlinx.android.synthetic.main.item_folder.view.*
+import com.simplemobiletools.musicplayer.models.Track
+import kotlinx.android.synthetic.main.item_folder.view.folder_frame
+import kotlinx.android.synthetic.main.item_folder.view.folder_title
+import kotlinx.android.synthetic.main.item_folder.view.folder_tracks
 import org.greenrobot.eventbus.EventBus
 
 class FoldersAdapter(
@@ -45,6 +51,7 @@ class FoldersAdapter(
     override fun actionItemPressed(id: Int) {
         when (id) {
             R.id.cab_exclude_folders -> excludeFolders()
+            R.id.cab_share -> shareFiles()
         }
     }
 
@@ -67,6 +74,17 @@ class FoldersAdapter(
 
         finishActMode()
         EventBus.getDefault().post(Events.RefreshFragments())
+    }
+
+    private fun shareFiles() {
+        ensureBackgroundThread {
+            val tracks = arrayListOf<Track>()
+            getSelectedFolders().forEach {
+                tracks += activity.audioHelper.getFolderTracks(it.title)
+            }
+
+            activity.shareTracks(tracks)
+        }
     }
 
     private fun getSelectedFolders(): List<Folder> = folders.filter { selectedKeys.contains(it.hashCode()) }.toList()

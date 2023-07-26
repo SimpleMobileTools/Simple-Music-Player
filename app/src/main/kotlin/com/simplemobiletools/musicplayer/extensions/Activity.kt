@@ -7,9 +7,11 @@ import android.provider.MediaStore
 import com.simplemobiletools.commons.activities.BaseSimpleActivity
 import com.simplemobiletools.commons.dialogs.PropertiesDialog
 import com.simplemobiletools.commons.extensions.rescanPaths
+import com.simplemobiletools.commons.extensions.sharePathsIntent
 import com.simplemobiletools.commons.extensions.toast
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.commons.helpers.isRPlus
+import com.simplemobiletools.musicplayer.BuildConfig
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.dialogs.SelectPlaylistDialog
 import com.simplemobiletools.musicplayer.helpers.*
@@ -159,4 +161,9 @@ fun Activity.ensureActivityNotDestroyed(callback: () -> Unit) {
     if (!isFinishing && !isDestroyed) {
         callback()
     }
+}
+
+fun Activity.shareTracks(tracks: List<Track>) {
+    val paths = tracks.map { it.path }
+    sharePathsIntent(paths, BuildConfig.APPLICATION_ID)
 }
