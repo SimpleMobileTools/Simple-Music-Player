@@ -62,7 +62,7 @@
     <!-- Artists -->
     <string name="artists">Esitaja</string>
     <string name="folders">Kaustad</string>
-    <string name="genres">Genres</string>
+    <string name="genres">Žanrid</string>
     <string name="albums">Albumid</string>
     <plurals name="albums_plural">
         <item quantity="one">%d album</item>
