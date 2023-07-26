@@ -101,7 +101,7 @@ class TracksAdapter(
             R.id.cab_rename -> displayEditDialog()
             R.id.cab_remove_from_playlist -> removeFromPlaylist()
             R.id.cab_delete -> askConfirmDelete()
-            R.id.cab_share -> activity.shareTracks(getSelectedTracks())
+            R.id.cab_share -> shareFiles()
             R.id.cab_select_all -> selectAll()
             R.id.cab_play_next -> playNext()
         }
@@ -209,6 +209,10 @@ class TracksAdapter(
                 }
             }
         }
+    }
+
+    private fun shareFiles() {
+        activity.shareTracks(getSelectedTracks())
     }
 
     private fun getSelectedTracks(): List<Track> = tracks.filter { selectedKeys.contains(it.hashCode()) }
