@@ -6,6 +6,7 @@ import android.provider.MediaStore
 import android.provider.MediaStore.Audio
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.isQPlus
+import com.simplemobiletools.commons.helpers.isRPlus
 import com.simplemobiletools.musicplayer.extensions.audioHelper
 import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.models.Events
@@ -42,6 +43,11 @@ class RoomHelper(val context: Context) {
             projection.add(Audio.Media.BUCKET_DISPLAY_NAME)
         }
 
+        if (isRPlus()) {
+            projection.add(Audio.Media.GENRE)
+            projection.add(Audio.Media.GENRE_ID)
+        }
+
         val pathsMap = HashSet<String>()
         paths.mapTo(pathsMap) { it }
 
@@ -74,7 +80,21 @@ class RoomHelper(val context: Context) {
                     ""
                 }
 
-                val song = Track(0, mediaStoreId, title, artist, path, duration, album, coverArt, playlistId, 0, folderName, albumId, artistId, year, dateAdded, 0)
+                val genre: String
+                val genreId: Long
+                if (isRPlus()) {
+                    genre = cursor.getStringValue(Audio.Media.GENRE)
+                    genreId = cursor.getLongValue(Audio.Media.GENRE_ID)
+                } else {
+                    genre = ""
+                    genreId = 0
+                }
+
+                val song = Track(
+                    id = 0, mediaStoreId = mediaStoreId, title = title, artist = artist, path = path, duration = duration, album = album, genre = genre,
+                    coverArt = coverArt, playListId = playlistId, trackId = 0, folderName = folderName, albumId = albumId, artistId = artistId,
+                    genreId = genreId, year = year, dateAdded = dateAdded, orderInPlaylist = 0
+                )
                 song.title = song.getProperTitle(showFilename)
                 songs.add(song)
                 pathsMap.remove(path)
@@ -91,7 +111,11 @@ class RoomHelper(val context: Context) {
                 0
             }
 
-            val song = Track(0, 0, title, artist, it, context.getDuration(it) ?: 0, "", "", playlistId, 0, "", 0, 0, 0,dateAdded ,0)
+            val song = Track(
+                id = 0, mediaStoreId = 0, title = title, artist = artist, path = it, duration = context.getDuration(it) ?: 0, album = "",
+                genre = "", coverArt = "", playListId = playlistId, trackId = 0, folderName = "", albumId = 0, artistId = 0, genreId = 0,
+                year = 0, dateAdded = dateAdded, orderInPlaylist = 0
+            )
             song.title = song.getProperTitle(showFilename)
             songs.add(song)
         }

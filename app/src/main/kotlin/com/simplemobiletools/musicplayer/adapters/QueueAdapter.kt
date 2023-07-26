@@ -94,11 +94,11 @@ class QueueAdapter(activity: SimpleActivity, var items: ArrayList<Track>, recycl
     override fun getItemKeyPosition(key: Int) = items.indexOfFirst { it.hashCode() == key }
 
     override fun onActionModeCreated() {
-        notifyDataSetChanged()
+        notifyItemRangeChanged(0, itemCount)
     }
 
     override fun onActionModeDestroyed() {
-        notifyDataSetChanged()
+        notifyItemRangeChanged(0, itemCount)
     }
 
     private fun removeFromQueue() {

@@ -1,15 +1,8 @@
 package com.simplemobiletools.musicplayer.helpers
 
 import android.content.Context
-import com.simplemobiletools.musicplayer.extensions.albumsDAO
-import com.simplemobiletools.musicplayer.extensions.artistDAO
-import com.simplemobiletools.musicplayer.extensions.config
-import com.simplemobiletools.musicplayer.extensions.playlistDAO
-import com.simplemobiletools.musicplayer.extensions.tracksDAO
-import com.simplemobiletools.musicplayer.models.Album
-import com.simplemobiletools.musicplayer.models.Artist
-import com.simplemobiletools.musicplayer.models.Playlist
-import com.simplemobiletools.musicplayer.models.Track
+import com.simplemobiletools.musicplayer.extensions.*
+import com.simplemobiletools.musicplayer.models.*
 
 class AudioHelper(private val context: Context) {
 
@@ -146,6 +139,46 @@ class AudioHelper(private val context: Context) {
 
     fun getAllPlaylists(): ArrayList<Playlist> {
         return context.playlistDAO.getAll() as ArrayList<Playlist>
+    }
+
+    fun getAllGenres(): ArrayList<Genre> {
+        val genres = context.genresDAO.getAll() as ArrayList<Genre>
+        genres.sort()
+        return genres
+    }
+
+    fun getGenreTracks(genreId: Long): ArrayList<Track> {
+        val tracks = context.tracksDAO.getGenreTracks(genreId)
+            .distinctBy { "${it.path}/${it.mediaStoreId}" } as ArrayList<Track>
+
+        Track.sorting = config.trackSorting
+        tracks.sort()
+        return tracks
+    }
+
+    fun getGenreTracks(genres: List<Genre>): ArrayList<Track> {
+        val tracks = genres.flatMap { context.tracksDAO.getGenreTracks(it.id) }
+            .distinctBy { "${it.path}/${it.mediaStoreId}" } as ArrayList<Track>
+
+        Track.sorting = config.trackSorting
+        tracks.sort()
+        return tracks
+    }
+
+    private fun deleteGenre(id: Long) {
+        context.genresDAO.deleteGenre(id)
+    }
+
+    fun deleteGenres(genres: List<Genre>) {
+        genres.forEach {
+            deleteGenre(it.id)
+        }
+    }
+
+    fun insertGenres(genres: List<Genre>) {
+        genres.forEach {
+            context.genresDAO.insert(it)
+        }
     }
 
     fun getPlaylistTracks(playlistId: Int): ArrayList<Track> {

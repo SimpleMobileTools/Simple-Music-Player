@@ -36,6 +36,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_albums.albums_fragment_holder
 import kotlinx.android.synthetic.main.fragment_artists.artists_fragment_holder
 import kotlinx.android.synthetic.main.fragment_folders.folders_fragment_holder
+import kotlinx.android.synthetic.main.fragment_genres.genres_fragment_holder
 import kotlinx.android.synthetic.main.fragment_playlists.playlists_fragment_holder
 import kotlinx.android.synthetic.main.fragment_tracks.tracks_fragment_holder
 import kotlinx.android.synthetic.main.view_current_track_bar.current_track_bar
@@ -304,6 +305,7 @@ class MainActivity : SimpleActivity() {
             TAB_FOLDERS -> R.drawable.ic_folders_vector
             TAB_ARTISTS -> R.drawable.ic_person_vector
             TAB_ALBUMS -> R.drawable.ic_album_vector
+            TAB_GENRES -> R.drawable.ic_genre_vector
             else -> R.drawable.ic_music_note_vector
         }
 
@@ -316,6 +318,7 @@ class MainActivity : SimpleActivity() {
             TAB_FOLDERS -> R.string.folders
             TAB_ARTISTS -> R.string.artists
             TAB_ALBUMS -> R.string.albums
+            TAB_GENRES -> R.string.genres
             else -> R.string.tracks
         }
 
@@ -343,6 +346,10 @@ class MainActivity : SimpleActivity() {
 
         if (showTabs and TAB_TRACKS != 0) {
             fragments.add(tracks_fragment_holder)
+        }
+
+        if (showTabs and TAB_GENRES != 0) {
+            fragments.add(genres_fragment_holder)
         }
 
         return fragments.getOrNull(view_pager.currentItem)
@@ -416,6 +423,7 @@ class MainActivity : SimpleActivity() {
                     showErrorToast(e)
                 }
             }
+
             else -> toast(R.string.invalid_file_format)
         }
     }
@@ -526,8 +534,14 @@ class MainActivity : SimpleActivity() {
         sleep_timer_holder.fadeOut()
     }
 
-    private fun getAllFragments() =
-        arrayListOf(playlists_fragment_holder, folders_fragment_holder, artists_fragment_holder, albums_fragment_holder, tracks_fragment_holder)
+    private fun getAllFragments() = arrayListOf(
+        playlists_fragment_holder,
+        folders_fragment_holder,
+        artists_fragment_holder,
+        albums_fragment_holder,
+        tracks_fragment_holder,
+        genres_fragment_holder
+    )
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun trackChangedEvent(event: Events.TrackChanged) {
