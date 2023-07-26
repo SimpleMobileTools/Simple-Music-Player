@@ -28,8 +28,11 @@ import com.simplemobiletools.musicplayer.helpers.TRACK_ID
 import com.simplemobiletools.musicplayer.helpers.UPDATE_NEXT_TRACK
 import com.simplemobiletools.musicplayer.models.Track
 import com.simplemobiletools.musicplayer.services.MusicService
-import kotlinx.android.synthetic.main.item_track_queue.view.*
-import java.util.*
+import kotlinx.android.synthetic.main.item_track_queue.view.track_queue_drag_handle
+import kotlinx.android.synthetic.main.item_track_queue.view.track_queue_duration
+import kotlinx.android.synthetic.main.item_track_queue.view.track_queue_frame
+import kotlinx.android.synthetic.main.item_track_queue.view.track_queue_title
+import java.util.Collections
 
 class QueueAdapter(activity: SimpleActivity, var items: ArrayList<Track>, recyclerView: MyRecyclerView, itemClick: (Any) -> Unit) :
     MyRecyclerViewAdapter(activity, recyclerView, itemClick), ItemTouchHelperContract, RecyclerViewFastScroller.OnPopupTextUpdate {
@@ -76,6 +79,7 @@ class QueueAdapter(activity: SimpleActivity, var items: ArrayList<Track>, recycl
         when (id) {
             R.id.cab_remove_from_queue -> removeFromQueue()
             R.id.cab_delete_file -> deleteTracks()
+            R.id.cab_share -> shareFiles()
             R.id.cab_add_to_playlist -> addToPlaylist()
             R.id.cab_select_all -> selectAll()
         }
@@ -127,6 +131,10 @@ class QueueAdapter(activity: SimpleActivity, var items: ArrayList<Track>, recycl
                 refreshTracksList(positions, selectedTracks)
             }
         }
+    }
+
+    private fun shareFiles() {
+        activity.shareTracks(getSelectedTracks())
     }
 
     private fun refreshTracksList(positions: ArrayList<Int>, selectedTracks: List<Track>) {
