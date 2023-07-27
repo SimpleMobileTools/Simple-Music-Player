@@ -42,13 +42,7 @@ data class Album(
                     else -> AlphanumericComparator().compare(artist.lowercase(), other.artist.lowercase())
                 }
             }
-            sorting and PLAYER_SORT_BY_DATE_ADDED != 0 -> {
-                when {
-                    dateAdded == 0 && other.dateAdded != 0 -> -1
-                    dateAdded != 0 && other.dateAdded == 0 -> 1
-                    else -> dateAdded.compareTo(other.dateAdded)
-                }
-            }
+            sorting and PLAYER_SORT_BY_DATE_ADDED != 0 -> dateAdded.compareTo(other.dateAdded)
             else -> year.compareTo(other.year)
         }
 

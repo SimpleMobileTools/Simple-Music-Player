@@ -54,28 +54,14 @@ data class Track(
             }
             sorting and PLAYER_SORT_BY_ARTIST_TITLE != 0 -> {
                 when {
-                    artist == MediaStore.UNKNOWN_STRING && artist != MediaStore.UNKNOWN_STRING -> 1
-                    artist != MediaStore.UNKNOWN_STRING && artist == MediaStore.UNKNOWN_STRING -> -1
+                    artist == MediaStore.UNKNOWN_STRING && other.artist != MediaStore.UNKNOWN_STRING -> 1
+                    artist != MediaStore.UNKNOWN_STRING && other.artist == MediaStore.UNKNOWN_STRING -> -1
                     else -> AlphanumericComparator().compare(artist.lowercase(), other.artist.lowercase())
                 }
             }
-            sorting and PLAYER_SORT_BY_TRACK_ID != 0 -> {
-                when {
-                    trackId == -1 && other.trackId != -1 -> 1
-                    trackId != -1 && other.trackId == -1 -> -1
-                    else -> AlphanumericComparator().compare(trackId.toString(), other.trackId.toString())
-                }
-            }
-            sorting and PLAYER_SORT_BY_DATE_ADDED != 0 -> {
-                when {
-                    dateAdded == 0 && other.dateAdded != 0 -> -1
-                    dateAdded != 0 && other.dateAdded == 0 -> 1
-                    else -> dateAdded.compareTo(other.dateAdded)
-                }
-            }
-            sorting and PLAYER_SORT_BY_CUSTOM != 0 -> {
-                orderInPlaylist.compareTo(other.orderInPlaylist)
-            }
+            sorting and PLAYER_SORT_BY_TRACK_ID != 0 -> trackId.compareTo(other.trackId)
+            sorting and PLAYER_SORT_BY_DATE_ADDED != 0 -> dateAdded.compareTo(other.dateAdded)
+            sorting and PLAYER_SORT_BY_CUSTOM != 0 -> orderInPlaylist.compareTo(other.orderInPlaylist)
             else -> duration.compareTo(other.duration)
         }
 
