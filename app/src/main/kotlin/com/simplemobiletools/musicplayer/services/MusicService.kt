@@ -355,7 +355,7 @@ class MusicService : Service(), MultiPlayer.PlaybackCallbacks {
                 mCurrTrackCover = getAlbumImage().first
                 trackChanged()
 
-                val secs = getPosition()!! / 1000
+                val secs = (getPosition() ?: 0) / 1000
                 broadcastTrackProgress(secs)
             }
             trackStateChanged()
