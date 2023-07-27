@@ -21,6 +21,7 @@ class AudioHelper(private val context: Context) {
         val tracks = context.tracksDAO.getAll()
             .distinctBy { "${it.path}/${it.mediaStoreId}" } as ArrayList<Track>
 
+        Track.sorting = config.trackSorting
         tracks.sort()
         return tracks
     }
@@ -61,6 +62,7 @@ class AudioHelper(private val context: Context) {
 
     fun getAllArtists(): ArrayList<Artist> {
         val artists = context.artistDAO.getAll() as ArrayList<Artist>
+        Artist.sorting = config.artistSorting
         artists.sort()
         return artists
     }
@@ -103,6 +105,7 @@ class AudioHelper(private val context: Context) {
 
     fun getAllAlbums(): ArrayList<Album> {
         val albums = context.albumsDAO.getAll() as ArrayList<Album>
+        Album.sorting = config.albumSorting
         albums.sort()
         return albums
     }
@@ -143,6 +146,7 @@ class AudioHelper(private val context: Context) {
 
     fun getAllGenres(): ArrayList<Genre> {
         val genres = context.genresDAO.getAll() as ArrayList<Genre>
+        Genre.sorting = config.genreSorting
         genres.sort()
         return genres
     }

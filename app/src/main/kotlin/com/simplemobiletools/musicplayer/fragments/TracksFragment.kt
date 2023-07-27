@@ -33,7 +33,6 @@ class TracksFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
 
     override fun setupFragment(activity: BaseSimpleActivity) {
         ensureBackgroundThread {
-            Track.sorting = context.config.trackSorting
             tracks = context.audioHelper.getAllTracks()
 
             val excludedFolders = context.config.excludedFolders

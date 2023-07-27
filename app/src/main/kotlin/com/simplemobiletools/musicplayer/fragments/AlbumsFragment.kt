@@ -31,7 +31,6 @@ class AlbumsFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
     private var albums = ArrayList<Album>()
 
     override fun setupFragment(activity: BaseSimpleActivity) {
-        Album.sorting = context.config.albumSorting
         ensureBackgroundThread {
             val cachedAlbums = activity.audioHelper.getAllAlbums()
             activity.runOnUiThread {

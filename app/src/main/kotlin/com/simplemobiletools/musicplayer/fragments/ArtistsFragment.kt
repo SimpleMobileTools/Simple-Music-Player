@@ -31,7 +31,6 @@ class ArtistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
     private var artists = ArrayList<Artist>()
 
     override fun setupFragment(activity: BaseSimpleActivity) {
-        Artist.sorting = context.config.artistSorting
         ensureBackgroundThread {
             val cachedArtists = activity.audioHelper.getAllArtists()
             activity.runOnUiThread {
