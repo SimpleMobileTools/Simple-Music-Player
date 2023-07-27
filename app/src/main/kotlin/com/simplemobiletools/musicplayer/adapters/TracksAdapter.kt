@@ -266,7 +266,7 @@ class TracksAdapter(
                 .transform(CenterCrop(), RoundedCorners(cornerRadius))
 
             context.getTrackCoverArt(track) { coverArt ->
-                if (!activity.isDestroyed || !activity.isFinishing) {
+                activity.ensureActivityNotDestroyed {
                     Glide.with(activity)
                         .load(coverArt)
                         .apply(options)
