@@ -22,7 +22,7 @@ class AudioHelper(private val context: Context) {
             .distinctBy { "${it.path}/${it.mediaStoreId}" } as ArrayList<Track>
 
         Track.sorting = config.trackSorting
-        tracks.sort()
+        sortOrThrow(tracks, Track.sorting)
         return tracks
     }
 
@@ -34,7 +34,7 @@ class AudioHelper(private val context: Context) {
             } as ArrayList<Track>
 
         Track.sorting = config.getProperFolderSorting(folder)
-        tracks.sort()
+        sortOrThrow(tracks, Track.sorting)
         return tracks
     }
 
@@ -63,7 +63,7 @@ class AudioHelper(private val context: Context) {
     fun getAllArtists(): ArrayList<Artist> {
         val artists = context.artistDAO.getAll() as ArrayList<Artist>
         Artist.sorting = config.artistSorting
-        artists.sort()
+        sortOrThrow(artists, Artist.sorting)
         return artists
     }
 
@@ -106,7 +106,7 @@ class AudioHelper(private val context: Context) {
     fun getAllAlbums(): ArrayList<Album> {
         val albums = context.albumsDAO.getAll() as ArrayList<Album>
         Album.sorting = config.albumSorting
-        albums.sort()
+        sortOrThrow(albums, Album.sorting)
         return albums
     }
 
@@ -147,7 +147,7 @@ class AudioHelper(private val context: Context) {
     fun getAllGenres(): ArrayList<Genre> {
         val genres = context.genresDAO.getAll() as ArrayList<Genre>
         Genre.sorting = config.genreSorting
-        genres.sort()
+        sortOrThrow(genres, Genre.sorting)
         return genres
     }
 
@@ -156,7 +156,7 @@ class AudioHelper(private val context: Context) {
             .distinctBy { "${it.path}/${it.mediaStoreId}" } as ArrayList<Track>
 
         Track.sorting = config.trackSorting
-        tracks.sort()
+        sortOrThrow(tracks, Track.sorting)
         return tracks
     }
 
@@ -165,7 +165,7 @@ class AudioHelper(private val context: Context) {
             .distinctBy { "${it.path}/${it.mediaStoreId}" } as ArrayList<Track>
 
         Track.sorting = config.trackSorting
-        tracks.sort()
+        sortOrThrow(tracks, Track.sorting)
         return tracks
     }
 
@@ -191,7 +191,7 @@ class AudioHelper(private val context: Context) {
         } as ArrayList<Track>
 
         Track.sorting = config.getProperPlaylistSorting(playlistId)
-        tracks.sort()
+        sortOrThrow(tracks, Track.sorting)
         return tracks
     }
 
@@ -220,5 +220,13 @@ class AudioHelper(private val context: Context) {
 
         val invalidArtists = artists.filter { artist -> tracks.none { it.artistId == artist.id } }
         deleteArtists(invalidArtists)
+    }
+
+    private inline fun <reified T : Comparable<T>> sortOrThrow(items: ArrayList<T>, sorting: Int) {
+        try {
+            items.sort()
+        } catch (e: IllegalArgumentException) {
+            throw Exception("Failed to sort ${T::class.simpleName}, sorting: $sorting, error: ${e.message}")
+        }
     }
 }
