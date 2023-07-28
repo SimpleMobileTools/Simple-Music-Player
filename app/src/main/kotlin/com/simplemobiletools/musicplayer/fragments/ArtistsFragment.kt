@@ -22,6 +22,7 @@ import com.simplemobiletools.musicplayer.extensions.mediaScanner
 import com.simplemobiletools.musicplayer.helpers.ARTIST
 import com.simplemobiletools.musicplayer.helpers.TAB_ARTISTS
 import com.simplemobiletools.musicplayer.models.Artist
+import com.simplemobiletools.musicplayer.models.sortSafely
 import kotlinx.android.synthetic.main.fragment_artists.view.artists_fastscroller
 import kotlinx.android.synthetic.main.fragment_artists.view.artists_list
 import kotlinx.android.synthetic.main.fragment_artists.view.artists_placeholder
@@ -31,7 +32,6 @@ class ArtistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
     private var artists = ArrayList<Artist>()
 
     override fun setupFragment(activity: BaseSimpleActivity) {
-        Artist.sorting = context.config.artistSorting
         ensureBackgroundThread {
             val cachedArtists = activity.audioHelper.getAllArtists()
             activity.runOnUiThread {
@@ -93,8 +93,7 @@ class ArtistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
     override fun onSortOpen(activity: SimpleActivity) {
         ChangeSortingDialog(activity, TAB_ARTISTS) {
             val adapter = artists_list.adapter as? ArtistsAdapter ?: return@ChangeSortingDialog
-            Artist.sorting = activity.config.artistSorting
-            artists.sort()
+            artists.sortSafely(activity.config.artistSorting)
             adapter.updateItems(artists, forceUpdate = true)
         }
     }

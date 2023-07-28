@@ -22,6 +22,10 @@ import com.simplemobiletools.commons.helpers.isOreoPlus
 import com.simplemobiletools.commons.helpers.isQPlus
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.adapters.TracksAdapter
+import com.simplemobiletools.musicplayer.adapters.TracksAdapter.Companion.TYPE_ALBUM
+import com.simplemobiletools.musicplayer.adapters.TracksAdapter.Companion.TYPE_FOLDER
+import com.simplemobiletools.musicplayer.adapters.TracksAdapter.Companion.TYPE_PLAYLIST
+import com.simplemobiletools.musicplayer.adapters.TracksAdapter.Companion.TYPE_TRACKS
 import com.simplemobiletools.musicplayer.adapters.TracksHeaderAdapter
 import com.simplemobiletools.musicplayer.dialogs.ChangeSortingDialog
 import com.simplemobiletools.musicplayer.dialogs.ExportPlaylistDialog
@@ -40,11 +44,6 @@ import java.io.OutputStream
 // this activity is used for displaying Playlist and Folder tracks, also Album tracks with a possible album header at the top
 // Artists -> Albums -> Tracks
 class TracksActivity : SimpleActivity() {
-    private val TYPE_PLAYLIST = 1
-    private val TYPE_FOLDER = 2
-    private val TYPE_ALBUM = 3
-    private val TYPE_GENRE = 4
-
     private val PICK_EXPORT_FILE_INTENT = 2
 
     private var isSearchOpen = false
@@ -53,7 +52,7 @@ class TracksActivity : SimpleActivity() {
     private var bus: EventBus? = null
     private var playlist: Playlist? = null
     private var folder: String? = null
-    private var tracksType = 0
+    private var sourceType = 0
     private var lastFilePickerPath = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -118,11 +117,11 @@ class TracksActivity : SimpleActivity() {
 
     private fun refreshMenuItems() {
         tracks_toolbar.menu.apply {
-            findItem(R.id.search).isVisible = tracksType != TYPE_ALBUM
-            findItem(R.id.sort).isVisible = tracksType != TYPE_ALBUM
-            findItem(R.id.add_file_to_playlist).isVisible = tracksType == TYPE_PLAYLIST
-            findItem(R.id.add_folder_to_playlist).isVisible = tracksType == TYPE_PLAYLIST
-            findItem(R.id.export_playlist).isVisible = tracksType == TYPE_PLAYLIST && isOreoPlus()
+            findItem(R.id.search).isVisible = sourceType != TYPE_ALBUM
+            findItem(R.id.sort).isVisible = sourceType != TYPE_ALBUM
+            findItem(R.id.add_file_to_playlist).isVisible = sourceType == TYPE_PLAYLIST
+            findItem(R.id.add_folder_to_playlist).isVisible = sourceType == TYPE_PLAYLIST
+            findItem(R.id.export_playlist).isVisible = sourceType == TYPE_PLAYLIST && isOreoPlus()
         }
     }
 
@@ -177,24 +176,24 @@ class TracksActivity : SimpleActivity() {
         val playlistType = object : TypeToken<Playlist>() {}.type
         playlist = Gson().fromJson<Playlist>(intent.getStringExtra(PLAYLIST), playlistType)
         if (playlist != null) {
-            tracksType = TYPE_PLAYLIST
+            sourceType = TYPE_PLAYLIST
         }
 
         val albumType = object : TypeToken<Album>() {}.type
         val album = Gson().fromJson<Album>(intent.getStringExtra(ALBUM), albumType)
         if (album != null) {
-            tracksType = TYPE_ALBUM
+            sourceType = TYPE_ALBUM
         }
 
         val genreType = object : TypeToken<Genre>() {}.type
         val genre = Gson().fromJson<Genre>(intent.getStringExtra(GENRE), genreType)
         if (genre != null) {
-            tracksType = TYPE_GENRE
+            sourceType = TYPE_TRACKS
         }
 
         folder = intent.getStringExtra(FOLDER)
         if (folder != null) {
-            tracksType = TYPE_FOLDER
+            sourceType = TYPE_FOLDER
             tracks_placeholder_2.beGone()
         }
 
@@ -205,7 +204,7 @@ class TracksActivity : SimpleActivity() {
         ensureBackgroundThread {
             val tracks = ArrayList<Track>()
             val listItems = ArrayList<ListItem>()
-            when (tracksType) {
+            when (sourceType) {
                 TYPE_PLAYLIST -> {
                     val playlistTracks = audioHelper.getPlaylistTracks(playlist!!.id)
                     runOnUiThread {
@@ -224,7 +223,7 @@ class TracksActivity : SimpleActivity() {
                     listItems.add(header)
                     listItems.addAll(tracks)
                 }
-                TYPE_GENRE -> {
+                TYPE_TRACKS -> {
                     val genreTracks = audioHelper.getGenreTracks(genre.id)
                     tracks.addAll(genreTracks)
                 }
@@ -240,7 +239,7 @@ class TracksActivity : SimpleActivity() {
             }
 
             runOnUiThread {
-                if (tracksType == TYPE_ALBUM) {
+                if (sourceType == TYPE_ALBUM) {
                     val currAdapter = tracks_list.adapter
                     if (currAdapter == null) {
                         TracksHeaderAdapter(this, listItems, tracks_list) {
@@ -256,10 +255,16 @@ class TracksActivity : SimpleActivity() {
                         (currAdapter as TracksHeaderAdapter).updateItems(listItems)
                     }
                 } else {
-                    val isPlaylistContent = tracksType == TYPE_PLAYLIST
                     val currAdapter = tracks_list.adapter
                     if (currAdapter == null) {
-                        TracksAdapter(this, tracks, isPlaylistContent, tracks_list, playlist) {
+                        TracksAdapter(
+                            activity = this,
+                            recyclerView = tracks_list,
+                            sourceType = sourceType,
+                            folder = folder,
+                            playlist = playlist,
+                            tracks = tracks
+                        ) {
                             itemClicked(it as Track)
                         }.apply {
                             tracks_list.adapter = this
@@ -280,16 +285,16 @@ class TracksActivity : SimpleActivity() {
         ChangeSortingDialog(this, ACTIVITY_PLAYLIST_FOLDER, playlist, folder) {
             val adapter = tracks_list.adapter as? TracksAdapter ?: return@ChangeSortingDialog
             val tracks = adapter.tracks
-            Track.sorting = when(tracksType) {
+            val sorting = when (sourceType) {
                 TYPE_PLAYLIST -> config.getProperPlaylistSorting(playlist?.id ?: -1)
-                TYPE_GENRE -> config.trackSorting
+                TYPE_TRACKS -> config.trackSorting
                 else -> config.getProperFolderSorting(folder ?: "")
             }
 
-            tracks.sort()
+            tracks.sortSafely(sorting)
             adapter.updateItems(tracks, forceUpdate = true)
 
-            if (tracksType == TYPE_GENRE) {
+            if (sourceType == TYPE_TRACKS) {
                 EventBus.getDefault().post(Events.RefreshTracks())
             }
         }
@@ -383,7 +388,7 @@ class TracksActivity : SimpleActivity() {
     }
 
     private fun itemClicked(track: Track) {
-        val tracks = when (tracksType) {
+        val tracks = when (sourceType) {
             TYPE_ALBUM -> (tracks_list.adapter as? TracksHeaderAdapter)?.items?.filterIsInstance<Track>()
             else -> (tracks_list.adapter as? TracksAdapter)?.tracks
         } ?: ArrayList()

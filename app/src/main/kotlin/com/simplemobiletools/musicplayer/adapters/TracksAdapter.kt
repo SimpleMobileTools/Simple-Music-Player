@@ -38,10 +38,11 @@ import java.util.Collections
 
 class TracksAdapter(
     activity: BaseSimpleActivity,
-    var tracks: ArrayList<Track>,
-    val isPlaylistContent: Boolean,
     recyclerView: MyRecyclerView,
+    val sourceType: Int,
+    val folder: String? = null,
     val playlist: Playlist? = null,
+    var tracks: ArrayList<Track>,
     itemClick: (Any) -> Unit
 ) : MyRecyclerViewAdapter(activity, recyclerView, itemClick), RecyclerViewFastScroller.OnPopupTextUpdate, ItemTouchHelperContract {
 
@@ -81,7 +82,7 @@ class TracksAdapter(
 
     override fun prepareActionMode(menu: Menu) {
         menu.apply {
-            findItem(R.id.cab_remove_from_playlist).isVisible = isPlaylistContent
+            findItem(R.id.cab_remove_from_playlist).isVisible = isPlaylistContent()
             findItem(R.id.cab_rename).isVisible =
                 isOneItemSelected() && getSelectedTracks().firstOrNull()?.let { !it.path.startsWith("content://") && tagHelper.isEditTagSupported(it) } == true
             findItem(R.id.cab_play_next).isVisible =
@@ -116,13 +117,13 @@ class TracksAdapter(
     override fun getItemKeyPosition(key: Int) = tracks.indexOfFirst { it.hashCode() == key }
 
     override fun onActionModeCreated() {
-        if (isPlaylistContent) {
+        if (isPlaylistContent()) {
             notifyItemRangeChanged(0, itemCount)
         }
     }
 
     override fun onActionModeDestroyed() {
-        if (isPlaylistContent) {
+        if (isPlaylistContent()) {
             notifyItemRangeChanged(0, itemCount)
         }
     }
@@ -210,7 +211,7 @@ class TracksAdapter(
                         finishActMode()
 
                         // finish activity if all tracks are deleted
-                        if (tracks.isEmpty() && !isPlaylistContent) {
+                        if (tracks.isEmpty() && !isPlaylistContent()) {
                             activity.finish()
                         }
                     }
@@ -247,7 +248,7 @@ class TracksAdapter(
             } else {
                 ("${track.artist} • ${track.album}").highlightTextPart(textToHighlight, properPrimaryColor)
             }
-            track_drag_handle.beVisibleIf(isPlaylistContent && selectedKeys.isNotEmpty())
+            track_drag_handle.beVisibleIf(isPlaylistContent() && selectedKeys.isNotEmpty())
             track_drag_handle.applyColorFilter(textColor)
             track_drag_handle.setOnTouchListener { v, event ->
                 if (event.action == MotionEvent.ACTION_DOWN) {
@@ -266,7 +267,7 @@ class TracksAdapter(
                 .transform(CenterCrop(), RoundedCorners(cornerRadius))
 
             context.getTrackCoverArt(track) { coverArt ->
-                if (!activity.isDestroyed || !activity.isFinishing) {
+                activity.ensureActivityNotDestroyed {
                     Glide.with(activity)
                         .load(coverArt)
                         .apply(options)
@@ -279,7 +280,17 @@ class TracksAdapter(
         }
     }
 
-    override fun onChange(position: Int) = tracks.getOrNull(position)?.getBubbleText() ?: ""
+    override fun onChange(position: Int): String {
+        val sorting = if (isPlaylistContent() && playlist != null) {
+            activity.config.getProperPlaylistSorting(playlist.id)
+        } else if (sourceType == TYPE_FOLDER && folder != null) {
+            activity.config.getProperFolderSorting(folder)
+        } else {
+            activity.config.trackSorting
+        }
+
+        return tracks.getOrNull(position)?.getBubbleText(sorting) ?: ""
+    }
 
     private fun displayEditDialog() {
         getSelectedTracks().firstOrNull()?.let { selectedTrack ->
@@ -318,5 +329,14 @@ class TracksAdapter(
                 activity.audioHelper.updateOrderInPlaylist(index, it.id)
             }
         }
+    }
+
+    private fun isPlaylistContent() = sourceType == TYPE_PLAYLIST
+
+    companion object {
+        const val TYPE_PLAYLIST = 1
+        const val TYPE_FOLDER = 2
+        const val TYPE_ALBUM = 3
+        const val TYPE_TRACKS = 4
     }
 }

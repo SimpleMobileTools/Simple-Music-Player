@@ -170,5 +170,5 @@ class AlbumsAdapter(activity: BaseSimpleActivity, var albums: ArrayList<Album>, 
         }
     }
 
-    override fun onChange(position: Int) = albums.getOrNull(position)?.getBubbleText() ?: ""
+    override fun onChange(position: Int) = albums.getOrNull(position)?.getBubbleText(activity.config.albumSorting) ?: ""
 }

@@ -7,6 +7,7 @@ import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.simplemobiletools.commons.helpers.AlphanumericComparator
 import com.simplemobiletools.commons.helpers.SORT_DESCENDING
+import com.simplemobiletools.musicplayer.extensions.sortSafely
 import com.simplemobiletools.musicplayer.helpers.PLAYER_SORT_BY_ARTIST_TITLE
 import com.simplemobiletools.musicplayer.helpers.PLAYER_SORT_BY_DATE_ADDED
 import com.simplemobiletools.musicplayer.helpers.PLAYER_SORT_BY_TITLE
@@ -21,47 +22,43 @@ data class Album(
     @ColumnInfo(name = "track_cnt") var trackCnt: Int,
     @ColumnInfo(name = "artist_id") var artistId: Long,
     @ColumnInfo(name = "date_added") var dateAdded: Int,
-) : ListItem(), Comparable<Album> {
+) : ListItem() {
     companion object {
-        var sorting = 0
+        fun getComparator(sorting: Int) = Comparator<Album> { first, second ->
+            var result = when {
+                sorting and PLAYER_SORT_BY_TITLE != 0 -> {
+                    when {
+                        first.title == MediaStore.UNKNOWN_STRING && second.title != MediaStore.UNKNOWN_STRING -> 1
+                        first.title != MediaStore.UNKNOWN_STRING && second.title == MediaStore.UNKNOWN_STRING -> -1
+                        else -> AlphanumericComparator().compare(first.title.lowercase(), second.title.lowercase())
+                    }
+                }
+
+                sorting and PLAYER_SORT_BY_ARTIST_TITLE != 0 -> {
+                    when {
+                        first.artist == MediaStore.UNKNOWN_STRING && second.artist != MediaStore.UNKNOWN_STRING -> 1
+                        first.artist != MediaStore.UNKNOWN_STRING && second.artist == MediaStore.UNKNOWN_STRING -> -1
+                        else -> AlphanumericComparator().compare(first.artist.lowercase(), second.artist.lowercase())
+                    }
+                }
+
+                sorting and PLAYER_SORT_BY_DATE_ADDED != 0 -> first.dateAdded.compareTo(second.dateAdded)
+                else -> first.year.compareTo(second.year)
+            }
+
+            if (sorting and SORT_DESCENDING != 0) {
+                result *= -1
+            }
+
+            return@Comparator result
+        }
     }
 
-    override fun compareTo(other: Album): Int {
-        var result = when {
-            sorting and PLAYER_SORT_BY_TITLE != 0 -> {
-                when {
-                    title == MediaStore.UNKNOWN_STRING && other.title != MediaStore.UNKNOWN_STRING -> 1
-                    title != MediaStore.UNKNOWN_STRING && other.title == MediaStore.UNKNOWN_STRING -> -1
-                    else -> AlphanumericComparator().compare(title.lowercase(), other.title.lowercase())
-                }
-            }
-            sorting and PLAYER_SORT_BY_ARTIST_TITLE != 0 -> {
-                when {
-                    artist == MediaStore.UNKNOWN_STRING && other.artist != MediaStore.UNKNOWN_STRING -> 1
-                    artist != MediaStore.UNKNOWN_STRING && other.artist == MediaStore.UNKNOWN_STRING -> -1
-                    else -> AlphanumericComparator().compare(artist.lowercase(), other.artist.lowercase())
-                }
-            }
-            sorting and PLAYER_SORT_BY_DATE_ADDED != 0 -> {
-                when {
-                    dateAdded == 0 && other.dateAdded != 0 -> -1
-                    dateAdded != 0 && other.dateAdded == 0 -> 1
-                    else -> dateAdded.compareTo(other.dateAdded)
-                }
-            }
-            else -> year.compareTo(other.year)
-        }
-
-        if (sorting and SORT_DESCENDING != 0) {
-            result *= -1
-        }
-
-        return result
-    }
-
-    fun getBubbleText() = when {
+    fun getBubbleText(sorting: Int) = when {
         sorting and PLAYER_SORT_BY_TITLE != 0 -> title
         sorting and PLAYER_SORT_BY_ARTIST_TITLE != 0 -> artist
         else -> year.toString()
     }
 }
+
+fun ArrayList<Album>.sortSafely(sorting: Int) = sortSafely(Album.getComparator(sorting))

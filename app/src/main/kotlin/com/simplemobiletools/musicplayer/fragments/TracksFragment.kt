@@ -23,6 +23,7 @@ import com.simplemobiletools.musicplayer.helpers.RESTART_PLAYER
 import com.simplemobiletools.musicplayer.helpers.TAB_TRACKS
 import com.simplemobiletools.musicplayer.helpers.TRACK
 import com.simplemobiletools.musicplayer.models.Track
+import com.simplemobiletools.musicplayer.models.sortSafely
 import kotlinx.android.synthetic.main.fragment_tracks.view.tracks_fastscroller
 import kotlinx.android.synthetic.main.fragment_tracks.view.tracks_list
 import kotlinx.android.synthetic.main.fragment_tracks.view.tracks_placeholder
@@ -33,7 +34,6 @@ class TracksFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
 
     override fun setupFragment(activity: BaseSimpleActivity) {
         ensureBackgroundThread {
-            Track.sorting = context.config.trackSorting
             tracks = context.audioHelper.getAllTracks()
 
             val excludedFolders = context.config.excludedFolders
@@ -51,7 +51,7 @@ class TracksFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
                 tracks_placeholder.beVisibleIf(tracks.isEmpty())
                 val adapter = tracks_list.adapter
                 if (adapter == null) {
-                    TracksAdapter(activity, tracks, false, tracks_list) {
+                    TracksAdapter(activity = activity, recyclerView = tracks_list, sourceType = TracksAdapter.TYPE_TRACKS, tracks = tracks) {
                         activity.hideKeyboard()
                         activity.handleNotificationPermission { granted ->
                             if (granted) {
@@ -102,8 +102,7 @@ class TracksFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
     override fun onSortOpen(activity: SimpleActivity) {
         ChangeSortingDialog(activity, TAB_TRACKS) {
             val adapter = tracks_list.adapter as? TracksAdapter ?: return@ChangeSortingDialog
-            Track.sorting = activity.config.trackSorting
-            tracks.sort()
+            tracks.sortSafely(activity.config.trackSorting)
             adapter.updateItems(tracks, forceUpdate = true)
         }
     }

@@ -19,6 +19,7 @@ import com.simplemobiletools.musicplayer.extensions.mediaScanner
 import com.simplemobiletools.musicplayer.helpers.FOLDER
 import com.simplemobiletools.musicplayer.helpers.TAB_FOLDERS
 import com.simplemobiletools.musicplayer.models.Folder
+import com.simplemobiletools.musicplayer.models.sortSafely
 import kotlinx.android.synthetic.main.fragment_folders.view.folders_fastscroller
 import kotlinx.android.synthetic.main.fragment_folders.view.folders_list
 import kotlinx.android.synthetic.main.fragment_folders.view.folders_placeholder
@@ -67,8 +68,7 @@ class FoldersFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
                     activity.startActivity(Intent(activity, ExcludedFoldersActivity::class.java))
                 }
 
-                Folder.sorting = activity.config.folderSorting
-                folders.sort()
+                folders.sortSafely(activity.config.folderSorting)
                 this.folders = folders
 
                 val adapter = folders_list.adapter
@@ -111,8 +111,7 @@ class FoldersFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
     override fun onSortOpen(activity: SimpleActivity) {
         ChangeSortingDialog(activity, TAB_FOLDERS) {
             val adapter = folders_list.adapter as? FoldersAdapter ?: return@ChangeSortingDialog
-            Folder.sorting = activity.config.folderSorting
-            folders.sort()
+            folders.sortSafely(activity.config.folderSorting)
             adapter.updateItems(folders, forceUpdate = true)
         }
     }

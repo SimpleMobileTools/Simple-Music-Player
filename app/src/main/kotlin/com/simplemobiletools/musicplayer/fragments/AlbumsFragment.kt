@@ -22,6 +22,7 @@ import com.simplemobiletools.musicplayer.extensions.mediaScanner
 import com.simplemobiletools.musicplayer.helpers.ALBUM
 import com.simplemobiletools.musicplayer.helpers.TAB_ALBUMS
 import com.simplemobiletools.musicplayer.models.Album
+import com.simplemobiletools.musicplayer.models.sortSafely
 import kotlinx.android.synthetic.main.fragment_albums.view.albums_fastscroller
 import kotlinx.android.synthetic.main.fragment_albums.view.albums_list
 import kotlinx.android.synthetic.main.fragment_albums.view.albums_placeholder
@@ -31,7 +32,6 @@ class AlbumsFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
     private var albums = ArrayList<Album>()
 
     override fun setupFragment(activity: BaseSimpleActivity) {
-        Album.sorting = context.config.albumSorting
         ensureBackgroundThread {
             val cachedAlbums = activity.audioHelper.getAllAlbums()
             activity.runOnUiThread {
@@ -94,8 +94,7 @@ class AlbumsFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
     override fun onSortOpen(activity: SimpleActivity) {
         ChangeSortingDialog(activity, TAB_ALBUMS) {
             val adapter = albums_list.adapter as? AlbumsAdapter ?: return@ChangeSortingDialog
-            Album.sorting = activity.config.albumSorting
-            albums.sort()
+            albums.sortSafely(activity.config.albumSorting)
             adapter.updateItems(albums, forceUpdate = true)
         }
     }

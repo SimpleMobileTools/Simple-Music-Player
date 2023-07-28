@@ -248,7 +248,7 @@ class TracksHeaderAdapter(activity: SimpleActivity, var items: ArrayList<ListIte
     override fun onChange(position: Int): CharSequence {
         val listItem = items.getOrNull(position)
         return when (listItem) {
-            is Track -> listItem.getBubbleText()
+            is Track -> listItem.getBubbleText(activity.config.trackSorting)
             is AlbumHeader -> listItem.title
             else -> ""
         }

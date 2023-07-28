@@ -11,6 +11,7 @@ import com.simplemobiletools.commons.extensions.getFilenameFromPath
 import com.simplemobiletools.commons.extensions.getFormattedDuration
 import com.simplemobiletools.commons.helpers.AlphanumericComparator
 import com.simplemobiletools.commons.helpers.SORT_DESCENDING
+import com.simplemobiletools.musicplayer.extensions.sortSafely
 import com.simplemobiletools.musicplayer.helpers.*
 import java.io.File
 import java.io.Serializable
@@ -36,57 +37,44 @@ data class Track(
     @ColumnInfo(name = "date_added") var dateAdded: Int,
     @ColumnInfo(name = "order_in_playlist") var orderInPlaylist: Int,
     @ColumnInfo(name = "flags") var flags: Int = 0
-) : Serializable, Comparable<Track>, ListItem() {
+) : Serializable, ListItem() {
 
     companion object {
         private const val serialVersionUID = 6717978793256852245L
-        var sorting = 0
+
+        fun getComparator(sorting: Int) = Comparator<Track> { first, second ->
+            var result = when {
+                sorting and PLAYER_SORT_BY_TITLE != 0 -> {
+                    when {
+                        first.title == MediaStore.UNKNOWN_STRING && second.title != MediaStore.UNKNOWN_STRING -> 1
+                        first.title != MediaStore.UNKNOWN_STRING && second.title == MediaStore.UNKNOWN_STRING -> -1
+                        else -> AlphanumericComparator().compare(first.title.lowercase(), second.title.lowercase())
+                    }
+                }
+
+                sorting and PLAYER_SORT_BY_ARTIST_TITLE != 0 -> {
+                    when {
+                        first.artist == MediaStore.UNKNOWN_STRING && second.artist != MediaStore.UNKNOWN_STRING -> 1
+                        first.artist != MediaStore.UNKNOWN_STRING && second.artist == MediaStore.UNKNOWN_STRING -> -1
+                        else -> AlphanumericComparator().compare(first.artist.lowercase(), second.artist.lowercase())
+                    }
+                }
+
+                sorting and PLAYER_SORT_BY_TRACK_ID != 0 -> first.trackId.compareTo(second.trackId)
+                sorting and PLAYER_SORT_BY_DATE_ADDED != 0 -> first.dateAdded.compareTo(second.dateAdded)
+                sorting and PLAYER_SORT_BY_CUSTOM != 0 -> first.orderInPlaylist.compareTo(second.orderInPlaylist)
+                else -> first.duration.compareTo(second.duration)
+            }
+
+            if (sorting and SORT_DESCENDING != 0) {
+                result *= -1
+            }
+
+            return@Comparator result
+        }
     }
 
-    override fun compareTo(other: Track): Int {
-        var res = when {
-            sorting and PLAYER_SORT_BY_TITLE != 0 -> {
-                when {
-                    title == MediaStore.UNKNOWN_STRING && other.title != MediaStore.UNKNOWN_STRING -> 1
-                    title != MediaStore.UNKNOWN_STRING && other.title == MediaStore.UNKNOWN_STRING -> -1
-                    else -> AlphanumericComparator().compare(title.lowercase(), other.title.lowercase())
-                }
-            }
-            sorting and PLAYER_SORT_BY_ARTIST_TITLE != 0 -> {
-                when {
-                    artist == MediaStore.UNKNOWN_STRING && artist != MediaStore.UNKNOWN_STRING -> 1
-                    artist != MediaStore.UNKNOWN_STRING && artist == MediaStore.UNKNOWN_STRING -> -1
-                    else -> AlphanumericComparator().compare(artist.lowercase(), other.artist.lowercase())
-                }
-            }
-            sorting and PLAYER_SORT_BY_TRACK_ID != 0 -> {
-                when {
-                    trackId == -1 && other.trackId != -1 -> 1
-                    trackId != -1 && other.trackId == -1 -> -1
-                    else -> AlphanumericComparator().compare(trackId.toString(), other.trackId.toString())
-                }
-            }
-            sorting and PLAYER_SORT_BY_DATE_ADDED != 0 -> {
-                when {
-                    dateAdded == 0 && other.dateAdded != 0 -> -1
-                    dateAdded != 0 && other.dateAdded == 0 -> 1
-                    else -> dateAdded.compareTo(other.dateAdded)
-                }
-            }
-            sorting and PLAYER_SORT_BY_CUSTOM != 0 -> {
-                orderInPlaylist.compareTo(other.orderInPlaylist)
-            }
-            else -> duration.compareTo(other.duration)
-        }
-
-        if (sorting and SORT_DESCENDING != 0) {
-            res *= -1
-        }
-
-        return res
-    }
-
-    fun getBubbleText() = when {
+    fun getBubbleText(sorting: Int) = when {
         sorting and PLAYER_SORT_BY_TITLE != 0 -> title
         sorting and PLAYER_SORT_BY_ARTIST_TITLE != 0 -> artist
         else -> duration.getFormattedDuration()
@@ -106,3 +94,5 @@ data class Track(
         ContentUris.withAppendedId(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, mediaStoreId)
     }
 }
+
+fun ArrayList<Track>.sortSafely(sorting: Int) = sortSafely(Track.getComparator(sorting))
