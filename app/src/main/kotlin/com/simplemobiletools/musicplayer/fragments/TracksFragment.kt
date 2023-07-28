@@ -51,7 +51,7 @@ class TracksFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
                 tracks_placeholder.beVisibleIf(tracks.isEmpty())
                 val adapter = tracks_list.adapter
                 if (adapter == null) {
-                    TracksAdapter(activity, tracks, false, tracks_list) {
+                    TracksAdapter(activity = activity, recyclerView = tracks_list, sourceType = TracksAdapter.TYPE_TRACKS, tracks = tracks) {
                         activity.hideKeyboard()
                         activity.handleNotificationPermission { granted ->
                             if (granted) {
