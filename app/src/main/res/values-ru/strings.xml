@@ -62,7 +62,7 @@
     <!-- Artists -->
     <string name="artists">Исполнители</string>
     <string name="folders">Папки</string>
-    <string name="genres">Genres</string>
+    <string name="genres">Жанры</string>
     <string name="albums">Альбомы</string>
     <plurals name="albums_plural">
         <item quantity="one">%d альбом</item>
