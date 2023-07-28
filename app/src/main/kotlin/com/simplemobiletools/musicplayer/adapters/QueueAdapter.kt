@@ -221,7 +221,7 @@ class QueueAdapter(activity: SimpleActivity, var items: ArrayList<Track>, recycl
 
     override fun onRowSelected(myViewHolder: ViewHolder?) {}
 
-    override fun onChange(position: Int) = items.getOrNull(position)?.getBubbleText() ?: ""
+    override fun onChange(position: Int) = items.getOrNull(position)?.getBubbleText(activity.config.trackSorting) ?: ""
 
     fun updateItems(newItems: ArrayList<Track>, highlightText: String = "", forceUpdate: Boolean = false) {
         if (forceUpdate || newItems.hashCode() != items.hashCode()) {

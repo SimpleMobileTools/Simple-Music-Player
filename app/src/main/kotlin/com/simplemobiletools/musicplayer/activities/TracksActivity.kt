@@ -280,13 +280,13 @@ class TracksActivity : SimpleActivity() {
         ChangeSortingDialog(this, ACTIVITY_PLAYLIST_FOLDER, playlist, folder) {
             val adapter = tracks_list.adapter as? TracksAdapter ?: return@ChangeSortingDialog
             val tracks = adapter.tracks
-            Track.sorting = when(tracksType) {
+            val sorting = when (tracksType) {
                 TYPE_PLAYLIST -> config.getProperPlaylistSorting(playlist?.id ?: -1)
                 TYPE_GENRE -> config.trackSorting
                 else -> config.getProperFolderSorting(folder ?: "")
             }
 
-            tracks.sort()
+            tracks.sortSafely(sorting)
             adapter.updateItems(tracks, forceUpdate = true)
 
             if (tracksType == TYPE_GENRE) {

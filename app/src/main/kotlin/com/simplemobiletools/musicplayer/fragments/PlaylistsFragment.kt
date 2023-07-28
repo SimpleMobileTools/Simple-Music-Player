@@ -21,6 +21,7 @@ import com.simplemobiletools.musicplayer.helpers.PLAYLIST
 import com.simplemobiletools.musicplayer.helpers.TAB_PLAYLISTS
 import com.simplemobiletools.musicplayer.models.Events
 import com.simplemobiletools.musicplayer.models.Playlist
+import com.simplemobiletools.musicplayer.models.sortSafely
 import kotlinx.android.synthetic.main.fragment_playlists.view.playlists_fastscroller
 import kotlinx.android.synthetic.main.fragment_playlists.view.playlists_list
 import kotlinx.android.synthetic.main.fragment_playlists.view.playlists_placeholder
@@ -44,8 +45,7 @@ class PlaylistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPa
                 it.trackCount = context.audioHelper.getPlaylistTrackCount(it.id)
             }
 
-            Playlist.sorting = context.config.playlistSorting
-            playlists.sort()
+            playlists.sortSafely(context.config.playlistSorting)
             this.playlists = playlists
 
             activity.runOnUiThread {
@@ -100,8 +100,7 @@ class PlaylistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPa
     override fun onSortOpen(activity: SimpleActivity) {
         ChangeSortingDialog(activity, TAB_PLAYLISTS) {
             val adapter = playlists_list.adapter as? PlaylistsAdapter ?: return@ChangeSortingDialog
-            Playlist.sorting = activity.config.playlistSorting
-            playlists.sort()
+            playlists.sortSafely(activity.config.playlistSorting)
             adapter.updateItems(playlists, forceUpdate = true)
         }
     }

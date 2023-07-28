@@ -114,5 +114,5 @@ class FoldersAdapter(
         }
     }
 
-    override fun onChange(position: Int) = folders.getOrNull(position)?.getBubbleText() ?: ""
+    override fun onChange(position: Int) = folders.getOrNull(position)?.getBubbleText(activity.config.folderSorting) ?: ""
 }

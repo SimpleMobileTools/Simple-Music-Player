@@ -37,6 +37,7 @@ import com.simplemobiletools.musicplayer.inlines.indexOfFirstOrNull
 import com.simplemobiletools.musicplayer.models.Events
 import com.simplemobiletools.musicplayer.models.QueueItem
 import com.simplemobiletools.musicplayer.models.Track
+import com.simplemobiletools.musicplayer.models.sortSafely
 import org.greenrobot.eventbus.EventBus
 import java.io.IOException
 import kotlin.math.roundToInt
@@ -406,8 +407,7 @@ class MusicService : Service(), MultiPlayer.PlaybackCallbacks {
         if (queueItems.isEmpty()) {
             val tracks = audioHelper.getPlaylistTracks(ALL_TRACKS_PLAYLIST_ID)
             if (tracks.isNotEmpty()) {
-                Track.sorting = config.trackSorting
-                tracks.sort()
+                tracks.sortSafely(config.trackSorting)
                 addQueueItems(newTracks = tracks) {}
                 queueItems = queueDAO.getAll()
             }

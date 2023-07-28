@@ -21,7 +21,7 @@ class AudioHelper(private val context: Context) {
         val tracks = context.tracksDAO.getAll()
             .distinctBy { "${it.path}/${it.mediaStoreId}" } as ArrayList<Track>
 
-        tracks.sort()
+        tracks.sortSafely(config.trackSorting)
         return tracks
     }
 
@@ -32,8 +32,7 @@ class AudioHelper(private val context: Context) {
                 it.title = it.getProperTitle(showFilename)
             } as ArrayList<Track>
 
-        Track.sorting = config.getProperFolderSorting(folder)
-        tracks.sort()
+        tracks.sortSafely(config.getProperFolderSorting(folder))
         return tracks
     }
 
@@ -61,7 +60,7 @@ class AudioHelper(private val context: Context) {
 
     fun getAllArtists(): ArrayList<Artist> {
         val artists = context.artistDAO.getAll() as ArrayList<Artist>
-        artists.sort()
+        artists.sortSafely(config.artistSorting)
         return artists
     }
 
@@ -103,7 +102,7 @@ class AudioHelper(private val context: Context) {
 
     fun getAllAlbums(): ArrayList<Album> {
         val albums = context.albumsDAO.getAll() as ArrayList<Album>
-        albums.sort()
+        albums.sortSafely(config.albumSorting)
         return albums
     }
 
@@ -143,7 +142,7 @@ class AudioHelper(private val context: Context) {
 
     fun getAllGenres(): ArrayList<Genre> {
         val genres = context.genresDAO.getAll() as ArrayList<Genre>
-        genres.sort()
+        genres.sortSafely(config.genreSorting)
         return genres
     }
 
@@ -151,8 +150,7 @@ class AudioHelper(private val context: Context) {
         val tracks = context.tracksDAO.getGenreTracks(genreId)
             .distinctBy { "${it.path}/${it.mediaStoreId}" } as ArrayList<Track>
 
-        Track.sorting = config.trackSorting
-        tracks.sort()
+        tracks.sortSafely(config.trackSorting)
         return tracks
     }
 
@@ -160,8 +158,7 @@ class AudioHelper(private val context: Context) {
         val tracks = genres.flatMap { context.tracksDAO.getGenreTracks(it.id) }
             .distinctBy { "${it.path}/${it.mediaStoreId}" } as ArrayList<Track>
 
-        Track.sorting = config.trackSorting
-        tracks.sort()
+        tracks.sortSafely(config.trackSorting)
         return tracks
     }
 
@@ -186,8 +183,7 @@ class AudioHelper(private val context: Context) {
             it.title = it.getProperTitle(showFilename)
         } as ArrayList<Track>
 
-        Track.sorting = config.getProperPlaylistSorting(playlistId)
-        tracks.sort()
+        tracks.sortSafely(config.getProperPlaylistSorting(playlistId))
         return tracks
     }
 

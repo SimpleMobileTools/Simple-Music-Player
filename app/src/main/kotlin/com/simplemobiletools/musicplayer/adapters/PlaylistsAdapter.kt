@@ -17,6 +17,7 @@ import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.dialogs.NewPlaylistDialog
 import com.simplemobiletools.musicplayer.dialogs.RemovePlaylistDialog
 import com.simplemobiletools.musicplayer.extensions.audioHelper
+import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.models.Events
 import com.simplemobiletools.musicplayer.models.Playlist
 import kotlinx.android.synthetic.main.item_playlist.view.playlist_frame
@@ -161,5 +162,5 @@ class PlaylistsAdapter(
         }
     }
 
-    override fun onChange(position: Int) = playlists.getOrNull(position)?.getBubbleText() ?: ""
+    override fun onChange(position: Int) = playlists.getOrNull(position)?.getBubbleText(activity.config.playlistSorting) ?: ""
 }

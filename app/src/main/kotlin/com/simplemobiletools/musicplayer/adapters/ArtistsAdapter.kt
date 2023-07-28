@@ -172,5 +172,5 @@ class ArtistsAdapter(activity: BaseSimpleActivity, var artists: ArrayList<Artist
         }
     }
 
-    override fun onChange(position: Int) = artists.getOrNull(position)?.getBubbleText() ?: ""
+    override fun onChange(position: Int) = artists.getOrNull(position)?.getBubbleText(activity.config.artistSorting) ?: ""
 }

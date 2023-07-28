@@ -22,6 +22,7 @@ import com.simplemobiletools.musicplayer.extensions.mediaScanner
 import com.simplemobiletools.musicplayer.helpers.GENRE
 import com.simplemobiletools.musicplayer.helpers.TAB_GENRES
 import com.simplemobiletools.musicplayer.models.Genre
+import com.simplemobiletools.musicplayer.models.sortSafely
 import kotlinx.android.synthetic.main.fragment_genres.view.genres_fastscroller
 import kotlinx.android.synthetic.main.fragment_genres.view.genres_list
 import kotlinx.android.synthetic.main.fragment_genres.view.genres_placeholder
@@ -30,7 +31,6 @@ class GenresFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
     private var genres = ArrayList<Genre>()
 
     override fun setupFragment(activity: BaseSimpleActivity) {
-        Genre.sorting = context.config.genreSorting
         ensureBackgroundThread {
             val cachedGenres = activity.audioHelper.getAllGenres()
             activity.runOnUiThread {
@@ -92,8 +92,7 @@ class GenresFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
     override fun onSortOpen(activity: SimpleActivity) {
         ChangeSortingDialog(activity, TAB_GENRES) {
             val adapter = genres_list.adapter as? GenresAdapter ?: return@ChangeSortingDialog
-            Genre.sorting = activity.config.genreSorting
-            genres.sort()
+            genres.sortSafely(activity.config.genreSorting)
             adapter.updateItems(genres, forceUpdate = true)
         }
     }

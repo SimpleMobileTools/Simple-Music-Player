@@ -175,5 +175,5 @@ class GenresAdapter(activity: BaseSimpleActivity, var genres: ArrayList<Genre>, 
         }
     }
 
-    override fun onChange(position: Int) = genres.getOrNull(position)?.getBubbleText() ?: ""
+    override fun onChange(position: Int) = genres.getOrNull(position)?.getBubbleText(activity.config.genreSorting) ?: ""
 }
