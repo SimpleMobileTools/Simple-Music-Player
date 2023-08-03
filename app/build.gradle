@@ -75,6 +75,8 @@ dependencies {
     implementation 'androidx.media:media:1.6.0'
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'androidx.media3:media3-session:1.1.0'
+    implementation 'androidx.media3:media3-exoplayer:1.1.0'
     implementation 'com.google.android.material:material:1.6.1'
     implementation 'com.airbnb.android:lottie:3.6.1'
     implementation 'com.github.bjoernpetersen:m3u-parser:1.3.0'
