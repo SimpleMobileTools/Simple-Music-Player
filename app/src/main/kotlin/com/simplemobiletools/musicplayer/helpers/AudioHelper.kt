@@ -1,6 +1,7 @@
 package com.simplemobiletools.musicplayer.helpers
 
 import android.content.Context
+import com.simplemobiletools.commons.extensions.getParentPath
 import com.simplemobiletools.musicplayer.extensions.*
 import com.simplemobiletools.musicplayer.models.*
 
@@ -23,6 +24,24 @@ class AudioHelper(private val context: Context) {
 
         tracks.sortSafely(config.trackSorting)
         return tracks
+    }
+
+    fun getAllFolders(): ArrayList<Folder> {
+        val tracks = context.audioHelper.getAllTracks()
+        val foldersMap = tracks.groupBy { it.folderName }
+        val folders = ArrayList<Folder>()
+        val excludedFolders = config.excludedFolders
+        for ((title, folderTracks) in foldersMap) {
+            val path = (folderTracks.firstOrNull()?.path?.getParentPath() ?: "").removeSuffix("/")
+            if (excludedFolders.contains(path)) {
+                continue
+            }
+
+            val folder = Folder(title, folderTracks.size, path)
+            folders.add(folder)
+        }
+
+        return folders
     }
 
     fun getFolderTracks(folder: String): ArrayList<Track> {
@@ -212,5 +231,16 @@ class AudioHelper(private val context: Context) {
 
         val invalidArtists = artists.filter { artist -> tracks.none { it.artistId == artist.id } }
         deleteArtists(invalidArtists)
+    }
+
+    fun updateQueue(items: List<QueueItem>, currentTrackId: Long? = null, startPosition: Long? = null) {
+        context.queueDAO.deleteAllItems()
+        context.queueDAO.insertAll(items)
+        if (currentTrackId != null && startPosition != null) {
+            val startPositionSeconds = (startPosition / 1000).toInt()
+            context.queueDAO.saveCurrentTrackProgress(currentTrackId, startPositionSeconds)
+        } else if (currentTrackId != null) {
+            context.queueDAO.saveCurrentTrack(currentTrackId)
+        }
     }
 }

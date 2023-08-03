@@ -37,6 +37,10 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:theme="@style/AppTheme">
 
+        <meta-data
+            android:name="com.google.android.gms.car.application"
+            android:resource="@xml/automotive_app_desc" />
+
         <activity
             android:name=".activities.SplashActivity"
             android:exported="false"
@@ -151,10 +155,9 @@
             android:label="@string/track_queue"
             android:parentActivityName=".activities.TrackActivity" />
 
-        <service
+        <!--<service
             android:name=".services.MusicService"
-            android:exported="true"
-            android:foregroundServiceType="mediaPlayback">
+            android:exported="true">
             <intent-filter>
                 <action android:name="com.simplemobiletools.musicplayer.action.INIT" />
                 <action android:name="com.simplemobiletools.musicplayer.action.INIT_PATH" />
@@ -176,6 +179,16 @@
                 <action android:name="com.simplemobiletools.musicplayer.action.BROADCAST_STATUS" />
                 <action android:name="com.simplemobiletools.musicplayer.action.UPDATE_QUEUE_SIZE" />
             </intent-filter>
+        </service>-->
+
+        <service
+            android:name=".services.playback.PlaybackService"
+            android:exported="true"
+            android:foregroundServiceType="mediaPlayback">
+            <intent-filter>
+                <action android:name="androidx.media3.session.MediaLibraryService" />
+                <action android:name="android.media.browse.MediaBrowserService" />
+            </intent-filter>
         </service>
 
         <receiver
@@ -190,36 +203,36 @@
                 android:resource="@xml/widget_info" />
         </receiver>
 
-        <receiver
-            android:name=".receivers.RemoteControlReceiver"
-            android:enabled="true"
-            android:exported="true">
-            <intent-filter android:priority="999">
-                <action android:name="android.intent.action.MEDIA_BUTTON" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </receiver>
+        <!--   <receiver
+               android:name=".receivers.RemoteControlReceiver"
+               android:enabled="true"
+               android:exported="true">
+               <intent-filter android:priority="999">
+                   <action android:name="android.intent.action.MEDIA_BUTTON" />
+                   <category android:name="android.intent.category.DEFAULT" />
+               </intent-filter>
+           </receiver>-->
 
-        <receiver
-            android:name=".receivers.HeadsetPlugReceiver"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.ACTION_HEADSET_PLUG" />
-            </intent-filter>
-        </receiver>
+        <!--    <receiver
+                android:name=".receivers.HeadsetPlugReceiver"
+                android:exported="true">
+                <intent-filter>
+                    <action android:name="android.intent.action.ACTION_HEADSET_PLUG" />
+                </intent-filter>
+            </receiver>
 
-        <receiver
-            android:name=".receivers.ControlActionsListener"
-            android:exported="false" />
+            <receiver
+                android:name=".receivers.ControlActionsListener"
+                android:exported="false" />
 
-        <receiver
-            android:name=".receivers.NotificationDismissedReceiver"
-            android:enabled="true"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="com.simplemobiletools.musicplayer.action.NOTIFICATION_DISMISSED" />
-            </intent-filter>
-        </receiver>
+            <receiver
+                android:name=".receivers.NotificationDismissedReceiver"
+                android:enabled="true"
+                android:exported="true">
+                <intent-filter>
+                    <action android:name="com.simplemobiletools.musicplayer.action.NOTIFICATION_DISMISSED" />
+                </intent-filter>
+            </receiver>-->
 
         <provider
             android:name="androidx.core.content.FileProvider"
