@@ -25,12 +25,12 @@ enum class CustomCommands(val customAction: String) {
 
 internal val customCommands = CustomCommands.values().map { it.sessionCommand }
 
-internal lateinit var customLayout: List<CommandButton>
-
-internal fun Context.createCloseCommandButton(): CommandButton {
-    return CommandButton.Builder()
-        .setDisplayName(getString(R.string.close))
-        .setSessionCommand(CustomCommands.CLOSE_PLAYER.sessionCommand)
-        .setIconResId(R.drawable.ic_cross_vector)
-        .build()
+internal fun Context.getCustomLayout(): List<CommandButton> {
+    return listOf(
+        CommandButton.Builder()
+            .setDisplayName(getString(R.string.close))
+            .setSessionCommand(CustomCommands.CLOSE_PLAYER.sessionCommand)
+            .setIconResId(R.drawable.ic_cross_vector)
+            .build()
+    )
 }

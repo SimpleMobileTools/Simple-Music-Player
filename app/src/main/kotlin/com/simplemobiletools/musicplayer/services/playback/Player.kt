@@ -50,18 +50,18 @@ internal fun PlaybackService.getPlayerListener(): Player.Listener {
     return playerListener!!
 }
 
-internal fun PlaybackService.initializeSessionAndPlayer(gaplessPlayback: Boolean) {
+internal fun PlaybackService.initializeSessionAndPlayer(handleAudioFocus: Boolean, handleAudioBecomingNoisy: Boolean, skipSilence: Boolean) {
     player = ExoPlayer.Builder(this)
         .setWakeMode(C.WAKE_MODE_LOCAL)
-        .setHandleAudioBecomingNoisy(true)
+        .setHandleAudioBecomingNoisy(handleAudioBecomingNoisy)
         .setAudioAttributes(
             AudioAttributes.Builder()
                 .setUsage(C.USAGE_MEDIA)
                 .setContentType(C.AUDIO_CONTENT_TYPE_MUSIC)
                 .build(),
-            true
+            handleAudioFocus
         )
-        .setSkipSilenceEnabled(gaplessPlayback)
+        .setSkipSilenceEnabled(skipSilence)
         .setSeekBackIncrementMs(SEEK_INCREMENT_MS)
         .setSeekForwardIncrementMs(SEEK_INCREMENT_MS)
         .build()
@@ -72,8 +72,7 @@ internal fun PlaybackService.initializeSessionAndPlayer(gaplessPlayback: Boolean
         .setSessionActivity(getSessionActivityIntent())
         .build()
 
-    customLayout = listOf(createCloseCommandButton())
-    mediaSession.setCustomLayout(customLayout)
+    mediaSession.setCustomLayout(getCustomLayout())
 }
 
 private fun Context.getSessionActivityIntent(): PendingIntent {

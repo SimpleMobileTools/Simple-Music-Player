@@ -20,7 +20,7 @@ class PlaybackService : MediaLibraryService() {
 
     override fun onCreate() {
         super.onCreate()
-        initializeSessionAndPlayer(config.gaplessPlayback)
+        initializeSessionAndPlayer(handleAudioFocus = true, handleAudioBecomingNoisy = true, skipSilence = config.gaplessPlayback)
         mediaItemProvider = MediaItemProvider(this)
     }
 
