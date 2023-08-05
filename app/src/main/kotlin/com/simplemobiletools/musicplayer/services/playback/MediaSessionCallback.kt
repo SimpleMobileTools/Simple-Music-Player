@@ -47,6 +47,7 @@ internal fun PlaybackService.getMediaSessionCallback() = object : MediaLibrarySe
     }
 
     override fun onPostConnect(session: MediaSession, controller: MediaSession.ControllerInfo) {
+        val customLayout = getCustomLayout()
         if (customLayout.isNotEmpty() && controller.controllerVersion != 0) {
             mediaSession.setCustomLayout(controller, customLayout)
         }
