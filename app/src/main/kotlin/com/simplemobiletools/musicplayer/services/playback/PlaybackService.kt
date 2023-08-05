@@ -30,6 +30,13 @@ class PlaybackService : MediaLibraryService() {
         super.onDestroy()
         releaseMediaSession()
         clearListener()
+        stopSleepTimer()
+    }
+
+    fun stopService() {
+        player.stop()
+        releaseMediaSession()
+        stopSelf()
     }
 
     private fun releaseMediaSession() {

@@ -6,20 +6,31 @@ import androidx.media3.session.CommandButton
 import androidx.media3.session.SessionCommand
 import com.simplemobiletools.musicplayer.R
 
-const val CUSTOM_COMMAND_CLOSE_PLAYER = "com.simplemobiletools.musicplayer.CLOSE_PLAYER"
-const val CUSTOM_COMMAND_RELOAD_CONTENT = "com.simplemobiletools.musicplayer.RELOAD_CONTENT"
+/**
+ * Enum class representing custom commands that are used within the app and by media controller clients (e.g. system media controls).
+ */
+enum class CustomCommands(val customAction: String) {
+    CLOSE_PLAYER(customAction = "com.simplemobiletools.musicplayer.CLOSE_PLAYER"),
+    RELOAD_CONTENT(customAction = "com.simplemobiletools.musicplayer.RELOAD_CONTENT"),
+    TOGGLE_SLEEP_TIMER(customAction = "com.simplemobiletools.musicplayer.TOGGLE_SLEEP_TIMER");
 
-val customCommands = listOf(
-    SessionCommand(CUSTOM_COMMAND_CLOSE_PLAYER, Bundle.EMPTY),
-    SessionCommand(CUSTOM_COMMAND_RELOAD_CONTENT, Bundle.EMPTY)
-)
+    val sessionCommand = SessionCommand(customAction, Bundle.EMPTY)
+
+    companion object {
+        fun fromSessionCommand(sessionCommand: SessionCommand): CustomCommands? {
+            return values().find { it.customAction == sessionCommand.customAction }
+        }
+    }
+}
+
+internal val customCommands = CustomCommands.values().map { it.sessionCommand }
 
 internal lateinit var customLayout: List<CommandButton>
 
-internal fun Context.getCloseCommandButton(sessionCommand: SessionCommand): CommandButton {
+internal fun Context.createCloseCommandButton(): CommandButton {
     return CommandButton.Builder()
         .setDisplayName(getString(R.string.close))
-        .setSessionCommand(sessionCommand)
+        .setSessionCommand(CustomCommands.CLOSE_PLAYER.sessionCommand)
         .setIconResId(R.drawable.ic_cross_vector)
         .build()
 }
