@@ -3,6 +3,8 @@ package com.simplemobiletools.musicplayer.services.playback.library
 import android.content.ContentResolver
 import android.content.Context
 import android.net.Uri
+import android.os.Handler
+import android.os.Looper
 import androidx.media3.common.MediaItem
 import androidx.media3.common.MediaMetadata
 import androidx.media3.common.MediaMetadata.MEDIA_TYPE_PLAYLIST
@@ -34,8 +36,10 @@ internal class MediaItemProvider(private val context: Context) {
             if (value == STATE_INITIALIZED || value == STATE_ERROR) {
                 synchronized(onReadyListeners) {
                     field = value
-                    onReadyListeners.forEach { listener ->
-                        listener(state == STATE_INITIALIZED)
+                    Handler(Looper.getMainLooper()).post {
+                        onReadyListeners.forEach { listener ->
+                            listener(state == STATE_INITIALIZED)
+                        }
                     }
                 }
             } else {
