@@ -124,8 +124,9 @@ internal class MediaItemProvider(private val context: Context) {
 
         if (recentItems.isEmpty() && random) {
             // return a random item if queue is empty
-            val recent = getRandomItem().mediaId
-            saveRecentItemsWithStartPosition(mediaId = recent, startPosition = 0, rootId = SMP_TRACKS_ROOT_ID)
+            val current = getRandomItem()
+            val mediaItems = getChildren(SMP_TRACKS_ROOT_ID).orEmpty()
+            saveRecentItemsWithStartPosition(items = mediaItems, current = current, startPosition = 0)
             return getRecentItemsWithStartPosition(random = false)
         }
 
@@ -133,16 +134,15 @@ internal class MediaItemProvider(private val context: Context) {
         return MediaItemsWithStartPosition(recentItems, startIndex, startPosition)
     }
 
-    fun saveRecentItemsWithStartPosition(mediaId: String, startPosition: Long, rootId: String) {
-        val mediaItems = getChildren(rootId)?.filter { it.mediaMetadata.isPlayable == true } ?: return
-        if (mediaItems.isEmpty()) {
+    fun saveRecentItemsWithStartPosition(items: List<MediaItem>, current: MediaItem, startPosition: Long) {
+        if (items.isEmpty()) {
             return
         }
 
         ensureBackgroundThread {
-            val trackId = mediaId.filter { it.isDigit() }.toLong()
-            val queueItems = mediaItems.mapIndexed { index, mediaItem ->
-                QueueItem(trackId = mediaItem.mediaId.filter { it.isDigit() }.toLong(), trackOrder = index, isCurrent = false, lastPosition = 0)
+            val trackId = current.mediaId.toLong()
+            val queueItems = items.mapIndexed { index, mediaItem ->
+                QueueItem(trackId = mediaItem.mediaId.toLong(), trackOrder = index, isCurrent = false, lastPosition = 0)
             }
 
             audioHelper.updateQueue(queueItems, trackId, startPosition)

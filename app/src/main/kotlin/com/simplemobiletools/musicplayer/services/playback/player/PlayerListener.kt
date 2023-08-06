@@ -9,6 +9,7 @@ import androidx.media3.common.Player
 import androidx.media3.common.util.UnstableApi
 import com.simplemobiletools.commons.extensions.toast
 import com.simplemobiletools.musicplayer.R
+import com.simplemobiletools.musicplayer.extensions.currentMediaItems
 import com.simplemobiletools.musicplayer.models.Events
 import com.simplemobiletools.musicplayer.services.playback.PlaybackService
 import org.greenrobot.eventbus.EventBus
@@ -35,12 +36,13 @@ class PlayerListener(private val context: PlaybackService) : Player.Listener {
                 Player.EVENT_MEDIA_METADATA_CHANGED
             )
         ) {
-            val currentMediaId = player.currentMediaItem?.mediaId
-            if (currentMediaId != null && context.currentRoot.isNotEmpty()) {
+            val currentMediaItem = player.currentMediaItem
+            val currentMediaItems = player.currentMediaItems
+            if (currentMediaItem != null) {
                 context.mediaItemProvider.saveRecentItemsWithStartPosition(
-                    mediaId = currentMediaId,
-                    startPosition = player.currentPosition,
-                    rootId = context.currentRoot
+                    items = currentMediaItems,
+                    current = currentMediaItem,
+                    startPosition = player.currentPosition
                 )
             }
         }
