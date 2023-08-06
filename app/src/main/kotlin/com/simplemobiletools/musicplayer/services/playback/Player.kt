@@ -25,12 +25,14 @@ internal fun PlaybackService.getPlayerListener(): Player.Listener {
     if (playerListener == null) {
         playerListener = object : Player.Listener {
             override fun onEvents(player: Player, events: Player.Events) {
-                if (events.contains(Player.EVENT_POSITION_DISCONTINUITY)
-                    || events.contains(Player.EVENT_MEDIA_ITEM_TRANSITION)
-                    || events.contains(Player.EVENT_PLAY_WHEN_READY_CHANGED)
-                    || events.contains(Player.EVENT_TRACKS_CHANGED)
-                    || events.contains(Player.EVENT_TIMELINE_CHANGED)
-                    || events.contains(Player.EVENT_IS_PLAYING_CHANGED)
+                if (events.containsAny(
+                        Player.EVENT_POSITION_DISCONTINUITY,
+                        Player.EVENT_MEDIA_ITEM_TRANSITION,
+                        Player.EVENT_PLAY_WHEN_READY_CHANGED,
+                        Player.EVENT_TRACKS_CHANGED,
+                        Player.EVENT_TIMELINE_CHANGED,
+                        Player.EVENT_IS_PLAYING_CHANGED
+                    )
                 ) {
                     val currentMediaId = player.currentMediaItem?.mediaId
                     if (currentMediaId != null && currentRoot.isNotEmpty()) {
