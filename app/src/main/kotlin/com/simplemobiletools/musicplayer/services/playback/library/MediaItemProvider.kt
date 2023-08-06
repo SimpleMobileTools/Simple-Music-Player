@@ -166,7 +166,6 @@ internal class MediaItemProvider(private val context: Context) {
                 reloadGenres()
             } catch (e: Exception) {
                 state = STATE_ERROR
-                throw e
             }
 
             state = STATE_INITIALIZED
