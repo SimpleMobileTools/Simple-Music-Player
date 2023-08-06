@@ -41,6 +41,7 @@ class AudioHelper(private val context: Context) {
             folders.add(folder)
         }
 
+        folders.sortSafely(config.folderSorting)
         return folders
     }
 
