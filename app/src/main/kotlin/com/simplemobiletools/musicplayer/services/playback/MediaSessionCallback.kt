@@ -145,20 +145,24 @@ internal fun PlaybackService.getMediaSessionCallback() = object : MediaLibrarySe
         startIndex: Int,
         startPositionMs: Long
     ) = callWhenSourceReady {
-        var allItems = mediaItems
-        var realStartIndex = startIndex
+        var queueItems = mediaItems
+        var startItemIndex = startIndex
 
         // this is to avoid single items in the queue: https://github.com/androidx/media/issues/156
         if (startIndex == C.INDEX_UNSET && mediaItems.size == 1) {
-            val currentItem = mediaItems[0]
-            val queueItems = mediaItemProvider.getChildren(currentRoot)?.toMutableList()
+            val startItemId = mediaItems[0].mediaId
+            val currentItems = mediaItemProvider.getChildren(currentRoot).orEmpty()
 
-            allItems = queueItems?.takeIf { it.contains(currentItem) }
-                ?: mediaItemProvider.getDefaultQueue()?.toMutableList() ?: allItems
-            realStartIndex = allItems.indexOfFirst { it.mediaId == currentItem.mediaId }
+            queueItems = if (currentItems.any { it.mediaId == startItemId }) {
+                currentItems.toMutableList()
+            } else {
+                mediaItemProvider.getDefaultQueue()?.toMutableList() ?: queueItems
+            }
+
+            startItemIndex = queueItems.indexOfFirst { it.mediaId == startItemId }
         }
 
-        super.onSetMediaItems(mediaSession, controller, allItems, realStartIndex, startPositionMs).get()
+        super.onSetMediaItems(mediaSession, controller, queueItems, startItemIndex, startPositionMs).get()
     }
 
     override fun onAddMediaItems(
