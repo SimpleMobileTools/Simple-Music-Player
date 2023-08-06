@@ -1,6 +1,6 @@
 @file:UnstableApi
 
-package com.simplemobiletools.musicplayer.services.playback
+package com.simplemobiletools.musicplayer.services.playback.player
 
 import android.app.PendingIntent
 import android.content.Context
@@ -16,6 +16,9 @@ import androidx.media3.session.MediaLibraryService
 import com.simplemobiletools.commons.extensions.toast
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.MainActivity
+import com.simplemobiletools.musicplayer.services.playback.PlaybackService
+import com.simplemobiletools.musicplayer.services.playback.getCustomLayout
+import com.simplemobiletools.musicplayer.services.playback.getMediaSessionCallback
 
 private const val SEEK_INCREMENT_MS = 10000L
 
@@ -53,20 +56,22 @@ internal fun PlaybackService.getPlayerListener(): Player.Listener {
 }
 
 internal fun PlaybackService.initializeSessionAndPlayer(handleAudioFocus: Boolean, handleAudioBecomingNoisy: Boolean, skipSilence: Boolean) {
-    player = ExoPlayer.Builder(this)
-        .setWakeMode(C.WAKE_MODE_LOCAL)
-        .setHandleAudioBecomingNoisy(handleAudioBecomingNoisy)
-        .setAudioAttributes(
-            AudioAttributes.Builder()
-                .setUsage(C.USAGE_MEDIA)
-                .setContentType(C.AUDIO_CONTENT_TYPE_MUSIC)
-                .build(),
-            handleAudioFocus
-        )
-        .setSkipSilenceEnabled(skipSilence)
-        .setSeekBackIncrementMs(SEEK_INCREMENT_MS)
-        .setSeekForwardIncrementMs(SEEK_INCREMENT_MS)
-        .build()
+    player = SimplePlayer(
+        ExoPlayer.Builder(this)
+            .setWakeMode(C.WAKE_MODE_LOCAL)
+            .setHandleAudioBecomingNoisy(handleAudioBecomingNoisy)
+            .setAudioAttributes(
+                AudioAttributes.Builder()
+                    .setUsage(C.USAGE_MEDIA)
+                    .setContentType(C.AUDIO_CONTENT_TYPE_MUSIC)
+                    .build(),
+                handleAudioFocus
+            )
+            .setSkipSilenceEnabled(skipSilence)
+            .setSeekBackIncrementMs(SEEK_INCREMENT_MS)
+            .setSeekForwardIncrementMs(SEEK_INCREMENT_MS)
+            .build()
+    )
 
     player.addListener(getPlayerListener())
 

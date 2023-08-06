@@ -3,14 +3,16 @@ package com.simplemobiletools.musicplayer.services.playback
 import androidx.annotation.OptIn
 import androidx.media3.common.*
 import androidx.media3.common.util.UnstableApi
-import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.session.*
 import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.services.playback.library.MediaItemProvider
+import com.simplemobiletools.musicplayer.services.playback.player.SimplePlayer
+import com.simplemobiletools.musicplayer.services.playback.player.getPlayerListener
+import com.simplemobiletools.musicplayer.services.playback.player.initializeSessionAndPlayer
 
 @OptIn(UnstableApi::class)
 class PlaybackService : MediaLibraryService() {
-    internal lateinit var player: ExoPlayer
+    internal lateinit var player: SimplePlayer
 
     internal lateinit var mediaSession: MediaLibrarySession
 
