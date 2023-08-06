@@ -28,6 +28,12 @@ class PlaybackService : MediaLibraryService() {
 
     override fun onGetSession(controllerInfo: MediaSession.ControllerInfo) = mediaSession
 
+    private fun releaseMediaSession() {
+        mediaSession.release()
+        player.removeListener(getPlayerListener())
+        player.release()
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         releaseMediaSession()
@@ -39,12 +45,6 @@ class PlaybackService : MediaLibraryService() {
         player.stop()
         releaseMediaSession()
         stopSelf()
-    }
-
-    private fun releaseMediaSession() {
-        mediaSession.release()
-        player.removeListener(getPlayerListener())
-        player.release()
     }
 }
 
