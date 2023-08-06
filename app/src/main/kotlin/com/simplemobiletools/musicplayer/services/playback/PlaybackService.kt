@@ -6,8 +6,8 @@ import androidx.media3.common.util.UnstableApi
 import androidx.media3.session.*
 import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.services.playback.library.MediaItemProvider
+import com.simplemobiletools.musicplayer.services.playback.player.PlayerListener
 import com.simplemobiletools.musicplayer.services.playback.player.SimplePlayer
-import com.simplemobiletools.musicplayer.services.playback.player.getPlayerListener
 import com.simplemobiletools.musicplayer.services.playback.player.initializeSessionAndPlayer
 
 @OptIn(UnstableApi::class)
@@ -17,6 +17,8 @@ class PlaybackService : MediaLibraryService() {
     internal lateinit var mediaSession: MediaLibrarySession
 
     internal lateinit var mediaItemProvider: MediaItemProvider
+
+    internal var listener: PlayerListener? = null
 
     internal var currentRoot = ""
 
@@ -30,7 +32,7 @@ class PlaybackService : MediaLibraryService() {
 
     private fun releaseMediaSession() {
         mediaSession.release()
-        player.removeListener(getPlayerListener())
+        player.removeListener(listener!!)
         player.release()
     }
 
@@ -42,6 +44,7 @@ class PlaybackService : MediaLibraryService() {
     }
 
     fun stopService() {
+        player.pause()
         player.stop()
         releaseMediaSession()
         stopSelf()
