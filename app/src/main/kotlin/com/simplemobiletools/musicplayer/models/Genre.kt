@@ -14,6 +14,7 @@ data class Genre(
     @PrimaryKey(autoGenerate = true) var id: Long,
     @ColumnInfo(name = "title") val title: String,
     @ColumnInfo(name = "track_cnt") var trackCnt: Int,
+    @ColumnInfo(name = "album_art") var albumArt: String
 ) {
     companion object {
         fun getComparator(sorting: Int) = Comparator<Genre> { first, second ->

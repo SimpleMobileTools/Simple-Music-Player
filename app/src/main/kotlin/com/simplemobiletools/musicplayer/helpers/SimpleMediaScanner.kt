@@ -134,7 +134,9 @@ class SimpleMediaScanner(private val context: Application) {
         }
 
         for (genre in newGenres) {
-            genre.trackCnt = newTracks.filter { it.genreId == genre.id }.size
+            val genreTracks = newTracks.filter { it.genreId == genre.id }
+            genre.trackCnt = genreTracks.size
+            genre.albumArt = genreTracks.firstOrNull { it.coverArt.isNotEmpty() }?.coverArt.orEmpty()
         }
 
         // remove invalid albums, artists
@@ -343,7 +345,7 @@ class SimpleMediaScanner(private val context: Application) {
             val title = cursor.getStringValue(Audio.Genres.NAME)
 
             if (!title.isNullOrEmpty()) {
-                val genre = Genre(id = id, title = title, trackCnt = 0)
+                val genre = Genre(id = id, title = title, trackCnt = 0, albumArt = "")
                 genres.add(genre)
             }
         }
@@ -543,7 +545,7 @@ class SimpleMediaScanner(private val context: Application) {
         for ((title, tracksInGenre) in tracksGroupedByGenres) {
             val trackCnt = tracksInGenre.size
             if (trackCnt > 0 && title.isNotEmpty()) {
-                val genre = Genre(id = 0, title = title, trackCnt = trackCnt)
+                val genre = Genre(id = 0, title = title, trackCnt = trackCnt, albumArt = "")
                 val genreId = genre.hashCode().toLong()
                 genre.id = genreId
                 tracksInGenre.onEach { it.genreId = genreId }

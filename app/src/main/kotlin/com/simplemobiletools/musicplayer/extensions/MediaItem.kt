@@ -99,6 +99,7 @@ fun Genre.toMediaItem(): MediaItem {
         title = title,
         mediaId = id.toString(),
         mediaType = MediaMetadata.MEDIA_TYPE_GENRE,
-        trackCnt = trackCnt
+        trackCnt = trackCnt,
+        artworkUri = albumArt.toUri()
     )
 }
