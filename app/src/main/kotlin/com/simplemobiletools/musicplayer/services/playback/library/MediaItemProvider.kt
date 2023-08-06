@@ -5,18 +5,36 @@ import android.content.Context
 import android.net.Uri
 import android.os.Handler
 import android.os.Looper
+import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import androidx.media3.common.MediaItem
 import androidx.media3.common.MediaMetadata
-import androidx.media3.common.MediaMetadata.MEDIA_TYPE_PLAYLIST
+import androidx.media3.common.MediaMetadata.MediaType
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.session.MediaSession.MediaItemsWithStartPosition
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.musicplayer.R
-import com.simplemobiletools.musicplayer.extensions.audioHelper
-import com.simplemobiletools.musicplayer.extensions.buildMediaItem
-import com.simplemobiletools.musicplayer.extensions.queueDAO
-import com.simplemobiletools.musicplayer.extensions.toMediaItem
+import com.simplemobiletools.musicplayer.extensions.*
+import com.simplemobiletools.musicplayer.helpers.TAB_ALBUMS
+import com.simplemobiletools.musicplayer.helpers.TAB_ARTISTS
+import com.simplemobiletools.musicplayer.helpers.TAB_FOLDERS
+import com.simplemobiletools.musicplayer.helpers.TAB_GENRES
+import com.simplemobiletools.musicplayer.helpers.TAB_PLAYLISTS
+import com.simplemobiletools.musicplayer.helpers.TAB_TRACKS
 import com.simplemobiletools.musicplayer.models.QueueItem
+
+private const val STATE_CREATED = 1
+private const val STATE_INITIALIZING = 2
+private const val STATE_INITIALIZED = 3
+private const val STATE_ERROR = 4
+
+private const val SMP_ROOT_ID = "__ROOT__"
+private const val SMP_PLAYLISTS_ROOT_ID = "__PLAYLISTS__"
+private const val SMP_FOLDERS_ROOT_ID = "__FOLDERS__"
+private const val SMP_ARTISTS_ROOT_ID = "__ARTISTS__"
+private const val SMP_ALBUMS_ROOT_ID = "__ALBUMS__"
+private const val SMP_TRACKS_ROOT_ID = "__TRACKS__"
+private const val SMP_GENRES_ROOT_ID = "__GENRES__"
 
 @UnstableApi
 internal class MediaItemProvider(private val context: Context) {
@@ -47,57 +65,9 @@ internal class MediaItemProvider(private val context: Context) {
             }
         }
 
+    private val audioHelper = context.audioHelper
+
     init {
-        state = STATE_INITIALIZING
-
-        val rootChildren = mutableListOf<MediaItem>()
-        rootChildren += buildMediaItem(
-            title = context.getString(R.string.playlists),
-            artworkUri = buildDrawableUri(R.drawable.ic_playlist_vector),
-            mediaId = SMP_PLAYLISTS_ROOT_ID,
-            mediaType = MediaMetadata.MEDIA_TYPE_FOLDER_PLAYLISTS
-        )
-
-        rootChildren += buildMediaItem(
-            title = context.getString(R.string.folders),
-            artworkUri = buildDrawableUri(R.drawable.ic_folders_vector),
-            mediaId = SMP_FOLDERS_ROOT_ID,
-            mediaType = MediaMetadata.MEDIA_TYPE_FOLDER_PLAYLISTS
-        )
-
-        rootChildren += buildMediaItem(
-            title = context.getString(R.string.artists),
-            artworkUri = buildDrawableUri(R.drawable.ic_person_vector),
-            mediaId = SMP_ARTISTS_ROOT_ID,
-            mediaType = MediaMetadata.MEDIA_TYPE_FOLDER_ARTISTS
-        )
-
-        rootChildren += buildMediaItem(
-            title = context.getString(R.string.albums),
-            artworkUri = buildDrawableUri(R.drawable.ic_album_vector),
-            mediaId = SMP_ALBUMS_ROOT_ID,
-            mediaType = MediaMetadata.MEDIA_TYPE_FOLDER_ALBUMS
-        )
-
-        rootChildren += buildMediaItem(
-            title = context.getString(R.string.tracks),
-            artworkUri = buildDrawableUri(R.drawable.ic_music_note_vector),
-            mediaId = SMP_TRACKS_ROOT_ID,
-            mediaType = MEDIA_TYPE_PLAYLIST
-        )
-
-        rootChildren += buildMediaItem(
-            title = context.getString(R.string.genres),
-            artworkUri = buildDrawableUri(R.drawable.ic_genre_vector),
-            mediaId = SMP_GENRES_ROOT_ID,
-            mediaType = MediaMetadata.MEDIA_TYPE_FOLDER_GENRES
-        )
-
-        addNodeAndChildren(
-            item = buildMediaItem(title = context.getString(R.string.root), mediaId = SMP_ROOT_ID, mediaType = MediaMetadata.MEDIA_TYPE_FOLDER_MIXED),
-            children = rootChildren
-        )
-
         reload()
     }
 
@@ -131,17 +101,16 @@ internal class MediaItemProvider(private val context: Context) {
     }
 
     fun getItemFromSearch(searchQuery: String): MediaItem? {
-        return if (searchQuery in titleMap) {
-            titleMap[searchQuery]?.item
-        } else {
-            val partialMatches = titleMap.keys.filter { it.contains(searchQuery) }
-            if (partialMatches.isNotEmpty()) {
-                titleMap[partialMatches.first()]?.item
-            } else {
-                null
-            }
+        var mediaItem = titleMap[searchQuery]?.item
+        if (mediaItem == null) {
+            val partialMatch = titleMap.keys.find { it.contains(searchQuery) } ?: return null
+            mediaItem = titleMap[partialMatch]?.item
         }
+
+        return mediaItem
     }
+
+    fun getDefaultQueue() = getChildren(SMP_TRACKS_ROOT_ID)
 
     fun getRecentItemsWithStartPosition(random: Boolean = true): MediaItemsWithStartPosition {
         val recentItems = context.queueDAO.getAll().mapNotNull { getMediaItemFromQueueItem(it) }
@@ -171,46 +140,73 @@ internal class MediaItemProvider(private val context: Context) {
         }
 
         ensureBackgroundThread {
-            val trackId = mediaId.toLong()
+            val trackId = mediaId.filter { it.isDigit() }.toLong()
             val queueItems = mediaItems.mapIndexed { index, mediaItem ->
-                QueueItem(trackId = mediaItem.mediaId.toLong(), trackOrder = index, isCurrent = false, lastPosition = 0)
+                QueueItem(trackId = mediaItem.mediaId.filter { it.isDigit() }.toLong(), trackOrder = index, isCurrent = false, lastPosition = 0)
             }
 
-            context.audioHelper.updateQueue(queueItems, trackId, startPosition)
+            audioHelper.updateQueue(queueItems, trackId, startPosition)
         }
     }
 
     fun reload() {
+        state = STATE_INITIALIZING
+
+        val root = buildMediaItem(title = context.getString(R.string.root), mediaId = SMP_ROOT_ID, mediaType = MediaMetadata.MEDIA_TYPE_FOLDER_MIXED)
+        val rootChildren = RootCategories.buildRootChildren(context)
+        addNodeAndChildren(item = root, children = rootChildren)
+
         ensureBackgroundThread {
-            with(context.audioHelper) {
-                getAllPlaylists().forEach { playlist ->
-                    addNodeAndChildren(SMP_PLAYLISTS_ROOT_ID, playlist.toMediaItem(), getPlaylistTracks(playlist.id).map { it.toMediaItem() })
-                }
-
-                getAllFolders().forEach { folder ->
-                    addNodeAndChildren(SMP_FOLDERS_ROOT_ID, folder.toMediaItem(), getFolderTracks(folder.title).map { it.toMediaItem() })
-                }
-
-                getAllArtists().forEach { artist ->
-                    addNodeAndChildren(SMP_ARTISTS_ROOT_ID, artist.toMediaItem(), getArtistAlbums(artist.id).map { it.toMediaItem() })
-                }
-
-                getAllAlbums().forEach { album ->
-                    addNodeAndChildren(SMP_ALBUMS_ROOT_ID, album.toMediaItem(), getAlbumTracks(album.id).map { it.toMediaItem() })
-                }
-
-                getAllTracks().forEach { track ->
-                    val trackMediaItem = track.toMediaItem()
-                    addNodeAndChildren(SMP_TRACKS_ROOT_ID, trackMediaItem)
-                    titleMap[track.title.lowercase()] = MediaItemNode(trackMediaItem)
-                }
-
-                getAllGenres().forEach { genre ->
-                    addNodeAndChildren(SMP_GENRES_ROOT_ID, genre.toMediaItem(), getGenreTracks(genre.id).map { it.toMediaItem() })
-                }
+            try {
+                reloadPlaylists()
+                reloadFolders()
+                reloadArtists()
+                reloadAlbums()
+                reloadTracks()
+                reloadGenres()
+            } catch (e: Exception) {
+                state = STATE_ERROR
+                throw e
             }
 
             state = STATE_INITIALIZED
+        }
+    }
+
+    private fun reloadPlaylists() = with(audioHelper) {
+        getAllPlaylists().forEach { playlist ->
+            addNodeAndChildren(SMP_PLAYLISTS_ROOT_ID, playlist.toMediaItem(), getPlaylistTracks(playlist.id).map { it.toMediaItem() })
+        }
+    }
+
+    private fun reloadFolders() = with(audioHelper) {
+        getAllFolders().forEach { folder ->
+            addNodeAndChildren(SMP_FOLDERS_ROOT_ID, folder.toMediaItem(), getFolderTracks(folder.title).map { it.toMediaItem() })
+        }
+    }
+
+    private fun reloadArtists() = with(audioHelper) {
+        getAllArtists().forEach { artist ->
+            addNodeAndChildren(SMP_ARTISTS_ROOT_ID, artist.toMediaItem(), getArtistAlbums(artist.id).map { it.toMediaItem() })
+        }
+    }
+
+    private fun reloadAlbums() = with(audioHelper) {
+        getAllAlbums().forEach { album ->
+            addNodeAndChildren(SMP_ALBUMS_ROOT_ID, album.toMediaItem(), getAlbumTracks(album.id).map { it.toMediaItem() })
+        }
+    }
+
+    private fun reloadTracks() = with(audioHelper) {
+        getAllTracks().forEach { track ->
+            addNodeAndChildren(SMP_TRACKS_ROOT_ID, track.toMediaItem())
+            titleMap[track.title.lowercase()] = MediaItemNode(track.toMediaItem())
+        }
+    }
+
+    private fun reloadGenres() = with(audioHelper) {
+        getAllGenres().forEach { genre ->
+            addNodeAndChildren(SMP_GENRES_ROOT_ID, genre.toMediaItem(), getGenreTracks(genre.id).map { it.toMediaItem() })
         }
     }
 
@@ -219,39 +215,65 @@ internal class MediaItemProvider(private val context: Context) {
     private fun addNodeAndChildren(parentId: String? = null, item: MediaItem, children: List<MediaItem>? = null) {
         val itemNode = MediaItemNode(item)
         treeNodes[item.mediaId] = itemNode
+
         children?.forEach { child ->
             treeNodes[child.mediaId] = MediaItemNode(child)
             itemNode.addChild(child.mediaId)
         }
 
         if (parentId != null) {
-            getNode(parentId)!!.addChild(item.mediaId)
+            getNode(parentId)?.addChild(item.mediaId)
         }
     }
 
-    private fun buildDrawableUri(drawableRes: Int): Uri? {
-        return Uri.Builder()
-            .scheme(ContentResolver.SCHEME_ANDROID_RESOURCE)
-            .authority(context.resources.getResourcePackageName(drawableRes))
-            .appendPath(context.resources.getResourceTypeName(drawableRes))
-            .appendPath(context.resources.getResourceEntryName(drawableRes))
-            .build()
-    }
-
     private fun getMediaItemFromQueueItem(queueItem: QueueItem) = getNode(queueItem.trackId.toString())?.item
+}
+
+private enum class RootCategories(@StringRes val titleRes: Int, @DrawableRes val drawableRes: Int, val mediaId: String, val mediaType: @MediaType Int) {
+    PLAYLISTS(R.string.playlists, R.drawable.ic_playlist_vector, SMP_PLAYLISTS_ROOT_ID, MediaMetadata.MEDIA_TYPE_FOLDER_PLAYLISTS),
+    FOLDERS(R.string.folders, R.drawable.ic_folders_vector, SMP_FOLDERS_ROOT_ID, MediaMetadata.MEDIA_TYPE_FOLDER_PLAYLISTS),
+    ARTISTS(R.string.artists, R.drawable.ic_person_vector, SMP_ARTISTS_ROOT_ID, MediaMetadata.MEDIA_TYPE_FOLDER_ARTISTS),
+    ALBUMS(R.string.albums, R.drawable.ic_album_vector, SMP_ALBUMS_ROOT_ID, MediaMetadata.MEDIA_TYPE_FOLDER_ALBUMS),
+    TRACKS(R.string.tracks, R.drawable.ic_music_note_vector, SMP_TRACKS_ROOT_ID, MediaMetadata.MEDIA_TYPE_PLAYLIST),
+    GENRES(R.string.genres, R.drawable.ic_genre_vector, SMP_GENRES_ROOT_ID, MediaMetadata.MEDIA_TYPE_FOLDER_GENRES);
 
     companion object {
-        private const val SMP_ROOT_ID = "__ROOT__"
-        private const val SMP_PLAYLISTS_ROOT_ID = "__PLAYLISTS__"
-        private const val SMP_FOLDERS_ROOT_ID = "__FOLDERS__"
-        private const val SMP_ARTISTS_ROOT_ID = "__ARTISTS__"
-        private const val SMP_ALBUMS_ROOT_ID = "__ALBUMS__"
-        private const val SMP_TRACKS_ROOT_ID = "__TRACKS__"
-        private const val SMP_GENRES_ROOT_ID = "__GENRES__"
+        fun buildRootChildren(context: Context): List<MediaItem> {
+            val rootChildren = mutableListOf<MediaItem>()
+            values().forEach {
+                val flag = getTabFlag(it.mediaId)
+                if (context.isTabVisible(flag)) {
+                    rootChildren += buildMediaItem(
+                        title = context.getString(it.titleRes),
+                        artworkUri = buildDrawableUri(context, it.drawableRes),
+                        mediaId = it.mediaId,
+                        mediaType = it.mediaType
+                    )
+                }
+            }
 
-        private const val STATE_CREATED = 1
-        private const val STATE_INITIALIZING = 2
-        private const val STATE_INITIALIZED = 3
-        private const val STATE_ERROR = 4
+            return rootChildren
+        }
+
+        private fun getTabFlag(mediaId: String): Int {
+            return when (mediaId) {
+                SMP_PLAYLISTS_ROOT_ID -> TAB_PLAYLISTS
+                SMP_FOLDERS_ROOT_ID -> TAB_FOLDERS
+                SMP_ARTISTS_ROOT_ID -> TAB_ARTISTS
+                SMP_ALBUMS_ROOT_ID -> TAB_ALBUMS
+                SMP_TRACKS_ROOT_ID -> TAB_TRACKS
+                SMP_GENRES_ROOT_ID -> TAB_GENRES
+                else -> throw IllegalArgumentException("Invalid media id: $mediaId")
+            }
+        }
+
+        private fun buildDrawableUri(context: Context, drawableRes: Int): Uri? {
+            return Uri.Builder()
+                .scheme(ContentResolver.SCHEME_ANDROID_RESOURCE)
+                .authority(context.resources.getResourcePackageName(drawableRes))
+                .appendPath(context.resources.getResourceTypeName(drawableRes))
+                .appendPath(context.resources.getResourceEntryName(drawableRes))
+                .build()
+        }
     }
 }

@@ -14,7 +14,7 @@ import java.util.concurrent.Executors
 
 @UnstableApi
 internal fun PlaybackService.getMediaSessionCallback() = object : MediaLibrarySession.Callback {
-    private val browsers = mutableMapOf<String, MediaSession.ControllerInfo>()
+    private val browsers = mutableMapOf<MediaSession.ControllerInfo, String>()
     private val executorService by lazy {
         MoreExecutors.listeningDecorator(Executors.newFixedThreadPool(4))
     }
@@ -126,7 +126,7 @@ internal fun PlaybackService.getMediaSessionCallback() = object : MediaLibrarySe
         val children = mediaItemProvider.getChildren(parentId)
             ?: return@callWhenSourceReady LibraryResult.ofError(LibraryResult.RESULT_ERROR_BAD_VALUE)
 
-        browsers += parentId to browser
+        browsers[browser] = parentId
         session.notifyChildrenChanged(browser, parentId, children.size, params)
         LibraryResult.ofVoid()
     }
@@ -145,16 +145,20 @@ internal fun PlaybackService.getMediaSessionCallback() = object : MediaLibrarySe
         startIndex: Int,
         startPositionMs: Long
     ) = callWhenSourceReady {
-        // this is to avoid single items in the queue: https://github.com/androidx/media/issues/156
-        var allMediaItems = mediaItems
+        var allItems = mediaItems
         var realStartIndex = startIndex
+
+        // this is to avoid single items in the queue: https://github.com/androidx/media/issues/156
         if (startIndex == C.INDEX_UNSET && mediaItems.size == 1) {
             val currentItem = mediaItems[0]
-            allMediaItems = mediaItemProvider.getChildren(currentRoot)?.toMutableList() ?: allMediaItems
-            realStartIndex = allMediaItems.indexOfFirst { currentItem.mediaId == it.mediaId }
+            val queueItems = mediaItemProvider.getChildren(currentRoot)?.toMutableList()
+
+            allItems = queueItems?.takeIf { it.contains(currentItem) }
+                ?: mediaItemProvider.getDefaultQueue()?.toMutableList() ?: allItems
+            realStartIndex = allItems.indexOfFirst { it.mediaId == currentItem.mediaId }
         }
 
-        super.onSetMediaItems(mediaSession, controller, allMediaItems, realStartIndex, startPositionMs).get()
+        super.onSetMediaItems(mediaSession, controller, allItems, realStartIndex, startPositionMs).get()
     }
 
     override fun onAddMediaItems(
@@ -184,10 +188,14 @@ internal fun PlaybackService.getMediaSessionCallback() = object : MediaLibrarySe
     private fun reloadContent() {
         mediaItemProvider.reload()
         mediaItemProvider.whenReady {
+            val rootItem = mediaItemProvider.getRootItem()
+            val rootItemCount = mediaItemProvider.getChildren(rootItem.mediaId)?.size ?: 0
+
             executorService.execute {
-                browsers.forEach { (parentId, browser) ->
+                browsers.forEach { (browser, parentId) ->
                     val itemCount = mediaItemProvider.getChildren(parentId)?.size ?: 0
                     mediaSession.notifyChildrenChanged(browser, parentId, itemCount, null)
+                    mediaSession.notifyChildrenChanged(browser, rootItem.mediaId, rootItemCount, null)
                 }
             }
         }

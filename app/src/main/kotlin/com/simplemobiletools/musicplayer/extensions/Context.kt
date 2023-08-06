@@ -327,3 +327,6 @@ fun Context.loadTrackCoverArt(track: Track?): Bitmap? {
 
     return null
 }
+
+
+fun Context.isTabVisible(flag: Int) = config.showTabs and flag != 0
