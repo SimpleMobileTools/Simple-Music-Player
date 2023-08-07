@@ -5,15 +5,13 @@ import android.app.Application
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.media.MediaMetadataRetriever
 import android.media.ThumbnailUtils
-import android.net.Uri
 import android.os.Handler
 import android.os.Looper
 import android.provider.MediaStore
 import android.provider.MediaStore.Audio
 import android.util.Size
+import androidx.core.net.toUri
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.commons.helpers.isOreoPlus
@@ -259,75 +257,31 @@ fun Context.loadTrackCoverArt(track: Track?): Bitmap? {
         return null
     }
 
-    val path = track.path
-    if (path.isNotEmpty() && File(path).exists()) {
-        val coverArtHeight = resources.getCoverArtHeight()
+    val artworkUri = track.coverArt
+    if (artworkUri.startsWith("content://")) {
         try {
-            try {
-                val mediaMetadataRetriever = MediaMetadataRetriever()
-                mediaMetadataRetriever.setDataSource(path)
-                val rawArt = mediaMetadataRetriever.embeddedPicture
-                if (rawArt != null) {
-                    val options = BitmapFactory.Options()
-                    val bitmap = BitmapFactory.decodeByteArray(rawArt, 0, rawArt.size, options)
-                    if (bitmap != null) {
-                        val resultBitmap = if (bitmap.height > coverArtHeight * 2) {
-                            val ratio = bitmap.width / bitmap.height.toFloat()
-                            Bitmap.createScaledBitmap(bitmap, (coverArtHeight * ratio).toInt(), coverArtHeight, false)
-                        } else {
-                            bitmap
-                        }
-
-                        return resultBitmap
-                    }
-                }
-            } catch (ignored: OutOfMemoryError) {
-            } catch (ignored: Exception) {
-            }
-
-            val trackParentDirectory = File(path).parent?.trimEnd('/')
-            val albumArtFiles = arrayListOf("folder.jpg", "albumart.jpg", "cover.jpg")
-            albumArtFiles.forEach {
-                val albumArtFilePath = "$trackParentDirectory/$it"
-                if (File(albumArtFilePath).exists()) {
-                    val bitmap = BitmapFactory.decodeFile(albumArtFilePath)
-                    if (bitmap != null) {
-                        val resultBitmap = if (bitmap.height > coverArtHeight * 2) {
-                            val ratio = bitmap.width / bitmap.height.toFloat()
-                            Bitmap.createScaledBitmap(bitmap, (coverArtHeight * ratio).toInt(), coverArtHeight, false)
-                        } else {
-                            bitmap
-                        }
-
-                        return resultBitmap
-                    }
-                }
-            }
+            return MediaStore.Images.Media.getBitmap(contentResolver, artworkUri.toUri())
         } catch (ignored: Exception) {
-        } catch (ignored: Error) {
         }
     }
 
     if (isQPlus()) {
-        if (track.coverArt.startsWith("content://")) {
+        val coverArtHeight = resources.getCoverArtHeight()
+        val size = Size(coverArtHeight, coverArtHeight)
+        if (artworkUri.startsWith("content://")) {
             try {
-                return MediaStore.Images.Media.getBitmap(contentResolver, Uri.parse(track.coverArt))
+                return contentResolver.loadThumbnail(artworkUri.toUri(), size, null)
             } catch (ignored: Exception) {
             }
         }
 
-        val size = Size(512, 512)
-        if (path.startsWith("content://")) {
+        val path = track.path
+        if (path.isNotEmpty() && File(path).exists()) {
             try {
-                return contentResolver.loadThumbnail(Uri.parse(path), size, null)
+                return ThumbnailUtils.createAudioThumbnail(File(track.path), size, null)
+            } catch (ignored: OutOfMemoryError) {
             } catch (ignored: Exception) {
             }
-        }
-
-        try {
-            // ThumbnailUtils.createAudioThumbnail() has better logic for searching thumbnails
-            return ThumbnailUtils.createAudioThumbnail(File(path), size, null)
-        } catch (ignored: Exception) {
         }
     }
 
