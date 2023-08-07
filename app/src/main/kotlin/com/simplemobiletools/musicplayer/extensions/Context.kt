@@ -224,8 +224,14 @@ fun Context.getAlbumCoverArt(album: Album, callback: (coverArt: Any?) -> Unit) {
 
 fun Context.getGenreCoverArt(genre: Genre, callback: (coverArt: Any?) -> Unit) {
     ensureBackgroundThread {
-        val track = audioHelper.getGenreTracks(genre.id).firstOrNull()
-        getTrackCoverArt(track, callback)
+        if (genre.albumArt.isEmpty()) {
+            val track = audioHelper.getGenreTracks(genre.id).firstOrNull()
+            getTrackCoverArt(track, callback)
+        } else {
+            Handler(Looper.getMainLooper()).post {
+                callback(genre.albumArt)
+            }
+        }
     }
 }
 
