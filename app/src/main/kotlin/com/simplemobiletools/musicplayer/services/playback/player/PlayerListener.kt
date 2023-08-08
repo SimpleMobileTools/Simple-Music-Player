@@ -37,10 +37,9 @@ class PlayerListener(private val context: PlaybackService) : Player.Listener {
             )
         ) {
             val currentMediaItem = player.currentMediaItem
-            val currentMediaItems = player.currentMediaItems
             if (currentMediaItem != null) {
                 context.mediaItemProvider.saveRecentItemsWithStartPosition(
-                    items = currentMediaItems,
+                    mediaItems = player.currentMediaItems,
                     current = currentMediaItem,
                     startPosition = player.currentPosition
                 )

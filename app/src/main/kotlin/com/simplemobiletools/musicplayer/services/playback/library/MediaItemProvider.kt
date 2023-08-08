@@ -126,7 +126,7 @@ internal class MediaItemProvider(private val context: Context) {
             // return a random item if queue is empty
             val current = getRandomItem()
             val mediaItems = getChildren(SMP_TRACKS_ROOT_ID).orEmpty()
-            saveRecentItemsWithStartPosition(items = mediaItems, current = current, startPosition = 0)
+            saveRecentItemsWithStartPosition(mediaItems = mediaItems, current = current, startPosition = 0)
             return getRecentItemsWithStartPosition(random = false)
         }
 
@@ -134,14 +134,14 @@ internal class MediaItemProvider(private val context: Context) {
         return MediaItemsWithStartPosition(recentItems, startIndex, startPosition)
     }
 
-    fun saveRecentItemsWithStartPosition(items: List<MediaItem>, current: MediaItem, startPosition: Long) {
-        if (items.isEmpty()) {
+    fun saveRecentItemsWithStartPosition(mediaItems: List<MediaItem>, current: MediaItem, startPosition: Long) {
+        if (mediaItems.isEmpty()) {
             return
         }
 
         ensureBackgroundThread {
             val trackId = current.mediaId.toLong()
-            val queueItems = items.mapIndexed { index, mediaItem ->
+            val queueItems = mediaItems.mapIndexed { index, mediaItem ->
                 QueueItem(trackId = mediaItem.mediaId.toLong(), trackOrder = index, isCurrent = false, lastPosition = 0)
             }
 
