@@ -30,8 +30,9 @@ internal fun PlaybackService.initializeSessionAndPlayer(handleAudioFocus: Boolea
 }
 
 private fun Context.initializePlayer(handleAudioFocus: Boolean, handleAudioBecomingNoisy: Boolean, skipSilence: Boolean): SimplePlayer {
+    val renderersFactory = AudioOnlyRenderersFactory(context = this)
     return SimplePlayer(
-        ExoPlayer.Builder(this)
+        ExoPlayer.Builder(this, renderersFactory)
             .setWakeMode(C.WAKE_MODE_LOCAL)
             .setHandleAudioBecomingNoisy(handleAudioBecomingNoisy)
             .setAudioAttributes(
