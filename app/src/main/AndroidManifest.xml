@@ -203,36 +203,13 @@
                 android:resource="@xml/widget_info" />
         </receiver>
 
-        <!--   <receiver
-               android:name=".receivers.RemoteControlReceiver"
-               android:enabled="true"
-               android:exported="true">
-               <intent-filter android:priority="999">
-                   <action android:name="android.intent.action.MEDIA_BUTTON" />
-                   <category android:name="android.intent.category.DEFAULT" />
-               </intent-filter>
-           </receiver>-->
-
-        <!--    <receiver
-                android:name=".receivers.HeadsetPlugReceiver"
-                android:exported="true">
-                <intent-filter>
-                    <action android:name="android.intent.action.ACTION_HEADSET_PLUG" />
-                </intent-filter>
-            </receiver>
-
-            <receiver
-                android:name=".receivers.ControlActionsListener"
-                android:exported="false" />
-
-            <receiver
-                android:name=".receivers.NotificationDismissedReceiver"
-                android:enabled="true"
-                android:exported="true">
-                <intent-filter>
-                    <action android:name="com.simplemobiletools.musicplayer.action.NOTIFICATION_DISMISSED" />
-                </intent-filter>
-            </receiver>-->
+        <receiver
+            android:name="androidx.media3.session.MediaButtonReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MEDIA_BUTTON" />
+            </intent-filter>
+        </receiver>
 
         <provider
             android:name="androidx.core.content.FileProvider"
