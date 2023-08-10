@@ -2,8 +2,11 @@ package com.simplemobiletools.musicplayer.extensions
 
 import android.net.Uri
 import androidx.core.net.toUri
+import androidx.core.os.bundleOf
 import androidx.media3.common.MediaItem
 import androidx.media3.common.MediaMetadata
+import com.simplemobiletools.musicplayer.helpers.MEDIA_ITEM_DURATION
+import com.simplemobiletools.musicplayer.helpers.MEDIA_ITEM_PATH
 import com.simplemobiletools.musicplayer.models.*
 
 fun buildMediaItem(
@@ -15,9 +18,11 @@ fun buildMediaItem(
     mediaType: @MediaMetadata.MediaType Int,
     trackCnt: Int? = null,
     trackNumber: Int? = null,
+    duration: Int? = null,
     year: Int? = null,
     sourceUri: Uri? = null,
-    artworkUri: Uri? = null
+    artworkUri: Uri? = null,
+    path: String? = null
 ): MediaItem {
     val metadata = MediaMetadata.Builder()
         .setTitle(title)
@@ -31,6 +36,16 @@ fun buildMediaItem(
         .setReleaseYear(year)
         .setMediaType(MediaMetadata.MEDIA_TYPE_MUSIC)
         .setArtworkUri(artworkUri)
+        .apply {
+            if (duration != null) {
+                setExtras(
+                    bundleOf(
+                        MEDIA_ITEM_DURATION to duration,
+                        MEDIA_ITEM_PATH to path
+                    )
+                )
+            }
+        }
         .build()
 
     return MediaItem.Builder()
@@ -49,6 +64,7 @@ fun Track.toMediaItem(): MediaItem {
         genre = genre,
         mediaType = MediaMetadata.MEDIA_TYPE_MUSIC,
         trackNumber = trackId,
+        duration = duration,
         sourceUri = getUri(),
         artworkUri = coverArt.toUri()
     )

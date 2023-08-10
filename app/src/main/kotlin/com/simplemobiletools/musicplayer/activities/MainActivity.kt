@@ -11,6 +11,8 @@ import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.media3.common.MediaItem
+import androidx.media3.common.Player
 import androidx.viewpager.widget.ViewPager
 import com.simplemobiletools.commons.dialogs.FilePickerDialog
 import com.simplemobiletools.commons.dialogs.PermissionRequiredDialog
@@ -31,7 +33,7 @@ import com.simplemobiletools.musicplayer.fragments.MyViewPagerFragment
 import com.simplemobiletools.musicplayer.helpers.*
 import com.simplemobiletools.musicplayer.helpers.M3uImporter.ImportResult
 import com.simplemobiletools.musicplayer.models.Events
-import com.simplemobiletools.musicplayer.services.MusicService
+import com.simplemobiletools.musicplayer.services.playback.CustomCommands
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_albums.albums_fragment_holder
 import kotlinx.android.synthetic.main.fragment_artists.artists_fragment_holder
@@ -46,7 +48,7 @@ import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import java.io.FileOutputStream
 
-class MainActivity : SimpleActivity() {
+class MainActivity : SimpleMusicActivity(), Player.Listener {
     private val PICK_IMPORT_SOURCE_INTENT = 1
 
     private var bus: EventBus? = null
@@ -206,14 +208,6 @@ class MainActivity : SimpleActivity() {
             }
         }
 
-        if (MusicService.mCurrTrack == null) {
-            ensureBackgroundThread {
-                if (queueDAO.getAll().isNotEmpty()) {
-                    sendIntent(INIT_QUEUE)
-                }
-            }
-        }
-
         refreshAllFragments()
     }
 
@@ -359,10 +353,13 @@ class MainActivity : SimpleActivity() {
         getCurrentFragment()?.onSortOpen(this)
     }
 
-    private fun updateCurrentTrackBar() {
-        current_track_bar.updateColors()
-        current_track_bar.updateCurrentTrack(MusicService.mCurrTrack)
-        current_track_bar.updateTrackState(MusicService.isPlaying())
+    private fun updateCurrentTrackBar() = withController {
+        current_track_bar.initialize {
+            withController { togglePlayback() }
+        }
+
+        current_track_bar.updateCurrentTrack(currentMediaItem)
+        current_track_bar.updateTrackState(isPlaying)
     }
 
     private fun createNewPlaylist() {
@@ -524,14 +521,14 @@ class MainActivity : SimpleActivity() {
         startSleepTimer()
     }
 
-    private fun startSleepTimer() {
+    private fun startSleepTimer() = withController {
         sleep_timer_holder.fadeIn()
-        sendIntent(START_SLEEP_TIMER)
+        sendCommand(CustomCommands.TOGGLE_SLEEP_TIMER)
     }
 
-    private fun stopSleepTimer() {
-        sendIntent(STOP_SLEEP_TIMER)
+    private fun stopSleepTimer() = withController {
         sleep_timer_holder.fadeOut()
+        sendCommand(CustomCommands.TOGGLE_SLEEP_TIMER)
     }
 
     private fun getAllFragments() = arrayListOf(
@@ -543,20 +540,9 @@ class MainActivity : SimpleActivity() {
         genres_fragment_holder
     )
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    fun trackChangedEvent(event: Events.TrackChanged) {
-        current_track_bar.updateCurrentTrack(event.track)
-    }
+    override fun onMediaItemTransition(mediaItem: MediaItem?, reason: Int) = current_track_bar.updateCurrentTrack(mediaItem)
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    fun trackStateChanged(event: Events.TrackStateChanged) {
-        current_track_bar.updateTrackState(event.isPlaying)
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    fun noStoragePermission(event: Events.NoStoragePermission) {
-        toast(R.string.no_storage_permissions)
-    }
+    override fun onIsPlayingChanged(isPlaying: Boolean) = current_track_bar.updateTrackState(isPlaying)
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun sleepTimerChanged(event: Events.SleepTimerChanged) {
@@ -564,6 +550,7 @@ class MainActivity : SimpleActivity() {
         sleep_timer_holder.beVisible()
 
         if (event.seconds == 0) {
+            config.sleepInTS = 0
             finish()
         }
     }

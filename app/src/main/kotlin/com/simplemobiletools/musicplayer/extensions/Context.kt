@@ -12,6 +12,7 @@ import android.provider.MediaStore
 import android.provider.MediaStore.Audio
 import android.util.Size
 import androidx.core.net.toUri
+import androidx.media3.common.MediaItem
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.commons.helpers.isOreoPlus
@@ -244,6 +245,26 @@ fun Context.getTrackCoverArt(track: Track?, callback: (coverArt: Any?) -> Unit) 
 
         val coverArt = track.coverArt.ifEmpty {
             loadTrackCoverArt(track)
+        }
+
+        Handler(Looper.getMainLooper()).post {
+            callback(coverArt)
+        }
+    }
+}
+
+fun Context.getMediaItemCoverArt(mediaItem: MediaItem?, callback: (coverArt: Any?) -> Unit) {
+    ensureBackgroundThread {
+        if (mediaItem == null) {
+            Handler(Looper.getMainLooper()).post {
+                callback(null)
+            }
+            return@ensureBackgroundThread
+        }
+
+        val artworkUri = mediaItem.mediaMetadata.artworkUri.toString()
+        val coverArt = artworkUri.ifEmpty {
+            // TODO: load bitmap using path
         }
 
         Handler(Looper.getMainLooper()).post {
