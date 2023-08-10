@@ -1,10 +1,16 @@
 package com.simplemobiletools.musicplayer.services.playback
 
+import android.os.Handler
+import android.os.Looper
 import androidx.annotation.OptIn
+import androidx.core.os.postDelayed
 import androidx.media3.common.*
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.session.*
+import com.simplemobiletools.commons.extensions.hasPermission
 import com.simplemobiletools.musicplayer.extensions.config
+import com.simplemobiletools.musicplayer.helpers.NotificationHelper
+import com.simplemobiletools.musicplayer.helpers.getPermissionToRequest
 import com.simplemobiletools.musicplayer.services.playback.library.MediaItemProvider
 import com.simplemobiletools.musicplayer.services.playback.player.PlayerListener
 import com.simplemobiletools.musicplayer.services.playback.player.SimplePlayer
@@ -26,6 +32,13 @@ class PlaybackService : MediaLibraryService() {
         super.onCreate()
         initializeSessionAndPlayer(handleAudioFocus = true, handleAudioBecomingNoisy = true, skipSilence = config.gaplessPlayback)
         mediaItemProvider = MediaItemProvider(this)
+
+        // we may or may not have storage permission at this time
+        if (hasPermission(getPermissionToRequest())) {
+            mediaItemProvider.reload()
+        } else {
+            showNoPermissionNotification()
+        }
     }
 
     override fun onGetSession(controllerInfo: MediaSession.ControllerInfo) = mediaSession
@@ -48,6 +61,18 @@ class PlaybackService : MediaLibraryService() {
         player.stop()
         releaseMediaSession()
         stopSelf()
+    }
+
+    private fun showNoPermissionNotification() {
+        Handler(Looper.getMainLooper()).postDelayed(delayInMillis = 100L) {
+            try {
+                startForeground(
+                    NotificationHelper.NOTIFICATION_ID,
+                    NotificationHelper.createInstance(this).createNoPermissionNotification()
+                )
+            } catch (ignored: Exception) {
+            }
+        }
     }
 }
 

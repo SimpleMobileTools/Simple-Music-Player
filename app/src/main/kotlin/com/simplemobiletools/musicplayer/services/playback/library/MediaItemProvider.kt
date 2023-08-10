@@ -67,10 +67,6 @@ internal class MediaItemProvider(private val context: Context) {
 
     private val audioHelper = context.audioHelper
 
-    init {
-        reload()
-    }
-
     fun whenReady(performAction: (Boolean) -> Unit): Boolean {
         return when (state) {
             STATE_CREATED, STATE_INITIALIZING -> {

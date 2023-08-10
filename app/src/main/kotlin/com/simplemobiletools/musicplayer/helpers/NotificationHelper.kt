@@ -101,6 +101,18 @@ class NotificationHelper(private val context: Context, private val mediaSessionT
         callback(builder.build())
     }
 
+    fun createNoPermissionNotification(): Notification {
+        return NotificationCompat.Builder(context, NOTIFICATION_CHANNEL)
+            .setContentTitle(context.getString(R.string.no_storage_permissions))
+            .setSmallIcon(R.drawable.ic_headset_small)
+            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+            .setPriority(NotificationCompat.PRIORITY_MAX)
+            .setContentIntent(getContentIntent())
+            .setChannelId(NOTIFICATION_CHANNEL)
+            .setCategory(Notification.CATEGORY_PROGRESS)
+            .build()
+    }
+
     fun createMediaScannerNotification(contentText: String, progress: Int, max: Int): Notification {
         val title = context.getString(R.string.scanning)
         return NotificationCompat.Builder(context, NOTIFICATION_CHANNEL)
