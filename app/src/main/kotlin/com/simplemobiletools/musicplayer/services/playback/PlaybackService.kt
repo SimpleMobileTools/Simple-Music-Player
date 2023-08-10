@@ -59,7 +59,6 @@ class PlaybackService : MediaLibraryService() {
     fun stopService() {
         player.pause()
         player.stop()
-        releaseMediaSession()
         stopSelf()
     }
 

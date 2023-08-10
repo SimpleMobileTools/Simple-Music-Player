@@ -9,8 +9,6 @@ import com.simplemobiletools.commons.helpers.isTiramisuPlus
 const val PROGRESS = "progress"
 const val EDITED_TRACK = "edited_track"
 const val ALL_TRACKS_PLAYLIST_ID = 1
-const val START_SLEEP_TIMER = "start_sleep_timer"
-const val STOP_SLEEP_TIMER = "stop_sleep_timer"
 const val TRACK_ID = "track_id"
 const val RESTART_PLAYER = "RESTART_PLAYER"
 const val EQUALIZER_PRESET_CUSTOM = -1
@@ -48,6 +46,8 @@ const val SET_PLAYBACK_SPEED = PATH + "SET_PLAYBACK_SPEED"
 const val UPDATE_QUEUE_SIZE = PATH + "UPDATE_QUEUE_SIZE"
 const val UPDATE_GAPLESS_PLAYBACK = PATH + "UPDATE_GAPLESS_PLAYBACK"
 const val TRACK_STATE_CHANGED = "TRACK_STATE_CHANGED"
+const val MEDIA_ITEM_DURATION = "MEDIA_ITEM_DURATION"
+const val MEDIA_ITEM_PATH = "MEDIA_ITEM_PATH"
 
 // shared preferences
 const val SHUFFLE = "shuffle"
