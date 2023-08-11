@@ -14,7 +14,6 @@ import com.simplemobiletools.musicplayer.services.playback.PlaybackService
 import java.util.concurrent.Executors
 
 abstract class SimpleMusicActivity : SimpleActivity(), Player.Listener {
-
     private val executorService by lazy {
         MoreExecutors.listeningDecorator(Executors.newFixedThreadPool(4))
     }
@@ -23,10 +22,10 @@ abstract class SimpleMusicActivity : SimpleActivity(), Player.Listener {
     private val controller: MediaController
         get() {
             if (controllerFuture.isDone) {
-                val completedController = controllerFuture.get()
-                if (!completedController.isConnected) {
+                val activeController = controllerFuture.get()
+                if (!activeController.isConnected) {
                     runOnUiThread {
-                        completedController.release()
+                        activeController.release()
                     }
 
                     newControllerAsync()
@@ -36,6 +35,21 @@ abstract class SimpleMusicActivity : SimpleActivity(), Player.Listener {
             return controllerFuture.get()
         }
 
+    @CallSuper
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        lifecycle.addObserver(
+            LifecycleEventObserver { _, event ->
+                when (event) {
+                    Lifecycle.Event.ON_START -> acquireController()
+                    Lifecycle.Event.ON_STOP -> releaseController()
+                    else -> {}
+                }
+            }
+        )
+
+        newControllerAsync()
+    }
 
     private fun newControllerAsync() {
         controllerFuture = MediaController
@@ -45,21 +59,6 @@ abstract class SimpleMusicActivity : SimpleActivity(), Player.Listener {
         controllerFuture.addListener({
             controller.addListener(this)
         }, MoreExecutors.directExecutor())
-    }
-
-    private val lifecycleObserver = LifecycleEventObserver { _, event ->
-        when (event) {
-            Lifecycle.Event.ON_START -> acquireController()
-            Lifecycle.Event.ON_STOP -> releaseController()
-            else -> {}
-        }
-    }
-
-    @CallSuper
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        lifecycle.addObserver(lifecycleObserver)
-        newControllerAsync()
     }
 
     private fun acquireController() {
@@ -77,9 +76,9 @@ abstract class SimpleMusicActivity : SimpleActivity(), Player.Listener {
             callback(controller)
         } else {
             executorService.execute {
-                val controller = controller
+                val activeController = controller
                 runOnUiThread {
-                    callback(controller)
+                    callback(activeController)
                 }
             }
         }
