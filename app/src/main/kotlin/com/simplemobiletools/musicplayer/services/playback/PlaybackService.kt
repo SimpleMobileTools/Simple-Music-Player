@@ -19,13 +19,10 @@ import com.simplemobiletools.musicplayer.services.playback.player.initializeSess
 @OptIn(UnstableApi::class)
 class PlaybackService : MediaLibraryService() {
     internal lateinit var player: SimpleMusicPlayer
-
     internal lateinit var mediaSession: MediaLibrarySession
-
     internal lateinit var mediaItemProvider: MediaItemProvider
 
     internal var listener: PlayerListener? = null
-
     internal var currentRoot = ""
 
     override fun onCreate() {
