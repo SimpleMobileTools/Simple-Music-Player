@@ -353,9 +353,9 @@ class MainActivity : SimpleMusicActivity(), Player.Listener {
         getCurrentFragment()?.onSortOpen(this)
     }
 
-    private fun updateCurrentTrackBar() = withController {
+    private fun updateCurrentTrackBar() = withPlayer {
         current_track_bar.initialize {
-            withController { togglePlayback() }
+            withPlayer { togglePlayback() }
         }
 
         current_track_bar.updateCurrentTrack(currentMediaItem)
@@ -521,12 +521,12 @@ class MainActivity : SimpleMusicActivity(), Player.Listener {
         startSleepTimer()
     }
 
-    private fun startSleepTimer() = withController {
+    private fun startSleepTimer() = withPlayer {
         sleep_timer_holder.fadeIn()
         sendCommand(CustomCommands.TOGGLE_SLEEP_TIMER)
     }
 
-    private fun stopSleepTimer() = withController {
+    private fun stopSleepTimer() = withPlayer {
         sleep_timer_holder.fadeOut()
         sendCommand(CustomCommands.TOGGLE_SLEEP_TIMER)
     }
@@ -542,11 +542,11 @@ class MainActivity : SimpleMusicActivity(), Player.Listener {
 
     override fun onMediaItemTransition(mediaItem: MediaItem?, reason: Int) = current_track_bar.updateCurrentTrack(mediaItem)
 
-    override fun onPlaybackStateChanged(playbackState: Int) = withController {
+    override fun onPlaybackStateChanged(playbackState: Int) = withPlayer {
         current_track_bar.updateTrackState(isPlayingOrBuffering)
     }
 
-    override fun onIsPlayingChanged(isPlaying: Boolean) = withController {
+    override fun onIsPlayingChanged(isPlaying: Boolean) = withPlayer {
         current_track_bar.updateTrackState(isPlayingOrBuffering)
     }
 

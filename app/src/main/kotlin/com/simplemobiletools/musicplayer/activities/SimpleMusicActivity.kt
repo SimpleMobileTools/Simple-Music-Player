@@ -71,7 +71,7 @@ abstract class SimpleMusicActivity : SimpleActivity(), Player.Listener {
         MediaController.releaseFuture(controllerFuture)
     }
 
-    fun withController(callback: MediaController.() -> Unit) {
+    fun withPlayer(callback: MediaController.() -> Unit) {
         if (controllerFuture.isDone && controllerFuture.get().isConnected) {
             callback(controller)
         } else {
