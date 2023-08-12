@@ -89,6 +89,10 @@ class MainActivity : SimpleMusicActivity(), Player.Listener {
         super.onResume()
         if (storedShowTabs != config.showTabs) {
             config.lastUsedViewPagerPage = 0
+            withPlayer {
+                sendCommand(CustomCommands.RELOAD_CONTENT)
+            }
+
             System.exit(0)
             return
         }
