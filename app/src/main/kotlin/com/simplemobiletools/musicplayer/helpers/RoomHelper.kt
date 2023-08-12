@@ -13,6 +13,7 @@ import com.simplemobiletools.musicplayer.models.Events
 import com.simplemobiletools.musicplayer.models.Track
 import org.greenrobot.eventbus.EventBus
 import java.io.File
+import kotlin.math.min
 
 class RoomHelper(val context: Context) {
     fun insertTracksWithPlaylist(tracks: ArrayList<Track>) {
@@ -57,12 +58,12 @@ class RoomHelper(val context: Context) {
 
         val parts = paths.size / ITEMS_PER_GROUP
         for (i in 0..parts) {
-            val sublist = paths.subList(i * ITEMS_PER_GROUP, Math.min((i + 1) * ITEMS_PER_GROUP, paths.size))
+            val sublist = paths.subList(i * ITEMS_PER_GROUP, min((i + 1) * ITEMS_PER_GROUP, paths.size))
             val questionMarks = getQuestionMarks(sublist.size)
             val selection = "${Audio.Media.DATA} IN ($questionMarks)"
             val selectionArgs = sublist.toTypedArray()
 
-            context.queryCursor(uri, projection.toTypedArray(), selection, selectionArgs) { cursor ->
+            context.queryCursor(uri, projection.toTypedArray(), selection, selectionArgs, showErrors = true) { cursor ->
                 val mediaStoreId = cursor.getLongValue(Audio.Media._ID)
                 val title = cursor.getStringValue(Audio.Media.TITLE)
                 val artist = cursor.getStringValue(Audio.Media.ARTIST)
@@ -72,8 +73,8 @@ class RoomHelper(val context: Context) {
                 val album = cursor.getStringValue(Audio.Media.ALBUM)
                 val albumId = cursor.getLongValue(Audio.Media.ALBUM_ID)
                 val coverArt = ContentUris.withAppendedId(artworkUri, albumId).toString()
-                val year = cursor.getIntValue(Audio.Media.YEAR)
-                val dateAdded = cursor.getIntValue(Audio.Media.DATE_ADDED)
+                val year = cursor.getIntValueOrNull(Audio.Media.YEAR) ?: 0
+                val dateAdded = cursor.getIntValueOrNull(Audio.Media.DATE_ADDED) ?: 0
                 val folderName = if (isQPlus()) {
                     cursor.getStringValue(Audio.Media.BUCKET_DISPLAY_NAME) ?: MediaStore.UNKNOWN_STRING
                 } else {
