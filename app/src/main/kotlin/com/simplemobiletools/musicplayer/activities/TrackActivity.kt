@@ -7,55 +7,48 @@ import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.provider.MediaStore
+import android.util.Size
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
 import android.widget.SeekBar
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.os.postDelayed
 import androidx.core.view.GestureDetectorCompat
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.DataSource
-import com.bumptech.glide.load.engine.GlideException
+import androidx.media3.common.MediaItem
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
-import com.bumptech.glide.request.target.Target
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.MEDIUM_ALPHA
-import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.extensions.*
 import com.simplemobiletools.musicplayer.fragments.PlaybackSpeedFragment
 import com.simplemobiletools.musicplayer.helpers.*
 import com.simplemobiletools.musicplayer.interfaces.PlaybackSpeedListener
-import com.simplemobiletools.musicplayer.models.Events
-import com.simplemobiletools.musicplayer.models.Track
-import com.simplemobiletools.musicplayer.services.MusicService
+import com.simplemobiletools.musicplayer.services.playback.CustomCommands
 import kotlinx.android.synthetic.main.activity_track.*
-import org.greenrobot.eventbus.EventBus
-import org.greenrobot.eventbus.Subscribe
-import org.greenrobot.eventbus.ThreadMode
 import java.text.DecimalFormat
 import kotlin.math.min
+import kotlin.time.Duration.Companion.milliseconds
 
-class TrackActivity : SimpleActivity(), PlaybackSpeedListener {
+class TrackActivity : SimpleMusicActivity(), PlaybackSpeedListener {
     private val SWIPE_DOWN_THRESHOLD = 100
 
     private var isThirdPartyIntent = false
-    private var bus: EventBus? = null
     private lateinit var nextTrackPlaceholder: Drawable
+
+    private val handler = Handler(Looper.getMainLooper())
+    private val updateIntervalMillis = 500L
 
     override fun onCreate(savedInstanceState: Bundle?) {
         showTransparentTop = true
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_track)
         nextTrackPlaceholder = resources.getColoredDrawableWithColor(R.drawable.ic_headset, getProperTextColor())
-        bus = EventBus.getDefault()
-        bus!!.register(this)
         setupButtons()
         setupFlingListener()
 
@@ -75,35 +68,19 @@ class TrackActivity : SimpleActivity(), PlaybackSpeedListener {
             return
         }
 
-        val trackType = object : TypeToken<Track>() {}.type
-        val track = Gson().fromJson<Track>(intent.getStringExtra(TRACK), trackType) ?: MusicService.mCurrTrack
-        if (track == null) {
-            toast(R.string.unknown_error_occurred)
-            finish()
-            return
-        }
-
-        setupTrackInfo(track)
-
-        if (intent.getBooleanExtra(RESTART_PLAYER, false)) {
-            intent.removeExtra(RESTART_PLAYER)
-            Intent(this, MusicService::class.java).apply {
-                putExtra(TRACK_ID, track.mediaStoreId)
-                action = INIT
-                try {
-                    startService(this)
-                    activity_track_play_pause.updatePlayPauseIcon(true, getProperTextColor())
-                } catch (e: Exception) {
-                    showErrorToast(e)
-                }
+        withPlayer {
+            setupTrackInfo(currentMediaItem)
+            setupNextTrackInfo(nextMediaItem)
+            updatePlayerState()
+            if (intent.getBooleanExtra(RESTART_PLAYER, false)) {
+                intent.removeExtra(RESTART_PLAYER)
+                play()
             }
-        } else {
-            sendIntent(BROADCAST_STATUS)
-        }
 
-        next_track_holder.background = ColorDrawable(getProperBackgroundColor())
-        next_track_holder.setOnClickListener {
-            startActivity(Intent(applicationContext, QueueActivity::class.java))
+            next_track_holder.background = ColorDrawable(getProperBackgroundColor())
+            next_track_holder.setOnClickListener {
+                startActivity(Intent(applicationContext, QueueActivity::class.java))
+            }
         }
     }
 
@@ -112,21 +89,35 @@ class TrackActivity : SimpleActivity(), PlaybackSpeedListener {
         updateTextColors(activity_track_holder)
         activity_track_title.setTextColor(getProperTextColor())
         activity_track_artist.setTextColor(getProperTextColor())
+        updatePlayerState()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        cancelProgressUpdate()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        bus?.unregister(this)
-
         if (isThirdPartyIntent && !isChangingConfigurations) {
-            sendIntent(FINISH_IF_NOT_PLAYING)
+            withPlayer {
+                if (!isPlayingOrBuffering) {
+                    sendCommand(CustomCommands.CLOSE_PLAYER)
+                }
+            }
         }
     }
 
-    private fun setupTrackInfo(track: Track) {
-        setupTopArt(track)
-        activity_track_title.text = track.title
-        activity_track_artist.text = track.artist
+    private fun setupTrackInfo(item: MediaItem?) {
+        if (item == null) {
+            return
+        }
+
+        val metadata = item.mediaMetadata
+
+        setupTopArt(item)
+        activity_track_title.text = metadata.title
+        activity_track_artist.text = metadata.artist
 
         activity_track_title.setOnLongClickListener {
             copyToClipboard(activity_track_title.value)
@@ -138,32 +129,26 @@ class TrackActivity : SimpleActivity(), PlaybackSpeedListener {
             true
         }
 
-        activity_track_progressbar.max = track.duration
-        activity_track_progress_max.text = track.duration.getFormattedDuration()
+        activity_track_progressbar.max = metadata.durationInSeconds
+        activity_track_progress_max.text = metadata.durationInSeconds.getFormattedDuration()
     }
 
     private fun initThirdPartyIntent() {
         next_track_holder.beGone()
-        val fileUri = intent.data
-        Intent(this, MusicService::class.java).apply {
-            data = fileUri
-            action = INIT_PATH
-
-            try {
-                startService(this)
-            } catch (e: Exception) {
-                showErrorToast(e)
+        getMediaItemFromUri(intent.data) {
+            runOnUiThread {
+                playMediaItems(listOf(it))
             }
         }
     }
 
     private fun setupButtons() {
-        activity_track_toggle_shuffle.setOnClickListener { toggleShuffle() }
-        activity_track_previous.setOnClickListener { sendIntent(PREVIOUS) }
-        activity_track_play_pause.setOnClickListener { sendIntent(PLAYPAUSE) }
-        activity_track_next.setOnClickListener { sendIntent(NEXT) }
-        activity_track_progress_current.setOnClickListener { sendIntent(SKIP_BACKWARD) }
-        activity_track_progress_max.setOnClickListener { sendIntent(SKIP_FORWARD) }
+        activity_track_toggle_shuffle.setOnClickListener { withPlayer { toggleShuffle() } }
+        activity_track_previous.setOnClickListener { withPlayer { seekToPreviousMediaItem() } }
+        activity_track_play_pause.setOnClickListener { withPlayer { togglePlayback() } }
+        activity_track_next.setOnClickListener { withPlayer { seekToNextMediaItem() } }
+        activity_track_progress_current.setOnClickListener { seekBack() }
+        activity_track_progress_max.setOnClickListener { seekForward() }
         activity_track_playback_setting.setOnClickListener { togglePlaybackSetting() }
         activity_track_speed_click_area.setOnClickListener { showPlaybackSpeedPicker() }
         setupShuffleButton()
@@ -175,105 +160,75 @@ class TrackActivity : SimpleActivity(), PlaybackSpeedListener {
         }
     }
 
-    private fun setupNextTrackInfo(track: Track?) {
-        val artist = if (track?.artist?.trim()?.isNotEmpty() == true && track.artist != MediaStore.UNKNOWN_STRING) {
-            " • ${track.artist}"
+    private fun setupNextTrackInfo(item: MediaItem?) {
+        if (item == null) {
+            next_track_holder.beGone()
+            return
+        }
+
+        val metadata = item.mediaMetadata
+        val artist = if (metadata.artist?.trim()?.isNotEmpty() == true && metadata.artist != MediaStore.UNKNOWN_STRING) {
+            " • ${metadata.artist}"
         } else {
             ""
         }
 
-        next_track_label.text = "${getString(R.string.next_track)} ${track?.title}$artist"
+        next_track_label.text = "${getString(R.string.next_track)} ${metadata.title}$artist"
 
-        getTrackCoverArt(track) { coverArt ->
+        getMediaItemCoverArt(item) { coverArt ->
             val cornerRadius = resources.getDimension(R.dimen.rounded_corner_radius_small).toInt()
             val wantedSize = resources.getDimension(R.dimen.song_image_size).toInt()
-            val options = RequestOptions()
-                .transform(CenterCrop(), RoundedCorners(cornerRadius))
 
-           ensureBackgroundThread {
-               try {
-                   // change cover image manually only once loaded successfully to avoid blinking at fails and placeholders
-                   Glide.with(this)
-                       .load(coverArt)
-                       .apply(options)
-                       .listener(object : RequestListener<Drawable> {
-                           override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
-                               runOnUiThread {
-                                   next_track_image.setImageDrawable(nextTrackPlaceholder)
-                               }
-                               return true
-                           }
-
-                           override fun onResourceReady(
-                               resource: Drawable,
-                               model: Any?,
-                               target: Target<Drawable>?,
-                               dataSource: DataSource?,
-                               isFirstResource: Boolean
-                           ): Boolean {
-                               runOnUiThread {
-                                   next_track_image.setImageDrawable(resource)
-                               }
-                               return false
-                           }
-                       })
-                       .into(wantedSize, wantedSize)
-                       .get()
-               } catch (ignored: Exception) {
-               }
-           }
+            // change cover image manually only once loaded successfully to avoid blinking at fails and placeholders
+            loadGlideResource(
+                model = coverArt,
+                options = RequestOptions().transform(CenterCrop(), RoundedCorners(cornerRadius)),
+                size = Size(wantedSize, wantedSize),
+                onLoadFailed = {
+                    runOnUiThread {
+                        next_track_image.setImageDrawable(nextTrackPlaceholder)
+                    }
+                },
+                onResourceReady = {
+                    runOnUiThread {
+                        next_track_image.setImageDrawable(it)
+                    }
+                }
+            )
         }
     }
 
-    private fun setupTopArt(track: Track) {
-        getTrackCoverArt(track) { coverArt ->
+    private fun setupTopArt(mediaItem: MediaItem) {
+        getMediaItemCoverArt(mediaItem) { coverArt ->
             var wantedHeight = resources.getCoverArtHeight()
             wantedHeight = min(wantedHeight, realScreenSize.y / 2)
             val wantedWidth = realScreenSize.x
 
             // change cover image manually only once loaded successfully to avoid blinking at fails and placeholders
-            ensureBackgroundThread {
-                try {
-                    val options = RequestOptions().centerCrop()
-                    Glide.with(this)
-                        .load(coverArt)
-                        .apply(options)
-                        .listener(object : RequestListener<Drawable> {
-                            override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
-                                val drawable = resources.getDrawable(R.drawable.ic_headset)
-                                val placeholder = getResizedDrawable(drawable, wantedHeight)
-                                placeholder.applyColorFilter(getProperTextColor())
+            loadGlideResource(
+                model = coverArt,
+                options = RequestOptions().centerCrop(),
+                size = Size(wantedWidth, wantedHeight),
+                onLoadFailed = {
+                    val drawable = resources.getDrawable(R.drawable.ic_headset)
+                    val placeholder = getResizedDrawable(drawable, wantedHeight)
+                    placeholder.applyColorFilter(getProperTextColor())
 
-                                runOnUiThread {
-                                    activity_track_image.setImageDrawable(placeholder)
-                                }
+                    runOnUiThread {
+                        activity_track_image.setImageDrawable(placeholder)
+                    }
+                },
+                onResourceReady = {
+                    val coverHeight = it.intrinsicHeight
+                    if (coverHeight > 0 && activity_track_image.height != coverHeight) {
+                        activity_track_image.layoutParams.height = coverHeight
+                    }
 
-                                return true
-                            }
-
-                            override fun onResourceReady(
-                                resource: Drawable,
-                                model: Any?,
-                                target: Target<Drawable>?,
-                                dataSource: DataSource?,
-                                isFirstResource: Boolean
-                            ): Boolean {
-                                val coverHeight = resource.intrinsicHeight
-                                if (coverHeight > 0 && activity_track_image.height != coverHeight) {
-                                    activity_track_image.layoutParams.height = coverHeight
-                                }
-
-                                runOnUiThread {
-                                    activity_track_image.setImageDrawable(resource)
-                                }
-                                return false
-                            }
-                        })
-                        .into(wantedWidth, wantedHeight)
-                        .get()
-                } catch (ignored: Exception) {
+                    runOnUiThread {
+                        activity_track_image.setImageDrawable(it)
+                    }
                 }
-            }
+            )
         }
     }
 
@@ -302,7 +257,10 @@ class TrackActivity : SimpleActivity(), PlaybackSpeedListener {
         config.isShuffleEnabled = isShuffleEnabled
         toast(if (isShuffleEnabled) R.string.shuffle_enabled else R.string.shuffle_disabled)
         setupShuffleButton()
-        sendIntent(REFRESH_LIST)
+        withPlayer {
+            shuffleModeEnabled = config.isShuffleEnabled
+            setupNextTrackInfo(nextMediaItem)
+        }
     }
 
     private fun setupShuffleButton() {
@@ -314,14 +272,24 @@ class TrackActivity : SimpleActivity(), PlaybackSpeedListener {
         }
     }
 
+    private fun seekBack() {
+        activity_track_progressbar.progress += -SEEK_INTERVAL_S
+        withPlayer { seekBack() }
+    }
+
+    private fun seekForward() {
+        activity_track_progressbar.progress += SEEK_INTERVAL_S
+        withPlayer { seekForward() }
+    }
+
     private fun togglePlaybackSetting() {
         val newPlaybackSetting = config.playbackSetting.nextPlaybackOption
         config.playbackSetting = newPlaybackSetting
-
         toast(newPlaybackSetting.descriptionStringRes)
-
         setupPlaybackSettingButton()
-        sendIntent(UPDATE_GAPLESS_PLAYBACK)
+        withPlayer {
+            setRepeatMode(config.playbackSetting)
+        }
     }
 
     private fun setupPlaybackSettingButton() {
@@ -349,12 +317,8 @@ class TrackActivity : SimpleActivity(), PlaybackSpeedListener {
 
             override fun onStartTrackingTouch(seekBar: SeekBar) {}
 
-            override fun onStopTrackingTouch(seekBar: SeekBar) {
-                Intent(this@TrackActivity, MusicService::class.java).apply {
-                    putExtra(PROGRESS, seekBar.progress)
-                    action = SET_PROGRESS
-                    startService(this)
-                }
+            override fun onStopTrackingTouch(seekBar: SeekBar) = withPlayer {
+                seekTo(seekBar.progress * 1000L)
             }
         })
     }
@@ -375,7 +339,9 @@ class TrackActivity : SimpleActivity(), PlaybackSpeedListener {
         }
 
         activity_track_speed.text = "${DecimalFormat("#.##").format(speed)}x"
-        sendIntent(SET_PLAYBACK_SPEED)
+        withPlayer {
+            setPlaybackSpeed(speed)
+        }
     }
 
     private fun getResizedDrawable(drawable: Drawable, wantedHeight: Int): Drawable {
@@ -384,28 +350,58 @@ class TrackActivity : SimpleActivity(), PlaybackSpeedListener {
         return BitmapDrawable(resources, bitmapResized)
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    fun progressUpdated(event: Events.ProgressUpdated) {
-        activity_track_progressbar.progress = event.progress
+    override fun onPlaybackStateChanged(playbackState: Int) {
+        super.onPlaybackStateChanged(playbackState)
+        updatePlayerState()
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    fun trackStateChanged(event: Events.TrackStateChanged) {
-        activity_track_play_pause.updatePlayPauseIcon(event.isPlaying, getProperTextColor())
+    override fun onIsPlayingChanged(isPlaying: Boolean) {
+        super.onIsPlayingChanged(isPlaying)
+        updatePlayerState()
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    fun trackChangedEvent(event: Events.TrackChanged) {
-        val track = event.track
-        if (track == null) {
+    override fun onMediaItemTransition(mediaItem: MediaItem?, reason: Int) {
+        super.onMediaItemTransition(mediaItem, reason)
+        if (mediaItem == null) {
             finish()
         } else {
-            setupTrackInfo(event.track)
+            activity_track_progressbar.progress = 0
+            withPlayer {
+                setupTrackInfo(currentMediaItem)
+                setupNextTrackInfo(nextMediaItem)
+            }
         }
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    fun nextTrackChangedEvent(event: Events.NextTrackChanged) {
-        setupNextTrackInfo(event.track!!)
+    private fun updatePlayerState() {
+        withPlayer {
+            val isPlaying = isPlayingOrBuffering
+            activity_track_play_pause.updatePlayPauseIcon(isPlaying, getProperTextColor())
+            updateProgress(currentPosition)
+            if (isPlaying) {
+                scheduleProgressUpdate()
+            } else {
+                cancelProgressUpdate()
+            }
+        }
+    }
+
+    private fun scheduleProgressUpdate() {
+        cancelProgressUpdate()
+        withPlayer {
+            val delayInMillis = (updateIntervalMillis / config.playbackSpeed).toLong()
+            handler.postDelayed(delayInMillis) {
+                updateProgress(currentPosition)
+                scheduleProgressUpdate()
+            }
+        }
+    }
+
+    private fun cancelProgressUpdate() {
+        handler.removeCallbacksAndMessages(null)
+    }
+
+    private fun updateProgress(currentPosition: Long) {
+        activity_track_progressbar.progress = currentPosition.milliseconds.inWholeSeconds.toInt()
     }
 }

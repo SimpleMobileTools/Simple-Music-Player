@@ -5,7 +5,9 @@ import android.app.Application
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
 import android.media.ThumbnailUtils
+import android.net.Uri
 import android.os.Handler
 import android.os.Looper
 import android.provider.MediaStore
@@ -13,6 +15,12 @@ import android.provider.MediaStore.Audio
 import android.util.Size
 import androidx.core.net.toUri
 import androidx.media3.common.MediaItem
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.request.target.Target
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.commons.helpers.isOreoPlus
@@ -309,5 +317,54 @@ fun Context.loadTrackCoverArt(track: Track?): Bitmap? {
     return null
 }
 
+fun Context.loadGlideResource(
+    model: Any?,
+    options: RequestOptions,
+    size: Size,
+    onLoadFailed: (e: Exception?) -> Unit,
+    onResourceReady: (resource: Drawable) -> Unit,
+) {
+    ensureBackgroundThread {
+        try {
+            Glide.with(this)
+                .load(model)
+                .apply(options)
+                .listener(object : RequestListener<Drawable> {
+                    override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
+                        onLoadFailed(e)
+                        return true
+                    }
+
+                    override fun onResourceReady(
+                        resource: Drawable,
+                        model: Any?,
+                        target: Target<Drawable>?,
+                        dataSource: DataSource?,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        onResourceReady(resource)
+                        return false
+                    }
+                })
+                .submit(size.width, size.height)
+                .get()
+        } catch (e: Exception) {
+            onLoadFailed(e)
+        }
+    }
+}
+
+fun Context.getMediaItemFromUri(uri: Uri?, callback: (mediaItem: MediaItem) -> Unit) {
+    if (uri == null) {
+        return
+    }
+
+    ensureBackgroundThread {
+        val path = getRealPathFromURI(uri) ?: return@ensureBackgroundThread
+        val allTracks = audioHelper.getAllTracks()
+        val track = allTracks.find { it.path == path } ?: RoomHelper(this).getTrackFromPath(path) ?: return@ensureBackgroundThread
+        callback(track.toMediaItem())
+    }
+}
 
 fun Context.isTabVisible(flag: Int) = config.showTabs and flag != 0

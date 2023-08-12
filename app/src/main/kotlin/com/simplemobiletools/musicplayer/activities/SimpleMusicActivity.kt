@@ -101,6 +101,12 @@ abstract class SimpleMusicActivity : SimpleActivity(), Player.Listener {
         }
     }
 
+    fun playMediaItems(mediaItems: List<MediaItem>, startIndex: Int = 0, startPosition: Long = 0) = withPlayer {
+        setMediaItems(mediaItems, startIndex, startPosition)
+        prepare()
+        play()
+    }
+
     fun setupCurrentTrackBar(trackBar: CurrentTrackBar) {
         trackBarView = trackBar
         trackBarView?.setOnClickListener {
