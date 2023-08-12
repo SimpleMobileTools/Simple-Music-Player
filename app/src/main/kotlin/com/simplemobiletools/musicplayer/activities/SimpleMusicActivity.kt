@@ -1,16 +1,25 @@
 package com.simplemobiletools.musicplayer.activities
 
 import android.content.ComponentName
+import android.content.Intent
 import android.os.Bundle
 import androidx.annotation.CallSuper
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
+import androidx.media3.common.MediaItem
 import androidx.media3.common.Player
 import androidx.media3.session.MediaController
 import androidx.media3.session.SessionToken
 import com.google.common.util.concurrent.ListenableFuture
 import com.google.common.util.concurrent.MoreExecutors
+import com.simplemobiletools.commons.dialogs.PermissionRequiredDialog
+import com.simplemobiletools.commons.extensions.hideKeyboard
+import com.simplemobiletools.commons.extensions.openNotificationSettings
+import com.simplemobiletools.musicplayer.R
+import com.simplemobiletools.musicplayer.extensions.isPlayingOrBuffering
+import com.simplemobiletools.musicplayer.extensions.togglePlayback
 import com.simplemobiletools.musicplayer.services.playback.PlaybackService
+import com.simplemobiletools.musicplayer.views.CurrentTrackBar
 import java.util.concurrent.Executors
 
 abstract class SimpleMusicActivity : SimpleActivity(), Player.Listener {
@@ -35,6 +44,8 @@ abstract class SimpleMusicActivity : SimpleActivity(), Player.Listener {
             return controllerFuture.get()
         }
 
+    private var trackBarView: CurrentTrackBar? = null
+
     @CallSuper
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,6 +60,12 @@ abstract class SimpleMusicActivity : SimpleActivity(), Player.Listener {
         )
 
         newControllerAsync()
+    }
+
+    @CallSuper
+    override fun onResume() {
+        super.onResume()
+        updateCurrentTrackBar()
     }
 
     private fun newControllerAsync() {
@@ -82,5 +99,45 @@ abstract class SimpleMusicActivity : SimpleActivity(), Player.Listener {
                 }
             }
         }
+    }
+
+    fun setupCurrentTrackBar(trackBar: CurrentTrackBar) {
+        trackBarView = trackBar
+        trackBarView?.setOnClickListener {
+            hideKeyboard()
+            handleNotificationPermission { granted ->
+                if (granted) {
+                    Intent(this, TrackActivity::class.java).apply {
+                        startActivity(this)
+                    }
+                } else {
+                    PermissionRequiredDialog(this, R.string.allow_notifications_music_player, { openNotificationSettings() })
+                }
+            }
+        }
+    }
+
+    private fun updateCurrentTrackBar() = withPlayer {
+        trackBarView?.initialize {
+            withPlayer { togglePlayback() }
+        }
+
+        trackBarView?.updateCurrentTrack(currentMediaItem)
+        trackBarView?.updateTrackState(isPlayingOrBuffering)
+    }
+
+    @CallSuper
+    override fun onMediaItemTransition(mediaItem: MediaItem?, reason: Int) {
+        trackBarView?.updateCurrentTrack(mediaItem)
+    }
+
+    @CallSuper
+    override fun onPlaybackStateChanged(playbackState: Int) = withPlayer {
+        trackBarView?.updateTrackState(isPlayingOrBuffering)
+    }
+
+    @CallSuper
+    override fun onIsPlayingChanged(isPlaying: Boolean) = withPlayer {
+        trackBarView?.updateTrackState(isPlayingOrBuffering)
     }
 }

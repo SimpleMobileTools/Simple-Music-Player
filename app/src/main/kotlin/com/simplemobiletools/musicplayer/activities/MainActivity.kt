@@ -11,11 +11,9 @@ import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.media3.common.MediaItem
 import androidx.media3.common.Player
 import androidx.viewpager.widget.ViewPager
 import com.simplemobiletools.commons.dialogs.FilePickerDialog
-import com.simplemobiletools.commons.dialogs.PermissionRequiredDialog
 import com.simplemobiletools.commons.dialogs.RadioGroupDialog
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.*
@@ -102,7 +100,6 @@ class MainActivity : SimpleMusicActivity(), Player.Listener {
         val properPrimaryColor = getProperPrimaryColor()
         sleep_timer_holder.background = ColorDrawable(getProperBackgroundColor())
         sleep_timer_stop.applyColorFilter(properTextColor)
-        updateCurrentTrackBar()
         loading_progress_bar.setIndicatorColor(properPrimaryColor)
         loading_progress_bar.trackColor = properPrimaryColor.adjustAlpha(LOWER_ALPHA)
 
@@ -196,18 +193,7 @@ class MainActivity : SimpleMusicActivity(), Player.Listener {
         initFragments()
         sleep_timer_stop.setOnClickListener { stopSleepTimer() }
 
-        current_track_bar.setOnClickListener {
-            handleNotificationPermission { granted ->
-                if (granted) {
-                    Intent(this, TrackActivity::class.java).apply {
-                        startActivity(this)
-                    }
-                } else {
-                    PermissionRequiredDialog(this, R.string.allow_notifications_music_player, { openNotificationSettings() })
-                }
-            }
-        }
-
+        setupCurrentTrackBar(current_track_bar)
         refreshAllFragments()
     }
 
@@ -351,15 +337,6 @@ class MainActivity : SimpleMusicActivity(), Player.Listener {
 
     private fun showSortingDialog() {
         getCurrentFragment()?.onSortOpen(this)
-    }
-
-    private fun updateCurrentTrackBar() = withPlayer {
-        current_track_bar.initialize {
-            withPlayer { togglePlayback() }
-        }
-
-        current_track_bar.updateCurrentTrack(currentMediaItem)
-        current_track_bar.updateTrackState(isPlaying)
     }
 
     private fun createNewPlaylist() {
@@ -539,16 +516,6 @@ class MainActivity : SimpleMusicActivity(), Player.Listener {
         tracks_fragment_holder,
         genres_fragment_holder
     )
-
-    override fun onMediaItemTransition(mediaItem: MediaItem?, reason: Int) = current_track_bar.updateCurrentTrack(mediaItem)
-
-    override fun onPlaybackStateChanged(playbackState: Int) = withPlayer {
-        current_track_bar.updateTrackState(isPlayingOrBuffering)
-    }
-
-    override fun onIsPlayingChanged(isPlaying: Boolean) = withPlayer {
-        current_track_bar.updateTrackState(isPlayingOrBuffering)
-    }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun sleepTimerChanged(event: Events.SleepTimerChanged) {
