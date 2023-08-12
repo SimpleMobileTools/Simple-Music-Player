@@ -12,11 +12,11 @@ import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.session.MediaLibraryService
 import com.simplemobiletools.musicplayer.activities.MainActivity
 import com.simplemobiletools.musicplayer.extensions.config
+import com.simplemobiletools.musicplayer.extensions.setRepeatMode
+import com.simplemobiletools.musicplayer.helpers.SEEK_INTERVAL_MS
 import com.simplemobiletools.musicplayer.services.playback.PlaybackService
 import com.simplemobiletools.musicplayer.services.playback.getCustomLayout
 import com.simplemobiletools.musicplayer.services.playback.getMediaSessionCallback
-
-private const val SEEK_INTERVAL_MS = 10000L
 
 internal fun PlaybackService.initializeSessionAndPlayer(handleAudioFocus: Boolean, handleAudioBecomingNoisy: Boolean, skipSilence: Boolean) {
     player = initializePlayer(handleAudioFocus, handleAudioBecomingNoisy, skipSilence)
@@ -30,9 +30,9 @@ internal fun PlaybackService.initializeSessionAndPlayer(handleAudioFocus: Boolea
     mediaSession.setCustomLayout(getCustomLayout())
 }
 
-private fun Context.initializePlayer(handleAudioFocus: Boolean, handleAudioBecomingNoisy: Boolean, skipSilence: Boolean): SimplePlayer {
+private fun Context.initializePlayer(handleAudioFocus: Boolean, handleAudioBecomingNoisy: Boolean, skipSilence: Boolean): SimpleMusicPlayer {
     val renderersFactory = AudioOnlyRenderersFactory(context = this)
-    val player = SimplePlayer(
+    val player = SimpleMusicPlayer(
         ExoPlayer.Builder(this, renderersFactory)
             .setWakeMode(C.WAKE_MODE_LOCAL)
             .setHandleAudioBecomingNoisy(handleAudioBecomingNoisy)
@@ -49,6 +49,7 @@ private fun Context.initializePlayer(handleAudioFocus: Boolean, handleAudioBecom
             .build()
     )
 
+    player.setRepeatMode(config.playbackSetting)
     player.setPlaybackSpeed(config.playbackSpeed)
     player.shuffleModeEnabled = config.isShuffleEnabled
     return player

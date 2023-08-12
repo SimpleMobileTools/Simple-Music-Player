@@ -5,7 +5,7 @@ import androidx.media3.common.Player
 import androidx.media3.common.util.UnstableApi
 
 @UnstableApi
-class SimplePlayer(player: Player) : ForwardingPlayer(player) {
+class SimpleMusicPlayer(player: Player) : ForwardingPlayer(player) {
 
     /**
      * The default implementation only advertises the seek to next and previous item in the case

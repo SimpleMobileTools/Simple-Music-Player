@@ -542,7 +542,13 @@ class MainActivity : SimpleMusicActivity(), Player.Listener {
 
     override fun onMediaItemTransition(mediaItem: MediaItem?, reason: Int) = current_track_bar.updateCurrentTrack(mediaItem)
 
-    override fun onIsPlayingChanged(isPlaying: Boolean) = current_track_bar.updateTrackState(isPlaying)
+    override fun onPlaybackStateChanged(playbackState: Int) = withController {
+        current_track_bar.updateTrackState(isPlayingOrBuffering)
+    }
+
+    override fun onIsPlayingChanged(isPlaying: Boolean) = withController {
+        current_track_bar.updateTrackState(isPlayingOrBuffering)
+    }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun sleepTimerChanged(event: Events.SleepTimerChanged) {

@@ -13,12 +13,12 @@ import com.simplemobiletools.musicplayer.helpers.NotificationHelper
 import com.simplemobiletools.musicplayer.helpers.getPermissionToRequest
 import com.simplemobiletools.musicplayer.services.playback.library.MediaItemProvider
 import com.simplemobiletools.musicplayer.services.playback.player.PlayerListener
-import com.simplemobiletools.musicplayer.services.playback.player.SimplePlayer
+import com.simplemobiletools.musicplayer.services.playback.player.SimpleMusicPlayer
 import com.simplemobiletools.musicplayer.services.playback.player.initializeSessionAndPlayer
 
 @OptIn(UnstableApi::class)
 class PlaybackService : MediaLibraryService() {
-    internal lateinit var player: SimplePlayer
+    internal lateinit var player: SimpleMusicPlayer
 
     internal lateinit var mediaSession: MediaLibrarySession
 

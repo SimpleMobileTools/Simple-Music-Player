@@ -71,6 +71,9 @@ const val EXCLUDED_FOLDERS = "excluded_folders"
 const val SORT_PLAYLIST_PREFIX = "sort_playlist_"
 const val GAPLESS_PLAYBACK = "gapless_playback"
 
+const val SEEK_INTERVAL_MS = 10000L
+const val SEEK_INTERVAL_S = 10
+
 const val SHOW_FILENAME_NEVER = 1
 const val SHOW_FILENAME_IF_UNAVAILABLE = 2
 const val SHOW_FILENAME_ALWAYS = 3

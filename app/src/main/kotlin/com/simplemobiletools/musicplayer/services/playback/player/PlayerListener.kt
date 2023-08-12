@@ -1,25 +1,19 @@
 package com.simplemobiletools.musicplayer.services.playback.player
 
-import android.os.Handler
-import android.os.Looper
 import android.widget.Toast
-import androidx.core.os.postDelayed
+import androidx.media3.common.MediaItem
 import androidx.media3.common.PlaybackException
 import androidx.media3.common.Player
 import androidx.media3.common.util.UnstableApi
 import com.simplemobiletools.commons.extensions.toast
 import com.simplemobiletools.musicplayer.R
+import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.extensions.currentMediaItems
-import com.simplemobiletools.musicplayer.models.Events
+import com.simplemobiletools.musicplayer.helpers.PlaybackSetting
 import com.simplemobiletools.musicplayer.services.playback.PlaybackService
-import org.greenrobot.eventbus.EventBus
-import kotlin.time.Duration.Companion.seconds
-import kotlin.time.DurationUnit
 
 @UnstableApi
 class PlayerListener(private val context: PlaybackService) : Player.Listener {
-    private val handler = Handler(Looper.getMainLooper())
-    private val updateIntervalMillis = 800L
 
     override fun onPlayerError(error: PlaybackException) = context.toast(R.string.unknown_error_occurred, Toast.LENGTH_LONG)
 
@@ -47,39 +41,12 @@ class PlayerListener(private val context: PlaybackService) : Player.Listener {
         }
     }
 
-    override fun onIsPlayingChanged(isPlaying: Boolean) {
-        if (isPlaying) {
-            schedulePositionUpdate()
-        } else {
-            cancelPositionUpdate()
-        }
-    }
-
-    override fun onPositionDiscontinuity(oldPosition: Player.PositionInfo, newPosition: Player.PositionInfo, reason: Int) {
-        if (context.player.isPlaying) {
-            schedulePositionUpdate()
-        } else {
-            cancelPositionUpdate()
-        }
-    }
-
-    private fun schedulePositionUpdate() {
-        handler.removeCallbacksAndMessages(null)
-        handler.postDelayed(updateIntervalMillis) {
-            updatePosition()
-        }
-    }
-
-    private fun cancelPositionUpdate() {
-        handler.removeCallbacksAndMessages(null)
-    }
-
-    private fun updatePosition() {
-        val currentPosition = context.player.currentPosition
-        if (currentPosition >= 0) {
-            val progress = currentPosition.seconds.toInt(DurationUnit.SECONDS)
-            EventBus.getDefault().post(Events.ProgressUpdated(progress))
-            schedulePositionUpdate()
+    override fun onMediaItemTransition(mediaItem: MediaItem?, reason: Int) {
+        // We handle this manually because this mode isn't supported in the media3 player.
+        // It's possible using Exoplayer.setPauseAtEndOfMediaItems() but that would require rebuilding the player.
+        val isReasonRepeat = reason == Player.MEDIA_ITEM_TRANSITION_REASON_REPEAT
+        if (isReasonRepeat && context.config.playbackSetting == PlaybackSetting.STOP_AFTER_CURRENT_TRACK) {
+            context.player.pause()
         }
     }
 }
