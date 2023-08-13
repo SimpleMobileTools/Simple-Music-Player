@@ -59,7 +59,7 @@ abstract class SimpleControllerActivity : SimpleActivity(), Player.Listener {
 
     private fun newControllerAsync() {
         controllerFuture = MediaController
-            .Builder(this, SessionToken(this, ComponentName(this, PlaybackService::class.java)))
+            .Builder(applicationContext, SessionToken(this, ComponentName(this, PlaybackService::class.java)))
             .buildAsync()
 
         controllerFuture.addListener({

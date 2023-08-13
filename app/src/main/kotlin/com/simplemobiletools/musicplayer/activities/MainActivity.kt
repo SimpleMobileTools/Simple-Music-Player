@@ -212,6 +212,10 @@ class MainActivity : SimpleMusicActivity(), Player.Listener {
                     if (complete) {
                         loading_progress_bar.hide()
                     }
+
+                    withPlayer {
+                        sendCommand(CustomCommands.RELOAD_CONTENT)
+                    }
                 }
             }
         }
