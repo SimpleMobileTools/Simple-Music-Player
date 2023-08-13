@@ -89,10 +89,6 @@ class MainActivity : SimpleMusicActivity(), Player.Listener {
         super.onResume()
         if (storedShowTabs != config.showTabs) {
             config.lastUsedViewPagerPage = 0
-            withPlayer {
-                sendCommand(CustomCommands.RELOAD_CONTENT)
-            }
-
             System.exit(0)
             return
         }
@@ -502,14 +498,18 @@ class MainActivity : SimpleMusicActivity(), Player.Listener {
         startSleepTimer()
     }
 
-    private fun startSleepTimer() = withPlayer {
+    private fun startSleepTimer() {
         sleep_timer_holder.fadeIn()
-        sendCommand(CustomCommands.TOGGLE_SLEEP_TIMER)
+        withPlayer {
+            sendCommand(CustomCommands.TOGGLE_SLEEP_TIMER)
+        }
     }
 
-    private fun stopSleepTimer() = withPlayer {
+    private fun stopSleepTimer() {
         sleep_timer_holder.fadeOut()
-        sendCommand(CustomCommands.TOGGLE_SLEEP_TIMER)
+        withPlayer {
+            sendCommand(CustomCommands.TOGGLE_SLEEP_TIMER)
+        }
     }
 
     private fun getAllFragments() = arrayListOf(

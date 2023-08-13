@@ -11,7 +11,7 @@ import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.helpers.*
 import kotlinx.android.synthetic.main.dialog_manage_visible_tabs.view.manage_visible_tabs_folders
 
-class ManageVisibleTabsDialog(val activity: BaseSimpleActivity) {
+class ManageVisibleTabsDialog(val activity: BaseSimpleActivity, val callback: (result: Int) -> Unit) {
     private var view = activity.layoutInflater.inflate(R.layout.dialog_manage_visible_tabs, null)
     private val tabs = LinkedHashMap<Int, Int>()
 
@@ -55,6 +55,6 @@ class ManageVisibleTabsDialog(val activity: BaseSimpleActivity) {
             result = allTabsMask
         }
 
-        activity.config.showTabs = result
+        callback(result)
     }
 }

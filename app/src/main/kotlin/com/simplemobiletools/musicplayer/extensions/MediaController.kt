@@ -13,3 +13,8 @@ fun MediaController.togglePlayback() {
         play()
     }
 }
+
+fun MediaController.runOnPlayerThread(callback: MediaController.() -> Unit) =
+    applicationLooper.post {
+        callback(this)
+    }

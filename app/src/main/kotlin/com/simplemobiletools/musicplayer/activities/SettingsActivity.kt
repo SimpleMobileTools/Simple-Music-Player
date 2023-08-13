@@ -11,13 +11,15 @@ import com.simplemobiletools.commons.models.RadioItem
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.dialogs.ManageVisibleTabsDialog
 import com.simplemobiletools.musicplayer.extensions.config
+import com.simplemobiletools.musicplayer.extensions.sendCommand
 import com.simplemobiletools.musicplayer.extensions.sendIntent
 import com.simplemobiletools.musicplayer.helpers.*
+import com.simplemobiletools.musicplayer.services.playback.CustomCommands
 import kotlinx.android.synthetic.main.activity_settings.*
-import java.util.*
+import java.util.Locale
 import kotlin.system.exitProcess
 
-class SettingsActivity : SimpleActivity() {
+class SettingsActivity : SimpleControllerActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         isMaterialActivity = true
@@ -125,7 +127,15 @@ class SettingsActivity : SimpleActivity() {
 
     private fun setupManageShownTabs() {
         settings_manage_shown_tabs_holder.setOnClickListener {
-            ManageVisibleTabsDialog(this)
+            ManageVisibleTabsDialog(this) { result ->
+                val tabsMask = config.showTabs
+                if (tabsMask != result) {
+                    config.showTabs = result
+                    withPlayer {
+                        sendCommand(CustomCommands.RELOAD_CONTENT)
+                    }
+                }
+            }
         }
     }
 

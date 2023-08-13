@@ -1,6 +1,7 @@
 package com.simplemobiletools.musicplayer.services.playback
 
 import android.os.Handler
+import android.os.HandlerThread
 import android.os.Looper
 import androidx.annotation.OptIn
 import androidx.core.os.postDelayed
@@ -19,6 +20,8 @@ import com.simplemobiletools.musicplayer.services.playback.player.initializeSess
 @OptIn(UnstableApi::class)
 class PlaybackService : MediaLibraryService() {
     internal lateinit var player: SimpleMusicPlayer
+    internal lateinit var playerThread: HandlerThread
+    internal lateinit var handler: Handler
     internal lateinit var mediaSession: MediaLibrarySession
     internal lateinit var mediaItemProvider: MediaItemProvider
 
@@ -42,8 +45,10 @@ class PlaybackService : MediaLibraryService() {
 
     private fun releaseMediaSession() {
         mediaSession.release()
-        player.removeListener(listener!!)
-        player.release()
+        withPlayer {
+            removeListener(listener!!)
+            release()
+        }
     }
 
     override fun onDestroy() {
@@ -54,9 +59,18 @@ class PlaybackService : MediaLibraryService() {
     }
 
     fun stopService() {
-        player.pause()
-        player.stop()
+        withPlayer {
+            player.pause()
+            player.stop()
+        }
+
         stopSelf()
+    }
+
+    internal fun withPlayer(callback: Player.() -> Unit) {
+        handler.post {
+            callback(player)
+        }
     }
 
     private fun showNoPermissionNotification() {

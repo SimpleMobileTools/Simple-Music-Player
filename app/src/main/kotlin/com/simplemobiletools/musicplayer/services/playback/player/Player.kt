@@ -5,6 +5,9 @@ package com.simplemobiletools.musicplayer.services.playback.player
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.os.Handler
+import android.os.HandlerThread
+import android.os.Process
 import androidx.media3.common.AudioAttributes
 import androidx.media3.common.C
 import androidx.media3.common.util.UnstableApi
@@ -18,21 +21,30 @@ import com.simplemobiletools.musicplayer.services.playback.PlaybackService
 import com.simplemobiletools.musicplayer.services.playback.getCustomLayout
 import com.simplemobiletools.musicplayer.services.playback.getMediaSessionCallback
 
-internal fun PlaybackService.initializeSessionAndPlayer(handleAudioFocus: Boolean, handleAudioBecomingNoisy: Boolean, skipSilence: Boolean) {
-    player = initializePlayer(handleAudioFocus, handleAudioBecomingNoisy, skipSilence)
-    listener = PlayerListener(context = this)
-    player.addListener(listener!!)
+private const val PLAYER_THREAD = "PlayerThread"
 
+internal fun PlaybackService.initializeSessionAndPlayer(handleAudioFocus: Boolean, handleAudioBecomingNoisy: Boolean, skipSilence: Boolean) {
+    // all player operations are handled on a separate thread to avoid slowing down the main thread.
+    playerThread = HandlerThread(PLAYER_THREAD, Process.THREAD_PRIORITY_AUDIO).also { it.start() }
+    player = initializePlayer(handleAudioFocus, handleAudioBecomingNoisy, skipSilence)
+    handler = Handler(player.applicationLooper)
+    listener = PlayerListener(context = this)
     mediaSession = MediaLibraryService.MediaLibrarySession.Builder(this, player, getMediaSessionCallback())
         .setSessionActivity(getSessionActivityIntent())
         .build()
 
-    mediaSession.setCustomLayout(getCustomLayout())
+    withPlayer {
+        addListener(listener!!)
+        setRepeatMode(config.playbackSetting)
+        setPlaybackSpeed(config.playbackSpeed)
+        shuffleModeEnabled = config.isShuffleEnabled
+        mediaSession.setCustomLayout(getCustomLayout())
+    }
 }
 
-private fun Context.initializePlayer(handleAudioFocus: Boolean, handleAudioBecomingNoisy: Boolean, skipSilence: Boolean): SimpleMusicPlayer {
+private fun PlaybackService.initializePlayer(handleAudioFocus: Boolean, handleAudioBecomingNoisy: Boolean, skipSilence: Boolean): SimpleMusicPlayer {
     val renderersFactory = AudioOnlyRenderersFactory(context = this)
-    val player = SimpleMusicPlayer(
+    return SimpleMusicPlayer(
         ExoPlayer.Builder(this, renderersFactory)
             .setWakeMode(C.WAKE_MODE_LOCAL)
             .setHandleAudioBecomingNoisy(handleAudioBecomingNoisy)
@@ -46,13 +58,9 @@ private fun Context.initializePlayer(handleAudioFocus: Boolean, handleAudioBecom
             .setSkipSilenceEnabled(skipSilence)
             .setSeekBackIncrementMs(SEEK_INTERVAL_MS)
             .setSeekForwardIncrementMs(SEEK_INTERVAL_MS)
+            .setLooper(playerThread.looper)
             .build()
     )
-
-    player.setRepeatMode(config.playbackSetting)
-    player.setPlaybackSpeed(config.playbackSpeed)
-    player.shuffleModeEnabled = config.isShuffleEnabled
-    return player
 }
 
 private fun Context.getSessionActivityIntent(): PendingIntent {

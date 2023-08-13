@@ -35,7 +35,7 @@ import java.text.DecimalFormat
 import kotlin.math.min
 import kotlin.time.Duration.Companion.milliseconds
 
-class TrackActivity : SimpleMusicActivity(), PlaybackSpeedListener {
+class TrackActivity : SimpleControllerActivity(), PlaybackSpeedListener {
     private val SWIPE_DOWN_THRESHOLD = 100
 
     private var isThirdPartyIntent = false
@@ -69,17 +69,17 @@ class TrackActivity : SimpleMusicActivity(), PlaybackSpeedListener {
         }
 
         withPlayer {
-            setupTrackInfo(currentMediaItem)
-            setupNextTrackInfo(nextMediaItem)
-            updatePlayerState()
-            if (intent.getBooleanExtra(RESTART_PLAYER, false)) {
-                intent.removeExtra(RESTART_PLAYER)
-                play()
-            }
+            val currentMediaItem = currentMediaItem
+            val nextMediaItem = nextMediaItem
+            runOnUiThread {
+                setupTrackInfo(currentMediaItem)
+                setupNextTrackInfo(nextMediaItem)
+                updatePlayerState()
 
-            next_track_holder.background = ColorDrawable(getProperBackgroundColor())
-            next_track_holder.setOnClickListener {
-                startActivity(Intent(applicationContext, QueueActivity::class.java))
+                next_track_holder.background = ColorDrawable(getProperBackgroundColor())
+                next_track_holder.setOnClickListener {
+                    startActivity(Intent(applicationContext, QueueActivity::class.java))
+                }
             }
         }
     }
@@ -259,7 +259,9 @@ class TrackActivity : SimpleMusicActivity(), PlaybackSpeedListener {
         setupShuffleButton()
         withPlayer {
             shuffleModeEnabled = config.isShuffleEnabled
-            setupNextTrackInfo(nextMediaItem)
+            runOnUiThread {
+                setupNextTrackInfo(nextMediaItem)
+            }
         }
     }
 
@@ -367,8 +369,12 @@ class TrackActivity : SimpleMusicActivity(), PlaybackSpeedListener {
         } else {
             activity_track_progressbar.progress = 0
             withPlayer {
-                setupTrackInfo(currentMediaItem)
-                setupNextTrackInfo(nextMediaItem)
+                val currentMediaItem = currentMediaItem
+                val nextMediaItem = nextMediaItem
+                runOnUiThread {
+                    setupTrackInfo(currentMediaItem)
+                    setupNextTrackInfo(nextMediaItem)
+                }
             }
         }
     }
@@ -376,12 +382,14 @@ class TrackActivity : SimpleMusicActivity(), PlaybackSpeedListener {
     private fun updatePlayerState() {
         withPlayer {
             val isPlaying = isPlayingOrBuffering
-            activity_track_play_pause.updatePlayPauseIcon(isPlaying, getProperTextColor())
-            updateProgress(currentPosition)
-            if (isPlaying) {
-                scheduleProgressUpdate()
-            } else {
-                cancelProgressUpdate()
+            runOnUiThread {
+                activity_track_play_pause.updatePlayPauseIcon(isPlaying, getProperTextColor())
+                updateProgress(currentPosition)
+                if (isPlaying) {
+                    scheduleProgressUpdate()
+                } else {
+                    cancelProgressUpdate()
+                }
             }
         }
     }

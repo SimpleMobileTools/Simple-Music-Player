@@ -46,7 +46,9 @@ class PlayerListener(private val context: PlaybackService) : Player.Listener {
         // It's possible using Exoplayer.setPauseAtEndOfMediaItems() but that would require rebuilding the player.
         val isReasonRepeat = reason == Player.MEDIA_ITEM_TRANSITION_REASON_REPEAT
         if (isReasonRepeat && context.config.playbackSetting == PlaybackSetting.STOP_AFTER_CURRENT_TRACK) {
-            context.player.pause()
+            context.withPlayer {
+                pause()
+            }
         }
     }
 }
