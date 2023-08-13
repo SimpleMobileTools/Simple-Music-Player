@@ -1,6 +1,7 @@
 package com.simplemobiletools.musicplayer.activities
 
 import android.content.ComponentName
+import android.content.Intent
 import android.os.Bundle
 import androidx.media3.common.MediaItem
 import androidx.media3.common.Player
@@ -96,9 +97,14 @@ abstract class SimpleControllerActivity : SimpleActivity(), Player.Listener {
         }
     }
 
-    fun playMediaItems(mediaItems: List<MediaItem>, startIndex: Int = 0, startPosition: Long = 0) = withPlayer {
-        setMediaItems(mediaItems, startIndex, startPosition)
-        prepare()
-        play()
+    fun playMediaItems(mediaItems: List<MediaItem>, startIndex: Int = 0, startPosition: Long = 0) {
+        withPlayer {
+            setMediaItems(mediaItems, startIndex, startPosition)
+            prepare()
+            play()
+            startActivity(
+                Intent(this@SimpleControllerActivity, TrackActivity::class.java)
+            )
+        }
     }
 }
