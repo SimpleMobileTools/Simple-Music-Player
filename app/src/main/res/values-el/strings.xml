@@ -62,7 +62,7 @@
     <!-- Artists -->
     <string name="artists">Καλλιτέχνες</string>
     <string name="folders">Φάκελοι</string>
-    <string name="genres">Genres</string>
+    <string name="genres">Κατηγορίες</string>
     <string name="albums">Άλμπουμ</string>
     <plurals name="albums_plural">
         <item quantity="one">%d Άλμπουμ</item>
@@ -77,7 +77,7 @@
     <string name="next_track">Επόμενο:</string>
     <string name="track_queue">Τραγούδια σε αναμονή</string>
     <string name="add_to_queue">Προσθήκη στην αναμονή</string>
-    <string name="play_next">Play next</string>
+    <string name="play_next">Αναπαρ/γή επόμενου</string>
     <string name="remove_from_queue">Κατάργηση από την αναμονή</string>
     <string name="create_playlist_from_queue">Δημιουργία λίστας από την ουρά</string>
     <!-- Settings -->
