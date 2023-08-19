@@ -14,11 +14,14 @@ import com.simplemobiletools.commons.helpers.IS_CUSTOMIZING_COLORS
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.helpers.MyWidgetProvider
-import com.simplemobiletools.musicplayer.services.MusicService
-import kotlinx.android.synthetic.main.widget.*
-import kotlinx.android.synthetic.main.widget.view.*
+import com.simplemobiletools.musicplayer.services.playback.PlaybackService
+import kotlinx.android.synthetic.main.widget.song_info_artist
+import kotlinx.android.synthetic.main.widget.song_info_title
+import kotlinx.android.synthetic.main.widget.view.widget_background
 import kotlinx.android.synthetic.main.widget_config.*
-import kotlinx.android.synthetic.main.widget_controls.*
+import kotlinx.android.synthetic.main.widget_controls.next_btn
+import kotlinx.android.synthetic.main.widget_controls.play_pause_btn
+import kotlinx.android.synthetic.main.widget_controls.previous_btn
 
 class WidgetConfigureActivity : SimpleActivity() {
     private var mBgAlpha = 0f
@@ -49,7 +52,7 @@ class WidgetConfigureActivity : SimpleActivity() {
         val primaryColor = getProperPrimaryColor()
         config_bg_seekbar.setColors(mTextColor, primaryColor, primaryColor)
 
-        val currSong = MusicService.mCurrTrack
+        val currSong = PlaybackService.currentMediaItem?.mediaMetadata
         if (currSong != null) {
             song_info_title.text = currSong.title
             song_info_artist.text = currSong.artist
