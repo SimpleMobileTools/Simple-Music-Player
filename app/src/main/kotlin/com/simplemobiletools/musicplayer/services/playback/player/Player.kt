@@ -27,7 +27,6 @@ internal fun PlaybackService.initializeSessionAndPlayer(handleAudioFocus: Boolea
     // all player operations are handled on a separate thread to avoid slowing down the main thread.
     playerThread = HandlerThread(PLAYER_THREAD, Process.THREAD_PRIORITY_AUDIO).also { it.start() }
     player = initializePlayer(handleAudioFocus, handleAudioBecomingNoisy, skipSilence)
-    handler = Handler(player.applicationLooper)
     listener = PlayerListener(context = this)
     mediaSession = MediaLibraryService.MediaLibrarySession.Builder(this, player, getMediaSessionCallback())
         .setSessionActivity(getSessionActivityIntent())

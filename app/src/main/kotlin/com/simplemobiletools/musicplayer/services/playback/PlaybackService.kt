@@ -23,7 +23,6 @@ import com.simplemobiletools.musicplayer.services.playback.player.initializeSess
 class PlaybackService : MediaLibraryService() {
     internal lateinit var player: SimpleMusicPlayer
     internal lateinit var playerThread: HandlerThread
-    internal lateinit var handler: Handler
     internal lateinit var mediaSession: MediaLibrarySession
     internal lateinit var mediaItemProvider: MediaItemProvider
 
@@ -33,9 +32,20 @@ class PlaybackService : MediaLibraryService() {
     override fun onCreate() {
         super.onCreate()
         initializeSessionAndPlayer(handleAudioFocus = true, handleAudioBecomingNoisy = true, skipSilence = config.gaplessPlayback)
-        mediaItemProvider = MediaItemProvider(this)
+        initializeLibrary()
+    }
 
-        // we may or may not have storage permission at this time
+    override fun onGetSession(controllerInfo: MediaSession.ControllerInfo) = mediaSession
+
+    override fun onDestroy() {
+        super.onDestroy()
+        releaseMediaSession()
+        clearListener()
+        stopSleepTimer()
+    }
+
+    private fun initializeLibrary() {
+        mediaItemProvider = MediaItemProvider(this)
         if (hasPermission(getPermissionToRequest())) {
             mediaItemProvider.reload()
         } else {
@@ -43,21 +53,12 @@ class PlaybackService : MediaLibraryService() {
         }
     }
 
-    override fun onGetSession(controllerInfo: MediaSession.ControllerInfo) = mediaSession
-
     private fun releaseMediaSession() {
         mediaSession.release()
         withPlayer {
             removeListener(listener!!)
             release()
         }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        releaseMediaSession()
-        clearListener()
-        stopSleepTimer()
     }
 
     fun stopService() {
@@ -70,7 +71,7 @@ class PlaybackService : MediaLibraryService() {
     }
 
     internal fun withPlayer(callback: Player.() -> Unit) {
-        handler.post {
+        Handler(player.applicationLooper).post {
             callback(player)
         }
     }
@@ -90,8 +91,11 @@ class PlaybackService : MediaLibraryService() {
     companion object {
         // Initializing a media controller might take a noticeable amount of time thus we expose current playback info here to keep things as quick as possible.
         var isPlaying: Boolean = false
+            private set
         var currentMediaItem: MediaItem? = null
+            private set
         var nextMediaItem: MediaItem? = null
+            private set
 
         fun updatePlaybackInfo(player: Player) {
             currentMediaItem = player.currentMediaItem
