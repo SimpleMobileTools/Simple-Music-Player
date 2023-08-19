@@ -68,7 +68,7 @@ class AlbumsFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
                     albums_list.scheduleLayoutAnimation()
                 }
             } else {
-                val oldItems = (adapter as AlbumsAdapter).albums
+                val oldItems = (adapter as AlbumsAdapter).items
                 if (oldItems.sortedBy { it.id }.hashCode() != albums.sortedBy { it.id }.hashCode()) {
                     adapter.updateItems(albums)
                 }

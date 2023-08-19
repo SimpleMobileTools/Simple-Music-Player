@@ -611,7 +611,7 @@ class SimpleMediaScanner(private val context: Application) {
         }
 
         if (notificationHelper == null) {
-            notificationHelper = NotificationHelper.createInstance(context, null)
+            notificationHelper = NotificationHelper.createInstance(context)
         }
 
         // avoid showing notification for a short duration

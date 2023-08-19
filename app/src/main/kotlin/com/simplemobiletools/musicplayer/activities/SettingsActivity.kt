@@ -12,8 +12,9 @@ import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.dialogs.ManageVisibleTabsDialog
 import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.extensions.sendCommand
-import com.simplemobiletools.musicplayer.extensions.sendIntent
-import com.simplemobiletools.musicplayer.helpers.*
+import com.simplemobiletools.musicplayer.helpers.SHOW_FILENAME_ALWAYS
+import com.simplemobiletools.musicplayer.helpers.SHOW_FILENAME_IF_UNAVAILABLE
+import com.simplemobiletools.musicplayer.helpers.SHOW_FILENAME_NEVER
 import com.simplemobiletools.musicplayer.services.playback.CustomCommands
 import kotlinx.android.synthetic.main.activity_settings.*
 import java.util.Locale
@@ -112,7 +113,9 @@ class SettingsActivity : SimpleControllerActivity() {
             RadioGroupDialog(this@SettingsActivity, items, config.showFilename) {
                 config.showFilename = it as Int
                 settings_show_filename.text = getReplaceTitleText()
-                sendIntent(REFRESH_LIST)
+                withPlayer {
+                    TODO("Force refresh queue.")
+                }
             }
         }
     }
@@ -150,7 +153,9 @@ class SettingsActivity : SimpleControllerActivity() {
         settings_gapless_playback_holder.setOnClickListener {
             settings_gapless_playback.toggle()
             config.gaplessPlayback = settings_gapless_playback.isChecked
-            sendIntent(UPDATE_GAPLESS_PLAYBACK)
+            withPlayer {
+                TODO("Toggle skip silence.")
+            }
         }
     }
 }

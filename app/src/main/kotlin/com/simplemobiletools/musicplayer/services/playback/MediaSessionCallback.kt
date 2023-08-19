@@ -10,6 +10,7 @@ import androidx.media3.session.MediaLibraryService.MediaLibrarySession
 import com.google.common.util.concurrent.Futures
 import com.google.common.util.concurrent.ListenableFuture
 import com.google.common.util.concurrent.MoreExecutors
+import com.simplemobiletools.musicplayer.extensions.currentMediaItems
 import java.util.concurrent.Executors
 
 @UnstableApi
@@ -65,6 +66,7 @@ internal fun PlaybackService.getMediaSessionCallback() = object : MediaLibrarySe
         when (command) {
             CustomCommands.CLOSE_PLAYER -> stopService()
             CustomCommands.RELOAD_CONTENT -> reloadContent()
+            CustomCommands.SAVE_QUEUE -> saveRecentItems()
             CustomCommands.TOGGLE_SLEEP_TIMER -> toggleSleepTimer()
         }
 
@@ -202,6 +204,17 @@ internal fun PlaybackService.getMediaSessionCallback() = object : MediaLibrarySe
                     mediaSession.notifyChildrenChanged(browser, rootItem.mediaId, rootItemCount, null)
                 }
             }
+        }
+    }
+
+    private fun saveRecentItems() {
+        val currentMediaItem = player.currentMediaItem
+        if (currentMediaItem != null) {
+            mediaItemProvider.saveRecentItemsWithStartPosition(
+                mediaItems = player.currentMediaItems,
+                current = currentMediaItem,
+                startPosition = player.currentPosition
+            )
         }
     }
 }

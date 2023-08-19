@@ -67,7 +67,7 @@ class ArtistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
                     artists_list.scheduleLayoutAnimation()
                 }
             } else {
-                val oldItems = (adapter as ArtistsAdapter).artists
+                val oldItems = (adapter as ArtistsAdapter).items
                 if (oldItems.sortedBy { it.id }.hashCode() != artists.sortedBy { it.id }.hashCode()) {
                     adapter.updateItems(artists)
                 }
