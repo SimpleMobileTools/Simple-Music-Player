@@ -261,26 +261,6 @@ fun Context.getTrackCoverArt(track: Track?, callback: (coverArt: Any?) -> Unit) 
     }
 }
 
-fun Context.getMediaItemCoverArt(mediaItem: MediaItem?, callback: (coverArt: Any?) -> Unit) {
-    ensureBackgroundThread {
-        if (mediaItem == null) {
-            Handler(Looper.getMainLooper()).post {
-                callback(null)
-            }
-            return@ensureBackgroundThread
-        }
-
-        val artworkUri = mediaItem.mediaMetadata.artworkUri.toString()
-        val coverArt = artworkUri.ifEmpty {
-            // TODO: load bitmap using path
-        }
-
-        Handler(Looper.getMainLooper()).post {
-            callback(coverArt)
-        }
-    }
-}
-
 fun Context.loadTrackCoverArt(track: Track?): Bitmap? {
     if (track == null) {
         return null

@@ -5,8 +5,8 @@ import androidx.core.net.toUri
 import androidx.core.os.bundleOf
 import androidx.media3.common.MediaItem
 import androidx.media3.common.MediaMetadata
-import com.simplemobiletools.musicplayer.helpers.MEDIA_ITEM_DURATION
-import com.simplemobiletools.musicplayer.helpers.MEDIA_ITEM_PATH
+import com.simplemobiletools.musicplayer.helpers.MEDIA_ITEM_TAG
+import com.simplemobiletools.musicplayer.inlines.indexOfFirstOrNull
 import com.simplemobiletools.musicplayer.models.*
 
 fun buildMediaItem(
@@ -18,11 +18,10 @@ fun buildMediaItem(
     mediaType: @MediaMetadata.MediaType Int,
     trackCnt: Int? = null,
     trackNumber: Int? = null,
-    duration: Int? = null,
     year: Int? = null,
     sourceUri: Uri? = null,
     artworkUri: Uri? = null,
-    path: String? = null
+    tag: Any? = null
 ): MediaItem {
     val metadata = MediaMetadata.Builder()
         .setTitle(title)
@@ -37,13 +36,8 @@ fun buildMediaItem(
         .setMediaType(MediaMetadata.MEDIA_TYPE_MUSIC)
         .setArtworkUri(artworkUri)
         .apply {
-            if (duration != null) {
-                setExtras(
-                    bundleOf(
-                        MEDIA_ITEM_DURATION to duration,
-                        MEDIA_ITEM_PATH to path
-                    )
-                )
+            if (tag != null) {
+                setExtras(bundleOf(MEDIA_ITEM_TAG to tag))
             }
         }
         .build()
@@ -64,9 +58,9 @@ fun Track.toMediaItem(): MediaItem {
         genre = genre,
         mediaType = MediaMetadata.MEDIA_TYPE_MUSIC,
         trackNumber = trackId,
-        duration = duration,
         sourceUri = getUri(),
-        artworkUri = coverArt.toUri()
+        artworkUri = coverArt.toUri(),
+        tag = this
     )
 }
 
@@ -119,3 +113,11 @@ fun Genre.toMediaItem(): MediaItem {
         artworkUri = albumArt.toUri()
     )
 }
+
+fun MediaItem.toTrack(): Track? = mediaMetadata.extras?.getSerializable(MEDIA_ITEM_TAG) as? Track
+
+fun Collection<MediaItem>.toTracks() = mapNotNull { it.toTrack() }
+
+fun Collection<MediaItem>.indexOfTrack(track: Track) = indexOfFirst { it.mediaId == track.mediaStoreId.toString() }
+
+fun Collection<MediaItem>.indexOfTrackOrNull(track: Track) = indexOfFirstOrNull { it.mediaId == track.mediaStoreId.toString() }

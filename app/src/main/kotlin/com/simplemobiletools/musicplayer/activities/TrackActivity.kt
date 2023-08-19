@@ -29,6 +29,7 @@ import com.simplemobiletools.musicplayer.extensions.*
 import com.simplemobiletools.musicplayer.fragments.PlaybackSpeedFragment
 import com.simplemobiletools.musicplayer.helpers.*
 import com.simplemobiletools.musicplayer.interfaces.PlaybackSpeedListener
+import com.simplemobiletools.musicplayer.models.Track
 import com.simplemobiletools.musicplayer.services.playback.CustomCommands
 import com.simplemobiletools.musicplayer.services.playback.PlaybackService
 import kotlinx.android.synthetic.main.activity_track.*
@@ -112,16 +113,11 @@ class TrackActivity : SimpleControllerActivity(), PlaybackSpeedListener {
     }
 
     private fun setupTrackInfo(item: MediaItem?) {
-        if (item == null) {
-            return
-        }
+        val track = item?.toTrack() ?: return
 
-        val metadata = item.mediaMetadata
-
-        setupTopArt(item)
-        activity_track_title.text = metadata.title
-        activity_track_artist.text = metadata.artist
-
+        setupTopArt(track)
+        activity_track_title.text = track.title
+        activity_track_artist.text = track.artist
         activity_track_title.setOnLongClickListener {
             copyToClipboard(activity_track_title.value)
             true
@@ -132,8 +128,8 @@ class TrackActivity : SimpleControllerActivity(), PlaybackSpeedListener {
             true
         }
 
-        activity_track_progressbar.max = metadata.durationInSeconds
-        activity_track_progress_max.text = metadata.durationInSeconds.getFormattedDuration()
+        activity_track_progressbar.max = track.duration
+        activity_track_progress_max.text = track.duration.getFormattedDuration()
     }
 
     private fun initThirdPartyIntent() {
@@ -164,22 +160,23 @@ class TrackActivity : SimpleControllerActivity(), PlaybackSpeedListener {
     }
 
     private fun setupNextTrackInfo(item: MediaItem?) {
-        if (item == null) {
+        val track = item?.toTrack()
+        if (track == null) {
             next_track_holder.beGone()
             return
         }
 
         next_track_holder.beVisible()
-        val metadata = item.mediaMetadata
-        val artist = if (metadata.artist?.trim()?.isNotEmpty() == true && metadata.artist != MediaStore.UNKNOWN_STRING) {
-            " • ${metadata.artist}"
+        val artist = if (track.artist.trim().isNotEmpty() && track.artist != MediaStore.UNKNOWN_STRING) {
+            " • ${track.artist}"
         } else {
             ""
         }
 
-        next_track_label.text = "${getString(R.string.next_track)} ${metadata.title}$artist"
+        @SuppressLint("SetTextI18n")
+        next_track_label.text = "${getString(R.string.next_track)} ${track.title}$artist"
 
-        getMediaItemCoverArt(item) { coverArt ->
+        getTrackCoverArt(track) { coverArt ->
             val cornerRadius = resources.getDimension(R.dimen.rounded_corner_radius_small).toInt()
             val wantedSize = resources.getDimension(R.dimen.song_image_size).toInt()
 
@@ -202,8 +199,8 @@ class TrackActivity : SimpleControllerActivity(), PlaybackSpeedListener {
         }
     }
 
-    private fun setupTopArt(mediaItem: MediaItem) {
-        getMediaItemCoverArt(mediaItem) { coverArt ->
+    private fun setupTopArt(track: Track) {
+        getTrackCoverArt(track) { coverArt ->
             var wantedHeight = resources.getCoverArtHeight()
             wantedHeight = min(wantedHeight, realScreenSize.y / 2)
             val wantedWidth = realScreenSize.x
@@ -348,6 +345,7 @@ class TrackActivity : SimpleControllerActivity(), PlaybackSpeedListener {
             activity_track_speed_icon.setImageDrawable(resources.getDrawable(drawableId))
         }
 
+        @SuppressLint("SetTextI18n")
         activity_track_speed.text = "${DecimalFormat("#.##").format(speed)}x"
         withPlayer {
             setPlaybackSpeed(speed)
