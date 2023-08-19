@@ -76,13 +76,6 @@ class MainActivity : SimpleMusicActivity(), Player.Listener {
         volumeControlStream = AudioManager.STREAM_MUSIC
         checkWhatsNewDialog()
         checkAppOnSDCard()
-
-        if (config.appRunCount == 1) {
-            config.wereTrackFoldersAdded = true
-        } else if (config.appRunCount > 5) {
-            // assume old users have it created already
-            config.wasAllTracksPlaylistCreated = true
-        }
     }
 
     override fun onResume() {

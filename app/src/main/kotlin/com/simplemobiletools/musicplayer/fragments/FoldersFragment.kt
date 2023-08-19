@@ -30,27 +30,7 @@ class FoldersFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
 
     override fun setupFragment(activity: BaseSimpleActivity) {
         ensureBackgroundThread {
-            val tracks = context.audioHelper.getAllTracks()
-            val foldersMap = tracks.groupBy { it.folderName }
-            val folders = ArrayList<Folder>()
-            val excludedFolders = activity.config.excludedFolders
-            for ((title, folderTracks) in foldersMap) {
-                val path = (folderTracks.firstOrNull()?.path?.getParentPath() ?: "").removeSuffix("/")
-                if (excludedFolders.contains(path)) {
-                    continue
-                }
-
-                val folder = Folder(title, folderTracks.size, path)
-                folders.add(folder)
-
-                if (!context.config.wereTrackFoldersAdded) {
-                    folderTracks.forEach {
-                        context.audioHelper.updateTrackFolder(title, it.mediaStoreId)
-                    }
-                }
-            }
-
-            context.config.wereTrackFoldersAdded = true
+            val folders = context.audioHelper.getAllFolders()
 
             activity.runOnUiThread {
                 val scanning = activity.mediaScanner.isScanning()
@@ -68,7 +48,6 @@ class FoldersFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
                     activity.startActivity(Intent(activity, ExcludedFoldersActivity::class.java))
                 }
 
-                folders.sortSafely(activity.config.folderSorting)
                 this.folders = folders
 
                 val adapter = folders_list.adapter
