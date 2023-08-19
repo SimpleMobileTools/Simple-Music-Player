@@ -1,15 +1,11 @@
 package com.simplemobiletools.musicplayer.adapters
 
+import android.annotation.SuppressLint
 import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.CenterCrop
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import com.bumptech.glide.request.RequestOptions
 import com.qtalk.recyclerviewfastscroller.RecyclerViewFastScroller
-import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
 import com.simplemobiletools.commons.dialogs.ConfirmationDialog
 import com.simplemobiletools.commons.extensions.beGone
 import com.simplemobiletools.commons.extensions.beVisible
@@ -21,25 +17,22 @@ import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
 import com.simplemobiletools.musicplayer.dialogs.EditDialog
 import com.simplemobiletools.musicplayer.extensions.*
-import com.simplemobiletools.musicplayer.helpers.TagHelper
 import com.simplemobiletools.musicplayer.models.AlbumHeader
 import com.simplemobiletools.musicplayer.models.ListItem
 import com.simplemobiletools.musicplayer.models.Track
-import com.simplemobiletools.musicplayer.services.MusicService
+import com.simplemobiletools.musicplayer.services.playback.PlaybackService
 import kotlinx.android.synthetic.main.item_album_header.view.album_artist
 import kotlinx.android.synthetic.main.item_album_header.view.album_meta
 import kotlinx.android.synthetic.main.item_album_header.view.album_title
 import kotlinx.android.synthetic.main.item_track.view.*
 
-class TracksHeaderAdapter(activity: SimpleActivity, var items: ArrayList<ListItem>, recyclerView: MyRecyclerView, itemClick: (Any) -> Unit) :
-    MyRecyclerViewAdapter(activity, recyclerView, itemClick), RecyclerViewFastScroller.OnPopupTextUpdate {
+class TracksHeaderAdapter(activity: SimpleActivity, items: ArrayList<ListItem>, recyclerView: MyRecyclerView, itemClick: (Any) -> Unit) :
+    BaseMusicAdapter<ListItem>(items, activity, recyclerView, itemClick), RecyclerViewFastScroller.OnPopupTextUpdate {
 
     private val ITEM_HEADER = 0
     private val ITEM_TRACK = 1
 
-    private val placeholder = resources.getBiggerPlaceholder(textColor)
-    private val cornerRadius = resources.getDimension(R.dimen.rounded_corner_radius_big).toInt()
-    private val tagHelper by lazy { TagHelper(activity) }
+    override val cornerRadius = resources.getDimension(R.dimen.rounded_corner_radius_big).toInt()
 
     init {
         setupDragListener(true)
@@ -59,7 +52,7 @@ class TracksHeaderAdapter(activity: SimpleActivity, var items: ArrayList<ListIte
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = items.getOrNull(position) ?: return
         val allowClicks = item !is AlbumHeader
-        holder.bindView(item, allowClicks, allowClicks) { itemView, layoutPosition ->
+        holder.bindView(item, allowClicks, allowClicks) { itemView, _ ->
             when (item) {
                 is AlbumHeader -> setupHeader(itemView, item)
                 else -> setupTrack(itemView, item as Track)
@@ -67,8 +60,6 @@ class TracksHeaderAdapter(activity: SimpleActivity, var items: ArrayList<ListIte
         }
         bindViewHolder(holder)
     }
-
-    override fun getItemCount() = items.size
 
     override fun getItemViewType(position: Int): Int {
         return when (items[position]) {
@@ -78,12 +69,14 @@ class TracksHeaderAdapter(activity: SimpleActivity, var items: ArrayList<ListIte
     }
 
     override fun prepareActionMode(menu: Menu) {
+        val firstTrack = getSelectedTracks().firstOrNull()
         menu.apply {
             val oneItemsSelected = isOneItemSelected()
-            val selected = getSelectedTracks().firstOrNull()?.let { !it.path.startsWith("content://") && tagHelper.isEditTagSupported(it) } == true
+            val selected = firstTrack?.let { !it.path.startsWith("content://") && tagHelper.isEditTagSupported(it) } == true
             findItem(R.id.cab_rename).isVisible = oneItemsSelected && selected
             findItem(R.id.cab_play_next).isVisible =
-                isOneItemSelected() && MusicService.mCurrTrack != getSelectedTracks().firstOrNull() && MusicService.mCurrTrack !== null
+                isOneItemSelected() && PlaybackService.currentMediaItem != null &&
+                    PlaybackService.currentMediaItem!!.mediaId != firstTrack?.mediaStoreId.toString()
         }
     }
 
@@ -100,7 +93,7 @@ class TracksHeaderAdapter(activity: SimpleActivity, var items: ArrayList<ListIte
             R.id.cab_share -> shareFiles()
             R.id.cab_rename -> displayEditDialog()
             R.id.cab_select_all -> selectAll()
-            R.id.cab_play_next -> playNext()
+            R.id.cab_play_next -> playNextInQueue()
         }
     }
 
@@ -108,42 +101,8 @@ class TracksHeaderAdapter(activity: SimpleActivity, var items: ArrayList<ListIte
 
     override fun getIsItemSelectable(position: Int) = position != 0
 
-    override fun getItemSelectionKey(position: Int) = items.getOrNull(position)?.hashCode()
-
-    override fun getItemKeyPosition(key: Int) = items.indexOfFirst { it.hashCode() == key }
-
-    override fun onActionModeCreated() {}
-
-    override fun onActionModeDestroyed() {}
-
-    private fun addToPlaylist() {
-        activity.addTracksToPlaylist(getSelectedTracks()) {
-            finishActMode()
-            notifyDataSetChanged()
-        }
-    }
-
-    private fun addToQueue() {
-        activity.addTracksToQueue(getSelectedTracks()) {
-            finishActMode()
-        }
-    }
-
-    private fun playNext() {
-        getSelectedTracks().firstOrNull()?.let { selectedTrack ->
-            activity.playNextInQueue(selectedTrack) {
-                finishActMode()
-            }
-        }
-    }
-
-    private fun showProperties() {
-        val selectedTracks = getSelectedTracks()
-        activity.showTrackProperties(selectedTracks)
-    }
-
     private fun askConfirmDelete() {
-        ConfirmationDialog(activity) {
+        ConfirmationDialog(ctx) {
             ensureBackgroundThread {
                 val positions = ArrayList<Int>()
                 val selectedTracks = getSelectedTracks()
@@ -154,8 +113,8 @@ class TracksHeaderAdapter(activity: SimpleActivity, var items: ArrayList<ListIte
                     }
                 }
 
-                activity.deleteTracks(selectedTracks) {
-                    activity.runOnUiThread {
+                ctx.deleteTracks(selectedTracks) {
+                    ctx.runOnUiThread {
                         positions.sortDescending()
                         removeSelectedItems(positions)
                         positions.forEach {
@@ -164,7 +123,7 @@ class TracksHeaderAdapter(activity: SimpleActivity, var items: ArrayList<ListIte
 
                         // finish activity if all tracks are deleted
                         if (items.none { it is Track }) {
-                            activity.finish()
+                            ctx.finish()
                         }
                     }
                 }
@@ -172,23 +131,11 @@ class TracksHeaderAdapter(activity: SimpleActivity, var items: ArrayList<ListIte
         }
     }
 
-    private fun shareFiles() {
-        activity.shareTracks(getSelectedTracks())
-    }
-
-    private fun getSelectedTracks(): List<Track> = items.filter { it is Track && selectedKeys.contains(it.hashCode()) }.toList() as List<Track>
-
-    fun updateItems(newItems: ArrayList<ListItem>) {
-        if (newItems.hashCode() != items.hashCode()) {
-            items = newItems.clone() as ArrayList<ListItem>
-            notifyDataSetChanged()
-            finishActMode()
-        }
-    }
+    override fun getSelectedTracks() = getSelectedItems().filterIsInstance<Track>().toList()
 
     private fun setupTrack(view: View, track: Track) {
         view.apply {
-            setupViewBackground(activity)
+            setupViewBackground(ctx)
             track_frame?.isSelected = selectedKeys.contains(track.hashCode())
             track_title.text = track.title
             track_info.beGone()
@@ -215,30 +162,22 @@ class TracksHeaderAdapter(activity: SimpleActivity, var items: ArrayList<ListIte
                 year = "${header.year} • "
             }
 
+            @SuppressLint("SetTextI18n")
             album_meta.text = "$year$tracks • ${header.duration.getFormattedDuration(true)}"
 
             arrayOf(album_title, album_artist, album_meta).forEach {
                 it.setTextColor(textColor)
             }
 
-            val options = RequestOptions()
-                .error(placeholder)
-                .transform(CenterCrop(), RoundedCorners(cornerRadius))
-
             ensureBackgroundThread {
-                val album = activity.audioHelper.getAlbum(header.id)
+                val album = ctx.audioHelper.getAlbum(header.id)
                 if (album != null) {
-                    activity.getAlbumCoverArt(album) { coverArt ->
-                        activity.ensureActivityNotDestroyed {
-                            Glide.with(activity)
-                                .load(coverArt)
-                                .apply(options)
-                                .into(findViewById(R.id.album_image))
-                        }
+                    ctx.getAlbumCoverArt(album) { coverArt ->
+                        loadImage(findViewById(R.id.album_image), coverArt, placeholderBig)
                     }
                 } else {
-                    activity.runOnUiThread {
-                        findViewById<ImageView>(R.id.album_image).setImageDrawable(placeholder)
+                    ctx.runOnUiThread {
+                        findViewById<ImageView>(R.id.album_image).setImageDrawable(placeholderBig)
                     }
                 }
             }
@@ -246,9 +185,8 @@ class TracksHeaderAdapter(activity: SimpleActivity, var items: ArrayList<ListIte
     }
 
     override fun onChange(position: Int): CharSequence {
-        val listItem = items.getOrNull(position)
-        return when (listItem) {
-            is Track -> listItem.getBubbleText(activity.config.trackSorting)
+        return when (val listItem = items.getOrNull(position)) {
+            is Track -> listItem.getBubbleText(ctx.config.trackSorting)
             is AlbumHeader -> listItem.title
             else -> ""
         }
@@ -256,7 +194,7 @@ class TracksHeaderAdapter(activity: SimpleActivity, var items: ArrayList<ListIte
 
     private fun displayEditDialog() {
         getSelectedTracks().firstOrNull()?.let { selectedTrack ->
-            EditDialog(activity as SimpleActivity, selectedTrack) { track ->
+            EditDialog(ctx, selectedTrack) { track ->
                 val trackIndex = items.indexOfFirst { (it as? Track)?.mediaStoreId == track.mediaStoreId }
                 if (trackIndex != -1) {
                     items[trackIndex] = track
@@ -264,7 +202,7 @@ class TracksHeaderAdapter(activity: SimpleActivity, var items: ArrayList<ListIte
                     finishActMode()
                 }
 
-                activity.refreshAfterEdit(track)
+                ctx.refreshAfterEdit(track)
             }
         }
     }

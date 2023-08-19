@@ -10,7 +10,6 @@ const val PROGRESS = "progress"
 const val EDITED_TRACK = "edited_track"
 const val ALL_TRACKS_PLAYLIST_ID = 1
 const val TRACK_ID = "track_id"
-const val RESTART_PLAYER = "RESTART_PLAYER"
 const val EQUALIZER_PRESET_CUSTOM = -1
 
 const val ARTIST = "artist"
@@ -20,7 +19,7 @@ const val PLAYLIST = "playlist"
 const val FOLDER = "folder"
 const val GENRE = "genre"
 
-private const val PATH = "com.simplemobiletools.musicplayer.action."
+const val PATH = "com.simplemobiletools.musicplayer.action."
 val artworkUri = Uri.parse("content://media/external/audio/albumart")
 
 const val INIT = PATH + "INIT"
@@ -46,8 +45,7 @@ const val SET_PLAYBACK_SPEED = PATH + "SET_PLAYBACK_SPEED"
 const val UPDATE_QUEUE_SIZE = PATH + "UPDATE_QUEUE_SIZE"
 const val UPDATE_GAPLESS_PLAYBACK = PATH + "UPDATE_GAPLESS_PLAYBACK"
 const val TRACK_STATE_CHANGED = "TRACK_STATE_CHANGED"
-const val MEDIA_ITEM_DURATION = "MEDIA_ITEM_DURATION"
-const val MEDIA_ITEM_PATH = "MEDIA_ITEM_PATH"
+const val MEDIA_ITEM_TAG = "MEDIA_ITEM_TRACK"
 
 // shared preferences
 const val SHUFFLE = "shuffle"
@@ -87,6 +85,7 @@ const val TAB_GENRES = 32
 const val ACTIVITY_PLAYLIST_FOLDER = 64
 
 const val FLAG_MANUAL_CACHE = 1
+const val FLAG_IS_CURRENT = 2
 
 // show Folders tab only on Android Q+, BUCKET_DISPLAY_NAME hasn't been available before that
 val allTabsMask = if (isQPlus()) {

@@ -1,6 +1,7 @@
 package com.simplemobiletools.musicplayer.helpers
 
 import android.content.Context
+import com.simplemobiletools.commons.extensions.addBit
 import com.simplemobiletools.commons.extensions.getParentPath
 import com.simplemobiletools.musicplayer.extensions.*
 import com.simplemobiletools.musicplayer.models.*
@@ -58,10 +59,6 @@ class AudioHelper(private val context: Context) {
 
     fun updateTrackInfo(newPath: String, artist: String, title: String, oldPath: String) {
         context.tracksDAO.updateSongInfo(newPath, artist, title, oldPath)
-    }
-
-    fun updateTrackFolder(folder: String, mediaStoreId: Long) {
-        context.tracksDAO.updateFolderName(folder, mediaStoreId)
     }
 
     fun deleteTrack(mediaStoreId: Long) {
@@ -232,6 +229,28 @@ class AudioHelper(private val context: Context) {
 
         val invalidArtists = artists.filter { artist -> tracks.none { it.artistId == artist.id } }
         deleteArtists(invalidArtists)
+    }
+
+    fun getAllQueuedTracks(): ArrayList<Track> {
+        val tracks = ArrayList<Track>()
+        val queueItems = context.queueDAO.getAll()
+        val allTracks = getAllTracks()
+
+        // make sure we fetch the songs in the order they were displayed in
+        for (queueItem in queueItems) {
+            val wantedId = queueItem.trackId
+            val track = allTracks.find { it.mediaStoreId == wantedId }
+            if (track != null) {
+                if (queueItem.isCurrent) {
+                    track.flags = track.flags.addBit(FLAG_IS_CURRENT)
+                }
+
+                tracks.add(track)
+                continue
+            }
+        }
+
+        return tracks.distinctBy { it.mediaStoreId }.toMutableList() as ArrayList<Track>
     }
 
     fun updateQueue(items: List<QueueItem>, currentTrackId: Long? = null, startPosition: Long? = null) {

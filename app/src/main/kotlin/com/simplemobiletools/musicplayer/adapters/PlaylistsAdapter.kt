@@ -5,7 +5,6 @@ import android.view.View
 import android.view.ViewGroup
 import com.qtalk.recyclerviewfastscroller.RecyclerViewFastScroller
 import com.simplemobiletools.commons.activities.BaseSimpleActivity
-import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
 import com.simplemobiletools.commons.extensions.deleteFiles
 import com.simplemobiletools.commons.extensions.getFilenameFromPath
 import com.simplemobiletools.commons.extensions.highlightTextPart
@@ -26,28 +25,20 @@ import kotlinx.android.synthetic.main.item_playlist.view.playlist_tracks
 import org.greenrobot.eventbus.EventBus
 
 class PlaylistsAdapter(
-    activity: BaseSimpleActivity, var playlists: ArrayList<Playlist>, recyclerView: MyRecyclerView, itemClick: (Any) -> Unit
-) : MyRecyclerViewAdapter(activity, recyclerView, itemClick), RecyclerViewFastScroller.OnPopupTextUpdate {
-
-    private var textToHighlight = ""
-
-    init {
-        setupDragListener(true)
-    }
+    activity: BaseSimpleActivity, items: ArrayList<Playlist>, recyclerView: MyRecyclerView, itemClick: (Any) -> Unit
+) : BaseMusicAdapter<Playlist>(items, activity, recyclerView, itemClick), RecyclerViewFastScroller.OnPopupTextUpdate {
 
     override fun getActionMenuId() = R.menu.cab_playlists
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = createViewHolder(R.layout.item_playlist, parent)
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val playlist = playlists.getOrNull(position) ?: return
-        holder.bindView(playlist, true, true) { itemView, layoutPosition ->
+        val playlist = items.getOrNull(position) ?: return
+        holder.bindView(playlist, allowSingleClick = true, allowLongClick = true) { itemView, _ ->
             setupView(itemView, playlist)
         }
         bindViewHolder(holder)
     }
-
-    override fun getItemCount() = playlists.size
 
     override fun prepareActionMode(menu: Menu) {
         menu.apply {
@@ -63,22 +54,10 @@ class PlaylistsAdapter(
         }
     }
 
-    override fun getSelectableItemCount() = playlists.size
-
-    override fun getIsItemSelectable(position: Int) = true
-
-    override fun getItemSelectionKey(position: Int) = playlists.getOrNull(position)?.id
-
-    override fun getItemKeyPosition(key: Int) = playlists.indexOfFirst { it.id == key }
-
-    override fun onActionModeCreated() {}
-
-    override fun onActionModeDestroyed() {}
-
     private fun askConfirmDelete() {
-        RemovePlaylistDialog(activity) {
-            val ids = selectedKeys.map { it } as ArrayList<Int>
-            if (it) {
+        RemovePlaylistDialog(ctx) { delete ->
+            val ids = getSelectedItems().map { it.id } as ArrayList<Int>
+            if (delete) {
                 ensureBackgroundThread {
                     deletePlaylistSongs(ids) {
                         removePlaylists()
@@ -92,10 +71,10 @@ class PlaylistsAdapter(
 
     private fun deletePlaylistSongs(ids: ArrayList<Int>, callback: () -> Unit) {
         var cnt = ids.size
-        ids.map {
-            val paths = activity.audioHelper.getPlaylistTracks(it).map { it.path }
+        ids.map { id ->
+            val paths = ctx.audioHelper.getPlaylistTracks(id).map { it.path }
             val fileDirItems = paths.map { FileDirItem(it, it.getFilenameFromPath()) } as ArrayList<FileDirItem>
-            activity.deleteFiles(fileDirItems) {
+            ctx.deleteFiles(fileDirItems) {
                 if (--cnt <= 0) {
                     callback()
                 }
@@ -108,18 +87,18 @@ class PlaylistsAdapter(
         val positions = ArrayList<Int>()
         for (key in selectedKeys) {
             val playlist = getItemWithKey(key) ?: continue
-            val position = playlists.indexOfFirst { it.id == key }
+            val position = items.indexOfFirst { it.id == key }
             if (position != -1) {
                 positions.add(position + positionOffset)
             }
             playlistsToDelete.add(playlist)
         }
 
-        playlists.removeAll(playlistsToDelete)
+        items.removeAll(playlistsToDelete.toSet())
 
         ensureBackgroundThread {
-            activity.audioHelper.deletePlaylists(playlistsToDelete)
-            activity.runOnUiThread {
+            ctx.audioHelper.deletePlaylists(playlistsToDelete)
+            ctx.runOnUiThread {
                 removeSelectedItems(positions)
             }
 
@@ -127,23 +106,11 @@ class PlaylistsAdapter(
         }
     }
 
-    private fun getItemWithKey(key: Int): Playlist? = playlists.firstOrNull { it.id == key }
-
-    fun updateItems(newItems: ArrayList<Playlist>, highlightText: String = "", forceUpdate: Boolean = false) {
-        if (forceUpdate || newItems.hashCode() != playlists.hashCode()) {
-            playlists = newItems.clone() as ArrayList<Playlist>
-            textToHighlight = highlightText
-            notifyDataSetChanged()
-            finishActMode()
-        } else if (textToHighlight != highlightText) {
-            textToHighlight = highlightText
-            notifyDataSetChanged()
-        }
-    }
+    private fun getItemWithKey(key: Int): Playlist? = items.firstOrNull { it.id == key }
 
     private fun showRenameDialog() {
-        NewPlaylistDialog(activity, playlists[getItemKeyPosition(selectedKeys.first())]) {
-            activity.runOnUiThread {
+        NewPlaylistDialog(ctx, items[getItemKeyPosition(selectedKeys.first())]) {
+            ctx.runOnUiThread {
                 finishActMode()
             }
         }
@@ -151,7 +118,7 @@ class PlaylistsAdapter(
 
     private fun setupView(view: View, playlist: Playlist) {
         view.apply {
-            setupViewBackground(activity)
+            setupViewBackground(ctx)
             playlist_frame?.isSelected = selectedKeys.contains(playlist.id)
             playlist_title.text = if (textToHighlight.isEmpty()) playlist.title else playlist.title.highlightTextPart(textToHighlight, properPrimaryColor)
             playlist_title.setTextColor(textColor)
@@ -162,5 +129,5 @@ class PlaylistsAdapter(
         }
     }
 
-    override fun onChange(position: Int) = playlists.getOrNull(position)?.getBubbleText(activity.config.playlistSorting) ?: ""
+    override fun onChange(position: Int) = items.getOrNull(position)?.getBubbleText(ctx.config.playlistSorting) ?: ""
 }

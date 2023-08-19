@@ -1,6 +1,5 @@
 package com.simplemobiletools.musicplayer.extensions
 
-import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
 import android.content.Intent
@@ -23,29 +22,15 @@ import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.Target
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
-import com.simplemobiletools.commons.helpers.isOreoPlus
 import com.simplemobiletools.commons.helpers.isQPlus
 import com.simplemobiletools.musicplayer.databases.SongsDatabase
 import com.simplemobiletools.musicplayer.helpers.*
 import com.simplemobiletools.musicplayer.interfaces.*
-import com.simplemobiletools.musicplayer.models.*
-import com.simplemobiletools.musicplayer.services.MusicService
+import com.simplemobiletools.musicplayer.models.Album
+import com.simplemobiletools.musicplayer.models.Artist
+import com.simplemobiletools.musicplayer.models.Genre
+import com.simplemobiletools.musicplayer.models.Track
 import java.io.File
-
-@SuppressLint("NewApi")
-fun Context.sendIntent(action: String) {
-    Intent(this, MusicService::class.java).apply {
-        this.action = action
-        try {
-            if (isOreoPlus()) {
-                startForegroundService(this)
-            } else {
-                startService(this)
-            }
-        } catch (ignored: Exception) {
-        }
-    }
-}
 
 val Context.config: Config get() = Config.newInstance(applicationContext)
 
@@ -73,59 +58,6 @@ fun Context.broadcastUpdateWidgetState() {
     Intent(this, MyWidgetProvider::class.java).apply {
         action = TRACK_STATE_CHANGED
         sendBroadcast(this)
-    }
-}
-
-fun Context.resetQueueItems(newTracks: List<Track>, callback: () -> Unit) {
-    ensureBackgroundThread {
-        queueDAO.deleteAllItems()
-        addQueueItems(newTracks, callback)
-    }
-}
-
-fun Context.addQueueItems(newTracks: List<Track>, callback: () -> Unit) {
-    ensureBackgroundThread {
-        val itemsToInsert = ArrayList<QueueItem>()
-        var order = 0
-        newTracks.forEach {
-            val queueItem = QueueItem(it.mediaStoreId, order++, false, 0)
-            itemsToInsert.add(queueItem)
-        }
-
-        audioHelper.insertTracks(newTracks)
-        queueDAO.insertAll(itemsToInsert)
-        sendIntent(UPDATE_QUEUE_SIZE)
-        callback()
-    }
-}
-
-fun Context.addNextQueueItem(nextTrack: Track, callback: () -> Unit) {
-    ensureBackgroundThread {
-        val tracksInQueue = queueDAO.getAll().toMutableList()
-        var order = 0
-        for (index in 0..tracksInQueue.size) {
-            val track = tracksInQueue[index]
-            track.trackOrder = order++
-            if (track.trackId == MusicService.mCurrTrack!!.mediaStoreId) {
-                val currentTrackPosition = tracksInQueue.indexOf(track)
-                tracksInQueue.add(currentTrackPosition + 1, QueueItem(nextTrack.mediaStoreId, order + 1, false, 0))
-            }
-        }
-
-        queueDAO.deleteAllItems()
-        queueDAO.insertAll(tracksInQueue)
-        sendIntent(UPDATE_QUEUE_SIZE)
-        callback()
-    }
-}
-
-fun Context.removeQueueItems(tracks: List<Track>, callback: (() -> Unit)? = null) {
-    ensureBackgroundThread {
-        tracks.forEach {
-            queueDAO.removeQueueItem(it.mediaStoreId)
-            MusicService.mTracks.remove(it)
-        }
-        callback?.invoke()
     }
 }
 
