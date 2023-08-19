@@ -86,6 +86,7 @@ class TrackActivity : SimpleControllerActivity(), PlaybackSpeedListener {
         activity_track_title.setTextColor(getProperTextColor())
         activity_track_artist.setTextColor(getProperTextColor())
         updatePlayerState()
+        updateTrackInfo()
     }
 
     override fun onPause() {
@@ -375,13 +376,17 @@ class TrackActivity : SimpleControllerActivity(), PlaybackSpeedListener {
             finish()
         } else {
             activity_track_progressbar.progress = 0
-            withPlayer {
-                val currentMediaItem = currentMediaItem
-                val nextMediaItem = nextMediaItem
-                runOnUiThread {
-                    setupTrackInfo(currentMediaItem)
-                    setupNextTrackInfo(nextMediaItem)
-                }
+            updateTrackInfo()
+        }
+    }
+
+    private fun updateTrackInfo() {
+        withPlayer {
+            val currentMediaItem = currentMediaItem
+            val nextMediaItem = nextMediaItem
+            runOnUiThread {
+                setupTrackInfo(currentMediaItem)
+                setupNextTrackInfo(nextMediaItem)
             }
         }
     }
