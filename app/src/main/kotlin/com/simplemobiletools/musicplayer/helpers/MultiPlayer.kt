@@ -1,7 +1,6 @@
 package com.simplemobiletools.musicplayer.helpers
 
 import android.app.Application
-import android.content.IntentFilter
 import android.media.AudioAttributes
 import android.media.AudioManager
 import android.media.MediaPlayer
@@ -12,19 +11,12 @@ import androidx.media.AudioAttributesCompat
 import androidx.media.AudioFocusRequestCompat
 import androidx.media.AudioManagerCompat
 import com.simplemobiletools.musicplayer.extensions.config
-import com.simplemobiletools.musicplayer.receivers.HeadsetPlugReceiver
 
 class MultiPlayer(private val app: Application, private val callbacks: PlaybackCallbacks) : MediaPlayer.OnErrorListener, MediaPlayer.OnCompletionListener {
     private var mCurrentMediaPlayer = MediaPlayer()
     private var mNextMediaPlayer: MediaPlayer? = null
 
     var isInitialized: Boolean = false
-
-    private var becomingNoisyReceiverRegistered = false
-    private val becomingNoisyReceiver = HeadsetPlugReceiver()
-    private val becomingNoisyReceiverIntentFilter = IntentFilter(AudioManager.ACTION_HEADSET_PLUG).apply {
-        addAction(AudioManager.ACTION_AUDIO_BECOMING_NOISY)
-    }
 
     private val audioManager: AudioManager? = app.getSystemService()
     private var isPausedByTransientLossOfFocus = false
@@ -115,7 +107,6 @@ class MultiPlayer(private val app: Application, private val callbacks: PlaybackC
 
     fun start(): Boolean {
         requestFocus()
-        registerBecomingNoisyReceiver()
         return try {
             mCurrentMediaPlayer.start()
             true
@@ -126,7 +117,6 @@ class MultiPlayer(private val app: Application, private val callbacks: PlaybackC
 
     fun stop() {
         abandonFocus()
-        unregisterBecomingNoisyReceiver()
         mCurrentMediaPlayer.reset()
         isInitialized = false
     }
@@ -142,7 +132,6 @@ class MultiPlayer(private val app: Application, private val callbacks: PlaybackC
             return false
         }
 
-        unregisterBecomingNoisyReceiver()
         return try {
             mCurrentMediaPlayer.pause()
             true
@@ -237,22 +226,6 @@ class MultiPlayer(private val app: Application, private val callbacks: PlaybackC
     private fun releaseNextPlayer() {
         mNextMediaPlayer?.release()
         mNextMediaPlayer = null
-    }
-
-    private fun unregisterBecomingNoisyReceiver() {
-        if (becomingNoisyReceiverRegistered) {
-            app.unregisterReceiver(becomingNoisyReceiver)
-            becomingNoisyReceiverRegistered = false
-        }
-    }
-
-    private fun registerBecomingNoisyReceiver() {
-        if (!becomingNoisyReceiverRegistered) {
-            app.registerReceiver(
-                becomingNoisyReceiver, becomingNoisyReceiverIntentFilter
-            )
-            becomingNoisyReceiverRegistered = true
-        }
     }
 
     private fun getAudioFocusRequest(): AudioFocusRequestCompat {

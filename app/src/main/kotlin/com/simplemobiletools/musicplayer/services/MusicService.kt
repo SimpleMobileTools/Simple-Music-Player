@@ -4,19 +4,16 @@ import android.annotation.SuppressLint
 import android.app.Application
 import android.app.Service
 import android.content.Intent
-import android.content.pm.ServiceInfo
 import android.graphics.Bitmap
 import android.media.MediaMetadataRetriever
 import android.media.audiofx.Equalizer
 import android.net.Uri
-import android.os.CountDownTimer
 import android.os.Handler
 import android.os.IBinder
 import android.os.Looper
 import android.support.v4.media.MediaMetadataCompat
 import android.support.v4.media.session.MediaSessionCompat
 import android.support.v4.media.session.PlaybackStateCompat
-import android.view.KeyEvent
 import androidx.media.session.MediaButtonReceiver
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -28,7 +25,6 @@ import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.databases.SongsDatabase
 import com.simplemobiletools.musicplayer.extensions.*
 import com.simplemobiletools.musicplayer.helpers.*
-import com.simplemobiletools.musicplayer.helpers.NotificationHelper.Companion.NOTIFICATION_ID
 import com.simplemobiletools.musicplayer.helpers.PlaybackSetting.REPEAT_OFF
 import com.simplemobiletools.musicplayer.helpers.PlaybackSetting.REPEAT_PLAYLIST
 import com.simplemobiletools.musicplayer.helpers.PlaybackSetting.REPEAT_TRACK
@@ -37,7 +33,6 @@ import com.simplemobiletools.musicplayer.inlines.indexOfFirstOrNull
 import com.simplemobiletools.musicplayer.models.Events
 import com.simplemobiletools.musicplayer.models.QueueItem
 import com.simplemobiletools.musicplayer.models.Track
-import com.simplemobiletools.musicplayer.models.sortSafely
 import org.greenrobot.eventbus.EventBus
 import java.io.IOException
 import kotlin.math.roundToInt
@@ -56,7 +51,6 @@ class MusicService : Service(), MultiPlayer.PlaybackCallbacks {
         private var mCurrTrackCover: Bitmap? = null
         private var mHeadsetPlaceholder: Bitmap? = null
         private var mProgressHandler = Handler()
-        private var mSleepTimer: CountDownTimer? = null
         private var mRetriedTrackCount = 0
         private var mPlaybackSpeed = 1f
 
@@ -80,42 +74,13 @@ class MusicService : Service(), MultiPlayer.PlaybackCallbacks {
         }
     }
 
-    private var mClicksCnt = 0
-    private val mRemoteControlHandler = Handler()
-    private val mRunnable = Runnable {
-        if (mClicksCnt == 0) {
-            return@Runnable
-        }
-
-        when (mClicksCnt) {
-            1 -> handlePlayPause()
-            2 -> handleNext()
-            else -> handlePrevious()
-        }
-        mClicksCnt = 0
-    }
-
-    private val notificationHandler = Handler()
-    private var notificationHelper: NotificationHelper? = null
-
     override fun onCreate() {
         super.onCreate()
         initMediaPlayerIfNeeded()
-        createMediaSession()
-
-        notificationHelper = NotificationHelper.createInstance(context = this, mMediaSession!!)
-        startForegroundAndNotify()
 
         if (!isQPlus() && !hasPermission(getPermissionToRequest())) {
             EventBus.getDefault().post(Events.NoStoragePermission())
         }
-    }
-
-    private fun createMediaSession() {
-        mMediaSession = MediaSessionCompat(this, "MusicService")
-        mMediaSession!!.setFlags(MediaSessionCompat.FLAG_HANDLES_MEDIA_BUTTONS)
-        val mediaSessionCallback = MediaSessionCallback(this)
-        mMediaSession!!.setCallback(mediaSessionCallback)
     }
 
     override fun onDestroy() {
@@ -125,7 +90,6 @@ class MusicService : Service(), MultiPlayer.PlaybackCallbacks {
         mMediaSession = null
         mEqualizer?.release()
         mEqualizer = null
-        mSleepTimer?.cancel()
         config.sleepInTS = 0L
         SongsDatabase.destroyInstance()
     }
@@ -154,8 +118,6 @@ class MusicService : Service(), MultiPlayer.PlaybackCallbacks {
             SET_PROGRESS -> handleSetProgress(intent)
             SKIP_BACKWARD -> skip(false)
             SKIP_FORWARD -> skip(true)
-            START_SLEEP_TIMER -> startSleepTimer()
-            STOP_SLEEP_TIMER -> stopSleepTimer()
             BROADCAST_STATUS -> broadcastPlayerStatus()
             SET_PLAYBACK_SPEED -> setPlaybackSpeed()
             UPDATE_QUEUE_SIZE -> updateQueueSize()
@@ -163,9 +125,6 @@ class MusicService : Service(), MultiPlayer.PlaybackCallbacks {
         }
 
         MediaButtonReceiver.handleIntent(mMediaSession!!, intent)
-        if (action != DISMISS && action != FINISH) {
-            startForegroundAndNotify()
-        }
         return START_NOT_STICKY
     }
 
@@ -215,7 +174,6 @@ class MusicService : Service(), MultiPlayer.PlaybackCallbacks {
         }
 
         initMediaPlayerIfNeeded()
-        startForegroundAndNotify()
         mIsServiceInitialized = true
     }
 
@@ -303,7 +261,6 @@ class MusicService : Service(), MultiPlayer.PlaybackCallbacks {
         if (isPlaying()) {
             pauseTrack(false)
         }
-        stopForegroundAndNotification()
     }
 
     private fun handleRefreshList() {
@@ -403,16 +360,7 @@ class MusicService : Service(), MultiPlayer.PlaybackCallbacks {
     // make sure tracks don't get duplicated in the queue, if they exist in multiple playlists
     private fun getQueuedTracks(): ArrayList<Track> {
         val tracks = ArrayList<Track>()
-        var queueItems = queueDAO.getAll()
-        if (queueItems.isEmpty()) {
-            val tracks = audioHelper.getPlaylistTracks(ALL_TRACKS_PLAYLIST_ID)
-            if (tracks.isNotEmpty()) {
-                tracks.sortSafely(config.trackSorting)
-                addQueueItems(newTracks = tracks) {}
-                queueItems = queueDAO.getAll()
-            }
-        }
-
+        val queueItems = queueDAO.getAll()
         val allTracks = audioHelper.getAllTracks()
 
         // make sure we fetch the songs in the order they were displayed in
@@ -439,38 +387,6 @@ class MusicService : Service(), MultiPlayer.PlaybackCallbacks {
                 mTracks.add(0, mCurrTrack!!)
             }
         }
-    }
-
-    private fun startForegroundAndNotify() {
-        notificationHandler.removeCallbacksAndMessages(null)
-        notificationHandler.postDelayed({
-            if (mCurrTrackCover?.isRecycled == true) {
-                mCurrTrackCover = resources.getColoredBitmap(R.drawable.ic_headset, getProperTextColor())
-            }
-
-            notificationHelper?.createPlayerNotification(
-                track = mCurrTrack,
-                isPlaying = isPlaying(),
-                largeIcon = mCurrTrackCover,
-            ) {
-                notificationHelper?.notify(NOTIFICATION_ID, it)
-                try {
-                    if (isQPlus()) {
-                        startForeground(NOTIFICATION_ID, it, ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PLAYBACK)
-                    } else {
-                        startForeground(NOTIFICATION_ID, it)
-                    }
-                } catch (ignored: IllegalStateException) {
-                }
-            }
-        }, 200L)
-    }
-
-    private fun stopForegroundAndNotification() {
-        notificationHandler.removeCallbacksAndMessages(null)
-        @Suppress("DEPRECATION")
-        stopForeground(true)
-        notificationHelper?.cancel(NOTIFICATION_ID)
     }
 
     private fun getTrackWithId(trackId: Long): Track? {
@@ -874,7 +790,6 @@ class MusicService : Service(), MultiPlayer.PlaybackCallbacks {
         trackStateChanged(isPlaying = false, notify = false)
         trackChanged()
 
-        stopForegroundAndNotification()
         stopSelf()
         mIsThirdPartyIntent = false
         mIsServiceInitialized = false
@@ -889,9 +804,6 @@ class MusicService : Service(), MultiPlayer.PlaybackCallbacks {
     private fun trackStateChanged(isPlaying: Boolean = isPlaying(), notify: Boolean = true) {
         handleProgressHandler(isPlaying)
         broadcastTrackStateChange(isPlaying)
-        if (notify) {
-            startForegroundAndNotify()
-        }
     }
 
     private fun handleProgressHandler(isPlaying: Boolean) {
@@ -918,62 +830,12 @@ class MusicService : Service(), MultiPlayer.PlaybackCallbacks {
         resumeTrack()
     }
 
-    private fun startSleepTimer() {
-        val millisInFuture = config.sleepInTS - System.currentTimeMillis() + 1000L
-        mSleepTimer?.cancel()
-        mSleepTimer = object : CountDownTimer(millisInFuture, 1000) {
-            override fun onTick(millisUntilFinished: Long) {
-                val seconds = (millisUntilFinished / 1000).toInt()
-                EventBus.getDefault().post(Events.SleepTimerChanged(seconds))
-            }
-
-            override fun onFinish() {
-                EventBus.getDefault().post(Events.SleepTimerChanged(0))
-                config.sleepInTS = 0
-                sendIntent(DISMISS)
-            }
-        }
-        mSleepTimer?.start()
-    }
-
-    private fun stopSleepTimer() {
-        config.sleepInTS = 0
-        mSleepTimer?.cancel()
-    }
-
     // used at updating the widget at create or resize
     private fun broadcastPlayerStatus() {
         broadcastTrackStateChange(isPlaying())
         broadcastTrackChange()
         broadcastNextTrackChange()
         broadcastTrackProgress((getPosition() ?: 0) / 1000)
-    }
-
-    fun handleMediaButton(mediaButtonEvent: Intent) {
-        if (mediaButtonEvent.action == Intent.ACTION_MEDIA_BUTTON) {
-            val swapPrevNext = config.swapPrevNext
-            val event = mediaButtonEvent.getParcelableExtra<KeyEvent>(Intent.EXTRA_KEY_EVENT) ?: return
-            if (event.action == KeyEvent.ACTION_UP) {
-                when (event.keyCode) {
-                    KeyEvent.KEYCODE_MEDIA_PLAY -> resumeTrack()
-                    KeyEvent.KEYCODE_MEDIA_PAUSE -> pauseTrack()
-                    KeyEvent.KEYCODE_MEDIA_STOP -> pauseTrack()
-                    KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE -> handlePlayPause()
-                    KeyEvent.KEYCODE_MEDIA_PREVIOUS -> if (swapPrevNext) handleNext() else handlePrevious()
-                    KeyEvent.KEYCODE_MEDIA_NEXT -> if (swapPrevNext) handlePrevious() else handleNext()
-                    KeyEvent.KEYCODE_HEADSETHOOK -> {
-                        mClicksCnt++
-
-                        mRemoteControlHandler.removeCallbacks(mRunnable)
-                        if (mClicksCnt >= 3) {
-                            mRemoteControlHandler.post(mRunnable)
-                        } else {
-                            mRemoteControlHandler.postDelayed(mRunnable, MAX_CLICK_DURATION)
-                        }
-                    }
-                }
-            }
-        }
     }
 
     private fun saveTrackProgress() {

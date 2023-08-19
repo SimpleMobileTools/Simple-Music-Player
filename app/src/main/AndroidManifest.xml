@@ -155,32 +155,6 @@
             android:label="@string/track_queue"
             android:parentActivityName=".activities.TrackActivity" />
 
-        <!--<service
-            android:name=".services.MusicService"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="com.simplemobiletools.musicplayer.action.INIT" />
-                <action android:name="com.simplemobiletools.musicplayer.action.INIT_PATH" />
-                <action android:name="com.simplemobiletools.musicplayer.action.INIT_QUEUE" />
-                <action android:name="com.simplemobiletools.musicplayer.action.FINISH" />
-                <action android:name="com.simplemobiletools.musicplayer.action.FINISH_IF_NOT_PLAYING" />
-                <action android:name="com.simplemobiletools.musicplayer.action.PREVIOUS" />
-                <action android:name="com.simplemobiletools.musicplayer.action.PAUSE" />
-                <action android:name="com.simplemobiletools.musicplayer.action.PLAYPAUSE" />
-                <action android:name="com.simplemobiletools.musicplayer.action.NEXT" />
-                <action android:name="com.simplemobiletools.musicplayer.action.EDIT" />
-                <action android:name="com.simplemobiletools.musicplayer.action.PLAY_TRACK" />
-                <action android:name="com.simplemobiletools.musicplayer.action.REFRESH_LIST" />
-                <action android:name="com.simplemobiletools.musicplayer.action.UPDATE_NEXT_TRACK" />
-                <action android:name="com.simplemobiletools.musicplayer.action.SET_PROGRESS" />
-                <action android:name="com.simplemobiletools.musicplayer.action.SKIP_BACKWARD" />
-                <action android:name="com.simplemobiletools.musicplayer.action.SKIP_FORWARD" />
-                <action android:name="com.simplemobiletools.musicplayer.action.SET_PLAYBACK_SPEED" />
-                <action android:name="com.simplemobiletools.musicplayer.action.BROADCAST_STATUS" />
-                <action android:name="com.simplemobiletools.musicplayer.action.UPDATE_QUEUE_SIZE" />
-            </intent-filter>
-        </service>-->
-
         <service
             android:name=".services.playback.PlaybackService"
             android:exported="true"
