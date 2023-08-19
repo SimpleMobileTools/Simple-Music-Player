@@ -1,83 +1,50 @@
 package com.simplemobiletools.musicplayer.activities
 
-import android.content.ComponentName
+import android.content.ContentUris
 import android.content.Intent
 import android.os.Bundle
+import android.provider.MediaStore
 import androidx.media3.common.MediaItem
 import androidx.media3.common.Player
 import androidx.media3.session.MediaController
-import androidx.media3.session.SessionToken
-import com.google.common.util.concurrent.ListenableFuture
-import com.google.common.util.concurrent.MoreExecutors
-import com.simplemobiletools.musicplayer.extensions.getOrNull
-import com.simplemobiletools.musicplayer.extensions.runOnPlayerThread
-import com.simplemobiletools.musicplayer.services.playback.PlaybackService
+import com.simplemobiletools.commons.extensions.toast
+import com.simplemobiletools.commons.helpers.ensureBackgroundThread
+import com.simplemobiletools.commons.helpers.isRPlus
+import com.simplemobiletools.musicplayer.R
+import com.simplemobiletools.musicplayer.extensions.*
+import com.simplemobiletools.musicplayer.helpers.SimpleMediaController
+import com.simplemobiletools.musicplayer.models.Events
+import com.simplemobiletools.musicplayer.models.Track
+import com.simplemobiletools.musicplayer.models.toMediaItems
 import com.simplemobiletools.musicplayer.services.playback.PlaybackService.Companion.updatePlaybackInfo
-import java.util.concurrent.Executors
+import org.greenrobot.eventbus.EventBus
+import java.io.File
 
 /**
  * Base class for activities that want to control the [Player].
  */
 abstract class SimpleControllerActivity : SimpleActivity(), Player.Listener {
-    private val executorService by lazy {
-        MoreExecutors.listeningDecorator(Executors.newSingleThreadExecutor())
-    }
-
-    private lateinit var controllerFuture: ListenableFuture<MediaController>
+    private lateinit var controller: SimpleMediaController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        newControllerAsync()
+        controller = SimpleMediaController(applicationContext, this)
     }
 
     override fun onStart() {
         super.onStart()
-        acquireController()
+        controller.acquireController()
     }
 
     override fun onStop() {
         super.onStop()
-        releaseController()
-    }
-
-    private fun newControllerAsync() {
-        controllerFuture = MediaController
-            .Builder(applicationContext, SessionToken(this, ComponentName(this, PlaybackService::class.java)))
-            .buildAsync()
-
-        controllerFuture.addListener({
-            controllerFuture.getOrNull()?.addListener(this)
-        }, MoreExecutors.directExecutor())
-    }
-
-    private fun shouldCreateNewController(): Boolean {
-        return controllerFuture.isCancelled || controllerFuture.isDone && controllerFuture.getOrNull()?.isConnected == false
-    }
-
-    private fun acquireController(callback: (() -> Unit)? = null) {
-        executorService.execute {
-            if (shouldCreateNewController()) {
-                newControllerAsync()
-            }
-
-            callback?.invoke()
-        }
-    }
-
-    private fun releaseController() {
-        MediaController.releaseFuture(controllerFuture)
+        controller.releaseController()
     }
 
     /**
      * The [callback] is executed on a background player thread. When performing UI operations, callers should use [runOnUiThread].
      */
-    fun withPlayer(callback: MediaController.() -> Unit) {
-        acquireController {
-            controllerFuture.getOrNull()?.runOnPlayerThread {
-                callback(this)
-            }
-        }
-    }
+    fun withPlayer(callback: MediaController.() -> Unit) = controller.withController(callback)
 
     fun playMediaItems(mediaItems: List<MediaItem>, startIndex: Int = 0, startPosition: Long = 0, startActivity: Boolean = true) {
         withPlayer {
