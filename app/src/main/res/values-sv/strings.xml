@@ -17,7 +17,7 @@
     <string name="sleep_timer">Insomningstimer</string>
     <string name="volume">Volym</string>
     <string name="playback_speed">Uppspelningshastighet</string>
-    <string name="loading_files">Laddar filer…</string>
+    <string name="loading_files">Läser in filer…</string>
     <!-- Playlists -->
     <string name="add_file_to_playlist">Lägg till fil i spellista</string>
     <string name="add_folder_to_playlist">Lägg till mapp i spellista</string>
@@ -62,7 +62,7 @@
     <!-- Artists -->
     <string name="artists">Artister</string>
     <string name="folders">Mappar</string>
-    <string name="genres">Genres</string>
+    <string name="genres">Genrer</string>
     <string name="albums">Album</string>
     <plurals name="albums_plural">
         <item quantity="one">%d album</item>
