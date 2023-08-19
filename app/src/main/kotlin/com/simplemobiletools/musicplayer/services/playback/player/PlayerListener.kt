@@ -11,9 +11,11 @@ import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.extensions.currentMediaItems
 import com.simplemobiletools.musicplayer.helpers.PlaybackSetting
 import com.simplemobiletools.musicplayer.services.playback.PlaybackService
+import com.simplemobiletools.musicplayer.services.playback.PlaybackService.Companion.updatePlaybackInfo
 
 @UnstableApi
 class PlayerListener(private val context: PlaybackService) : Player.Listener {
+    private val player = context.player
 
     override fun onPlayerError(error: PlaybackException) = context.toast(R.string.unknown_error_occurred, Toast.LENGTH_LONG)
 
@@ -27,9 +29,11 @@ class PlayerListener(private val context: PlaybackService) : Player.Listener {
                 Player.EVENT_TIMELINE_CHANGED,
                 Player.EVENT_IS_PLAYING_CHANGED,
                 Player.EVENT_PLAYBACK_STATE_CHANGED,
-                Player.EVENT_MEDIA_METADATA_CHANGED
+                Player.EVENT_MEDIA_METADATA_CHANGED,
+                Player.EVENT_PLAYLIST_METADATA_CHANGED
             )
         ) {
+            updatePlaybackInfo(player)
             val currentMediaItem = player.currentMediaItem
             if (currentMediaItem != null) {
                 context.mediaItemProvider.saveRecentItemsWithStartPosition(
@@ -46,9 +50,7 @@ class PlayerListener(private val context: PlaybackService) : Player.Listener {
         // It's possible using Exoplayer.setPauseAtEndOfMediaItems() but that would require rebuilding the player.
         val isReasonRepeat = reason == Player.MEDIA_ITEM_TRANSITION_REASON_REPEAT
         if (isReasonRepeat && context.config.playbackSetting == PlaybackSetting.STOP_AFTER_CURRENT_TRACK) {
-            context.withPlayer {
-                pause()
-            }
+            player.pause()
         }
     }
 }

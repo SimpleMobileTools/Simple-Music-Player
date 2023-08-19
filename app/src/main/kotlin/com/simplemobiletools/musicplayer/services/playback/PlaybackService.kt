@@ -10,6 +10,8 @@ import androidx.media3.common.util.UnstableApi
 import androidx.media3.session.*
 import com.simplemobiletools.commons.extensions.hasPermission
 import com.simplemobiletools.musicplayer.extensions.config
+import com.simplemobiletools.musicplayer.extensions.isPlayingOrBuffering
+import com.simplemobiletools.musicplayer.extensions.nextMediaItem
 import com.simplemobiletools.musicplayer.helpers.NotificationHelper
 import com.simplemobiletools.musicplayer.helpers.getPermissionToRequest
 import com.simplemobiletools.musicplayer.services.playback.library.MediaItemProvider
@@ -82,6 +84,19 @@ class PlaybackService : MediaLibraryService() {
                 )
             } catch (ignored: Exception) {
             }
+        }
+    }
+
+    companion object {
+        // Initializing a media controller might take a noticeable amount of time thus we expose current playback info here to keep things as quick as possible.
+        var isPlaying: Boolean = false
+        var currentMediaItem: MediaItem? = null
+        var nextMediaItem: MediaItem? = null
+
+        fun updatePlaybackInfo(player: Player) {
+            currentMediaItem = player.currentMediaItem
+            nextMediaItem = player.nextMediaItem
+            isPlaying = player.isPlayingOrBuffering
         }
     }
 }

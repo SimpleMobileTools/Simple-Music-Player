@@ -90,6 +90,7 @@ abstract class SimpleControllerActivity : SimpleActivity(), Player.Listener {
             setMediaItems(mediaItems, startIndex, startPosition)
             prepare()
             play()
+            updatePlaybackInfo(this)
         }
     }
 }

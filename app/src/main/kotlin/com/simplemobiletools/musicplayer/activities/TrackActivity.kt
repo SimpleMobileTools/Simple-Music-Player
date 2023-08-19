@@ -30,6 +30,7 @@ import com.simplemobiletools.musicplayer.fragments.PlaybackSpeedFragment
 import com.simplemobiletools.musicplayer.helpers.*
 import com.simplemobiletools.musicplayer.interfaces.PlaybackSpeedListener
 import com.simplemobiletools.musicplayer.services.playback.CustomCommands
+import com.simplemobiletools.musicplayer.services.playback.PlaybackService
 import kotlinx.android.synthetic.main.activity_track.*
 import java.text.DecimalFormat
 import kotlin.math.min
@@ -68,19 +69,14 @@ class TrackActivity : SimpleControllerActivity(), PlaybackSpeedListener {
             return
         }
 
-        withPlayer {
-            val currentMediaItem = currentMediaItem
-            val nextMediaItem = nextMediaItem
-            runOnUiThread {
-                setupTrackInfo(currentMediaItem)
-                setupNextTrackInfo(nextMediaItem)
-                updatePlayerState()
+        setupTrackInfo(PlaybackService.currentMediaItem)
+        setupNextTrackInfo(PlaybackService.nextMediaItem)
+        activity_track_play_pause.updatePlayPauseIcon(PlaybackService.isPlaying, getProperTextColor())
+        updatePlayerState()
 
-                next_track_holder.background = ColorDrawable(getProperBackgroundColor())
-                next_track_holder.setOnClickListener {
-                    startActivity(Intent(applicationContext, QueueActivity::class.java))
-                }
-            }
+        next_track_holder.background = ColorDrawable(getProperBackgroundColor())
+        next_track_holder.setOnClickListener {
+            startActivity(Intent(applicationContext, QueueActivity::class.java))
         }
     }
 
@@ -97,8 +93,14 @@ class TrackActivity : SimpleControllerActivity(), PlaybackSpeedListener {
         cancelProgressUpdate()
     }
 
+    override fun onStop() {
+        super.onStop()
+        cancelProgressUpdate()
+    }
+
     override fun onDestroy() {
         super.onDestroy()
+        cancelProgressUpdate()
         if (isThirdPartyIntent && !isChangingConfigurations) {
             withPlayer {
                 if (!isPlayingOrBuffering) {
@@ -166,6 +168,7 @@ class TrackActivity : SimpleControllerActivity(), PlaybackSpeedListener {
             return
         }
 
+        next_track_holder.beVisible()
         val metadata = item.mediaMetadata
         val artist = if (metadata.artist?.trim()?.isNotEmpty() == true && metadata.artist != MediaStore.UNKNOWN_STRING) {
             " • ${metadata.artist}"
@@ -291,6 +294,10 @@ class TrackActivity : SimpleControllerActivity(), PlaybackSpeedListener {
         setupPlaybackSettingButton()
         withPlayer {
             setRepeatMode(config.playbackSetting)
+            val nextMediaItem = nextMediaItem
+            runOnUiThread {
+                setupNextTrackInfo(nextMediaItem)
+            }
         }
     }
 
