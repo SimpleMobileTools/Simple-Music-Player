@@ -9,9 +9,10 @@ import androidx.media3.session.MediaController
 import androidx.media3.session.SessionToken
 import com.google.common.util.concurrent.ListenableFuture
 import com.google.common.util.concurrent.MoreExecutors
+import com.simplemobiletools.musicplayer.extensions.getOrNull
 import com.simplemobiletools.musicplayer.extensions.runOnPlayerThread
 import com.simplemobiletools.musicplayer.services.playback.PlaybackService
-import java.util.concurrent.CancellationException
+import com.simplemobiletools.musicplayer.services.playback.PlaybackService.Companion.updatePlaybackInfo
 import java.util.concurrent.Executors
 
 /**
@@ -19,7 +20,7 @@ import java.util.concurrent.Executors
  */
 abstract class SimpleControllerActivity : SimpleActivity(), Player.Listener {
     private val executorService by lazy {
-        MoreExecutors.listeningDecorator(Executors.newFixedThreadPool(4))
+        MoreExecutors.listeningDecorator(Executors.newSingleThreadExecutor())
     }
 
     private lateinit var controllerFuture: ListenableFuture<MediaController>
@@ -39,38 +40,27 @@ abstract class SimpleControllerActivity : SimpleActivity(), Player.Listener {
         releaseController()
     }
 
-    private fun getController(): MediaController? {
-        if (controllerFuture.isDone) {
-            val activeController = controllerFuture.get()
-            if (!activeController.isConnected) {
-                activeController.runOnPlayerThread {
-                    release()
-                }
-
-                newControllerAsync()
-            }
-        }
-
-        return try {
-            controllerFuture.get()
-        } catch (e: CancellationException) {
-            null
-        }
-    }
-
     private fun newControllerAsync() {
         controllerFuture = MediaController
             .Builder(applicationContext, SessionToken(this, ComponentName(this, PlaybackService::class.java)))
             .buildAsync()
 
         controllerFuture.addListener({
-            getController()?.addListener(this)
+            controllerFuture.getOrNull()?.addListener(this)
         }, MoreExecutors.directExecutor())
     }
 
-    private fun acquireController() {
-        if (controllerFuture.isDone && !controllerFuture.get().isConnected) {
-            newControllerAsync()
+    private fun shouldCreateNewController(): Boolean {
+        return controllerFuture.isCancelled || controllerFuture.isDone && controllerFuture.getOrNull()?.isConnected == false
+    }
+
+    private fun acquireController(callback: (() -> Unit)? = null) {
+        executorService.execute {
+            if (shouldCreateNewController()) {
+                newControllerAsync()
+            }
+
+            callback?.invoke()
         }
     }
 
@@ -78,33 +68,28 @@ abstract class SimpleControllerActivity : SimpleActivity(), Player.Listener {
         MediaController.releaseFuture(controllerFuture)
     }
 
-    private fun callOnPlayerThread(callback: MediaController.() -> Unit) {
-        getController()?.runOnPlayerThread {
-            callback(this)
-        }
-    }
-
     /**
      * The [callback] is executed on a background player thread. When performing UI operations, callers should use [runOnUiThread].
      */
     fun withPlayer(callback: MediaController.() -> Unit) {
-        if (controllerFuture.isDone && controllerFuture.get().isConnected) {
-            callOnPlayerThread(callback)
-        } else {
-            executorService.execute {
-                callOnPlayerThread(callback)
+        acquireController {
+            controllerFuture.getOrNull()?.runOnPlayerThread {
+                callback(this)
             }
         }
     }
 
-    fun playMediaItems(mediaItems: List<MediaItem>, startIndex: Int = 0, startPosition: Long = 0) {
+    fun playMediaItems(mediaItems: List<MediaItem>, startIndex: Int = 0, startPosition: Long = 0, startActivity: Boolean = true) {
         withPlayer {
+            if (startActivity) {
+                startActivity(
+                    Intent(this@SimpleControllerActivity, TrackActivity::class.java)
+                )
+            }
+
             setMediaItems(mediaItems, startIndex, startPosition)
             prepare()
             play()
-            startActivity(
-                Intent(this@SimpleControllerActivity, TrackActivity::class.java)
-            )
         }
     }
 }
