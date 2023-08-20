@@ -113,9 +113,7 @@ class SettingsActivity : SimpleControllerActivity() {
             RadioGroupDialog(this@SettingsActivity, items, config.showFilename) {
                 config.showFilename = it as Int
                 settings_show_filename.text = getReplaceTitleText()
-                withPlayer {
-                    TODO("Force refresh queue.")
-                }
+                refreshQueueAndTracks()
             }
         }
     }

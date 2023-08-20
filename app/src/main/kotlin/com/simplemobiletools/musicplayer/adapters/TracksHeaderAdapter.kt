@@ -196,7 +196,7 @@ class TracksHeaderAdapter(activity: SimpleActivity, items: ArrayList<ListItem>, 
                     finishActMode()
                 }
 
-                ctx.refreshAfterEdit(track)
+                ctx.refreshQueueAndTracks(track)
             }
         }
     }

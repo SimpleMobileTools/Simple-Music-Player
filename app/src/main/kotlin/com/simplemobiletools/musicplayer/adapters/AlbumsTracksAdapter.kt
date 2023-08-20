@@ -202,7 +202,7 @@ class AlbumsTracksAdapter(
                     finishActMode()
                 }
 
-                ctx.refreshAfterEdit(track)
+                ctx.refreshQueueAndTracks(track)
             }
         }
     }

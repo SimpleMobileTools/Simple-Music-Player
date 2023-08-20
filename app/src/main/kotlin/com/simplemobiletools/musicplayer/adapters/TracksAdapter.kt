@@ -226,7 +226,7 @@ class TracksAdapter(
                 notifyItemChanged(trackIndex)
                 finishActMode()
 
-                ctx.refreshAfterEdit(track)
+                ctx.refreshQueueAndTracks(track)
             }
         }
     }

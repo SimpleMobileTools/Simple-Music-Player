@@ -143,24 +143,23 @@ abstract class SimpleControllerActivity : SimpleActivity(), Player.Listener {
         }
     }
 
-    fun refreshAfterEdit(track: Track) {
-        withPlayer {
-            val currentIndex = currentMediaItemIndex
-            val currentPosition = currentPosition
-            val currentMediaItems = currentMediaItems
-            ensureBackgroundThread {
-                val queuedTracks = audioHelper.getAllQueuedTracks()
-                val queuedMediaItems = queuedTracks.toMediaItems()
-                runOnPlayerThread {
-                    if (currentMediaItem.isSameMedia(track)) {
-                        // it's not yet directly possible to update metadata without interrupting the playback: https://github.com/androidx/media/issues/33
-                        val startIndex = maxOf(queuedMediaItems.indexOfTrack(track), 0)
-                        prepareAndPlay(queuedTracks, startIndex, currentPosition, startActivity = false)
-                    } else if (currentMediaItems.indexOfTrack(track) != -1) {
-                        removeMediaItems(0, currentMediaItemIndex - 1)
-                        removeMediaItems(currentMediaItemIndex + 1, currentMediaItems.lastIndex)
-                        addMediaItems(queuedMediaItems.subList(0, currentIndex))
-                        addMediaItems(queuedMediaItems.subList(currentIndex + 1, queuedMediaItems.lastIndex))
+    fun refreshQueueAndTracks(trackToUpdate: Track? = null) {
+        ensureBackgroundThread {
+            val queuedTracks = audioHelper.getAllQueuedTracks()
+            withPlayer {
+                // it's not yet directly possible to update metadata without interrupting the playback: https://github.com/androidx/media/issues/33
+                if (trackToUpdate == null || currentMediaItem.isSameMedia(trackToUpdate)) {
+                    val wasPlaying = isReallyPlaying
+                    prepareUsingTracks(queuedTracks, currentMediaItemIndex, currentPosition) { success ->
+                        if (success && wasPlaying) {
+                            play()
+                        }
+                    }
+                } else {
+                    val trackIndex = currentMediaItems.indexOfTrack(trackToUpdate)
+                    if (trackIndex > 0) {
+                        removeMediaItem(trackIndex)
+                        addMediaItem(trackIndex, trackToUpdate.toMediaItem())
                     }
                 }
             }
