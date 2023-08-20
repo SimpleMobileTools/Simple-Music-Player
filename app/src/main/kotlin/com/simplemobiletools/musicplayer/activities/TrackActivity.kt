@@ -289,8 +289,7 @@ class TrackActivity : SimpleControllerActivity(), PlaybackSpeedListener {
         toast(newPlaybackSetting.descriptionStringRes)
         setupPlaybackSettingButton()
         withPlayer {
-            setRepeatMode(config.playbackSetting)
-            setupNextTrackInfo(nextMediaItem)
+            sendCommand(CustomCommands.TOGGLE_REPEAT_MODE)
         }
     }
 

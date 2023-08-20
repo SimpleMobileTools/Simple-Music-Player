@@ -29,7 +29,15 @@ class SimpleMusicPlayer(val exoPlayer: ExoPlayer) : ForwardingPlayer(exoPlayer) 
         playWhenReady = true
     }
 
+    fun getAudioSessionId(): Int {
+        return exoPlayer.audioSessionId
+    }
+
     fun setSkipSilence(skipSilence: Boolean) {
         exoPlayer.skipSilenceEnabled = skipSilence
+    }
+
+    fun setPauseAtEndOfMediaItems(pauseAtEnd: Boolean) {
+        exoPlayer.pauseAtEndOfMediaItems = pauseAtEnd
     }
 }

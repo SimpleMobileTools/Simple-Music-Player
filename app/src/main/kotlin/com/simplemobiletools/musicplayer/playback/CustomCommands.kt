@@ -14,6 +14,7 @@ enum class CustomCommands(val customAction: String) {
     CLOSE_PLAYER(customAction = PATH + "CLOSE_PLAYER"),
     RELOAD_CONTENT(customAction = PATH + "RELOAD_CONTENT"),
     SAVE_QUEUE(customAction = PATH + "SAVE_QUEUE"),
+    TOGGLE_REPEAT_MODE(customAction = PATH + "TOGGLE_REPEAT_MODE"),
     TOGGLE_SLEEP_TIMER(customAction = PATH + "TOGGLE_SLEEP_TIMER"),
     TOGGLE_SKIP_SILENCE(customAction = PATH + "TOGGLE_SKIP_SILENCE");
 

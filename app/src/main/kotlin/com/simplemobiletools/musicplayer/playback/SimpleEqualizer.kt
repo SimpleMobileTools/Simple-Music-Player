@@ -19,7 +19,7 @@ object SimpleEqualizer {
     fun setupEqualizer(context: Context, player: SimpleMusicPlayer) {
         try {
             val preset = context.config.equalizerPreset
-            instance = Equalizer(0, player.exoPlayer.audioSessionId)
+            instance = Equalizer(0, player.getAudioSessionId())
             if (!instance.enabled) {
                 instance.enabled = true
             }

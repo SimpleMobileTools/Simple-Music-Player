@@ -14,7 +14,6 @@ import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.session.MediaLibraryService
 import com.simplemobiletools.musicplayer.activities.MainActivity
 import com.simplemobiletools.musicplayer.extensions.config
-import com.simplemobiletools.musicplayer.extensions.setRepeatMode
 import com.simplemobiletools.musicplayer.helpers.SEEK_INTERVAL_MS
 import com.simplemobiletools.musicplayer.playback.PlaybackService
 import com.simplemobiletools.musicplayer.playback.SimpleEqualizer
@@ -34,7 +33,7 @@ internal fun PlaybackService.initializeSessionAndPlayer(handleAudioFocus: Boolea
 
     withPlayer {
         addListener(listener!!)
-        setRepeatMode(config.playbackSetting)
+        updateRepeatMode()
         setPlaybackSpeed(config.playbackSpeed)
         shuffleModeEnabled = config.isShuffleEnabled
         mediaSession.setCustomLayout(getCustomLayout())

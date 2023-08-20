@@ -2,8 +2,6 @@ package com.simplemobiletools.musicplayer.extensions
 
 import androidx.media3.common.MediaItem
 import androidx.media3.common.Player
-import com.simplemobiletools.musicplayer.helpers.PlaybackSetting
-import com.simplemobiletools.musicplayer.playback.player.PlayerListener
 
 val Player.isReallyPlaying: Boolean
     get() = when (playbackState) {
@@ -20,15 +18,3 @@ val Player.nextMediaItem: MediaItem?
     } else {
         null
     }
-
-/**
- * [PlaybackSetting.STOP_AFTER_CURRENT_TRACK] is handled manually as it isn't supported by media3 player. See [PlayerListener.onMediaItemTransition].
- */
-fun Player.setRepeatMode(playbackSetting: PlaybackSetting) {
-    repeatMode = when (playbackSetting) {
-        PlaybackSetting.REPEAT_OFF -> Player.REPEAT_MODE_OFF
-        PlaybackSetting.REPEAT_PLAYLIST -> Player.REPEAT_MODE_ALL
-        PlaybackSetting.REPEAT_TRACK -> Player.REPEAT_MODE_ONE
-        PlaybackSetting.STOP_AFTER_CURRENT_TRACK -> Player.REPEAT_MODE_ONE
-    }
-}
