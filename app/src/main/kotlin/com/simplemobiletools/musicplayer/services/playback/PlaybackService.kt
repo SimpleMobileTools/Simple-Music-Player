@@ -42,6 +42,7 @@ class PlaybackService : MediaLibraryService() {
         releaseMediaSession()
         clearListener()
         stopSleepTimer()
+        SimpleEqualizer.release()
     }
 
     private fun initializeLibrary() {

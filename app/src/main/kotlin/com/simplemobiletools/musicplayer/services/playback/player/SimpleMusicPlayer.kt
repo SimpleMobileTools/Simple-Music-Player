@@ -3,9 +3,10 @@ package com.simplemobiletools.musicplayer.services.playback.player
 import androidx.media3.common.ForwardingPlayer
 import androidx.media3.common.Player
 import androidx.media3.common.util.UnstableApi
+import androidx.media3.exoplayer.ExoPlayer
 
 @UnstableApi
-class SimpleMusicPlayer(player: Player) : ForwardingPlayer(player) {
+class SimpleMusicPlayer(val exoPlayer: ExoPlayer) : ForwardingPlayer(exoPlayer) {
 
     /**
      * The default implementation only advertises the seek to next and previous item in the case

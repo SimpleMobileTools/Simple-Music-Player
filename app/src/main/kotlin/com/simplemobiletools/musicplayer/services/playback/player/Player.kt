@@ -17,6 +17,7 @@ import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.extensions.setRepeatMode
 import com.simplemobiletools.musicplayer.helpers.SEEK_INTERVAL_MS
 import com.simplemobiletools.musicplayer.services.playback.PlaybackService
+import com.simplemobiletools.musicplayer.services.playback.SimpleEqualizer
 import com.simplemobiletools.musicplayer.services.playback.getCustomLayout
 import com.simplemobiletools.musicplayer.services.playback.getMediaSessionCallback
 
@@ -37,6 +38,7 @@ internal fun PlaybackService.initializeSessionAndPlayer(handleAudioFocus: Boolea
         setPlaybackSpeed(config.playbackSpeed)
         shuffleModeEnabled = config.isShuffleEnabled
         mediaSession.setCustomLayout(getCustomLayout())
+        SimpleEqualizer.setupEqualizer(this@initializeSessionAndPlayer, player)
     }
 }
 

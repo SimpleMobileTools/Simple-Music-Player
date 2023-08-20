@@ -1,7 +1,6 @@
 package com.simplemobiletools.musicplayer.activities
 
 import android.annotation.SuppressLint
-import android.media.MediaPlayer
 import android.media.audiofx.Equalizer
 import android.os.Bundle
 import android.widget.SeekBar
@@ -16,10 +15,11 @@ import com.simplemobiletools.commons.views.MySeekBar
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.helpers.EQUALIZER_PRESET_CUSTOM
-import com.simplemobiletools.musicplayer.services.MusicService
+import com.simplemobiletools.musicplayer.services.playback.SimpleEqualizer
 import kotlinx.android.synthetic.main.activity_equalizer.*
 import kotlinx.android.synthetic.main.equalizer_band.view.*
 import java.text.DecimalFormat
+import kotlin.math.roundToInt
 
 class EqualizerActivity : SimpleActivity() {
     private var bands = HashMap<Short, Int>()
@@ -42,15 +42,12 @@ class EqualizerActivity : SimpleActivity() {
 
     @SuppressLint("SetTextI18n")
     private fun initMediaPlayer() {
-        val equalizer = MusicService.mEqualizer ?: run {
-            val audioSessionId = MusicService.mPlayer?.getAudioSessionId() ?: MediaPlayer().audioSessionId
-            Equalizer(0, audioSessionId)
-        }
+        val equalizer = SimpleEqualizer.instance
         try {
             if (!equalizer.enabled) {
                 equalizer.enabled = true
             }
-        } catch (e: IllegalStateException) {
+        } catch (ignored: IllegalStateException) {
         }
 
         setupBands(equalizer)
@@ -65,6 +62,7 @@ class EqualizerActivity : SimpleActivity() {
         equalizer_preset.setTextColor(presetTextColor)
     }
 
+    @SuppressLint("SetTextI18n")
     private fun setupBands(equalizer: Equalizer) {
         val minValue = equalizer.bandLevelRange[0]
         val maxValue = equalizer.bandLevelRange[1]
@@ -92,16 +90,16 @@ class EqualizerActivity : SimpleActivity() {
                 this.equalizer_band_seek_bar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
                     override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
                         if (fromUser) {
-                            val newProgress = Math.round(progress / 100.0) * 100
-                            this@apply.equalizer_band_seek_bar.progress = newProgress.toInt()
+                            val newProgress = (progress / 100.0).roundToInt() * 100
+                            this@apply.equalizer_band_seek_bar.progress = newProgress
 
                             val newValue = newProgress + minValue
                             try {
-                                if ((MusicService.mEqualizer ?: equalizer).getBandLevel(band.toShort()) != newValue.toShort()) {
-                                    (MusicService.mEqualizer ?: equalizer).setBandLevel(band.toShort(), newValue.toShort())
-                                    bands[band.toShort()] = newValue.toInt()
+                                if (equalizer.getBandLevel(band.toShort()) != newValue.toShort()) {
+                                    equalizer.setBandLevel(band.toShort(), newValue.toShort())
+                                    bands[band.toShort()] = newValue
                                 }
-                            } catch (e: Exception) {
+                            } catch (ignored: Exception) {
                             }
                         }
                     }
@@ -169,10 +167,10 @@ class EqualizerActivity : SimpleActivity() {
 
                 bandSeekBars[band].progress = progress!!.toInt()
                 val newValue = progress + minValue
-                (MusicService.mEqualizer ?: equalizer).setBandLevel(band.toShort(), newValue.toShort())
+                equalizer.setBandLevel(band.toShort(), newValue.toShort())
             }
         } else {
-            val presetName = (MusicService.mEqualizer ?: equalizer).getPresetName(presetId.toShort())
+            val presetName = equalizer.getPresetName(presetId.toShort())
             if (presetName.isEmpty()) {
                 config.equalizerPreset = EQUALIZER_PRESET_CUSTOM
                 equalizer_preset.text = getString(R.string.custom)
@@ -180,11 +178,11 @@ class EqualizerActivity : SimpleActivity() {
                 equalizer_preset.text = presetName
             }
 
-            (MusicService.mEqualizer ?: equalizer).usePreset(presetId.toShort())
+            equalizer.usePreset(presetId.toShort())
 
-            val lowestBandLevel = (MusicService.mEqualizer ?: equalizer).bandLevelRange?.get(0)
-            for (band in 0 until (MusicService.mEqualizer ?: equalizer).numberOfBands) {
-                val level = (MusicService.mEqualizer ?: equalizer).getBandLevel(band.toShort()).minus(lowestBandLevel!!)
+            val lowestBandLevel = equalizer.bandLevelRange?.get(0)
+            for (band in 0 until equalizer.numberOfBands) {
+                val level = equalizer.getBandLevel(band.toShort()).minus(lowestBandLevel!!)
                 bandSeekBars[band].progress = level
             }
         }
