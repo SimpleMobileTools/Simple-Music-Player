@@ -227,7 +227,6 @@ class SimpleMediaScanner(private val context: Application) {
             projection.add(Audio.Media.GENRE_ID)
         }
 
-        val showFilename = config.showFilename
         context.queryCursor(uri, projection.toTypedArray(), showErrors = true) { cursor ->
             val id = cursor.getLongValue(Audio.Media._ID)
             val title = cursor.getStringValue(Audio.Media.TITLE)
@@ -265,7 +264,6 @@ class SimpleMediaScanner(private val context: Application) {
                     coverArt = coverArt, playListId = 0, trackId = trackId, folderName = folderName, albumId = albumId, artistId = artistId, genreId = genreId,
                     year = year, dateAdded = dateAdded, orderInPlaylist = 0
                 )
-                track.title = track.getProperTitle(showFilename)
                 tracks.add(track)
             }
         }

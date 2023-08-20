@@ -10,7 +10,6 @@ import kotlin.time.Duration.Companion.milliseconds
 class AudioHelper(private val context: Context) {
 
     private val config = context.config
-    private val showFilename = config.showFilename
 
     fun insertTracks(tracks: List<Track>) {
         context.tracksDAO.insertAll(tracks)
@@ -22,7 +21,7 @@ class AudioHelper(private val context: Context) {
 
     fun getAllTracks(): ArrayList<Track> {
         val tracks = context.tracksDAO.getAll()
-            .distinctBy { "${it.path}/${it.mediaStoreId}" } as ArrayList<Track>
+            .applyProperFilenames(config.showFilename)
 
         tracks.sortSafely(config.trackSorting)
         return tracks
@@ -49,10 +48,7 @@ class AudioHelper(private val context: Context) {
 
     fun getFolderTracks(folder: String): ArrayList<Track> {
         val tracks = context.tracksDAO.getTracksFromFolder(folder)
-            .distinctBy { "${it.path}/${it.mediaStoreId}" }
-            .onEach {
-                it.title = it.getProperTitle(showFilename)
-            } as ArrayList<Track>
+            .applyProperFilenames(config.showFilename)
 
         tracks.sortSafely(config.getProperFolderSorting(folder))
         return tracks
@@ -91,7 +87,8 @@ class AudioHelper(private val context: Context) {
     }
 
     fun getArtistTracks(artistId: Long): ArrayList<Track> {
-        return context.tracksDAO.getTracksFromArtist(artistId) as ArrayList<Track>
+        return context.tracksDAO.getTracksFromArtist(artistId)
+            .applyProperFilenames(config.showFilename)
     }
 
     fun getArtistTracks(artists: List<Artist>): ArrayList<Track> {
@@ -126,14 +123,14 @@ class AudioHelper(private val context: Context) {
 
     fun getAlbumTracks(albumId: Long): ArrayList<Track> {
         val tracks = context.tracksDAO.getTracksFromAlbum(albumId)
-            .distinctBy { "${it.path}/${it.mediaStoreId}" } as ArrayList<Track>
+            .applyProperFilenames(config.showFilename)
         tracks.sortWith(compareBy({ it.trackId }, { it.title.lowercase() }))
         return tracks
     }
 
     fun getAlbumTracks(albums: List<Album>): ArrayList<Track> {
         return albums.flatMap { getAlbumTracks(it.id) }
-            .distinctBy { "${it.path}/${it.mediaStoreId}" } as ArrayList<Track>
+            .applyProperFilenames(config.showFilename)
     }
 
     private fun deleteAlbum(id: Long) {
@@ -166,7 +163,7 @@ class AudioHelper(private val context: Context) {
 
     fun getGenreTracks(genreId: Long): ArrayList<Track> {
         val tracks = context.tracksDAO.getGenreTracks(genreId)
-            .distinctBy { "${it.path}/${it.mediaStoreId}" } as ArrayList<Track>
+            .applyProperFilenames(config.showFilename)
 
         tracks.sortSafely(config.trackSorting)
         return tracks
@@ -174,7 +171,7 @@ class AudioHelper(private val context: Context) {
 
     fun getGenreTracks(genres: List<Genre>): ArrayList<Track> {
         val tracks = genres.flatMap { context.tracksDAO.getGenreTracks(it.id) }
-            .distinctBy { "${it.path}/${it.mediaStoreId}" } as ArrayList<Track>
+            .applyProperFilenames(config.showFilename)
 
         tracks.sortSafely(config.trackSorting)
         return tracks
@@ -197,9 +194,8 @@ class AudioHelper(private val context: Context) {
     }
 
     fun getPlaylistTracks(playlistId: Int): ArrayList<Track> {
-        val tracks = context.tracksDAO.getTracksFromPlaylist(playlistId).onEach {
-            it.title = it.getProperTitle(showFilename)
-        } as ArrayList<Track>
+        val tracks = context.tracksDAO.getTracksFromPlaylist(playlistId)
+            .applyProperFilenames(config.showFilename)
 
         tracks.sortSafely(config.getProperPlaylistSorting(playlistId))
         return tracks
@@ -274,4 +270,9 @@ class AudioHelper(private val context: Context) {
             context.queueDAO.saveCurrentTrack(currentTrackId)
         }
     }
+}
+
+private fun Collection<Track>.applyProperFilenames(showFilename: Int): ArrayList<Track> {
+    return distinctBy { "${it.path}/${it.mediaStoreId}" }
+        .onEach { it.title = it.getProperTitle(showFilename) } as ArrayList<Track>
 }
