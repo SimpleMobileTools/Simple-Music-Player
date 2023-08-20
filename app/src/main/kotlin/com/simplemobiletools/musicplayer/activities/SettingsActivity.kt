@@ -152,7 +152,7 @@ class SettingsActivity : SimpleControllerActivity() {
             settings_gapless_playback.toggle()
             config.gaplessPlayback = settings_gapless_playback.isChecked
             withPlayer {
-                TODO("Toggle skip silence.")
+                sendCommand(CustomCommands.TOGGLE_SKIP_SILENCE)
             }
         }
     }

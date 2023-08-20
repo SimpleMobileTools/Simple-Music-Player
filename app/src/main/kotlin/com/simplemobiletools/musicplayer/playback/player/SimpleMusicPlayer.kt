@@ -28,4 +28,8 @@ class SimpleMusicPlayer(val exoPlayer: ExoPlayer) : ForwardingPlayer(exoPlayer) 
     override fun play() {
         playWhenReady = true
     }
+
+    fun setSkipSilence(skipSilence: Boolean) {
+        exoPlayer.skipSilenceEnabled = skipSilence
+    }
 }

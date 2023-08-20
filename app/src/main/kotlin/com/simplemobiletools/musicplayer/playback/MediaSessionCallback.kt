@@ -10,6 +10,7 @@ import androidx.media3.session.MediaLibraryService.MediaLibrarySession
 import com.google.common.util.concurrent.Futures
 import com.google.common.util.concurrent.ListenableFuture
 import com.google.common.util.concurrent.MoreExecutors
+import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.extensions.currentMediaItems
 import java.util.concurrent.Executors
 
@@ -68,6 +69,7 @@ internal fun PlaybackService.getMediaSessionCallback() = object : MediaLibrarySe
             CustomCommands.RELOAD_CONTENT -> reloadContent()
             CustomCommands.SAVE_QUEUE -> saveRecentItems()
             CustomCommands.TOGGLE_SLEEP_TIMER -> toggleSleepTimer()
+            CustomCommands.TOGGLE_SKIP_SILENCE -> player.setSkipSilence(config.gaplessPlayback)
         }
 
         return Futures.immediateFuture(SessionResult(SessionResult.RESULT_SUCCESS))
