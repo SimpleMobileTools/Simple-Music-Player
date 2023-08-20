@@ -16,6 +16,7 @@ import com.simplemobiletools.musicplayer.activities.SimpleControllerActivity
 import com.simplemobiletools.musicplayer.extensions.*
 import com.simplemobiletools.musicplayer.helpers.TagHelper
 import com.simplemobiletools.musicplayer.models.Track
+import com.simplemobiletools.musicplayer.services.playback.PlaybackService
 
 abstract class BaseMusicAdapter<Type>(
     var items: ArrayList<Type>,
@@ -54,6 +55,25 @@ abstract class BaseMusicAdapter<Type>(
 
     open fun getSelectedItems(): List<Type> {
         return items.filter { selectedKeys.contains(it.hashCode()) }.toList()
+    }
+
+    fun shouldShowPlayNext(): Boolean {
+        if (!isOneItemSelected()) {
+            return false
+        }
+
+        val currentMedia = PlaybackService.currentMediaItem ?: return false
+        val selectedTrack = getSelectedTracks().firstOrNull()
+        return selectedTrack != null && isOneItemSelected() && currentMedia.isSameMedia(selectedTrack)
+    }
+
+    fun shouldShowRename(): Boolean {
+        if (!isOneItemSelected()) {
+            return false
+        }
+
+        val selectedTrack = getSelectedTracks().firstOrNull() ?: return false
+        return !selectedTrack.path.startsWith("content://") && tagHelper.isEditTagSupported(selectedTrack)
     }
 
     fun addToQueue() {

@@ -20,7 +20,6 @@ import com.simplemobiletools.musicplayer.extensions.*
 import com.simplemobiletools.musicplayer.models.AlbumHeader
 import com.simplemobiletools.musicplayer.models.ListItem
 import com.simplemobiletools.musicplayer.models.Track
-import com.simplemobiletools.musicplayer.services.playback.PlaybackService
 import kotlinx.android.synthetic.main.item_album_header.view.album_artist
 import kotlinx.android.synthetic.main.item_album_header.view.album_meta
 import kotlinx.android.synthetic.main.item_album_header.view.album_title
@@ -69,14 +68,9 @@ class TracksHeaderAdapter(activity: SimpleActivity, items: ArrayList<ListItem>, 
     }
 
     override fun prepareActionMode(menu: Menu) {
-        val firstTrack = getSelectedTracks().firstOrNull()
         menu.apply {
-            val oneItemsSelected = isOneItemSelected()
-            val selected = firstTrack?.let { !it.path.startsWith("content://") && tagHelper.isEditTagSupported(it) } == true
-            findItem(R.id.cab_rename).isVisible = oneItemsSelected && selected
-            findItem(R.id.cab_play_next).isVisible =
-                isOneItemSelected() && PlaybackService.currentMediaItem != null &&
-                    PlaybackService.currentMediaItem!!.mediaId != firstTrack?.mediaStoreId.toString()
+            findItem(R.id.cab_rename).isVisible = shouldShowRename()
+            findItem(R.id.cab_play_next).isVisible = shouldShowPlayNext()
         }
     }
 

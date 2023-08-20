@@ -156,7 +156,7 @@ abstract class SimpleControllerActivity : SimpleActivity(), Player.Listener {
             ensureBackgroundThread {
                 val queuedTracks = audioHelper.getAllQueuedTracks()
                 val queuedMediaItems = queuedTracks.toMediaItems()
-                if (track.mediaStoreId.toString() == currentMediaItem?.mediaId) {
+                if (currentMediaItem.isSameMedia(track)) {
                     // in media3, it's not yet directly possible to update metadata without interrupting the playback
                     val startIndex = maxOf(queuedMediaItems.indexOfTrack(track), 0)
                     playMediaItems(queuedMediaItems, startIndex, currentPosition, startActivity = false)

@@ -25,7 +25,6 @@ import com.simplemobiletools.musicplayer.inlines.indexOfFirstOrNull
 import com.simplemobiletools.musicplayer.models.Events
 import com.simplemobiletools.musicplayer.models.Playlist
 import com.simplemobiletools.musicplayer.models.Track
-import com.simplemobiletools.musicplayer.services.playback.PlaybackService
 import kotlinx.android.synthetic.main.item_track.view.*
 import org.greenrobot.eventbus.EventBus
 
@@ -68,15 +67,10 @@ class TracksAdapter(
     }
 
     override fun prepareActionMode(menu: Menu) {
-        val firstTrack = getSelectedTracks().firstOrNull()
         menu.apply {
             findItem(R.id.cab_remove_from_playlist).isVisible = isPlaylistContent()
-            findItem(R.id.cab_rename).isVisible =
-                isOneItemSelected() && firstTrack?.let { !it.path.startsWith("content://") && tagHelper.isEditTagSupported(it) } == true
-            findItem(R.id.cab_play_next).isVisible =
-                isOneItemSelected() &&
-                    PlaybackService.currentMediaItem != null &&
-                    PlaybackService.currentMediaItem!!.mediaId != firstTrack?.mediaStoreId.toString()
+            findItem(R.id.cab_rename).isVisible = shouldShowRename()
+            findItem(R.id.cab_play_next).isVisible = shouldShowPlayNext()
         }
     }
 

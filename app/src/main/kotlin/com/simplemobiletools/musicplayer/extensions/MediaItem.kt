@@ -114,10 +114,15 @@ fun Genre.toMediaItem(): MediaItem {
     )
 }
 
+@Suppress("DEPRECATION")
 fun MediaItem.toTrack(): Track? = mediaMetadata.extras?.getSerializable(MEDIA_ITEM_TAG) as? Track
+
+fun MediaItem?.isSameMedia(track: Track): Boolean {
+    return this?.mediaId == track.mediaStoreId.toString()
+}
 
 fun Collection<MediaItem>.toTracks() = mapNotNull { it.toTrack() }
 
-fun Collection<MediaItem>.indexOfTrack(track: Track) = indexOfFirst { it.mediaId == track.mediaStoreId.toString() }
+fun Collection<MediaItem>.indexOfTrack(track: Track) = indexOfFirst { it.isSameMedia(track) }
 
-fun Collection<MediaItem>.indexOfTrackOrNull(track: Track) = indexOfFirstOrNull { it.mediaId == track.mediaStoreId.toString() }
+fun Collection<MediaItem>.indexOfTrackOrNull(track: Track) = indexOfFirstOrNull { it.isSameMedia(track) }
