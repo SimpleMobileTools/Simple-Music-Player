@@ -64,7 +64,7 @@ abstract class BaseMusicAdapter<Type>(
 
         val currentMedia = PlaybackService.currentMediaItem ?: return false
         val selectedTrack = getSelectedTracks().firstOrNull()
-        return selectedTrack != null && isOneItemSelected() && currentMedia.isSameMedia(selectedTrack)
+        return selectedTrack != null && !currentMedia.isSameMedia(selectedTrack)
     }
 
     fun shouldShowRename(): Boolean {
