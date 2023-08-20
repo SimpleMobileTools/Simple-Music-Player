@@ -16,10 +16,7 @@ import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.adapters.QueueAdapter
 import com.simplemobiletools.musicplayer.dialogs.NewPlaylistDialog
-import com.simplemobiletools.musicplayer.extensions.audioHelper
-import com.simplemobiletools.musicplayer.extensions.currentMediaItems
-import com.simplemobiletools.musicplayer.extensions.indexOfTrack
-import com.simplemobiletools.musicplayer.extensions.toTracks
+import com.simplemobiletools.musicplayer.extensions.*
 import com.simplemobiletools.musicplayer.helpers.RoomHelper
 import com.simplemobiletools.musicplayer.models.Track
 import kotlinx.android.synthetic.main.activity_queue.*
@@ -55,6 +52,8 @@ class QueueActivity : SimpleControllerActivity() {
     }
 
     override fun onMediaItemTransition(mediaItem: MediaItem?, reason: Int) = updateAdapter()
+
+    override fun onIsPlayingChanged(isPlaying: Boolean) = updateAdapter()
 
     private fun setupOptionsMenu() {
         setupSearch(queue_toolbar.menu)
@@ -131,6 +130,9 @@ class QueueActivity : SimpleControllerActivity() {
                         withPlayer {
                             val startIndex = currentMediaItems.indexOfTrack(it as Track)
                             seekTo(startIndex, 0)
+                            if (!isReallyPlaying) {
+                                play()
+                            }
                         }
                     }
 
