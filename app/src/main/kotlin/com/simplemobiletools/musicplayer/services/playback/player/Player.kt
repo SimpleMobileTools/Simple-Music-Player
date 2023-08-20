@@ -5,7 +5,6 @@ package com.simplemobiletools.musicplayer.services.playback.player
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.os.Handler
 import android.os.HandlerThread
 import android.os.Process
 import androidx.media3.common.AudioAttributes

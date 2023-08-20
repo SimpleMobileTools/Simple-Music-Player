@@ -260,9 +260,7 @@ class TrackActivity : SimpleControllerActivity(), PlaybackSpeedListener {
         setupShuffleButton()
         withPlayer {
             shuffleModeEnabled = config.isShuffleEnabled
-            runOnUiThread {
-                setupNextTrackInfo(nextMediaItem)
-            }
+            setupNextTrackInfo(nextMediaItem)
         }
     }
 
@@ -292,10 +290,7 @@ class TrackActivity : SimpleControllerActivity(), PlaybackSpeedListener {
         setupPlaybackSettingButton()
         withPlayer {
             setRepeatMode(config.playbackSetting)
-            val nextMediaItem = nextMediaItem
-            runOnUiThread {
-                setupNextTrackInfo(nextMediaItem)
-            }
+            setupNextTrackInfo(nextMediaItem)
         }
     }
 
@@ -380,26 +375,20 @@ class TrackActivity : SimpleControllerActivity(), PlaybackSpeedListener {
 
     private fun updateTrackInfo() {
         withPlayer {
-            val currentMediaItem = currentMediaItem
-            val nextMediaItem = nextMediaItem
-            runOnUiThread {
-                setupTrackInfo(currentMediaItem)
-                setupNextTrackInfo(nextMediaItem)
-            }
+            setupTrackInfo(currentMediaItem)
+            setupNextTrackInfo(nextMediaItem)
         }
     }
 
     private fun updatePlayerState() {
         withPlayer {
             val isPlaying = isPlayingOrBuffering
-            runOnUiThread {
-                activity_track_play_pause.updatePlayPauseIcon(isPlaying, getProperTextColor())
-                updateProgress(currentPosition)
-                if (isPlaying) {
-                    scheduleProgressUpdate()
-                } else {
-                    cancelProgressUpdate()
-                }
+            activity_track_play_pause.updatePlayPauseIcon(isPlayingOrBuffering, getProperTextColor())
+            updateProgress(currentPosition)
+            if (isPlaying) {
+                scheduleProgressUpdate()
+            } else {
+                cancelProgressUpdate()
             }
         }
     }

@@ -42,17 +42,12 @@ abstract class SimpleMusicActivity : SimpleControllerActivity(), Player.Listener
     private fun updateCurrentTrackBar() {
         if (trackBarView != null) {
             withPlayer {
-                val currentMediaItem = currentMediaItem
-                val isPlaying = isPlayingOrBuffering
-
-                runOnUiThread {
-                    trackBarView?.initialize {
-                        withPlayer { togglePlayback() }
-                    }
-
-                    trackBarView?.updateCurrentTrack(currentMediaItem)
-                    trackBarView?.updateTrackState(isPlaying)
+                trackBarView?.initialize {
+                    withPlayer { togglePlayback() }
                 }
+
+                trackBarView?.updateCurrentTrack(currentMediaItem)
+                trackBarView?.updateTrackState(isPlayingOrBuffering)
             }
         }
     }

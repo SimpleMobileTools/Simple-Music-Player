@@ -25,26 +25,14 @@ class PlayerListener(private val context: PlaybackService) : Player.Listener {
             events.containsAny(
                 Player.EVENT_POSITION_DISCONTINUITY,
                 Player.EVENT_MEDIA_ITEM_TRANSITION,
-                Player.EVENT_PLAY_WHEN_READY_CHANGED,
                 Player.EVENT_TRACKS_CHANGED,
                 Player.EVENT_TIMELINE_CHANGED,
-                Player.EVENT_IS_PLAYING_CHANGED,
                 Player.EVENT_PLAYBACK_STATE_CHANGED,
-                Player.EVENT_MEDIA_METADATA_CHANGED,
+                Player.EVENT_IS_PLAYING_CHANGED,
                 Player.EVENT_PLAYLIST_METADATA_CHANGED
             )
         ) {
-            updatePlaybackInfo(player)
-            val currentMediaItem = player.currentMediaItem
-            if (currentMediaItem != null) {
-                context.mediaItemProvider.saveRecentItemsWithStartPosition(
-                    mediaItems = player.currentMediaItems,
-                    current = currentMediaItem,
-                    startPosition = player.currentPosition
-                )
-            }
-
-            context.broadcastUpdateWidgetState()
+            updatePlaybackInfo()
         }
     }
 
@@ -55,5 +43,19 @@ class PlayerListener(private val context: PlaybackService) : Player.Listener {
         if (isReasonRepeat && context.config.playbackSetting == PlaybackSetting.STOP_AFTER_CURRENT_TRACK) {
             player.pause()
         }
+    }
+
+    private fun updatePlaybackInfo() {
+        updatePlaybackInfo(player)
+        val currentMediaItem = player.currentMediaItem
+        if (currentMediaItem != null) {
+            context.mediaItemProvider.saveRecentItemsWithStartPosition(
+                mediaItems = player.currentMediaItems,
+                current = currentMediaItem,
+                startPosition = player.currentPosition
+            )
+        }
+
+        context.broadcastUpdateWidgetState()
     }
 }

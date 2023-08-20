@@ -2,6 +2,7 @@ package com.simplemobiletools.musicplayer.helpers
 
 import android.content.ComponentName
 import android.content.Context
+import android.os.Looper
 import androidx.media3.common.Player.Listener
 import androidx.media3.session.MediaController
 import androidx.media3.session.SessionToken
@@ -26,13 +27,14 @@ class SimpleMediaController(val context: Context, val listener: Listener?) {
     private fun newControllerAsync() {
         controllerFuture = MediaController
             .Builder(context, SessionToken(context, ComponentName(context, PlaybackService::class.java)))
+            .setApplicationLooper(Looper.getMainLooper())
             .buildAsync()
 
-        controllerFuture.addListener({
-            if (listener != null) {
+        if (listener != null) {
+            controllerFuture.addListener({
                 controllerFuture.getOrNull()?.addListener(listener)
-            }
-        }, MoreExecutors.directExecutor())
+            }, MoreExecutors.directExecutor())
+        }
     }
 
     private fun shouldCreateNewController(): Boolean {

@@ -154,9 +154,7 @@ class QueueActivity : SimpleControllerActivity() {
         withPlayer {
             val currentMediaItems = currentMediaItems
             val currentTracks = currentMediaItems.toTracks() as ArrayList<Track>
-            runOnUiThread {
-                adapter.updateItems(currentTracks, forceUpdate = true)
-            }
+            adapter.updateItems(currentTracks, forceUpdate = true)
         }
     }
 

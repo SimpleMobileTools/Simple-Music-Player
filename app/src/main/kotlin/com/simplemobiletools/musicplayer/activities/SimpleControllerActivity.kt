@@ -42,9 +42,6 @@ abstract class SimpleControllerActivity : SimpleActivity(), Player.Listener {
         controller.releaseController()
     }
 
-    /**
-     * The [callback] is executed on a background player thread. When performing UI operations, callers should use [runOnUiThread].
-     */
     fun withPlayer(callback: MediaController.() -> Unit) = controller.withController(callback)
 
     fun playMediaItems(mediaItems: List<MediaItem>, startIndex: Int = 0, startPosition: Long = 0, startActivity: Boolean = true) {
@@ -67,10 +64,7 @@ abstract class SimpleControllerActivity : SimpleActivity(), Player.Listener {
             val currentMediaItemsIds = currentMediaItems.map { it.mediaId }
             val mediaItems = tracks.toMediaItems().filter { it.mediaId !in currentMediaItemsIds }
             addMediaItems(mediaItems)
-
-            runOnUiThread {
-                callback()
-            }
+            callback()
         }
     }
 
