@@ -1,4 +1,4 @@
-package com.simplemobiletools.musicplayer.services.playback
+package com.simplemobiletools.musicplayer.playback
 
 import android.content.Context
 import android.media.audiofx.Equalizer
@@ -9,7 +9,7 @@ import com.simplemobiletools.commons.extensions.toast
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.helpers.EQUALIZER_PRESET_CUSTOM
-import com.simplemobiletools.musicplayer.services.playback.player.SimpleMusicPlayer
+import com.simplemobiletools.musicplayer.playback.player.SimpleMusicPlayer
 
 @UnstableApi
 object SimpleEqualizer {

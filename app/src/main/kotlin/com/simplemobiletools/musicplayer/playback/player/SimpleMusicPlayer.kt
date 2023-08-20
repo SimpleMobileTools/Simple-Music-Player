@@ -1,4 +1,4 @@
-package com.simplemobiletools.musicplayer.services.playback.player
+package com.simplemobiletools.musicplayer.playback.player
 
 import androidx.media3.common.ForwardingPlayer
 import androidx.media3.common.Player

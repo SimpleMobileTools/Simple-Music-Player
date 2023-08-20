@@ -16,7 +16,7 @@ import com.simplemobiletools.musicplayer.activities.SimpleControllerActivity
 import com.simplemobiletools.musicplayer.extensions.*
 import com.simplemobiletools.musicplayer.helpers.TagHelper
 import com.simplemobiletools.musicplayer.models.Track
-import com.simplemobiletools.musicplayer.services.playback.PlaybackService
+import com.simplemobiletools.musicplayer.playback.PlaybackService
 
 abstract class BaseMusicAdapter<Type>(
     var items: ArrayList<Type>,

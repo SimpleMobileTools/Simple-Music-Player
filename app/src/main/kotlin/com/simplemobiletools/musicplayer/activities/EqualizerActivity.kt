@@ -15,7 +15,7 @@ import com.simplemobiletools.commons.views.MySeekBar
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.helpers.EQUALIZER_PRESET_CUSTOM
-import com.simplemobiletools.musicplayer.services.playback.SimpleEqualizer
+import com.simplemobiletools.musicplayer.playback.SimpleEqualizer
 import kotlinx.android.synthetic.main.activity_equalizer.*
 import kotlinx.android.synthetic.main.equalizer_band.view.*
 import java.text.DecimalFormat

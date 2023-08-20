@@ -3,7 +3,7 @@ package com.simplemobiletools.musicplayer.extensions
 import androidx.media3.common.MediaItem
 import androidx.media3.common.Player
 import com.simplemobiletools.musicplayer.helpers.PlaybackSetting
-import com.simplemobiletools.musicplayer.services.playback.player.PlayerListener
+import com.simplemobiletools.musicplayer.playback.player.PlayerListener
 
 val Player.isReallyPlaying: Boolean
     get() = when (playbackState) {

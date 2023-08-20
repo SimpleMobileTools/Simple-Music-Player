@@ -17,7 +17,7 @@ import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
 import com.simplemobiletools.musicplayer.extensions.*
 import com.simplemobiletools.musicplayer.models.Track
-import com.simplemobiletools.musicplayer.services.playback.PlaybackService
+import com.simplemobiletools.musicplayer.playback.PlaybackService
 import kotlinx.android.synthetic.main.item_track_queue.view.track_queue_drag_handle
 import kotlinx.android.synthetic.main.item_track_queue.view.track_queue_duration
 import kotlinx.android.synthetic.main.item_track_queue.view.track_queue_frame

@@ -1,4 +1,4 @@
-package com.simplemobiletools.musicplayer.services.playback
+package com.simplemobiletools.musicplayer.playback
 
 import android.os.CountDownTimer
 import com.simplemobiletools.musicplayer.extensions.config

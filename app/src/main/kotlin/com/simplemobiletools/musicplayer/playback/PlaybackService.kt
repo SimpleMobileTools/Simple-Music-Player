@@ -1,4 +1,4 @@
-package com.simplemobiletools.musicplayer.services.playback
+package com.simplemobiletools.musicplayer.playback
 
 import android.os.Handler
 import android.os.HandlerThread
@@ -14,10 +14,10 @@ import com.simplemobiletools.musicplayer.extensions.isReallyPlaying
 import com.simplemobiletools.musicplayer.extensions.nextMediaItem
 import com.simplemobiletools.musicplayer.helpers.NotificationHelper
 import com.simplemobiletools.musicplayer.helpers.getPermissionToRequest
-import com.simplemobiletools.musicplayer.services.playback.library.MediaItemProvider
-import com.simplemobiletools.musicplayer.services.playback.player.PlayerListener
-import com.simplemobiletools.musicplayer.services.playback.player.SimpleMusicPlayer
-import com.simplemobiletools.musicplayer.services.playback.player.initializeSessionAndPlayer
+import com.simplemobiletools.musicplayer.playback.library.MediaItemProvider
+import com.simplemobiletools.musicplayer.playback.player.PlayerListener
+import com.simplemobiletools.musicplayer.playback.player.SimpleMusicPlayer
+import com.simplemobiletools.musicplayer.playback.player.initializeSessionAndPlayer
 
 @OptIn(UnstableApi::class)
 class PlaybackService : MediaLibraryService() {

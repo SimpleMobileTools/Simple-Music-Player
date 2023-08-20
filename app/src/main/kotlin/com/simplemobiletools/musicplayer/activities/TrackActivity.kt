@@ -30,8 +30,8 @@ import com.simplemobiletools.musicplayer.fragments.PlaybackSpeedFragment
 import com.simplemobiletools.musicplayer.helpers.*
 import com.simplemobiletools.musicplayer.interfaces.PlaybackSpeedListener
 import com.simplemobiletools.musicplayer.models.Track
-import com.simplemobiletools.musicplayer.services.playback.CustomCommands
-import com.simplemobiletools.musicplayer.services.playback.PlaybackService
+import com.simplemobiletools.musicplayer.playback.CustomCommands
+import com.simplemobiletools.musicplayer.playback.PlaybackService
 import kotlinx.android.synthetic.main.activity_track.*
 import java.text.DecimalFormat
 import kotlin.math.min

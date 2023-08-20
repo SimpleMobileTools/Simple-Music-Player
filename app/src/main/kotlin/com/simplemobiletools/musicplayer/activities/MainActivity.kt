@@ -31,7 +31,7 @@ import com.simplemobiletools.musicplayer.fragments.MyViewPagerFragment
 import com.simplemobiletools.musicplayer.helpers.*
 import com.simplemobiletools.musicplayer.helpers.M3uImporter.ImportResult
 import com.simplemobiletools.musicplayer.models.Events
-import com.simplemobiletools.musicplayer.services.playback.CustomCommands
+import com.simplemobiletools.musicplayer.playback.CustomCommands
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_albums.albums_fragment_holder
 import kotlinx.android.synthetic.main.fragment_artists.artists_fragment_holder

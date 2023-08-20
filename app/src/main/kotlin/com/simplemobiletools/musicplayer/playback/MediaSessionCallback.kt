@@ -1,4 +1,4 @@
-package com.simplemobiletools.musicplayer.services.playback
+package com.simplemobiletools.musicplayer.playback
 
 import android.os.Bundle
 import android.os.ConditionVariable

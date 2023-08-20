@@ -22,7 +22,7 @@ import com.simplemobiletools.musicplayer.extensions.broadcastUpdateWidgetState
 import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.extensions.queueDAO
 import com.simplemobiletools.musicplayer.extensions.togglePlayback
-import com.simplemobiletools.musicplayer.services.playback.PlaybackService
+import com.simplemobiletools.musicplayer.playback.PlaybackService
 
 class MyWidgetProvider : AppWidgetProvider() {
 

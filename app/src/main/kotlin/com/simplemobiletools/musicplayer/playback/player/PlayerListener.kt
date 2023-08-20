@@ -1,4 +1,4 @@
-package com.simplemobiletools.musicplayer.services.playback.player
+package com.simplemobiletools.musicplayer.playback.player
 
 import android.widget.Toast
 import androidx.media3.common.MediaItem
@@ -11,8 +11,8 @@ import com.simplemobiletools.musicplayer.extensions.broadcastUpdateWidgetState
 import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.extensions.currentMediaItems
 import com.simplemobiletools.musicplayer.helpers.PlaybackSetting
-import com.simplemobiletools.musicplayer.services.playback.PlaybackService
-import com.simplemobiletools.musicplayer.services.playback.PlaybackService.Companion.updatePlaybackInfo
+import com.simplemobiletools.musicplayer.playback.PlaybackService
+import com.simplemobiletools.musicplayer.playback.PlaybackService.Companion.updatePlaybackInfo
 
 @UnstableApi
 class PlayerListener(private val context: PlaybackService) : Player.Listener {

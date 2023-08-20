@@ -10,7 +10,7 @@ import com.google.common.util.concurrent.ListenableFuture
 import com.google.common.util.concurrent.MoreExecutors
 import com.simplemobiletools.musicplayer.extensions.getOrNull
 import com.simplemobiletools.musicplayer.extensions.runOnPlayerThread
-import com.simplemobiletools.musicplayer.services.playback.PlaybackService
+import com.simplemobiletools.musicplayer.playback.PlaybackService
 import java.util.concurrent.Executors
 
 class SimpleMediaController(val context: Context, val listener: Listener? = null) {

@@ -15,7 +15,7 @@ import com.simplemobiletools.musicplayer.extensions.sendCommand
 import com.simplemobiletools.musicplayer.helpers.SHOW_FILENAME_ALWAYS
 import com.simplemobiletools.musicplayer.helpers.SHOW_FILENAME_IF_UNAVAILABLE
 import com.simplemobiletools.musicplayer.helpers.SHOW_FILENAME_NEVER
-import com.simplemobiletools.musicplayer.services.playback.CustomCommands
+import com.simplemobiletools.musicplayer.playback.CustomCommands
 import kotlinx.android.synthetic.main.activity_settings.*
 import java.util.Locale
 import kotlin.system.exitProcess

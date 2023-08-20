@@ -14,7 +14,7 @@ import com.simplemobiletools.commons.helpers.IS_CUSTOMIZING_COLORS
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.helpers.MyWidgetProvider
-import com.simplemobiletools.musicplayer.services.playback.PlaybackService
+import com.simplemobiletools.musicplayer.playback.PlaybackService
 import kotlinx.android.synthetic.main.widget.song_info_artist
 import kotlinx.android.synthetic.main.widget.song_info_title
 import kotlinx.android.synthetic.main.widget.view.widget_background

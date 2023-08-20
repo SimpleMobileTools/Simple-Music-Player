@@ -1,4 +1,4 @@
-package com.simplemobiletools.musicplayer.services.playback
+package com.simplemobiletools.musicplayer.playback
 
 import android.content.Context
 import android.os.Bundle

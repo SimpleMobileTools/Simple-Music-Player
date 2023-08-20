@@ -1,6 +1,6 @@
 @file:UnstableApi
 
-package com.simplemobiletools.musicplayer.services.playback.player
+package com.simplemobiletools.musicplayer.playback.player
 
 import android.app.PendingIntent
 import android.content.Context
@@ -16,10 +16,10 @@ import com.simplemobiletools.musicplayer.activities.MainActivity
 import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.extensions.setRepeatMode
 import com.simplemobiletools.musicplayer.helpers.SEEK_INTERVAL_MS
-import com.simplemobiletools.musicplayer.services.playback.PlaybackService
-import com.simplemobiletools.musicplayer.services.playback.SimpleEqualizer
-import com.simplemobiletools.musicplayer.services.playback.getCustomLayout
-import com.simplemobiletools.musicplayer.services.playback.getMediaSessionCallback
+import com.simplemobiletools.musicplayer.playback.PlaybackService
+import com.simplemobiletools.musicplayer.playback.SimpleEqualizer
+import com.simplemobiletools.musicplayer.playback.getCustomLayout
+import com.simplemobiletools.musicplayer.playback.getMediaSessionCallback
 
 private const val PLAYER_THREAD = "PlayerThread"
 

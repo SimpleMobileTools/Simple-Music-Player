@@ -160,7 +160,7 @@
             android:parentActivityName=".activities.TrackActivity" />
 
         <service
-            android:name=".services.playback.PlaybackService"
+            android:name=".playback.PlaybackService"
             android:exported="true"
             android:foregroundServiceType="mediaPlayback">
             <intent-filter>

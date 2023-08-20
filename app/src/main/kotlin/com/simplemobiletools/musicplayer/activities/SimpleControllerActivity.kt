@@ -16,8 +16,8 @@ import com.simplemobiletools.musicplayer.helpers.SimpleMediaController
 import com.simplemobiletools.musicplayer.models.Events
 import com.simplemobiletools.musicplayer.models.Track
 import com.simplemobiletools.musicplayer.models.toMediaItems
-import com.simplemobiletools.musicplayer.services.playback.CustomCommands
-import com.simplemobiletools.musicplayer.services.playback.PlaybackService.Companion.updatePlaybackInfo
+import com.simplemobiletools.musicplayer.playback.CustomCommands
+import com.simplemobiletools.musicplayer.playback.PlaybackService.Companion.updatePlaybackInfo
 import org.greenrobot.eventbus.EventBus
 import java.io.File
 
