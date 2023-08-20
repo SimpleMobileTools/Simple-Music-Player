@@ -144,7 +144,7 @@ internal class MediaItemProvider(private val context: Context) {
                 QueueItem(trackId = mediaItem.mediaId.toLong(), trackOrder = index, isCurrent = false, lastPosition = 0)
             }
 
-            audioHelper.updateQueue(queueItems, trackId, startPosition)
+            audioHelper.resetQueue(queueItems, trackId, startPosition)
         }
     }
 

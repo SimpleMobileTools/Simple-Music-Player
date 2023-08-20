@@ -76,6 +76,13 @@ class MainActivity : SimpleMusicActivity(), Player.Listener {
         volumeControlStream = AudioManager.STREAM_MUSIC
         checkWhatsNewDialog()
         checkAppOnSDCard()
+        withPlayer {
+            maybePreparePlayer(context = this@MainActivity) { success ->
+                if (success) {
+                    broadcastUpdateWidgetState()
+                }
+            }
+        }
     }
 
     override fun onResume() {

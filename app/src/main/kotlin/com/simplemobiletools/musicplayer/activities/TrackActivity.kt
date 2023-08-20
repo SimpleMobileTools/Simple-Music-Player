@@ -134,9 +134,9 @@ class TrackActivity : SimpleControllerActivity(), PlaybackSpeedListener {
 
     private fun initThirdPartyIntent() {
         next_track_holder.beGone()
-        getMediaItemFromUri(intent.data) {
+        getTrackFromUri(intent.data) {
             runOnUiThread {
-                playMediaItems(listOf(it))
+                prepareAndPlay(listOf(it))
             }
         }
     }

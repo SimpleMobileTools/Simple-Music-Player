@@ -13,7 +13,6 @@ import android.provider.MediaStore
 import android.provider.MediaStore.Audio
 import android.util.Size
 import androidx.core.net.toUri
-import androidx.media3.common.MediaItem
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
@@ -266,7 +265,7 @@ fun Context.loadGlideResource(
     }
 }
 
-fun Context.getMediaItemFromUri(uri: Uri?, callback: (mediaItem: MediaItem) -> Unit) {
+fun Context.getTrackFromUri(uri: Uri?, callback: (track: Track) -> Unit) {
     if (uri == null) {
         return
     }
@@ -275,7 +274,7 @@ fun Context.getMediaItemFromUri(uri: Uri?, callback: (mediaItem: MediaItem) -> U
         val path = getRealPathFromURI(uri) ?: return@ensureBackgroundThread
         val allTracks = audioHelper.getAllTracks()
         val track = allTracks.find { it.path == path } ?: RoomHelper(this).getTrackFromPath(path) ?: return@ensureBackgroundThread
-        callback(track.toMediaItem())
+        callback(track)
     }
 }
 

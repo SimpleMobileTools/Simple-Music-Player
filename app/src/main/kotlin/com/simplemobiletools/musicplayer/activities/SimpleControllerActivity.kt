@@ -4,7 +4,6 @@ import android.content.ContentUris
 import android.content.Intent
 import android.os.Bundle
 import android.provider.MediaStore
-import androidx.media3.common.MediaItem
 import androidx.media3.common.Player
 import androidx.media3.session.MediaController
 import com.simplemobiletools.commons.extensions.toast
@@ -44,7 +43,7 @@ abstract class SimpleControllerActivity : SimpleActivity(), Player.Listener {
 
     fun withPlayer(callback: MediaController.() -> Unit) = controller.withController(callback)
 
-    fun playMediaItems(mediaItems: List<MediaItem>, startIndex: Int = 0, startPosition: Long = 0, startActivity: Boolean = true) {
+    fun prepareAndPlay(tracks: List<Track>, startIndex: Int = 0, startPosition: Long = 0, startActivity: Boolean = true) {
         withPlayer {
             if (startActivity) {
                 startActivity(
@@ -52,10 +51,12 @@ abstract class SimpleControllerActivity : SimpleActivity(), Player.Listener {
                 )
             }
 
-            setMediaItems(mediaItems, startIndex, startPosition)
-            prepare()
-            play()
-            updatePlaybackInfo(this)
+            prepareUsingTracks(tracks, startIndex, startPosition) { success ->
+                if (success) {
+                    play()
+                    updatePlaybackInfo(this)
+                }
+            }
         }
     }
 
@@ -154,7 +155,7 @@ abstract class SimpleControllerActivity : SimpleActivity(), Player.Listener {
                     if (currentMediaItem.isSameMedia(track)) {
                         // it's not yet directly possible to update metadata without interrupting the playback: https://github.com/androidx/media/issues/33
                         val startIndex = maxOf(queuedMediaItems.indexOfTrack(track), 0)
-                        playMediaItems(queuedMediaItems, startIndex, currentPosition, startActivity = false)
+                        prepareAndPlay(queuedTracks, startIndex, currentPosition, startActivity = false)
                     } else if (currentMediaItems.indexOfTrack(track) != -1) {
                         removeMediaItems(0, currentMediaItemIndex - 1)
                         removeMediaItems(currentMediaItemIndex + 1, currentMediaItems.lastIndex)

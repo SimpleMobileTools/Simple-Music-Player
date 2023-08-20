@@ -18,7 +18,6 @@ import com.simplemobiletools.musicplayer.extensions.mediaScanner
 import com.simplemobiletools.musicplayer.helpers.TAB_TRACKS
 import com.simplemobiletools.musicplayer.models.Track
 import com.simplemobiletools.musicplayer.models.sortSafely
-import com.simplemobiletools.musicplayer.models.toMediaItems
 import kotlinx.android.synthetic.main.fragment_tracks.view.tracks_fastscroller
 import kotlinx.android.synthetic.main.fragment_tracks.view.tracks_list
 import kotlinx.android.synthetic.main.fragment_tracks.view.tracks_placeholder
@@ -50,9 +49,8 @@ class TracksFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
                         activity.hideKeyboard()
                         activity.handleNotificationPermission { granted ->
                             if (granted) {
-                                val mediaItems = tracks.toMediaItems()
                                 val startIndex = tracks.indexOf(it as Track)
-                                playMediaItems(mediaItems, startIndex, 0)
+                                prepareAndPlay(tracks, startIndex, 0)
                             } else {
                                 if (context is Activity) {
                                     PermissionRequiredDialog(activity, R.string.allow_notifications_music_player, { activity.openNotificationSettings() })

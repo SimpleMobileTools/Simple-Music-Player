@@ -368,9 +368,8 @@ class TracksActivity : SimpleMusicActivity() {
 
         handleNotificationPermission { granted ->
             if (granted) {
-                val mediaItems = tracks.toMediaItems()
                 val startIndex = tracks.indexOf(track)
-                playMediaItems(mediaItems, startIndex)
+                prepareAndPlay(tracks, startIndex)
             } else {
                 PermissionRequiredDialog(this, R.string.allow_notifications_music_player, { openNotificationSettings() })
             }

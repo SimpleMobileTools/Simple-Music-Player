@@ -60,9 +60,8 @@ class AlbumsActivity : SimpleMusicActivity() {
                     } else {
                         handleNotificationPermission { granted ->
                             if (granted) {
-                                val mediaItems = tracksToAdd.toMediaItems()
                                 val startIndex = tracksToAdd.indexOf(it as Track)
-                                playMediaItems(mediaItems, startIndex)
+                                prepareAndPlay(tracksToAdd, startIndex)
                             } else {
                                 PermissionRequiredDialog(this, R.string.allow_notifications_music_player, { openNotificationSettings() })
                             }

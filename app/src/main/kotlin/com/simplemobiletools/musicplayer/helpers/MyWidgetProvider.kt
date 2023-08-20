@@ -8,19 +8,16 @@ import android.content.Context
 import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.widget.RemoteViews
 import androidx.media3.common.MediaMetadata
 import com.simplemobiletools.commons.extensions.applyColorFilter
 import com.simplemobiletools.commons.extensions.getColoredBitmap
 import com.simplemobiletools.commons.extensions.getLaunchIntent
-import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.SplashActivity
 import com.simplemobiletools.musicplayer.extensions.broadcastUpdateWidgetState
 import com.simplemobiletools.musicplayer.extensions.config
-import com.simplemobiletools.musicplayer.extensions.queueDAO
+import com.simplemobiletools.musicplayer.extensions.maybePreparePlayer
 import com.simplemobiletools.musicplayer.extensions.togglePlayback
 import com.simplemobiletools.musicplayer.playback.PlaybackService
 
@@ -58,19 +55,16 @@ class MyWidgetProvider : AppWidgetProvider() {
         val result = goAsync()
         SimpleMediaController(context.applicationContext).withController {
             if (currentMediaItem == null) {
-                ensureBackgroundThread {
-                    val queueItems = context.queueDAO.getAll()
-                    Handler(Looper.getMainLooper()).post {
-                        if (queueItems.isEmpty()) {
-                            val intent = context.getLaunchIntent() ?: Intent(context, SplashActivity::class.java)
-                            intent.addFlags(FLAG_ACTIVITY_NEW_TASK)
-                            context.startActivity(intent)
-                        } else {
-                            play()
-                        }
-
-                        result.finish()
+                maybePreparePlayer(context) { success ->
+                    if (success) {
+                        play()
+                    } else {
+                        val intent = context.getLaunchIntent() ?: Intent(context, SplashActivity::class.java)
+                        intent.addFlags(FLAG_ACTIVITY_NEW_TASK)
+                        context.startActivity(intent)
                     }
+
+                    result.finish()
                 }
             } else {
                 when (action) {

@@ -5,6 +5,7 @@ import com.simplemobiletools.commons.extensions.addBit
 import com.simplemobiletools.commons.extensions.getParentPath
 import com.simplemobiletools.musicplayer.extensions.*
 import com.simplemobiletools.musicplayer.models.*
+import kotlin.time.Duration.Companion.milliseconds
 
 class AudioHelper(private val context: Context) {
 
@@ -253,11 +254,21 @@ class AudioHelper(private val context: Context) {
         return tracks.distinctBy { it.mediaStoreId }.toMutableList() as ArrayList<Track>
     }
 
-    fun updateQueue(items: List<QueueItem>, currentTrackId: Long? = null, startPosition: Long? = null) {
+    fun initQueue(): ArrayList<Track> {
+        val tracks = getAllTracks()
+        val queueItems = tracks.mapIndexed { index, mediaItem ->
+            QueueItem(trackId = mediaItem.mediaStoreId, trackOrder = index, isCurrent = index == 0, lastPosition = 0)
+        }
+
+        resetQueue(queueItems)
+        return tracks
+    }
+
+    fun resetQueue(items: List<QueueItem>, currentTrackId: Long? = null, startPosition: Long? = null) {
         context.queueDAO.deleteAllItems()
         context.queueDAO.insertAll(items)
         if (currentTrackId != null && startPosition != null) {
-            val startPositionSeconds = (startPosition / 1000).toInt()
+            val startPositionSeconds = startPosition.milliseconds.inWholeSeconds.toInt()
             context.queueDAO.saveCurrentTrackProgress(currentTrackId, startPositionSeconds)
         } else if (currentTrackId != null) {
             context.queueDAO.saveCurrentTrack(currentTrackId)
