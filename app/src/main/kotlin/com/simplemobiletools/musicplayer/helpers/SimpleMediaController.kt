@@ -13,7 +13,7 @@ import com.simplemobiletools.musicplayer.extensions.runOnPlayerThread
 import com.simplemobiletools.musicplayer.services.playback.PlaybackService
 import java.util.concurrent.Executors
 
-class SimpleMediaController(val context: Context, val listener: Listener?) {
+class SimpleMediaController(val context: Context, val listener: Listener? = null) {
     private val executorService by lazy {
         MoreExecutors.listeningDecorator(Executors.newSingleThreadExecutor())
     }

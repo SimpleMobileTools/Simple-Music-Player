@@ -25,7 +25,6 @@ import com.simplemobiletools.musicplayer.extensions.togglePlayback
 import com.simplemobiletools.musicplayer.services.playback.PlaybackService
 
 class MyWidgetProvider : AppWidgetProvider() {
-    private lateinit var controller: SimpleMediaController
 
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
         performUpdate(context)
@@ -48,7 +47,6 @@ class MyWidgetProvider : AppWidgetProvider() {
     }
 
     override fun onReceive(context: Context, intent: Intent) {
-        controller = SimpleMediaController(context.applicationContext, null)
         when (val action = intent.action) {
             TRACK_STATE_CHANGED -> performUpdate(context)
             PREVIOUS, PLAYPAUSE, NEXT -> handlePlayerControls(context, action)
@@ -57,28 +55,31 @@ class MyWidgetProvider : AppWidgetProvider() {
     }
 
     private fun handlePlayerControls(context: Context, action: String) {
-        if (PlaybackService.currentMediaItem == null) {
-            ensureBackgroundThread {
-                val queueItems = context.queueDAO.getAll()
-                Handler(Looper.getMainLooper()).post {
-                    if (queueItems.isEmpty()) {
-                        val intent = context.getLaunchIntent() ?: Intent(context, SplashActivity::class.java)
-                        intent.addFlags(FLAG_ACTIVITY_NEW_TASK)
-                        context.startActivity(intent)
-                    } else {
-                        controller.withController {
+        val result = goAsync()
+        SimpleMediaController(context.applicationContext).withController {
+            if (currentMediaItem == null) {
+                ensureBackgroundThread {
+                    val queueItems = context.queueDAO.getAll()
+                    Handler(Looper.getMainLooper()).post {
+                        if (queueItems.isEmpty()) {
+                            val intent = context.getLaunchIntent() ?: Intent(context, SplashActivity::class.java)
+                            intent.addFlags(FLAG_ACTIVITY_NEW_TASK)
+                            context.startActivity(intent)
+                        } else {
                             play()
                         }
+
+                        result.finish()
                     }
                 }
-            }
-        } else {
-            controller.withController {
+            } else {
                 when (action) {
                     NEXT -> seekToNextMediaItem()
                     PREVIOUS -> seekToPreviousMediaItem()
                     PLAYPAUSE -> togglePlayback()
                 }
+
+                result.finish()
             }
         }
     }
