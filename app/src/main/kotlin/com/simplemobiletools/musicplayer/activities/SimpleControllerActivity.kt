@@ -156,15 +156,17 @@ abstract class SimpleControllerActivity : SimpleActivity(), Player.Listener {
             ensureBackgroundThread {
                 val queuedTracks = audioHelper.getAllQueuedTracks()
                 val queuedMediaItems = queuedTracks.toMediaItems()
-                if (currentMediaItem.isSameMedia(track)) {
-                    // in media3, it's not yet directly possible to update metadata without interrupting the playback
-                    val startIndex = maxOf(queuedMediaItems.indexOfTrack(track), 0)
-                    playMediaItems(queuedMediaItems, startIndex, currentPosition, startActivity = false)
-                } else if (currentMediaItems.indexOfTrack(track) != -1) {
-                    removeMediaItems(0, currentMediaItemIndex - 1)
-                    removeMediaItems(currentMediaItemIndex + 1, currentMediaItems.lastIndex)
-                    addMediaItems(queuedMediaItems.subList(0, currentIndex))
-                    addMediaItems(queuedMediaItems.subList(currentIndex + 1, queuedMediaItems.lastIndex))
+                runOnPlayerThread {
+                    if (currentMediaItem.isSameMedia(track)) {
+                        // in media3, it's not yet directly possible to update metadata without interrupting the playback
+                        val startIndex = maxOf(queuedMediaItems.indexOfTrack(track), 0)
+                        playMediaItems(queuedMediaItems, startIndex, currentPosition, startActivity = false)
+                    } else if (currentMediaItems.indexOfTrack(track) != -1) {
+                        removeMediaItems(0, currentMediaItemIndex - 1)
+                        removeMediaItems(currentMediaItemIndex + 1, currentMediaItems.lastIndex)
+                        addMediaItems(queuedMediaItems.subList(0, currentIndex))
+                        addMediaItems(queuedMediaItems.subList(currentIndex + 1, queuedMediaItems.lastIndex))
+                    }
                 }
             }
         }
