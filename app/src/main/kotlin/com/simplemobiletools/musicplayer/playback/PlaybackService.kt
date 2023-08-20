@@ -9,9 +9,7 @@ import androidx.media3.common.*
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.session.*
 import com.simplemobiletools.commons.extensions.hasPermission
-import com.simplemobiletools.musicplayer.extensions.config
-import com.simplemobiletools.musicplayer.extensions.isReallyPlaying
-import com.simplemobiletools.musicplayer.extensions.nextMediaItem
+import com.simplemobiletools.musicplayer.extensions.*
 import com.simplemobiletools.musicplayer.helpers.NotificationHelper
 import com.simplemobiletools.musicplayer.helpers.getPermissionToRequest
 import com.simplemobiletools.musicplayer.playback.library.MediaItemProvider
@@ -72,9 +70,7 @@ class PlaybackService : MediaLibraryService() {
     }
 
     internal fun withPlayer(callback: Player.() -> Unit) {
-        Handler(player.applicationLooper).post {
-            callback(player)
-        }
+        player.applicationLooper.post { callback(player) }
     }
 
     private fun showNoPermissionNotification() {
