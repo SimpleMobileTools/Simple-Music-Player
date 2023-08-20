@@ -10,7 +10,7 @@ import androidx.media3.common.util.UnstableApi
 import androidx.media3.session.*
 import com.simplemobiletools.commons.extensions.hasPermission
 import com.simplemobiletools.musicplayer.extensions.config
-import com.simplemobiletools.musicplayer.extensions.isPlayingOrBuffering
+import com.simplemobiletools.musicplayer.extensions.isReallyPlaying
 import com.simplemobiletools.musicplayer.extensions.nextMediaItem
 import com.simplemobiletools.musicplayer.helpers.NotificationHelper
 import com.simplemobiletools.musicplayer.helpers.getPermissionToRequest
@@ -63,8 +63,8 @@ class PlaybackService : MediaLibraryService() {
 
     fun stopService() {
         withPlayer {
-            player.pause()
-            player.stop()
+            pause()
+            stop()
         }
 
         stopSelf()
@@ -100,7 +100,7 @@ class PlaybackService : MediaLibraryService() {
         fun updatePlaybackInfo(player: Player) {
             currentMediaItem = player.currentMediaItem
             nextMediaItem = player.nextMediaItem
-            isPlaying = player.isPlayingOrBuffering
+            isPlaying = player.isReallyPlaying
         }
     }
 }

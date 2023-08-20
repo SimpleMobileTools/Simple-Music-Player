@@ -8,7 +8,7 @@ import com.simplemobiletools.commons.dialogs.PermissionRequiredDialog
 import com.simplemobiletools.commons.extensions.hideKeyboard
 import com.simplemobiletools.commons.extensions.openNotificationSettings
 import com.simplemobiletools.musicplayer.R
-import com.simplemobiletools.musicplayer.extensions.isPlayingOrBuffering
+import com.simplemobiletools.musicplayer.extensions.isReallyPlaying
 import com.simplemobiletools.musicplayer.extensions.togglePlayback
 import com.simplemobiletools.musicplayer.views.CurrentTrackBar
 
@@ -47,7 +47,7 @@ abstract class SimpleMusicActivity : SimpleControllerActivity(), Player.Listener
                 }
 
                 trackBarView?.updateCurrentTrack(currentMediaItem)
-                trackBarView?.updateTrackState(isPlayingOrBuffering)
+                trackBarView?.updateTrackState(isReallyPlaying)
             }
         }
     }
@@ -59,11 +59,11 @@ abstract class SimpleMusicActivity : SimpleControllerActivity(), Player.Listener
 
     @CallSuper
     override fun onPlaybackStateChanged(playbackState: Int) = withPlayer {
-        trackBarView?.updateTrackState(isPlayingOrBuffering)
+        trackBarView?.updateTrackState(isReallyPlaying)
     }
 
     @CallSuper
     override fun onIsPlayingChanged(isPlaying: Boolean) = withPlayer {
-        trackBarView?.updateTrackState(isPlayingOrBuffering)
+        trackBarView?.updateTrackState(isReallyPlaying)
     }
 }

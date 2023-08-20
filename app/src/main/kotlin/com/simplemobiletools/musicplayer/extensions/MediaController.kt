@@ -7,7 +7,7 @@ import com.simplemobiletools.musicplayer.services.playback.CustomCommands
 fun MediaController.sendCommand(command: CustomCommands) = sendCustomCommand(command.sessionCommand, Bundle.EMPTY)
 
 fun MediaController.togglePlayback() {
-    if (isPlaying) {
+    if (isReallyPlaying) {
         pause()
     } else {
         play()

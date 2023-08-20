@@ -5,9 +5,8 @@ import androidx.media3.common.Player
 import com.simplemobiletools.musicplayer.helpers.PlaybackSetting
 import com.simplemobiletools.musicplayer.services.playback.player.PlayerListener
 
-val Player.isPlayingOrBuffering: Boolean
+val Player.isReallyPlaying: Boolean
     get() = when (playbackState) {
-        Player.STATE_BUFFERING -> true
         Player.STATE_ENDED, Player.STATE_IDLE -> false
         else -> isPlaying || playWhenReady
     }

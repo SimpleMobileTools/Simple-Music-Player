@@ -105,7 +105,7 @@ class TrackActivity : SimpleControllerActivity(), PlaybackSpeedListener {
         cancelProgressUpdate()
         if (isThirdPartyIntent && !isChangingConfigurations) {
             withPlayer {
-                if (!isPlayingOrBuffering) {
+                if (!isReallyPlaying) {
                     sendCommand(CustomCommands.CLOSE_PLAYER)
                 }
             }
@@ -382,8 +382,8 @@ class TrackActivity : SimpleControllerActivity(), PlaybackSpeedListener {
 
     private fun updatePlayerState() {
         withPlayer {
-            val isPlaying = isPlayingOrBuffering
-            activity_track_play_pause.updatePlayPauseIcon(isPlayingOrBuffering, getProperTextColor())
+            val isPlaying = isReallyPlaying
+            activity_track_play_pause.updatePlayPauseIcon(isReallyPlaying, getProperTextColor())
             updateProgress(currentPosition)
             if (isPlaying) {
                 scheduleProgressUpdate()

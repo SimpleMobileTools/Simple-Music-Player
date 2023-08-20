@@ -23,4 +23,8 @@ class SimpleMusicPlayer(player: Player) : ForwardingPlayer(player) {
             )
             .build()
     }
+
+    override fun play() {
+        playWhenReady = true
+    }
 }
