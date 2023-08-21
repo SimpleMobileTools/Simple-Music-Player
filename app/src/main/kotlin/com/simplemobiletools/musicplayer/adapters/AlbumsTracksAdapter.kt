@@ -38,10 +38,6 @@ class AlbumsTracksAdapter(
     private val ITEM_ALBUM = 1
     private val ITEM_TRACK = 2
 
-    init {
-        setupDragListener(true)
-    }
-
     override fun getActionMenuId() = R.menu.cab_albums_tracks
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -130,12 +126,8 @@ class AlbumsTracksAdapter(
         }
     }
 
-    override fun getSelectedTracks(): ArrayList<Track> {
-        return getSelectedItems().filterIsInstance<Track>().toMutableList() as ArrayList<Track>
-    }
-
     override fun getAllSelectedTracks(): List<Track> {
-        val tracks = getSelectedTracks()
+        val tracks = getSelectedTracks().toMutableList()
         tracks.addAll(ctx.audioHelper.getAlbumTracks(getSelectedAlbums()))
         return tracks
     }

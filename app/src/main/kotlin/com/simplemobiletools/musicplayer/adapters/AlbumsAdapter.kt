@@ -21,10 +21,6 @@ import kotlinx.android.synthetic.main.item_album.view.album_tracks
 class AlbumsAdapter(activity: BaseSimpleActivity, items: ArrayList<Album>, recyclerView: MyRecyclerView, itemClick: (Any) -> Unit) :
     BaseMusicAdapter<Album>(items, activity, recyclerView, itemClick), RecyclerViewFastScroller.OnPopupTextUpdate {
 
-    init {
-        setupDragListener(true)
-    }
-
     override fun getActionMenuId() = R.menu.cab_albums
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = createViewHolder(R.layout.item_album, parent)

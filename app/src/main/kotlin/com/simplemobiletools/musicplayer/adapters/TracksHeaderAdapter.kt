@@ -33,10 +33,6 @@ class TracksHeaderAdapter(activity: SimpleActivity, items: ArrayList<ListItem>, 
 
     override val cornerRadius = resources.getDimension(R.dimen.rounded_corner_radius_big).toInt()
 
-    init {
-        setupDragListener(true)
-    }
-
     override fun getActionMenuId() = R.menu.cab_tracks_header
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

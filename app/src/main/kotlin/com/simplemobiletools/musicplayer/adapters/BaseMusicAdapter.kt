@@ -49,7 +49,7 @@ abstract class BaseMusicAdapter<Type>(
 
     override fun onActionModeDestroyed() {}
 
-    open fun getSelectedTracks(): List<Track> = getSelectedItems().filterIsInstance<Track>()
+    open fun getSelectedTracks(): List<Track> = getSelectedItems().filterIsInstance<Track>().toList()
 
     open fun getAllSelectedTracks(): List<Track> = getSelectedTracks()
 

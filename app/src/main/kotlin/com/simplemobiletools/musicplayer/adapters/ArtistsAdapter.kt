@@ -22,10 +22,6 @@ import kotlinx.android.synthetic.main.item_artist.view.artist_title
 class ArtistsAdapter(activity: BaseSimpleActivity, items: ArrayList<Artist>, recyclerView: MyRecyclerView, itemClick: (Any) -> Unit) :
     BaseMusicAdapter<Artist>(items, activity, recyclerView, itemClick), RecyclerViewFastScroller.OnPopupTextUpdate {
 
-    init {
-        setupDragListener(true)
-    }
-
     override fun getActionMenuId() = R.menu.cab_artists
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = createViewHolder(R.layout.item_artist, parent)

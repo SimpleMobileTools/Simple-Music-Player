@@ -22,10 +22,6 @@ class FoldersAdapter(
     activity: BaseSimpleActivity, items: ArrayList<Folder>, recyclerView: MyRecyclerView, itemClick: (Any) -> Unit
 ) : BaseMusicAdapter<Folder>(items, activity, recyclerView, itemClick), RecyclerViewFastScroller.OnPopupTextUpdate {
 
-    init {
-        setupDragListener(true)
-    }
-
     override fun getActionMenuId() = R.menu.cab_folders
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = createViewHolder(R.layout.item_folder, parent)
