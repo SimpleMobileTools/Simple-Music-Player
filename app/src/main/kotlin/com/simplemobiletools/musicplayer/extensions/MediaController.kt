@@ -39,23 +39,21 @@ fun MediaController.prepareUsingTracks(tracks: List<Track>, startIndex: Int = 0,
 }
 
 fun MediaController.maybePreparePlayer(context: Context, callback: (success: Boolean) -> Unit) {
-    runOnPlayerThread {
-        if (currentMediaItem == null) {
-            ensureBackgroundThread {
-                if (context.queueDAO.getAll().isEmpty()) {
-                    prepareUsingTracks(context.audioHelper.initQueue(), callback = callback)
-                } else {
-                    val queuedTracks = context.audioHelper.getAllQueuedTracks()
-                    prepareUsingTracks(
-                        tracks = queuedTracks,
-                        startIndex = maxOf(queuedTracks.indexOfFirst { it.isCurrent() }, 0),
-                        startPosition = context.queueDAO.getCurrent()?.lastPosition?.seconds?.inWholeMilliseconds ?: 0,
-                        callback = callback
-                    )
-                }
+    if (currentMediaItem == null) {
+        ensureBackgroundThread {
+            if (context.queueDAO.getAll().isEmpty()) {
+                prepareUsingTracks(context.audioHelper.initQueue(), callback = callback)
+            } else {
+                val queuedTracks = context.audioHelper.getAllQueuedTracks()
+                prepareUsingTracks(
+                    tracks = queuedTracks,
+                    startIndex = maxOf(queuedTracks.indexOfFirst { it.isCurrent() }, 0),
+                    startPosition = context.queueDAO.getCurrent()?.lastPosition?.seconds?.inWholeMilliseconds ?: 0,
+                    callback = callback
+                )
             }
-        } else {
-            callback(false)
         }
+    } else {
+        callback(false)
     }
 }

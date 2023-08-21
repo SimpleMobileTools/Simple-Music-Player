@@ -10,12 +10,12 @@ import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.os.Bundle
 import android.widget.RemoteViews
 import androidx.media3.common.MediaMetadata
+import androidx.media3.session.MediaController
 import com.simplemobiletools.commons.extensions.applyColorFilter
 import com.simplemobiletools.commons.extensions.getColoredBitmap
 import com.simplemobiletools.commons.extensions.getLaunchIntent
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.SplashActivity
-import com.simplemobiletools.musicplayer.extensions.broadcastUpdateWidgetState
 import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.extensions.maybePreparePlayer
 import com.simplemobiletools.musicplayer.extensions.togglePlayback
@@ -39,9 +39,7 @@ class MyWidgetProvider : AppWidgetProvider() {
         }
     }
 
-    override fun onEnabled(context: Context) {
-        context.broadcastUpdateWidgetState()
-    }
+    override fun onEnabled(context: Context) = triggerUpdate(context)
 
     override fun onReceive(context: Context, intent: Intent) {
         when (val action = intent.action) {
@@ -51,37 +49,39 @@ class MyWidgetProvider : AppWidgetProvider() {
         }
     }
 
-    private fun handlePlayerControls(context: Context, action: String) {
-        val result = goAsync()
-        SimpleMediaController(context.applicationContext).withController {
-            if (currentMediaItem == null) {
-                maybePreparePlayer(context) { success ->
-                    if (success) {
-                        play()
-                    } else {
-                        val intent = context.getLaunchIntent() ?: Intent(context, SplashActivity::class.java)
-                        intent.addFlags(FLAG_ACTIVITY_NEW_TASK)
-                        context.startActivity(intent)
-                    }
+    override fun onAppWidgetOptionsChanged(context: Context, appWidgetManager: AppWidgetManager, widgetId: Int, newOptions: Bundle) = triggerUpdate(context)
 
-                    result.finish()
-                }
+    private fun handlePlayerControls(context: Context, action: String) {
+        maybePreparePlayer(context) { player, _ ->
+            if (player.currentMediaItem == null) {
+                val intent = context.getLaunchIntent() ?: Intent(context, SplashActivity::class.java)
+                intent.addFlags(FLAG_ACTIVITY_NEW_TASK)
+                context.startActivity(intent)
             } else {
                 when (action) {
-                    NEXT -> seekToNextMediaItem()
-                    PREVIOUS -> seekToPreviousMediaItem()
-                    PLAYPAUSE -> togglePlayback()
+                    NEXT -> player.seekToNextMediaItem()
+                    PREVIOUS -> player.seekToPreviousMediaItem()
+                    PLAYPAUSE -> player.togglePlayback()
                 }
-
-                result.finish()
             }
         }
     }
 
-    override fun onAppWidgetOptionsChanged(context: Context, appWidgetManager: AppWidgetManager, widgetId: Int, newOptions: Bundle) {
+    private fun maybePreparePlayer(context: Context, callback: (player: MediaController, prepared: Boolean) -> Unit) {
+        SimpleMediaController(context.applicationContext).withController {
+            maybePreparePlayer(context) { success ->
+                callback(this, success)
+            }
+        }
+    }
+
+    private fun triggerUpdate(context: Context) {
         performUpdate(context)
-        context.broadcastUpdateWidgetState()
-        super.onAppWidgetOptionsChanged(context, appWidgetManager, widgetId, newOptions)
+        maybePreparePlayer(context) { _, success ->
+            if (success) {
+                performUpdate(context)
+            }
+        }
     }
 
     private fun setupIntent(context: Context, views: RemoteViews, action: String, id: Int) {
