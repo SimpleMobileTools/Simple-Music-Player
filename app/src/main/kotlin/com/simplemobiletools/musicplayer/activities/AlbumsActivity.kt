@@ -41,13 +41,13 @@ class AlbumsActivity : SimpleMusicActivity() {
             listItems.add(AlbumSection(albumsSectionLabel))
             listItems.addAll(albums)
 
-            val tracksToAdd = audioHelper.getAlbumTracks(albums)
-            val trackFullDuration = tracksToAdd.sumOf { it.duration }
+            val albumTracks = audioHelper.getAlbumTracks(albums)
+            val trackFullDuration = albumTracks.sumOf { it.duration }
 
-            var tracksSectionLabel = resources.getQuantityString(R.plurals.tracks_plural, tracksToAdd.size, tracksToAdd.size)
+            var tracksSectionLabel = resources.getQuantityString(R.plurals.tracks_plural, albumTracks.size, albumTracks.size)
             tracksSectionLabel += " • ${trackFullDuration.getFormattedDuration(true)}"
             listItems.add(AlbumSection(tracksSectionLabel))
-            listItems.addAll(tracksToAdd)
+            listItems.addAll(albumTracks)
 
             runOnUiThread {
                 AlbumsTracksAdapter(this, listItems, albums_list) {
@@ -60,8 +60,8 @@ class AlbumsActivity : SimpleMusicActivity() {
                     } else {
                         handleNotificationPermission { granted ->
                             if (granted) {
-                                val startIndex = tracksToAdd.indexOf(it as Track)
-                                prepareAndPlay(tracksToAdd, startIndex)
+                                val startIndex = albumTracks.indexOf(it as Track)
+                                prepareAndPlay(albumTracks, startIndex)
                             } else {
                                 PermissionRequiredDialog(this, R.string.allow_notifications_music_player, { openNotificationSettings() })
                             }
