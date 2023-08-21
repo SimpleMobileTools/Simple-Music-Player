@@ -7,6 +7,7 @@ import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.musicplayer.models.Track
 import com.simplemobiletools.musicplayer.models.toMediaItems
 import com.simplemobiletools.musicplayer.playback.CustomCommands
+import com.simplemobiletools.musicplayer.playback.PlaybackService.Companion.updatePlaybackInfo
 import kotlin.time.Duration.Companion.seconds
 
 fun MediaController.sendCommand(command: CustomCommands) = sendCustomCommand(command.sessionCommand, Bundle.EMPTY)
@@ -34,6 +35,7 @@ fun MediaController.prepareUsingTracks(tracks: List<Track>, startIndex: Int = 0,
     runOnPlayerThread {
         setMediaItems(mediaItems, startIndex, startPosition)
         prepare()
+        updatePlaybackInfo(this)
         callback(true)
     }
 }

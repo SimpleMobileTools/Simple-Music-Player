@@ -6,7 +6,7 @@ import androidx.media3.common.util.UnstableApi
 import androidx.media3.exoplayer.ExoPlayer
 
 @UnstableApi
-class SimpleMusicPlayer(val exoPlayer: ExoPlayer) : ForwardingPlayer(exoPlayer) {
+class SimpleMusicPlayer(private val exoPlayer: ExoPlayer) : ForwardingPlayer(exoPlayer) {
 
     /**
      * The default implementation only advertises the seek to next and previous item in the case
