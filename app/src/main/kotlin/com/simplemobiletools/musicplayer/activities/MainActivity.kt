@@ -531,7 +531,6 @@ class MainActivity : SimpleMusicActivity(), Player.Listener {
         sleep_timer_holder.beVisible()
 
         if (event.seconds == 0) {
-            config.sleepInTS = 0
             finish()
         }
     }

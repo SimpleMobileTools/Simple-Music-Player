@@ -26,6 +26,7 @@ internal fun PlaybackService.startSleepTimer() {
         }
 
         override fun onFinish() {
+            config.sleepInTS = 0
             EventBus.getDefault().post(Events.SleepTimerChanged(0))
             stopSleepTimer()
             stopService()
