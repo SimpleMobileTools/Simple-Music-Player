@@ -44,6 +44,15 @@ class PlaybackService : MediaLibraryService() {
         SimpleEqualizer.release()
     }
 
+    fun stopService() {
+        withPlayer {
+            pause()
+            stop()
+        }
+
+        stopSelf()
+    }
+
     private fun initializeLibrary() {
         mediaItemProvider = MediaItemProvider(this)
         if (hasPermission(getPermissionToRequest())) {
@@ -59,15 +68,6 @@ class PlaybackService : MediaLibraryService() {
             removeListener(listener!!)
             release()
         }
-    }
-
-    fun stopService() {
-        withPlayer {
-            pause()
-            stop()
-        }
-
-        stopSelf()
     }
 
     internal fun updateRepeatMode() {

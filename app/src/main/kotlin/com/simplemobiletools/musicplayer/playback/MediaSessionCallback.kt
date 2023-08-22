@@ -11,7 +11,7 @@ import com.google.common.util.concurrent.Futures
 import com.google.common.util.concurrent.ListenableFuture
 import com.google.common.util.concurrent.MoreExecutors
 import com.simplemobiletools.musicplayer.extensions.config
-import com.simplemobiletools.musicplayer.extensions.currentMediaItems
+import com.simplemobiletools.musicplayer.playback.player.saveCurrentPlaybackInfo
 import java.util.concurrent.Executors
 
 @UnstableApi
@@ -67,7 +67,7 @@ internal fun PlaybackService.getMediaSessionCallback() = object : MediaLibrarySe
         when (command) {
             CustomCommands.CLOSE_PLAYER -> stopService()
             CustomCommands.RELOAD_CONTENT -> reloadContent()
-            CustomCommands.SAVE_QUEUE -> saveRecentItems()
+            CustomCommands.SAVE_QUEUE -> saveCurrentPlaybackInfo()
             CustomCommands.TOGGLE_REPEAT_MODE -> updateRepeatMode()
             CustomCommands.TOGGLE_SLEEP_TIMER -> toggleSleepTimer()
             CustomCommands.TOGGLE_SKIP_SILENCE -> player.setSkipSilence(config.gaplessPlayback)
@@ -207,17 +207,6 @@ internal fun PlaybackService.getMediaSessionCallback() = object : MediaLibrarySe
                     mediaSession.notifyChildrenChanged(browser, rootItem.mediaId, rootItemCount, null)
                 }
             }
-        }
-    }
-
-    private fun saveRecentItems() {
-        val currentMediaItem = player.currentMediaItem
-        if (currentMediaItem != null) {
-            mediaItemProvider.saveRecentItemsWithStartPosition(
-                mediaItems = player.currentMediaItems,
-                current = currentMediaItem,
-                startPosition = player.currentPosition
-            )
         }
     }
 }

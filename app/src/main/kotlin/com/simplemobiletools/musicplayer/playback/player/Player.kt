@@ -14,6 +14,7 @@ import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.session.MediaLibraryService
 import com.simplemobiletools.musicplayer.activities.MainActivity
 import com.simplemobiletools.musicplayer.extensions.config
+import com.simplemobiletools.musicplayer.extensions.currentMediaItems
 import com.simplemobiletools.musicplayer.helpers.SEEK_INTERVAL_MS
 import com.simplemobiletools.musicplayer.playback.PlaybackService
 import com.simplemobiletools.musicplayer.playback.SimpleEqualizer
@@ -69,4 +70,17 @@ private fun Context.getSessionActivityIntent(): PendingIntent {
         Intent(this, MainActivity::class.java),
         PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
     )
+}
+
+internal fun PlaybackService.saveCurrentPlaybackInfo() {
+    withPlayer {
+        val currentMediaItem = currentMediaItem
+        if (currentMediaItem != null) {
+            mediaItemProvider.saveRecentItemsWithStartPosition(
+                mediaItems = currentMediaItems,
+                current = currentMediaItem,
+                startPosition = currentPosition
+            )
+        }
+    }
 }

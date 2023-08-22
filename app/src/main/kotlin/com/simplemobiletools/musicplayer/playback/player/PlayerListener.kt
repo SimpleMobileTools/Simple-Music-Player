@@ -7,13 +7,11 @@ import androidx.media3.common.util.UnstableApi
 import com.simplemobiletools.commons.extensions.toast
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.extensions.broadcastUpdateWidgetState
-import com.simplemobiletools.musicplayer.extensions.currentMediaItems
 import com.simplemobiletools.musicplayer.playback.PlaybackService
 import com.simplemobiletools.musicplayer.playback.PlaybackService.Companion.updatePlaybackInfo
 
 @UnstableApi
 class PlayerListener(private val context: PlaybackService) : Player.Listener {
-    private val player = context.player
 
     override fun onPlayerError(error: PlaybackException) = context.toast(R.string.unknown_error_occurred, Toast.LENGTH_LONG)
 
@@ -29,21 +27,9 @@ class PlayerListener(private val context: PlaybackService) : Player.Listener {
                 Player.EVENT_PLAYLIST_METADATA_CHANGED
             )
         ) {
-            updatePlaybackInfo()
+            updatePlaybackInfo(player)
+            context.saveCurrentPlaybackInfo()
+            context.broadcastUpdateWidgetState()
         }
-    }
-
-    private fun updatePlaybackInfo() {
-        updatePlaybackInfo(player)
-        val currentMediaItem = player.currentMediaItem
-        if (currentMediaItem != null) {
-            context.mediaItemProvider.saveRecentItemsWithStartPosition(
-                mediaItems = player.currentMediaItems,
-                current = currentMediaItem,
-                startPosition = player.currentPosition
-            )
-        }
-
-        context.broadcastUpdateWidgetState()
     }
 }
