@@ -43,5 +43,9 @@ object SimpleEqualizer {
         }
     }
 
-    fun release() = instance.release()
+    fun release() {
+        if (::instance.isInitialized) {
+            instance.release()
+        }
+    }
 }
