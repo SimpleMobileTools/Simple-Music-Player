@@ -9,6 +9,8 @@ import androidx.media3.common.*
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.session.*
 import com.simplemobiletools.commons.extensions.hasPermission
+import com.simplemobiletools.commons.extensions.toast
+import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.extensions.*
 import com.simplemobiletools.musicplayer.helpers.NotificationHelper
 import com.simplemobiletools.musicplayer.helpers.PlaybackSetting
@@ -19,7 +21,7 @@ import com.simplemobiletools.musicplayer.playback.player.SimpleMusicPlayer
 import com.simplemobiletools.musicplayer.playback.player.initializeSessionAndPlayer
 
 @OptIn(UnstableApi::class)
-class PlaybackService : MediaLibraryService() {
+class PlaybackService : MediaLibraryService(), MediaSessionService.Listener {
     internal lateinit var player: SimpleMusicPlayer
     internal lateinit var playerThread: HandlerThread
     internal lateinit var mediaSession: MediaLibrarySession
@@ -30,6 +32,7 @@ class PlaybackService : MediaLibraryService() {
 
     override fun onCreate() {
         super.onCreate()
+        setListener(this)
         initializeSessionAndPlayer(handleAudioFocus = true, handleAudioBecomingNoisy = true, skipSilence = config.gaplessPlayback)
         initializeLibrary()
     }
@@ -97,6 +100,16 @@ class PlaybackService : MediaLibraryService() {
             } catch (ignored: Exception) {
             }
         }
+    }
+
+    /**
+     * This method is only required to be implemented on Android 12 or above when an attempt is made
+     * by a media controller to resume playback when the {@link MediaSessionService} is in the
+     * background.
+     */
+    override fun onForegroundServiceStartNotAllowedException() {
+        toast(R.string.unknown_error_occurred)
+        // todo: show a notification instead.
     }
 
     companion object {
