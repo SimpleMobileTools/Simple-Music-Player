@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
+import androidx.media3.session.MediaController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.qtalk.recyclerviewfastscroller.RecyclerViewFastScroller
@@ -16,7 +18,9 @@ import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
 import com.simplemobiletools.musicplayer.extensions.*
+import com.simplemobiletools.musicplayer.helpers.EXTRA_SHUFFLE_INDICES
 import com.simplemobiletools.musicplayer.models.Track
+import com.simplemobiletools.musicplayer.playback.CustomCommands
 import com.simplemobiletools.musicplayer.playback.PlaybackService
 import kotlinx.android.synthetic.main.item_track_queue.view.track_queue_drag_handle
 import kotlinx.android.synthetic.main.item_track_queue.view.track_queue_duration
@@ -149,9 +153,7 @@ class QueueAdapter(activity: SimpleActivity, items: ArrayList<Track>, recyclerVi
     override fun onRowMoved(fromPosition: Int, toPosition: Int) {
         items.swap(fromPosition, toPosition)
         notifyItemMoved(fromPosition, toPosition)
-        ctx.withPlayer {
-            moveMediaItem(fromPosition, toPosition)
-        }
+        swapMediaItemInQueue(fromPosition, toPosition)
     }
 
     override fun onRowClear(myViewHolder: ViewHolder?) {}
@@ -159,4 +161,23 @@ class QueueAdapter(activity: SimpleActivity, items: ArrayList<Track>, recyclerVi
     override fun onRowSelected(myViewHolder: ViewHolder?) {}
 
     override fun onChange(position: Int) = items.getOrNull(position)?.getBubbleText(ctx.config.trackSorting) ?: ""
+
+    /**
+     * [MediaController.moveMediaItem] is the proper way to move media items but it doesn't work when shuffle mode is enabled. This method modifies
+     * the shuffle order when shuffle mode is enabled and defaults to [MediaController.moveMediaItem] otherwise.
+     */
+    private fun swapMediaItemInQueue(fromPosition: Int, toPosition: Int) {
+        ctx.withPlayer {
+            if (shuffleModeEnabled) {
+                val indices = shuffledMediaItemsIndices.toMutableList()
+                indices.swap(fromPosition, toPosition)
+                sendCommand(
+                    command = CustomCommands.SET_SHUFFLE_ORDER,
+                    extras = bundleOf(EXTRA_SHUFFLE_INDICES to indices.toIntArray())
+                )
+            } else {
+                moveMediaItem(fromPosition, toPosition)
+            }
+        }
+    }
 }

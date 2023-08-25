@@ -1,9 +1,17 @@
 package com.simplemobiletools.musicplayer.playback.player
 
 import androidx.media3.common.ForwardingPlayer
+import androidx.media3.common.MediaItem
 import androidx.media3.common.Player
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.exoplayer.ExoPlayer
+import androidx.media3.exoplayer.source.ShuffleOrder.DefaultShuffleOrder
+import com.simplemobiletools.musicplayer.extensions.currentMediaItems
+import com.simplemobiletools.musicplayer.extensions.move
+import com.simplemobiletools.musicplayer.extensions.shuffledMediaItemsIndices
+import com.simplemobiletools.musicplayer.inlines.indexOfFirstOrNull
+
+private const val DEFAULT_SHUFFLE_ORDER_SEED = 42L
 
 @UnstableApi
 class SimpleMusicPlayer(private val exoPlayer: ExoPlayer) : ForwardingPlayer(exoPlayer) {
@@ -39,5 +47,42 @@ class SimpleMusicPlayer(private val exoPlayer: ExoPlayer) : ForwardingPlayer(exo
 
     fun setPauseAtEndOfMediaItems(pauseAtEnd: Boolean) {
         exoPlayer.pauseAtEndOfMediaItems = pauseAtEnd
+    }
+
+    /**
+     * This is done here only because the player interface doesn't yet support the shuffle order concept: https://github.com/androidx/media/issues/325
+     * To ensure the correct item is played, we manually alter the shuffle order here.
+     */
+    @Deprecated("Should be rewritten when https://github.com/androidx/media/issues/325 is implemented.")
+    fun setShuffleIndices(indices: IntArray) {
+        val shuffleOrder = DefaultShuffleOrder(indices, DEFAULT_SHUFFLE_ORDER_SEED)
+        exoPlayer.setShuffleOrder(shuffleOrder)
+    }
+
+    @Deprecated("Should be rewritten when https://github.com/androidx/media/issues/325 is implemented.")
+    fun setNextMediaItem(mediaItem: MediaItem) {
+        val currentIndex = currentMediaItems.indexOfFirstOrNull { it.mediaId == mediaItem.mediaId }
+        if (currentIndex != null) {
+            if (shuffleModeEnabled) {
+                ensureItemPlaysNext(currentIndex)
+            } else {
+                moveMediaItem(currentIndex, nextMediaItemIndex)
+            }
+        } else {
+            val newIndex = currentMediaItemIndex + 1
+            addMediaItem(newIndex, mediaItem)
+            ensureItemPlaysNext(newIndex)
+        }
+    }
+
+    private fun ensureItemPlaysNext(itemIndex: Int) {
+        val nextMediaItemIndex = nextMediaItemIndex
+        if (itemIndex != nextMediaItemIndex && shuffleModeEnabled) {
+            val shuffledIndices = shuffledMediaItemsIndices.toMutableList()
+            val shuffledCurrentIndex = shuffledIndices.indexOf(itemIndex)
+            val shuffledNewIndex = shuffledIndices.indexOf(nextMediaItemIndex)
+            shuffledIndices.move(currentIndex = shuffledCurrentIndex, newIndex = shuffledNewIndex)
+            exoPlayer.setShuffleOrder(DefaultShuffleOrder(shuffledIndices.toIntArray(), DEFAULT_SHUFFLE_ORDER_SEED))
+        }
     }
 }

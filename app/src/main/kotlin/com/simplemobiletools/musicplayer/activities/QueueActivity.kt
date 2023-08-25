@@ -123,27 +123,25 @@ class QueueActivity : SimpleControllerActivity() {
 
     private fun setupAdapter() {
         if (getAdapter() == null) {
-            ensureBackgroundThread {
-                val tracks = audioHelper.getAllQueuedTracks()
-                runOnUiThread {
-                    queue_list.adapter = QueueAdapter(activity = this, items = tracks, recyclerView = queue_list) {
-                        withPlayer {
-                            val startIndex = currentMediaItems.indexOfTrack(it as Track)
-                            seekTo(startIndex, 0)
-                            if (!isReallyPlaying) {
-                                play()
-                            }
+            withPlayer {
+                val tracks = currentMediaItemsShuffled.toTracks().toMutableList() as ArrayList<Track>
+                queue_list.adapter = QueueAdapter(activity = this@QueueActivity, items = tracks, recyclerView = queue_list) {
+                    withPlayer {
+                        val startIndex = currentMediaItems.indexOfTrack(it as Track)
+                        seekTo(startIndex, 0)
+                        if (!isReallyPlaying) {
+                            play()
                         }
                     }
+                }
 
-                    if (areSystemAnimationsEnabled) {
-                        queue_list.scheduleLayoutAnimation()
-                    }
+                if (areSystemAnimationsEnabled) {
+                    queue_list.scheduleLayoutAnimation()
+                }
 
-                    val currentPosition = tracks.indexOfFirst { it.isCurrent() }
-                    if (currentPosition > 0) {
-                        queue_list.smoothScrollToPosition(currentPosition)
-                    }
+                val currentPosition = shuffledMediaItemsIndices.indexOf(currentMediaItemIndex)
+                if (currentPosition > 0) {
+                    queue_list.smoothScrollToPosition(currentPosition)
                 }
             }
         } else {
@@ -154,7 +152,7 @@ class QueueActivity : SimpleControllerActivity() {
     private fun updateAdapter() {
         val adapter = getAdapter() ?: return
         withPlayer {
-            val currentTracks = currentMediaItems.toTracks() as ArrayList<Track>
+            val currentTracks = currentMediaItemsShuffled.toTracks() as ArrayList<Track>
             adapter.updateItems(currentTracks, forceUpdate = true)
         }
     }

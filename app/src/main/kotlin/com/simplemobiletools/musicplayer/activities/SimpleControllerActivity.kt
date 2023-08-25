@@ -4,6 +4,7 @@ import android.content.ContentUris
 import android.content.Intent
 import android.os.Bundle
 import android.provider.MediaStore
+import androidx.core.os.bundleOf
 import androidx.media3.common.Player
 import androidx.media3.session.MediaController
 import com.simplemobiletools.commons.extensions.toast
@@ -11,6 +12,7 @@ import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.commons.helpers.isRPlus
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.extensions.*
+import com.simplemobiletools.musicplayer.helpers.EXTRA_NEXT_MEDIA_ID
 import com.simplemobiletools.musicplayer.helpers.SimpleMediaController
 import com.simplemobiletools.musicplayer.models.Events
 import com.simplemobiletools.musicplayer.models.Track
@@ -90,15 +92,10 @@ abstract class SimpleControllerActivity : SimpleActivity(), Player.Listener {
 
     fun playNextInQueue(track: Track, callback: () -> Unit) {
         withPlayer {
-            val mediaItem = track.toMediaItem()
-            val indexInQueue = currentMediaItems.indexOfTrack(track)
-            if (indexInQueue != -1) {
-                moveMediaItem(indexInQueue, currentMediaItemIndex + 1)
-            } else {
-                addMediaItem(currentMediaItemIndex + 1, mediaItem)
-            }
-
-            sendCommand(CustomCommands.SAVE_QUEUE)
+            sendCommand(
+                command = CustomCommands.SET_NEXT_ITEM,
+                extras = bundleOf(EXTRA_NEXT_MEDIA_ID to track.mediaStoreId.toString())
+            )
             callback()
         }
     }

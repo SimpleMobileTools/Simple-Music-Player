@@ -11,6 +11,9 @@ import com.google.common.util.concurrent.Futures
 import com.google.common.util.concurrent.ListenableFuture
 import com.google.common.util.concurrent.MoreExecutors
 import com.simplemobiletools.musicplayer.extensions.config
+import com.simplemobiletools.musicplayer.helpers.EXTRA_NEXT_MEDIA_ID
+import com.simplemobiletools.musicplayer.helpers.EXTRA_SHUFFLE_INDICES
+import com.simplemobiletools.musicplayer.playback.PlaybackService.Companion.updatePlaybackInfo
 import com.simplemobiletools.musicplayer.playback.player.saveCurrentPlaybackInfo
 import java.util.concurrent.Executors
 
@@ -67,10 +70,11 @@ internal fun PlaybackService.getMediaSessionCallback() = object : MediaLibrarySe
         when (command) {
             CustomCommands.CLOSE_PLAYER -> stopService()
             CustomCommands.RELOAD_CONTENT -> reloadContent()
-            CustomCommands.SAVE_QUEUE -> saveCurrentPlaybackInfo()
             CustomCommands.TOGGLE_REPEAT_MODE -> updateRepeatMode()
             CustomCommands.TOGGLE_SLEEP_TIMER -> toggleSleepTimer()
             CustomCommands.TOGGLE_SKIP_SILENCE -> player.setSkipSilence(config.gaplessPlayback)
+            CustomCommands.SET_SHUFFLE_ORDER -> setShuffleOrder(args)
+            CustomCommands.SET_NEXT_ITEM -> setNextItem(args)
         }
 
         return Futures.immediateFuture(SessionResult(SessionResult.RESULT_SUCCESS))
@@ -206,6 +210,25 @@ internal fun PlaybackService.getMediaSessionCallback() = object : MediaLibrarySe
                     mediaSession.notifyChildrenChanged(browser, parentId, itemCount, null)
                     mediaSession.notifyChildrenChanged(browser, rootItem.mediaId, rootItemCount, null)
                 }
+            }
+        }
+    }
+
+    private fun setShuffleOrder(args: Bundle) {
+        val indices = args.getIntArray(EXTRA_SHUFFLE_INDICES) ?: return
+        withPlayer {
+            setShuffleIndices(indices)
+        }
+    }
+
+    private fun setNextItem(args: Bundle) {
+        val mediaId = args.getString(EXTRA_NEXT_MEDIA_ID) ?: return
+        callWhenSourceReady {
+            val mediaItem = mediaItemProvider[mediaId] ?: return@callWhenSourceReady
+            withPlayer {
+                setNextMediaItem(mediaItem)
+                saveCurrentPlaybackInfo()
+                updatePlaybackInfo(this)
             }
         }
     }

@@ -18,3 +18,26 @@ val Player.nextMediaItem: MediaItem?
     } else {
         null
     }
+
+val Player.currentMediaItemsShuffled: List<MediaItem>
+    get() = if (shuffleModeEnabled) {
+        shuffledMediaItemsIndices.map { getMediaItemAt(it) }
+    } else {
+        currentMediaItems
+    }
+
+val Player.shuffledMediaItemsIndices: List<Int>
+    get() {
+        val indices = mutableListOf<Int>()
+        var index = currentTimeline.getFirstWindowIndex(shuffleModeEnabled)
+        if (index == -1) {
+            return emptyList()
+        }
+
+        repeat(currentTimeline.windowCount) {
+            indices += index
+            index = currentTimeline.getNextWindowIndex(index, Player.REPEAT_MODE_OFF, shuffleModeEnabled)
+        }
+
+        return indices
+    }

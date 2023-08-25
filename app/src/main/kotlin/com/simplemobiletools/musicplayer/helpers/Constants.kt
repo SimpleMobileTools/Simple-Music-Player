@@ -24,6 +24,8 @@ const val PLAYPAUSE = PATH + "PLAYPAUSE"
 const val NEXT = PATH + "NEXT"
 const val TRACK_STATE_CHANGED = "TRACK_STATE_CHANGED"
 const val MEDIA_ITEM_TAG = "MEDIA_ITEM_TRACK"
+const val EXTRA_NEXT_MEDIA_ID = "EXTRA_NEXT_MEDIA_ID"
+const val EXTRA_SHUFFLE_INDICES = "EXTRA_SHUFFLE_INDICES"
 
 // shared preferences
 const val SHUFFLE = "shuffle"
