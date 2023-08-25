@@ -24,11 +24,14 @@ import kotlinx.android.synthetic.main.view_current_track_bar.view.current_track_
 class CurrentTrackBar(context: Context, attributeSet: AttributeSet) : RelativeLayout(context, attributeSet) {
 
     fun initialize(togglePlayback: () -> Unit) {
-        background = ColorDrawable(context.getProperBackgroundColor())
-        current_track_label.setTextColor(context.getProperTextColor())
         current_track_play_pause.setOnClickListener {
             togglePlayback()
         }
+    }
+
+    fun updateColors() {
+        background = ColorDrawable(context.getProperBackgroundColor())
+        current_track_label.setTextColor(context.getProperTextColor())
     }
 
     fun updateCurrentTrack(mediaItem: MediaItem?) {

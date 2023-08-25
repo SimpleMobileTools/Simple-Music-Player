@@ -79,6 +79,7 @@ class MainActivity : SimpleMusicActivity(), Player.Listener {
         withPlayer {
             maybePreparePlayer(context = this@MainActivity) { success ->
                 if (success) {
+                    updateCurrentTrackBar()
                     broadcastUpdateWidgetState()
                 }
             }

@@ -25,6 +25,7 @@ abstract class SimpleMusicActivity : SimpleControllerActivity(), Player.Listener
 
     fun setupCurrentTrackBar(trackBar: CurrentTrackBar) {
         trackBarView = trackBar
+        trackBarView?.initialize { withPlayer { togglePlayback() } }
         trackBarView?.setOnClickListener {
             hideKeyboard()
             handleNotificationPermission { granted ->
@@ -39,15 +40,12 @@ abstract class SimpleMusicActivity : SimpleControllerActivity(), Player.Listener
         }
     }
 
-    private fun updateCurrentTrackBar() {
-        if (trackBarView != null) {
+    fun updateCurrentTrackBar() {
+        trackBarView?.apply {
             withPlayer {
-                trackBarView?.initialize {
-                    withPlayer { togglePlayback() }
-                }
-
-                trackBarView?.updateCurrentTrack(currentMediaItem)
-                trackBarView?.updateTrackState(isReallyPlaying)
+                updateColors()
+                updateCurrentTrack(currentMediaItem)
+                updateTrackState(isReallyPlaying)
             }
         }
     }
