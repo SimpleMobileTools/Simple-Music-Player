@@ -27,9 +27,7 @@ internal fun PlaybackService.getPlayerListener() = object : Player.Listener {
                 Player.EVENT_PLAYLIST_METADATA_CHANGED
             )
         ) {
-            updatePlaybackInfo(player)
-            saveCurrentPlaybackInfo()
-            broadcastUpdateWidgetState()
+            updatePlaybackState()
         }
     }
 }

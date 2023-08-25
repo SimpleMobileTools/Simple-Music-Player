@@ -13,10 +13,12 @@ import androidx.media3.common.util.UnstableApi
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.session.MediaLibraryService
 import com.simplemobiletools.musicplayer.activities.MainActivity
+import com.simplemobiletools.musicplayer.extensions.broadcastUpdateWidgetState
 import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.extensions.currentMediaItems
 import com.simplemobiletools.musicplayer.helpers.SEEK_INTERVAL_MS
 import com.simplemobiletools.musicplayer.playback.PlaybackService
+import com.simplemobiletools.musicplayer.playback.PlaybackService.Companion.updatePlaybackInfo
 import com.simplemobiletools.musicplayer.playback.SimpleEqualizer
 import com.simplemobiletools.musicplayer.playback.getCustomLayout
 import com.simplemobiletools.musicplayer.playback.getMediaSessionCallback
@@ -77,8 +79,10 @@ private fun Context.getSessionActivityIntent(): PendingIntent {
     )
 }
 
-internal fun PlaybackService.saveCurrentPlaybackInfo() {
+internal fun PlaybackService.updatePlaybackState() {
     withPlayer {
+        updatePlaybackInfo(player)
+        broadcastUpdateWidgetState()
         val currentMediaItem = currentMediaItem
         if (currentMediaItem != null) {
             mediaItemProvider.saveRecentItemsWithStartPosition(

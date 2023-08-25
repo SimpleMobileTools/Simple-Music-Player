@@ -13,8 +13,7 @@ import com.google.common.util.concurrent.MoreExecutors
 import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.helpers.EXTRA_NEXT_MEDIA_ID
 import com.simplemobiletools.musicplayer.helpers.EXTRA_SHUFFLE_INDICES
-import com.simplemobiletools.musicplayer.playback.PlaybackService.Companion.updatePlaybackInfo
-import com.simplemobiletools.musicplayer.playback.player.saveCurrentPlaybackInfo
+import com.simplemobiletools.musicplayer.playback.player.updatePlaybackState
 import java.util.concurrent.Executors
 
 @UnstableApi
@@ -227,8 +226,7 @@ internal fun PlaybackService.getMediaSessionCallback() = object : MediaLibrarySe
             val mediaItem = mediaItemProvider[mediaId] ?: return@callWhenSourceReady
             withPlayer {
                 setNextMediaItem(mediaItem)
-                saveCurrentPlaybackInfo()
-                updatePlaybackInfo(this)
+                updatePlaybackState()
             }
         }
     }
