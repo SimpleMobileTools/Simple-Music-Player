@@ -23,8 +23,13 @@ import com.simplemobiletools.musicplayer.playback.getMediaSessionCallback
 
 private const val PLAYER_THREAD = "PlayerThread"
 
+/**
+ * Initializes player and media session.
+ *
+ * All player operations are handled on a separate handler thread to avoid slowing down the main thread.
+ * See https://developer.android.com/guide/topics/media/exoplayer/hello-world#a-note-on-threading for more info.
+ */
 internal fun PlaybackService.initializeSessionAndPlayer(handleAudioFocus: Boolean, handleAudioBecomingNoisy: Boolean, skipSilence: Boolean) {
-    // all player operations are handled on a separate thread to avoid slowing down the main thread.
     playerThread = HandlerThread(PLAYER_THREAD, Process.THREAD_PRIORITY_AUDIO).also { it.start() }
     player = initializePlayer(handleAudioFocus, handleAudioBecomingNoisy, skipSilence)
     playerListener = getPlayerListener()
