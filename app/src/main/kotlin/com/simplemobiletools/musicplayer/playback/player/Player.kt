@@ -27,13 +27,13 @@ internal fun PlaybackService.initializeSessionAndPlayer(handleAudioFocus: Boolea
     // all player operations are handled on a separate thread to avoid slowing down the main thread.
     playerThread = HandlerThread(PLAYER_THREAD, Process.THREAD_PRIORITY_AUDIO).also { it.start() }
     player = initializePlayer(handleAudioFocus, handleAudioBecomingNoisy, skipSilence)
-    listener = PlayerListener(context = this)
+    playerListener = getPlayerListener()
     mediaSession = MediaLibraryService.MediaLibrarySession.Builder(this, player, getMediaSessionCallback())
         .setSessionActivity(getSessionActivityIntent())
         .build()
 
     withPlayer {
-        addListener(listener!!)
+        addListener(playerListener)
         updateRepeatMode()
         setPlaybackSpeed(config.playbackSpeed)
         shuffleModeEnabled = config.isShuffleEnabled

@@ -11,9 +11,9 @@ import com.simplemobiletools.musicplayer.playback.PlaybackService
 import com.simplemobiletools.musicplayer.playback.PlaybackService.Companion.updatePlaybackInfo
 
 @UnstableApi
-class PlayerListener(private val context: PlaybackService) : Player.Listener {
+internal fun PlaybackService.getPlayerListener() = object : Player.Listener {
 
-    override fun onPlayerError(error: PlaybackException) = context.toast(R.string.unknown_error_occurred, Toast.LENGTH_LONG)
+    override fun onPlayerError(error: PlaybackException) = toast(R.string.unknown_error_occurred, Toast.LENGTH_LONG)
 
     override fun onEvents(player: Player, events: Player.Events) {
         if (
@@ -28,8 +28,8 @@ class PlayerListener(private val context: PlaybackService) : Player.Listener {
             )
         ) {
             updatePlaybackInfo(player)
-            context.saveCurrentPlaybackInfo()
-            context.broadcastUpdateWidgetState()
+            saveCurrentPlaybackInfo()
+            broadcastUpdateWidgetState()
         }
     }
 }

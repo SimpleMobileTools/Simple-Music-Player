@@ -9,14 +9,13 @@ import androidx.media3.common.*
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.session.*
 import com.simplemobiletools.commons.extensions.hasPermission
-import com.simplemobiletools.commons.extensions.toast
+import com.simplemobiletools.commons.extensions.showErrorToast
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.extensions.*
 import com.simplemobiletools.musicplayer.helpers.NotificationHelper
 import com.simplemobiletools.musicplayer.helpers.PlaybackSetting
 import com.simplemobiletools.musicplayer.helpers.getPermissionToRequest
 import com.simplemobiletools.musicplayer.playback.library.MediaItemProvider
-import com.simplemobiletools.musicplayer.playback.player.PlayerListener
 import com.simplemobiletools.musicplayer.playback.player.SimpleMusicPlayer
 import com.simplemobiletools.musicplayer.playback.player.initializeSessionAndPlayer
 
@@ -24,10 +23,10 @@ import com.simplemobiletools.musicplayer.playback.player.initializeSessionAndPla
 class PlaybackService : MediaLibraryService(), MediaSessionService.Listener {
     internal lateinit var player: SimpleMusicPlayer
     internal lateinit var playerThread: HandlerThread
+    internal lateinit var playerListener: Player.Listener
     internal lateinit var mediaSession: MediaLibrarySession
     internal lateinit var mediaItemProvider: MediaItemProvider
 
-    internal var listener: PlayerListener? = null
     internal var currentRoot = ""
 
     override fun onCreate() {
@@ -68,7 +67,7 @@ class PlaybackService : MediaLibraryService(), MediaSessionService.Listener {
     private fun releaseMediaSession() {
         mediaSession.release()
         withPlayer {
-            removeListener(listener!!)
+            removeListener(playerListener)
             release()
         }
     }
@@ -108,7 +107,7 @@ class PlaybackService : MediaLibraryService(), MediaSessionService.Listener {
      * background.
      */
     override fun onForegroundServiceStartNotAllowedException() {
-        toast(R.string.unknown_error_occurred)
+        showErrorToast(getString(R.string.unknown_error_occurred))
         // todo: show a notification instead.
     }
 
