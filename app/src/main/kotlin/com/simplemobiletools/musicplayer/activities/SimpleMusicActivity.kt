@@ -61,7 +61,7 @@ abstract class SimpleMusicActivity : SimpleControllerActivity(), Player.Listener
     }
 
     @CallSuper
-    override fun onIsPlayingChanged(isPlaying: Boolean) = withPlayer {
-        trackBarView?.updateTrackState(isReallyPlaying)
+    override fun onIsPlayingChanged(isPlaying: Boolean) {
+        trackBarView?.updateTrackState(isPlaying)
     }
 }

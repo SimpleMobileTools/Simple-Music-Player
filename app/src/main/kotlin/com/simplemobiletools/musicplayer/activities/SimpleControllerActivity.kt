@@ -30,17 +30,17 @@ abstract class SimpleControllerActivity : SimpleActivity(), Player.Listener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        controller = SimpleMediaController(applicationContext, this)
+        controller = SimpleMediaController.getInstance(this)
     }
 
     override fun onStart() {
         super.onStart()
-        controller.acquireController()
+        controller.addListener(this)
     }
 
     override fun onStop() {
         super.onStop()
-        controller.releaseController()
+        controller.removeListener(this)
     }
 
     fun withPlayer(callback: MediaController.() -> Unit) = controller.withController(callback)
@@ -53,9 +53,8 @@ abstract class SimpleControllerActivity : SimpleActivity(), Player.Listener {
                 )
             }
 
-            prepareUsingTracks(tracks, startIndex, startPosition) { success ->
+            prepareUsingTracks(tracks = tracks, startIndex = startIndex, startPosition = startPosition, play = true) { success ->
                 if (success) {
-                    play()
                     updatePlaybackInfo(this)
                 }
             }
@@ -143,20 +142,17 @@ abstract class SimpleControllerActivity : SimpleActivity(), Player.Listener {
     fun refreshQueueAndTracks(trackToUpdate: Track? = null) {
         ensureBackgroundThread {
             val queuedTracks = audioHelper.getAllQueuedTracks()
-            withPlayer {
-                // it's not yet directly possible to update metadata without interrupting the playback: https://github.com/androidx/media/issues/33
-                if (trackToUpdate == null || currentMediaItem.isSameMedia(trackToUpdate)) {
-                    val wasPlaying = isReallyPlaying
-                    prepareUsingTracks(queuedTracks, currentMediaItemIndex, currentPosition) { success ->
-                        if (success && wasPlaying) {
-                            play()
+            runOnUiThread {
+                withPlayer {
+                    // it's not yet directly possible to update metadata without interrupting the playback: https://github.com/androidx/media/issues/33
+                    if (trackToUpdate == null || currentMediaItem.isSameMedia(trackToUpdate)) {
+                        prepareUsingTracks(tracks = queuedTracks, startIndex = currentMediaItemIndex, startPosition = currentPosition, play = isReallyPlaying)
+                    } else {
+                        val trackIndex = currentMediaItems.indexOfTrack(trackToUpdate)
+                        if (trackIndex > 0) {
+                            removeMediaItem(trackIndex)
+                            addMediaItem(trackIndex, trackToUpdate.toMediaItem())
                         }
-                    }
-                } else {
-                    val trackIndex = currentMediaItems.indexOfTrack(trackToUpdate)
-                    if (trackIndex > 0) {
-                        removeMediaItem(trackIndex)
-                        addMediaItem(trackIndex, trackToUpdate.toMediaItem())
                     }
                 }
             }

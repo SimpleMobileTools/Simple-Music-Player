@@ -25,18 +25,25 @@ fun MediaController.runOnPlayerThread(callback: MediaController.() -> Unit) =
         callback(this)
     }
 
-fun MediaController.prepareUsingTracks(tracks: List<Track>, startIndex: Int = 0, startPosition: Long = 0, callback: (success: Boolean) -> Unit) {
+fun MediaController.prepareUsingTracks(
+    tracks: List<Track>,
+    startIndex: Int = 0,
+    startPosition: Long = 0,
+    play: Boolean = false,
+    callback: ((success: Boolean) -> Unit)? = null
+) {
     if (tracks.isEmpty()) {
-        callback(false)
+        callback?.invoke(false)
         return
     }
 
     val mediaItems = tracks.toMediaItems()
     runOnPlayerThread {
         setMediaItems(mediaItems, startIndex, startPosition)
+        playWhenReady = play
         prepare()
         updatePlaybackInfo(this)
-        callback(true)
+        callback?.invoke(true)
     }
 }
 

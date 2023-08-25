@@ -24,6 +24,7 @@ class PlaybackService : MediaLibraryService(), MediaSessionService.Listener {
     internal lateinit var player: SimpleMusicPlayer
     internal lateinit var playerThread: HandlerThread
     internal lateinit var playerListener: Player.Listener
+    internal lateinit var playerHandler: Handler
     internal lateinit var mediaSession: MediaLibrarySession
     internal lateinit var mediaItemProvider: MediaItemProvider
 
@@ -85,9 +86,7 @@ class PlaybackService : MediaLibraryService(), MediaSessionService.Listener {
         }
     }
 
-    internal fun withPlayer(callback: SimpleMusicPlayer.() -> Unit) {
-        player.applicationLooper.post { callback(player) }
-    }
+    internal fun withPlayer(callback: SimpleMusicPlayer.() -> Unit) = playerHandler.post { callback(player) }
 
     private fun showNoPermissionNotification() {
         Handler(Looper.getMainLooper()).postDelayed(delayInMillis = 100L) {

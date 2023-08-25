@@ -6,9 +6,7 @@ import androidx.media3.common.Player
 import androidx.media3.common.util.UnstableApi
 import com.simplemobiletools.commons.extensions.toast
 import com.simplemobiletools.musicplayer.R
-import com.simplemobiletools.musicplayer.extensions.broadcastUpdateWidgetState
 import com.simplemobiletools.musicplayer.playback.PlaybackService
-import com.simplemobiletools.musicplayer.playback.PlaybackService.Companion.updatePlaybackInfo
 
 @UnstableApi
 internal fun PlaybackService.getPlayerListener() = object : Player.Listener {

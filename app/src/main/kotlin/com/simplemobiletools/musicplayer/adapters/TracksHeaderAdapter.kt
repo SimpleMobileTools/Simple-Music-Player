@@ -121,8 +121,6 @@ class TracksHeaderAdapter(activity: SimpleActivity, items: ArrayList<ListItem>, 
         }
     }
 
-    override fun getSelectedTracks() = getSelectedItems().filterIsInstance<Track>().toList()
-
     private fun setupTrack(view: View, track: Track) {
         view.apply {
             setupViewBackground(ctx)

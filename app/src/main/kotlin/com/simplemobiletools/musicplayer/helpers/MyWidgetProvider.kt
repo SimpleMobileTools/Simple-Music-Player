@@ -68,7 +68,7 @@ class MyWidgetProvider : AppWidgetProvider() {
     }
 
     private fun maybePreparePlayer(context: Context, callback: (player: MediaController, prepared: Boolean) -> Unit) {
-        SimpleMediaController(context.applicationContext).withController {
+        SimpleMediaController.getInstance(context).withController {
             maybePreparePlayer(context) { success ->
                 callback(this, success)
             }

@@ -5,6 +5,7 @@ package com.simplemobiletools.musicplayer.playback.player
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.os.Handler
 import android.os.HandlerThread
 import android.os.Process
 import androidx.media3.common.AudioAttributes
@@ -32,7 +33,8 @@ private const val PLAYER_THREAD = "PlayerThread"
  * See https://developer.android.com/guide/topics/media/exoplayer/hello-world#a-note-on-threading for more info.
  */
 internal fun PlaybackService.initializeSessionAndPlayer(handleAudioFocus: Boolean, handleAudioBecomingNoisy: Boolean, skipSilence: Boolean) {
-    playerThread = HandlerThread(PLAYER_THREAD, Process.THREAD_PRIORITY_AUDIO).also { it.start() }
+    playerThread = HandlerThread(PLAYER_THREAD).also { it.start() }
+    playerHandler = Handler(playerThread.looper)
     player = initializePlayer(handleAudioFocus, handleAudioBecomingNoisy, skipSilence)
     playerListener = getPlayerListener()
     mediaSession = MediaLibraryService.MediaLibrarySession.Builder(this, player, getMediaSessionCallback())

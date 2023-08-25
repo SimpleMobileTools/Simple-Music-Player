@@ -78,8 +78,11 @@ abstract class BaseMusicAdapter<Type>(
 
     fun addToQueue() {
         ensureBackgroundThread {
-            ctx.addTracksToQueue(getAllSelectedTracks()) {
-                finishActMode()
+            val allSelectedTracks = getAllSelectedTracks()
+            ctx.runOnUiThread {
+                ctx.addTracksToQueue(allSelectedTracks) {
+                    finishActMode()
+                }
             }
         }
     }
@@ -87,8 +90,10 @@ abstract class BaseMusicAdapter<Type>(
     fun playNextInQueue() {
         ensureBackgroundThread {
             getSelectedTracks().firstOrNull()?.let { selectedTrack ->
-                ctx.playNextInQueue(selectedTrack) {
-                    finishActMode()
+                ctx.runOnUiThread {
+                    ctx.playNextInQueue(selectedTrack) {
+                        finishActMode()
+                    }
                 }
             }
         }
