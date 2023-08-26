@@ -21,13 +21,12 @@ import com.simplemobiletools.musicplayer.extensions.*
 import com.simplemobiletools.musicplayer.helpers.EXTRA_SHUFFLE_INDICES
 import com.simplemobiletools.musicplayer.models.Track
 import com.simplemobiletools.musicplayer.playback.CustomCommands
-import com.simplemobiletools.musicplayer.playback.PlaybackService
 import kotlinx.android.synthetic.main.item_track_queue.view.track_queue_drag_handle
 import kotlinx.android.synthetic.main.item_track_queue.view.track_queue_duration
 import kotlinx.android.synthetic.main.item_track_queue.view.track_queue_frame
 import kotlinx.android.synthetic.main.item_track_queue.view.track_queue_title
 
-class QueueAdapter(activity: SimpleActivity, items: ArrayList<Track>, recyclerView: MyRecyclerView, itemClick: (Any) -> Unit) :
+class QueueAdapter(activity: SimpleActivity, items: ArrayList<Track>, var currentTrack: Track? = null, recyclerView: MyRecyclerView, itemClick: (Any) -> Unit) :
     BaseMusicAdapter<Track>(items, activity, recyclerView, itemClick), ItemTouchHelperContract, RecyclerViewFastScroller.OnPopupTextUpdate {
 
     private var startReorderDragListener: StartReorderDragListener
@@ -74,6 +73,22 @@ class QueueAdapter(activity: SimpleActivity, items: ArrayList<Track>, recyclerVi
     override fun onActionModeCreated() = notifyDataChanged()
 
     override fun onActionModeDestroyed() = notifyDataChanged()
+
+    fun updateCurrentTrack() {
+        ctx.withPlayer {
+            val track = currentMediaItem?.toTrack()
+            if (track != null) {
+                val lastTrackId = currentTrack?.mediaStoreId
+                currentTrack = track
+                val previousIndex = items.indexOfFirst { it.mediaStoreId == lastTrackId }
+                val newIndex = items.indexOfFirst { it.mediaStoreId == track.mediaStoreId }
+                if (previousIndex != -1 && newIndex != -1) {
+                    notifyItemChanged(previousIndex)
+                    notifyItemChanged(newIndex)
+                }
+            }
+        }
+    }
 
     private fun removeFromQueue() {
         val positions = ArrayList<Int>()
@@ -128,7 +143,6 @@ class QueueAdapter(activity: SimpleActivity, items: ArrayList<Track>, recyclerVi
             track_queue_frame?.isSelected = selectedKeys.contains(track.hashCode())
             track_queue_title.text = if (textToHighlight.isEmpty()) track.title else track.title.highlightTextPart(textToHighlight, properPrimaryColor)
 
-            val currentTrack = PlaybackService.currentMediaItem?.toTrack()
             arrayOf(track_queue_title, track_queue_duration).forEach {
                 val color = if (track.mediaStoreId == currentTrack?.mediaStoreId) context.getProperPrimaryColor() else textColor
                 it.setTextColor(color)
@@ -147,6 +161,13 @@ class QueueAdapter(activity: SimpleActivity, items: ArrayList<Track>, recyclerVi
             ctx.getTrackCoverArt(track) { coverArt ->
                 loadImage(findViewById(R.id.track_queue_image), coverArt, placeholderBig)
             }
+        }
+    }
+
+    override fun updateItems(newItems: ArrayList<Track>, highlightText: String, forceUpdate: Boolean) {
+        ctx.withPlayer {
+            currentTrack = currentMediaItem?.toTrack()
+            super.updateItems(newItems, highlightText, forceUpdate)
         }
     }
 

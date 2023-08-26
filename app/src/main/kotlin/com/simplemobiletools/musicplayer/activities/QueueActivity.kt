@@ -8,6 +8,7 @@ import android.view.MenuItem
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.MenuItemCompat
 import androidx.media3.common.MediaItem
+import androidx.media3.common.Timeline
 import com.simplemobiletools.commons.extensions.areSystemAnimationsEnabled
 import com.simplemobiletools.commons.extensions.beGoneIf
 import com.simplemobiletools.commons.extensions.getProperPrimaryColor
@@ -51,9 +52,11 @@ class QueueActivity : SimpleControllerActivity() {
         }
     }
 
-    override fun onMediaItemTransition(mediaItem: MediaItem?, reason: Int) = updateAdapter()
+    override fun onMediaItemTransition(mediaItem: MediaItem?, reason: Int) {
+        getAdapter()?.updateCurrentTrack()
+    }
 
-    override fun onIsPlayingChanged(isPlaying: Boolean) = updateAdapter()
+    override fun onTimelineChanged(timeline: Timeline, reason: Int) = updateAdapter()
 
     private fun setupOptionsMenu() {
         setupSearch(queue_toolbar.menu)
@@ -125,7 +128,12 @@ class QueueActivity : SimpleControllerActivity() {
         if (getAdapter() == null) {
             withPlayer {
                 val tracks = currentMediaItemsShuffled.toTracks().toMutableList() as ArrayList<Track>
-                queue_list.adapter = QueueAdapter(activity = this@QueueActivity, items = tracks, recyclerView = queue_list) {
+                queue_list.adapter = QueueAdapter(
+                    activity = this@QueueActivity,
+                    items = tracks,
+                    currentTrack = currentMediaItem?.toTrack(),
+                    recyclerView = queue_list
+                ) {
                     withPlayer {
                         val startIndex = currentMediaItems.indexOfTrack(it as Track)
                         seekTo(startIndex, 0)
@@ -144,8 +152,6 @@ class QueueActivity : SimpleControllerActivity() {
                     queue_list.smoothScrollToPosition(currentPosition)
                 }
             }
-        } else {
-            updateAdapter()
         }
     }
 
@@ -153,7 +159,7 @@ class QueueActivity : SimpleControllerActivity() {
         val adapter = getAdapter() ?: return
         withPlayer {
             val currentTracks = currentMediaItemsShuffled.toTracks() as ArrayList<Track>
-            adapter.updateItems(currentTracks, forceUpdate = true)
+            adapter.updateItems(currentTracks)
         }
     }
 

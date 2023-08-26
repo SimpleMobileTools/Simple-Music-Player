@@ -57,6 +57,18 @@ abstract class BaseMusicAdapter<Type>(
         return items.filter { selectedKeys.contains(it.hashCode()) }.toList()
     }
 
+    open fun updateItems(newItems: ArrayList<Type>, highlightText: String = "", forceUpdate: Boolean = false) {
+        if (forceUpdate || newItems.hashCode() != items.hashCode()) {
+            items = newItems.clone() as ArrayList<Type>
+            textToHighlight = highlightText
+            notifyDataChanged()
+            finishActMode()
+        } else if (textToHighlight != highlightText) {
+            textToHighlight = highlightText
+            notifyDataChanged()
+        }
+    }
+
     fun shouldShowPlayNext(): Boolean {
         if (!isOneItemSelected()) {
             return false
@@ -127,18 +139,6 @@ abstract class BaseMusicAdapter<Type>(
             ctx.runOnUiThread {
                 ctx.showTrackProperties(selectedTracks)
             }
-        }
-    }
-
-    fun updateItems(newItems: ArrayList<Type>, highlightText: String = "", forceUpdate: Boolean = false) {
-        if (forceUpdate || newItems.hashCode() != items.hashCode()) {
-            items = newItems.clone() as ArrayList<Type>
-            textToHighlight = highlightText
-            notifyDataChanged()
-            finishActMode()
-        } else if (textToHighlight != highlightText) {
-            textToHighlight = highlightText
-            notifyDataChanged()
         }
     }
 
