@@ -289,7 +289,7 @@ class TrackActivity : SimpleControllerActivity(), PlaybackSpeedListener {
         toast(newPlaybackSetting.descriptionStringRes)
         setupPlaybackSettingButton()
         withPlayer {
-            sendCommand(CustomCommands.TOGGLE_REPEAT_MODE)
+            setRepeatMode(newPlaybackSetting)
         }
     }
 

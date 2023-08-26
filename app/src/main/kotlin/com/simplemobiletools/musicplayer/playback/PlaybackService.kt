@@ -13,7 +13,6 @@ import com.simplemobiletools.commons.extensions.showErrorToast
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.extensions.*
 import com.simplemobiletools.musicplayer.helpers.NotificationHelper
-import com.simplemobiletools.musicplayer.helpers.PlaybackSetting
 import com.simplemobiletools.musicplayer.helpers.getPermissionToRequest
 import com.simplemobiletools.musicplayer.playback.library.MediaItemProvider
 import com.simplemobiletools.musicplayer.playback.player.SimpleMusicPlayer
@@ -70,19 +69,6 @@ class PlaybackService : MediaLibraryService(), MediaSessionService.Listener {
         withPlayer {
             removeListener(playerListener)
             release()
-        }
-    }
-
-    internal fun updateRepeatMode() {
-        withPlayer {
-            val playbackSetting = config.playbackSetting
-            setPauseAtEndOfMediaItems(playbackSetting == PlaybackSetting.STOP_AFTER_CURRENT_TRACK)
-            repeatMode = when (playbackSetting) {
-                PlaybackSetting.REPEAT_OFF -> Player.REPEAT_MODE_OFF
-                PlaybackSetting.REPEAT_PLAYLIST -> Player.REPEAT_MODE_ALL
-                PlaybackSetting.REPEAT_TRACK -> Player.REPEAT_MODE_ONE
-                PlaybackSetting.STOP_AFTER_CURRENT_TRACK -> Player.REPEAT_MODE_ALL
-            }
         }
     }
 

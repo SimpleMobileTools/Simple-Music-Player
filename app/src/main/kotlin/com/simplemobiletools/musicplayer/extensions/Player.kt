@@ -2,6 +2,7 @@ package com.simplemobiletools.musicplayer.extensions
 
 import androidx.media3.common.MediaItem
 import androidx.media3.common.Player
+import com.simplemobiletools.musicplayer.helpers.PlaybackSetting
 
 val Player.isReallyPlaying: Boolean
     get() = when (playbackState) {
@@ -41,3 +42,13 @@ val Player.shuffledMediaItemsIndices: List<Int>
 
         return indices
     }
+
+fun Player.setRepeatMode(playbackSetting: PlaybackSetting) {
+    repeatMode = when (playbackSetting) {
+        PlaybackSetting.REPEAT_TRACK -> Player.REPEAT_MODE_ONE
+        else -> {
+            // other modes are handled manually.
+            Player.REPEAT_MODE_ALL
+        }
+    }
+}

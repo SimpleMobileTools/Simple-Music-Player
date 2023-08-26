@@ -13,7 +13,6 @@ import com.simplemobiletools.musicplayer.helpers.PATH
 enum class CustomCommands(val customAction: String) {
     CLOSE_PLAYER(customAction = PATH + "CLOSE_PLAYER"),
     RELOAD_CONTENT(customAction = PATH + "RELOAD_CONTENT"),
-    TOGGLE_REPEAT_MODE(customAction = PATH + "TOGGLE_REPEAT_MODE"),
     TOGGLE_SLEEP_TIMER(customAction = PATH + "TOGGLE_SLEEP_TIMER"),
     TOGGLE_SKIP_SILENCE(customAction = PATH + "TOGGLE_SKIP_SILENCE"),
     SET_NEXT_ITEM(customAction = PATH + "SET_NEXT_ITEM"),
