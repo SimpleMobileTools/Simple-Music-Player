@@ -136,7 +136,7 @@ class TrackActivity : SimpleControllerActivity(), PlaybackSpeedListener {
         next_track_holder.beGone()
         getTrackFromUri(intent.data) {
             runOnUiThread {
-                prepareAndPlay(listOf(it))
+                prepareAndPlay(listOf(it), startActivity = false)
             }
         }
     }
