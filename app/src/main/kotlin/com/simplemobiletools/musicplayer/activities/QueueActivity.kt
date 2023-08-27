@@ -160,6 +160,7 @@ class QueueActivity : SimpleControllerActivity() {
         withPlayer {
             val currentTracks = currentMediaItemsShuffled.toTracks() as ArrayList<Track>
             adapter.updateItems(currentTracks)
+            queue_list.lazySmoothScroll(shuffledMediaItemsIndices.indexOf(currentMediaItemIndex))
         }
     }
 
