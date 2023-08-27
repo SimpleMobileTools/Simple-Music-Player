@@ -261,11 +261,20 @@ class AudioHelper(private val context: Context) {
                 queueItems = context.queueDAO.getAll()
             }
 
-            val currentItem = context.queueDAO.getCurrent() ?: return@ensureBackgroundThread
-            val currentTrack = getTrack(currentItem.trackId) ?: return@ensureBackgroundThread
-            val startPositionMs = currentItem.lastPosition.seconds.inWholeMilliseconds
+            val currentItem = context.queueDAO.getCurrent()
+            if (currentItem == null) {
+                callback(emptyList(), 0, 0)
+                return@ensureBackgroundThread
+            }
+
+            val currentTrack = getTrack(currentItem.trackId)
+            if (currentTrack == null) {
+                callback(emptyList(), 0, 0)
+                return@ensureBackgroundThread
+            }
 
             // immediately return the current track.
+            val startPositionMs = currentItem.lastPosition.seconds.inWholeMilliseconds
             callback(listOf(currentTrack), 0, startPositionMs)
 
             // return the rest of the queued tracks.

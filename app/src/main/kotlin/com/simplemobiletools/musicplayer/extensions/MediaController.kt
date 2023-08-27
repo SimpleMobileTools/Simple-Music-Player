@@ -32,7 +32,9 @@ fun MediaController.prepareUsingTracks(
     callback: ((success: Boolean) -> Unit)? = null
 ) {
     if (tracks.isEmpty()) {
-        callback?.invoke(false)
+        runOnPlayerThread {
+            callback?.invoke(false)
+        }
         return
     }
 
@@ -62,13 +64,11 @@ fun MediaController.maybePreparePlayer(context: Context, callback: (success: Boo
                         prepared = it
                     }
                 } else {
-                    ensureBackgroundThread {
-                        if (tracks.size == 1) {
-                            return@ensureBackgroundThread
-                        }
-
-                        addRemainingMediaItems(tracks.toMediaItems(), startIndex)
+                    if (tracks.size == 1) {
+                        return@getAllQueuedTracksLazily
                     }
+
+                    addRemainingMediaItems(tracks.toMediaItems(), startIndex)
                 }
             }
         }
