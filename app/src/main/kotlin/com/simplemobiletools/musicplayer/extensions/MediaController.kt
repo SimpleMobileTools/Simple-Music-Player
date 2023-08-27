@@ -58,6 +58,7 @@ fun MediaController.maybePreparePlayer(context: Context, callback: (success: Boo
             context.audioHelper.getAllQueuedTracksLazily { tracks, startIndex, startPositionMs ->
                 if (!prepared) {
                     prepareUsingTracks(tracks = tracks, startIndex = startIndex, startPosition = startPositionMs) {
+                        callback(it)
                         prepared = it
                     }
                 } else {
