@@ -151,11 +151,11 @@ internal class MediaItemProvider(private val context: Context) {
     fun reload() {
         state = STATE_INITIALIZING
 
-        val root = buildMediaItem(title = context.getString(R.string.root), mediaId = SMP_ROOT_ID, mediaType = MediaMetadata.MEDIA_TYPE_FOLDER_MIXED)
-        val rootChildren = RootCategories.buildRootChildren(context)
-        addNodeAndChildren(item = root, children = rootChildren)
-
         ensureBackgroundThread {
+            val root = buildMediaItem(title = context.getString(R.string.root), mediaId = SMP_ROOT_ID, mediaType = MediaMetadata.MEDIA_TYPE_FOLDER_MIXED)
+            val rootChildren = RootCategories.buildRootChildren(context)
+            addNodeAndChildren(item = root, children = rootChildren)
+
             try {
                 reloadPlaylists()
                 reloadFolders()

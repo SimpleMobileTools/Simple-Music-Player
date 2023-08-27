@@ -2,7 +2,6 @@ package com.simplemobiletools.musicplayer.playback
 
 import android.os.Bundle
 import android.os.ConditionVariable
-import androidx.media3.common.C
 import androidx.media3.common.MediaItem
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.session.*
@@ -151,12 +150,12 @@ internal fun PlaybackService.getMediaSessionCallback() = object : MediaLibrarySe
         mediaItems: MutableList<MediaItem>,
         startIndex: Int,
         startPositionMs: Long
-    ) = callWhenSourceReady {
-        var queueItems = mediaItems
-        var startItemIndex = startIndex
-
-        // this is to avoid single items in the queue: https://github.com/androidx/media/issues/156
-        if (startIndex == C.INDEX_UNSET && mediaItems.size == 1) {
+    ) = if (controller.packageName == packageName) {
+        Futures.immediateFuture(MediaSession.MediaItemsWithStartPosition(mediaItems, startIndex, startPositionMs))
+    } else {
+        callWhenSourceReady {
+            // this is to avoid single items in the queue: https://github.com/androidx/media/issues/156
+            var queueItems = mediaItems
             val startItemId = mediaItems[0].mediaId
             val currentItems = mediaItemProvider.getChildren(currentRoot).orEmpty()
 
@@ -166,22 +165,25 @@ internal fun PlaybackService.getMediaSessionCallback() = object : MediaLibrarySe
                 mediaItemProvider.getDefaultQueue()?.toMutableList() ?: queueItems
             }
 
-            startItemIndex = queueItems.indexOfFirst { it.mediaId == startItemId }
+            val startItemIndex = queueItems.indexOfFirst { it.mediaId == startItemId }
+            super.onSetMediaItems(mediaSession, controller, queueItems, startItemIndex, startPositionMs).get()
         }
-
-        super.onSetMediaItems(mediaSession, controller, queueItems, startItemIndex, startPositionMs).get()
     }
 
     override fun onAddMediaItems(
         mediaSession: MediaSession,
         controller: MediaSession.ControllerInfo,
         mediaItems: List<MediaItem>
-    ) = callWhenSourceReady {
-        mediaItems.map { mediaItem ->
-            if (mediaItem.requestMetadata.searchQuery != null) {
-                getMediaItemFromSearchQuery(mediaItem.requestMetadata.searchQuery!!)
-            } else {
-                mediaItemProvider[mediaItem.mediaId] ?: mediaItem
+    ) = if (controller.packageName == packageName) {
+        Futures.immediateFuture(mediaItems)
+    } else {
+        callWhenSourceReady {
+            mediaItems.map { mediaItem ->
+                if (mediaItem.requestMetadata.searchQuery != null) {
+                    getMediaItemFromSearchQuery(mediaItem.requestMetadata.searchQuery!!)
+                } else {
+                    mediaItemProvider[mediaItem.mediaId] ?: mediaItem
+                }
             }
         }
     }
