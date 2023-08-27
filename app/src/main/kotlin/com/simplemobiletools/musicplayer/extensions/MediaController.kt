@@ -47,19 +47,42 @@ fun MediaController.prepareUsingTracks(
     }
 }
 
+/**
+ * This method optimizes player preparation by first starting with the current track and then adding
+ * all queued items using [MediaController.addMediaItems]. This helps prevent delays, especially with
+ * large queues, and avoids the [ForegroundServiceDidNotStartInTimeException] when starting from background.
+ */
 fun MediaController.maybePreparePlayer(context: Context, callback: (success: Boolean) -> Unit) {
     if (currentMediaItem == null) {
         ensureBackgroundThread {
-            if (context.queueDAO.getAll().isEmpty()) {
+            val currentQueueItem = context.queueDAO.getCurrent()
+            if (currentQueueItem == null) {
                 prepareUsingTracks(context.audioHelper.initQueue(), callback = callback)
             } else {
-                val queuedTracks = context.audioHelper.getAllQueuedTracks()
+                val queueItems = context.queueDAO.getAll()
+                val currentTrack = context.audioHelper.getTrack(currentQueueItem.trackId) ?: return@ensureBackgroundThread
+                val startPosition = currentQueueItem.lastPosition.seconds.inWholeMilliseconds
                 prepareUsingTracks(
-                    tracks = queuedTracks,
-                    startIndex = maxOf(queuedTracks.indexOfFirst { it.isCurrent() }, 0),
-                    startPosition = context.queueDAO.getCurrent()?.lastPosition?.seconds?.inWholeMilliseconds ?: 0,
-                    callback = callback
-                )
+                    tracks = listOf(currentTrack),
+                    startPosition = startPosition,
+                ) { success ->
+                    callback(success)
+                    if (success) {
+                        ensureBackgroundThread {
+                            val queuedTracks = context.audioHelper.getAllQueuedTracks(queueItems)
+                            if (queuedTracks.size == 1) {
+                                return@ensureBackgroundThread
+                            }
+
+                            val mediaItems = queuedTracks.toMediaItems()
+                            val currentIndex = mediaItems.indexOfTrack(currentTrack)
+                            runOnPlayerThread {
+                                addMediaItems(0, mediaItems.take(currentIndex))
+                                addMediaItems(currentIndex + 1, mediaItems.takeLast(mediaItems.lastIndex - currentIndex))
+                            }
+                        }
+                    }
+                }
             }
         }
     } else {
