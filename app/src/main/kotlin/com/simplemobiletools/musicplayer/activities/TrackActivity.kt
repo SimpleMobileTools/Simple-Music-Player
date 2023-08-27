@@ -143,9 +143,9 @@ class TrackActivity : SimpleControllerActivity(), PlaybackSpeedListener {
 
     private fun setupButtons() {
         activity_track_toggle_shuffle.setOnClickListener { withPlayer { toggleShuffle() } }
-        activity_track_previous.setOnClickListener { withPlayer { seekToPreviousMediaItem() } }
+        activity_track_previous.setOnClickListener { withPlayer { forceSeekToPrevious() } }
         activity_track_play_pause.setOnClickListener { withPlayer { togglePlayback() } }
-        activity_track_next.setOnClickListener { withPlayer { seekToNextMediaItem() } }
+        activity_track_next.setOnClickListener { withPlayer { forceSeekToNext() } }
         activity_track_progress_current.setOnClickListener { seekBack() }
         activity_track_progress_max.setOnClickListener { seekForward() }
         activity_track_playback_setting.setOnClickListener { togglePlaybackSetting() }

@@ -6,9 +6,7 @@ import androidx.media3.common.Player
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.exoplayer.source.ShuffleOrder.DefaultShuffleOrder
-import com.simplemobiletools.musicplayer.extensions.currentMediaItems
-import com.simplemobiletools.musicplayer.extensions.move
-import com.simplemobiletools.musicplayer.extensions.shuffledMediaItemsIndices
+import com.simplemobiletools.musicplayer.extensions.*
 import com.simplemobiletools.musicplayer.inlines.indexOfFirstOrNull
 
 private const val DEFAULT_SHUFFLE_ORDER_SEED = 42L
@@ -37,16 +35,36 @@ class SimpleMusicPlayer(private val exoPlayer: ExoPlayer) : ForwardingPlayer(exo
         playWhenReady = true
     }
 
+    override fun seekToNext() {
+        if (!maybeForceNext()) {
+            super.seekToNext()
+        }
+    }
+
+    override fun seekToPrevious() {
+        if (!maybeForcePrevious()) {
+            super.seekToPrevious()
+        }
+    }
+
+    override fun seekToNextMediaItem() {
+        if (!maybeForceNext()) {
+            super.seekToNextMediaItem()
+        }
+    }
+
+    override fun seekToPreviousMediaItem() {
+        if (!maybeForcePrevious()) {
+            super.seekToPreviousMediaItem()
+        }
+    }
+
     fun getAudioSessionId(): Int {
         return exoPlayer.audioSessionId
     }
 
     fun setSkipSilence(skipSilence: Boolean) {
         exoPlayer.skipSilenceEnabled = skipSilence
-    }
-
-    fun setPauseAtEndOfMediaItems(pauseAtEnd: Boolean) {
-        exoPlayer.pauseAtEndOfMediaItems = pauseAtEnd
     }
 
     /**

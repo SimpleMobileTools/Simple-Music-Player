@@ -35,16 +35,11 @@ internal fun PlaybackService.getPlayerListener() = object : Player.Listener {
     override fun onMediaItemTransition(mediaItem: MediaItem?, reason: Int) {
         // customize repeat mode behaviour as the default behaviour doesn't align with our requirements.
         withPlayer {
-            when (config.playbackSetting) {
-                PlaybackSetting.REPEAT_OFF -> setPauseAtEndOfMediaItems(currentMediaItemIndex == mediaItemCount - 1)
-                PlaybackSetting.STOP_AFTER_CURRENT_TRACK -> {
-                    if (reason == Player.MEDIA_ITEM_TRANSITION_REASON_AUTO) {
-                        pause()
-                        seekToPreviousMediaItem()
-                    }
+            if (reason == Player.MEDIA_ITEM_TRANSITION_REASON_REPEAT) {
+                if (config.playbackSetting == PlaybackSetting.STOP_AFTER_CURRENT_TRACK) {
+                    pause()
+                    seekTo(0)
                 }
-                // revert to default repeat mode behaviour.
-                else -> setPauseAtEndOfMediaItems(false)
             }
         }
     }

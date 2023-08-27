@@ -1,5 +1,6 @@
 package com.simplemobiletools.musicplayer.extensions
 
+import androidx.media3.common.C
 import androidx.media3.common.MediaItem
 import androidx.media3.common.Player
 import com.simplemobiletools.musicplayer.helpers.PlaybackSetting
@@ -14,10 +15,36 @@ val Player.currentMediaItems: List<MediaItem>
     get() = (0 until (mediaItemCount)).map { getMediaItemAt(it) }
 
 val Player.nextMediaItem: MediaItem?
-    get() = if (hasNextMediaItem()) {
-        getMediaItemAt(nextMediaItemIndex)
+    get() = when {
+        hasNextMediaItem() -> getMediaItemAt(nextMediaItemIndex)
+        currentMediaItemIndex == lastMediaItemIndex -> getMediaItemAt(firstMediaItemIndex)
+        else -> null
+    }
+
+val Player.firstMediaItemIndex: Int
+    get() = if (shuffleModeEnabled) {
+        shuffledMediaItemsIndices.firstOrNull() ?: -1
     } else {
-        null
+        0
+    }
+
+val Player.lastMediaItemIndex: Int
+    get() = if (shuffleModeEnabled) {
+        shuffledMediaItemsIndices.lastOrNull() ?: -1
+    } else {
+        mediaItemCount - 1
+    }
+
+val Player.isAtStartOfPlaylist: Boolean
+    get() = currentMediaItemIndex == firstMediaItemIndex
+
+val Player.isAtEndOfPlaylist: Boolean
+    get() {
+        if (currentMediaItemIndex == C.INDEX_UNSET) {
+            return false
+        }
+
+        return currentMediaItemIndex == lastMediaItemIndex
     }
 
 val Player.currentMediaItemsShuffled: List<MediaItem>
@@ -46,9 +73,47 @@ val Player.shuffledMediaItemsIndices: List<Int>
 fun Player.setRepeatMode(playbackSetting: PlaybackSetting) {
     repeatMode = when (playbackSetting) {
         PlaybackSetting.REPEAT_TRACK -> Player.REPEAT_MODE_ONE
+        PlaybackSetting.REPEAT_PLAYLIST -> Player.REPEAT_MODE_ALL
+        PlaybackSetting.REPEAT_OFF -> Player.REPEAT_MODE_OFF
         else -> {
-            // other modes are handled manually.
-            Player.REPEAT_MODE_ALL
+            // PlaybackSetting.STOP_AFTER_CURRENT_TRACK is handled manually.
+            Player.REPEAT_MODE_ONE
         }
+    }
+}
+
+fun Player.forceSeekToNext() {
+    if (!maybeForceNext()) {
+        seekToNext()
+    }
+}
+
+fun Player.forceSeekToPrevious() {
+    if (!maybeForcePrevious()) {
+        seekToPrevious()
+    }
+}
+
+/**
+ * Force seek to the next media item regardless of the current [Player.RepeatMode]. Returns true on success.
+ */
+fun Player.maybeForceNext(): Boolean {
+    return if (isAtEndOfPlaylist) {
+        seekTo(firstMediaItemIndex, 0)
+        true
+    } else {
+        false
+    }
+}
+
+/**
+ * Force seek to the previous media item regardless of the current [Player.RepeatMode]. Returns true on success.
+ */
+fun Player.maybeForcePrevious(): Boolean {
+    return if (isAtStartOfPlaylist && currentMediaItem != null) {
+        seekTo(lastMediaItemIndex, 0)
+        true
+    } else {
+        false
     }
 }
