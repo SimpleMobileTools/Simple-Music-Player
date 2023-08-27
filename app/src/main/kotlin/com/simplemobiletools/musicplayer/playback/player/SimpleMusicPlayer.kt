@@ -30,7 +30,6 @@ class SimpleMusicPlayer(private val exoPlayer: ExoPlayer) : ForwardingPlayer(exo
                 Player.COMMAND_SEEK_TO_NEXT,
                 Player.COMMAND_SEEK_TO_NEXT_MEDIA_ITEM,
             )
-            .removeAll(Player.COMMAND_SET_REPEAT_MODE)
             .build()
     }
 

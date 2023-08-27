@@ -42,7 +42,6 @@ internal fun PlaybackService.getPlayerListener() = object : Player.Listener {
                         pause()
                         seekToPreviousMediaItem()
                     }
-
                 }
                 // revert to default repeat mode behaviour.
                 else -> setPauseAtEndOfMediaItems(false)
