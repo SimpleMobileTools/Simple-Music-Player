@@ -149,21 +149,8 @@ class QueueActivity : SimpleControllerActivity() {
 
                 val currentPosition = shuffledMediaItemsIndices.indexOf(currentMediaItemIndex)
                 if (currentPosition > 0) {
-                    lazySmoothScroll(currentPosition)
+                    queue_list.lazySmoothScroll(currentPosition)
                 }
-            }
-        }
-    }
-
-    private fun lazySmoothScroll(scrollToPosition: Int) {
-        queue_list.apply {
-            if (scrollToPosition > 100) {
-                post {
-                    scrollToPosition(scrollToPosition - 50)
-                    smoothScrollToPosition(scrollToPosition)
-                }
-            } else {
-                smoothScrollToPosition(scrollToPosition)
             }
         }
     }

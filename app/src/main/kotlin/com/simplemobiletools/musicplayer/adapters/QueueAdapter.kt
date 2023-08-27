@@ -85,6 +85,7 @@ class QueueAdapter(activity: SimpleActivity, items: ArrayList<Track>, var curren
                 if (previousIndex != -1 && newIndex != -1) {
                     notifyItemChanged(previousIndex)
                     notifyItemChanged(newIndex)
+                    recyclerView.lazySmoothScroll(newIndex)
                 }
             }
         }
