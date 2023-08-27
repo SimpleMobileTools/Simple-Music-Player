@@ -3,9 +3,12 @@ package com.simplemobiletools.musicplayer.helpers
 import android.content.Context
 import com.simplemobiletools.commons.extensions.addBit
 import com.simplemobiletools.commons.extensions.getParentPath
+import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.musicplayer.extensions.*
+import com.simplemobiletools.musicplayer.inlines.indexOfFirstOrNull
 import com.simplemobiletools.musicplayer.models.*
 import kotlin.time.Duration.Companion.milliseconds
+import kotlin.time.Duration.Companion.seconds
 
 class AudioHelper(private val context: Context) {
 
@@ -245,6 +248,31 @@ class AudioHelper(private val context: Context) {
         }
 
         return tracks as ArrayList<Track>
+    }
+
+    /**
+     * Executes [callback] with current track as quickly as possible and then proceeds to load the complete queue with all tracks.
+     */
+    fun getAllQueuedTracksLazily(callback: (tracks: List<Track>, startIndex: Int, startPositionMs: Long) -> Unit) {
+        ensureBackgroundThread {
+            var queueItems = context.queueDAO.getAll()
+            if (queueItems.isEmpty()) {
+                initQueue()
+                queueItems = context.queueDAO.getAll()
+            }
+
+            val currentItem = context.queueDAO.getCurrent() ?: return@ensureBackgroundThread
+            val currentTrack = getTrack(currentItem.trackId) ?: return@ensureBackgroundThread
+            val startPositionMs = currentItem.lastPosition.seconds.inWholeMilliseconds
+
+            // immediately return the current track.
+            callback(listOf(currentTrack), 0, startPositionMs)
+
+            // return the rest of the queued tracks.
+            val queuedTracks = getAllQueuedTracks(queueItems)
+            val currentIndex = queuedTracks.indexOfFirstOrNull { it.mediaStoreId == currentTrack.mediaStoreId } ?: 0
+            callback(queuedTracks, currentIndex, startPositionMs)
+        }
     }
 
     fun initQueue(): ArrayList<Track> {

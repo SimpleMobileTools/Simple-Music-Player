@@ -9,6 +9,8 @@ import androidx.media3.session.MediaLibraryService.MediaLibrarySession
 import com.google.common.util.concurrent.Futures
 import com.google.common.util.concurrent.ListenableFuture
 import com.google.common.util.concurrent.MoreExecutors
+import com.google.common.util.concurrent.SettableFuture
+import com.simplemobiletools.musicplayer.extensions.addRemainingMediaItems
 import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.helpers.EXTRA_NEXT_MEDIA_ID
 import com.simplemobiletools.musicplayer.helpers.EXTRA_SHUFFLE_INDICES
@@ -140,8 +142,22 @@ internal fun PlaybackService.getMediaSessionCallback() = object : MediaLibrarySe
     override fun onPlaybackResumption(
         mediaSession: MediaSession,
         controller: MediaSession.ControllerInfo
-    ) = callWhenSourceReady {
-        mediaItemProvider.getRecentItemsWithStartPosition()
+    ): ListenableFuture<MediaSession.MediaItemsWithStartPosition> {
+        val settableFuture = SettableFuture.create<MediaSession.MediaItemsWithStartPosition>()
+        executorService.execute {
+            var futureSet = false
+            mediaItemProvider.getRecentItemsLazily {
+                // resume playback as quickly as possible: https://github.com/androidx/media/issues/111
+                if (!futureSet) {
+                    settableFuture.set(it)
+                    futureSet = true
+                } else {
+                    player.addRemainingMediaItems(it.mediaItems, it.startIndex)
+                }
+            }
+        }
+
+        return settableFuture
     }
 
     override fun onSetMediaItems(

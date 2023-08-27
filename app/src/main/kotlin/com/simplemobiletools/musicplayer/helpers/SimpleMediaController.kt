@@ -49,7 +49,7 @@ class SimpleMediaController(val context: Application) {
             if (shouldCreateNewController()) {
                 createControllerAsync()
             } else {
-                controller = getControllerSync()!!
+                controller = getControllerSync()
             }
 
             callback?.invoke()

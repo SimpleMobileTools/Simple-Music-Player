@@ -117,3 +117,13 @@ fun Player.maybeForcePrevious(): Boolean {
         false
     }
 }
+
+
+fun Player.addRemainingMediaItems(mediaItems: List<MediaItem>, currentIndex: Int) {
+    val itemsAtStart = mediaItems.take(currentIndex)
+    val itemsAtEnd = mediaItems.takeLast(mediaItems.lastIndex - currentIndex)
+    applicationLooper.post {
+        addMediaItems(0, itemsAtStart)
+        addMediaItems(currentIndex + 1, itemsAtEnd)
+    }
+}

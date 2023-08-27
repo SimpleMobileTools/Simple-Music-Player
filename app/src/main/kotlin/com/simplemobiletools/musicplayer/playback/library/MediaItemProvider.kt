@@ -22,6 +22,7 @@ import com.simplemobiletools.musicplayer.helpers.TAB_GENRES
 import com.simplemobiletools.musicplayer.helpers.TAB_PLAYLISTS
 import com.simplemobiletools.musicplayer.helpers.TAB_TRACKS
 import com.simplemobiletools.musicplayer.models.QueueItem
+import com.simplemobiletools.musicplayer.models.toMediaItems
 
 private const val STATE_CREATED = 1
 private const val STATE_INITIALIZING = 2
@@ -110,6 +111,16 @@ internal class MediaItemProvider(private val context: Context) {
     }
 
     fun getDefaultQueue() = getChildren(SMP_TRACKS_ROOT_ID)
+
+    fun getRecentItemsLazily(callback: (itemsWithStartPosition: MediaItemsWithStartPosition) -> Unit) {
+        if (state == STATE_INITIALIZED) {
+            callback(getRecentItemsWithStartPosition())
+        } else {
+            audioHelper.getAllQueuedTracksLazily { tracks, startIndex, startPositionMs ->
+                callback(MediaItemsWithStartPosition(tracks.toMediaItems(), startIndex, startPositionMs))
+            }
+        }
+    }
 
     fun getRecentItemsWithStartPosition(random: Boolean = true): MediaItemsWithStartPosition {
         val recentItems = context.queueDAO.getAll().mapNotNull { getMediaItemFromQueueItem(it) }
