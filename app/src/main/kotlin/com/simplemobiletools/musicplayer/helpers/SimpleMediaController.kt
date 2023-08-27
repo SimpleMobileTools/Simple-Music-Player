@@ -20,7 +20,7 @@ class SimpleMediaController(val context: Application) {
     }
 
     private lateinit var controllerFuture: ListenableFuture<MediaController>
-    private lateinit var controller: MediaController
+    private var controller: MediaController? = null
 
     @Synchronized
     fun createControllerAsync() {
@@ -30,7 +30,7 @@ class SimpleMediaController(val context: Application) {
             .buildAsync()
 
         controllerFuture.addListener({
-            controller = getControllerSync()!!
+            controller = getControllerSync()
         }, MoreExecutors.directExecutor())
     }
 
@@ -61,7 +61,8 @@ class SimpleMediaController(val context: Application) {
     }
 
     fun withController(callback: MediaController.() -> Unit) {
-        if (::controller.isInitialized && controller.isConnected) {
+        val controller = controller
+        if (controller != null && controller.isConnected) {
             controller.runOnPlayerThread(callback)
         } else {
             acquireController {
