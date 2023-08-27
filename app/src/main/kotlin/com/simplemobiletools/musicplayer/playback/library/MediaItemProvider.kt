@@ -122,7 +122,7 @@ internal class MediaItemProvider(private val context: Context) {
         }
     }
 
-    fun getRecentItemsWithStartPosition(random: Boolean = true): MediaItemsWithStartPosition {
+    fun getRecentItemsWithStartPosition(): MediaItemsWithStartPosition {
         val recentItems = context.queueDAO.getAll().mapNotNull { getMediaItemFromQueueItem(it) }
         var startPosition = 0L
         val currentItem = context.queueDAO.getCurrent()?.let {
@@ -130,14 +130,6 @@ internal class MediaItemProvider(private val context: Context) {
             val metadata = mediaItem.mediaMetadata.buildUpon().build()
             startPosition = it.lastPosition * 1000L
             mediaItem.buildUpon().setMediaMetadata(metadata).build()
-        }
-
-        if (recentItems.isEmpty() && random) {
-            // return a random item if queue is empty
-            val current = getRandomItem()
-            val mediaItems = getChildren(SMP_TRACKS_ROOT_ID).orEmpty()
-            saveRecentItemsWithStartPosition(mediaItems = mediaItems, current = current, startPosition = 0)
-            return getRecentItemsWithStartPosition(random = false)
         }
 
         val startIndex = maxOf(recentItems.indexOf(currentItem), 0)
