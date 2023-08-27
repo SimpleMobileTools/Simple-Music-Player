@@ -228,26 +228,23 @@ class AudioHelper(private val context: Context) {
         deleteArtists(invalidArtists)
     }
 
-    fun getAllQueuedTracks(): ArrayList<Track> {
-        val tracks = ArrayList<Track>()
-        val queueItems = context.queueDAO.getAll()
-        val allTracks = getAllTracks()
+    fun getAllQueuedTracks(queueItems: List<QueueItem> = context.queueDAO.getAll()): ArrayList<Track> {
+        val allTracks = getAllTracks().associateBy { it.mediaStoreId }
 
         // make sure we fetch the songs in the order they were displayed in
-        for (queueItem in queueItems) {
-            val wantedId = queueItem.trackId
-            val track = allTracks.find { it.mediaStoreId == wantedId }
+        val tracks = queueItems.mapNotNull { queueItem ->
+            val track = allTracks[queueItem.trackId]
             if (track != null) {
                 if (queueItem.isCurrent) {
                     track.flags = track.flags.addBit(FLAG_IS_CURRENT)
                 }
-
-                tracks.add(track)
-                continue
+                track
+            } else {
+                null
             }
         }
 
-        return tracks.distinctBy { it.mediaStoreId }.toMutableList() as ArrayList<Track>
+        return tracks as ArrayList<Track>
     }
 
     fun initQueue(): ArrayList<Track> {
