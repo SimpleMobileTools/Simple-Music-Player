@@ -118,7 +118,10 @@ fun Player.maybeForcePrevious(): Boolean {
     }
 }
 
-
+/**
+ * This function takes a list of media items and the current index in the playlist. It then
+ * adds the media items that come before and after the current index to the player's playlist.
+ */
 fun Player.addRemainingMediaItems(mediaItems: List<MediaItem>, currentIndex: Int) {
     val itemsAtStart = mediaItems.take(currentIndex)
     val itemsAtEnd = mediaItems.takeLast(mediaItems.lastIndex - currentIndex)

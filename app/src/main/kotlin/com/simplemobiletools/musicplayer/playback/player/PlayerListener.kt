@@ -8,6 +8,7 @@ import androidx.media3.common.util.UnstableApi
 import com.simplemobiletools.commons.extensions.toast
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.extensions.config
+import com.simplemobiletools.musicplayer.extensions.getPlaybackSetting
 import com.simplemobiletools.musicplayer.helpers.PlaybackSetting
 import com.simplemobiletools.musicplayer.playback.PlaybackService
 
@@ -42,5 +43,13 @@ internal fun PlaybackService.getPlayerListener() = object : Player.Listener {
                 }
             }
         }
+    }
+
+    override fun onRepeatModeChanged(repeatMode: Int) {
+        config.playbackSetting = getPlaybackSetting(repeatMode)
+    }
+
+    override fun onShuffleModeEnabledChanged(shuffleModeEnabled: Boolean) {
+        config.isShuffleEnabled = shuffleModeEnabled
     }
 }

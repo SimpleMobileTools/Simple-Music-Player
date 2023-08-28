@@ -264,8 +264,7 @@ class TrackActivity : SimpleControllerActivity(), PlaybackSpeedListener {
         }
     }
 
-    private fun setupShuffleButton() {
-        val isShuffleEnabled = config.isShuffleEnabled
+    private fun setupShuffleButton(isShuffleEnabled: Boolean = config.isShuffleEnabled) {
         activity_track_toggle_shuffle.apply {
             applyColorFilter(if (isShuffleEnabled) getProperPrimaryColor() else getProperTextColor())
             alpha = if (isShuffleEnabled) 1f else MEDIUM_ALPHA
@@ -293,8 +292,7 @@ class TrackActivity : SimpleControllerActivity(), PlaybackSpeedListener {
         }
     }
 
-    private fun setupPlaybackSettingButton() {
-        val playbackSetting = config.playbackSetting
+    private fun setupPlaybackSettingButton(playbackSetting: PlaybackSetting = config.playbackSetting) {
         activity_track_playback_setting.apply {
             contentDescription = getString(playbackSetting.contentDescriptionStringRes)
             setImageResource(playbackSetting.iconRes)
@@ -352,15 +350,13 @@ class TrackActivity : SimpleControllerActivity(), PlaybackSpeedListener {
         return BitmapDrawable(resources, bitmapResized)
     }
 
-    override fun onPlaybackStateChanged(playbackState: Int) {
-        super.onPlaybackStateChanged(playbackState)
-        updatePlayerState()
-    }
+    override fun onPlaybackStateChanged(playbackState: Int) = updatePlayerState()
 
-    override fun onIsPlayingChanged(isPlaying: Boolean) {
-        super.onIsPlayingChanged(isPlaying)
-        updatePlayerState()
-    }
+    override fun onIsPlayingChanged(isPlaying: Boolean) = updatePlayerState()
+
+    override fun onRepeatModeChanged(repeatMode: Int) = setupPlaybackSettingButton(getPlaybackSetting(repeatMode))
+
+    override fun onShuffleModeEnabledChanged(shuffleModeEnabled: Boolean) = setupShuffleButton(shuffleModeEnabled)
 
     override fun onMediaItemTransition(mediaItem: MediaItem?, reason: Int) {
         super.onMediaItemTransition(mediaItem, reason)
@@ -382,13 +378,16 @@ class TrackActivity : SimpleControllerActivity(), PlaybackSpeedListener {
     private fun updatePlayerState() {
         withPlayer {
             val isPlaying = isReallyPlaying
-            activity_track_play_pause.updatePlayPauseIcon(isReallyPlaying, getProperTextColor())
-            updateProgress(currentPosition)
             if (isPlaying) {
                 scheduleProgressUpdate()
             } else {
                 cancelProgressUpdate()
             }
+
+            updateProgress(currentPosition)
+            updatePlayPause(isPlaying)
+            setupShuffleButton(shuffleModeEnabled)
+            setupPlaybackSettingButton(getPlaybackSetting(repeatMode))
         }
     }
 
@@ -409,5 +408,9 @@ class TrackActivity : SimpleControllerActivity(), PlaybackSpeedListener {
 
     private fun updateProgress(currentPosition: Long) {
         activity_track_progressbar.progress = currentPosition.milliseconds.inWholeSeconds.toInt()
+    }
+
+    private fun updatePlayPause(isPlaying: Boolean) {
+        activity_track_play_pause.updatePlayPauseIcon(isPlaying, getProperTextColor())
     }
 }
