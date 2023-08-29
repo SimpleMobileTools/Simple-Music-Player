@@ -50,7 +50,7 @@ class TracksFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
                         activity.handleNotificationPermission { granted ->
                             if (granted) {
                                 val startIndex = tracks.indexOf(it as Track)
-                                prepareAndPlay(tracks, startIndex, 0)
+                                prepareAndPlay(tracks, startIndex)
                             } else {
                                 if (context is Activity) {
                                     PermissionRequiredDialog(activity, R.string.allow_notifications_music_player, { activity.openNotificationSettings() })

@@ -45,7 +45,7 @@ abstract class SimpleControllerActivity : SimpleActivity(), Player.Listener {
 
     fun withPlayer(callback: MediaController.() -> Unit) = controller.withController(callback)
 
-    fun prepareAndPlay(tracks: List<Track>, startIndex: Int = 0, startPosition: Long = 0, startActivity: Boolean = true) {
+    fun prepareAndPlay(tracks: List<Track>, startIndex: Int = 0, startPositionMs: Long = 0, startActivity: Boolean = true) {
         withPlayer {
             if (startActivity) {
                 startActivity(
@@ -53,7 +53,7 @@ abstract class SimpleControllerActivity : SimpleActivity(), Player.Listener {
                 )
             }
 
-            prepareUsingTracks(tracks = tracks, startIndex = startIndex, startPosition = startPosition, play = true) { success ->
+            prepareUsingTracks(tracks = tracks, startIndex = startIndex, startPositionMs = startPositionMs, play = true) { success ->
                 if (success) {
                     updatePlaybackInfo(this)
                 }
@@ -146,7 +146,7 @@ abstract class SimpleControllerActivity : SimpleActivity(), Player.Listener {
                 withPlayer {
                     // it's not yet directly possible to update metadata without interrupting the playback: https://github.com/androidx/media/issues/33
                     if (trackToUpdate == null || currentMediaItem.isSameMedia(trackToUpdate)) {
-                        prepareUsingTracks(tracks = queuedTracks, startIndex = currentMediaItemIndex, startPosition = currentPosition, play = isReallyPlaying)
+                        prepareUsingTracks(tracks = queuedTracks, startIndex = currentMediaItemIndex, startPositionMs = currentPosition, play = isReallyPlaying)
                     } else {
                         val trackIndex = currentMediaItems.indexOfTrack(trackToUpdate)
                         if (trackIndex > 0) {

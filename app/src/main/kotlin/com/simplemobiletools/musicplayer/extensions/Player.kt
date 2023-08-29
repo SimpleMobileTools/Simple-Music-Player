@@ -1,9 +1,13 @@
 package com.simplemobiletools.musicplayer.extensions
 
+import android.content.Context
 import androidx.media3.common.C
 import androidx.media3.common.MediaItem
 import androidx.media3.common.Player
+import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.musicplayer.helpers.PlaybackSetting
+import com.simplemobiletools.musicplayer.models.Track
+import com.simplemobiletools.musicplayer.models.toMediaItems
 
 val Player.isReallyPlaying: Boolean
     get() = when (playbackState) {
@@ -70,6 +74,19 @@ val Player.shuffledMediaItemsIndices: List<Int>
         return indices
     }
 
+inline fun <T : Player> T.runOnPlayerThread(crossinline callback: T.() -> Unit) =
+    applicationLooper.post {
+        callback()
+    }
+
+fun Player.togglePlayback() {
+    if (isReallyPlaying) {
+        pause()
+    } else {
+        play()
+    }
+}
+
 fun Player.setRepeatMode(playbackSetting: PlaybackSetting) {
     repeatMode = when (playbackSetting) {
         PlaybackSetting.REPEAT_TRACK -> Player.REPEAT_MODE_ONE
@@ -118,14 +135,67 @@ fun Player.maybeForcePrevious(): Boolean {
     }
 }
 
+fun Player.prepareUsingTracks(
+    tracks: List<Track>,
+    startIndex: Int = 0,
+    startPositionMs: Long = 0,
+    play: Boolean = false,
+    callback: ((success: Boolean) -> Unit)? = null
+) {
+    if (tracks.isEmpty()) {
+        runOnPlayerThread {
+            callback?.invoke(false)
+        }
+        return
+    }
+
+    val mediaItems = tracks.toMediaItems()
+    runOnPlayerThread {
+        setMediaItems(mediaItems, startIndex, startPositionMs)
+        playWhenReady = play
+        prepare()
+        callback?.invoke(true)
+    }
+}
+
 /**
- * This function takes a list of media items and the current index in the playlist. It then
+ * This method prepares the player using queued tracks or in case the queue is empty, initializing
+ * the queue using all tracks. To optimize this, the player is first prepared using the current track and then all queued
+ * items are added using [addRemainingMediaItems]. This helps prevent delays, especially with large queues, and
+ * avoids potential issues like [android.app.ForegroundServiceStartNotAllowedException] when starting from background.
+ */
+inline fun Player.maybePreparePlayer(context: Context, crossinline callback: (success: Boolean) -> Unit) {
+    if (currentMediaItem == null) {
+        ensureBackgroundThread {
+            var prepared = false
+            context.audioHelper.getQueuedTracksLazily { tracks, startIndex, startPositionMs ->
+                if (!prepared) {
+                    prepareUsingTracks(tracks = tracks, startIndex = startIndex, startPositionMs = startPositionMs) {
+                        callback(it)
+                        prepared = it
+                    }
+                } else {
+                    if (tracks.size == 1) {
+                        return@getQueuedTracksLazily
+                    }
+
+                    addRemainingMediaItems(tracks.toMediaItems(), startIndex)
+                }
+            }
+        }
+    } else {
+        callback(false)
+    }
+}
+
+/**
+ * This method takes a list of media items and the current index in the playlist. It then
  * adds the media items that come before and after the current index to the player's playlist.
  */
 fun Player.addRemainingMediaItems(mediaItems: List<MediaItem>, currentIndex: Int) {
     val itemsAtStart = mediaItems.take(currentIndex)
     val itemsAtEnd = mediaItems.takeLast(mediaItems.lastIndex - currentIndex)
-    applicationLooper.post {
+    runOnPlayerThread {
         addMediaItems(0, itemsAtStart)
         addMediaItems(currentIndex + 1, itemsAtEnd)
     }
