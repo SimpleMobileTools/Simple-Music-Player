@@ -57,7 +57,7 @@ fun MediaController.maybePreparePlayer(context: Context, callback: (success: Boo
     if (currentMediaItem == null) {
         ensureBackgroundThread {
             var prepared = false
-            context.audioHelper.getAllQueuedTracksLazily { tracks, startIndex, startPositionMs ->
+            context.audioHelper.getQueuedTracksLazily { tracks, startIndex, startPositionMs ->
                 if (!prepared) {
                     prepareUsingTracks(tracks = tracks, startIndex = startIndex, startPosition = startPositionMs) {
                         callback(it)
@@ -65,7 +65,7 @@ fun MediaController.maybePreparePlayer(context: Context, callback: (success: Boo
                     }
                 } else {
                     if (tracks.size == 1) {
-                        return@getAllQueuedTracksLazily
+                        return@getQueuedTracksLazily
                     }
 
                     addRemainingMediaItems(tracks.toMediaItems(), startIndex)

@@ -141,7 +141,7 @@ abstract class SimpleControllerActivity : SimpleActivity(), Player.Listener {
 
     fun refreshQueueAndTracks(trackToUpdate: Track? = null) {
         ensureBackgroundThread {
-            val queuedTracks = audioHelper.getAllQueuedTracks()
+            val queuedTracks = audioHelper.getQueuedTracks()
             runOnUiThread {
                 withPlayer {
                     // it's not yet directly possible to update metadata without interrupting the playback: https://github.com/androidx/media/issues/33

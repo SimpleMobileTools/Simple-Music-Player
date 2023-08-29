@@ -116,7 +116,7 @@ internal class MediaItemProvider(private val context: Context) {
         if (state == STATE_INITIALIZED) {
             callback(getRecentItemsWithStartPosition())
         } else {
-            audioHelper.getAllQueuedTracksLazily { tracks, startIndex, startPositionMs ->
+            audioHelper.getQueuedTracksLazily { tracks, startIndex, startPositionMs ->
                 callback(MediaItemsWithStartPosition(tracks.toMediaItems(), startIndex, startPositionMs))
             }
         }

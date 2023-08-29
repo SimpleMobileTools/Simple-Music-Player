@@ -231,7 +231,7 @@ class AudioHelper(private val context: Context) {
         deleteArtists(invalidArtists)
     }
 
-    fun getAllQueuedTracks(queueItems: List<QueueItem> = context.queueDAO.getAll()): ArrayList<Track> {
+    fun getQueuedTracks(queueItems: List<QueueItem> = context.queueDAO.getAll()): ArrayList<Track> {
         val allTracks = getAllTracks().associateBy { it.mediaStoreId }
 
         // make sure we fetch the songs in the order they were displayed in
@@ -253,7 +253,7 @@ class AudioHelper(private val context: Context) {
     /**
      * Executes [callback] with current track as quickly as possible and then proceeds to load the complete queue with all tracks.
      */
-    fun getAllQueuedTracksLazily(callback: (tracks: List<Track>, startIndex: Int, startPositionMs: Long) -> Unit) {
+    fun getQueuedTracksLazily(callback: (tracks: List<Track>, startIndex: Int, startPositionMs: Long) -> Unit) {
         ensureBackgroundThread {
             var queueItems = context.queueDAO.getAll()
             if (queueItems.isEmpty()) {
@@ -278,7 +278,7 @@ class AudioHelper(private val context: Context) {
             callback(listOf(currentTrack), 0, startPositionMs)
 
             // return the rest of the queued tracks.
-            val queuedTracks = getAllQueuedTracks(queueItems)
+            val queuedTracks = getQueuedTracks(queueItems)
             val currentIndex = queuedTracks.indexOfFirstOrNull { it.mediaStoreId == currentTrack.mediaStoreId } ?: 0
             callback(queuedTracks, currentIndex, startPositionMs)
         }
