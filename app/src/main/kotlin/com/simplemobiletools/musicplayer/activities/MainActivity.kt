@@ -11,7 +11,6 @@ import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.media3.common.Player
 import androidx.viewpager.widget.ViewPager
 import com.simplemobiletools.commons.dialogs.FilePickerDialog
 import com.simplemobiletools.commons.dialogs.RadioGroupDialog
@@ -46,7 +45,7 @@ import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import java.io.FileOutputStream
 
-class MainActivity : SimpleMusicActivity(), Player.Listener {
+class MainActivity : SimpleMusicActivity() {
     private val PICK_IMPORT_SOURCE_INTENT = 1
 
     private var bus: EventBus? = null
