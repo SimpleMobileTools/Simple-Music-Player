@@ -105,10 +105,6 @@ class Config(context: Context) : BaseConfig(context) {
         get() = prefs.getInt(PLAYBACK_SPEED_PROGRESS, -1)
         set(playbackSpeedProgress) = prefs.edit().putInt(PLAYBACK_SPEED_PROGRESS, playbackSpeedProgress).apply()
 
-    var wereTrackFoldersAdded: Boolean
-        get() = prefs.getBoolean(WERE_TRACK_FOLDERS_ADDED, false)
-        set(wereTrackFoldersAdded) = prefs.edit().putBoolean(WERE_TRACK_FOLDERS_ADDED, wereTrackFoldersAdded).apply()
-
     var wasAllTracksPlaylistCreated: Boolean
         get() = prefs.getBoolean(WAS_ALL_TRACKS_PLAYLIST_CREATED, false)
         set(wasAllTracksPlaylistCreated) = prefs.edit().putBoolean(WAS_ALL_TRACKS_PLAYLIST_CREATED, wasAllTracksPlaylistCreated).apply()

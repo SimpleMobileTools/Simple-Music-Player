@@ -11,13 +11,16 @@ import com.simplemobiletools.commons.models.RadioItem
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.dialogs.ManageVisibleTabsDialog
 import com.simplemobiletools.musicplayer.extensions.config
-import com.simplemobiletools.musicplayer.extensions.sendIntent
-import com.simplemobiletools.musicplayer.helpers.*
+import com.simplemobiletools.musicplayer.extensions.sendCommand
+import com.simplemobiletools.musicplayer.helpers.SHOW_FILENAME_ALWAYS
+import com.simplemobiletools.musicplayer.helpers.SHOW_FILENAME_IF_UNAVAILABLE
+import com.simplemobiletools.musicplayer.helpers.SHOW_FILENAME_NEVER
+import com.simplemobiletools.musicplayer.playback.CustomCommands
 import kotlinx.android.synthetic.main.activity_settings.*
-import java.util.*
+import java.util.Locale
 import kotlin.system.exitProcess
 
-class SettingsActivity : SimpleActivity() {
+class SettingsActivity : SimpleControllerActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         isMaterialActivity = true
@@ -110,7 +113,7 @@ class SettingsActivity : SimpleActivity() {
             RadioGroupDialog(this@SettingsActivity, items, config.showFilename) {
                 config.showFilename = it as Int
                 settings_show_filename.text = getReplaceTitleText()
-                sendIntent(REFRESH_LIST)
+                refreshQueueAndTracks()
             }
         }
     }
@@ -125,7 +128,15 @@ class SettingsActivity : SimpleActivity() {
 
     private fun setupManageShownTabs() {
         settings_manage_shown_tabs_holder.setOnClickListener {
-            ManageVisibleTabsDialog(this)
+            ManageVisibleTabsDialog(this) { result ->
+                val tabsMask = config.showTabs
+                if (tabsMask != result) {
+                    config.showTabs = result
+                    withPlayer {
+                        sendCommand(CustomCommands.RELOAD_CONTENT)
+                    }
+                }
+            }
         }
     }
 
@@ -140,7 +151,9 @@ class SettingsActivity : SimpleActivity() {
         settings_gapless_playback_holder.setOnClickListener {
             settings_gapless_playback.toggle()
             config.gaplessPlayback = settings_gapless_playback.isChecked
-            sendIntent(UPDATE_GAPLESS_PLAYBACK)
+            withPlayer {
+                sendCommand(CustomCommands.TOGGLE_SKIP_SILENCE)
+            }
         }
     }
 }

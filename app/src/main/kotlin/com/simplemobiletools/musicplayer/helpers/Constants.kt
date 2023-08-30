@@ -6,13 +6,7 @@ import com.simplemobiletools.commons.helpers.PERMISSION_WRITE_STORAGE
 import com.simplemobiletools.commons.helpers.isQPlus
 import com.simplemobiletools.commons.helpers.isTiramisuPlus
 
-const val PROGRESS = "progress"
-const val EDITED_TRACK = "edited_track"
 const val ALL_TRACKS_PLAYLIST_ID = 1
-const val START_SLEEP_TIMER = "start_sleep_timer"
-const val STOP_SLEEP_TIMER = "stop_sleep_timer"
-const val TRACK_ID = "track_id"
-const val RESTART_PLAYER = "RESTART_PLAYER"
 const val EQUALIZER_PRESET_CUSTOM = -1
 
 const val ARTIST = "artist"
@@ -22,38 +16,39 @@ const val PLAYLIST = "playlist"
 const val FOLDER = "folder"
 const val GENRE = "genre"
 
-private const val PATH = "com.simplemobiletools.musicplayer.action."
+const val PATH = "com.simplemobiletools.musicplayer.action."
 val artworkUri = Uri.parse("content://media/external/audio/albumart")
 
-const val INIT = PATH + "INIT"
-const val INIT_PATH = PATH + "INIT_PATH"
-const val INIT_QUEUE = PATH + "INIT_QUEUE"
-const val FINISH = PATH + "FINISH"
-const val FINISH_IF_NOT_PLAYING = PATH + "FINISH_IF_NOT_PLAYING"
-const val DISMISS = PATH + "DISMISS"
 const val PREVIOUS = PATH + "PREVIOUS"
-const val PAUSE = PATH + "PAUSE"
 const val PLAYPAUSE = PATH + "PLAYPAUSE"
 const val NEXT = PATH + "NEXT"
-const val EDIT = PATH + "EDIT"
-const val PLAY_TRACK = PATH + "PLAY_TRACK"
-const val REFRESH_LIST = PATH + "REFRESH_LIST"
-const val UPDATE_NEXT_TRACK = PATH + "UPDATE_NEXT_TRACK"
-const val SET_PROGRESS = PATH + "SET_PROGRESS"
-const val SKIP_BACKWARD = PATH + "SKIP_BACKWARD"
-const val SKIP_FORWARD = PATH + "SKIP_FORWARD"
-const val BROADCAST_STATUS = PATH + "BROADCAST_STATUS"
-const val NOTIFICATION_DISMISSED = PATH + "NOTIFICATION_DISMISSED"
-const val SET_PLAYBACK_SPEED = PATH + "SET_PLAYBACK_SPEED"
-const val UPDATE_QUEUE_SIZE = PATH + "UPDATE_QUEUE_SIZE"
-const val UPDATE_GAPLESS_PLAYBACK = PATH + "UPDATE_GAPLESS_PLAYBACK"
 const val TRACK_STATE_CHANGED = "TRACK_STATE_CHANGED"
+const val EXTRA_ID = "id"
+const val EXTRA_MEDIA_STORE_ID = "media_store_id"
+const val EXTRA_TITLE = "title"
+const val EXTRA_ARTIST = "artist"
+const val EXTRA_PATH = "path"
+const val EXTRA_DURATION = "duration"
+const val EXTRA_ALBUM = "album"
+const val EXTRA_GENRE = "genre"
+const val EXTRA_COVER_ART = "cover_art"
+const val EXTRA_PLAYLIST_ID = "playlist_id"
+const val EXTRA_TRACK_ID = "track_id"
+const val EXTRA_FOLDER_NAME = "folder_name"
+const val EXTRA_ALBUM_ID = "album_id"
+const val EXTRA_ARTIST_ID = "artist_id"
+const val EXTRA_GENRE_ID = "genre_id"
+const val EXTRA_YEAR = "year"
+const val EXTRA_DATE_ADDED = "date_added"
+const val EXTRA_ORDER_IN_PLAYLIST = "order_in_playlist"
+const val EXTRA_FLAGS = "flags"
+const val EXTRA_NEXT_MEDIA_ID = "EXTRA_NEXT_MEDIA_ID"
+const val EXTRA_SHUFFLE_INDICES = "EXTRA_SHUFFLE_INDICES"
 
 // shared preferences
 const val SHUFFLE = "shuffle"
 const val PLAYBACK_SETTING = "playback_setting"
 const val AUTOPLAY = "autoplay"
-const val CURRENT_PLAYLIST = "current_playlist"
 const val SHOW_FILENAME = "show_filename"
 const val SWAP_PREV_NEXT = "swap_prev_next"
 const val LAST_SLEEP_TIMER_SECONDS = "last_sleep_timer_seconds"
@@ -62,7 +57,6 @@ const val EQUALIZER_PRESET = "EQUALIZER_PRESET"
 const val EQUALIZER_BANDS = "EQUALIZER_BANDS"
 const val PLAYBACK_SPEED = "PLAYBACK_SPEED"
 const val PLAYBACK_SPEED_PROGRESS = "PLAYBACK_SPEED_PROGRESS"
-const val WERE_TRACK_FOLDERS_ADDED = "were_track_folders_added"
 const val SHOW_TABS = "show_tabs"
 const val WAS_ALL_TRACKS_PLAYLIST_CREATED = "was_all_tracks_playlist_created"
 const val TRACKS_REMOVED_FROM_ALL_TRACKS_PLAYLIST = "tracks_removed_from_all_tracks_playlist"
@@ -70,6 +64,9 @@ const val LAST_EXPORT_PATH = "last_export_path"
 const val EXCLUDED_FOLDERS = "excluded_folders"
 const val SORT_PLAYLIST_PREFIX = "sort_playlist_"
 const val GAPLESS_PLAYBACK = "gapless_playback"
+
+const val SEEK_INTERVAL_MS = 10000L
+const val SEEK_INTERVAL_S = 10
 
 const val SHOW_FILENAME_NEVER = 1
 const val SHOW_FILENAME_IF_UNAVAILABLE = 2
@@ -84,6 +81,7 @@ const val TAB_GENRES = 32
 const val ACTIVITY_PLAYLIST_FOLDER = 64
 
 const val FLAG_MANUAL_CACHE = 1
+const val FLAG_IS_CURRENT = 2
 
 // show Folders tab only on Android Q+, BUCKET_DISPLAY_NAME hasn't been available before that
 val allTabsMask = if (isQPlus()) {

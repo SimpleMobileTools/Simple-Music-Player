@@ -8,22 +8,21 @@ import android.content.Context
 import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.widget.RemoteViews
+import androidx.media3.common.MediaMetadata
+import androidx.media3.session.MediaController
 import com.simplemobiletools.commons.extensions.applyColorFilter
 import com.simplemobiletools.commons.extensions.getColoredBitmap
 import com.simplemobiletools.commons.extensions.getLaunchIntent
-import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.SplashActivity
 import com.simplemobiletools.musicplayer.extensions.config
-import com.simplemobiletools.musicplayer.extensions.queueDAO
-import com.simplemobiletools.musicplayer.extensions.sendIntent
-import com.simplemobiletools.musicplayer.models.Track
-import com.simplemobiletools.musicplayer.services.MusicService
+import com.simplemobiletools.musicplayer.extensions.maybePreparePlayer
+import com.simplemobiletools.musicplayer.extensions.togglePlayback
+import com.simplemobiletools.musicplayer.playback.PlaybackService
 
 class MyWidgetProvider : AppWidgetProvider() {
+
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
         performUpdate(context)
     }
@@ -34,15 +33,13 @@ class MyWidgetProvider : AppWidgetProvider() {
             val views = getRemoteViews(appWidgetManager, context, it)
             updateColors(context, views)
             setupButtons(context, views)
-            updateSongInfo(views, MusicService.mCurrTrack)
-            updatePlayPauseButton(context, views, MusicService.isPlaying())
+            updateSongInfo(views, PlaybackService.currentMediaItem?.mediaMetadata)
+            updatePlayPauseButton(context, views, PlaybackService.isPlaying)
             appWidgetManager.updateAppWidget(it, views)
         }
     }
 
-    override fun onEnabled(context: Context) {
-        context.sendIntent(BROADCAST_STATUS)
-    }
+    override fun onEnabled(context: Context) = triggerUpdate(context)
 
     override fun onReceive(context: Context, intent: Intent) {
         when (val action = intent.action) {
@@ -52,29 +49,39 @@ class MyWidgetProvider : AppWidgetProvider() {
         }
     }
 
+    override fun onAppWidgetOptionsChanged(context: Context, appWidgetManager: AppWidgetManager, widgetId: Int, newOptions: Bundle) = triggerUpdate(context)
+
     private fun handlePlayerControls(context: Context, action: String) {
-        if (MusicService.mCurrTrack == null) {
-            ensureBackgroundThread {
-                val queueItems = context.queueDAO.getAll()
-                Handler(Looper.getMainLooper()).post {
-                    if (queueItems.isEmpty()) {
-                        val intent = context.getLaunchIntent() ?: Intent(context, SplashActivity::class.java)
-                        intent.addFlags(FLAG_ACTIVITY_NEW_TASK)
-                        context.startActivity(intent)
-                    } else {
-                        context.sendIntent(action)
-                    }
+        maybePreparePlayer(context) { player, _ ->
+            if (player.currentMediaItem == null) {
+                val intent = context.getLaunchIntent() ?: Intent(context, SplashActivity::class.java)
+                intent.addFlags(FLAG_ACTIVITY_NEW_TASK)
+                context.startActivity(intent)
+            } else {
+                when (action) {
+                    NEXT -> player.seekToNextMediaItem()
+                    PREVIOUS -> player.seekToPreviousMediaItem()
+                    PLAYPAUSE -> player.togglePlayback()
                 }
             }
-        } else {
-            context.sendIntent(action)
         }
     }
 
-    override fun onAppWidgetOptionsChanged(context: Context, appWidgetManager: AppWidgetManager, widgetId: Int, newOptions: Bundle) {
+    private fun maybePreparePlayer(context: Context, callback: (player: MediaController, prepared: Boolean) -> Unit) {
+        SimpleMediaController.getInstance(context).withController {
+            maybePreparePlayer(context) { success ->
+                callback(this, success)
+            }
+        }
+    }
+
+    private fun triggerUpdate(context: Context) {
         performUpdate(context)
-        context.sendIntent(BROADCAST_STATUS)
-        super.onAppWidgetOptionsChanged(context, appWidgetManager, widgetId, newOptions)
+        maybePreparePlayer(context) { _, success ->
+            if (success) {
+                performUpdate(context)
+            }
+        }
     }
 
     private fun setupIntent(context: Context, views: RemoteViews, action: String, id: Int) {
@@ -90,7 +97,7 @@ class MyWidgetProvider : AppWidgetProvider() {
         views.setOnClickPendingIntent(id, pendingIntent)
     }
 
-    private fun updateSongInfo(views: RemoteViews, currSong: Track?) {
+    private fun updateSongInfo(views: RemoteViews, currSong: MediaMetadata?) {
         if (currSong != null) {
             views.setTextViewText(R.id.song_info_title, currSong.title)
             views.setTextViewText(R.id.song_info_artist, currSong.artist)

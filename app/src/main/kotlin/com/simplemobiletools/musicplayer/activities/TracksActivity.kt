@@ -29,27 +29,26 @@ import com.simplemobiletools.musicplayer.adapters.TracksAdapter.Companion.TYPE_T
 import com.simplemobiletools.musicplayer.adapters.TracksHeaderAdapter
 import com.simplemobiletools.musicplayer.dialogs.ChangeSortingDialog
 import com.simplemobiletools.musicplayer.dialogs.ExportPlaylistDialog
-import com.simplemobiletools.musicplayer.extensions.*
+import com.simplemobiletools.musicplayer.extensions.audioHelper
+import com.simplemobiletools.musicplayer.extensions.config
+import com.simplemobiletools.musicplayer.extensions.getFolderTracks
+import com.simplemobiletools.musicplayer.extensions.getMediaStoreIdFromPath
 import com.simplemobiletools.musicplayer.helpers.*
 import com.simplemobiletools.musicplayer.helpers.M3uExporter.ExportResult
 import com.simplemobiletools.musicplayer.models.*
-import com.simplemobiletools.musicplayer.services.MusicService
 import kotlinx.android.synthetic.main.activity_tracks.*
 import kotlinx.android.synthetic.main.view_current_track_bar.current_track_bar
 import org.greenrobot.eventbus.EventBus
-import org.greenrobot.eventbus.Subscribe
-import org.greenrobot.eventbus.ThreadMode
 import java.io.OutputStream
 
 // this activity is used for displaying Playlist and Folder tracks, also Album tracks with a possible album header at the top
 // Artists -> Albums -> Tracks
-class TracksActivity : SimpleActivity() {
+class TracksActivity : SimpleMusicActivity() {
     private val PICK_EXPORT_FILE_INTENT = 2
 
     private var isSearchOpen = false
     private var searchMenuItem: MenuItem? = null
     private var tracksIgnoringSearch = ArrayList<Track>()
-    private var bus: EventBus? = null
     private var playlist: Playlist? = null
     private var folder: String? = null
     private var sourceType = 0
@@ -65,9 +64,6 @@ class TracksActivity : SimpleActivity() {
         updateMaterialActivityViews(tracks_coordinator, tracks_holder, useTransparentNavigation = true, useTopSearchMenu = false)
         setupMaterialScrollListener(tracks_list, tracks_toolbar)
 
-        bus = EventBus.getDefault()
-        bus!!.register(this)
-
         val properPrimaryColor = getProperPrimaryColor()
         tracks_fastscroller.updateColors(properPrimaryColor)
         tracks_placeholder.setTextColor(getProperTextColor())
@@ -77,30 +73,13 @@ class TracksActivity : SimpleActivity() {
             addFolderToPlaylist()
         }
 
-        current_track_bar.setOnClickListener {
-            hideKeyboard()
-            handleNotificationPermission { granted ->
-                if (granted) {
-                    Intent(this, TrackActivity::class.java).apply {
-                        startActivity(this)
-                    }
-                } else {
-                    PermissionRequiredDialog(this, R.string.allow_notifications_music_player, { openNotificationSettings() })
-                }
-            }
-        }
+        setupCurrentTrackBar(current_track_bar)
     }
 
     override fun onResume() {
         super.onResume()
-        updateCurrentTrackBar()
         setupToolbar(tracks_toolbar, NavigationIcon.Arrow, searchMenuItem = searchMenuItem)
         refreshTracks()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        bus?.unregister(this)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, resultData: Intent?) {
@@ -263,7 +242,7 @@ class TracksActivity : SimpleActivity() {
                             sourceType = sourceType,
                             folder = folder,
                             playlist = playlist,
-                            tracks = tracks
+                            items = tracks
                         ) {
                             itemClicked(it as Track)
                         }.apply {
@@ -284,7 +263,7 @@ class TracksActivity : SimpleActivity() {
     private fun showSortingDialog() {
         ChangeSortingDialog(this, ACTIVITY_PLAYLIST_FOLDER, playlist, folder) {
             val adapter = tracks_list.adapter as? TracksAdapter ?: return@ChangeSortingDialog
-            val tracks = adapter.tracks
+            val tracks = adapter.items
             val sorting = when (sourceType) {
                 TYPE_PLAYLIST -> config.getProperPlaylistSorting(playlist?.id ?: -1)
                 TYPE_TRACKS -> config.trackSorting
@@ -354,7 +333,7 @@ class TracksActivity : SimpleActivity() {
     }
 
     private fun onSearchOpened() {
-        tracksIgnoringSearch = (tracks_list.adapter as? TracksAdapter)?.tracks ?: return
+        tracksIgnoringSearch = (tracks_list.adapter as? TracksAdapter)?.items ?: return
     }
 
     private fun onSearchClosed() {
@@ -381,29 +360,16 @@ class TracksActivity : SimpleActivity() {
         }
     }
 
-    private fun updateCurrentTrackBar() {
-        current_track_bar.updateColors()
-        current_track_bar.updateCurrentTrack(MusicService.mCurrTrack)
-        current_track_bar.updateTrackState(MusicService.isPlaying())
-    }
-
     private fun itemClicked(track: Track) {
         val tracks = when (sourceType) {
             TYPE_ALBUM -> (tracks_list.adapter as? TracksHeaderAdapter)?.items?.filterIsInstance<Track>()
-            else -> (tracks_list.adapter as? TracksAdapter)?.tracks
+            else -> (tracks_list.adapter as? TracksAdapter)?.items
         } ?: ArrayList()
 
         handleNotificationPermission { granted ->
             if (granted) {
-                resetQueueItems(tracks) {
-                    hideKeyboard()
-                    Intent(this, TrackActivity::class.java).apply {
-                        putExtra(TRACK, Gson().toJson(track))
-                        putExtra(RESTART_PLAYER, true)
-                        startActivity(this)
-                    }
-
-                }
+                val startIndex = tracks.indexOf(track)
+                prepareAndPlay(tracks, startIndex)
             } else {
                 PermissionRequiredDialog(this, R.string.allow_notifications_music_player, { openNotificationSettings() })
             }
@@ -441,7 +407,7 @@ class TracksActivity : SimpleActivity() {
     }
 
     private fun exportPlaylistTo(outputStream: OutputStream?) {
-        val tracks = (tracks_list.adapter as TracksAdapter).tracks
+        val tracks = (tracks_list.adapter as TracksAdapter).items
 
         if (tracks.isEmpty()) {
             toast(R.string.no_entries_for_exporting)
@@ -457,15 +423,5 @@ class TracksActivity : SimpleActivity() {
                 }
             )
         }
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    fun trackChangedEvent(event: Events.TrackChanged) {
-        current_track_bar.updateCurrentTrack(event.track)
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    fun trackStateChanged(event: Events.TrackStateChanged) {
-        current_track_bar.updateTrackState(event.isPlaying)
     }
 }

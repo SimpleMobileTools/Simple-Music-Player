@@ -13,7 +13,6 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.viewpager.widget.ViewPager
 import com.simplemobiletools.commons.dialogs.FilePickerDialog
-import com.simplemobiletools.commons.dialogs.PermissionRequiredDialog
 import com.simplemobiletools.commons.dialogs.RadioGroupDialog
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.*
@@ -31,7 +30,7 @@ import com.simplemobiletools.musicplayer.fragments.MyViewPagerFragment
 import com.simplemobiletools.musicplayer.helpers.*
 import com.simplemobiletools.musicplayer.helpers.M3uImporter.ImportResult
 import com.simplemobiletools.musicplayer.models.Events
-import com.simplemobiletools.musicplayer.services.MusicService
+import com.simplemobiletools.musicplayer.playback.CustomCommands
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_albums.albums_fragment_holder
 import kotlinx.android.synthetic.main.fragment_artists.artists_fragment_holder
@@ -46,7 +45,7 @@ import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import java.io.FileOutputStream
 
-class MainActivity : SimpleActivity() {
+class MainActivity : SimpleMusicActivity() {
     private val PICK_IMPORT_SOURCE_INTENT = 1
 
     private var bus: EventBus? = null
@@ -76,12 +75,13 @@ class MainActivity : SimpleActivity() {
         volumeControlStream = AudioManager.STREAM_MUSIC
         checkWhatsNewDialog()
         checkAppOnSDCard()
-
-        if (config.appRunCount == 1) {
-            config.wereTrackFoldersAdded = true
-        } else if (config.appRunCount > 5) {
-            // assume old users have it created already
-            config.wasAllTracksPlaylistCreated = true
+        withPlayer {
+            maybePreparePlayer(context = this@MainActivity) { success ->
+                if (success) {
+                    updateCurrentTrackBar()
+                    broadcastUpdateWidgetState()
+                }
+            }
         }
     }
 
@@ -100,7 +100,6 @@ class MainActivity : SimpleActivity() {
         val properPrimaryColor = getProperPrimaryColor()
         sleep_timer_holder.background = ColorDrawable(getProperBackgroundColor())
         sleep_timer_stop.applyColorFilter(properTextColor)
-        updateCurrentTrackBar()
         loading_progress_bar.setIndicatorColor(properPrimaryColor)
         loading_progress_bar.trackColor = properPrimaryColor.adjustAlpha(LOWER_ALPHA)
 
@@ -194,26 +193,7 @@ class MainActivity : SimpleActivity() {
         initFragments()
         sleep_timer_stop.setOnClickListener { stopSleepTimer() }
 
-        current_track_bar.setOnClickListener {
-            handleNotificationPermission { granted ->
-                if (granted) {
-                    Intent(this, TrackActivity::class.java).apply {
-                        startActivity(this)
-                    }
-                } else {
-                    PermissionRequiredDialog(this, R.string.allow_notifications_music_player, { openNotificationSettings() })
-                }
-            }
-        }
-
-        if (MusicService.mCurrTrack == null) {
-            ensureBackgroundThread {
-                if (queueDAO.getAll().isNotEmpty()) {
-                    sendIntent(INIT_QUEUE)
-                }
-            }
-        }
-
+        setupCurrentTrackBar(current_track_bar)
         refreshAllFragments()
     }
 
@@ -231,6 +211,9 @@ class MainActivity : SimpleActivity() {
 
                     if (complete) {
                         loading_progress_bar.hide()
+                        withPlayer {
+                            sendCommand(CustomCommands.RELOAD_CONTENT)
+                        }
                     }
                 }
             }
@@ -357,12 +340,6 @@ class MainActivity : SimpleActivity() {
 
     private fun showSortingDialog() {
         getCurrentFragment()?.onSortOpen(this)
-    }
-
-    private fun updateCurrentTrackBar() {
-        current_track_bar.updateColors()
-        current_track_bar.updateCurrentTrack(MusicService.mCurrTrack)
-        current_track_bar.updateTrackState(MusicService.isPlaying())
     }
 
     private fun createNewPlaylist() {
@@ -526,12 +503,16 @@ class MainActivity : SimpleActivity() {
 
     private fun startSleepTimer() {
         sleep_timer_holder.fadeIn()
-        sendIntent(START_SLEEP_TIMER)
+        withPlayer {
+            sendCommand(CustomCommands.TOGGLE_SLEEP_TIMER)
+        }
     }
 
     private fun stopSleepTimer() {
-        sendIntent(STOP_SLEEP_TIMER)
         sleep_timer_holder.fadeOut()
+        withPlayer {
+            sendCommand(CustomCommands.TOGGLE_SLEEP_TIMER)
+        }
     }
 
     private fun getAllFragments() = arrayListOf(
@@ -542,21 +523,6 @@ class MainActivity : SimpleActivity() {
         tracks_fragment_holder,
         genres_fragment_holder
     )
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    fun trackChangedEvent(event: Events.TrackChanged) {
-        current_track_bar.updateCurrentTrack(event.track)
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    fun trackStateChanged(event: Events.TrackStateChanged) {
-        current_track_bar.updateTrackState(event.isPlaying)
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    fun noStoragePermission(event: Events.NoStoragePermission) {
-        toast(R.string.no_storage_permissions)
-    }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun sleepTimerChanged(event: Events.SleepTimerChanged) {

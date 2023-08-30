@@ -17,6 +17,10 @@
         android:name="android.permission.USE_FINGERPRINT"
         tools:node="remove" />
 
+    <uses-permission
+        android:name="android.permission.ACCESS_NETWORK_STATE"
+        tools:node="remove" />
+
     <uses-feature
         android:name="android.hardware.faketouch"
         android:required="false" />
@@ -36,6 +40,10 @@
         android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher"
         android:theme="@style/AppTheme">
+
+        <meta-data
+            android:name="com.google.android.gms.car.application"
+            android:resource="@xml/automotive_app_desc" />
 
         <activity
             android:name=".activities.SplashActivity"
@@ -152,29 +160,12 @@
             android:parentActivityName=".activities.TrackActivity" />
 
         <service
-            android:name=".services.MusicService"
+            android:name=".playback.PlaybackService"
             android:exported="true"
             android:foregroundServiceType="mediaPlayback">
             <intent-filter>
-                <action android:name="com.simplemobiletools.musicplayer.action.INIT" />
-                <action android:name="com.simplemobiletools.musicplayer.action.INIT_PATH" />
-                <action android:name="com.simplemobiletools.musicplayer.action.INIT_QUEUE" />
-                <action android:name="com.simplemobiletools.musicplayer.action.FINISH" />
-                <action android:name="com.simplemobiletools.musicplayer.action.FINISH_IF_NOT_PLAYING" />
-                <action android:name="com.simplemobiletools.musicplayer.action.PREVIOUS" />
-                <action android:name="com.simplemobiletools.musicplayer.action.PAUSE" />
-                <action android:name="com.simplemobiletools.musicplayer.action.PLAYPAUSE" />
-                <action android:name="com.simplemobiletools.musicplayer.action.NEXT" />
-                <action android:name="com.simplemobiletools.musicplayer.action.EDIT" />
-                <action android:name="com.simplemobiletools.musicplayer.action.PLAY_TRACK" />
-                <action android:name="com.simplemobiletools.musicplayer.action.REFRESH_LIST" />
-                <action android:name="com.simplemobiletools.musicplayer.action.UPDATE_NEXT_TRACK" />
-                <action android:name="com.simplemobiletools.musicplayer.action.SET_PROGRESS" />
-                <action android:name="com.simplemobiletools.musicplayer.action.SKIP_BACKWARD" />
-                <action android:name="com.simplemobiletools.musicplayer.action.SKIP_FORWARD" />
-                <action android:name="com.simplemobiletools.musicplayer.action.SET_PLAYBACK_SPEED" />
-                <action android:name="com.simplemobiletools.musicplayer.action.BROADCAST_STATUS" />
-                <action android:name="com.simplemobiletools.musicplayer.action.UPDATE_QUEUE_SIZE" />
+                <action android:name="androidx.media3.session.MediaLibraryService" />
+                <action android:name="android.media.browse.MediaBrowserService" />
             </intent-filter>
         </service>
 
@@ -191,33 +182,10 @@
         </receiver>
 
         <receiver
-            android:name=".receivers.RemoteControlReceiver"
-            android:enabled="true"
+            android:name="androidx.media3.session.MediaButtonReceiver"
             android:exported="true">
-            <intent-filter android:priority="999">
+            <intent-filter>
                 <action android:name="android.intent.action.MEDIA_BUTTON" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </receiver>
-
-        <receiver
-            android:name=".receivers.HeadsetPlugReceiver"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.ACTION_HEADSET_PLUG" />
-            </intent-filter>
-        </receiver>
-
-        <receiver
-            android:name=".receivers.ControlActionsListener"
-            android:exported="false" />
-
-        <receiver
-            android:name=".receivers.NotificationDismissedReceiver"
-            android:enabled="true"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="com.simplemobiletools.musicplayer.action.NOTIFICATION_DISMISSED" />
             </intent-filter>
         </receiver>
 

@@ -1,15 +1,9 @@
 package com.simplemobiletools.musicplayer.adapters
 
-import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.CenterCrop
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import com.bumptech.glide.request.RequestOptions
 import com.qtalk.recyclerviewfastscroller.RecyclerViewFastScroller
 import com.simplemobiletools.commons.activities.BaseSimpleActivity
-import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
 import com.simplemobiletools.commons.dialogs.ConfirmationDialog
 import com.simplemobiletools.commons.extensions.highlightTextPart
 import com.simplemobiletools.commons.extensions.setupViewBackground
@@ -24,32 +18,20 @@ import kotlinx.android.synthetic.main.item_album.view.album_frame
 import kotlinx.android.synthetic.main.item_album.view.album_title
 import kotlinx.android.synthetic.main.item_album.view.album_tracks
 
-class AlbumsAdapter(activity: BaseSimpleActivity, var albums: ArrayList<Album>, recyclerView: MyRecyclerView, itemClick: (Any) -> Unit) :
-    MyRecyclerViewAdapter(activity, recyclerView, itemClick), RecyclerViewFastScroller.OnPopupTextUpdate {
-
-    private var textToHighlight = ""
-    private val placeholderBig = resources.getBiggerPlaceholder(textColor)
-    private val cornerRadius = resources.getDimension(R.dimen.rounded_corner_radius_small).toInt()
-
-    init {
-        setupDragListener(true)
-    }
+class AlbumsAdapter(activity: BaseSimpleActivity, items: ArrayList<Album>, recyclerView: MyRecyclerView, itemClick: (Any) -> Unit) :
+    BaseMusicAdapter<Album>(items, activity, recyclerView, itemClick), RecyclerViewFastScroller.OnPopupTextUpdate {
 
     override fun getActionMenuId() = R.menu.cab_albums
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = createViewHolder(R.layout.item_album, parent)
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val album = albums.getOrNull(position) ?: return
-        holder.bindView(album, true, true) { itemView, layoutPosition ->
+        val album = items.getOrNull(position) ?: return
+        holder.bindView(album, allowSingleClick = true, allowLongClick = true) { itemView, _ ->
             setupView(itemView, album)
         }
         bindViewHolder(holder)
     }
-
-    override fun getItemCount() = albums.size
-
-    override fun prepareActionMode(menu: Menu) {}
 
     override fun actionItemPressed(id: Int) {
         if (selectedKeys.isEmpty()) {
@@ -65,57 +47,25 @@ class AlbumsAdapter(activity: BaseSimpleActivity, var albums: ArrayList<Album>, 
         }
     }
 
-    override fun getSelectableItemCount() = albums.size
-
-    override fun getIsItemSelectable(position: Int) = true
-
-    override fun getItemSelectionKey(position: Int) = albums.getOrNull(position)?.hashCode()
-
-    override fun getItemKeyPosition(key: Int) = albums.indexOfFirst { it.hashCode() == key }
-
-    override fun onActionModeCreated() {}
-
-    override fun onActionModeDestroyed() {}
-
-    private fun addToPlaylist() {
-        ensureBackgroundThread {
-            val allSelectedTracks = getAllSelectedTracks()
-            activity.runOnUiThread {
-                activity.addTracksToPlaylist(allSelectedTracks) {
-                    finishActMode()
-                    notifyDataSetChanged()
-                }
-            }
-        }
-    }
-
-    private fun addToQueue() {
-        ensureBackgroundThread {
-            activity.addTracksToQueue(getAllSelectedTracks()) {
-                finishActMode()
-            }
-        }
-    }
-
-    private fun getAllSelectedTracks(): ArrayList<Track> {
-        return activity.audioHelper.getAlbumTracks(getSelectedAlbums())
+    override fun getSelectedTracks(): List<Track> {
+        return ctx.audioHelper.getAlbumTracks(getSelectedItems())
     }
 
     private fun askConfirmDelete() {
-        ConfirmationDialog(activity) {
+        ConfirmationDialog(ctx) {
             ensureBackgroundThread {
-                val selectedAlbums = getSelectedAlbums()
-                val positions = selectedAlbums.mapNotNull { album -> albums.indexOfFirstOrNull { it.id == album.id } } as ArrayList<Int>
-                val tracks = activity.audioHelper.getAlbumTracks(selectedAlbums)
-                activity.audioHelper.deleteAlbums(selectedAlbums)
+                val selectedAlbums = getSelectedItems()
+                val positions = selectedAlbums.mapNotNull { album -> items.indexOfFirstOrNull { it.id == album.id } } as ArrayList<Int>
+                val tracks = ctx.audioHelper.getAlbumTracks(selectedAlbums)
+                ctx.audioHelper.deleteAlbums(selectedAlbums)
 
-                activity.deleteTracks(tracks) {
-                    activity.runOnUiThread {
+                ctx.deleteTracks(tracks) {
+                    ctx.runOnUiThread {
                         positions.sortDescending()
                         removeSelectedItems(positions)
                         positions.forEach {
-                            if (albums.size > it) {
-                                albums.removeAt(it)
+                            if (items.size > it) {
+                                items.removeAt(it)
                             }
                         }
                     }
@@ -124,29 +74,9 @@ class AlbumsAdapter(activity: BaseSimpleActivity, var albums: ArrayList<Album>, 
         }
     }
 
-    private fun shareFiles() {
-        ensureBackgroundThread {
-            activity.shareTracks(getAllSelectedTracks())
-        }
-    }
-
-    private fun getSelectedAlbums(): List<Album> = albums.filter { selectedKeys.contains(it.hashCode()) }.toList()
-
-    fun updateItems(newItems: ArrayList<Album>, highlightText: String = "", forceUpdate: Boolean = false) {
-        if (forceUpdate || newItems.hashCode() != albums.hashCode()) {
-            albums = newItems.clone() as ArrayList<Album>
-            textToHighlight = highlightText
-            notifyDataSetChanged()
-            finishActMode()
-        } else if (textToHighlight != highlightText) {
-            textToHighlight = highlightText
-            notifyDataSetChanged()
-        }
-    }
-
     private fun setupView(view: View, album: Album) {
         view.apply {
-            setupViewBackground(activity)
+            setupViewBackground(ctx)
             album_frame?.isSelected = selectedKeys.contains(album.hashCode())
             album_title.text = if (textToHighlight.isEmpty()) album.title else album.title.highlightTextPart(textToHighlight, properPrimaryColor)
             album_title.setTextColor(textColor)
@@ -155,20 +85,11 @@ class AlbumsAdapter(activity: BaseSimpleActivity, var albums: ArrayList<Album>, 
             album_tracks.text = tracks
             album_tracks.setTextColor(textColor)
 
-            activity.getAlbumCoverArt(album) { coverArt ->
-                val options = RequestOptions()
-                    .error(placeholderBig)
-                    .transform(CenterCrop(), RoundedCorners(cornerRadius))
-
-                activity.ensureActivityNotDestroyed {
-                    Glide.with(activity)
-                        .load(coverArt)
-                        .apply(options)
-                        .into(findViewById(R.id.album_image))
-                }
+            ctx.getAlbumCoverArt(album) { coverArt ->
+                loadImage(findViewById(R.id.album_image), coverArt, placeholderBig)
             }
         }
     }
 
-    override fun onChange(position: Int) = albums.getOrNull(position)?.getBubbleText(activity.config.albumSorting) ?: ""
+    override fun onChange(position: Int) = items.getOrNull(position)?.getBubbleText(ctx.config.albumSorting) ?: ""
 }

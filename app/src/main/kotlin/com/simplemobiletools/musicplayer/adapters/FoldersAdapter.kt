@@ -1,19 +1,15 @@
 package com.simplemobiletools.musicplayer.adapters
 
-import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import com.qtalk.recyclerviewfastscroller.RecyclerViewFastScroller
 import com.simplemobiletools.commons.activities.BaseSimpleActivity
-import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
 import com.simplemobiletools.commons.extensions.highlightTextPart
 import com.simplemobiletools.commons.extensions.setupViewBackground
-import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.extensions.audioHelper
 import com.simplemobiletools.musicplayer.extensions.config
-import com.simplemobiletools.musicplayer.extensions.shareTracks
 import com.simplemobiletools.musicplayer.models.Events
 import com.simplemobiletools.musicplayer.models.Folder
 import com.simplemobiletools.musicplayer.models.Track
@@ -23,30 +19,20 @@ import kotlinx.android.synthetic.main.item_folder.view.folder_tracks
 import org.greenrobot.eventbus.EventBus
 
 class FoldersAdapter(
-    activity: BaseSimpleActivity, var folders: ArrayList<Folder>, recyclerView: MyRecyclerView, itemClick: (Any) -> Unit
-) : MyRecyclerViewAdapter(activity, recyclerView, itemClick), RecyclerViewFastScroller.OnPopupTextUpdate {
-
-    private var textToHighlight = ""
-
-    init {
-        setupDragListener(true)
-    }
+    activity: BaseSimpleActivity, items: ArrayList<Folder>, recyclerView: MyRecyclerView, itemClick: (Any) -> Unit
+) : BaseMusicAdapter<Folder>(items, activity, recyclerView, itemClick), RecyclerViewFastScroller.OnPopupTextUpdate {
 
     override fun getActionMenuId() = R.menu.cab_folders
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = createViewHolder(R.layout.item_folder, parent)
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val folder = folders.getOrNull(position) ?: return
-        holder.bindView(folder, true, true) { itemView, layoutPosition ->
+        val folder = items.getOrNull(position) ?: return
+        holder.bindView(folder, allowSingleClick = true, allowLongClick = true) { itemView, _ ->
             setupView(itemView, folder)
         }
         bindViewHolder(holder)
     }
-
-    override fun getItemCount() = folders.size
-
-    override fun prepareActionMode(menu: Menu) {}
 
     override fun actionItemPressed(id: Int) {
         when (id) {
@@ -55,55 +41,27 @@ class FoldersAdapter(
         }
     }
 
-    override fun getSelectableItemCount() = folders.size
-
-    override fun getIsItemSelectable(position: Int) = true
-
-    override fun getItemSelectionKey(position: Int) = folders.getOrNull(position)?.hashCode()
-
-    override fun getItemKeyPosition(key: Int) = folders.indexOfFirst { it.hashCode() == key }
-
-    override fun onActionModeCreated() {}
-
-    override fun onActionModeDestroyed() {}
-
     private fun excludeFolders() {
-        getSelectedFolders().forEach {
-            activity.config.addExcludedFolder(it.path)
+        getSelectedItems().forEach {
+            ctx.config.addExcludedFolder(it.path)
         }
 
         finishActMode()
         EventBus.getDefault().post(Events.RefreshFragments())
     }
 
-    private fun shareFiles() {
-        ensureBackgroundThread {
-            val tracks = arrayListOf<Track>()
-            getSelectedFolders().forEach {
-                tracks += activity.audioHelper.getFolderTracks(it.title)
-            }
-
-            activity.shareTracks(tracks)
+    override fun getSelectedTracks(): List<Track> {
+        val tracks = arrayListOf<Track>()
+        getSelectedItems().forEach {
+            tracks += ctx.audioHelper.getFolderTracks(it.title)
         }
-    }
 
-    private fun getSelectedFolders(): List<Folder> = folders.filter { selectedKeys.contains(it.hashCode()) }.toList()
-
-    fun updateItems(newItems: ArrayList<Folder>, highlightText: String = "", forceUpdate: Boolean = false) {
-        if (forceUpdate || newItems.hashCode() != folders.hashCode()) {
-            folders = newItems.clone() as ArrayList<Folder>
-            textToHighlight = highlightText
-            notifyDataSetChanged()
-            finishActMode()
-        } else if (textToHighlight != highlightText) {
-            textToHighlight = highlightText
-            notifyDataSetChanged()
-        }
+        return tracks
     }
 
     private fun setupView(view: View, folder: Folder) {
         view.apply {
-            setupViewBackground(activity)
+            setupViewBackground(ctx)
             folder_frame?.isSelected = selectedKeys.contains(folder.hashCode())
             folder_title.text = if (textToHighlight.isEmpty()) folder.title else folder.title.highlightTextPart(textToHighlight, properPrimaryColor)
             folder_title.setTextColor(textColor)
@@ -114,5 +72,5 @@ class FoldersAdapter(
         }
     }
 
-    override fun onChange(position: Int) = folders.getOrNull(position)?.getBubbleText(activity.config.folderSorting) ?: ""
+    override fun onChange(position: Int) = items.getOrNull(position)?.getBubbleText(ctx.config.folderSorting) ?: ""
 }

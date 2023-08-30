@@ -12,6 +12,7 @@ import com.simplemobiletools.commons.extensions.getFormattedDuration
 import com.simplemobiletools.commons.helpers.AlphanumericComparator
 import com.simplemobiletools.commons.helpers.SORT_DESCENDING
 import com.simplemobiletools.musicplayer.extensions.sortSafely
+import com.simplemobiletools.musicplayer.extensions.toMediaItem
 import com.simplemobiletools.musicplayer.helpers.*
 import java.io.File
 import java.io.Serializable
@@ -93,6 +94,10 @@ data class Track(
     } else {
         ContentUris.withAppendedId(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, mediaStoreId)
     }
+
+    fun isCurrent() = flags and FLAG_IS_CURRENT != 0
 }
 
 fun ArrayList<Track>.sortSafely(sorting: Int) = sortSafely(Track.getComparator(sorting))
+
+fun Collection<Track>.toMediaItems() = map { it.toMediaItem() }

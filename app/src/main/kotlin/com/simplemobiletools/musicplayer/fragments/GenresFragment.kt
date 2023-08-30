@@ -66,7 +66,7 @@ class GenresFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
                     genres_list.scheduleLayoutAnimation()
                 }
             } else {
-                val oldItems = (adapter as GenresAdapter).genres
+                val oldItems = (adapter as GenresAdapter).items
                 if (oldItems.sortedBy { it.id }.hashCode() != genres.sortedBy { it.id }.hashCode()) {
                     adapter.updateItems(genres)
                 }

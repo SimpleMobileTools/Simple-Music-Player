@@ -1,12 +1,10 @@
 package com.simplemobiletools.musicplayer.extensions
 
-import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.media.MediaMetadataRetriever
+import android.graphics.drawable.Drawable
 import android.media.ThumbnailUtils
 import android.net.Uri
 import android.os.Handler
@@ -14,31 +12,25 @@ import android.os.Looper
 import android.provider.MediaStore
 import android.provider.MediaStore.Audio
 import android.util.Size
+import androidx.core.net.toUri
+import androidx.media3.common.Player
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.request.target.Target
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
-import com.simplemobiletools.commons.helpers.isOreoPlus
 import com.simplemobiletools.commons.helpers.isQPlus
 import com.simplemobiletools.musicplayer.databases.SongsDatabase
 import com.simplemobiletools.musicplayer.helpers.*
 import com.simplemobiletools.musicplayer.interfaces.*
-import com.simplemobiletools.musicplayer.models.*
-import com.simplemobiletools.musicplayer.services.MusicService
+import com.simplemobiletools.musicplayer.models.Album
+import com.simplemobiletools.musicplayer.models.Artist
+import com.simplemobiletools.musicplayer.models.Genre
+import com.simplemobiletools.musicplayer.models.Track
 import java.io.File
-
-@SuppressLint("NewApi")
-fun Context.sendIntent(action: String) {
-    Intent(this, MusicService::class.java).apply {
-        this.action = action
-        try {
-            if (isOreoPlus()) {
-                startForegroundService(this)
-            } else {
-                startService(this)
-            }
-        } catch (ignored: Exception) {
-        }
-    }
-}
 
 val Context.config: Config get() = Config.newInstance(applicationContext)
 
@@ -66,59 +58,6 @@ fun Context.broadcastUpdateWidgetState() {
     Intent(this, MyWidgetProvider::class.java).apply {
         action = TRACK_STATE_CHANGED
         sendBroadcast(this)
-    }
-}
-
-fun Context.resetQueueItems(newTracks: List<Track>, callback: () -> Unit) {
-    ensureBackgroundThread {
-        queueDAO.deleteAllItems()
-        addQueueItems(newTracks, callback)
-    }
-}
-
-fun Context.addQueueItems(newTracks: List<Track>, callback: () -> Unit) {
-    ensureBackgroundThread {
-        val itemsToInsert = ArrayList<QueueItem>()
-        var order = 0
-        newTracks.forEach {
-            val queueItem = QueueItem(it.mediaStoreId, order++, false, 0)
-            itemsToInsert.add(queueItem)
-        }
-
-        audioHelper.insertTracks(newTracks)
-        queueDAO.insertAll(itemsToInsert)
-        sendIntent(UPDATE_QUEUE_SIZE)
-        callback()
-    }
-}
-
-fun Context.addNextQueueItem(nextTrack: Track, callback: () -> Unit) {
-    ensureBackgroundThread {
-        val tracksInQueue = queueDAO.getAll().toMutableList()
-        var order = 0
-        for (index in 0..tracksInQueue.size) {
-            val track = tracksInQueue[index]
-            track.trackOrder = order++
-            if (track.trackId == MusicService.mCurrTrack!!.mediaStoreId) {
-                val currentTrackPosition = tracksInQueue.indexOf(track)
-                tracksInQueue.add(currentTrackPosition + 1, QueueItem(nextTrack.mediaStoreId, order + 1, false, 0))
-            }
-        }
-
-        queueDAO.deleteAllItems()
-        queueDAO.insertAll(tracksInQueue)
-        sendIntent(UPDATE_QUEUE_SIZE)
-        callback()
-    }
-}
-
-fun Context.removeQueueItems(tracks: List<Track>, callback: (() -> Unit)? = null) {
-    ensureBackgroundThread {
-        tracks.forEach {
-            queueDAO.removeQueueItem(it.mediaStoreId)
-            MusicService.mTracks.remove(it)
-        }
-        callback?.invoke()
     }
 }
 
@@ -224,8 +163,14 @@ fun Context.getAlbumCoverArt(album: Album, callback: (coverArt: Any?) -> Unit) {
 
 fun Context.getGenreCoverArt(genre: Genre, callback: (coverArt: Any?) -> Unit) {
     ensureBackgroundThread {
-        val track = audioHelper.getGenreTracks(genre.id).firstOrNull()
-        getTrackCoverArt(track, callback)
+        if (genre.albumArt.isEmpty()) {
+            val track = audioHelper.getGenreTracks(genre.id).firstOrNull()
+            getTrackCoverArt(track, callback)
+        } else {
+            Handler(Looper.getMainLooper()).post {
+                callback(genre.albumArt)
+            }
+        }
     }
 }
 
@@ -253,77 +198,94 @@ fun Context.loadTrackCoverArt(track: Track?): Bitmap? {
         return null
     }
 
-    val path = track.path
-    if (path.isNotEmpty() && File(path).exists()) {
-        val coverArtHeight = resources.getCoverArtHeight()
+    val artworkUri = track.coverArt
+    if (artworkUri.startsWith("content://")) {
         try {
-            try {
-                val mediaMetadataRetriever = MediaMetadataRetriever()
-                mediaMetadataRetriever.setDataSource(path)
-                val rawArt = mediaMetadataRetriever.embeddedPicture
-                if (rawArt != null) {
-                    val options = BitmapFactory.Options()
-                    val bitmap = BitmapFactory.decodeByteArray(rawArt, 0, rawArt.size, options)
-                    if (bitmap != null) {
-                        val resultBitmap = if (bitmap.height > coverArtHeight * 2) {
-                            val ratio = bitmap.width / bitmap.height.toFloat()
-                            Bitmap.createScaledBitmap(bitmap, (coverArtHeight * ratio).toInt(), coverArtHeight, false)
-                        } else {
-                            bitmap
-                        }
-
-                        return resultBitmap
-                    }
-                }
-            } catch (ignored: OutOfMemoryError) {
-            } catch (ignored: Exception) {
-            }
-
-            val trackParentDirectory = File(path).parent?.trimEnd('/')
-            val albumArtFiles = arrayListOf("folder.jpg", "albumart.jpg", "cover.jpg")
-            albumArtFiles.forEach {
-                val albumArtFilePath = "$trackParentDirectory/$it"
-                if (File(albumArtFilePath).exists()) {
-                    val bitmap = BitmapFactory.decodeFile(albumArtFilePath)
-                    if (bitmap != null) {
-                        val resultBitmap = if (bitmap.height > coverArtHeight * 2) {
-                            val ratio = bitmap.width / bitmap.height.toFloat()
-                            Bitmap.createScaledBitmap(bitmap, (coverArtHeight * ratio).toInt(), coverArtHeight, false)
-                        } else {
-                            bitmap
-                        }
-
-                        return resultBitmap
-                    }
-                }
-            }
+            return MediaStore.Images.Media.getBitmap(contentResolver, artworkUri.toUri())
         } catch (ignored: Exception) {
-        } catch (ignored: Error) {
         }
     }
 
     if (isQPlus()) {
-        if (track.coverArt.startsWith("content://")) {
+        val coverArtHeight = resources.getCoverArtHeight()
+        val size = Size(coverArtHeight, coverArtHeight)
+        if (artworkUri.startsWith("content://")) {
             try {
-                return MediaStore.Images.Media.getBitmap(contentResolver, Uri.parse(track.coverArt))
+                return contentResolver.loadThumbnail(artworkUri.toUri(), size, null)
             } catch (ignored: Exception) {
             }
         }
 
-        val size = Size(512, 512)
-        if (path.startsWith("content://")) {
+        val path = track.path
+        if (path.isNotEmpty() && File(path).exists()) {
             try {
-                return contentResolver.loadThumbnail(Uri.parse(path), size, null)
+                return ThumbnailUtils.createAudioThumbnail(File(track.path), size, null)
+            } catch (ignored: OutOfMemoryError) {
             } catch (ignored: Exception) {
             }
-        }
-
-        try {
-            // ThumbnailUtils.createAudioThumbnail() has better logic for searching thumbnails
-            return ThumbnailUtils.createAudioThumbnail(File(path), size, null)
-        } catch (ignored: Exception) {
         }
     }
 
     return null
+}
+
+fun Context.loadGlideResource(
+    model: Any?,
+    options: RequestOptions,
+    size: Size,
+    onLoadFailed: (e: Exception?) -> Unit,
+    onResourceReady: (resource: Drawable) -> Unit,
+) {
+    ensureBackgroundThread {
+        try {
+            Glide.with(this)
+                .load(model)
+                .apply(options)
+                .listener(object : RequestListener<Drawable> {
+                    override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
+                        onLoadFailed(e)
+                        return true
+                    }
+
+                    override fun onResourceReady(
+                        resource: Drawable,
+                        model: Any?,
+                        target: Target<Drawable>?,
+                        dataSource: DataSource?,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        onResourceReady(resource)
+                        return false
+                    }
+                })
+                .submit(size.width, size.height)
+                .get()
+        } catch (e: Exception) {
+            onLoadFailed(e)
+        }
+    }
+}
+
+fun Context.getTrackFromUri(uri: Uri?, callback: (track: Track) -> Unit) {
+    if (uri == null) {
+        return
+    }
+
+    ensureBackgroundThread {
+        val path = getRealPathFromURI(uri) ?: return@ensureBackgroundThread
+        val allTracks = audioHelper.getAllTracks()
+        val track = allTracks.find { it.path == path } ?: RoomHelper(this).getTrackFromPath(path) ?: return@ensureBackgroundThread
+        callback(track)
+    }
+}
+
+fun Context.isTabVisible(flag: Int) = config.showTabs and flag != 0
+
+fun Context.getPlaybackSetting(repeatMode: @Player.RepeatMode Int): PlaybackSetting {
+    return when (repeatMode) {
+        Player.REPEAT_MODE_OFF -> PlaybackSetting.REPEAT_OFF
+        Player.REPEAT_MODE_ONE -> PlaybackSetting.REPEAT_TRACK
+        Player.REPEAT_MODE_ALL -> PlaybackSetting.REPEAT_PLAYLIST
+        else -> config.playbackSetting
+    }
 }

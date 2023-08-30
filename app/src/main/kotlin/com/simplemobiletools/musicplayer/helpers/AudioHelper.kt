@@ -1,13 +1,18 @@
 package com.simplemobiletools.musicplayer.helpers
 
 import android.content.Context
+import com.simplemobiletools.commons.extensions.addBit
+import com.simplemobiletools.commons.extensions.getParentPath
+import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.musicplayer.extensions.*
+import com.simplemobiletools.musicplayer.inlines.indexOfFirstOrNull
 import com.simplemobiletools.musicplayer.models.*
+import kotlin.time.Duration.Companion.milliseconds
+import kotlin.time.Duration.Companion.seconds
 
 class AudioHelper(private val context: Context) {
 
     private val config = context.config
-    private val showFilename = config.showFilename
 
     fun insertTracks(tracks: List<Track>) {
         context.tracksDAO.insertAll(tracks)
@@ -19,18 +24,34 @@ class AudioHelper(private val context: Context) {
 
     fun getAllTracks(): ArrayList<Track> {
         val tracks = context.tracksDAO.getAll()
-            .distinctBy { "${it.path}/${it.mediaStoreId}" } as ArrayList<Track>
+            .applyProperFilenames(config.showFilename)
 
         tracks.sortSafely(config.trackSorting)
         return tracks
     }
 
+    fun getAllFolders(): ArrayList<Folder> {
+        val tracks = context.audioHelper.getAllTracks()
+        val foldersMap = tracks.groupBy { it.folderName }
+        val folders = ArrayList<Folder>()
+        val excludedFolders = config.excludedFolders
+        for ((title, folderTracks) in foldersMap) {
+            val path = (folderTracks.firstOrNull()?.path?.getParentPath() ?: "").removeSuffix("/")
+            if (excludedFolders.contains(path)) {
+                continue
+            }
+
+            val folder = Folder(title, folderTracks.size, path)
+            folders.add(folder)
+        }
+
+        folders.sortSafely(config.folderSorting)
+        return folders
+    }
+
     fun getFolderTracks(folder: String): ArrayList<Track> {
         val tracks = context.tracksDAO.getTracksFromFolder(folder)
-            .distinctBy { "${it.path}/${it.mediaStoreId}" }
-            .onEach {
-                it.title = it.getProperTitle(showFilename)
-            } as ArrayList<Track>
+            .applyProperFilenames(config.showFilename)
 
         tracks.sortSafely(config.getProperFolderSorting(folder))
         return tracks
@@ -38,10 +59,6 @@ class AudioHelper(private val context: Context) {
 
     fun updateTrackInfo(newPath: String, artist: String, title: String, oldPath: String) {
         context.tracksDAO.updateSongInfo(newPath, artist, title, oldPath)
-    }
-
-    fun updateTrackFolder(folder: String, mediaStoreId: Long) {
-        context.tracksDAO.updateFolderName(folder, mediaStoreId)
     }
 
     fun deleteTrack(mediaStoreId: Long) {
@@ -73,7 +90,8 @@ class AudioHelper(private val context: Context) {
     }
 
     fun getArtistTracks(artistId: Long): ArrayList<Track> {
-        return context.tracksDAO.getTracksFromArtist(artistId) as ArrayList<Track>
+        return context.tracksDAO.getTracksFromArtist(artistId)
+            .applyProperFilenames(config.showFilename)
     }
 
     fun getArtistTracks(artists: List<Artist>): ArrayList<Track> {
@@ -108,14 +126,14 @@ class AudioHelper(private val context: Context) {
 
     fun getAlbumTracks(albumId: Long): ArrayList<Track> {
         val tracks = context.tracksDAO.getTracksFromAlbum(albumId)
-            .distinctBy { "${it.path}/${it.mediaStoreId}" } as ArrayList<Track>
+            .applyProperFilenames(config.showFilename)
         tracks.sortWith(compareBy({ it.trackId }, { it.title.lowercase() }))
         return tracks
     }
 
     fun getAlbumTracks(albums: List<Album>): ArrayList<Track> {
         return albums.flatMap { getAlbumTracks(it.id) }
-            .distinctBy { "${it.path}/${it.mediaStoreId}" } as ArrayList<Track>
+            .applyProperFilenames(config.showFilename)
     }
 
     private fun deleteAlbum(id: Long) {
@@ -148,7 +166,7 @@ class AudioHelper(private val context: Context) {
 
     fun getGenreTracks(genreId: Long): ArrayList<Track> {
         val tracks = context.tracksDAO.getGenreTracks(genreId)
-            .distinctBy { "${it.path}/${it.mediaStoreId}" } as ArrayList<Track>
+            .applyProperFilenames(config.showFilename)
 
         tracks.sortSafely(config.trackSorting)
         return tracks
@@ -156,7 +174,7 @@ class AudioHelper(private val context: Context) {
 
     fun getGenreTracks(genres: List<Genre>): ArrayList<Track> {
         val tracks = genres.flatMap { context.tracksDAO.getGenreTracks(it.id) }
-            .distinctBy { "${it.path}/${it.mediaStoreId}" } as ArrayList<Track>
+            .applyProperFilenames(config.showFilename)
 
         tracks.sortSafely(config.trackSorting)
         return tracks
@@ -179,9 +197,8 @@ class AudioHelper(private val context: Context) {
     }
 
     fun getPlaylistTracks(playlistId: Int): ArrayList<Track> {
-        val tracks = context.tracksDAO.getTracksFromPlaylist(playlistId).onEach {
-            it.title = it.getProperTitle(showFilename)
-        } as ArrayList<Track>
+        val tracks = context.tracksDAO.getTracksFromPlaylist(playlistId)
+            .applyProperFilenames(config.showFilename)
 
         tracks.sortSafely(config.getProperPlaylistSorting(playlistId))
         return tracks
@@ -213,4 +230,83 @@ class AudioHelper(private val context: Context) {
         val invalidArtists = artists.filter { artist -> tracks.none { it.artistId == artist.id } }
         deleteArtists(invalidArtists)
     }
+
+    fun getQueuedTracks(queueItems: List<QueueItem> = context.queueDAO.getAll()): ArrayList<Track> {
+        val allTracks = getAllTracks().associateBy { it.mediaStoreId }
+
+        // make sure we fetch the songs in the order they were displayed in
+        val tracks = queueItems.mapNotNull { queueItem ->
+            val track = allTracks[queueItem.trackId]
+            if (track != null) {
+                if (queueItem.isCurrent) {
+                    track.flags = track.flags.addBit(FLAG_IS_CURRENT)
+                }
+                track
+            } else {
+                null
+            }
+        }
+
+        return tracks as ArrayList<Track>
+    }
+
+    /**
+     * Executes [callback] with current track as quickly as possible and then proceeds to load the complete queue with all tracks.
+     */
+    fun getQueuedTracksLazily(callback: (tracks: List<Track>, startIndex: Int, startPositionMs: Long) -> Unit) {
+        ensureBackgroundThread {
+            var queueItems = context.queueDAO.getAll()
+            if (queueItems.isEmpty()) {
+                initQueue()
+                queueItems = context.queueDAO.getAll()
+            }
+
+            val currentItem = context.queueDAO.getCurrent()
+            if (currentItem == null) {
+                callback(emptyList(), 0, 0)
+                return@ensureBackgroundThread
+            }
+
+            val currentTrack = getTrack(currentItem.trackId)
+            if (currentTrack == null) {
+                callback(emptyList(), 0, 0)
+                return@ensureBackgroundThread
+            }
+
+            // immediately return the current track.
+            val startPositionMs = currentItem.lastPosition.seconds.inWholeMilliseconds
+            callback(listOf(currentTrack), 0, startPositionMs)
+
+            // return the rest of the queued tracks.
+            val queuedTracks = getQueuedTracks(queueItems)
+            val currentIndex = queuedTracks.indexOfFirstOrNull { it.mediaStoreId == currentTrack.mediaStoreId } ?: 0
+            callback(queuedTracks, currentIndex, startPositionMs)
+        }
+    }
+
+    fun initQueue(): ArrayList<Track> {
+        val tracks = getAllTracks()
+        val queueItems = tracks.mapIndexed { index, mediaItem ->
+            QueueItem(trackId = mediaItem.mediaStoreId, trackOrder = index, isCurrent = index == 0, lastPosition = 0)
+        }
+
+        resetQueue(queueItems)
+        return tracks
+    }
+
+    fun resetQueue(items: List<QueueItem>, currentTrackId: Long? = null, startPosition: Long? = null) {
+        context.queueDAO.deleteAllItems()
+        context.queueDAO.insertAll(items)
+        if (currentTrackId != null && startPosition != null) {
+            val startPositionSeconds = startPosition.milliseconds.inWholeSeconds.toInt()
+            context.queueDAO.saveCurrentTrackProgress(currentTrackId, startPositionSeconds)
+        } else if (currentTrackId != null) {
+            context.queueDAO.saveCurrentTrack(currentTrackId)
+        }
+    }
+}
+
+private fun Collection<Track>.applyProperFilenames(showFilename: Int): ArrayList<Track> {
+    return distinctBy { "${it.path}/${it.mediaStoreId}" }
+        .onEach { it.title = it.getProperTitle(showFilename) } as ArrayList<Track>
 }

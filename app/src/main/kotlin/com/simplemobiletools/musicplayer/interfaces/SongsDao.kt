@@ -47,9 +47,6 @@ interface SongsDao {
     @Query("UPDATE tracks SET cover_art = :coverArt WHERE media_store_id = :id")
     fun updateCoverArt(coverArt: String, id: Long)
 
-    @Query("UPDATE tracks SET folder_name = :folderName WHERE media_store_id = :id")
-    fun updateFolderName(folderName: String, id: Long)
-
     @Query("UPDATE tracks SET order_in_playlist = :index WHERE id = :id")
     fun updateOrderInPlaylist(index: Int, id: Long)
 }

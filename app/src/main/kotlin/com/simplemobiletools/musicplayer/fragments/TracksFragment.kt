@@ -2,9 +2,7 @@ package com.simplemobiletools.musicplayer.fragments
 
 import android.app.Activity
 import android.content.Context
-import android.content.Intent
 import android.util.AttributeSet
-import com.google.gson.Gson
 import com.simplemobiletools.commons.activities.BaseSimpleActivity
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
 import com.simplemobiletools.commons.dialogs.PermissionRequiredDialog
@@ -12,16 +10,12 @@ import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
-import com.simplemobiletools.musicplayer.activities.TrackActivity
 import com.simplemobiletools.musicplayer.adapters.TracksAdapter
 import com.simplemobiletools.musicplayer.dialogs.ChangeSortingDialog
 import com.simplemobiletools.musicplayer.extensions.audioHelper
 import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.extensions.mediaScanner
-import com.simplemobiletools.musicplayer.extensions.resetQueueItems
-import com.simplemobiletools.musicplayer.helpers.RESTART_PLAYER
 import com.simplemobiletools.musicplayer.helpers.TAB_TRACKS
-import com.simplemobiletools.musicplayer.helpers.TRACK
 import com.simplemobiletools.musicplayer.models.Track
 import com.simplemobiletools.musicplayer.models.sortSafely
 import kotlinx.android.synthetic.main.fragment_tracks.view.tracks_fastscroller
@@ -51,17 +45,12 @@ class TracksFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
                 tracks_placeholder.beVisibleIf(tracks.isEmpty())
                 val adapter = tracks_list.adapter
                 if (adapter == null) {
-                    TracksAdapter(activity = activity, recyclerView = tracks_list, sourceType = TracksAdapter.TYPE_TRACKS, tracks = tracks) {
+                    TracksAdapter(activity = activity, recyclerView = tracks_list, sourceType = TracksAdapter.TYPE_TRACKS, items = tracks) {
                         activity.hideKeyboard()
                         activity.handleNotificationPermission { granted ->
                             if (granted) {
-                                activity.resetQueueItems(tracks) {
-                                    Intent(activity, TrackActivity::class.java).apply {
-                                        putExtra(TRACK, Gson().toJson(it))
-                                        putExtra(RESTART_PLAYER, true)
-                                        activity.startActivity(this)
-                                    }
-                                }
+                                val startIndex = tracks.indexOf(it as Track)
+                                prepareAndPlay(tracks, startIndex)
                             } else {
                                 if (context is Activity) {
                                     PermissionRequiredDialog(activity, R.string.allow_notifications_music_player, { activity.openNotificationSettings() })

@@ -11,22 +11,14 @@ import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.adapters.AlbumsTracksAdapter
 import com.simplemobiletools.musicplayer.extensions.audioHelper
-import com.simplemobiletools.musicplayer.extensions.resetQueueItems
 import com.simplemobiletools.musicplayer.helpers.ALBUM
 import com.simplemobiletools.musicplayer.helpers.ARTIST
-import com.simplemobiletools.musicplayer.helpers.RESTART_PLAYER
-import com.simplemobiletools.musicplayer.helpers.TRACK
 import com.simplemobiletools.musicplayer.models.*
-import com.simplemobiletools.musicplayer.services.MusicService
 import kotlinx.android.synthetic.main.activity_albums.*
 import kotlinx.android.synthetic.main.view_current_track_bar.current_track_bar
-import org.greenrobot.eventbus.EventBus
-import org.greenrobot.eventbus.Subscribe
-import org.greenrobot.eventbus.ThreadMode
 
 // Artists -> Albums -> Tracks
-class AlbumsActivity : SimpleActivity() {
-    private var bus: EventBus? = null
+class AlbumsActivity : SimpleMusicActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         isMaterialActivity = true
@@ -35,9 +27,6 @@ class AlbumsActivity : SimpleActivity() {
 
         updateMaterialActivityViews(albums_coordinator, albums_holder, useTransparentNavigation = true, useTopSearchMenu = false)
         setupMaterialScrollListener(albums_list, albums_toolbar)
-
-        bus = EventBus.getDefault()
-        bus!!.register(this)
 
         albums_fastscroller.updateColors(getProperPrimaryColor())
 
@@ -52,13 +41,13 @@ class AlbumsActivity : SimpleActivity() {
             listItems.add(AlbumSection(albumsSectionLabel))
             listItems.addAll(albums)
 
-            val tracksToAdd = audioHelper.getAlbumTracks(albums)
-            val trackFullDuration = tracksToAdd.sumOf { it.duration }
+            val albumTracks = audioHelper.getAlbumTracks(albums)
+            val trackFullDuration = albumTracks.sumOf { it.duration }
 
-            var tracksSectionLabel = resources.getQuantityString(R.plurals.tracks_plural, tracksToAdd.size, tracksToAdd.size)
+            var tracksSectionLabel = resources.getQuantityString(R.plurals.tracks_plural, albumTracks.size, albumTracks.size)
             tracksSectionLabel += " • ${trackFullDuration.getFormattedDuration(true)}"
             listItems.add(AlbumSection(tracksSectionLabel))
-            listItems.addAll(tracksToAdd)
+            listItems.addAll(albumTracks)
 
             runOnUiThread {
                 AlbumsTracksAdapter(this, listItems, albums_list) {
@@ -71,13 +60,8 @@ class AlbumsActivity : SimpleActivity() {
                     } else {
                         handleNotificationPermission { granted ->
                             if (granted) {
-                                resetQueueItems(tracksToAdd) {
-                                    Intent(this, TrackActivity::class.java).apply {
-                                        putExtra(TRACK, Gson().toJson(it))
-                                        putExtra(RESTART_PLAYER, true)
-                                        startActivity(this)
-                                    }
-                                }
+                                val startIndex = albumTracks.indexOf(it as Track)
+                                prepareAndPlay(albumTracks, startIndex)
                             } else {
                                 PermissionRequiredDialog(this, R.string.allow_notifications_music_player, { openNotificationSettings() })
                             }
@@ -93,44 +77,11 @@ class AlbumsActivity : SimpleActivity() {
             }
         }
 
-        current_track_bar.setOnClickListener {
-            hideKeyboard()
-            handleNotificationPermission { granted ->
-                if (granted) {
-                    Intent(this, TrackActivity::class.java).apply {
-                        startActivity(this)
-                    }
-                } else {
-                    PermissionRequiredDialog(this, R.string.allow_notifications_music_player, { openNotificationSettings() })
-                }
-            }
-        }
+        setupCurrentTrackBar(current_track_bar)
     }
 
     override fun onResume() {
         super.onResume()
-        updateCurrentTrackBar()
         setupToolbar(albums_toolbar, NavigationIcon.Arrow)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        bus?.unregister(this)
-    }
-
-    private fun updateCurrentTrackBar() {
-        current_track_bar.updateColors()
-        current_track_bar.updateCurrentTrack(MusicService.mCurrTrack)
-        current_track_bar.updateTrackState(MusicService.isPlaying())
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    fun trackChangedEvent(event: Events.TrackChanged) {
-        current_track_bar.updateCurrentTrack(event.track)
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    fun trackStateChanged(event: Events.TrackStateChanged) {
-        current_track_bar.updateTrackState(event.isPlaying)
     }
 }
