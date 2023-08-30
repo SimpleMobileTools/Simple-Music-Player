@@ -51,24 +51,28 @@ class SimpleMusicPlayer(private val exoPlayer: ExoPlayer) : ForwardingPlayer(exo
     }
 
     override fun seekToNext() {
+        play()
         if (!maybeForceNext()) {
             super.seekToNext()
         }
     }
 
     override fun seekToPrevious() {
+        play()
         if (!maybeForcePrevious()) {
             super.seekToPrevious()
         }
     }
 
     override fun seekToNextMediaItem() {
+        play()
         if (!maybeForceNext()) {
             super.seekToNextMediaItem()
         }
     }
 
     override fun seekToPreviousMediaItem() {
+        play()
         if (!maybeForcePrevious()) {
             super.seekToPreviousMediaItem()
         }
