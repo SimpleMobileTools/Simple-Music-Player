@@ -22,8 +22,8 @@ class NewPlaylistDialog(val activity: Activity, var playlist: Playlist? = null, 
 
         binding.newPlaylistTitle.setText(playlist!!.title)
         activity.getAlertDialogBuilder()
-            .setPositiveButton(R.string.ok, null)
-            .setNegativeButton(R.string.cancel, null)
+            .setPositiveButton(com.simplemobiletools.commons.R.string.ok, null)
+            .setNegativeButton(com.simplemobiletools.commons.R.string.cancel, null)
             .apply {
                 val dialogTitle = if (isNewPlaylist) R.string.create_new_playlist else R.string.rename_playlist
                 activity.setupDialogStuff(binding.root, this, dialogTitle) { alertDialog ->
@@ -38,7 +38,7 @@ class NewPlaylistDialog(val activity: Activity, var playlist: Playlist? = null, 
                             }
 
                             if (title.isEmpty()) {
-                                activity.toast(R.string.empty_name)
+                                activity.toast(com.simplemobiletools.commons.R.string.empty_name)
                                 return@ensureBackgroundThread
                             } else if (isPlaylistTitleTaken) {
                                 activity.toast(R.string.playlist_name_exists)
@@ -58,7 +58,7 @@ class NewPlaylistDialog(val activity: Activity, var playlist: Playlist? = null, 
                                 alertDialog.dismiss()
                                 callback(eventTypeId)
                             } else {
-                                activity.toast(R.string.unknown_error_occurred)
+                                activity.toast(com.simplemobiletools.commons.R.string.unknown_error_occurred)
                             }
                         }
                     }

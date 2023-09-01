@@ -292,7 +292,7 @@ class TracksActivity : SimpleMusicActivity() {
                 if (path.isAudioFast()) {
                     addTrackFromPath(path, true)
                 } else {
-                    toast(R.string.invalid_file_format)
+                    toast(com.simplemobiletools.commons.R.string.invalid_file_format)
                 }
             }
         }
@@ -306,7 +306,7 @@ class TracksActivity : SimpleMusicActivity() {
                     addTrackFromPath(path, false)
                 }
             } else {
-                toast(R.string.unknown_error_occurred)
+                toast(com.simplemobiletools.commons.R.string.unknown_error_occurred)
             }
         } else {
             var track = audioHelper.getTrack(mediaStoreId)
@@ -377,7 +377,7 @@ class TracksActivity : SimpleMusicActivity() {
                 val startIndex = tracks.indexOf(track)
                 prepareAndPlay(tracks, startIndex)
             } else {
-                PermissionRequiredDialog(this, R.string.allow_notifications_music_player, { openNotificationSettings() })
+                PermissionRequiredDialog(this, com.simplemobiletools.commons.R.string.allow_notifications_music_player, { openNotificationSettings() })
             }
         }
     }
@@ -393,7 +393,7 @@ class TracksActivity : SimpleMusicActivity() {
                     try {
                         startActivityForResult(this, PICK_EXPORT_FILE_INTENT)
                     } catch (e: ActivityNotFoundException) {
-                        toast(R.string.system_service_disabled, Toast.LENGTH_LONG)
+                        toast(com.simplemobiletools.commons.R.string.system_service_disabled, Toast.LENGTH_LONG)
                     } catch (e: Exception) {
                         showErrorToast(e)
                     }
@@ -415,16 +415,16 @@ class TracksActivity : SimpleMusicActivity() {
     private fun exportPlaylistTo(outputStream: OutputStream?) {
         val tracks = getTracksAdapter()?.items
         if (tracks.isNullOrEmpty()) {
-            toast(R.string.no_entries_for_exporting)
+            toast(com.simplemobiletools.commons.R.string.no_entries_for_exporting)
             return
         }
 
         M3uExporter(this).exportPlaylist(outputStream, tracks) { result ->
             toast(
                 when (result) {
-                    ExportResult.EXPORT_OK -> R.string.exporting_successful
-                    ExportResult.EXPORT_PARTIAL -> R.string.exporting_some_entries_failed
-                    else -> R.string.exporting_failed
+                    ExportResult.EXPORT_OK -> com.simplemobiletools.commons.R.string.exporting_successful
+                    ExportResult.EXPORT_PARTIAL -> com.simplemobiletools.commons.R.string.exporting_some_entries_failed
+                    else -> com.simplemobiletools.commons.R.string.exporting_failed
                 }
             )
         }

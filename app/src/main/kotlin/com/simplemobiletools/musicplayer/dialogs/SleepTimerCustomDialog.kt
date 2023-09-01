@@ -11,10 +11,10 @@ class SleepTimerCustomDialog(val activity: Activity, val callback: (seconds: Int
     private val binding by activity.viewBinding(DialogCustomSleepTimerPickerBinding::inflate)
 
     init {
-        binding.minutesHint.hint = activity.getString(R.string.minutes_raw).replaceFirstChar { it.uppercaseChar() }
+        binding.minutesHint.hint = activity.getString(com.simplemobiletools.commons.R.string.minutes_raw).replaceFirstChar { it.uppercaseChar() }
         activity.getAlertDialogBuilder()
-            .setPositiveButton(R.string.ok) { _, _ -> dialogConfirmed() }
-            .setNegativeButton(R.string.cancel, null)
+            .setPositiveButton(com.simplemobiletools.commons.R.string.ok) { _, _ -> dialogConfirmed() }
+            .setNegativeButton(com.simplemobiletools.commons.R.string.cancel, null)
             .apply {
                 activity.setupDialogStuff(binding.root, this, R.string.sleep_timer) { alertDialog ->
                     dialog = alertDialog

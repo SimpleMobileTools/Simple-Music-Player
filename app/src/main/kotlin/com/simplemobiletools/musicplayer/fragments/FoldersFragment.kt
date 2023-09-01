@@ -35,7 +35,7 @@ class FoldersFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
                 binding.foldersPlaceholder.text = if (scanning) {
                     context.getString(R.string.loading_files)
                 } else {
-                    context.getString(R.string.no_items_found)
+                    context.getString(com.simplemobiletools.commons.R.string.no_items_found)
                 }
                 binding.foldersPlaceholder.beVisibleIf(folders.isEmpty())
                 binding.foldersFastscroller.beGoneIf(binding.foldersPlaceholder.isVisible())

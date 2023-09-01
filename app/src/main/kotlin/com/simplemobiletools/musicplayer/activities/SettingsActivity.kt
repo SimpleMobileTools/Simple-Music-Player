@@ -107,9 +107,9 @@ class SettingsActivity : SimpleControllerActivity() {
         settingsShowFilename.text = getReplaceTitleText()
         settingsShowFilenameHolder.setOnClickListener {
             val items = arrayListOf(
-                RadioItem(SHOW_FILENAME_NEVER, getString(R.string.never)),
+                RadioItem(SHOW_FILENAME_NEVER, getString(com.simplemobiletools.commons.R.string.never)),
                 RadioItem(SHOW_FILENAME_IF_UNAVAILABLE, getString(R.string.title_is_not_available)),
-                RadioItem(SHOW_FILENAME_ALWAYS, getString(R.string.always))
+                RadioItem(SHOW_FILENAME_ALWAYS, getString(com.simplemobiletools.commons.R.string.always))
             )
 
             RadioGroupDialog(this@SettingsActivity, items, config.showFilename) {
@@ -122,9 +122,9 @@ class SettingsActivity : SimpleControllerActivity() {
 
     private fun getReplaceTitleText() = getString(
         when (config.showFilename) {
-            SHOW_FILENAME_NEVER -> R.string.never
+            SHOW_FILENAME_NEVER -> com.simplemobiletools.commons.R.string.never
             SHOW_FILENAME_IF_UNAVAILABLE -> R.string.title_is_not_available
-            else -> R.string.always
+            else -> com.simplemobiletools.commons.R.string.always
         }
     )
 

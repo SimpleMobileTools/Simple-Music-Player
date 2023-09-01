@@ -107,7 +107,7 @@ class QueueAdapter(activity: SimpleActivity, items: ArrayList<Track>, var curren
     }
 
     private fun deleteTracks() {
-        ConfirmationDialog(ctx, "", R.string.delete_song_warning, R.string.ok, R.string.cancel) {
+        ConfirmationDialog(ctx, "", R.string.delete_song_warning, com.simplemobiletools.commons.R.string.ok, com.simplemobiletools.commons.R.string.cancel) {
             val positions = ArrayList<Int>()
             val selectedTracks = getSelectedTracks()
             selectedTracks.forEach { track ->

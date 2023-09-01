@@ -34,8 +34,9 @@ class PlaybackSpeedFragment : BottomSheetDialogFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val config = requireContext().config
         val binding = FragmentPlaybackSpeedBinding.inflate(inflater, container, false)
-        val background = ResourcesCompat.getDrawable(resources, R.drawable.bottom_sheet_bg, requireContext().theme)
-        (background as LayerDrawable).findDrawableByLayerId(R.id.bottom_sheet_background).applyColorFilter(requireContext().getProperBackgroundColor())
+        val background = ResourcesCompat.getDrawable(resources, com.simplemobiletools.commons.R.drawable.bottom_sheet_bg, requireContext().theme)
+        (background as LayerDrawable).findDrawableByLayerId(com.simplemobiletools.commons.R.id.bottom_sheet_background)
+            .applyColorFilter(requireContext().getProperBackgroundColor())
 
         binding.apply {
             seekBar = playbackSpeedSeekbar

@@ -31,8 +31,8 @@ class EditDialog(val activity: BaseSimpleActivity, val track: Track, val callbac
         }
 
         activity.getAlertDialogBuilder()
-            .setPositiveButton(R.string.ok, null)
-            .setNegativeButton(R.string.cancel, null)
+            .setPositiveButton(com.simplemobiletools.commons.R.string.ok, null)
+            .setNegativeButton(com.simplemobiletools.commons.R.string.cancel, null)
             .apply {
                 activity.setupDialogStuff(binding.root, this, R.string.rename_song) { alertDialog ->
                     alertDialog.showKeyboard(binding.title)
@@ -105,7 +105,7 @@ class EditDialog(val activity: BaseSimpleActivity, val track: Track, val callbac
                     }
                 }
             } catch (e: Exception) {
-                activity.toast(R.string.unknown_error_occurred)
+                activity.toast(com.simplemobiletools.commons.R.string.unknown_error_occurred)
             }
         }
     }

@@ -64,7 +64,11 @@ class AlbumsActivity : SimpleMusicActivity() {
                                 val startIndex = albumTracks.indexOf(it as Track)
                                 prepareAndPlay(albumTracks, startIndex)
                             } else {
-                                PermissionRequiredDialog(this, R.string.allow_notifications_music_player, { openNotificationSettings() })
+                                PermissionRequiredDialog(
+                                    this,
+                                    com.simplemobiletools.commons.R.string.allow_notifications_music_player,
+                                    { openNotificationSettings() }
+                                )
                             }
                         }
                     }

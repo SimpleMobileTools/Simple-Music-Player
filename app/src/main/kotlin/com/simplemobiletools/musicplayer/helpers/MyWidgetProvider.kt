@@ -105,7 +105,7 @@ class MyWidgetProvider : AppWidgetProvider() {
     }
 
     private fun updatePlayPauseButton(context: Context, views: RemoteViews, isPlaying: Boolean) {
-        val drawableId = if (isPlaying) R.drawable.ic_pause_vector else R.drawable.ic_play_vector
+        val drawableId = if (isPlaying) com.simplemobiletools.commons.R.drawable.ic_pause_vector else com.simplemobiletools.commons.R.drawable.ic_play_vector
         val widgetTextColor = context.config.widgetTextColor
         val icon = context.resources.getColoredBitmap(drawableId, widgetTextColor)
         views.setImageViewBitmap(R.id.play_pause_btn, icon)
@@ -120,8 +120,14 @@ class MyWidgetProvider : AppWidgetProvider() {
             applyColorFilter(R.id.widget_background, widgetBgColor)
             setTextColor(R.id.song_info_title, widgetTextColor)
             setTextColor(R.id.song_info_artist, widgetTextColor)
-            setImageViewBitmap(R.id.previous_btn, context.resources.getColoredBitmap(R.drawable.ic_previous_vector, widgetTextColor))
-            setImageViewBitmap(R.id.next_btn, context.resources.getColoredBitmap(R.drawable.ic_next_vector, widgetTextColor))
+            setImageViewBitmap(
+                R.id.previous_btn,
+                context.resources.getColoredBitmap(
+                    com.simplemobiletools.commons.R.drawable.ic_previous_vector,
+                    widgetTextColor
+                )
+            )
+            setImageViewBitmap(R.id.next_btn, context.resources.getColoredBitmap(com.simplemobiletools.commons.R.drawable.ic_next_vector, widgetTextColor))
         }
     }
 

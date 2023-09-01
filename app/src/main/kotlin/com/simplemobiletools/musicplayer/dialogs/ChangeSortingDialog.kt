@@ -29,7 +29,7 @@ class ChangeSortingDialog(val activity: Activity, val location: Int, val playlis
             if (playlist != null) {
                 sortingDialogUseForThisOnly.isChecked = config.hasCustomPlaylistSorting(playlist.id)
             } else if (path != null) {
-                sortingDialogUseForThisOnly.text = activity.getString(R.string.use_for_this_folder)
+                sortingDialogUseForThisOnly.text = activity.getString(com.simplemobiletools.commons.R.string.use_for_this_folder)
                 sortingDialogUseForThisOnly.isChecked = config.hasCustomSorting(path)
             }
         }
@@ -54,10 +54,10 @@ class ChangeSortingDialog(val activity: Activity, val location: Int, val playlis
         setupOrderRadio()
 
         activity.getAlertDialogBuilder()
-            .setPositiveButton(R.string.ok) { _, _ -> dialogConfirmed() }
-            .setNegativeButton(R.string.cancel, null)
+            .setPositiveButton(com.simplemobiletools.commons.R.string.ok) { _, _ -> dialogConfirmed() }
+            .setNegativeButton(com.simplemobiletools.commons.R.string.cancel, null)
             .apply {
-                activity.setupDialogStuff(binding.root, this, R.string.sort_by)
+                activity.setupDialogStuff(binding.root, this, com.simplemobiletools.commons.R.string.sort_by)
             }
     }
 
@@ -65,45 +65,45 @@ class ChangeSortingDialog(val activity: Activity, val location: Int, val playlis
         val radioItems = ArrayList<RadioItem>()
         when (location) {
             TAB_PLAYLISTS, TAB_FOLDERS -> {
-                radioItems.add(RadioItem(0, activity.getString(R.string.title), PLAYER_SORT_BY_TITLE))
+                radioItems.add(RadioItem(0, activity.getString(com.simplemobiletools.commons.R.string.title), PLAYER_SORT_BY_TITLE))
                 radioItems.add(RadioItem(1, activity.getString(R.string.track_count), PLAYER_SORT_BY_TRACK_COUNT))
             }
 
             TAB_ARTISTS -> {
-                radioItems.add(RadioItem(0, activity.getString(R.string.title), PLAYER_SORT_BY_TITLE))
+                radioItems.add(RadioItem(0, activity.getString(com.simplemobiletools.commons.R.string.title), PLAYER_SORT_BY_TITLE))
                 radioItems.add(RadioItem(1, activity.getString(R.string.album_count), PLAYER_SORT_BY_ALBUM_COUNT))
                 radioItems.add(RadioItem(2, activity.getString(R.string.track_count), PLAYER_SORT_BY_TRACK_COUNT))
             }
 
             TAB_ALBUMS -> {
-                radioItems.add(RadioItem(0, activity.getString(R.string.title), PLAYER_SORT_BY_TITLE))
+                radioItems.add(RadioItem(0, activity.getString(com.simplemobiletools.commons.R.string.title), PLAYER_SORT_BY_TITLE))
                 radioItems.add(RadioItem(1, activity.getString(R.string.artist_name), PLAYER_SORT_BY_ARTIST_TITLE))
                 radioItems.add(RadioItem(2, activity.getString(R.string.year), PLAYER_SORT_BY_YEAR))
-                radioItems.add(RadioItem(4, activity.getString(R.string.date_added), PLAYER_SORT_BY_DATE_ADDED))
+                radioItems.add(RadioItem(4, activity.getString(com.simplemobiletools.commons.R.string.date_added), PLAYER_SORT_BY_DATE_ADDED))
             }
 
             TAB_TRACKS -> {
-                radioItems.add(RadioItem(0, activity.getString(R.string.title), PLAYER_SORT_BY_TITLE))
-                radioItems.add(RadioItem(1, activity.getString(R.string.artist), PLAYER_SORT_BY_ARTIST_TITLE))
-                radioItems.add(RadioItem(2, activity.getString(R.string.duration), PLAYER_SORT_BY_DURATION))
+                radioItems.add(RadioItem(0, activity.getString(com.simplemobiletools.commons.R.string.title), PLAYER_SORT_BY_TITLE))
+                radioItems.add(RadioItem(1, activity.getString(com.simplemobiletools.commons.R.string.artist), PLAYER_SORT_BY_ARTIST_TITLE))
+                radioItems.add(RadioItem(2, activity.getString(com.simplemobiletools.commons.R.string.duration), PLAYER_SORT_BY_DURATION))
                 radioItems.add(RadioItem(3, activity.getString(R.string.track_number), PLAYER_SORT_BY_TRACK_ID))
-                radioItems.add(RadioItem(4, activity.getString(R.string.date_added), PLAYER_SORT_BY_DATE_ADDED))
+                radioItems.add(RadioItem(4, activity.getString(com.simplemobiletools.commons.R.string.date_added), PLAYER_SORT_BY_DATE_ADDED))
             }
 
             TAB_GENRES -> {
-                radioItems.add(RadioItem(0, activity.getString(R.string.title), PLAYER_SORT_BY_TITLE))
+                radioItems.add(RadioItem(0, activity.getString(com.simplemobiletools.commons.R.string.title), PLAYER_SORT_BY_TITLE))
                 radioItems.add(RadioItem(2, activity.getString(R.string.track_count), PLAYER_SORT_BY_TRACK_COUNT))
             }
 
             ACTIVITY_PLAYLIST_FOLDER -> {
-                radioItems.add(RadioItem(0, activity.getString(R.string.title), PLAYER_SORT_BY_TITLE))
-                radioItems.add(RadioItem(1, activity.getString(R.string.artist), PLAYER_SORT_BY_ARTIST_TITLE))
-                radioItems.add(RadioItem(2, activity.getString(R.string.duration), PLAYER_SORT_BY_DURATION))
+                radioItems.add(RadioItem(0, activity.getString(com.simplemobiletools.commons.R.string.title), PLAYER_SORT_BY_TITLE))
+                radioItems.add(RadioItem(1, activity.getString(com.simplemobiletools.commons.R.string.artist), PLAYER_SORT_BY_ARTIST_TITLE))
+                radioItems.add(RadioItem(2, activity.getString(com.simplemobiletools.commons.R.string.duration), PLAYER_SORT_BY_DURATION))
                 radioItems.add(RadioItem(3, activity.getString(R.string.track_number), PLAYER_SORT_BY_TRACK_ID))
-                radioItems.add(RadioItem(4, activity.getString(R.string.date_added), PLAYER_SORT_BY_DATE_ADDED))
+                radioItems.add(RadioItem(4, activity.getString(com.simplemobiletools.commons.R.string.date_added), PLAYER_SORT_BY_DATE_ADDED))
 
                 if (playlist != null) {
-                    radioItems.add(RadioItem(4, activity.getString(R.string.custom), PLAYER_SORT_BY_CUSTOM))
+                    radioItems.add(RadioItem(4, activity.getString(com.simplemobiletools.commons.R.string.custom), PLAYER_SORT_BY_CUSTOM))
                 }
             }
         }

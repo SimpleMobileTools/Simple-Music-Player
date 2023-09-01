@@ -11,7 +11,6 @@ import com.simplemobiletools.commons.extensions.humanizePath
 import com.simplemobiletools.commons.extensions.setupViewBackground
 import com.simplemobiletools.commons.interfaces.RefreshRecyclerViewListener
 import com.simplemobiletools.commons.views.MyRecyclerView
-import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.databinding.ItemExcludedFolderBinding
 import com.simplemobiletools.musicplayer.extensions.config
 
@@ -25,13 +24,13 @@ class ExcludedFoldersAdapter(
 
     private val config = activity.config
 
-    override fun getActionMenuId() = R.menu.cab_remove_only
+    override fun getActionMenuId() = com.simplemobiletools.commons.R.menu.cab_remove_only
 
     override fun prepareActionMode(menu: Menu) {}
 
     override fun actionItemPressed(id: Int) {
         when (id) {
-            R.id.cab_remove -> removeSelection()
+            com.simplemobiletools.commons.R.id.cab_remove -> removeSelection()
         }
     }
 
@@ -95,7 +94,7 @@ class ExcludedFoldersAdapter(
             setOnMenuItemClickListener { item ->
                 val eventTypeId = folder.hashCode()
                 when (item.itemId) {
-                    R.id.cab_remove -> {
+                    com.simplemobiletools.commons.R.id.cab_remove -> {
                         executeItemMenuOperation(eventTypeId) {
                             removeSelection()
                         }

@@ -71,7 +71,7 @@ class SimpleMediaScanner(private val context: Application) {
             } catch (ignored: Exception) {
             } finally {
                 if (showProgress && newTracks.isEmpty()) {
-                    context.toast(R.string.no_items_found)
+                    context.toast(com.simplemobiletools.commons.R.string.no_items_found)
                 }
 
                 newTracks.clear()

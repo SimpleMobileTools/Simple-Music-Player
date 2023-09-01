@@ -48,7 +48,7 @@ class CurrentTrackBar(context: Context, attributeSet: AttributeSet) : RelativeLa
 
         @SuppressLint("SetTextI18n")
         binding.currentTrackLabel.text = "${track.title}$artist"
-        val cornerRadius = resources.getDimension(R.dimen.rounded_corner_radius_small).toInt()
+        val cornerRadius = resources.getDimension(com.simplemobiletools.commons.R.dimen.rounded_corner_radius_small).toInt()
         val currentTrackPlaceholder = resources.getColoredDrawableWithColor(R.drawable.ic_headset, context.getProperTextColor())
         val options = RequestOptions()
             .error(currentTrackPlaceholder)

@@ -12,7 +12,6 @@ import com.simplemobiletools.commons.activities.BaseSimpleActivity
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.commons.views.MyRecyclerView
-import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.SimpleControllerActivity
 import com.simplemobiletools.musicplayer.extensions.*
 import com.simplemobiletools.musicplayer.helpers.TagHelper
@@ -32,7 +31,7 @@ abstract class BaseMusicAdapter<Type>(
     val tagHelper by lazy { TagHelper(ctx) }
     val placeholder by lazy { resources.getSmallPlaceholder(textColor) }
     val placeholderBig by lazy { resources.getBiggerPlaceholder(textColor) }
-    open val cornerRadius by lazy { resources.getDimension(R.dimen.rounded_corner_radius_small).toInt() }
+    open val cornerRadius by lazy { resources.getDimension(com.simplemobiletools.commons.R.dimen.rounded_corner_radius_small).toInt() }
 
     override fun getItemCount() = items.size
 

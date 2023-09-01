@@ -47,7 +47,7 @@ class AlbumsFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
             binding.albumsPlaceholder.text = if (scanning) {
                 context.getString(R.string.loading_files)
             } else {
-                context.getString(R.string.no_items_found)
+                context.getString(com.simplemobiletools.commons.R.string.no_items_found)
             }
             binding.albumsPlaceholder.beVisibleIf(albums.isEmpty())
 

@@ -46,7 +46,7 @@ class ArtistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
             binding.artistsPlaceholder.text = if (scanning) {
                 context.getString(R.string.loading_files)
             } else {
-                context.getString(R.string.no_items_found)
+                context.getString(com.simplemobiletools.commons.R.string.no_items_found)
             }
             binding.artistsPlaceholder.beVisibleIf(artists.isEmpty())
 

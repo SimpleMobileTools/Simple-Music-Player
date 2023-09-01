@@ -28,7 +28,7 @@ class TracksHeaderAdapter(activity: SimpleActivity, items: ArrayList<ListItem>, 
     private val ITEM_HEADER = 0
     private val ITEM_TRACK = 1
 
-    override val cornerRadius = resources.getDimension(R.dimen.rounded_corner_radius_big).toInt()
+    override val cornerRadius = resources.getDimension(com.simplemobiletools.commons.R.dimen.rounded_corner_radius_big).toInt()
 
     override fun getActionMenuId() = R.menu.cab_tracks_header
 

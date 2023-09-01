@@ -62,7 +62,7 @@ class MainActivity : SimpleMusicActivity() {
             if (it) {
                 initActivity()
             } else {
-                toast(R.string.no_storage_permissions)
+                toast(com.simplemobiletools.commons.R.string.no_storage_permissions)
                 finish()
             }
         }
@@ -239,7 +239,7 @@ class MainActivity : SimpleMusicActivity() {
     private fun setupTabs() {
         binding.mainTabsHolder.removeAllTabs()
         getVisibleTabs().forEach { value ->
-            binding.mainTabsHolder.newTab().setCustomView(R.layout.bottom_tablayout_item).apply {
+            binding.mainTabsHolder.newTab().setCustomView(com.simplemobiletools.commons.R.layout.bottom_tablayout_item).apply {
                 val tabItemBinding = BottomTablayoutItemBinding.bind(customView!!)
                 tabItemBinding.tabItemIcon.setImageDrawable(getTabIcon(value))
                 tabItemBinding.tabItemLabel.text = getTabLabel(value)
@@ -282,7 +282,7 @@ class MainActivity : SimpleMusicActivity() {
         val drawableId = when (position) {
             TAB_PLAYLISTS -> R.drawable.ic_playlist_vector
             TAB_FOLDERS -> R.drawable.ic_folders_vector
-            TAB_ARTISTS -> R.drawable.ic_person_vector
+            TAB_ARTISTS -> com.simplemobiletools.commons.R.drawable.ic_person_vector
             TAB_ALBUMS -> R.drawable.ic_album_vector
             TAB_GENRES -> R.drawable.ic_genre_vector
             else -> R.drawable.ic_music_note_vector
@@ -352,7 +352,7 @@ class MainActivity : SimpleMusicActivity() {
             uri.scheme == "content" -> {
                 val tempFile = getTempFile("imports", uri.path!!.getFilenameFromPath())
                 if (tempFile == null) {
-                    toast(R.string.unknown_error_occurred)
+                    toast(com.simplemobiletools.commons.R.string.unknown_error_occurred)
                     return
                 }
 
@@ -367,7 +367,7 @@ class MainActivity : SimpleMusicActivity() {
                 }
             }
 
-            else -> toast(R.string.invalid_file_format)
+            else -> toast(com.simplemobiletools.commons.R.string.invalid_file_format)
         }
     }
 
@@ -381,7 +381,7 @@ class MainActivity : SimpleMusicActivity() {
                 try {
                     startActivityForResult(this, PICK_IMPORT_SOURCE_INTENT)
                 } catch (e: ActivityNotFoundException) {
-                    toast(R.string.system_service_disabled, Toast.LENGTH_LONG)
+                    toast(com.simplemobiletools.commons.R.string.system_service_disabled, Toast.LENGTH_LONG)
                 } catch (e: Exception) {
                     showErrorToast(e)
                 }
@@ -415,9 +415,9 @@ class MainActivity : SimpleMusicActivity() {
                 runOnUiThread {
                     toast(
                         when (result) {
-                            ImportResult.IMPORT_OK -> R.string.importing_successful
-                            ImportResult.IMPORT_PARTIAL -> R.string.importing_some_entries_failed
-                            else -> R.string.importing_failed
+                            ImportResult.IMPORT_OK -> com.simplemobiletools.commons.R.string.importing_successful
+                            ImportResult.IMPORT_PARTIAL -> com.simplemobiletools.commons.R.string.importing_some_entries_failed
+                            else -> com.simplemobiletools.commons.R.string.importing_failed
                         }
                     )
 
@@ -428,8 +428,8 @@ class MainActivity : SimpleMusicActivity() {
     }
 
     private fun showSleepTimer() {
-        val minutes = getString(R.string.minutes_raw)
-        val hour = resources.getQuantityString(R.plurals.hours, 1, 1)
+        val minutes = getString(com.simplemobiletools.commons.R.string.minutes_raw)
+        val hour = resources.getQuantityString(com.simplemobiletools.commons.R.plurals.hours, 1, 1)
 
         val items = arrayListOf(
             RadioItem(5 * 60, "5 $minutes"),
@@ -441,12 +441,12 @@ class MainActivity : SimpleMusicActivity() {
 
         if (items.none { it.id == config.lastSleepTimerSeconds }) {
             val lastSleepTimerMinutes = config.lastSleepTimerSeconds / 60
-            val text = resources.getQuantityString(R.plurals.minutes, lastSleepTimerMinutes, lastSleepTimerMinutes)
+            val text = resources.getQuantityString(com.simplemobiletools.commons.R.plurals.minutes, lastSleepTimerMinutes, lastSleepTimerMinutes)
             items.add(RadioItem(config.lastSleepTimerSeconds, text))
         }
 
         items.sortBy { it.id }
-        items.add(RadioItem(-1, getString(R.string.custom)))
+        items.add(RadioItem(-1, getString(com.simplemobiletools.commons.R.string.custom)))
 
         RadioGroupDialog(this, items, config.lastSleepTimerSeconds) {
             if (it as Int == -1) {
@@ -527,14 +527,14 @@ class MainActivity : SimpleMusicActivity() {
 
         val faqItems = arrayListOf(
             FAQItem(R.string.faq_1_title, R.string.faq_1_text),
-            FAQItem(R.string.faq_1_title_commons, R.string.faq_1_text_commons),
-            FAQItem(R.string.faq_4_title_commons, R.string.faq_4_text_commons),
-            FAQItem(R.string.faq_9_title_commons, R.string.faq_9_text_commons)
+            FAQItem(com.simplemobiletools.commons.R.string.faq_1_title_commons, com.simplemobiletools.commons.R.string.faq_1_text_commons),
+            FAQItem(com.simplemobiletools.commons.R.string.faq_4_title_commons, com.simplemobiletools.commons.R.string.faq_4_text_commons),
+            FAQItem(com.simplemobiletools.commons.R.string.faq_9_title_commons, com.simplemobiletools.commons.R.string.faq_9_text_commons)
         )
 
         if (!resources.getBoolean(R.bool.hide_google_relations)) {
-            faqItems.add(FAQItem(R.string.faq_2_title_commons, R.string.faq_2_text_commons))
-            faqItems.add(FAQItem(R.string.faq_6_title_commons, R.string.faq_6_text_commons))
+            faqItems.add(FAQItem(com.simplemobiletools.commons.R.string.faq_2_title_commons, com.simplemobiletools.commons.R.string.faq_2_text_commons))
+            faqItems.add(FAQItem(com.simplemobiletools.commons.R.string.faq_6_title_commons, com.simplemobiletools.commons.R.string.faq_6_text_commons))
         }
 
         startAboutActivity(R.string.app_name, licenses, BuildConfig.VERSION_NAME, faqItems, true)

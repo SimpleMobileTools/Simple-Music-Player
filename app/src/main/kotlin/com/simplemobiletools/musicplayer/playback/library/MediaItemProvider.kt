@@ -155,7 +155,11 @@ internal class MediaItemProvider(private val context: Context) {
         state = STATE_INITIALIZING
 
         ensureBackgroundThread {
-            val root = buildMediaItem(title = context.getString(R.string.root), mediaId = SMP_ROOT_ID, mediaType = MediaMetadata.MEDIA_TYPE_FOLDER_MIXED)
+            val root = buildMediaItem(
+                title = context.getString(com.simplemobiletools.commons.R.string.root),
+                mediaId = SMP_ROOT_ID,
+                mediaType = MediaMetadata.MEDIA_TYPE_FOLDER_MIXED
+            )
             val rootChildren = RootCategories.buildRootChildren(context)
             addNodeAndChildren(item = root, children = rootChildren)
 
@@ -233,7 +237,7 @@ internal class MediaItemProvider(private val context: Context) {
 private enum class RootCategories(@StringRes val titleRes: Int, @DrawableRes val drawableRes: Int, val mediaId: String, val mediaType: @MediaType Int) {
     PLAYLISTS(R.string.playlists, R.drawable.ic_playlist_vector, SMP_PLAYLISTS_ROOT_ID, MediaMetadata.MEDIA_TYPE_FOLDER_PLAYLISTS),
     FOLDERS(R.string.folders, R.drawable.ic_folders_vector, SMP_FOLDERS_ROOT_ID, MediaMetadata.MEDIA_TYPE_FOLDER_PLAYLISTS),
-    ARTISTS(R.string.artists, R.drawable.ic_person_vector, SMP_ARTISTS_ROOT_ID, MediaMetadata.MEDIA_TYPE_FOLDER_ARTISTS),
+    ARTISTS(R.string.artists, com.simplemobiletools.commons.R.drawable.ic_person_vector, SMP_ARTISTS_ROOT_ID, MediaMetadata.MEDIA_TYPE_FOLDER_ARTISTS),
     ALBUMS(R.string.albums, R.drawable.ic_album_vector, SMP_ALBUMS_ROOT_ID, MediaMetadata.MEDIA_TYPE_FOLDER_ALBUMS),
     TRACKS(R.string.tracks, R.drawable.ic_music_note_vector, SMP_TRACKS_ROOT_ID, MediaMetadata.MEDIA_TYPE_PLAYLIST),
     GENRES(R.string.genres, R.drawable.ic_genre_vector, SMP_GENRES_ROOT_ID, MediaMetadata.MEDIA_TYPE_FOLDER_GENRES);

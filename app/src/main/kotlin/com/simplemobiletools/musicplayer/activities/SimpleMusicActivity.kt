@@ -7,7 +7,6 @@ import androidx.media3.common.Player
 import com.simplemobiletools.commons.dialogs.PermissionRequiredDialog
 import com.simplemobiletools.commons.extensions.hideKeyboard
 import com.simplemobiletools.commons.extensions.openNotificationSettings
-import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.extensions.isReallyPlaying
 import com.simplemobiletools.musicplayer.extensions.togglePlayback
 import com.simplemobiletools.musicplayer.views.CurrentTrackBar
@@ -34,7 +33,7 @@ abstract class SimpleMusicActivity : SimpleControllerActivity(), Player.Listener
                         startActivity(this)
                     }
                 } else {
-                    PermissionRequiredDialog(this, R.string.allow_notifications_music_player, { openNotificationSettings() })
+                    PermissionRequiredDialog(this, com.simplemobiletools.commons.R.string.allow_notifications_music_player, { openNotificationSettings() })
                 }
             }
         }

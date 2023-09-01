@@ -10,7 +10,6 @@ import androidx.media3.session.MediaController
 import com.simplemobiletools.commons.extensions.toast
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.commons.helpers.isRPlus
-import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.extensions.*
 import com.simplemobiletools.musicplayer.helpers.EXTRA_NEXT_MEDIA_ID
 import com.simplemobiletools.musicplayer.helpers.SimpleMediaController
@@ -117,7 +116,7 @@ abstract class SimpleControllerActivity : SimpleActivity(), Player.Listener {
                             EventBus.getDefault().post(Events.RefreshFragments())
                             callback()
                         } else {
-                            toast(R.string.unknown_error_occurred)
+                            toast(com.simplemobiletools.commons.R.string.unknown_error_occurred)
                         }
                     }
                 } else {

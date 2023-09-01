@@ -145,7 +145,7 @@ class TrackActivity : SimpleControllerActivity(), PlaybackSpeedListener {
                 if (track != null) {
                     prepareAndPlay(listOf(track), startActivity = false)
                 } else {
-                    toast(R.string.unknown_error_occurred)
+                    toast(com.simplemobiletools.commons.R.string.unknown_error_occurred)
                     finish()
                 }
             }
@@ -188,7 +188,7 @@ class TrackActivity : SimpleControllerActivity(), PlaybackSpeedListener {
         binding.nextTrackLabel.text = "${getString(R.string.next_track)} ${track.title}$artist"
 
         getTrackCoverArt(track) { coverArt ->
-            val cornerRadius = resources.getDimension(R.dimen.rounded_corner_radius_small).toInt()
+            val cornerRadius = resources.getDimension(com.simplemobiletools.commons.R.dimen.rounded_corner_radius_small).toInt()
             val wantedSize = resources.getDimension(R.dimen.song_image_size).toInt()
 
             // change cover image manually only once loaded successfully to avoid blinking at fails and placeholders
@@ -252,7 +252,7 @@ class TrackActivity : SimpleControllerActivity(), PlaybackSpeedListener {
                     if (velocityY > 0 && velocityY > velocityX && e2.y - e1.y > SWIPE_DOWN_THRESHOLD) {
                         finish()
                         binding.activityTrackTopShadow.animate().alpha(0f).start()
-                        overridePendingTransition(0, R.anim.slide_down)
+                        overridePendingTransition(0, com.simplemobiletools.commons.R.anim.slide_down)
                     }
                 }
                 return super.onFling(e1, e2, velocityX, velocityY)

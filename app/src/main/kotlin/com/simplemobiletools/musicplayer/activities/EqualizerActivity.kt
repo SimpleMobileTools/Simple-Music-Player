@@ -12,7 +12,6 @@ import com.simplemobiletools.commons.helpers.DARK_GREY
 import com.simplemobiletools.commons.helpers.NavigationIcon
 import com.simplemobiletools.commons.models.RadioItem
 import com.simplemobiletools.commons.views.MySeekBar
-import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.databinding.ActivityEqualizerBinding
 import com.simplemobiletools.musicplayer.databinding.EqualizerBandBinding
 import com.simplemobiletools.musicplayer.extensions.config
@@ -122,7 +121,7 @@ class EqualizerActivity : SimpleActivity() {
     }
 
     private fun draggingStarted(equalizer: Equalizer) {
-        binding.equalizerPreset.text = getString(R.string.custom)
+        binding.equalizerPreset.text = getString(com.simplemobiletools.commons.R.string.custom)
         config.equalizerPreset = EQUALIZER_PRESET_CUSTOM
         for (band in 0 until equalizer.numberOfBands) {
             bands[band.toShort()] = bandSeekBars[band].progress
@@ -143,7 +142,7 @@ class EqualizerActivity : SimpleActivity() {
                 RadioItem(it, equalizer.getPresetName(it.toShort()))
             }
 
-            items.add(RadioItem(EQUALIZER_PRESET_CUSTOM, getString(R.string.custom)))
+            items.add(RadioItem(EQUALIZER_PRESET_CUSTOM, getString(com.simplemobiletools.commons.R.string.custom)))
             RadioGroupDialog(this, items, config.equalizerPreset) { presetId ->
                 try {
                     config.equalizerPreset = presetId as Int
@@ -158,7 +157,7 @@ class EqualizerActivity : SimpleActivity() {
 
     private fun presetChanged(presetId: Int, equalizer: Equalizer) {
         if (presetId == EQUALIZER_PRESET_CUSTOM) {
-            binding.equalizerPreset.text = getString(R.string.custom)
+            binding.equalizerPreset.text = getString(com.simplemobiletools.commons.R.string.custom)
 
             for (band in 0 until equalizer.numberOfBands) {
                 val minValue = equalizer.bandLevelRange[0]
@@ -177,7 +176,7 @@ class EqualizerActivity : SimpleActivity() {
             val presetName = equalizer.getPresetName(presetId.toShort())
             if (presetName.isEmpty()) {
                 config.equalizerPreset = EQUALIZER_PRESET_CUSTOM
-                binding.equalizerPreset.text = getString(R.string.custom)
+                binding.equalizerPreset.text = getString(com.simplemobiletools.commons.R.string.custom)
             } else {
                 binding.equalizerPreset.text = presetName
             }

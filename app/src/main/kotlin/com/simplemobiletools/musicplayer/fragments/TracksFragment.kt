@@ -5,7 +5,12 @@ import android.content.Context
 import android.util.AttributeSet
 import com.simplemobiletools.commons.activities.BaseSimpleActivity
 import com.simplemobiletools.commons.dialogs.PermissionRequiredDialog
-import com.simplemobiletools.commons.extensions.*
+import com.simplemobiletools.commons.extensions.areSystemAnimationsEnabled
+import com.simplemobiletools.commons.extensions.beGoneIf
+import com.simplemobiletools.commons.extensions.beVisibleIf
+import com.simplemobiletools.commons.extensions.getParentPath
+import com.simplemobiletools.commons.extensions.hideKeyboard
+import com.simplemobiletools.commons.extensions.openNotificationSettings
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
@@ -39,7 +44,7 @@ class TracksFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
                 binding.tracksPlaceholder.text = if (scanning) {
                     context.getString(R.string.loading_files)
                 } else {
-                    context.getString(R.string.no_items_found)
+                    context.getString(com.simplemobiletools.commons.R.string.no_items_found)
                 }
                 binding.tracksPlaceholder.beVisibleIf(tracks.isEmpty())
                 val adapter = binding.tracksList.adapter
@@ -52,7 +57,11 @@ class TracksFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
                                 prepareAndPlay(tracks, startIndex)
                             } else {
                                 if (context is Activity) {
-                                    PermissionRequiredDialog(activity, R.string.allow_notifications_music_player, { activity.openNotificationSettings() })
+                                    PermissionRequiredDialog(
+                                        activity,
+                                        com.simplemobiletools.commons.R.string.allow_notifications_music_player,
+                                        { activity.openNotificationSettings() }
+                                    )
                                 }
                             }
                         }
