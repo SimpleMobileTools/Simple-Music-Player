@@ -27,6 +27,7 @@ import com.simplemobiletools.musicplayer.adapters.TracksAdapter.Companion.TYPE_F
 import com.simplemobiletools.musicplayer.adapters.TracksAdapter.Companion.TYPE_PLAYLIST
 import com.simplemobiletools.musicplayer.adapters.TracksAdapter.Companion.TYPE_TRACKS
 import com.simplemobiletools.musicplayer.adapters.TracksHeaderAdapter
+import com.simplemobiletools.musicplayer.databinding.ActivityTracksBinding
 import com.simplemobiletools.musicplayer.dialogs.ChangeSortingDialog
 import com.simplemobiletools.musicplayer.dialogs.ExportPlaylistDialog
 import com.simplemobiletools.musicplayer.extensions.audioHelper
@@ -36,8 +37,6 @@ import com.simplemobiletools.musicplayer.extensions.getMediaStoreIdFromPath
 import com.simplemobiletools.musicplayer.helpers.*
 import com.simplemobiletools.musicplayer.helpers.M3uExporter.ExportResult
 import com.simplemobiletools.musicplayer.models.*
-import kotlinx.android.synthetic.main.activity_tracks.*
-import kotlinx.android.synthetic.main.view_current_track_bar.current_track_bar
 import org.greenrobot.eventbus.EventBus
 import java.io.OutputStream
 
@@ -54,31 +53,33 @@ class TracksActivity : SimpleMusicActivity() {
     private var sourceType = 0
     private var lastFilePickerPath = ""
 
+    private val binding by viewBinding(ActivityTracksBinding::inflate)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         isMaterialActivity = true
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_tracks)
+        setContentView(binding.root)
         setupOptionsMenu()
         refreshMenuItems()
 
-        updateMaterialActivityViews(tracks_coordinator, tracks_holder, useTransparentNavigation = true, useTopSearchMenu = false)
-        setupMaterialScrollListener(tracks_list, tracks_toolbar)
+        updateMaterialActivityViews(binding.tracksCoordinator, binding.tracksHolder, useTransparentNavigation = true, useTopSearchMenu = false)
+        setupMaterialScrollListener(binding.tracksList, binding.tracksToolbar)
 
         val properPrimaryColor = getProperPrimaryColor()
-        tracks_fastscroller.updateColors(properPrimaryColor)
-        tracks_placeholder.setTextColor(getProperTextColor())
-        tracks_placeholder_2.setTextColor(properPrimaryColor)
-        tracks_placeholder_2.underlineText()
-        tracks_placeholder_2.setOnClickListener {
+        binding.tracksFastscroller.updateColors(properPrimaryColor)
+        binding.tracksPlaceholder.setTextColor(getProperTextColor())
+        binding.tracksPlaceholder2.setTextColor(properPrimaryColor)
+        binding.tracksPlaceholder2.underlineText()
+        binding.tracksPlaceholder2.setOnClickListener {
             addFolderToPlaylist()
         }
 
-        setupCurrentTrackBar(current_track_bar)
+        setupCurrentTrackBar(binding.currentTrackBar.root)
     }
 
     override fun onResume() {
         super.onResume()
-        setupToolbar(tracks_toolbar, NavigationIcon.Arrow, searchMenuItem = searchMenuItem)
+        setupToolbar(binding.tracksToolbar, NavigationIcon.Arrow, searchMenuItem = searchMenuItem)
         refreshTracks()
     }
 
@@ -95,7 +96,7 @@ class TracksActivity : SimpleMusicActivity() {
     }
 
     private fun refreshMenuItems() {
-        tracks_toolbar.menu.apply {
+        binding.tracksToolbar.menu.apply {
             findItem(R.id.search).isVisible = sourceType != TYPE_ALBUM
             findItem(R.id.sort).isVisible = sourceType != TYPE_ALBUM
             findItem(R.id.add_file_to_playlist).isVisible = sourceType == TYPE_PLAYLIST
@@ -105,8 +106,8 @@ class TracksActivity : SimpleMusicActivity() {
     }
 
     private fun setupOptionsMenu() {
-        setupSearch(tracks_toolbar.menu)
-        tracks_toolbar.setOnMenuItemClickListener { menuItem ->
+        setupSearch(binding.tracksToolbar.menu)
+        binding.tracksToolbar.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.sort -> showSortingDialog()
                 R.id.add_file_to_playlist -> addFileToPlaylist()
@@ -173,11 +174,11 @@ class TracksActivity : SimpleMusicActivity() {
         folder = intent.getStringExtra(FOLDER)
         if (folder != null) {
             sourceType = TYPE_FOLDER
-            tracks_placeholder_2.beGone()
+            binding.tracksPlaceholder2.beGone()
         }
 
         val titleToUse = playlist?.title ?: album?.title ?: genre?.title ?: folder ?: ""
-        tracks_toolbar.title = titleToUse
+        binding.tracksToolbar.title = titleToUse
         refreshMenuItems()
 
         ensureBackgroundThread {
@@ -187,13 +188,14 @@ class TracksActivity : SimpleMusicActivity() {
                 TYPE_PLAYLIST -> {
                     val playlistTracks = audioHelper.getPlaylistTracks(playlist!!.id)
                     runOnUiThread {
-                        tracks_placeholder.beVisibleIf(playlistTracks.isEmpty())
-                        tracks_placeholder_2.beVisibleIf(playlistTracks.isEmpty())
+                        binding.tracksPlaceholder.beVisibleIf(playlistTracks.isEmpty())
+                        binding.tracksPlaceholder2.beVisibleIf(playlistTracks.isEmpty())
                     }
 
                     tracks.addAll(playlistTracks)
                     listItems.addAll(tracks)
                 }
+
                 TYPE_ALBUM -> {
                     val albumTracks = audioHelper.getAlbumTracks(album.id)
                     tracks.addAll(albumTracks)
@@ -202,14 +204,16 @@ class TracksActivity : SimpleMusicActivity() {
                     listItems.add(header)
                     listItems.addAll(tracks)
                 }
+
                 TYPE_TRACKS -> {
                     val genreTracks = audioHelper.getGenreTracks(genre.id)
                     tracks.addAll(genreTracks)
                 }
+
                 else -> {
                     val folderTracks = audioHelper.getFolderTracks(folder.orEmpty())
                     runOnUiThread {
-                        tracks_placeholder.beVisibleIf(folderTracks.isEmpty())
+                        binding.tracksPlaceholder.beVisibleIf(folderTracks.isEmpty())
                     }
 
                     tracks.addAll(folderTracks)
@@ -219,26 +223,26 @@ class TracksActivity : SimpleMusicActivity() {
 
             runOnUiThread {
                 if (sourceType == TYPE_ALBUM) {
-                    val currAdapter = tracks_list.adapter
+                    val currAdapter = binding.tracksList.adapter
                     if (currAdapter == null) {
-                        TracksHeaderAdapter(this, listItems, tracks_list) {
+                        TracksHeaderAdapter(this, listItems, binding.tracksList) {
                             itemClicked(it as Track)
                         }.apply {
-                            tracks_list.adapter = this
+                            binding.tracksList.adapter = this
                         }
 
                         if (areSystemAnimationsEnabled) {
-                            tracks_list.scheduleLayoutAnimation()
+                            binding.tracksList.scheduleLayoutAnimation()
                         }
                     } else {
                         (currAdapter as TracksHeaderAdapter).updateItems(listItems)
                     }
                 } else {
-                    val currAdapter = tracks_list.adapter
+                    val currAdapter = binding.tracksList.adapter
                     if (currAdapter == null) {
                         TracksAdapter(
                             activity = this,
-                            recyclerView = tracks_list,
+                            recyclerView = binding.tracksList,
                             sourceType = sourceType,
                             folder = folder,
                             playlist = playlist,
@@ -246,11 +250,11 @@ class TracksActivity : SimpleMusicActivity() {
                         ) {
                             itemClicked(it as Track)
                         }.apply {
-                            tracks_list.adapter = this
+                            binding.tracksList.adapter = this
                         }
 
                         if (areSystemAnimationsEnabled) {
-                            tracks_list.scheduleLayoutAnimation()
+                            binding.tracksList.scheduleLayoutAnimation()
                         }
                     } else {
                         (currAdapter as TracksAdapter).updateItems(tracks)
@@ -260,9 +264,11 @@ class TracksActivity : SimpleMusicActivity() {
         }
     }
 
+    private fun getTracksAdapter() = binding.tracksList.adapter as? TracksAdapter
+
     private fun showSortingDialog() {
         ChangeSortingDialog(this, ACTIVITY_PLAYLIST_FOLDER, playlist, folder) {
-            val adapter = tracks_list.adapter as? TracksAdapter ?: return@ChangeSortingDialog
+            val adapter = getTracksAdapter() ?: return@ChangeSortingDialog
             val tracks = adapter.items
             val sorting = when (sourceType) {
                 TYPE_PLAYLIST -> config.getProperPlaylistSorting(playlist?.id ?: -1)
@@ -333,20 +339,20 @@ class TracksActivity : SimpleMusicActivity() {
     }
 
     private fun onSearchOpened() {
-        tracksIgnoringSearch = (tracks_list.adapter as? TracksAdapter)?.items ?: return
+        tracksIgnoringSearch = getTracksAdapter()?.items ?: return
     }
 
     private fun onSearchClosed() {
-        (tracks_list.adapter as? TracksAdapter)?.updateItems(tracksIgnoringSearch)
-        tracks_placeholder.beGoneIf(tracksIgnoringSearch.isNotEmpty())
+        getTracksAdapter()?.updateItems(tracksIgnoringSearch)
+        binding.tracksPlaceholder.beGoneIf(tracksIgnoringSearch.isNotEmpty())
     }
 
     private fun onSearchQueryChanged(text: String) {
         val filtered = tracksIgnoringSearch.filter {
             it.title.contains(text, true) || ("${it.artist} - ${it.album}").contains(text, true)
         }.toMutableList() as ArrayList<Track>
-        (tracks_list.adapter as? TracksAdapter)?.updateItems(filtered, text)
-        tracks_placeholder.beGoneIf(filtered.isNotEmpty())
+        getTracksAdapter()?.updateItems(filtered, text)
+        binding.tracksPlaceholder.beGoneIf(filtered.isNotEmpty())
     }
 
     private fun refreshPlaylist() {
@@ -354,16 +360,16 @@ class TracksActivity : SimpleMusicActivity() {
 
         val newTracks = audioHelper.getPlaylistTracks(playlist!!.id)
         runOnUiThread {
-            (tracks_list.adapter as? TracksAdapter)?.updateItems(newTracks)
-            tracks_placeholder.beVisibleIf(newTracks.isEmpty())
-            tracks_placeholder_2.beVisibleIf(newTracks.isEmpty())
+            getTracksAdapter()?.updateItems(newTracks)
+            binding.tracksPlaceholder.beVisibleIf(newTracks.isEmpty())
+            binding.tracksPlaceholder2.beVisibleIf(newTracks.isEmpty())
         }
     }
 
     private fun itemClicked(track: Track) {
         val tracks = when (sourceType) {
-            TYPE_ALBUM -> (tracks_list.adapter as? TracksHeaderAdapter)?.items?.filterIsInstance<Track>()
-            else -> (tracks_list.adapter as? TracksAdapter)?.items
+            TYPE_ALBUM -> (binding.tracksList.adapter as? TracksHeaderAdapter)?.items?.filterIsInstance<Track>()
+            else -> getTracksAdapter()?.items
         } ?: ArrayList()
 
         handleNotificationPermission { granted ->
@@ -407,9 +413,8 @@ class TracksActivity : SimpleMusicActivity() {
     }
 
     private fun exportPlaylistTo(outputStream: OutputStream?) {
-        val tracks = (tracks_list.adapter as TracksAdapter).items
-
-        if (tracks.isEmpty()) {
+        val tracks = getTracksAdapter()?.items
+        if (tracks.isNullOrEmpty()) {
             toast(R.string.no_entries_for_exporting)
             return
         }

@@ -14,6 +14,7 @@ import com.simplemobiletools.musicplayer.extensions.addRemainingMediaItems
 import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.helpers.EXTRA_NEXT_MEDIA_ID
 import com.simplemobiletools.musicplayer.helpers.EXTRA_SHUFFLE_INDICES
+import com.simplemobiletools.musicplayer.helpers.log
 import com.simplemobiletools.musicplayer.playback.player.updatePlaybackState
 import java.util.concurrent.Executors
 

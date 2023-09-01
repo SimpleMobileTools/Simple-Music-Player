@@ -17,6 +17,7 @@ import com.simplemobiletools.commons.interfaces.ItemTouchHelperContract
 import com.simplemobiletools.commons.interfaces.StartReorderDragListener
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.musicplayer.R
+import com.simplemobiletools.musicplayer.databinding.ItemTrackBinding
 import com.simplemobiletools.musicplayer.dialogs.EditDialog
 import com.simplemobiletools.musicplayer.extensions.*
 import com.simplemobiletools.musicplayer.helpers.ALL_TRACKS_PLAYLIST_ID
@@ -25,7 +26,6 @@ import com.simplemobiletools.musicplayer.inlines.indexOfFirstOrNull
 import com.simplemobiletools.musicplayer.models.Events
 import com.simplemobiletools.musicplayer.models.Playlist
 import com.simplemobiletools.musicplayer.models.Track
-import kotlinx.android.synthetic.main.item_track.view.*
 import org.greenrobot.eventbus.EventBus
 
 class TracksAdapter(
@@ -56,7 +56,10 @@ class TracksAdapter(
 
     override fun getActionMenuId() = R.menu.cab_tracks
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = createViewHolder(R.layout.item_track, parent)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val binding = ItemTrackBinding.inflate(layoutInflater, parent, false)
+        return createViewHolder(binding.root)
+    }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val track = items.getOrNull(position) ?: return
@@ -174,35 +177,35 @@ class TracksAdapter(
 
     @SuppressLint("ClickableViewAccessibility")
     private fun setupView(view: View, track: Track, holder: ViewHolder) {
-        view.apply {
-            setupViewBackground(ctx)
-            track_frame?.isSelected = selectedKeys.contains(track.hashCode())
-            track_title.text = if (textToHighlight.isEmpty()) track.title else track.title.highlightTextPart(textToHighlight, properPrimaryColor)
-            track_info.text = if (textToHighlight.isEmpty()) {
+        ItemTrackBinding.bind(view).apply {
+            root.setupViewBackground(ctx)
+            trackFrame.isSelected = selectedKeys.contains(track.hashCode())
+            trackTitle.text = if (textToHighlight.isEmpty()) track.title else track.title.highlightTextPart(textToHighlight, properPrimaryColor)
+            trackInfo.text = if (textToHighlight.isEmpty()) {
                 "${track.artist} • ${track.album}"
             } else {
                 ("${track.artist} • ${track.album}").highlightTextPart(textToHighlight, properPrimaryColor)
             }
-            track_drag_handle.beVisibleIf(isPlaylistContent() && selectedKeys.isNotEmpty())
-            track_drag_handle.applyColorFilter(textColor)
-            track_drag_handle.setOnTouchListener { _, event ->
+            trackDragHandle.beVisibleIf(isPlaylistContent() && selectedKeys.isNotEmpty())
+            trackDragHandle.applyColorFilter(textColor)
+            trackDragHandle.setOnTouchListener { _, event ->
                 if (event.action == MotionEvent.ACTION_DOWN) {
                     startReorderDragListener.requestDrag(holder)
                 }
                 false
             }
 
-            arrayOf(track_id, track_title, track_info, track_duration).forEach {
+            arrayOf(trackId, trackTitle, trackInfo, trackDuration).forEach {
                 it.setTextColor(textColor)
             }
 
-            track_duration.text = track.duration.getFormattedDuration()
-            context.getTrackCoverArt(track) { coverArt ->
-                loadImage(findViewById(R.id.track_image), coverArt, placeholderBig)
+            trackDuration.text = track.duration.getFormattedDuration()
+            activity.getTrackCoverArt(track) { coverArt ->
+                loadImage(trackImage, coverArt, placeholderBig)
             }
 
-            track_image.beVisible()
-            track_id.beGone()
+            trackImage.beVisible()
+            trackId.beGone()
         }
     }
 

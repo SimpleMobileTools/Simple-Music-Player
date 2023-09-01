@@ -17,14 +17,11 @@ import com.simplemobiletools.commons.interfaces.StartReorderDragListener
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
+import com.simplemobiletools.musicplayer.databinding.ItemTrackQueueBinding
 import com.simplemobiletools.musicplayer.extensions.*
 import com.simplemobiletools.musicplayer.helpers.EXTRA_SHUFFLE_INDICES
 import com.simplemobiletools.musicplayer.models.Track
 import com.simplemobiletools.musicplayer.playback.CustomCommands
-import kotlinx.android.synthetic.main.item_track_queue.view.track_queue_drag_handle
-import kotlinx.android.synthetic.main.item_track_queue.view.track_queue_duration
-import kotlinx.android.synthetic.main.item_track_queue.view.track_queue_frame
-import kotlinx.android.synthetic.main.item_track_queue.view.track_queue_title
 
 class QueueAdapter(activity: SimpleActivity, items: ArrayList<Track>, var currentTrack: Track? = null, recyclerView: MyRecyclerView, itemClick: (Any) -> Unit) :
     BaseMusicAdapter<Track>(items, activity, recyclerView, itemClick), ItemTouchHelperContract, RecyclerViewFastScroller.OnPopupTextUpdate {
@@ -46,7 +43,10 @@ class QueueAdapter(activity: SimpleActivity, items: ArrayList<Track>, var curren
 
     override fun getActionMenuId() = R.menu.cab_queue
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = createViewHolder(R.layout.item_track_queue, parent)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val binding = ItemTrackQueueBinding.inflate(layoutInflater, parent, false)
+        return createViewHolder(binding.root)
+    }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = items.getOrNull(position) ?: return
@@ -139,20 +139,24 @@ class QueueAdapter(activity: SimpleActivity, items: ArrayList<Track>, var curren
 
     @SuppressLint("ClickableViewAccessibility")
     private fun setupView(view: View, track: Track, holder: ViewHolder) {
-        view.apply {
-            setupViewBackground(ctx)
-            track_queue_frame?.isSelected = selectedKeys.contains(track.hashCode())
-            track_queue_title.text = if (textToHighlight.isEmpty()) track.title else track.title.highlightTextPart(textToHighlight, properPrimaryColor)
+        ItemTrackQueueBinding.bind(view).apply {
+            root.setupViewBackground(ctx)
+            trackQueueFrame.isSelected = selectedKeys.contains(track.hashCode())
+            trackQueueTitle.text = if (textToHighlight.isEmpty()) track.title else track.title.highlightTextPart(textToHighlight, properPrimaryColor)
 
-            arrayOf(track_queue_title, track_queue_duration).forEach {
-                val color = if (track.mediaStoreId == currentTrack?.mediaStoreId) context.getProperPrimaryColor() else textColor
+            arrayOf(trackQueueTitle, trackQueueDuration).forEach {
+                val color = if (track.mediaStoreId == currentTrack?.mediaStoreId) {
+                    activity.getProperPrimaryColor()
+                } else {
+                    textColor
+                }
                 it.setTextColor(color)
             }
 
-            track_queue_duration.text = track.duration.getFormattedDuration()
-            track_queue_drag_handle.beVisibleIf(selectedKeys.isNotEmpty())
-            track_queue_drag_handle.applyColorFilter(textColor)
-            track_queue_drag_handle.setOnTouchListener { _, event ->
+            trackQueueDuration.text = track.duration.getFormattedDuration()
+            trackQueueDragHandle.beVisibleIf(selectedKeys.isNotEmpty())
+            trackQueueDragHandle.applyColorFilter(textColor)
+            trackQueueDragHandle.setOnTouchListener { _, event ->
                 if (event.action == MotionEvent.ACTION_DOWN) {
                     startReorderDragListener.requestDrag(holder)
                 }
@@ -160,7 +164,7 @@ class QueueAdapter(activity: SimpleActivity, items: ArrayList<Track>, var curren
             }
 
             ctx.getTrackCoverArt(track) { coverArt ->
-                loadImage(findViewById(R.id.track_queue_image), coverArt, placeholderBig)
+                loadImage(trackQueueImage, coverArt, placeholderBig)
             }
         }
     }

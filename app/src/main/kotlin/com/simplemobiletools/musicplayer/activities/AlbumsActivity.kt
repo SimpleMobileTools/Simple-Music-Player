@@ -10,29 +10,30 @@ import com.simplemobiletools.commons.helpers.NavigationIcon
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.adapters.AlbumsTracksAdapter
+import com.simplemobiletools.musicplayer.databinding.ActivityAlbumsBinding
 import com.simplemobiletools.musicplayer.extensions.audioHelper
 import com.simplemobiletools.musicplayer.helpers.ALBUM
 import com.simplemobiletools.musicplayer.helpers.ARTIST
 import com.simplemobiletools.musicplayer.models.*
-import kotlinx.android.synthetic.main.activity_albums.*
-import kotlinx.android.synthetic.main.view_current_track_bar.current_track_bar
 
 // Artists -> Albums -> Tracks
 class AlbumsActivity : SimpleMusicActivity() {
 
+    private val binding by viewBinding(ActivityAlbumsBinding::inflate)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         isMaterialActivity = true
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_albums)
+        setContentView(binding.root)
 
-        updateMaterialActivityViews(albums_coordinator, albums_holder, useTransparentNavigation = true, useTopSearchMenu = false)
-        setupMaterialScrollListener(albums_list, albums_toolbar)
+        updateMaterialActivityViews(binding.albumsCoordinator, binding.albumsHolder, useTransparentNavigation = true, useTopSearchMenu = false)
+        setupMaterialScrollListener(binding.albumsList, binding.albumsToolbar)
 
-        albums_fastscroller.updateColors(getProperPrimaryColor())
+        binding.albumsFastscroller.updateColors(getProperPrimaryColor())
 
         val artistType = object : TypeToken<Artist>() {}.type
         val artist = Gson().fromJson<Artist>(intent.getStringExtra(ARTIST), artistType)
-        albums_toolbar.title = artist.title
+        binding.albumsToolbar.title = artist.title
 
         ensureBackgroundThread {
             val albums = audioHelper.getArtistAlbums(artist.id)
@@ -50,7 +51,7 @@ class AlbumsActivity : SimpleMusicActivity() {
             listItems.addAll(albumTracks)
 
             runOnUiThread {
-                AlbumsTracksAdapter(this, listItems, albums_list) {
+                AlbumsTracksAdapter(this, listItems, binding.albumsList) {
                     hideKeyboard()
                     if (it is Album) {
                         Intent(this, TracksActivity::class.java).apply {
@@ -68,20 +69,20 @@ class AlbumsActivity : SimpleMusicActivity() {
                         }
                     }
                 }.apply {
-                    albums_list.adapter = this
+                    binding.albumsList.adapter = this
                 }
 
                 if (areSystemAnimationsEnabled) {
-                    albums_list.scheduleLayoutAnimation()
+                    binding.albumsList.scheduleLayoutAnimation()
                 }
             }
         }
 
-        setupCurrentTrackBar(current_track_bar)
+        setupCurrentTrackBar(binding.currentTrackBar.root)
     }
 
     override fun onResume() {
         super.onResume()
-        setupToolbar(albums_toolbar, NavigationIcon.Arrow)
+        setupToolbar(binding.albumsToolbar, NavigationIcon.Arrow)
     }
 }

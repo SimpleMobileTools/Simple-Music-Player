@@ -1,5 +1,6 @@
 package com.simplemobiletools.musicplayer.adapters
 
+import android.annotation.SuppressLint
 import android.view.*
 import android.widget.PopupMenu
 import com.simplemobiletools.commons.activities.BaseSimpleActivity
@@ -11,8 +12,8 @@ import com.simplemobiletools.commons.extensions.setupViewBackground
 import com.simplemobiletools.commons.interfaces.RefreshRecyclerViewListener
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.musicplayer.R
+import com.simplemobiletools.musicplayer.databinding.ItemExcludedFolderBinding
 import com.simplemobiletools.musicplayer.extensions.config
-import kotlinx.android.synthetic.main.item_excluded_folder.view.*
 
 class ExcludedFoldersAdapter(
     activity: BaseSimpleActivity,
@@ -46,11 +47,14 @@ class ExcludedFoldersAdapter(
 
     override fun onActionModeDestroyed() {}
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = createViewHolder(R.layout.item_excluded_folder, parent)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val binding = ItemExcludedFolderBinding.inflate(layoutInflater, parent, false)
+        return createViewHolder(binding.root)
+    }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val folder = folders[position]
-        holder.bindView(folder, true, true) { itemView, adapterPosition ->
+        holder.bindView(folder, allowSingleClick = true, allowLongClick = true) { itemView, _ ->
             setupView(itemView, folder)
         }
         bindViewHolder(holder)
@@ -61,21 +65,22 @@ class ExcludedFoldersAdapter(
     private fun getSelectedItems() = folders.filter { selectedKeys.contains(it.hashCode()) } as ArrayList<String>
 
     private fun setupView(view: View, folder: String) {
-        view.apply {
-            setupViewBackground(activity)
-            excluded_folder_holder?.isSelected = selectedKeys.contains(folder.hashCode())
-            excluded_folder_title.apply {
+        ItemExcludedFolderBinding.bind(view).apply {
+            root.setupViewBackground(activity)
+            excludedFolderHolder.isSelected = selectedKeys.contains(folder.hashCode())
+            excludedFolderTitle.apply {
+                @SuppressLint("SetTextI18n")
                 text = context.humanizePath(folder) + "/"
                 setTextColor(context.getProperTextColor())
             }
 
-            overflow_menu_icon.drawable.apply {
+            overflowMenuIcon.drawable.apply {
                 mutate()
                 setTint(activity.getProperTextColor())
             }
 
-            overflow_menu_icon.setOnClickListener {
-                showPopupMenu(overflow_menu_anchor, folder)
+            overflowMenuIcon.setOnClickListener {
+                showPopupMenu(overflowMenuAnchor, folder)
             }
         }
     }

@@ -13,6 +13,9 @@ import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
+import com.simplemobiletools.musicplayer.databinding.ItemAlbumBinding
+import com.simplemobiletools.musicplayer.databinding.ItemSectionBinding
+import com.simplemobiletools.musicplayer.databinding.ItemTrackBinding
 import com.simplemobiletools.musicplayer.dialogs.EditDialog
 import com.simplemobiletools.musicplayer.extensions.audioHelper
 import com.simplemobiletools.musicplayer.extensions.getAlbumCoverArt
@@ -22,11 +25,6 @@ import com.simplemobiletools.musicplayer.models.Album
 import com.simplemobiletools.musicplayer.models.AlbumSection
 import com.simplemobiletools.musicplayer.models.ListItem
 import com.simplemobiletools.musicplayer.models.Track
-import kotlinx.android.synthetic.main.item_album.view.album_frame
-import kotlinx.android.synthetic.main.item_album.view.album_title
-import kotlinx.android.synthetic.main.item_album.view.album_tracks
-import kotlinx.android.synthetic.main.item_section.view.item_section
-import kotlinx.android.synthetic.main.item_track.view.*
 
 // we show both albums and individual tracks here
 class AlbumsTracksAdapter(
@@ -41,13 +39,13 @@ class AlbumsTracksAdapter(
     override fun getActionMenuId() = R.menu.cab_albums_tracks
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val layout = when (viewType) {
-            ITEM_SECTION -> R.layout.item_section
-            ITEM_ALBUM -> R.layout.item_album
-            else -> R.layout.item_track
+        val binding = when (viewType) {
+            ITEM_SECTION -> ItemSectionBinding.inflate(layoutInflater, parent, false)
+            ITEM_ALBUM -> ItemAlbumBinding.inflate(layoutInflater, parent, false)
+            else -> ItemTrackBinding.inflate(layoutInflater, parent, false)
         }
 
-        return createViewHolder(layout, parent)
+        return createViewHolder(binding.root)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -135,43 +133,43 @@ class AlbumsTracksAdapter(
     private fun getSelectedAlbums(): List<Album> = getSelectedItems().filterIsInstance<Album>().toList()
 
     private fun setupAlbum(view: View, album: Album) {
-        view.apply {
-            album_frame?.isSelected = selectedKeys.contains(album.hashCode())
-            album_title.text = album.title
-            album_title.setTextColor(textColor)
-            album_tracks.text = resources.getQuantityString(R.plurals.tracks_plural, album.trackCnt, album.trackCnt)
-            album_tracks.setTextColor(textColor)
+        ItemAlbumBinding.bind(view).apply {
+            albumFrame.isSelected = selectedKeys.contains(album.hashCode())
+            albumTitle.text = album.title
+            albumTitle.setTextColor(textColor)
+            albumTracks.text = resources.getQuantityString(R.plurals.tracks_plural, album.trackCnt, album.trackCnt)
+            albumTracks.setTextColor(textColor)
 
             ctx.getAlbumCoverArt(album) { coverArt ->
-                loadImage(findViewById(R.id.album_image), coverArt, placeholderBig)
+                loadImage(albumImage, coverArt, placeholderBig)
             }
         }
     }
 
     private fun setupTrack(view: View, track: Track) {
-        view.apply {
-            setupViewBackground(ctx)
-            track_frame?.isSelected = selectedKeys.contains(track.hashCode())
-            track_title.text = track.title
-            track_title.setTextColor(textColor)
-            track_info.text = track.album
-            track_info.setTextColor(textColor)
+        ItemTrackBinding.bind(view).apply {
+            root.setupViewBackground(ctx)
+            trackFrame.isSelected = selectedKeys.contains(track.hashCode())
+            trackTitle.text = track.title
+            trackTitle.setTextColor(textColor)
+            trackInfo.text = track.album
+            trackInfo.setTextColor(textColor)
 
-            track_id.beGone()
-            track_image.beVisible()
-            track_duration.text = track.duration.getFormattedDuration()
-            track_duration.setTextColor(textColor)
+            trackId.beGone()
+            trackImage.beVisible()
+            trackDuration.text = track.duration.getFormattedDuration()
+            trackDuration.setTextColor(textColor)
 
             ctx.getTrackCoverArt(track) { coverArt ->
-                loadImage(findViewById(R.id.track_image), coverArt, placeholder)
+                loadImage(trackImage, coverArt, placeholder)
             }
         }
     }
 
     private fun setupSection(view: View, section: AlbumSection) {
-        view.apply {
-            item_section.text = section.title
-            item_section.setTextColor(textColor)
+        ItemSectionBinding.bind(view).apply {
+            itemSection.text = section.title
+            itemSection.setTextColor(textColor)
         }
     }
 

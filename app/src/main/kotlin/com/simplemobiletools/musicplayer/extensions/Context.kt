@@ -281,6 +281,8 @@ fun Context.getTrackFromUri(uri: Uri?, callback: (track: Track) -> Unit) {
 
 fun Context.isTabVisible(flag: Int) = config.showTabs and flag != 0
 
+fun Context.getVisibleTabs() = tabsList.filter { isTabVisible(it) }
+
 fun Context.getPlaybackSetting(repeatMode: @Player.RepeatMode Int): PlaybackSetting {
     return when (repeatMode) {
         Player.REPEAT_MODE_OFF -> PlaybackSetting.REPEAT_OFF

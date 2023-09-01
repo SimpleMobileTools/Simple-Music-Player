@@ -13,31 +13,35 @@ import com.simplemobiletools.commons.helpers.NavigationIcon
 import com.simplemobiletools.commons.models.RadioItem
 import com.simplemobiletools.commons.views.MySeekBar
 import com.simplemobiletools.musicplayer.R
+import com.simplemobiletools.musicplayer.databinding.ActivityEqualizerBinding
+import com.simplemobiletools.musicplayer.databinding.EqualizerBandBinding
 import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.helpers.EQUALIZER_PRESET_CUSTOM
 import com.simplemobiletools.musicplayer.playback.SimpleEqualizer
-import kotlinx.android.synthetic.main.activity_equalizer.*
-import kotlinx.android.synthetic.main.equalizer_band.view.*
 import java.text.DecimalFormat
+import kotlin.math.log10
+import kotlin.math.pow
 import kotlin.math.roundToInt
 
 class EqualizerActivity : SimpleActivity() {
     private var bands = HashMap<Short, Int>()
     private var bandSeekBars = ArrayList<MySeekBar>()
 
+    private val binding by viewBinding(ActivityEqualizerBinding::inflate)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         isMaterialActivity = true
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_equalizer)
+        setContentView(binding.root)
 
-        updateMaterialActivityViews(equalizer_coordinator, equalizer_holder, useTransparentNavigation = true, useTopSearchMenu = false)
-        setupMaterialScrollListener(equalizer_nested_scrollview, equalizer_toolbar)
+        updateMaterialActivityViews(binding.equalizerCoordinator, binding.equalizerHolder, useTransparentNavigation = true, useTopSearchMenu = false)
+        setupMaterialScrollListener(binding.equalizerNestedScrollview, binding.equalizerToolbar)
         initMediaPlayer()
     }
 
     override fun onResume() {
         super.onResume()
-        setupToolbar(equalizer_toolbar, NavigationIcon.Arrow)
+        setupToolbar(binding.equalizerToolbar, NavigationIcon.Arrow)
     }
 
     @SuppressLint("SetTextI18n")
@@ -52,46 +56,46 @@ class EqualizerActivity : SimpleActivity() {
 
         setupBands(equalizer)
         setupPresets(equalizer)
-        updateTextColors(equalizer_holder)
+        updateTextColors(binding.equalizerHolder)
 
         val presetTextColor = if (isWhiteTheme()) {
             DARK_GREY
         } else {
             getProperPrimaryColor().getContrastColor()
         }
-        equalizer_preset.setTextColor(presetTextColor)
+        binding.equalizerPreset.setTextColor(presetTextColor)
     }
 
     @SuppressLint("SetTextI18n")
     private fun setupBands(equalizer: Equalizer) {
         val minValue = equalizer.bandLevelRange[0]
         val maxValue = equalizer.bandLevelRange[1]
-        equalizer_label_right.text = "+${maxValue / 100}"
-        equalizer_label_left.text = "${minValue / 100}"
-        equalizer_label_0.text = (minValue + maxValue).toString()
+        binding.equalizerLabelRight.text = "+${maxValue / 100}"
+        binding.equalizerLabelLeft.text = "${minValue / 100}"
+        binding.equalizerLabel0.text = (minValue + maxValue).toString()
 
         bandSeekBars.clear()
-        equalizer_bands_holder.removeAllViews()
+        binding.equalizerBandsHolder.removeAllViews()
 
         val bandType = object : TypeToken<HashMap<Short, Int>>() {}.type
         bands = Gson().fromJson<HashMap<Short, Int>>(config.equalizerBands, bandType) ?: HashMap()
 
         for (band in 0 until equalizer.numberOfBands) {
-            val frequency = equalizer.getCenterFreq(band.toShort()) / 1000
+            val frequency = equalizer.getCenterFreq(band.toShort()) / 1000.0
             val formatted = formatFrequency(frequency)
 
-            layoutInflater.inflate(R.layout.equalizer_band, equalizer_bands_holder, false).apply {
-                equalizer_bands_holder.addView(this)
-                bandSeekBars.add(this.equalizer_band_seek_bar)
-                this.equalizer_band_label.text = formatted
-                this.equalizer_band_label.setTextColor(getProperTextColor())
-                this.equalizer_band_seek_bar.max = maxValue - minValue
+            EqualizerBandBinding.inflate(layoutInflater, binding.equalizerBandsHolder, false).apply {
+                binding.equalizerBandsHolder.addView(root)
+                bandSeekBars.add(equalizerBandSeekBar)
+                equalizerBandLabel.text = formatted
+                equalizerBandLabel.setTextColor(getProperTextColor())
+                equalizerBandSeekBar.max = maxValue - minValue
 
-                this.equalizer_band_seek_bar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+                equalizerBandSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
                     override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
                         if (fromUser) {
                             val newProgress = (progress / 100.0).roundToInt() * 100
-                            this@apply.equalizer_band_seek_bar.progress = newProgress
+                            equalizerBandSeekBar.progress = newProgress
 
                             val newValue = newProgress + minValue
                             try {
@@ -109,7 +113,7 @@ class EqualizerActivity : SimpleActivity() {
                     }
 
                     override fun onStopTrackingTouch(seekBar: SeekBar) {
-                        bands[band.toShort()] = this@apply.equalizer_band_seek_bar.progress
+                        bands[band.toShort()] = equalizerBandSeekBar.progress
                         config.equalizerBands = Gson().toJson(bands)
                     }
                 })
@@ -118,7 +122,7 @@ class EqualizerActivity : SimpleActivity() {
     }
 
     private fun draggingStarted(equalizer: Equalizer) {
-        equalizer_preset.text = getString(R.string.custom)
+        binding.equalizerPreset.text = getString(R.string.custom)
         config.equalizerPreset = EQUALIZER_PRESET_CUSTOM
         for (band in 0 until equalizer.numberOfBands) {
             bands[band.toShort()] = bandSeekBars[band].progress
@@ -133,7 +137,7 @@ class EqualizerActivity : SimpleActivity() {
             config.equalizerPreset = EQUALIZER_PRESET_CUSTOM
         }
 
-        equalizer_preset.setOnClickListener {
+        binding.equalizerPreset.setOnClickListener {
             val items = arrayListOf<RadioItem>()
             (0 until equalizer.numberOfPresets).mapTo(items) {
                 RadioItem(it, equalizer.getPresetName(it.toShort()))
@@ -154,7 +158,7 @@ class EqualizerActivity : SimpleActivity() {
 
     private fun presetChanged(presetId: Int, equalizer: Equalizer) {
         if (presetId == EQUALIZER_PRESET_CUSTOM) {
-            equalizer_preset.text = getString(R.string.custom)
+            binding.equalizerPreset.text = getString(R.string.custom)
 
             for (band in 0 until equalizer.numberOfBands) {
                 val minValue = equalizer.bandLevelRange[0]
@@ -173,9 +177,9 @@ class EqualizerActivity : SimpleActivity() {
             val presetName = equalizer.getPresetName(presetId.toShort())
             if (presetName.isEmpty()) {
                 config.equalizerPreset = EQUALIZER_PRESET_CUSTOM
-                equalizer_preset.text = getString(R.string.custom)
+                binding.equalizerPreset.text = getString(R.string.custom)
             } else {
-                equalizer_preset.text = presetName
+                binding.equalizerPreset.text = presetName
             }
 
             equalizer.usePreset(presetId.toShort())
@@ -188,14 +192,14 @@ class EqualizerActivity : SimpleActivity() {
         }
     }
 
-    // copypasted  from the file size formatter, should be simplified
-    private fun formatFrequency(value: Int): String {
+    // copy-pasted from the file size formatter, should be simplified
+    private fun formatFrequency(value: Double): String {
         if (value <= 0) {
             return "0 Hz"
         }
 
         val units = arrayOf("Hz", "kHz", "gHz")
-        val digitGroups = (Math.log10(value.toDouble()) / Math.log10(1000.0)).toInt()
-        return "${DecimalFormat("#,##0.#").format(value / Math.pow(1000.0, digitGroups.toDouble()))} ${units[digitGroups]}"
+        val digitGroups = (log10(value) / log10(1000.0)).toInt()
+        return "${DecimalFormat("#,##0.#").format(value / 1000.0.pow(digitGroups.toDouble()))} ${units[digitGroups]}"
     }
 }

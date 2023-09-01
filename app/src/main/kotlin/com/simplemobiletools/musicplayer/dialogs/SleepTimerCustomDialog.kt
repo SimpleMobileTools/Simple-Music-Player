@@ -4,28 +4,28 @@ import android.app.Activity
 import androidx.appcompat.app.AlertDialog
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.musicplayer.R
-import kotlinx.android.synthetic.main.dialog_custom_sleep_timer_picker.view.*
+import com.simplemobiletools.musicplayer.databinding.DialogCustomSleepTimerPickerBinding
 
 class SleepTimerCustomDialog(val activity: Activity, val callback: (seconds: Int) -> Unit) {
     private var dialog: AlertDialog? = null
-    private val view = activity.layoutInflater.inflate(R.layout.dialog_custom_sleep_timer_picker, null)
+    private val binding by activity.viewBinding(DialogCustomSleepTimerPickerBinding::inflate)
 
     init {
-        view.minutes_hint.hint = activity.getString(R.string.minutes_raw).replaceFirstChar { it.uppercaseChar() }
+        binding.minutesHint.hint = activity.getString(R.string.minutes_raw).replaceFirstChar { it.uppercaseChar() }
         activity.getAlertDialogBuilder()
-            .setPositiveButton(R.string.ok) { dialog, which -> dialogConfirmed() }
+            .setPositiveButton(R.string.ok) { _, _ -> dialogConfirmed() }
             .setNegativeButton(R.string.cancel, null)
             .apply {
-                activity.setupDialogStuff(view, this, R.string.sleep_timer) { alertDialog ->
+                activity.setupDialogStuff(binding.root, this, R.string.sleep_timer) { alertDialog ->
                     dialog = alertDialog
-                    alertDialog.showKeyboard(view.minutes)
+                    alertDialog.showKeyboard(binding.minutes)
                 }
             }
     }
 
     private fun dialogConfirmed() {
-        val value = view.minutes.value
-        val minutes = Integer.valueOf(if (value.isEmpty()) "0" else value)
+        val value = binding.minutes.value
+        val minutes = Integer.valueOf(value.ifEmpty { "0" })
         callback(minutes * 60)
         activity.hideKeyboard()
         dialog?.dismiss()

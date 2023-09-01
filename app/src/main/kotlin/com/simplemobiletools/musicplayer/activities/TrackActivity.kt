@@ -25,6 +25,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.MEDIUM_ALPHA
 import com.simplemobiletools.musicplayer.R
+import com.simplemobiletools.musicplayer.databinding.ActivityTrackBinding
 import com.simplemobiletools.musicplayer.extensions.*
 import com.simplemobiletools.musicplayer.fragments.PlaybackSpeedFragment
 import com.simplemobiletools.musicplayer.helpers.*
@@ -32,7 +33,6 @@ import com.simplemobiletools.musicplayer.interfaces.PlaybackSpeedListener
 import com.simplemobiletools.musicplayer.models.Track
 import com.simplemobiletools.musicplayer.playback.CustomCommands
 import com.simplemobiletools.musicplayer.playback.PlaybackService
-import kotlinx.android.synthetic.main.activity_track.*
 import java.text.DecimalFormat
 import kotlin.math.min
 import kotlin.time.Duration.Companion.milliseconds
@@ -46,46 +46,50 @@ class TrackActivity : SimpleControllerActivity(), PlaybackSpeedListener {
     private val handler = Handler(Looper.getMainLooper())
     private val updateIntervalMillis = 500L
 
+    private val binding by viewBinding(ActivityTrackBinding::inflate)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         showTransparentTop = true
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_track)
+        setContentView(binding.root)
         nextTrackPlaceholder = resources.getColoredDrawableWithColor(R.drawable.ic_headset, getProperTextColor())
         setupButtons()
         setupFlingListener()
 
-        (activity_track_appbar.layoutParams as ConstraintLayout.LayoutParams).topMargin = statusBarHeight
-        activity_track_holder.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-        activity_track_toolbar.setNavigationOnClickListener {
-            finish()
-        }
+        binding.apply {
+            (activityTrackAppbar.layoutParams as ConstraintLayout.LayoutParams).topMargin = statusBarHeight
+            activityTrackHolder.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+            activityTrackToolbar.setNavigationOnClickListener {
+                finish()
+            }
 
-        isThirdPartyIntent = intent.action == Intent.ACTION_VIEW
-        arrayOf(activity_track_toggle_shuffle, activity_track_previous, activity_track_next, activity_track_playback_setting).forEach {
-            it.beInvisibleIf(isThirdPartyIntent)
-        }
+            isThirdPartyIntent = intent.action == Intent.ACTION_VIEW
+            arrayOf(activityTrackToggleShuffle, activityTrackPrevious, activityTrackNext, activityTrackPlaybackSetting).forEach {
+                it.beInvisibleIf(isThirdPartyIntent)
+            }
 
-        if (isThirdPartyIntent) {
-            initThirdPartyIntent()
-            return
-        }
+            if (isThirdPartyIntent) {
+                initThirdPartyIntent()
+                return
+            }
 
-        setupTrackInfo(PlaybackService.currentMediaItem)
-        setupNextTrackInfo(PlaybackService.nextMediaItem)
-        activity_track_play_pause.updatePlayPauseIcon(PlaybackService.isPlaying, getProperTextColor())
-        updatePlayerState()
+            setupTrackInfo(PlaybackService.currentMediaItem)
+            setupNextTrackInfo(PlaybackService.nextMediaItem)
+            activityTrackPlayPause.updatePlayPauseIcon(PlaybackService.isPlaying, getProperTextColor())
+            updatePlayerState()
 
-        next_track_holder.background = ColorDrawable(getProperBackgroundColor())
-        next_track_holder.setOnClickListener {
-            startActivity(Intent(applicationContext, QueueActivity::class.java))
+            nextTrackHolder.background = ColorDrawable(getProperBackgroundColor())
+            nextTrackHolder.setOnClickListener {
+                startActivity(Intent(applicationContext, QueueActivity::class.java))
+            }
         }
     }
 
     override fun onResume() {
         super.onResume()
-        updateTextColors(activity_track_holder)
-        activity_track_title.setTextColor(getProperTextColor())
-        activity_track_artist.setTextColor(getProperTextColor())
+        updateTextColors(binding.activityTrackHolder)
+        binding.activityTrackTitle.setTextColor(getProperTextColor())
+        binding.activityTrackArtist.setTextColor(getProperTextColor())
         updatePlayerState()
         updateTrackInfo()
     }
@@ -116,24 +120,26 @@ class TrackActivity : SimpleControllerActivity(), PlaybackSpeedListener {
         val track = item?.toTrack() ?: return
 
         setupTopArt(track)
-        activity_track_title.text = track.title
-        activity_track_artist.text = track.artist
-        activity_track_title.setOnLongClickListener {
-            copyToClipboard(activity_track_title.value)
-            true
-        }
+        binding.apply {
+            activityTrackTitle.text = track.title
+            activityTrackArtist.text = track.artist
+            activityTrackTitle.setOnLongClickListener {
+                copyToClipboard(activityTrackTitle.value)
+                true
+            }
 
-        activity_track_artist.setOnLongClickListener {
-            copyToClipboard(activity_track_artist.value)
-            true
-        }
+            activityTrackArtist.setOnLongClickListener {
+                copyToClipboard(activityTrackArtist.value)
+                true
+            }
 
-        activity_track_progressbar.max = track.duration
-        activity_track_progress_max.text = track.duration.getFormattedDuration()
+            activityTrackProgressbar.max = track.duration
+            activityTrackProgressMax.text = track.duration.getFormattedDuration()
+        }
     }
 
     private fun initThirdPartyIntent() {
-        next_track_holder.beGone()
+        binding.nextTrackHolder.beGone()
         getTrackFromUri(intent.data) {
             runOnUiThread {
                 prepareAndPlay(listOf(it), startActivity = false)
@@ -141,20 +147,20 @@ class TrackActivity : SimpleControllerActivity(), PlaybackSpeedListener {
         }
     }
 
-    private fun setupButtons() {
-        activity_track_toggle_shuffle.setOnClickListener { withPlayer { toggleShuffle() } }
-        activity_track_previous.setOnClickListener { withPlayer { forceSeekToPrevious() } }
-        activity_track_play_pause.setOnClickListener { withPlayer { togglePlayback() } }
-        activity_track_next.setOnClickListener { withPlayer { forceSeekToNext() } }
-        activity_track_progress_current.setOnClickListener { seekBack() }
-        activity_track_progress_max.setOnClickListener { seekForward() }
-        activity_track_playback_setting.setOnClickListener { togglePlaybackSetting() }
-        activity_track_speed_click_area.setOnClickListener { showPlaybackSpeedPicker() }
+    private fun setupButtons() = binding.apply {
+        activityTrackToggleShuffle.setOnClickListener { withPlayer { toggleShuffle() } }
+        activityTrackPrevious.setOnClickListener { withPlayer { forceSeekToPrevious() } }
+        activityTrackPlayPause.setOnClickListener { withPlayer { togglePlayback() } }
+        activityTrackNext.setOnClickListener { withPlayer { forceSeekToNext() } }
+        activityTrackProgressCurrent.setOnClickListener { seekBack() }
+        activityTrackProgressMax.setOnClickListener { seekForward() }
+        activityTrackPlaybackSetting.setOnClickListener { togglePlaybackSetting() }
+        activityTrackSpeedClickArea.setOnClickListener { showPlaybackSpeedPicker() }
         setupShuffleButton()
         setupPlaybackSettingButton()
         setupSeekbar()
 
-        arrayOf(activity_track_previous, activity_track_play_pause, activity_track_next).forEach {
+        arrayOf(activityTrackPrevious, activityTrackPlayPause, activityTrackNext).forEach {
             it.applyColorFilter(getProperTextColor())
         }
     }
@@ -162,11 +168,11 @@ class TrackActivity : SimpleControllerActivity(), PlaybackSpeedListener {
     private fun setupNextTrackInfo(item: MediaItem?) {
         val track = item?.toTrack()
         if (track == null) {
-            next_track_holder.beGone()
+            binding.nextTrackHolder.beGone()
             return
         }
 
-        next_track_holder.beVisible()
+        binding.nextTrackHolder.beVisible()
         val artist = if (track.artist.trim().isNotEmpty() && track.artist != MediaStore.UNKNOWN_STRING) {
             " • ${track.artist}"
         } else {
@@ -174,7 +180,7 @@ class TrackActivity : SimpleControllerActivity(), PlaybackSpeedListener {
         }
 
         @SuppressLint("SetTextI18n")
-        next_track_label.text = "${getString(R.string.next_track)} ${track.title}$artist"
+        binding.nextTrackLabel.text = "${getString(R.string.next_track)} ${track.title}$artist"
 
         getTrackCoverArt(track) { coverArt ->
             val cornerRadius = resources.getDimension(R.dimen.rounded_corner_radius_small).toInt()
@@ -187,12 +193,12 @@ class TrackActivity : SimpleControllerActivity(), PlaybackSpeedListener {
                 size = Size(wantedSize, wantedSize),
                 onLoadFailed = {
                     runOnUiThread {
-                        next_track_image.setImageDrawable(nextTrackPlaceholder)
+                        binding.nextTrackImage.setImageDrawable(nextTrackPlaceholder)
                     }
                 },
                 onResourceReady = {
                     runOnUiThread {
-                        next_track_image.setImageDrawable(it)
+                        binding.nextTrackImage.setImageDrawable(it)
                     }
                 }
             )
@@ -216,17 +222,17 @@ class TrackActivity : SimpleControllerActivity(), PlaybackSpeedListener {
                     placeholder.applyColorFilter(getProperTextColor())
 
                     runOnUiThread {
-                        activity_track_image.setImageDrawable(placeholder)
+                        binding.activityTrackImage.setImageDrawable(placeholder)
                     }
                 },
                 onResourceReady = {
                     val coverHeight = it.intrinsicHeight
-                    if (coverHeight > 0 && activity_track_image.height != coverHeight) {
-                        activity_track_image.layoutParams.height = coverHeight
+                    if (coverHeight > 0 && binding.activityTrackImage.height != coverHeight) {
+                        binding.activityTrackImage.layoutParams.height = coverHeight
                     }
 
                     runOnUiThread {
-                        activity_track_image.setImageDrawable(it)
+                        binding.activityTrackImage.setImageDrawable(it)
                     }
                 }
             )
@@ -236,18 +242,20 @@ class TrackActivity : SimpleControllerActivity(), PlaybackSpeedListener {
     @SuppressLint("ClickableViewAccessibility")
     private fun setupFlingListener() {
         val flingListener = object : GestureDetector.SimpleOnGestureListener() {
-            override fun onFling(e1: MotionEvent, e2: MotionEvent, velocityX: Float, velocityY: Float): Boolean {
-                if (velocityY > 0 && velocityY > velocityX && e2.y - e1.y > SWIPE_DOWN_THRESHOLD) {
-                    finish()
-                    activity_track_top_shadow.animate().alpha(0f).start()
-                    overridePendingTransition(0, R.anim.slide_down)
+            override fun onFling(e1: MotionEvent?, e2: MotionEvent, velocityX: Float, velocityY: Float): Boolean {
+                if (e1 != null) {
+                    if (velocityY > 0 && velocityY > velocityX && e2.y - e1.y > SWIPE_DOWN_THRESHOLD) {
+                        finish()
+                        binding.activityTrackTopShadow.animate().alpha(0f).start()
+                        overridePendingTransition(0, R.anim.slide_down)
+                    }
                 }
                 return super.onFling(e1, e2, velocityX, velocityY)
             }
         }
 
         val gestureDetector = GestureDetectorCompat(this, flingListener)
-        activity_track_holder.setOnTouchListener { v, event ->
+        binding.activityTrackHolder.setOnTouchListener { _, event ->
             gestureDetector.onTouchEvent(event)
             true
         }
@@ -265,7 +273,7 @@ class TrackActivity : SimpleControllerActivity(), PlaybackSpeedListener {
     }
 
     private fun setupShuffleButton(isShuffleEnabled: Boolean = config.isShuffleEnabled) {
-        activity_track_toggle_shuffle.apply {
+        binding.activityTrackToggleShuffle.apply {
             applyColorFilter(if (isShuffleEnabled) getProperPrimaryColor() else getProperTextColor())
             alpha = if (isShuffleEnabled) 1f else MEDIUM_ALPHA
             contentDescription = getString(if (isShuffleEnabled) R.string.disable_shuffle else R.string.enable_shuffle)
@@ -273,12 +281,12 @@ class TrackActivity : SimpleControllerActivity(), PlaybackSpeedListener {
     }
 
     private fun seekBack() {
-        activity_track_progressbar.progress += -SEEK_INTERVAL_S
+        binding.activityTrackProgressbar.progress += -SEEK_INTERVAL_S
         withPlayer { seekBack() }
     }
 
     private fun seekForward() {
-        activity_track_progressbar.progress += SEEK_INTERVAL_S
+        binding.activityTrackProgressbar.progress += SEEK_INTERVAL_S
         withPlayer { seekForward() }
     }
 
@@ -293,7 +301,7 @@ class TrackActivity : SimpleControllerActivity(), PlaybackSpeedListener {
     }
 
     private fun setupPlaybackSettingButton(playbackSetting: PlaybackSetting = config.playbackSetting) {
-        activity_track_playback_setting.apply {
+        binding.activityTrackPlaybackSetting.apply {
             contentDescription = getString(playbackSetting.contentDescriptionStringRes)
             setImageResource(playbackSetting.iconRes)
 
@@ -305,13 +313,13 @@ class TrackActivity : SimpleControllerActivity(), PlaybackSpeedListener {
     }
 
     private fun setupSeekbar() {
-        activity_track_speed_icon.applyColorFilter(getProperTextColor())
+        binding.activityTrackSpeedIcon.applyColorFilter(getProperTextColor())
         updatePlaybackSpeed(config.playbackSpeed)
 
-        activity_track_progressbar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+        binding.activityTrackProgressbar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
                 val formattedProgress = progress.getFormattedDuration()
-                activity_track_progress_current.text = formattedProgress
+                binding.activityTrackProgressCurrent.text = formattedProgress
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar) {}
@@ -330,15 +338,15 @@ class TrackActivity : SimpleControllerActivity(), PlaybackSpeedListener {
 
     override fun updatePlaybackSpeed(speed: Float) {
         val isSlow = speed < 1f
-        if (isSlow != activity_track_speed.tag as? Boolean) {
-            activity_track_speed.tag = isSlow
+        if (isSlow != binding.activityTrackSpeed.tag as? Boolean) {
+            binding.activityTrackSpeed.tag = isSlow
 
             val drawableId = if (isSlow) R.drawable.ic_playback_speed_slow_vector else R.drawable.ic_playback_speed_vector
-            activity_track_speed_icon.setImageDrawable(resources.getDrawable(drawableId))
+            binding.activityTrackSpeedIcon.setImageDrawable(resources.getDrawable(drawableId))
         }
 
         @SuppressLint("SetTextI18n")
-        activity_track_speed.text = "${DecimalFormat("#.##").format(speed)}x"
+        binding.activityTrackSpeed.text = "${DecimalFormat("#.##").format(speed)}x"
         withPlayer {
             setPlaybackSpeed(speed)
         }
@@ -363,7 +371,7 @@ class TrackActivity : SimpleControllerActivity(), PlaybackSpeedListener {
         if (mediaItem == null) {
             finish()
         } else {
-            activity_track_progressbar.progress = 0
+            binding.activityTrackProgressbar.progress = 0
             updateTrackInfo()
         }
     }
@@ -407,10 +415,10 @@ class TrackActivity : SimpleControllerActivity(), PlaybackSpeedListener {
     }
 
     private fun updateProgress(currentPosition: Long) {
-        activity_track_progressbar.progress = currentPosition.milliseconds.inWholeSeconds.toInt()
+        binding.activityTrackProgressbar.progress = currentPosition.milliseconds.inWholeSeconds.toInt()
     }
 
     private fun updatePlayPause(isPlaying: Boolean) {
-        activity_track_play_pause.updatePlayPauseIcon(isPlaying, getProperTextColor())
+        binding.activityTrackPlayPause.updatePlayPauseIcon(isPlaying, getProperTextColor())
     }
 }

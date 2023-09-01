@@ -13,15 +13,13 @@ import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.commons.models.FileDirItem
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.musicplayer.R
+import com.simplemobiletools.musicplayer.databinding.ItemPlaylistBinding
 import com.simplemobiletools.musicplayer.dialogs.NewPlaylistDialog
 import com.simplemobiletools.musicplayer.dialogs.RemovePlaylistDialog
 import com.simplemobiletools.musicplayer.extensions.audioHelper
 import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.models.Events
 import com.simplemobiletools.musicplayer.models.Playlist
-import kotlinx.android.synthetic.main.item_playlist.view.playlist_frame
-import kotlinx.android.synthetic.main.item_playlist.view.playlist_title
-import kotlinx.android.synthetic.main.item_playlist.view.playlist_tracks
 import org.greenrobot.eventbus.EventBus
 
 class PlaylistsAdapter(
@@ -30,7 +28,10 @@ class PlaylistsAdapter(
 
     override fun getActionMenuId() = R.menu.cab_playlists
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = createViewHolder(R.layout.item_playlist, parent)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val binding = ItemPlaylistBinding.inflate(layoutInflater, parent, false)
+        return createViewHolder(binding.root)
+    }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val playlist = items.getOrNull(position) ?: return
@@ -117,15 +118,15 @@ class PlaylistsAdapter(
     }
 
     private fun setupView(view: View, playlist: Playlist) {
-        view.apply {
-            setupViewBackground(ctx)
-            playlist_frame?.isSelected = selectedKeys.contains(playlist.id)
-            playlist_title.text = if (textToHighlight.isEmpty()) playlist.title else playlist.title.highlightTextPart(textToHighlight, properPrimaryColor)
-            playlist_title.setTextColor(textColor)
+        ItemPlaylistBinding.bind(view).apply {
+            root.setupViewBackground(ctx)
+            playlistFrame.isSelected = selectedKeys.contains(playlist.id)
+            playlistTitle.text = if (textToHighlight.isEmpty()) playlist.title else playlist.title.highlightTextPart(textToHighlight, properPrimaryColor)
+            playlistTitle.setTextColor(textColor)
 
             val tracks = resources.getQuantityString(R.plurals.tracks_plural, playlist.trackCount, playlist.trackCount)
-            playlist_tracks.text = tracks
-            playlist_tracks.setTextColor(textColor)
+            playlistTracks.text = tracks
+            playlistTracks.setTextColor(textColor)
         }
     }
 

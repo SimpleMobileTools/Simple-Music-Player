@@ -10,20 +10,23 @@ import com.simplemobiletools.commons.extensions.setupViewBackground
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.musicplayer.R
-import com.simplemobiletools.musicplayer.extensions.*
+import com.simplemobiletools.musicplayer.databinding.ItemAlbumBinding
+import com.simplemobiletools.musicplayer.extensions.audioHelper
+import com.simplemobiletools.musicplayer.extensions.config
+import com.simplemobiletools.musicplayer.extensions.getAlbumCoverArt
 import com.simplemobiletools.musicplayer.inlines.indexOfFirstOrNull
 import com.simplemobiletools.musicplayer.models.Album
 import com.simplemobiletools.musicplayer.models.Track
-import kotlinx.android.synthetic.main.item_album.view.album_frame
-import kotlinx.android.synthetic.main.item_album.view.album_title
-import kotlinx.android.synthetic.main.item_album.view.album_tracks
 
 class AlbumsAdapter(activity: BaseSimpleActivity, items: ArrayList<Album>, recyclerView: MyRecyclerView, itemClick: (Any) -> Unit) :
     BaseMusicAdapter<Album>(items, activity, recyclerView, itemClick), RecyclerViewFastScroller.OnPopupTextUpdate {
 
     override fun getActionMenuId() = R.menu.cab_albums
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = createViewHolder(R.layout.item_album, parent)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val binding = ItemAlbumBinding.inflate(layoutInflater, parent, false)
+        return createViewHolder(binding.root)
+    }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val album = items.getOrNull(position) ?: return
@@ -75,18 +78,18 @@ class AlbumsAdapter(activity: BaseSimpleActivity, items: ArrayList<Album>, recyc
     }
 
     private fun setupView(view: View, album: Album) {
-        view.apply {
-            setupViewBackground(ctx)
-            album_frame?.isSelected = selectedKeys.contains(album.hashCode())
-            album_title.text = if (textToHighlight.isEmpty()) album.title else album.title.highlightTextPart(textToHighlight, properPrimaryColor)
-            album_title.setTextColor(textColor)
+        ItemAlbumBinding.bind(view).apply {
+            root.setupViewBackground(ctx)
+            albumFrame.isSelected = selectedKeys.contains(album.hashCode())
+            albumTitle.text = if (textToHighlight.isEmpty()) album.title else album.title.highlightTextPart(textToHighlight, properPrimaryColor)
+            albumTitle.setTextColor(textColor)
 
             val tracks = resources.getQuantityString(R.plurals.tracks_plural, album.trackCnt, album.trackCnt)
-            album_tracks.text = tracks
-            album_tracks.setTextColor(textColor)
+            albumTracks.text = tracks
+            albumTracks.setTextColor(textColor)
 
             ctx.getAlbumCoverArt(album) { coverArt ->
-                loadImage(findViewById(R.id.album_image), coverArt, placeholderBig)
+                loadImage(albumImage, coverArt, placeholderBig)
             }
         }
     }

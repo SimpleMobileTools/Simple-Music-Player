@@ -12,16 +12,10 @@ import com.simplemobiletools.commons.dialogs.FeatureLockedDialog
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.IS_CUSTOMIZING_COLORS
 import com.simplemobiletools.musicplayer.R
+import com.simplemobiletools.musicplayer.databinding.WidgetConfigBinding
 import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.helpers.MyWidgetProvider
 import com.simplemobiletools.musicplayer.playback.PlaybackService
-import kotlinx.android.synthetic.main.widget.song_info_artist
-import kotlinx.android.synthetic.main.widget.song_info_title
-import kotlinx.android.synthetic.main.widget.view.widget_background
-import kotlinx.android.synthetic.main.widget_config.*
-import kotlinx.android.synthetic.main.widget_controls.next_btn
-import kotlinx.android.synthetic.main.widget_controls.play_pause_btn
-import kotlinx.android.synthetic.main.widget_controls.previous_btn
 
 class WidgetConfigureActivity : SimpleActivity() {
     private var mBgAlpha = 0f
@@ -31,11 +25,13 @@ class WidgetConfigureActivity : SimpleActivity() {
     private var mBgColorWithoutTransparency = 0
     private var mFeatureLockedDialog: FeatureLockedDialog? = null
 
+    private val binding by viewBinding(WidgetConfigBinding::inflate)
+
     public override fun onCreate(savedInstanceState: Bundle?) {
         useDynamicTheme = false
         super.onCreate(savedInstanceState)
         setResult(Activity.RESULT_CANCELED)
-        setContentView(R.layout.widget_config)
+        setContentView(binding.root)
         initVariables()
 
         val isCustomizingColors = intent.extras?.getBoolean(IS_CUSTOMIZING_COLORS) ?: false
@@ -45,20 +41,21 @@ class WidgetConfigureActivity : SimpleActivity() {
             finish()
         }
 
-        config_save.setOnClickListener { saveConfig() }
-        config_bg_color.setOnClickListener { pickBackgroundColor() }
-        config_text_color.setOnClickListener { pickTextColor() }
+        binding.configSave.setOnClickListener { saveConfig() }
+        binding.configBgColor.setOnClickListener { pickBackgroundColor() }
+        binding.configTextColor.setOnClickListener { pickTextColor() }
 
         val primaryColor = getProperPrimaryColor()
-        config_bg_seekbar.setColors(mTextColor, primaryColor, primaryColor)
-
-        val currSong = PlaybackService.currentMediaItem?.mediaMetadata
-        if (currSong != null) {
-            song_info_title.text = currSong.title
-            song_info_artist.text = currSong.artist
-        } else {
-            song_info_title.text = getString(R.string.artist)
-            song_info_artist.text = getString(R.string.song_title)
+        binding.configBgSeekbar.setColors(mTextColor, primaryColor, primaryColor)
+        binding.configPlayer.apply {
+            val currSong = PlaybackService.currentMediaItem?.mediaMetadata
+            if (currSong != null) {
+                songInfoTitle.text = currSong.title
+                songInfoArtist.text = currSong.artist
+            } else {
+                songInfoTitle.text = getString(R.string.artist)
+                songInfoArtist.text = getString(R.string.song_title)
+            }
         }
 
         if (!isCustomizingColors && !isOrWasThankYouInstalled()) {
@@ -82,9 +79,9 @@ class WidgetConfigureActivity : SimpleActivity() {
         mBgAlpha = Color.alpha(mBgColor) / 255.toFloat()
 
         mBgColorWithoutTransparency = Color.rgb(Color.red(mBgColor), Color.green(mBgColor), Color.blue(mBgColor))
-        config_bg_seekbar.progress = (mBgAlpha * 100).toInt()
+        binding.configBgSeekbar.progress = (mBgAlpha * 100).toInt()
         updateBackgroundColor()
-        config_bg_seekbar.onSeekBarChangeListener { progress ->
+        binding.configBgSeekbar.onSeekBarChangeListener { progress ->
             mBgAlpha = progress / 100.toFloat()
             updateBackgroundColor()
         }
@@ -133,23 +130,23 @@ class WidgetConfigureActivity : SimpleActivity() {
         }
     }
 
-    private fun updateBackgroundColor() {
+    private fun updateBackgroundColor() = binding.apply {
         mBgColor = mBgColorWithoutTransparency.adjustAlpha(mBgAlpha)
-        config_player.widget_background.applyColorFilter(mBgColor)
-        config_bg_color.setFillWithStroke(mBgColor, mBgColor)
-        config_save.backgroundTintList = ColorStateList.valueOf(getProperPrimaryColor())
+        configPlayer.widgetBackground.applyColorFilter(mBgColor)
+        configBgColor.setFillWithStroke(mBgColor, mBgColor)
+        configSave.backgroundTintList = ColorStateList.valueOf(getProperPrimaryColor())
     }
 
-    private fun updateTextColor() {
-        config_text_color.setFillWithStroke(mTextColor, mTextColor)
+    private fun updateTextColor() = binding.apply {
+        configTextColor.setFillWithStroke(mTextColor, mTextColor)
 
-        song_info_title.setTextColor(mTextColor)
-        song_info_artist.setTextColor(mTextColor)
-        config_save.setTextColor(getProperPrimaryColor().getContrastColor())
+        configPlayer.songInfoTitle.setTextColor(mTextColor)
+        configPlayer.songInfoArtist.setTextColor(mTextColor)
+        configSave.setTextColor(getProperPrimaryColor().getContrastColor())
 
-        previous_btn.drawable.applyColorFilter(mTextColor)
-        play_pause_btn.drawable.applyColorFilter(mTextColor)
-        next_btn.drawable.applyColorFilter(mTextColor)
+        configPlayer.widgetControls.previousBtn.drawable.applyColorFilter(mTextColor)
+        configPlayer.widgetControls.playPauseBtn.drawable.applyColorFilter(mTextColor)
+        configPlayer.widgetControls.nextBtn.drawable.applyColorFilter(mTextColor)
     }
 
     private fun pickBackgroundColor() {

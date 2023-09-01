@@ -12,36 +12,40 @@ import androidx.media3.common.Timeline
 import com.simplemobiletools.commons.extensions.areSystemAnimationsEnabled
 import com.simplemobiletools.commons.extensions.beGoneIf
 import com.simplemobiletools.commons.extensions.getProperPrimaryColor
+import com.simplemobiletools.commons.extensions.viewBinding
 import com.simplemobiletools.commons.helpers.NavigationIcon
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.adapters.QueueAdapter
+import com.simplemobiletools.musicplayer.databinding.ActivityQueueBinding
 import com.simplemobiletools.musicplayer.dialogs.NewPlaylistDialog
 import com.simplemobiletools.musicplayer.extensions.*
 import com.simplemobiletools.musicplayer.helpers.RoomHelper
 import com.simplemobiletools.musicplayer.models.Track
-import kotlinx.android.synthetic.main.activity_queue.*
+
 
 class QueueActivity : SimpleControllerActivity() {
     private var searchMenuItem: MenuItem? = null
     private var isSearchOpen = false
     private var tracksIgnoringSearch = ArrayList<Track>()
 
+    private val binding by viewBinding(ActivityQueueBinding::inflate)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         isMaterialActivity = true
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_queue)
+        setContentView(binding.root)
         setupOptionsMenu()
-        updateMaterialActivityViews(queue_coordinator, queue_list, useTransparentNavigation = true, useTopSearchMenu = false)
-        setupMaterialScrollListener(queue_list, queue_toolbar)
+        updateMaterialActivityViews(binding.queueCoordinator, binding.queueList, useTransparentNavigation = true, useTopSearchMenu = false)
+        setupMaterialScrollListener(binding.queueList, binding.queueToolbar)
 
         setupAdapter()
-        queue_fastscroller.updateColors(getProperPrimaryColor())
+        binding.queueFastscroller.updateColors(getProperPrimaryColor())
     }
 
     override fun onResume() {
         super.onResume()
-        setupToolbar(queue_toolbar, NavigationIcon.Arrow, searchMenuItem = searchMenuItem)
+        setupToolbar(binding.queueToolbar, NavigationIcon.Arrow, searchMenuItem = searchMenuItem)
     }
 
     override fun onBackPressed() {
@@ -59,8 +63,8 @@ class QueueActivity : SimpleControllerActivity() {
     override fun onTimelineChanged(timeline: Timeline, reason: Int) = updateAdapter()
 
     private fun setupOptionsMenu() {
-        setupSearch(queue_toolbar.menu)
-        queue_toolbar.setOnMenuItemClickListener { menuItem ->
+        setupSearch(binding.queueToolbar.menu)
+        binding.queueToolbar.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.create_playlist_from_queue -> createPlaylistFromQueue()
                 else -> return@setOnMenuItemClickListener false
@@ -111,28 +115,28 @@ class QueueActivity : SimpleControllerActivity() {
     private fun onSearchClosed() {
         val adapter = getAdapter() ?: return
         adapter.updateItems(tracksIgnoringSearch, forceUpdate = true)
-        queue_placeholder.beGoneIf(tracksIgnoringSearch.isNotEmpty())
+        binding.queuePlaceholder.beGoneIf(tracksIgnoringSearch.isNotEmpty())
     }
 
     private fun onSearchQueryChanged(text: String) {
         val filtered = tracksIgnoringSearch.filter { it.title.contains(text, true) }.toMutableList() as ArrayList<Track>
         getAdapter()?.updateItems(filtered, text)
-        queue_placeholder.beGoneIf(filtered.isNotEmpty())
+        binding.queuePlaceholder.beGoneIf(filtered.isNotEmpty())
     }
 
     private fun getAdapter(): QueueAdapter? {
-        return queue_list.adapter as? QueueAdapter
+        return binding.queueList.adapter as? QueueAdapter
     }
 
     private fun setupAdapter() {
         if (getAdapter() == null) {
             withPlayer {
                 val tracks = currentMediaItemsShuffled.toTracks().toMutableList() as ArrayList<Track>
-                queue_list.adapter = QueueAdapter(
+                binding.queueList.adapter = QueueAdapter(
                     activity = this@QueueActivity,
                     items = tracks,
                     currentTrack = currentMediaItem?.toTrack(),
-                    recyclerView = queue_list
+                    recyclerView = binding.queueList
                 ) {
                     withPlayer {
                         val startIndex = currentMediaItems.indexOfTrack(it as Track)
@@ -144,12 +148,12 @@ class QueueActivity : SimpleControllerActivity() {
                 }
 
                 if (areSystemAnimationsEnabled) {
-                    queue_list.scheduleLayoutAnimation()
+                    binding.queueList.scheduleLayoutAnimation()
                 }
 
                 val currentPosition = shuffledMediaItemsIndices.indexOf(currentMediaItemIndex)
                 if (currentPosition > 0) {
-                    queue_list.lazySmoothScroll(currentPosition)
+                    binding.queueList.lazySmoothScroll(currentPosition)
                 }
             }
         }
@@ -160,7 +164,7 @@ class QueueActivity : SimpleControllerActivity() {
         withPlayer {
             val currentTracks = currentMediaItemsShuffled.toTracks() as ArrayList<Track>
             adapter.updateItems(currentTracks)
-            queue_list.lazySmoothScroll(shuffledMediaItemsIndices.indexOf(currentMediaItemIndex))
+            binding.queueList.lazySmoothScroll(shuffledMediaItemsIndices.indexOf(currentMediaItemIndex))
         }
     }
 

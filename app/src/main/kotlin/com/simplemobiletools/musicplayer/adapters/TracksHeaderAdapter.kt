@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import com.qtalk.recyclerviewfastscroller.RecyclerViewFastScroller
 import com.simplemobiletools.commons.dialogs.ConfirmationDialog
 import com.simplemobiletools.commons.extensions.beGone
@@ -15,15 +14,13 @@ import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
+import com.simplemobiletools.musicplayer.databinding.ItemAlbumHeaderBinding
+import com.simplemobiletools.musicplayer.databinding.ItemTrackBinding
 import com.simplemobiletools.musicplayer.dialogs.EditDialog
 import com.simplemobiletools.musicplayer.extensions.*
 import com.simplemobiletools.musicplayer.models.AlbumHeader
 import com.simplemobiletools.musicplayer.models.ListItem
 import com.simplemobiletools.musicplayer.models.Track
-import kotlinx.android.synthetic.main.item_album_header.view.album_artist
-import kotlinx.android.synthetic.main.item_album_header.view.album_meta
-import kotlinx.android.synthetic.main.item_album_header.view.album_title
-import kotlinx.android.synthetic.main.item_track.view.*
 
 class TracksHeaderAdapter(activity: SimpleActivity, items: ArrayList<ListItem>, recyclerView: MyRecyclerView, itemClick: (Any) -> Unit) :
     BaseMusicAdapter<ListItem>(items, activity, recyclerView, itemClick), RecyclerViewFastScroller.OnPopupTextUpdate {
@@ -36,12 +33,12 @@ class TracksHeaderAdapter(activity: SimpleActivity, items: ArrayList<ListItem>, 
     override fun getActionMenuId() = R.menu.cab_tracks_header
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val layout = when (viewType) {
-            ITEM_HEADER -> R.layout.item_album_header
-            else -> R.layout.item_track
+        val binding = when (viewType) {
+            ITEM_HEADER -> ItemAlbumHeaderBinding.inflate(layoutInflater, parent, false)
+            else -> ItemTrackBinding.inflate(layoutInflater, parent, false)
         }
 
-        return createViewHolder(layout, parent)
+        return createViewHolder(binding.root)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -122,27 +119,27 @@ class TracksHeaderAdapter(activity: SimpleActivity, items: ArrayList<ListItem>, 
     }
 
     private fun setupTrack(view: View, track: Track) {
-        view.apply {
-            setupViewBackground(ctx)
-            track_frame?.isSelected = selectedKeys.contains(track.hashCode())
-            track_title.text = track.title
-            track_info.beGone()
+        ItemTrackBinding.bind(view).apply {
+            root.setupViewBackground(ctx)
+            trackFrame.isSelected = selectedKeys.contains(track.hashCode())
+            trackTitle.text = track.title
+            trackInfo.beGone()
 
-            arrayOf(track_id, track_title, track_duration).forEach {
+            arrayOf(trackId, trackTitle, trackDuration).forEach {
                 it.setTextColor(textColor)
             }
 
-            track_duration.text = track.duration.getFormattedDuration()
-            track_id.text = track.trackId.toString()
-            track_image.beGone()
-            track_id.beVisible()
+            trackDuration.text = track.duration.getFormattedDuration()
+            trackId.text = track.trackId.toString()
+            trackImage.beGone()
+            trackId.beVisible()
         }
     }
 
     private fun setupHeader(view: View, header: AlbumHeader) {
-        view.apply {
-            album_title.text = header.title
-            album_artist.text = header.artist
+        ItemAlbumHeaderBinding.bind(view).apply {
+            albumTitle.text = header.title
+            albumArtist.text = header.artist
 
             val tracks = resources.getQuantityString(R.plurals.tracks_plural, header.trackCnt, header.trackCnt)
             var year = ""
@@ -151,9 +148,9 @@ class TracksHeaderAdapter(activity: SimpleActivity, items: ArrayList<ListItem>, 
             }
 
             @SuppressLint("SetTextI18n")
-            album_meta.text = "$year$tracks • ${header.duration.getFormattedDuration(true)}"
+            albumMeta.text = "$year$tracks • ${header.duration.getFormattedDuration(true)}"
 
-            arrayOf(album_title, album_artist, album_meta).forEach {
+            arrayOf(albumTitle, albumArtist, albumMeta).forEach {
                 it.setTextColor(textColor)
             }
 
@@ -161,11 +158,11 @@ class TracksHeaderAdapter(activity: SimpleActivity, items: ArrayList<ListItem>, 
                 val album = ctx.audioHelper.getAlbum(header.id)
                 if (album != null) {
                     ctx.getAlbumCoverArt(album) { coverArt ->
-                        loadImage(findViewById(R.id.album_image), coverArt, placeholderBig)
+                        loadImage(albumImage, coverArt, placeholderBig)
                     }
                 } else {
                     ctx.runOnUiThread {
-                        findViewById<ImageView>(R.id.album_image).setImageDrawable(placeholderBig)
+                        albumImage.setImageDrawable(placeholderBig)
                     }
                 }
             }

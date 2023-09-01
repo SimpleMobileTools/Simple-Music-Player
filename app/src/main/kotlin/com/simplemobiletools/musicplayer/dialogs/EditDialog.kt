@@ -6,24 +6,25 @@ import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.commons.helpers.isRPlus
 import com.simplemobiletools.musicplayer.R
+import com.simplemobiletools.musicplayer.databinding.DialogRenameSongBinding
 import com.simplemobiletools.musicplayer.extensions.audioHelper
 import com.simplemobiletools.musicplayer.helpers.TagHelper
 import com.simplemobiletools.musicplayer.models.Track
-import kotlinx.android.synthetic.main.dialog_rename_song.view.*
 
 class EditDialog(val activity: BaseSimpleActivity, val track: Track, val callback: (track: Track) -> Unit) {
     private val tagHelper = TagHelper(activity)
+    private val binding by activity.viewBinding(DialogRenameSongBinding::inflate)
 
     init {
-        val view = activity.layoutInflater.inflate(R.layout.dialog_rename_song, null).apply {
+        binding.apply {
             title.setText(track.title)
             artist.setText(track.artist)
             album.setText(track.album)
             val filename = track.path.getFilenameFromPath()
-            file_name.setText(filename.substring(0, filename.lastIndexOf(".")))
+            fileName.setText(filename.substring(0, filename.lastIndexOf(".")))
             extension.setText(track.path.getFilenameExtension())
             if (isRPlus()) {
-                arrayOf(file_name_hint, extension_hint).forEach {
+                arrayOf(fileNameHint, extensionHint).forEach {
                     it.beGone()
                 }
             }
@@ -33,14 +34,14 @@ class EditDialog(val activity: BaseSimpleActivity, val track: Track, val callbac
             .setPositiveButton(R.string.ok, null)
             .setNegativeButton(R.string.cancel, null)
             .apply {
-                activity.setupDialogStuff(view, this, R.string.rename_song) { alertDialog ->
-                    alertDialog.showKeyboard(view.title)
+                activity.setupDialogStuff(binding.root, this, R.string.rename_song) { alertDialog ->
+                    alertDialog.showKeyboard(binding.title)
                     alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
-                        val newTitle = view.title.value
-                        val newArtist = view.artist.value
-                        val newAlbum = view.album.value
-                        val newFilename = view.file_name.value
-                        val newFileExtension = view.extension.value
+                        val newTitle = binding.title.value
+                        val newArtist = binding.artist.value
+                        val newAlbum = binding.album.value
+                        val newFilename = binding.fileName.value
+                        val newFileExtension = binding.extension.value
 
                         if (newTitle.isEmpty() || newArtist.isEmpty() || newFilename.isEmpty() || newFileExtension.isEmpty()) {
                             activity.toast(R.string.rename_song_empty)
@@ -62,7 +63,7 @@ class EditDialog(val activity: BaseSimpleActivity, val track: Track, val callbac
                                 }
 
                                 if (!isRPlus()) {
-                                    activity.renameFile(oldPath, newPath, false) { success, andd ->
+                                    activity.renameFile(oldPath, newPath, false) { success, _ ->
                                         if (success) {
                                             storeEditedSong(track, oldPath, newPath)
                                             track.path = newPath
