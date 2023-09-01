@@ -140,9 +140,14 @@ class TrackActivity : SimpleControllerActivity(), PlaybackSpeedListener {
 
     private fun initThirdPartyIntent() {
         binding.nextTrackHolder.beGone()
-        getTrackFromUri(intent.data) {
+        getTrackFromUri(intent.data) { track ->
             runOnUiThread {
-                prepareAndPlay(listOf(it), startActivity = false)
+                if (track != null) {
+                    prepareAndPlay(listOf(track), startActivity = false)
+                } else {
+                    toast(R.string.unknown_error_occurred)
+                    finish()
+                }
             }
         }
     }

@@ -266,13 +266,19 @@ fun Context.loadGlideResource(
     }
 }
 
-fun Context.getTrackFromUri(uri: Uri?, callback: (track: Track) -> Unit) {
+fun Context.getTrackFromUri(uri: Uri?, callback: (track: Track?) -> Unit) {
     if (uri == null) {
+        callback(null)
         return
     }
 
     ensureBackgroundThread {
-        val path = getRealPathFromURI(uri) ?: return@ensureBackgroundThread
+        val path = getRealPathFromURI(uri)
+        if (path == null) {
+            callback(null)
+            return@ensureBackgroundThread
+        }
+
         val allTracks = audioHelper.getAllTracks()
         val track = allTracks.find { it.path == path } ?: RoomHelper(this).getTrackFromPath(path) ?: return@ensureBackgroundThread
         callback(track)
