@@ -1,5 +1,6 @@
 package com.simplemobiletools.musicplayer.adapters
 
+import android.annotation.SuppressLint
 import android.graphics.drawable.Drawable
 import android.view.Menu
 import android.widget.ImageView
@@ -155,5 +156,10 @@ abstract class BaseMusicAdapter<Type>(
         }
     }
 
-    fun notifyDataChanged() = notifyItemRangeChanged(0, itemCount)
+    @SuppressLint("NotifyDataSetChanged")
+    fun notifyDataChanged() = if (itemCount == 0) {
+        notifyDataSetChanged()
+    } else {
+        notifyItemRangeChanged(0, itemCount)
+    }
 }

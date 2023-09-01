@@ -8,7 +8,6 @@ import android.view.MenuItem
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.MenuItemCompat
 import androidx.media3.common.MediaItem
-import androidx.media3.common.Timeline
 import com.simplemobiletools.commons.extensions.areSystemAnimationsEnabled
 import com.simplemobiletools.commons.extensions.beGoneIf
 import com.simplemobiletools.commons.extensions.getProperPrimaryColor
@@ -59,8 +58,6 @@ class QueueActivity : SimpleControllerActivity() {
     override fun onMediaItemTransition(mediaItem: MediaItem?, reason: Int) {
         getAdapter()?.updateCurrentTrack()
     }
-
-    override fun onTimelineChanged(timeline: Timeline, reason: Int) = updateAdapter()
 
     private fun setupOptionsMenu() {
         setupSearch(binding.queueToolbar.menu)
@@ -156,15 +153,6 @@ class QueueActivity : SimpleControllerActivity() {
                     binding.queueList.lazySmoothScroll(currentPosition)
                 }
             }
-        }
-    }
-
-    private fun updateAdapter() {
-        val adapter = getAdapter() ?: return
-        withPlayer {
-            val currentTracks = currentMediaItemsShuffled.toTracks() as ArrayList<Track>
-            adapter.updateItems(currentTracks)
-            binding.queueList.lazySmoothScroll(shuffledMediaItemsIndices.indexOf(currentMediaItemIndex))
         }
     }
 
