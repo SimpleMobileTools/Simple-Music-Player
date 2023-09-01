@@ -1,0 +1,69 @@
+[versions]
+#jetbrains
+autofittextview = "0.2.1"
+desugar_jdk_libs = "2.0.3"
+# higher versions of jaudiotagger not compatible with <= API 25 devices
+# https://bitbucket.org/ijabz/jaudiotagger/issues/149/some-nio-classes-are-unavailable-while
+jaudiotagger = "2.2.5"
+kotlin = "1.9.0"
+#KSP
+ksp = "1.9.0-1.0.12"
+#AndroidX
+androidx-constraintlayout = "2.1.4"
+androidx-swiperefreshlayout = "1.1.0"
+androidx-lifecycleprocess = "2.6.1"
+#Eventbus
+eventbus = "3.3.1"
+#Room
+lottie = "6.1.0"
+m3uParser = "1.3.0"
+media = "1.6.0"
+media3 = "1.1.1"
+room = "2.5.2"
+#Simple Mobile Tools
+simple-commons = "adb7dea7ee"
+#Gradle
+gradlePlugins-agp = "8.1.0"
+#build
+app-build-compileSDKVersion = "34"
+app-build-targetSDK = "34"
+app-build-minimumSDK = "23"
+app-build-javaVersion = "VERSION_17"
+app-build-kotlinJVMTarget = "17"
+#Helpers
+shortcut-badger = "1.1.22"
+#versioning
+app-version-appId = "com.simplemobiletools.musicplayer"
+app-version-versionCode = "114"
+app-version-versionName = "5.17.1"
+[libraries]
+#AndroidX
+androidx-constraintlayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "androidx-constraintlayout" }
+androidx-lifecycle-process = { module = "androidx.lifecycle:lifecycle-process", version.ref = "androidx-lifecycleprocess" }
+androidx-media = { module = "androidx.media:media", version.ref = "media" }
+androidx-media3-exoplayer = { module = "androidx.media3:media3-exoplayer", version.ref = "media3" }
+androidx-media3-session = { module = "androidx.media3:media3-session", version.ref = "media3" }
+androidx-swiperefreshlayout = { module = "androidx.swiperefreshlayout:swiperefreshlayout", version.ref = "androidx-swiperefreshlayout" }
+#Room
+androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
+androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
+androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
+#Simple Mobile Tools
+simple-mobile-tools-commons = { module = "com.github.SimpleMobileTools:Simple-Commons", version.ref = "simple-commons" }
+#EventBus
+eventbus = { module = "org.greenrobot:eventbus", version.ref = "eventbus" }
+#Helpers
+desugar_jdk_libs = { module = "com.android.tools:desugar_jdk_libs", version.ref = "desugar_jdk_libs" }
+jaudiotagger = { module = "net.jthink:jaudiotagger", version.ref = "jaudiotagger" }
+lottie = { module = "com.airbnb.android:lottie", version.ref = "lottie" }
+autofittextview = { module = "me.grantland:autofittextview", version.ref = "autofittextview" }
+m3u-parser = { module = "com.github.bjoernpetersen:m3u-parser", version.ref = "m3uParser" }
+[bundles]
+room = [
+    "androidx-room-ktx",
+    "androidx-room-runtime",
+]
+[plugins]
+android = { id = "com.android.application", version.ref = "gradlePlugins-agp" }
+kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
