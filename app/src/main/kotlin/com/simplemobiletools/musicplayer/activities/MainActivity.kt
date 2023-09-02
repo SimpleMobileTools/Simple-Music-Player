@@ -71,7 +71,6 @@ class MainActivity : SimpleMusicActivity() {
         checkWhatsNewDialog()
         checkAppOnSDCard()
         withPlayer {
-            log("maybePreparePlayer()")
             maybePreparePlayer(context = this@MainActivity) { success ->
                 if (success) {
                     updateCurrentTrackBar()
