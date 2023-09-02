@@ -5,9 +5,9 @@ desugar_jdk_libs = "2.0.3"
 # higher versions of jaudiotagger not compatible with <= API 25 devices
 # https://bitbucket.org/ijabz/jaudiotagger/issues/149/some-nio-classes-are-unavailable-while
 jaudiotagger = "2.2.5"
-kotlin = "1.9.0"
+kotlin = "1.9.10"
 #KSP
-ksp = "1.9.0-1.0.12"
+ksp = "1.9.10-1.0.13"
 #AndroidX
 androidx-constraintlayout = "2.1.4"
 androidx-swiperefreshlayout = "1.1.0"
