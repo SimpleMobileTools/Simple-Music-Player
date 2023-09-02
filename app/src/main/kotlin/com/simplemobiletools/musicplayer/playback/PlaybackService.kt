@@ -32,7 +32,7 @@ class PlaybackService : MediaLibraryService(), MediaSessionService.Listener {
     override fun onCreate() {
         super.onCreate()
         setListener(this)
-        initializeSessionAndPlayer(handleAudioFocus = true, handleAudioBecomingNoisy = true, skipSilence = config.gaplessPlayback)
+        initializeSessionAndPlayer(handleAudioFocus = true, handleAudioBecomingNoisy = true, skipSilence = config.skipSilence)
         initializeLibrary()
     }
 

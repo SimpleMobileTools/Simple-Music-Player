@@ -86,7 +86,7 @@
     <string name="equalizer">Ekvalizér</string>
     <string name="swap_prev_next">Zaměnit tlačítka sluchátek pro předchozí/následující skladbu</string>
     <string name="exclude_folder_description">Vyloučením složky zabráníte zobrazení všech zvukových souborů v ní. Soubory ručně přidané do seznamů skladeb nebudou ovlivněny.</string>
-    <string name="gapless_playback">Přehrávání bez mezer</string>
+    <string name="skip_silence">Skip silence</string>
     <string name="rescan_media">Rescan media</string>
     <!-- FAQ -->
     <string name="faq_1_title">Jak mohu rychle posunout skladbu vpřed\?</string>

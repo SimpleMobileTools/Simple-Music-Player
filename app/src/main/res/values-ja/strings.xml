@@ -82,7 +82,7 @@
     <string name="equalizer">イコライザー</string>
     <string name="swap_prev_next">ヘッドフォンの 前へ/次へ ボタンを入れ替える</string>
     <string name="exclude_folder_description">フォルダを除外すると、フォルダ内のすべてのオーディオファイルが表示されなくなります。プレイリストに手動で追加したファイルは影響を受けません。</string>
-    <string name="gapless_playback">Gapless playback</string>
+    <string name="skip_silence">Skip silence</string>
     <string name="rescan_media">Rescan media</string>
     <!-- FAQ -->
     <string name="faq_1_title">曲を早送りするにはどうすればよいですか？</string>

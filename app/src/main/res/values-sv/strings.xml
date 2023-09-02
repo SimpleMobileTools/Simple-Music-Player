@@ -84,7 +84,7 @@
     <string name="equalizer">Frekvenskorrigerare</string>
     <string name="swap_prev_next">Växla hörlurars föregående- och nästaknappar</string>
     <string name="exclude_folder_description">När du utesluter en mapp hindrar det alla ljudfiler i mappen från att visas. Filer som har lagts till i spellistor manuellt påverkas inte.</string>
-    <string name="gapless_playback">Uppspelning utan avbrott</string>
+    <string name="skip_silence">Skip silence</string>
     <string name="rescan_media">Skanna media igen</string>
     <!-- FAQ -->
     <string name="faq_1_title">Hur kan jag snabbspola låtar\?</string>

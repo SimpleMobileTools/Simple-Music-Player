@@ -88,7 +88,7 @@
     <string name="equalizer">Еквалайзер</string>
     <string name="swap_prev_next">Змінити призначення кнопок навушників Попередній/Наступний</string>
     <string name="exclude_folder_description">Виключення папки перешкоджатиме відображенню всіх аудіофайлів у ній. Файли, додані до списків відтворення вручну, не постраждають.</string>
-    <string name="gapless_playback">Відтворення без пауз</string>
+    <string name="skip_silence">Skip silence</string>
     <string name="rescan_media">Rescan media</string>
     <!-- FAQ -->
     <string name="faq_1_title">Як я можу змінити позицію відтворення композиції\?</string>

@@ -86,7 +86,7 @@
     <string name="equalizer">Equalizzatore</string>
     <string name="swap_prev_next">Inverti i pulsanti successivo/precedente delle cuffiette</string>
     <string name="exclude_folder_description">L\'esclusione di una cartella impedisce la visualizzazione di tutti i file audio al suo interno. I file aggiunti manualmente alle playlist non saranno interessati.</string>
-    <string name="gapless_playback">Riproduzione senza intervallo</string>
+    <string name="skip_silence">Skip silence</string>
     <string name="rescan_media">Riscansiona il media</string>
     <!-- FAQ -->
     <string name="faq_1_title">Come posso avanzare rapidamente nei brani\?</string>

@@ -84,7 +84,7 @@
     <string name="equalizer">Equalizer</string>
     <string name="swap_prev_next">Vertausche die Kopfhörerknöpfe Vorheriger/Nächster Titel</string>
     <string name="exclude_folder_description">Das Ausschließen eines Ordner verhindert die Anzeige aller darin enthaltenen Audiodateien. Dateien, die manuell zu Wiedergabelisten hinzugefügt wurden, sind davon nicht betroffen.</string>
-    <string name="gapless_playback">Lückenlose Wiedergabe</string>
+    <string name="skip_silence">Skip silence</string>
     <string name="rescan_media">Medien erneut einlesen</string>
     <!-- FAQ -->
     <string name="faq_1_title">Wie kann ich Lieder vor- oder zurückspulen\?</string>

@@ -82,7 +82,7 @@
     <string name="equalizer">Ekualiser</string>
     <string name="swap_prev_next">Tukar tombol pemilih lagu sebelumnya/berikutnya pada headphone</string>
     <string name="exclude_folder_description">Tidak menyertakan folder akan mencegah penampilan semua berkas audio yang di dalamnya. Berkas yang ditambahkan secara manual ke daftar putar tidak berpengaruh.</string>
-    <string name="gapless_playback">Gapless playback</string>
+    <string name="skip_silence">Skip silence</string>
     <string name="rescan_media">Rescan media</string>
     <!-- FAQ -->
     <string name="faq_1_title">Bagaimana saya memajukan lagu\?</string>

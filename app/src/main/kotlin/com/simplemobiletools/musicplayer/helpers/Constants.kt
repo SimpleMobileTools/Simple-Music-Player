@@ -63,7 +63,7 @@ const val TRACKS_REMOVED_FROM_ALL_TRACKS_PLAYLIST = "tracks_removed_from_all_tra
 const val LAST_EXPORT_PATH = "last_export_path"
 const val EXCLUDED_FOLDERS = "excluded_folders"
 const val SORT_PLAYLIST_PREFIX = "sort_playlist_"
-const val GAPLESS_PLAYBACK = "gapless_playback"
+const val SKIP_SILENCE = "skip_silence"
 
 const val SEEK_INTERVAL_MS = 10000L
 const val SEEK_INTERVAL_S = 10

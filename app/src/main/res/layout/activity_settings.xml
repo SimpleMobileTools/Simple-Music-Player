@@ -213,17 +213,17 @@
                 android:text="@string/audio" />
 
             <RelativeLayout
-                android:id="@+id/settings_gapless_playback_holder"
+                android:id="@+id/settings_skip_silence_holder"
                 style="@style/SettingsHolderCheckboxStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <com.simplemobiletools.commons.views.MyAppCompatCheckbox
-                    android:id="@+id/settings_gapless_playback"
+                    android:id="@+id/settings_skip_silence"
                     style="@style/SettingsCheckboxStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/gapless_playback" />
+                    android:text="@string/skip_silence" />
 
             </RelativeLayout>
         </LinearLayout>

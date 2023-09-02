@@ -92,7 +92,7 @@
     <string name="equalizer">المعادل(Equalizer)</string>
     <string name="swap_prev_next">تبديل أزرار السابق/التالي لسماعة الرأس</string>
     <string name="exclude_folder_description">إذا استبعدت مجلدا، فسيقوم ذلك على منع عرض جميع الملفات الصوتية فيه. لن تتأثر الملفات المضافة يدويا إلى قوائم التشغيل.</string>
-    <string name="gapless_playback">تشغيل بدون فجوات</string>
+    <string name="skip_silence">Skip silence</string>
     <string name="rescan_media">إعادة فحص الوسائط</string>
     <!-- FAQ -->
     <string name="faq_1_title">كيف يمكنني التقدم أو الرجوع في الأغاني؟</string>

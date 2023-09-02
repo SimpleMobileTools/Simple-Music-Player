@@ -84,7 +84,7 @@
     <string name="equalizer">Equalizador</string>
     <string name="swap_prev_next">Trocar os botões anterior/próximo do fone de ouvido</string>
     <string name="exclude_folder_description">A exclusão de uma pasta impedirá a exibição de todos os arquivos de áudio dentro dela. Os arquivos adicionados manualmente às listas de reprodução não serão afetados.</string>
-    <string name="gapless_playback">Gapless playback</string>
+    <string name="skip_silence">Skip silence</string>
     <string name="rescan_media">Rescan media</string>
     <!-- FAQ -->
     <string name="faq_1_title">Como posso avançar músicas\?</string>

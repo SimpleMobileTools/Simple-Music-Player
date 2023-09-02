@@ -86,7 +86,7 @@
     <string name="equalizer">Ekvalaizeris</string>
     <string name="swap_prev_next">Ankstesnių / vėlesnių ausinių mygtukų keitimas</string>
     <string name="exclude_folder_description">Excluding a folder will prevent the displaying of all audio files within. Files manually added to playlists will not be affected.</string>
-    <string name="gapless_playback">Gapless playback</string>
+    <string name="skip_silence">Skip silence</string>
     <string name="rescan_media">Rescan media</string>
     <!-- FAQ -->
     <string name="faq_1_title">Kaip greitai persukti dainas į priekį\?</string>

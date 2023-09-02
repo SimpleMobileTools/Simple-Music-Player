@@ -88,7 +88,7 @@
     <string name="equalizer">Izenačevalnik</string>
     <string name="swap_prev_next">Zamenjava prejšnjih/naslednjih gumbov za slušalke</string>
     <string name="exclude_folder_description">Če izvzamete mapo, boste preprečili prikazovanje vseh zvočnih datotek v njej. To ne bo vplivalo na ročno dodane datoteke v sezname predvajanja.</string>
-    <string name="gapless_playback">Gapless playback</string>
+    <string name="skip_silence">Skip silence</string>
     <string name="rescan_media">Rescan media</string>
     <!-- FAQ -->
     <string name="faq_1_title">Kako lahko pesmi prestavim naprej\?</string>

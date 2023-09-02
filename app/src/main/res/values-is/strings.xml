@@ -84,7 +84,7 @@
     <string name="equalizer">Tónjafnari</string>
     <string name="swap_prev_next">Skiptu um fyrra/næsta heyrnartólshnappa</string>
     <string name="exclude_folder_description">Að útiloka möppu kemur í veg fyrir birtingu allra hljóðskráa innan. Skrár sem bætt er handvirkt við lagalista verða ekki fyrir áhrifum.</string>
-    <string name="gapless_playback">Gapless playback</string>
+    <string name="skip_silence">Skip silence</string>
     <string name="rescan_media">Rescan media</string>
     <!-- FAQ -->
     <string name="faq_1_title">Hvernig get ég hraðspólað lög\?</string>

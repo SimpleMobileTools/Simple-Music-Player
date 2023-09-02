@@ -2,7 +2,7 @@ package com.simplemobiletools.musicplayer.helpers
 
 import android.content.Context
 import com.simplemobiletools.commons.helpers.BaseConfig
-import java.util.*
+import java.util.Arrays
 
 class Config(context: Context) : BaseConfig(context) {
     companion object {
@@ -139,7 +139,7 @@ class Config(context: Context) : BaseConfig(context) {
         excludedFolders = currExcludedFolders
     }
 
-    var gaplessPlayback: Boolean
-        get() = prefs.getBoolean(GAPLESS_PLAYBACK, false)
-        set(gaplessPlayback) = prefs.edit().putBoolean(GAPLESS_PLAYBACK, gaplessPlayback).apply()
+    var skipSilence: Boolean
+        get() = prefs.getBoolean(SKIP_SILENCE, false)
+        set(skipSilence) = prefs.edit().putBoolean(SKIP_SILENCE, skipSilence).apply()
 }

@@ -84,7 +84,7 @@
     <string name="equalizer">Taajuuskorjain</string>
     <string name="swap_prev_next">Vaihda edellinen/seuraava kuulokepainikkeet</string>
     <string name="exclude_folder_description">Kansion poistaminen estää kaikkien kansiossa olevien äänitiedostojen näyttämisen. Tämä ei vaikuta soittolistoihin manuaalisesti lisättyihin tiedostoihin.</string>
-    <string name="gapless_playback">Gapless playback</string>
+    <string name="skip_silence">Skip silence</string>
     <string name="rescan_media">Rescan media</string>
     <!-- FAQ -->
     <string name="faq_1_title">Kuinka voin kelata kappaleita eteenpäin\?</string>

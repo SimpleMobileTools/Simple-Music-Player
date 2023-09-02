@@ -71,7 +71,7 @@ internal fun PlaybackService.getMediaSessionCallback() = object : MediaLibrarySe
             CustomCommands.CLOSE_PLAYER -> stopService()
             CustomCommands.RELOAD_CONTENT -> reloadContent()
             CustomCommands.TOGGLE_SLEEP_TIMER -> toggleSleepTimer()
-            CustomCommands.TOGGLE_SKIP_SILENCE -> player.setSkipSilence(config.gaplessPlayback)
+            CustomCommands.TOGGLE_SKIP_SILENCE -> player.setSkipSilence(config.skipSilence)
             CustomCommands.SET_SHUFFLE_ORDER -> setShuffleOrder(args)
             CustomCommands.SET_NEXT_ITEM -> setNextItem(args)
         }

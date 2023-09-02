@@ -44,7 +44,7 @@ class SettingsActivity : SimpleControllerActivity() {
         setupManageShownTabs()
         setupSwapPrevNext()
         setupReplaceTitle()
-        setupGaplessPlayback()
+        setupSkipSilence()
         updateTextColors(settings_nested_scrollview)
 
         arrayOf(settings_color_customization_section_label, settings_general_settings_label, settings_playback_section_label).forEach {
@@ -146,11 +146,11 @@ class SettingsActivity : SimpleControllerActivity() {
         }
     }
 
-    private fun setupGaplessPlayback() {
-        settings_gapless_playback.isChecked = config.gaplessPlayback
-        settings_gapless_playback_holder.setOnClickListener {
-            settings_gapless_playback.toggle()
-            config.gaplessPlayback = settings_gapless_playback.isChecked
+    private fun setupSkipSilence() {
+        settings_skip_silence.isChecked = config.skipSilence
+        settings_skip_silence_holder.setOnClickListener {
+            settings_skip_silence.toggle()
+            config.skipSilence = settings_skip_silence.isChecked
             withPlayer {
                 sendCommand(CustomCommands.TOGGLE_SKIP_SILENCE)
             }
