@@ -305,6 +305,12 @@ class TrackActivity : SimpleControllerActivity(), PlaybackSpeedListener {
         }
     }
 
+    private fun maybeUpdatePlaybackSettingButton(playbackSetting: PlaybackSetting) {
+        if (config.playbackSetting != PlaybackSetting.STOP_AFTER_CURRENT_TRACK) {
+            setupPlaybackSettingButton(playbackSetting)
+        }
+    }
+
     private fun setupPlaybackSettingButton(playbackSetting: PlaybackSetting = config.playbackSetting) {
         binding.activityTrackPlaybackSetting.apply {
             contentDescription = getString(playbackSetting.contentDescriptionStringRes)
@@ -367,7 +373,7 @@ class TrackActivity : SimpleControllerActivity(), PlaybackSpeedListener {
 
     override fun onIsPlayingChanged(isPlaying: Boolean) = updatePlayerState()
 
-    override fun onRepeatModeChanged(repeatMode: Int) = setupPlaybackSettingButton(getPlaybackSetting(repeatMode))
+    override fun onRepeatModeChanged(repeatMode: Int) = maybeUpdatePlaybackSettingButton(getPlaybackSetting(repeatMode))
 
     override fun onShuffleModeEnabledChanged(shuffleModeEnabled: Boolean) = setupShuffleButton(shuffleModeEnabled)
 
@@ -400,7 +406,7 @@ class TrackActivity : SimpleControllerActivity(), PlaybackSpeedListener {
             updateProgress(currentPosition)
             updatePlayPause(isPlaying)
             setupShuffleButton(shuffleModeEnabled)
-            setupPlaybackSettingButton(getPlaybackSetting(repeatMode))
+            maybeUpdatePlaybackSettingButton(getPlaybackSetting(repeatMode))
         }
     }
 

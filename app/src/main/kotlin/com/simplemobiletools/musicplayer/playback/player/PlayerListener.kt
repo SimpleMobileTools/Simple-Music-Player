@@ -37,15 +37,17 @@ internal fun PlaybackService.getPlayerListener() = object : Player.Listener {
         withPlayer {
             if (reason == Player.MEDIA_ITEM_TRANSITION_REASON_REPEAT) {
                 if (config.playbackSetting == PlaybackSetting.STOP_AFTER_CURRENT_TRACK) {
-                    pause()
                     seekTo(0)
+                    pause()
                 }
             }
         }
     }
 
     override fun onRepeatModeChanged(repeatMode: Int) {
-        config.playbackSetting = getPlaybackSetting(repeatMode)
+        if (config.playbackSetting != PlaybackSetting.STOP_AFTER_CURRENT_TRACK) {
+            config.playbackSetting = getPlaybackSetting(repeatMode)
+        }
     }
 
     override fun onShuffleModeEnabledChanged(shuffleModeEnabled: Boolean) {
