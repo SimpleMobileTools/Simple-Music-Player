@@ -242,16 +242,16 @@ fun Context.loadGlideResource(
                 .load(model)
                 .apply(options)
                 .listener(object : RequestListener<Drawable> {
-                    override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
+                    override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>, isFirstResource: Boolean): Boolean {
                         onLoadFailed(e)
                         return true
                     }
 
                     override fun onResourceReady(
                         resource: Drawable,
-                        model: Any?,
-                        target: Target<Drawable>?,
-                        dataSource: DataSource?,
+                        model: Any,
+                        target: Target<Drawable>,
+                        dataSource: DataSource,
                         isFirstResource: Boolean
                     ): Boolean {
                         onResourceReady(resource)
