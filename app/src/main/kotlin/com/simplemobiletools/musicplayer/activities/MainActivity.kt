@@ -1,6 +1,5 @@
 package com.simplemobiletools.musicplayer.activities
 
-
 import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.Intent
@@ -132,7 +131,7 @@ class MainActivity : SimpleMusicActivity() {
             findItem(R.id.create_new_playlist).isVisible = isPlaylistFragment
             findItem(R.id.create_playlist_from_folder).isVisible = isPlaylistFragment
             findItem(R.id.import_playlist).isVisible = isPlaylistFragment && isOreoPlus()
-            findItem(R.id.more_apps_from_us).isVisible = !resources.getBoolean(R.bool.hide_google_relations)
+            findItem(R.id.more_apps_from_us).isVisible = !resources.getBoolean(com.simplemobiletools.commons.R.bool.hide_google_relations)
         }
     }
 
@@ -531,7 +530,7 @@ class MainActivity : SimpleMusicActivity() {
             FAQItem(com.simplemobiletools.commons.R.string.faq_9_title_commons, com.simplemobiletools.commons.R.string.faq_9_text_commons)
         )
 
-        if (!resources.getBoolean(R.bool.hide_google_relations)) {
+        if (!resources.getBoolean(com.simplemobiletools.commons.R.bool.hide_google_relations)) {
             faqItems.add(FAQItem(com.simplemobiletools.commons.R.string.faq_2_title_commons, com.simplemobiletools.commons.R.string.faq_2_text_commons))
             faqItems.add(FAQItem(com.simplemobiletools.commons.R.string.faq_6_title_commons, com.simplemobiletools.commons.R.string.faq_6_text_commons))
         }
