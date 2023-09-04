@@ -56,7 +56,7 @@ class PlaylistsAdapter(
     }
 
     private fun askConfirmDelete() {
-        RemovePlaylistDialog(ctx) { delete ->
+        RemovePlaylistDialog(context) { delete ->
             val ids = getSelectedItems().map { it.id } as ArrayList<Int>
             if (delete) {
                 ensureBackgroundThread {
@@ -73,9 +73,9 @@ class PlaylistsAdapter(
     private fun deletePlaylistSongs(ids: ArrayList<Int>, callback: () -> Unit) {
         var cnt = ids.size
         ids.map { id ->
-            val paths = ctx.audioHelper.getPlaylistTracks(id).map { it.path }
+            val paths = context.audioHelper.getPlaylistTracks(id).map { it.path }
             val fileDirItems = paths.map { FileDirItem(it, it.getFilenameFromPath()) } as ArrayList<FileDirItem>
-            ctx.deleteFiles(fileDirItems) {
+            context.deleteFiles(fileDirItems) {
                 if (--cnt <= 0) {
                     callback()
                 }
@@ -98,8 +98,8 @@ class PlaylistsAdapter(
         items.removeAll(playlistsToDelete.toSet())
 
         ensureBackgroundThread {
-            ctx.audioHelper.deletePlaylists(playlistsToDelete)
-            ctx.runOnUiThread {
+            context.audioHelper.deletePlaylists(playlistsToDelete)
+            context.runOnUiThread {
                 removeSelectedItems(positions)
             }
 
@@ -110,8 +110,8 @@ class PlaylistsAdapter(
     private fun getItemWithKey(key: Int): Playlist? = items.firstOrNull { it.id == key }
 
     private fun showRenameDialog() {
-        NewPlaylistDialog(ctx, items[getItemKeyPosition(selectedKeys.first())]) {
-            ctx.runOnUiThread {
+        NewPlaylistDialog(context, items[getItemKeyPosition(selectedKeys.first())]) {
+            context.runOnUiThread {
                 finishActMode()
             }
         }
@@ -119,7 +119,7 @@ class PlaylistsAdapter(
 
     private fun setupView(view: View, playlist: Playlist) {
         ItemPlaylistBinding.bind(view).apply {
-            root.setupViewBackground(ctx)
+            root.setupViewBackground(context)
             playlistFrame.isSelected = selectedKeys.contains(playlist.id)
             playlistTitle.text = if (textToHighlight.isEmpty()) playlist.title else playlist.title.highlightTextPart(textToHighlight, properPrimaryColor)
             playlistTitle.setTextColor(textColor)
@@ -130,5 +130,5 @@ class PlaylistsAdapter(
         }
     }
 
-    override fun onChange(position: Int) = items.getOrNull(position)?.getBubbleText(ctx.config.playlistSorting) ?: ""
+    override fun onChange(position: Int) = items.getOrNull(position)?.getBubbleText(context.config.playlistSorting) ?: ""
 }

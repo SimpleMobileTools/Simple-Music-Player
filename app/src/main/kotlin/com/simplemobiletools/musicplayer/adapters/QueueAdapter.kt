@@ -75,7 +75,7 @@ class QueueAdapter(activity: SimpleActivity, items: ArrayList<Track>, var curren
     override fun onActionModeDestroyed() = notifyDataChanged()
 
     fun updateCurrentTrack() {
-        ctx.withPlayer {
+        context.withPlayer {
             val track = currentMediaItem?.toTrack()
             if (track != null) {
                 val lastTrackId = currentTrack?.mediaStoreId
@@ -101,13 +101,13 @@ class QueueAdapter(activity: SimpleActivity, items: ArrayList<Track>, var curren
             }
         }
 
-        ctx.removeQueueItems(selectedTracks) {
+        context.removeQueueItems(selectedTracks) {
             refreshTracksList(positions)
         }
     }
 
     private fun deleteTracks() {
-        ConfirmationDialog(ctx, "", R.string.delete_song_warning, com.simplemobiletools.commons.R.string.ok, com.simplemobiletools.commons.R.string.cancel) {
+        ConfirmationDialog(context, "", R.string.delete_song_warning, com.simplemobiletools.commons.R.string.ok, com.simplemobiletools.commons.R.string.cancel) {
             val positions = ArrayList<Int>()
             val selectedTracks = getSelectedTracks()
             selectedTracks.forEach { track ->
@@ -117,14 +117,14 @@ class QueueAdapter(activity: SimpleActivity, items: ArrayList<Track>, var curren
                 }
             }
 
-            ctx.deleteTracks(selectedTracks) {
+            context.deleteTracks(selectedTracks) {
                 refreshTracksList(positions)
             }
         }
     }
 
     private fun refreshTracksList(positions: ArrayList<Int>) {
-        ctx.runOnUiThread {
+        context.runOnUiThread {
             positions.sortDescending()
             positions.forEach {
                 items.removeAt(it)
@@ -132,7 +132,7 @@ class QueueAdapter(activity: SimpleActivity, items: ArrayList<Track>, var curren
 
             removeSelectedItems(positions)
             if (items.isEmpty()) {
-                ctx.finish()
+                context.finish()
             }
         }
     }
@@ -140,7 +140,7 @@ class QueueAdapter(activity: SimpleActivity, items: ArrayList<Track>, var curren
     @SuppressLint("ClickableViewAccessibility")
     private fun setupView(view: View, track: Track, holder: ViewHolder) {
         ItemTrackQueueBinding.bind(view).apply {
-            root.setupViewBackground(ctx)
+            root.setupViewBackground(context)
             trackQueueFrame.isSelected = selectedKeys.contains(track.hashCode())
             trackQueueTitle.text = if (textToHighlight.isEmpty()) track.title else track.title.highlightTextPart(textToHighlight, properPrimaryColor)
 
@@ -163,14 +163,14 @@ class QueueAdapter(activity: SimpleActivity, items: ArrayList<Track>, var curren
                 false
             }
 
-            ctx.getTrackCoverArt(track) { coverArt ->
+            context.getTrackCoverArt(track) { coverArt ->
                 loadImage(trackQueueImage, coverArt, placeholderBig)
             }
         }
     }
 
     override fun updateItems(newItems: ArrayList<Track>, highlightText: String, forceUpdate: Boolean) {
-        ctx.withPlayer {
+        context.withPlayer {
             currentTrack = currentMediaItem?.toTrack()
             super.updateItems(newItems, highlightText, forceUpdate)
         }
@@ -186,14 +186,14 @@ class QueueAdapter(activity: SimpleActivity, items: ArrayList<Track>, var curren
 
     override fun onRowSelected(myViewHolder: ViewHolder?) {}
 
-    override fun onChange(position: Int) = items.getOrNull(position)?.getBubbleText(ctx.config.trackSorting) ?: ""
+    override fun onChange(position: Int) = items.getOrNull(position)?.getBubbleText(context.config.trackSorting) ?: ""
 
     /**
      * [MediaController.moveMediaItem] is the proper way to move media items but it doesn't work when shuffle mode is enabled. This method modifies
      * the shuffle order when shuffle mode is enabled and defaults to [MediaController.moveMediaItem] otherwise.
      */
     private fun swapMediaItemInQueue(fromPosition: Int, toPosition: Int) {
-        ctx.withPlayer {
+        context.withPlayer {
             if (shuffleModeEnabled) {
                 val indices = shuffledMediaItemsIndices.toMutableList()
                 indices.swap(fromPosition, toPosition)

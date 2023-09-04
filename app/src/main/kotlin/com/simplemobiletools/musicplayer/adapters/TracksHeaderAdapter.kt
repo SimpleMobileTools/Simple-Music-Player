@@ -89,7 +89,7 @@ class TracksHeaderAdapter(activity: SimpleActivity, items: ArrayList<ListItem>, 
     override fun getIsItemSelectable(position: Int) = position != 0
 
     private fun askConfirmDelete() {
-        ConfirmationDialog(ctx) {
+        ConfirmationDialog(context) {
             ensureBackgroundThread {
                 val positions = ArrayList<Int>()
                 val selectedTracks = getSelectedTracks()
@@ -100,8 +100,8 @@ class TracksHeaderAdapter(activity: SimpleActivity, items: ArrayList<ListItem>, 
                     }
                 }
 
-                ctx.deleteTracks(selectedTracks) {
-                    ctx.runOnUiThread {
+                context.deleteTracks(selectedTracks) {
+                    context.runOnUiThread {
                         positions.sortDescending()
                         removeSelectedItems(positions)
                         positions.forEach {
@@ -110,7 +110,7 @@ class TracksHeaderAdapter(activity: SimpleActivity, items: ArrayList<ListItem>, 
 
                         // finish activity if all tracks are deleted
                         if (items.none { it is Track }) {
-                            ctx.finish()
+                            context.finish()
                         }
                     }
                 }
@@ -120,7 +120,7 @@ class TracksHeaderAdapter(activity: SimpleActivity, items: ArrayList<ListItem>, 
 
     private fun setupTrack(view: View, track: Track) {
         ItemTrackBinding.bind(view).apply {
-            root.setupViewBackground(ctx)
+            root.setupViewBackground(context)
             trackFrame.isSelected = selectedKeys.contains(track.hashCode())
             trackTitle.text = track.title
             trackInfo.beGone()
@@ -155,13 +155,13 @@ class TracksHeaderAdapter(activity: SimpleActivity, items: ArrayList<ListItem>, 
             }
 
             ensureBackgroundThread {
-                val album = ctx.audioHelper.getAlbum(header.id)
+                val album = context.audioHelper.getAlbum(header.id)
                 if (album != null) {
-                    ctx.getAlbumCoverArt(album) { coverArt ->
+                    context.getAlbumCoverArt(album) { coverArt ->
                         loadImage(albumImage, coverArt, placeholderBig)
                     }
                 } else {
-                    ctx.runOnUiThread {
+                    context.runOnUiThread {
                         albumImage.setImageDrawable(placeholderBig)
                     }
                 }
@@ -171,7 +171,7 @@ class TracksHeaderAdapter(activity: SimpleActivity, items: ArrayList<ListItem>, 
 
     override fun onChange(position: Int): CharSequence {
         return when (val listItem = items.getOrNull(position)) {
-            is Track -> listItem.getBubbleText(ctx.config.trackSorting)
+            is Track -> listItem.getBubbleText(context.config.trackSorting)
             is AlbumHeader -> listItem.title
             else -> ""
         }
@@ -179,7 +179,7 @@ class TracksHeaderAdapter(activity: SimpleActivity, items: ArrayList<ListItem>, 
 
     private fun displayEditDialog() {
         getSelectedTracks().firstOrNull()?.let { selectedTrack ->
-            EditDialog(ctx, selectedTrack) { track ->
+            EditDialog(context, selectedTrack) { track ->
                 val trackIndex = items.indexOfFirst { (it as? Track)?.mediaStoreId == track.mediaStoreId }
                 if (trackIndex != -1) {
                     items[trackIndex] = track
@@ -187,7 +187,7 @@ class TracksHeaderAdapter(activity: SimpleActivity, items: ArrayList<ListItem>, 
                     finishActMode()
                 }
 
-                ctx.refreshQueueAndTracks(track)
+                context.refreshQueueAndTracks(track)
             }
         }
     }

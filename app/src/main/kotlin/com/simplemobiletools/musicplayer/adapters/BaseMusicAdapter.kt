@@ -25,10 +25,10 @@ abstract class BaseMusicAdapter<Type>(
     itemClick: (Any) -> Unit
 ) : MyRecyclerViewAdapter(activity, recyclerView, itemClick) {
 
-    val ctx = activity as SimpleControllerActivity
+    val context = activity as SimpleControllerActivity
 
     var textToHighlight = ""
-    val tagHelper by lazy { TagHelper(ctx) }
+    val tagHelper by lazy { TagHelper(context) }
     val placeholder by lazy { resources.getSmallPlaceholder(textColor) }
     val placeholderBig by lazy { resources.getBiggerPlaceholder(textColor) }
     open val cornerRadius by lazy { resources.getDimension(com.simplemobiletools.commons.R.dimen.rounded_corner_radius_small).toInt() }
@@ -95,8 +95,8 @@ abstract class BaseMusicAdapter<Type>(
     fun addToQueue() {
         ensureBackgroundThread {
             val allSelectedTracks = getAllSelectedTracks()
-            ctx.runOnUiThread {
-                ctx.addTracksToQueue(allSelectedTracks) {
+            context.runOnUiThread {
+                context.addTracksToQueue(allSelectedTracks) {
                     finishActMode()
                 }
             }
@@ -106,8 +106,8 @@ abstract class BaseMusicAdapter<Type>(
     fun playNextInQueue() {
         ensureBackgroundThread {
             getSelectedTracks().firstOrNull()?.let { selectedTrack ->
-                ctx.runOnUiThread {
-                    ctx.playNextInQueue(selectedTrack) {
+                context.runOnUiThread {
+                    context.playNextInQueue(selectedTrack) {
                         finishActMode()
                     }
                 }
@@ -118,8 +118,8 @@ abstract class BaseMusicAdapter<Type>(
     fun addToPlaylist() {
         ensureBackgroundThread {
             val allSelectedTracks = getAllSelectedTracks()
-            ctx.runOnUiThread {
-                ctx.addTracksToPlaylist(allSelectedTracks) {
+            context.runOnUiThread {
+                context.addTracksToPlaylist(allSelectedTracks) {
                     finishActMode()
                     notifyDataChanged()
                 }
@@ -129,7 +129,7 @@ abstract class BaseMusicAdapter<Type>(
 
     fun shareFiles() {
         ensureBackgroundThread {
-            ctx.shareFiles(getAllSelectedTracks())
+            context.shareFiles(getAllSelectedTracks())
         }
     }
 
@@ -140,8 +140,8 @@ abstract class BaseMusicAdapter<Type>(
                 return@ensureBackgroundThread
             }
 
-            ctx.runOnUiThread {
-                ctx.showTrackProperties(selectedTracks)
+            context.runOnUiThread {
+                context.showTrackProperties(selectedTracks)
             }
         }
     }
@@ -151,8 +151,8 @@ abstract class BaseMusicAdapter<Type>(
             .error(placeholder)
             .transform(CenterCrop(), RoundedCorners(cornerRadius))
 
-        ctx.ensureActivityNotDestroyed {
-            Glide.with(ctx)
+        context.ensureActivityNotDestroyed {
+            Glide.with(context)
                 .load(resource)
                 .apply(options)
                 .into(imageView)

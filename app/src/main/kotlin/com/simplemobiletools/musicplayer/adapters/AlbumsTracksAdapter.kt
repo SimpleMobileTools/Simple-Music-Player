@@ -97,7 +97,7 @@ class AlbumsTracksAdapter(
     override fun getIsItemSelectable(position: Int) = items[position] !is AlbumSection
 
     private fun askConfirmDelete() {
-        ConfirmationDialog(ctx) {
+        ConfirmationDialog(context) {
             ensureBackgroundThread {
                 val positions = ArrayList<Int>()
                 val selectedTracks = getAllSelectedTracks()
@@ -106,8 +106,8 @@ class AlbumsTracksAdapter(
                 positions += selectedTracks.mapNotNull { track -> items.indexOfFirstOrNull { it is Track && it.mediaStoreId == track.mediaStoreId } }
                 positions += selectedAlbums.mapNotNull { album -> items.indexOfFirstOrNull { it is Album && it.id == album.id } }
 
-                ctx.deleteTracks(selectedTracks) {
-                    ctx.runOnUiThread {
+                context.deleteTracks(selectedTracks) {
+                    context.runOnUiThread {
                         positions.sortDescending()
                         removeSelectedItems(positions)
                         positions.forEach {
@@ -116,7 +116,7 @@ class AlbumsTracksAdapter(
 
                         // finish activity if all tracks are deleted
                         if (items.none { it is Track }) {
-                            ctx.finish()
+                            context.finish()
                         }
                     }
                 }
@@ -126,7 +126,7 @@ class AlbumsTracksAdapter(
 
     override fun getAllSelectedTracks(): List<Track> {
         val tracks = getSelectedTracks().toMutableList()
-        tracks.addAll(ctx.audioHelper.getAlbumTracks(getSelectedAlbums()))
+        tracks.addAll(context.audioHelper.getAlbumTracks(getSelectedAlbums()))
         return tracks
     }
 
@@ -140,7 +140,7 @@ class AlbumsTracksAdapter(
             albumTracks.text = resources.getQuantityString(R.plurals.tracks_plural, album.trackCnt, album.trackCnt)
             albumTracks.setTextColor(textColor)
 
-            ctx.getAlbumCoverArt(album) { coverArt ->
+            context.getAlbumCoverArt(album) { coverArt ->
                 loadImage(albumImage, coverArt, placeholderBig)
             }
         }
@@ -148,7 +148,7 @@ class AlbumsTracksAdapter(
 
     private fun setupTrack(view: View, track: Track) {
         ItemTrackBinding.bind(view).apply {
-            root.setupViewBackground(ctx)
+            root.setupViewBackground(context)
             trackFrame.isSelected = selectedKeys.contains(track.hashCode())
             trackTitle.text = track.title
             trackTitle.setTextColor(textColor)
@@ -160,7 +160,7 @@ class AlbumsTracksAdapter(
             trackDuration.text = track.duration.getFormattedDuration()
             trackDuration.setTextColor(textColor)
 
-            ctx.getTrackCoverArt(track) { coverArt ->
+            context.getTrackCoverArt(track) { coverArt ->
                 loadImage(trackImage, coverArt, placeholder)
             }
         }
@@ -184,7 +184,7 @@ class AlbumsTracksAdapter(
 
     private fun displayEditDialog() {
         getSelectedTracks().firstOrNull()?.let { selectedTrack ->
-            EditDialog(ctx as SimpleActivity, selectedTrack) { track ->
+            EditDialog(context as SimpleActivity, selectedTrack) { track ->
                 val trackIndex = items.indexOfFirst { (it as? Track)?.mediaStoreId == track.mediaStoreId }
                 if (trackIndex != -1) {
                     items[trackIndex] = track
@@ -192,7 +192,7 @@ class AlbumsTracksAdapter(
                     finishActMode()
                 }
 
-                ctx.refreshQueueAndTracks(track)
+                context.refreshQueueAndTracks(track)
             }
         }
     }

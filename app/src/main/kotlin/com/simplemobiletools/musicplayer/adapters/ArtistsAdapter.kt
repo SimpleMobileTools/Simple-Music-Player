@@ -50,20 +50,20 @@ class ArtistsAdapter(activity: BaseSimpleActivity, items: ArrayList<Artist>, rec
     }
 
     override fun getSelectedTracks(): ArrayList<Track> {
-        val albums = ctx.audioHelper.getArtistAlbums(getSelectedItems())
-        return ctx.audioHelper.getAlbumTracks(albums)
+        val albums = context.audioHelper.getArtistAlbums(getSelectedItems())
+        return context.audioHelper.getAlbumTracks(albums)
     }
 
     private fun askConfirmDelete() {
-        ConfirmationDialog(ctx) {
+        ConfirmationDialog(context) {
             ensureBackgroundThread {
                 val selectedArtists = getSelectedItems()
                 val positions = selectedArtists.mapNotNull { artist -> items.indexOfFirstOrNull { it.id == artist.id } } as ArrayList<Int>
-                val tracks = ctx.audioHelper.getArtistTracks(selectedArtists)
+                val tracks = context.audioHelper.getArtistTracks(selectedArtists)
 
-                ctx.audioHelper.deleteArtists(selectedArtists)
-                ctx.deleteTracks(tracks) {
-                    ctx.runOnUiThread {
+                context.audioHelper.deleteArtists(selectedArtists)
+                context.deleteTracks(tracks) {
+                    context.runOnUiThread {
                         positions.sortDescending()
                         removeSelectedItems(positions)
                         positions.forEach {
@@ -79,7 +79,7 @@ class ArtistsAdapter(activity: BaseSimpleActivity, items: ArrayList<Artist>, rec
 
     private fun setupView(view: View, artist: Artist) {
         ItemArtistBinding.bind(view).apply {
-            root.setupViewBackground(ctx)
+            root.setupViewBackground(context)
             artistFrame.isSelected = selectedKeys.contains(artist.hashCode())
             artistTitle.text = if (textToHighlight.isEmpty()) artist.title else artist.title.highlightTextPart(textToHighlight, properPrimaryColor)
             artistTitle.setTextColor(textColor)
@@ -90,11 +90,11 @@ class ArtistsAdapter(activity: BaseSimpleActivity, items: ArrayList<Artist>, rec
             artistAlbumsTracks.text = "$albums, $tracks"
             artistAlbumsTracks.setTextColor(textColor)
 
-            ctx.getArtistCoverArt(artist) { coverArt ->
+            context.getArtistCoverArt(artist) { coverArt ->
                 loadImage(artistImage, coverArt, placeholder)
             }
         }
     }
 
-    override fun onChange(position: Int) = items.getOrNull(position)?.getBubbleText(ctx.config.artistSorting) ?: ""
+    override fun onChange(position: Int) = items.getOrNull(position)?.getBubbleText(context.config.artistSorting) ?: ""
 }

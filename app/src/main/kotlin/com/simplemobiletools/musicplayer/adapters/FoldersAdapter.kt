@@ -44,7 +44,7 @@ class FoldersAdapter(
 
     private fun excludeFolders() {
         getSelectedItems().forEach {
-            ctx.config.addExcludedFolder(it.path)
+            context.config.addExcludedFolder(it.path)
         }
 
         finishActMode()
@@ -54,7 +54,7 @@ class FoldersAdapter(
     override fun getSelectedTracks(): List<Track> {
         val tracks = arrayListOf<Track>()
         getSelectedItems().forEach {
-            tracks += ctx.audioHelper.getFolderTracks(it.title)
+            tracks += context.audioHelper.getFolderTracks(it.title)
         }
 
         return tracks
@@ -62,7 +62,7 @@ class FoldersAdapter(
 
     private fun setupView(view: View, folder: Folder) {
         ItemFolderBinding.bind(view).apply {
-            root.setupViewBackground(ctx)
+            root.setupViewBackground(context)
             folderFrame.isSelected = selectedKeys.contains(folder.hashCode())
             folderTitle.text = if (textToHighlight.isEmpty()) folder.title else folder.title.highlightTextPart(textToHighlight, properPrimaryColor)
             folderTitle.setTextColor(textColor)
@@ -73,5 +73,5 @@ class FoldersAdapter(
         }
     }
 
-    override fun onChange(position: Int) = items.getOrNull(position)?.getBubbleText(ctx.config.folderSorting) ?: ""
+    override fun onChange(position: Int) = items.getOrNull(position)?.getBubbleText(context.config.folderSorting) ?: ""
 }

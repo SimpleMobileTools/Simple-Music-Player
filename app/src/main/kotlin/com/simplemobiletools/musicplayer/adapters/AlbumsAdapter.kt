@@ -51,19 +51,19 @@ class AlbumsAdapter(activity: BaseSimpleActivity, items: ArrayList<Album>, recyc
     }
 
     override fun getSelectedTracks(): List<Track> {
-        return ctx.audioHelper.getAlbumTracks(getSelectedItems())
+        return context.audioHelper.getAlbumTracks(getSelectedItems())
     }
 
     private fun askConfirmDelete() {
-        ConfirmationDialog(ctx) {
+        ConfirmationDialog(context) {
             ensureBackgroundThread {
                 val selectedAlbums = getSelectedItems()
                 val positions = selectedAlbums.mapNotNull { album -> items.indexOfFirstOrNull { it.id == album.id } } as ArrayList<Int>
-                val tracks = ctx.audioHelper.getAlbumTracks(selectedAlbums)
-                ctx.audioHelper.deleteAlbums(selectedAlbums)
+                val tracks = context.audioHelper.getAlbumTracks(selectedAlbums)
+                context.audioHelper.deleteAlbums(selectedAlbums)
 
-                ctx.deleteTracks(tracks) {
-                    ctx.runOnUiThread {
+                context.deleteTracks(tracks) {
+                    context.runOnUiThread {
                         positions.sortDescending()
                         removeSelectedItems(positions)
                         positions.forEach {
@@ -79,7 +79,7 @@ class AlbumsAdapter(activity: BaseSimpleActivity, items: ArrayList<Album>, recyc
 
     private fun setupView(view: View, album: Album) {
         ItemAlbumBinding.bind(view).apply {
-            root.setupViewBackground(ctx)
+            root.setupViewBackground(context)
             albumFrame.isSelected = selectedKeys.contains(album.hashCode())
             albumTitle.text = if (textToHighlight.isEmpty()) album.title else album.title.highlightTextPart(textToHighlight, properPrimaryColor)
             albumTitle.setTextColor(textColor)
@@ -88,11 +88,11 @@ class AlbumsAdapter(activity: BaseSimpleActivity, items: ArrayList<Album>, recyc
             albumTracks.text = tracks
             albumTracks.setTextColor(textColor)
 
-            ctx.getAlbumCoverArt(album) { coverArt ->
+            context.getAlbumCoverArt(album) { coverArt ->
                 loadImage(albumImage, coverArt, placeholderBig)
             }
         }
     }
 
-    override fun onChange(position: Int) = items.getOrNull(position)?.getBubbleText(ctx.config.albumSorting) ?: ""
+    override fun onChange(position: Int) = items.getOrNull(position)?.getBubbleText(context.config.albumSorting) ?: ""
 }

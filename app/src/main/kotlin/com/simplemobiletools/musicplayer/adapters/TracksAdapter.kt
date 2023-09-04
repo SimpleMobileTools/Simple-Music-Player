@@ -116,18 +116,18 @@ class TracksAdapter(
                 }
             }
 
-            ctx.audioHelper.deleteTracks(selectedTracks)
+            context.audioHelper.deleteTracks(selectedTracks)
             // this is to make sure these tracks aren't automatically re-added to the 'All tracks' playlist on rescan
             val removedTrackIds = selectedTracks.filter { it.playListId == ALL_TRACKS_PLAYLIST_ID }.map { it.mediaStoreId.toString() }
             if (removedTrackIds.isNotEmpty()) {
-                val config = ctx.config
+                val config = context.config
                 config.tracksRemovedFromAllTracksPlaylist = config.tracksRemovedFromAllTracksPlaylist.apply {
                     addAll(removedTrackIds)
                 }
             }
 
             EventBus.getDefault().post(Events.PlaylistsUpdated())
-            ctx.runOnUiThread {
+            context.runOnUiThread {
                 positions.sortDescending()
                 removeSelectedItems(positions)
                 positions.forEach {
@@ -138,7 +138,7 @@ class TracksAdapter(
     }
 
     private fun askConfirmDelete() {
-        ConfirmationDialog(ctx) {
+        ConfirmationDialog(context) {
             ensureBackgroundThread {
                 val positions = ArrayList<Int>()
                 val selectedTracks = getSelectedTracks()
@@ -149,8 +149,8 @@ class TracksAdapter(
                     }
                 }
 
-                ctx.deleteTracks(selectedTracks) {
-                    ctx.runOnUiThread {
+                context.deleteTracks(selectedTracks) {
+                    context.runOnUiThread {
                         positions.sortDescending()
                         removeSelectedItems(positions)
                         positions.forEach {
@@ -163,7 +163,7 @@ class TracksAdapter(
 
                         // finish activity if all tracks are deleted
                         if (items.isEmpty() && !isPlaylistContent()) {
-                            ctx.finish()
+                            context.finish()
                         }
                     }
                 }
@@ -176,7 +176,7 @@ class TracksAdapter(
     @SuppressLint("ClickableViewAccessibility")
     private fun setupView(view: View, track: Track, holder: ViewHolder) {
         ItemTrackBinding.bind(view).apply {
-            root.setupViewBackground(ctx)
+            root.setupViewBackground(context)
             trackFrame.isSelected = selectedKeys.contains(track.hashCode())
             trackTitle.text = if (textToHighlight.isEmpty()) track.title else track.title.highlightTextPart(textToHighlight, properPrimaryColor)
             trackInfo.text = if (textToHighlight.isEmpty()) {
@@ -209,11 +209,11 @@ class TracksAdapter(
 
     override fun onChange(position: Int): String {
         val sorting = if (isPlaylistContent() && playlist != null) {
-            ctx.config.getProperPlaylistSorting(playlist.id)
+            context.config.getProperPlaylistSorting(playlist.id)
         } else if (sourceType == TYPE_FOLDER && folder != null) {
-            ctx.config.getProperFolderSorting(folder)
+            context.config.getProperFolderSorting(folder)
         } else {
-            ctx.config.trackSorting
+            context.config.trackSorting
         }
 
         return items.getOrNull(position)?.getBubbleText(sorting) ?: ""
@@ -221,19 +221,19 @@ class TracksAdapter(
 
     private fun displayEditDialog() {
         getSelectedTracks().firstOrNull()?.let { selectedTrack ->
-            EditDialog(ctx, selectedTrack) { track ->
+            EditDialog(context, selectedTrack) { track ->
                 val trackIndex = items.indexOfFirstOrNull { it.mediaStoreId == track.mediaStoreId } ?: return@EditDialog
                 items[trackIndex] = track
                 notifyItemChanged(trackIndex)
                 finishActMode()
 
-                ctx.refreshQueueAndTracks(track)
+                context.refreshQueueAndTracks(track)
             }
         }
     }
 
     override fun onRowMoved(fromPosition: Int, toPosition: Int) {
-        ctx.config.saveCustomPlaylistSorting(playlist!!.id, PLAYER_SORT_BY_CUSTOM)
+        context.config.saveCustomPlaylistSorting(playlist!!.id, PLAYER_SORT_BY_CUSTOM)
         items.swap(fromPosition, toPosition)
         notifyItemMoved(fromPosition, toPosition)
     }
@@ -245,7 +245,7 @@ class TracksAdapter(
             var index = 0
             items.forEach {
                 it.orderInPlaylist = index++
-                ctx.audioHelper.updateOrderInPlaylist(index, it.id)
+                context.audioHelper.updateOrderInPlaylist(index, it.id)
             }
         }
     }

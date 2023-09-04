@@ -51,19 +51,19 @@ class GenresAdapter(activity: BaseSimpleActivity, items: ArrayList<Genre>, recyc
     }
 
     override fun getSelectedTracks(): ArrayList<Track> {
-        return ctx.audioHelper.getGenreTracks(getSelectedItems())
+        return context.audioHelper.getGenreTracks(getSelectedItems())
     }
 
     private fun askConfirmDelete() {
-        ConfirmationDialog(ctx) {
+        ConfirmationDialog(context) {
             ensureBackgroundThread {
                 val selectedGenres = getSelectedItems()
                 val positions = selectedGenres.mapNotNull { genre -> items.indexOfFirstOrNull { it.id == genre.id } } as ArrayList<Int>
-                val tracks = ctx.audioHelper.getGenreTracks(selectedGenres)
-                ctx.audioHelper.deleteGenres(selectedGenres)
+                val tracks = context.audioHelper.getGenreTracks(selectedGenres)
+                context.audioHelper.deleteGenres(selectedGenres)
 
-                ctx.deleteTracks(tracks) {
-                    ctx.runOnUiThread {
+                context.deleteTracks(tracks) {
+                    context.runOnUiThread {
                         positions.sortDescending()
                         removeSelectedItems(positions)
                         positions.forEach {
@@ -99,5 +99,5 @@ class GenresAdapter(activity: BaseSimpleActivity, items: ArrayList<Genre>, recyc
         }
     }
 
-    override fun onChange(position: Int) = items.getOrNull(position)?.getBubbleText(ctx.config.genreSorting) ?: ""
+    override fun onChange(position: Int) = items.getOrNull(position)?.getBubbleText(context.config.genreSorting) ?: ""
 }
