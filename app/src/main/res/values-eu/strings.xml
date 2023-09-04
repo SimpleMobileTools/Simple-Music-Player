@@ -14,7 +14,7 @@
     <string name="disable_shuffle">Desgaitu nahasketa</string>
     <string name="shuffle_enabled">Nahastea gaituta</string>
     <string name="shuffle_disabled">Nahastea ezgaituta</string>
-    <string name="sleep_timer">Lo egiteko tenporizadorea</string>
+    <string name="sleep_timer">Sleep timer</string>
     <string name="volume">Bolumena</string>
     <string name="playback_speed">Erreprodukzio abiadura</string>
     <string name="loading_files">Fitxategiak kargatzen…</string>
