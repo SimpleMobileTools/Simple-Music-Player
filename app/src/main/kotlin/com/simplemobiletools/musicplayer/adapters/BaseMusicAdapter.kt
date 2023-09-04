@@ -33,6 +33,10 @@ abstract class BaseMusicAdapter<Type>(
     val placeholderBig by lazy { resources.getBiggerPlaceholder(textColor) }
     open val cornerRadius by lazy { resources.getDimension(com.simplemobiletools.commons.R.dimen.rounded_corner_radius_small).toInt() }
 
+    init {
+        setupDragListener(true)
+    }
+
     override fun getItemCount() = items.size
 
     override fun getSelectableItemCount() = items.size

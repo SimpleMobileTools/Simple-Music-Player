@@ -24,6 +24,10 @@ class ExcludedFoldersAdapter(
 
     private val config = activity.config
 
+    init {
+        setupDragListener(true)
+    }
+
     override fun getActionMenuId() = com.simplemobiletools.commons.R.menu.cab_remove_only
 
     override fun prepareActionMode(menu: Menu) {}

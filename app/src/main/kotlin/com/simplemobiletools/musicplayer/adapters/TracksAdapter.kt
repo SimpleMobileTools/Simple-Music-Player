@@ -42,8 +42,6 @@ class TracksAdapter(
     private var startReorderDragListener: StartReorderDragListener
 
     init {
-        setupDragListener(true)
-
         touchHelper = ItemTouchHelper(ItemMoveCallback(this))
         touchHelper!!.attachToRecyclerView(recyclerView)
 
