@@ -14,7 +14,6 @@
     <string name="disable_shuffle">Nonaktifkan acak</string>
     <string name="shuffle_enabled">Acak diaktifkan</string>
     <string name="shuffle_disabled">Acak dinonaktifkan</string>
-    <string name="sleep_timer">Timer tidur</string>
     <string name="volume">Volume</string>
     <string name="playback_speed">Kecepatan playback</string>
     <string name="loading_files">Memuat file…</string>

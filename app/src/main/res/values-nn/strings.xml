@@ -14,7 +14,6 @@
     <string name="disable_shuffle">Slå av blanding</string>
     <string name="shuffle_enabled">Blandar</string>
     <string name="shuffle_disabled">Blandar ikkje</string>
-    <string name="sleep_timer">Svevntidsur</string>
     <string name="volume">Ljodstyrk</string>
     <string name="playback_speed">Avspelingssnøggleiken</string>
     <string name="loading_files">Leitar fram filer …</string>

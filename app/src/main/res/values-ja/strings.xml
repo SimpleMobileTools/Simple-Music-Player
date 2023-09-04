@@ -14,7 +14,6 @@
     <string name="disable_shuffle">シャッフルを無効にする</string>
     <string name="shuffle_enabled">シャッフル有効</string>
     <string name="shuffle_disabled">シャッフル無効</string>
-    <string name="sleep_timer">スリープタイマー</string>
     <string name="volume">音量</string>
     <string name="playback_speed">再生速度</string>
     <string name="loading_files">ファイルを読込中…</string>

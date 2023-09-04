@@ -14,7 +14,6 @@
     <string name="disable_shuffle">Désactiver la lecture aléatoire</string>
     <string name="shuffle_enabled">Lecture aléatoire activée</string>
     <string name="shuffle_disabled">Lecture aléatoire désactivée</string>
-    <string name="sleep_timer">Minuterie de veille</string>
     <string name="volume">Volume</string>
     <string name="playback_speed">Vitesse de lecture</string>
     <string name="loading_files">Chargement des fichiers…</string>

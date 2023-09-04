@@ -14,7 +14,6 @@
     <string name="disable_shuffle">停用隨機</string>
     <string name="shuffle_enabled">已啟用隨機播放</string>
     <string name="shuffle_disabled">已停用隨機播放</string>
-    <string name="sleep_timer">睡眠定時器</string>
     <string name="volume">音量</string>
     <string name="playback_speed">播放速度</string>
     <string name="loading_files">正在載入檔案……</string>

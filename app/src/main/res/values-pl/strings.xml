@@ -14,7 +14,6 @@
     <string name="disable_shuffle">Wyłącz odtwarzanie losowe</string>
     <string name="shuffle_enabled">Odtwarzanie losowe włączone</string>
     <string name="shuffle_disabled">Odtwarzanie losowe wyłączone</string>
-    <string name="sleep_timer">Wyłącznik czasowy</string>
     <string name="volume">Głośność</string>
     <string name="playback_speed">Prędkość odtwarzania</string>
     <string name="loading_files">Ładowanie plików…</string>

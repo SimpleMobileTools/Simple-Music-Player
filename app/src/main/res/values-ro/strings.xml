@@ -14,7 +14,6 @@
     <string name="disable_shuffle">Dezactivați amestecarea melodiilor</string>
     <string name="shuffle_enabled">Amestecarea melodiilor activată</string>
     <string name="shuffle_disabled">Amestecarea melodiilor dezactivată</string>
-    <string name="sleep_timer">Temporizator de somn</string>
     <string name="volume">Volum</string>
     <string name="playback_speed">Viteza de redare</string>
     <string name="loading_files">Încărcare fișiere…</string>

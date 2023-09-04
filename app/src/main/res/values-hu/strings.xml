@@ -14,7 +14,6 @@
     <string name="disable_shuffle">Véletlenszerű lejátszás letiltása</string>
     <string name="shuffle_enabled">Véletlenszerű lejátszás engedélyezve</string>
     <string name="shuffle_disabled">Véletlenszerű lejátszás letiltva</string>
-    <string name="sleep_timer">Alvásidőzítő</string>
     <string name="volume">Hangerő</string>
     <string name="playback_speed">Lejátszási sebesség</string>
     <string name="loading_files">Fájlok betöltése…</string>

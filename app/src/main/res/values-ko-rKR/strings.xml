@@ -14,7 +14,6 @@
     <string name="disable_shuffle">셔플 비 활성화</string>
     <string name="shuffle_enabled">셔플 활성화됨</string>
     <string name="shuffle_disabled">셔플 비 활성화됨</string>
-    <string name="sleep_timer">취침 타이머</string>
     <string name="volume">볼륨</string>
     <string name="playback_speed">재생 속도</string>
     <string name="loading_files">파일 로드 중…</string>

@@ -14,7 +14,6 @@
     <string name="disable_shuffle">Desativar modo aleatório</string>
     <string name="shuffle_enabled">Modo aleatório ativado</string>
     <string name="shuffle_disabled">Modo aleatório desativado</string>
-    <string name="sleep_timer">Temporizador</string>
     <string name="volume">Volume</string>
     <string name="playback_speed">Velocidade de reprodução</string>
     <string name="loading_files">A carregar ficheiros…</string>

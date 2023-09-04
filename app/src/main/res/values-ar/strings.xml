@@ -14,7 +14,6 @@
     <string name="disable_shuffle">إيقاف التشغيل العشوائي</string>
     <string name="shuffle_enabled">تم تفعيل التشغيل العشوائي</string>
     <string name="shuffle_disabled">تم إيقاف التشغيل العشوائي</string>
-    <string name="sleep_timer">مؤقت النوم</string>
     <string name="volume">مستوى الصوت</string>
     <string name="playback_speed">سرعة التشغيل</string>
     <string name="loading_files">يجري تحميل الملفات…</string>

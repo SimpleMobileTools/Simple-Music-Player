@@ -14,7 +14,6 @@
     <string name="disable_shuffle">Skru av omstokking</string>
     <string name="shuffle_enabled">Shuffle aktivert</string>
     <string name="shuffle_disabled">Shuffle deaktivert</string>
-    <string name="sleep_timer">Søvntidsur</string>
     <string name="volume">Lydstyrke</string>
     <string name="playback_speed">Avspillingshastighet</string>
     <string name="loading_files">Laster inn filer …</string>

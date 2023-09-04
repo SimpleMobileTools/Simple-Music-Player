@@ -14,7 +14,6 @@
     <string name="disable_shuffle">Išjungti grojimą atsitiktine tvarka</string>
     <string name="shuffle_enabled">Grojimas atsitiktine tvarka įjungtas</string>
     <string name="shuffle_disabled">Grojimas atsitiktine tvarka išjungtas</string>
-    <string name="sleep_timer">Miego laikmatis</string>
     <string name="volume">Apimtis</string>
     <string name="playback_speed">Atkūrimo greitis</string>
     <string name="loading_files">Loading files…</string>

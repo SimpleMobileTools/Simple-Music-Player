@@ -17,7 +17,6 @@
     <string name="volume">Volume</string>
     <string name="playback_speed">Afspilningshastighed</string>
     <string name="loading_files">Indlæser filer…</string>
-    <string name="sleep_timer">Timer til slumretilstand</string>
     <!-- Playlists -->
     <string name="add_file_to_playlist">Tilføj fil til afspilningsliste</string>
     <string name="add_folder_to_playlist">Tilgøj mappe til afspilningsliste</string>

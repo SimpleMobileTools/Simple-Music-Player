@@ -14,7 +14,6 @@
     <string name="disable_shuffle">Inaktivera blanda</string>
     <string name="shuffle_enabled">Blanda aktiverad</string>
     <string name="shuffle_disabled">Blanda inaktiverad</string>
-    <string name="sleep_timer">Insomningstimer</string>
     <string name="volume">Volym</string>
     <string name="playback_speed">Uppspelningshastighet</string>
     <string name="loading_files">Läser in filer…</string>

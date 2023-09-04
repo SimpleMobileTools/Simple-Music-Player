@@ -14,7 +14,6 @@
     <string name="disable_shuffle">Qarışdırmanı qapat</string>
     <string name="shuffle_enabled">Qarışdırma aktivdir</string>
     <string name="shuffle_disabled">Qarışdırma deaktivdir</string>
-    <string name="sleep_timer">Sleep timer</string>
     <string name="volume">Volume</string>
     <string name="playback_speed">Playback speed</string>
     <string name="loading_files">Loading files…</string>

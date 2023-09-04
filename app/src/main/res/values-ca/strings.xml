@@ -14,7 +14,6 @@
     <string name="disable_shuffle">Desactiva la reproducció aleatòria</string>
     <string name="shuffle_enabled">S\'ha activat la reproducció aleatòria</string>
     <string name="shuffle_disabled">S\'ha desactivat la reproducció aleatòria</string>
-    <string name="sleep_timer">Temporitzador per adormir-se</string>
     <string name="volume">Volum</string>
     <string name="playback_speed">Velocitat de reproducció</string>
     <string name="loading_files">S\'estan carregant els fitxers…</string>

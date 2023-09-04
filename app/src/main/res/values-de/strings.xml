@@ -14,7 +14,6 @@
     <string name="disable_shuffle">Zufällige Wiedergabe deaktivieren</string>
     <string name="shuffle_enabled">Zufällige Wiedergabe aktiviert</string>
     <string name="shuffle_disabled">Zufällige Wiedergabe deaktiviert</string>
-    <string name="sleep_timer">Sleeptimer</string>
     <string name="volume">Lautstärke</string>
     <string name="playback_speed">Wiedergabegeschwindigkeit</string>
     <string name="loading_files">Dateien werden geladen …</string>

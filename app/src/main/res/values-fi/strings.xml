@@ -14,7 +14,6 @@
     <string name="disable_shuffle">Poista satunnaistoisto käytöstä</string>
     <string name="shuffle_enabled">Shuffle käytössä</string>
     <string name="shuffle_disabled">Shuffle pois käytöstä</string>
-    <string name="sleep_timer">Uniajastin</string>
     <string name="volume">Tilavuus</string>
     <string name="playback_speed">Toisto-nopeuden</string>
     <string name="loading_files">Ladataan tiedostoja…</string>

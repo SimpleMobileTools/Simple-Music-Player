@@ -14,7 +14,6 @@
     <string name="disable_shuffle">Играть подряд</string>
     <string name="shuffle_enabled">Воспроизведение в случайном порядке включено</string>
     <string name="shuffle_disabled">Воспроизведение в случайном порядке выключено</string>
-    <string name="sleep_timer">Таймер сна</string>
     <string name="volume">Громкость</string>
     <string name="playback_speed">Скорость воспроизведения</string>
     <string name="loading_files">Загрузка файлов…</string>

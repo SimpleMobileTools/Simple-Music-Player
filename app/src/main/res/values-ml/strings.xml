@@ -14,7 +14,6 @@
     <string name="disable_shuffle">ഷഫിൾ പ്രവർത്തനരഹിതമാക്കുക</string>
     <string name="shuffle_enabled">ഷഫിൾ പ്രവർത്തനക്ഷമമാക്കി</string>
     <string name="shuffle_disabled">ഷഫിൾ പ്രവർത്തനരഹിതമാക്കി</string>
-    <string name="sleep_timer">Sleep timer</string>
     <string name="volume">വ്യാപ്തം</string>
     <string name="playback_speed">പ്ലേബാക്ക് വേഗത</string>
     <string name="loading_files">ഫയലുകൾ ലോഡുചെയ്യുന്നു…</string>
