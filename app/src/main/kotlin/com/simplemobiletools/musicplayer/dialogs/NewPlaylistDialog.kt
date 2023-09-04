@@ -10,7 +10,6 @@ import com.simplemobiletools.musicplayer.extensions.audioHelper
 import com.simplemobiletools.musicplayer.extensions.getPlaylistIdWithTitle
 import com.simplemobiletools.musicplayer.models.Playlist
 
-
 class NewPlaylistDialog(val activity: Activity, var playlist: Playlist? = null, val callback: (playlistId: Int) -> Unit) {
     private var isNewPlaylist = playlist == null
     private val binding by activity.viewBinding(DialogNewPlaylistBinding::inflate)

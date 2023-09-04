@@ -52,7 +52,6 @@ class NotificationHelper(private val context: Context) {
             }.build()
     }
 
-
     fun notify(id: Int, notification: Notification) = notificationManager.notify(id, notification)
 
     fun cancel(id: Int) = notificationManager.cancel(id)

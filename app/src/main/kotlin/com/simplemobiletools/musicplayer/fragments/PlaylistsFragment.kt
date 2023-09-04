@@ -1,6 +1,5 @@
 package com.simplemobiletools.musicplayer.fragments
 
-
 import android.content.Context
 import android.content.Intent
 import android.util.AttributeSet

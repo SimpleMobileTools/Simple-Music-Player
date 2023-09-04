@@ -22,7 +22,6 @@ import com.simplemobiletools.musicplayer.extensions.*
 import com.simplemobiletools.musicplayer.helpers.RoomHelper
 import com.simplemobiletools.musicplayer.models.Track
 
-
 class QueueActivity : SimpleControllerActivity() {
     private var searchMenuItem: MenuItem? = null
     private var isSearchOpen = false
