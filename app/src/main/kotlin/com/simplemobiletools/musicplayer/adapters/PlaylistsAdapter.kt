@@ -120,7 +120,7 @@ class PlaylistsAdapter(
     private fun setupView(view: View, playlist: Playlist) {
         ItemPlaylistBinding.bind(view).apply {
             root.setupViewBackground(context)
-            playlistFrame.isSelected = selectedKeys.contains(playlist.id)
+            playlistFrame.isSelected = selectedKeys.contains(playlist.hashCode())
             playlistTitle.text = if (textToHighlight.isEmpty()) playlist.title else playlist.title.highlightTextPart(textToHighlight, properPrimaryColor)
             playlistTitle.setTextColor(textColor)
 
