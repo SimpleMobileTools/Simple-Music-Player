@@ -14,7 +14,7 @@
     <string name="disable_shuffle">غیر فعال کردن پخش تصادفی</string>
     <string name="shuffle_enabled">پخش تصادفی فعال شد</string>
     <string name="shuffle_disabled">پخش تصادفی غیر فعال شد</string>
-    <string name="sleep_timer">Sleep timer</string>
+    <string name="sleep_timer">تایمر خواب</string>
     <string name="volume">حجم صدا</string>
     <string name="playback_speed">Playback speed</string>
     <string name="loading_files">Loading files…</string>
