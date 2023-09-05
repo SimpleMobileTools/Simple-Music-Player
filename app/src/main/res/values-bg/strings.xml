@@ -14,7 +14,6 @@
     <string name="disable_shuffle">Деактивиране на разбъркване</string>
     <string name="shuffle_enabled">Разбъркването е активирано</string>
     <string name="shuffle_disabled">Разбъркването е деактивирано</string>
-    <string name="sleep_timer">Таймер за заспиване</string>
     <string name="volume">Сила на звука</string>
     <string name="playback_speed">Скорост на възпроизвеждане</string>
     <string name="loading_files">Файловете се зареждат…</string>

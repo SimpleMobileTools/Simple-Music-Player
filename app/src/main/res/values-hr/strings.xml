@@ -14,7 +14,6 @@
     <string name="disable_shuffle">Onemogući slučajnu reprodukciju</string>
     <string name="shuffle_enabled">Slučajna reprodukcija je aktivirana</string>
     <string name="shuffle_disabled">Onemogućena je slučajna reprodukcija</string>
-    <string name="sleep_timer">Mjerač vremena za isključivanje</string>
     <string name="volume">Glasnoća</string>
     <string name="playback_speed">Brzina reprodukcije</string>
     <string name="loading_files">Učitavanje datoteka …</string>

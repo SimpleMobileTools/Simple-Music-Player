@@ -14,7 +14,6 @@
     <string name="disable_shuffle">Vypnout náhodné přehrávání</string>
     <string name="shuffle_enabled">Náhodné přehrávání zapnuto</string>
     <string name="shuffle_disabled">Náhodné přehrávání vypnuto</string>
-    <string name="sleep_timer">Časovač vypnutí</string>
     <string name="volume">Hlasitost</string>
     <string name="playback_speed">Rychlost přehrávání</string>
     <string name="loading_files">Načítaní souborů…</string>

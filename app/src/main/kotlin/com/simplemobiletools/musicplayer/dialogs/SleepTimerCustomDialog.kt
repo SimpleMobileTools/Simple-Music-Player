@@ -16,7 +16,7 @@ class SleepTimerCustomDialog(val activity: Activity, val callback: (seconds: Int
             .setPositiveButton(com.simplemobiletools.commons.R.string.ok) { _, _ -> dialogConfirmed() }
             .setNegativeButton(com.simplemobiletools.commons.R.string.cancel, null)
             .apply {
-                activity.setupDialogStuff(binding.root, this, R.string.sleep_timer) { alertDialog ->
+                activity.setupDialogStuff(binding.root, this, com.simplemobiletools.commons.R.string.sleep_timer) { alertDialog ->
                     dialog = alertDialog
                     alertDialog.showKeyboard(binding.minutes)
                 }

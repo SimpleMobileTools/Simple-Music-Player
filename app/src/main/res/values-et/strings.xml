@@ -14,7 +14,6 @@
     <string name="disable_shuffle">Lülita juhuesitus välja</string>
     <string name="shuffle_enabled">Juhuesitus on kasutusel</string>
     <string name="shuffle_disabled">Juhuesitus on väljas</string>
-    <string name="sleep_timer">Unetaimer</string>
     <string name="volume">Helitugevus</string>
     <string name="playback_speed">Taasesituse kiirus</string>
     <string name="loading_files">Laadin faile…</string>

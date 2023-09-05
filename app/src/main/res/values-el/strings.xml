@@ -14,7 +14,6 @@
     <string name="disable_shuffle">Απενεργοποίηση τυχαίας σειράς</string>
     <string name="shuffle_enabled">Τυχαία σειρά Ενεργή</string>
     <string name="shuffle_disabled">Τυχαία σειρά Ανενεργή</string>
-    <string name="sleep_timer">Χρονοδιακόπτης</string>
     <string name="volume">Ένταση</string>
     <string name="playback_speed">Ταχύτητα Αναπ/γής</string>
     <string name="loading_files">Φόρτωση αρχείων…</string>

@@ -14,7 +14,6 @@
     <string name="disable_shuffle">Desativar reprodução aleatória</string>
     <string name="shuffle_enabled">Reprodução aleatória ativada</string>
     <string name="shuffle_disabled">Reprodução aleatória desativada</string>
-    <string name="sleep_timer">Temporizador de sono</string>
     <string name="volume">Volume</string>
     <string name="playback_speed">Velocidade de reprodução</string>
     <string name="loading_files">Carregando arquivos…</string>
