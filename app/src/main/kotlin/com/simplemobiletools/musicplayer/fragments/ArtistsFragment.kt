@@ -100,6 +100,7 @@ class ArtistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
     override fun setupColors(textColor: Int, adjustedPrimaryColor: Int) {
         binding.artistsPlaceholder.setTextColor(textColor)
         binding.artistsFastscroller.updateColors(adjustedPrimaryColor)
+        getAdapter()?.updateColors(textColor)
     }
 
     private fun getAdapter() = binding.artistsList.adapter as? ArtistsAdapter

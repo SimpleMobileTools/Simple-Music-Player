@@ -107,6 +107,7 @@ class PlaylistsFragment(context: Context, attributeSet: AttributeSet) : MyViewPa
         binding.playlistsPlaceholder.setTextColor(textColor)
         binding.playlistsPlaceholder2.setTextColor(adjustedPrimaryColor)
         binding.playlistsFastscroller.updateColors(adjustedPrimaryColor)
+        getAdapter()?.updateColors(textColor)
     }
 
     private fun getAdapter() = binding.playlistsList.adapter as? PlaylistsAdapter

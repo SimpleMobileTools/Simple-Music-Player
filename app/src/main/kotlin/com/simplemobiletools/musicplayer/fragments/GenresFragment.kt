@@ -100,6 +100,7 @@ class GenresFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
     override fun setupColors(textColor: Int, adjustedPrimaryColor: Int) {
         binding.genresPlaceholder.setTextColor(textColor)
         binding.genresFastscroller.updateColors(adjustedPrimaryColor)
+        getAdapter()?.updateColors(textColor)
     }
 
     private fun getAdapter() = binding.genresList.adapter as? GenresAdapter

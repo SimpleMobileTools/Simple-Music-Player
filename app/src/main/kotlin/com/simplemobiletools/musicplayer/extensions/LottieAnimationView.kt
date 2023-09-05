@@ -17,11 +17,11 @@ fun LottieAnimationView.updatePlayPauseIcon(isPlaying: Boolean, color: Int) {
             playAnimation()
         }
 
-        addValueCallback(
-            KeyPath("**"),
-            LottieProperty.COLOR_FILTER,
-            { PorterDuffColorFilter(color, PorterDuff.Mode.SRC_IN) }
-        )
         tag = isPlaying
     }
+
+    addValueCallback(
+        KeyPath("**"),
+        LottieProperty.COLOR_FILTER
+    ) { PorterDuffColorFilter(color, PorterDuff.Mode.SRC_IN) }
 }

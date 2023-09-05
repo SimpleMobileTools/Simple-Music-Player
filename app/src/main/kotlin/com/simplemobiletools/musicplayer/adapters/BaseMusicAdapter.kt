@@ -10,6 +10,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.simplemobiletools.commons.activities.BaseSimpleActivity
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
+import com.simplemobiletools.commons.extensions.getProperPrimaryColor
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.musicplayer.activities.SimpleControllerActivity
@@ -156,6 +157,14 @@ abstract class BaseMusicAdapter<Type>(
                 .load(resource)
                 .apply(options)
                 .into(imageView)
+        }
+    }
+
+    fun updateColors(newTextColor: Int) {
+        if (textColor != newTextColor || properPrimaryColor != context.getProperPrimaryColor()) {
+            updateTextColor(newTextColor)
+            updatePrimaryColor()
+            notifyDataChanged()
         }
     }
 

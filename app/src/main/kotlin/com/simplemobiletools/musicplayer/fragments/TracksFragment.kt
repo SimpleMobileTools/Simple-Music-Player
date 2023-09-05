@@ -107,6 +107,7 @@ class TracksFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
     override fun setupColors(textColor: Int, adjustedPrimaryColor: Int) {
         binding.tracksPlaceholder.setTextColor(textColor)
         binding.tracksFastscroller.updateColors(adjustedPrimaryColor)
+        getAdapter()?.updateColors(textColor)
     }
 
     private fun getAdapter() = binding.tracksList.adapter as? TracksAdapter

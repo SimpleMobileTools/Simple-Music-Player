@@ -97,6 +97,7 @@ class FoldersFragment(context: Context, attributeSet: AttributeSet) : MyViewPage
         binding.foldersPlaceholder.setTextColor(textColor)
         binding.foldersFastscroller.updateColors(adjustedPrimaryColor)
         binding.foldersPlaceholder2.setTextColor(adjustedPrimaryColor)
+        getAdapter()?.updateColors(textColor)
     }
 
     private fun getAdapter() = binding.foldersList.adapter as? FoldersAdapter
