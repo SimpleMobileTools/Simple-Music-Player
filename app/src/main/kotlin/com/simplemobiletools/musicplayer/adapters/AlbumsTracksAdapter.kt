@@ -134,6 +134,7 @@ class AlbumsTracksAdapter(
 
     private fun setupAlbum(view: View, album: Album) {
         ItemAlbumBinding.bind(view).apply {
+            root.setupViewBackground(context)
             albumFrame.isSelected = selectedKeys.contains(album.hashCode())
             albumTitle.text = album.title
             albumTitle.setTextColor(textColor)
