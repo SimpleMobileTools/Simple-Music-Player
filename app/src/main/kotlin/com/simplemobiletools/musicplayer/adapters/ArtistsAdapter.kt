@@ -11,20 +11,21 @@ import com.simplemobiletools.commons.extensions.setupViewBackground
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.musicplayer.R
+import com.simplemobiletools.musicplayer.databinding.ItemArtistBinding
 import com.simplemobiletools.musicplayer.extensions.*
 import com.simplemobiletools.musicplayer.inlines.indexOfFirstOrNull
 import com.simplemobiletools.musicplayer.models.Artist
 import com.simplemobiletools.musicplayer.models.Track
-import kotlinx.android.synthetic.main.item_artist.view.artist_albums_tracks
-import kotlinx.android.synthetic.main.item_artist.view.artist_frame
-import kotlinx.android.synthetic.main.item_artist.view.artist_title
 
 class ArtistsAdapter(activity: BaseSimpleActivity, items: ArrayList<Artist>, recyclerView: MyRecyclerView, itemClick: (Any) -> Unit) :
     BaseMusicAdapter<Artist>(items, activity, recyclerView, itemClick), RecyclerViewFastScroller.OnPopupTextUpdate {
 
     override fun getActionMenuId() = R.menu.cab_artists
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = createViewHolder(R.layout.item_artist, parent)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val binding = ItemArtistBinding.inflate(layoutInflater, parent, false)
+        return createViewHolder(binding.root)
+    }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val artist = items.getOrNull(position) ?: return
@@ -49,20 +50,20 @@ class ArtistsAdapter(activity: BaseSimpleActivity, items: ArrayList<Artist>, rec
     }
 
     override fun getSelectedTracks(): ArrayList<Track> {
-        val albums = ctx.audioHelper.getArtistAlbums(getSelectedItems())
-        return ctx.audioHelper.getAlbumTracks(albums)
+        val albums = context.audioHelper.getArtistAlbums(getSelectedItems())
+        return context.audioHelper.getAlbumTracks(albums)
     }
 
     private fun askConfirmDelete() {
-        ConfirmationDialog(ctx) {
+        ConfirmationDialog(context) {
             ensureBackgroundThread {
                 val selectedArtists = getSelectedItems()
                 val positions = selectedArtists.mapNotNull { artist -> items.indexOfFirstOrNull { it.id == artist.id } } as ArrayList<Int>
-                val tracks = ctx.audioHelper.getArtistTracks(selectedArtists)
+                val tracks = context.audioHelper.getArtistTracks(selectedArtists)
 
-                ctx.audioHelper.deleteArtists(selectedArtists)
-                ctx.deleteTracks(tracks) {
-                    ctx.runOnUiThread {
+                context.audioHelper.deleteArtists(selectedArtists)
+                context.deleteTracks(tracks) {
+                    context.runOnUiThread {
                         positions.sortDescending()
                         removeSelectedItems(positions)
                         positions.forEach {
@@ -77,23 +78,23 @@ class ArtistsAdapter(activity: BaseSimpleActivity, items: ArrayList<Artist>, rec
     }
 
     private fun setupView(view: View, artist: Artist) {
-        view.apply {
-            setupViewBackground(ctx)
-            artist_frame?.isSelected = selectedKeys.contains(artist.hashCode())
-            artist_title.text = if (textToHighlight.isEmpty()) artist.title else artist.title.highlightTextPart(textToHighlight, properPrimaryColor)
-            artist_title.setTextColor(textColor)
+        ItemArtistBinding.bind(view).apply {
+            root.setupViewBackground(context)
+            artistFrame.isSelected = selectedKeys.contains(artist.hashCode())
+            artistTitle.text = if (textToHighlight.isEmpty()) artist.title else artist.title.highlightTextPart(textToHighlight, properPrimaryColor)
+            artistTitle.setTextColor(textColor)
 
             val albums = resources.getQuantityString(R.plurals.albums_plural, artist.albumCnt, artist.albumCnt)
             val tracks = resources.getQuantityString(R.plurals.tracks_plural, artist.trackCnt, artist.trackCnt)
             @SuppressLint("SetTextI18n")
-            artist_albums_tracks.text = "$albums, $tracks"
-            artist_albums_tracks.setTextColor(textColor)
+            artistAlbumsTracks.text = "$albums, $tracks"
+            artistAlbumsTracks.setTextColor(textColor)
 
-            ctx.getArtistCoverArt(artist) { coverArt ->
-                loadImage(findViewById(R.id.artist_image), coverArt, placeholder)
+            context.getArtistCoverArt(artist) { coverArt ->
+                loadImage(artistImage, coverArt, placeholder)
             }
         }
     }
 
-    override fun onChange(position: Int) = items.getOrNull(position)?.getBubbleText(ctx.config.artistSorting) ?: ""
+    override fun onChange(position: Int) = items.getOrNull(position)?.getBubbleText(context.config.artistSorting) ?: ""
 }

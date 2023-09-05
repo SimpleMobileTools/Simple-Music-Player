@@ -8,14 +8,12 @@ import com.simplemobiletools.commons.extensions.highlightTextPart
 import com.simplemobiletools.commons.extensions.setupViewBackground
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.musicplayer.R
+import com.simplemobiletools.musicplayer.databinding.ItemFolderBinding
 import com.simplemobiletools.musicplayer.extensions.audioHelper
 import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.models.Events
 import com.simplemobiletools.musicplayer.models.Folder
 import com.simplemobiletools.musicplayer.models.Track
-import kotlinx.android.synthetic.main.item_folder.view.folder_frame
-import kotlinx.android.synthetic.main.item_folder.view.folder_title
-import kotlinx.android.synthetic.main.item_folder.view.folder_tracks
 import org.greenrobot.eventbus.EventBus
 
 class FoldersAdapter(
@@ -24,7 +22,10 @@ class FoldersAdapter(
 
     override fun getActionMenuId() = R.menu.cab_folders
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = createViewHolder(R.layout.item_folder, parent)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val binding = ItemFolderBinding.inflate(layoutInflater, parent, false)
+        return createViewHolder(binding.root)
+    }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val folder = items.getOrNull(position) ?: return
@@ -43,7 +44,7 @@ class FoldersAdapter(
 
     private fun excludeFolders() {
         getSelectedItems().forEach {
-            ctx.config.addExcludedFolder(it.path)
+            context.config.addExcludedFolder(it.path)
         }
 
         finishActMode()
@@ -53,24 +54,24 @@ class FoldersAdapter(
     override fun getSelectedTracks(): List<Track> {
         val tracks = arrayListOf<Track>()
         getSelectedItems().forEach {
-            tracks += ctx.audioHelper.getFolderTracks(it.title)
+            tracks += context.audioHelper.getFolderTracks(it.title)
         }
 
         return tracks
     }
 
     private fun setupView(view: View, folder: Folder) {
-        view.apply {
-            setupViewBackground(ctx)
-            folder_frame?.isSelected = selectedKeys.contains(folder.hashCode())
-            folder_title.text = if (textToHighlight.isEmpty()) folder.title else folder.title.highlightTextPart(textToHighlight, properPrimaryColor)
-            folder_title.setTextColor(textColor)
+        ItemFolderBinding.bind(view).apply {
+            root.setupViewBackground(context)
+            folderFrame.isSelected = selectedKeys.contains(folder.hashCode())
+            folderTitle.text = if (textToHighlight.isEmpty()) folder.title else folder.title.highlightTextPart(textToHighlight, properPrimaryColor)
+            folderTitle.setTextColor(textColor)
 
             val tracks = resources.getQuantityString(R.plurals.tracks_plural, folder.trackCount, folder.trackCount)
-            folder_tracks.text = tracks
-            folder_tracks.setTextColor(textColor)
+            folderTracks.text = tracks
+            folderTracks.setTextColor(textColor)
         }
     }
 
-    override fun onChange(position: Int) = items.getOrNull(position)?.getBubbleText(ctx.config.folderSorting) ?: ""
+    override fun onChange(position: Int) = items.getOrNull(position)?.getBubbleText(context.config.folderSorting) ?: ""
 }

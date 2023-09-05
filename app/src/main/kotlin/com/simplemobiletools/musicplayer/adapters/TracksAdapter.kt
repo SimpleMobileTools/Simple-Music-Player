@@ -17,6 +17,7 @@ import com.simplemobiletools.commons.interfaces.ItemTouchHelperContract
 import com.simplemobiletools.commons.interfaces.StartReorderDragListener
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.musicplayer.R
+import com.simplemobiletools.musicplayer.databinding.ItemTrackBinding
 import com.simplemobiletools.musicplayer.dialogs.EditDialog
 import com.simplemobiletools.musicplayer.extensions.*
 import com.simplemobiletools.musicplayer.helpers.ALL_TRACKS_PLAYLIST_ID
@@ -25,7 +26,6 @@ import com.simplemobiletools.musicplayer.inlines.indexOfFirstOrNull
 import com.simplemobiletools.musicplayer.models.Events
 import com.simplemobiletools.musicplayer.models.Playlist
 import com.simplemobiletools.musicplayer.models.Track
-import kotlinx.android.synthetic.main.item_track.view.*
 import org.greenrobot.eventbus.EventBus
 
 class TracksAdapter(
@@ -42,8 +42,6 @@ class TracksAdapter(
     private var startReorderDragListener: StartReorderDragListener
 
     init {
-        setupDragListener(true)
-
         touchHelper = ItemTouchHelper(ItemMoveCallback(this))
         touchHelper!!.attachToRecyclerView(recyclerView)
 
@@ -56,7 +54,10 @@ class TracksAdapter(
 
     override fun getActionMenuId() = R.menu.cab_tracks
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = createViewHolder(R.layout.item_track, parent)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val binding = ItemTrackBinding.inflate(layoutInflater, parent, false)
+        return createViewHolder(binding.root)
+    }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val track = items.getOrNull(position) ?: return
@@ -115,18 +116,18 @@ class TracksAdapter(
                 }
             }
 
-            ctx.audioHelper.deleteTracks(selectedTracks)
+            context.audioHelper.deleteTracks(selectedTracks)
             // this is to make sure these tracks aren't automatically re-added to the 'All tracks' playlist on rescan
             val removedTrackIds = selectedTracks.filter { it.playListId == ALL_TRACKS_PLAYLIST_ID }.map { it.mediaStoreId.toString() }
             if (removedTrackIds.isNotEmpty()) {
-                val config = ctx.config
+                val config = context.config
                 config.tracksRemovedFromAllTracksPlaylist = config.tracksRemovedFromAllTracksPlaylist.apply {
                     addAll(removedTrackIds)
                 }
             }
 
             EventBus.getDefault().post(Events.PlaylistsUpdated())
-            ctx.runOnUiThread {
+            context.runOnUiThread {
                 positions.sortDescending()
                 removeSelectedItems(positions)
                 positions.forEach {
@@ -137,7 +138,7 @@ class TracksAdapter(
     }
 
     private fun askConfirmDelete() {
-        ConfirmationDialog(ctx) {
+        ConfirmationDialog(context) {
             ensureBackgroundThread {
                 val positions = ArrayList<Int>()
                 val selectedTracks = getSelectedTracks()
@@ -148,8 +149,8 @@ class TracksAdapter(
                     }
                 }
 
-                ctx.deleteTracks(selectedTracks) {
-                    ctx.runOnUiThread {
+                context.deleteTracks(selectedTracks) {
+                    context.runOnUiThread {
                         positions.sortDescending()
                         removeSelectedItems(positions)
                         positions.forEach {
@@ -162,7 +163,7 @@ class TracksAdapter(
 
                         // finish activity if all tracks are deleted
                         if (items.isEmpty() && !isPlaylistContent()) {
-                            ctx.finish()
+                            context.finish()
                         }
                     }
                 }
@@ -174,45 +175,45 @@ class TracksAdapter(
 
     @SuppressLint("ClickableViewAccessibility")
     private fun setupView(view: View, track: Track, holder: ViewHolder) {
-        view.apply {
-            setupViewBackground(ctx)
-            track_frame?.isSelected = selectedKeys.contains(track.hashCode())
-            track_title.text = if (textToHighlight.isEmpty()) track.title else track.title.highlightTextPart(textToHighlight, properPrimaryColor)
-            track_info.text = if (textToHighlight.isEmpty()) {
+        ItemTrackBinding.bind(view).apply {
+            root.setupViewBackground(context)
+            trackFrame.isSelected = selectedKeys.contains(track.hashCode())
+            trackTitle.text = if (textToHighlight.isEmpty()) track.title else track.title.highlightTextPart(textToHighlight, properPrimaryColor)
+            trackInfo.text = if (textToHighlight.isEmpty()) {
                 "${track.artist} • ${track.album}"
             } else {
                 ("${track.artist} • ${track.album}").highlightTextPart(textToHighlight, properPrimaryColor)
             }
-            track_drag_handle.beVisibleIf(isPlaylistContent() && selectedKeys.isNotEmpty())
-            track_drag_handle.applyColorFilter(textColor)
-            track_drag_handle.setOnTouchListener { _, event ->
+            trackDragHandle.beVisibleIf(isPlaylistContent() && selectedKeys.isNotEmpty())
+            trackDragHandle.applyColorFilter(textColor)
+            trackDragHandle.setOnTouchListener { _, event ->
                 if (event.action == MotionEvent.ACTION_DOWN) {
                     startReorderDragListener.requestDrag(holder)
                 }
                 false
             }
 
-            arrayOf(track_id, track_title, track_info, track_duration).forEach {
+            arrayOf(trackId, trackTitle, trackInfo, trackDuration).forEach {
                 it.setTextColor(textColor)
             }
 
-            track_duration.text = track.duration.getFormattedDuration()
-            context.getTrackCoverArt(track) { coverArt ->
-                loadImage(findViewById(R.id.track_image), coverArt, placeholderBig)
+            trackDuration.text = track.duration.getFormattedDuration()
+            activity.getTrackCoverArt(track) { coverArt ->
+                loadImage(trackImage, coverArt, placeholderBig)
             }
 
-            track_image.beVisible()
-            track_id.beGone()
+            trackImage.beVisible()
+            trackId.beGone()
         }
     }
 
     override fun onChange(position: Int): String {
         val sorting = if (isPlaylistContent() && playlist != null) {
-            ctx.config.getProperPlaylistSorting(playlist.id)
+            context.config.getProperPlaylistSorting(playlist.id)
         } else if (sourceType == TYPE_FOLDER && folder != null) {
-            ctx.config.getProperFolderSorting(folder)
+            context.config.getProperFolderSorting(folder)
         } else {
-            ctx.config.trackSorting
+            context.config.trackSorting
         }
 
         return items.getOrNull(position)?.getBubbleText(sorting) ?: ""
@@ -220,19 +221,19 @@ class TracksAdapter(
 
     private fun displayEditDialog() {
         getSelectedTracks().firstOrNull()?.let { selectedTrack ->
-            EditDialog(ctx, selectedTrack) { track ->
+            EditDialog(context, selectedTrack) { track ->
                 val trackIndex = items.indexOfFirstOrNull { it.mediaStoreId == track.mediaStoreId } ?: return@EditDialog
                 items[trackIndex] = track
                 notifyItemChanged(trackIndex)
                 finishActMode()
 
-                ctx.refreshQueueAndTracks(track)
+                context.refreshQueueAndTracks(track)
             }
         }
     }
 
     override fun onRowMoved(fromPosition: Int, toPosition: Int) {
-        ctx.config.saveCustomPlaylistSorting(playlist!!.id, PLAYER_SORT_BY_CUSTOM)
+        context.config.saveCustomPlaylistSorting(playlist!!.id, PLAYER_SORT_BY_CUSTOM)
         items.swap(fromPosition, toPosition)
         notifyItemMoved(fromPosition, toPosition)
     }
@@ -244,7 +245,7 @@ class TracksAdapter(
             var index = 0
             items.forEach {
                 it.orderInPlaylist = index++
-                ctx.audioHelper.updateOrderInPlaylist(index, it.id)
+                context.audioHelper.updateOrderInPlaylist(index, it.id)
             }
         }
     }

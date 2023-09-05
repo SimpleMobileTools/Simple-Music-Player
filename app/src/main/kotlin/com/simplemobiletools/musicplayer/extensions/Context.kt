@@ -242,16 +242,16 @@ fun Context.loadGlideResource(
                 .load(model)
                 .apply(options)
                 .listener(object : RequestListener<Drawable> {
-                    override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
+                    override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>, isFirstResource: Boolean): Boolean {
                         onLoadFailed(e)
                         return true
                     }
 
                     override fun onResourceReady(
                         resource: Drawable,
-                        model: Any?,
-                        target: Target<Drawable>?,
-                        dataSource: DataSource?,
+                        model: Any,
+                        target: Target<Drawable>,
+                        dataSource: DataSource,
                         isFirstResource: Boolean
                     ): Boolean {
                         onResourceReady(resource)
@@ -266,13 +266,19 @@ fun Context.loadGlideResource(
     }
 }
 
-fun Context.getTrackFromUri(uri: Uri?, callback: (track: Track) -> Unit) {
+fun Context.getTrackFromUri(uri: Uri?, callback: (track: Track?) -> Unit) {
     if (uri == null) {
+        callback(null)
         return
     }
 
     ensureBackgroundThread {
-        val path = getRealPathFromURI(uri) ?: return@ensureBackgroundThread
+        val path = getRealPathFromURI(uri)
+        if (path == null) {
+            callback(null)
+            return@ensureBackgroundThread
+        }
+
         val allTracks = audioHelper.getAllTracks()
         val track = allTracks.find { it.path == path } ?: RoomHelper(this).getTrackFromPath(path) ?: return@ensureBackgroundThread
         callback(track)
@@ -280,6 +286,8 @@ fun Context.getTrackFromUri(uri: Uri?, callback: (track: Track) -> Unit) {
 }
 
 fun Context.isTabVisible(flag: Int) = config.showTabs and flag != 0
+
+fun Context.getVisibleTabs() = tabsList.filter { isTabVisible(it) }
 
 fun Context.getPlaybackSetting(repeatMode: @Player.RepeatMode Int): PlaybackSetting {
     return when (repeatMode) {

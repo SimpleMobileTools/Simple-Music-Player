@@ -10,20 +10,23 @@ import com.simplemobiletools.commons.extensions.setupViewBackground
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.musicplayer.R
-import com.simplemobiletools.musicplayer.extensions.*
+import com.simplemobiletools.musicplayer.databinding.ItemGenreBinding
+import com.simplemobiletools.musicplayer.extensions.audioHelper
+import com.simplemobiletools.musicplayer.extensions.config
+import com.simplemobiletools.musicplayer.extensions.getGenreCoverArt
 import com.simplemobiletools.musicplayer.inlines.indexOfFirstOrNull
 import com.simplemobiletools.musicplayer.models.Genre
 import com.simplemobiletools.musicplayer.models.Track
-import kotlinx.android.synthetic.main.item_genre.view.genre_frame
-import kotlinx.android.synthetic.main.item_genre.view.genre_title
-import kotlinx.android.synthetic.main.item_genre.view.genre_tracks
 
 class GenresAdapter(activity: BaseSimpleActivity, items: ArrayList<Genre>, recyclerView: MyRecyclerView, itemClick: (Any) -> Unit) :
     BaseMusicAdapter<Genre>(items, activity, recyclerView, itemClick), RecyclerViewFastScroller.OnPopupTextUpdate {
 
     override fun getActionMenuId() = R.menu.cab_genres
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = createViewHolder(R.layout.item_genre, parent)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val binding = ItemGenreBinding.inflate(layoutInflater, parent, false)
+        return createViewHolder(binding.root)
+    }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val genre = items.getOrNull(position) ?: return
@@ -48,19 +51,19 @@ class GenresAdapter(activity: BaseSimpleActivity, items: ArrayList<Genre>, recyc
     }
 
     override fun getSelectedTracks(): ArrayList<Track> {
-        return ctx.audioHelper.getGenreTracks(getSelectedItems())
+        return context.audioHelper.getGenreTracks(getSelectedItems())
     }
 
     private fun askConfirmDelete() {
-        ConfirmationDialog(ctx) {
+        ConfirmationDialog(context) {
             ensureBackgroundThread {
                 val selectedGenres = getSelectedItems()
                 val positions = selectedGenres.mapNotNull { genre -> items.indexOfFirstOrNull { it.id == genre.id } } as ArrayList<Int>
-                val tracks = ctx.audioHelper.getGenreTracks(selectedGenres)
-                ctx.audioHelper.deleteGenres(selectedGenres)
+                val tracks = context.audioHelper.getGenreTracks(selectedGenres)
+                context.audioHelper.deleteGenres(selectedGenres)
 
-                ctx.deleteTracks(tracks) {
-                    ctx.runOnUiThread {
+                context.deleteTracks(tracks) {
+                    context.runOnUiThread {
                         positions.sortDescending()
                         removeSelectedItems(positions)
                         positions.forEach {
@@ -75,26 +78,26 @@ class GenresAdapter(activity: BaseSimpleActivity, items: ArrayList<Genre>, recyc
     }
 
     private fun setupView(view: View, genre: Genre) {
-        view.apply {
-            setupViewBackground(context)
-            genre_frame?.isSelected = selectedKeys.contains(genre.hashCode())
-            genre_title.text = if (textToHighlight.isEmpty()) {
+        ItemGenreBinding.bind(view).apply {
+            root.setupViewBackground(activity)
+            genreFrame.isSelected = selectedKeys.contains(genre.hashCode())
+            genreTitle.text = if (textToHighlight.isEmpty()) {
                 genre.title
             } else {
                 genre.title.highlightTextPart(textToHighlight, properPrimaryColor)
             }
 
-            genre_title.setTextColor(textColor)
+            genreTitle.setTextColor(textColor)
 
             val tracks = resources.getQuantityString(R.plurals.tracks_plural, genre.trackCnt, genre.trackCnt)
-            genre_tracks.text = tracks
-            genre_tracks.setTextColor(textColor)
+            genreTracks.text = tracks
+            genreTracks.setTextColor(textColor)
 
-            context.getGenreCoverArt(genre) { coverArt ->
-                loadImage(findViewById(R.id.genre_image), coverArt, placeholderBig)
+            activity.getGenreCoverArt(genre) { coverArt ->
+                loadImage(genreImage, coverArt, placeholderBig)
             }
         }
     }
 
-    override fun onChange(position: Int) = items.getOrNull(position)?.getBubbleText(ctx.config.genreSorting) ?: ""
+    override fun onChange(position: Int) = items.getOrNull(position)?.getBubbleText(context.config.genreSorting) ?: ""
 }

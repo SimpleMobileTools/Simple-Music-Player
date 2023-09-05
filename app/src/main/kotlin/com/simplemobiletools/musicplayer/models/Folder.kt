@@ -21,7 +21,6 @@ data class Folder(val title: String, val trackCount: Int, val path: String) {
         }
     }
 
-
     fun getBubbleText(sorting: Int) = when {
         sorting and PLAYER_SORT_BY_TITLE != 0 -> title
         else -> trackCount.toString()

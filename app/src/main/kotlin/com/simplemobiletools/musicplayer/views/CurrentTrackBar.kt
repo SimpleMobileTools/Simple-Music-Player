@@ -14,24 +14,21 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.musicplayer.R
-import com.simplemobiletools.musicplayer.extensions.ensureActivityNotDestroyed
-import com.simplemobiletools.musicplayer.extensions.getTrackCoverArt
-import com.simplemobiletools.musicplayer.extensions.toTrack
-import com.simplemobiletools.musicplayer.extensions.updatePlayPauseIcon
-import kotlinx.android.synthetic.main.view_current_track_bar.view.current_track_label
-import kotlinx.android.synthetic.main.view_current_track_bar.view.current_track_play_pause
+import com.simplemobiletools.musicplayer.databinding.ViewCurrentTrackBarBinding
+import com.simplemobiletools.musicplayer.extensions.*
 
 class CurrentTrackBar(context: Context, attributeSet: AttributeSet) : RelativeLayout(context, attributeSet) {
+    private val binding by viewBinding(ViewCurrentTrackBarBinding::bind)
 
     fun initialize(togglePlayback: () -> Unit) {
-        current_track_play_pause.setOnClickListener {
+        binding.currentTrackPlayPause.setOnClickListener {
             togglePlayback()
         }
     }
 
     fun updateColors() {
         background = ColorDrawable(context.getProperBackgroundColor())
-        current_track_label.setTextColor(context.getProperTextColor())
+        binding.currentTrackLabel.setTextColor(context.getProperTextColor())
     }
 
     fun updateCurrentTrack(mediaItem: MediaItem?) {
@@ -50,8 +47,8 @@ class CurrentTrackBar(context: Context, attributeSet: AttributeSet) : RelativeLa
         }
 
         @SuppressLint("SetTextI18n")
-        current_track_label.text = "${track.title}$artist"
-        val cornerRadius = resources.getDimension(R.dimen.rounded_corner_radius_small).toInt()
+        binding.currentTrackLabel.text = "${track.title}$artist"
+        val cornerRadius = resources.getDimension(com.simplemobiletools.commons.R.dimen.rounded_corner_radius_small).toInt()
         val currentTrackPlaceholder = resources.getColoredDrawableWithColor(R.drawable.ic_headset, context.getProperTextColor())
         val options = RequestOptions()
             .error(currentTrackPlaceholder)
@@ -68,6 +65,6 @@ class CurrentTrackBar(context: Context, attributeSet: AttributeSet) : RelativeLa
     }
 
     fun updateTrackState(isPlaying: Boolean) {
-        current_track_play_pause.updatePlayPauseIcon(isPlaying, context.getProperTextColor())
+        binding.currentTrackPlayPause.updatePlayPauseIcon(isPlaying, context.getProperTextColor())
     }
 }

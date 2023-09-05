@@ -1,5 +1,6 @@
 package com.simplemobiletools.musicplayer.adapters
 
+import android.annotation.SuppressLint
 import android.graphics.drawable.Drawable
 import android.view.Menu
 import android.widget.ImageView
@@ -9,9 +10,9 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.simplemobiletools.commons.activities.BaseSimpleActivity
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
+import com.simplemobiletools.commons.extensions.getProperPrimaryColor
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.commons.views.MyRecyclerView
-import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.SimpleControllerActivity
 import com.simplemobiletools.musicplayer.extensions.*
 import com.simplemobiletools.musicplayer.helpers.TagHelper
@@ -25,13 +26,17 @@ abstract class BaseMusicAdapter<Type>(
     itemClick: (Any) -> Unit
 ) : MyRecyclerViewAdapter(activity, recyclerView, itemClick) {
 
-    val ctx = activity as SimpleControllerActivity
+    val context = activity as SimpleControllerActivity
 
     var textToHighlight = ""
-    val tagHelper by lazy { TagHelper(ctx) }
-    val placeholder by lazy { resources.getSmallPlaceholder(textColor) }
-    val placeholderBig by lazy { resources.getBiggerPlaceholder(textColor) }
-    open val cornerRadius by lazy { resources.getDimension(R.dimen.rounded_corner_radius_small).toInt() }
+    val tagHelper by lazy { TagHelper(context) }
+    var placeholder = resources.getSmallPlaceholder(textColor)
+    var placeholderBig = resources.getBiggerPlaceholder(textColor)
+    open val cornerRadius by lazy { resources.getDimension(com.simplemobiletools.commons.R.dimen.rounded_corner_radius_small).toInt() }
+
+    init {
+        setupDragListener(true)
+    }
 
     override fun getItemCount() = items.size
 
@@ -91,8 +96,8 @@ abstract class BaseMusicAdapter<Type>(
     fun addToQueue() {
         ensureBackgroundThread {
             val allSelectedTracks = getAllSelectedTracks()
-            ctx.runOnUiThread {
-                ctx.addTracksToQueue(allSelectedTracks) {
+            context.runOnUiThread {
+                context.addTracksToQueue(allSelectedTracks) {
                     finishActMode()
                 }
             }
@@ -102,8 +107,8 @@ abstract class BaseMusicAdapter<Type>(
     fun playNextInQueue() {
         ensureBackgroundThread {
             getSelectedTracks().firstOrNull()?.let { selectedTrack ->
-                ctx.runOnUiThread {
-                    ctx.playNextInQueue(selectedTrack) {
+                context.runOnUiThread {
+                    context.playNextInQueue(selectedTrack) {
                         finishActMode()
                     }
                 }
@@ -114,8 +119,8 @@ abstract class BaseMusicAdapter<Type>(
     fun addToPlaylist() {
         ensureBackgroundThread {
             val allSelectedTracks = getAllSelectedTracks()
-            ctx.runOnUiThread {
-                ctx.addTracksToPlaylist(allSelectedTracks) {
+            context.runOnUiThread {
+                context.addTracksToPlaylist(allSelectedTracks) {
                     finishActMode()
                     notifyDataChanged()
                 }
@@ -125,7 +130,7 @@ abstract class BaseMusicAdapter<Type>(
 
     fun shareFiles() {
         ensureBackgroundThread {
-            ctx.shareFiles(getAllSelectedTracks())
+            context.shareFiles(getAllSelectedTracks())
         }
     }
 
@@ -136,8 +141,8 @@ abstract class BaseMusicAdapter<Type>(
                 return@ensureBackgroundThread
             }
 
-            ctx.runOnUiThread {
-                ctx.showTrackProperties(selectedTracks)
+            context.runOnUiThread {
+                context.showTrackProperties(selectedTracks)
             }
         }
     }
@@ -147,13 +152,28 @@ abstract class BaseMusicAdapter<Type>(
             .error(placeholder)
             .transform(CenterCrop(), RoundedCorners(cornerRadius))
 
-        ctx.ensureActivityNotDestroyed {
-            Glide.with(ctx)
+        context.ensureActivityNotDestroyed {
+            Glide.with(context)
                 .load(resource)
                 .apply(options)
                 .into(imageView)
         }
     }
 
-    fun notifyDataChanged() = notifyItemRangeChanged(0, itemCount)
+    fun updateColors(newTextColor: Int) {
+        if (textColor != newTextColor || properPrimaryColor != context.getProperPrimaryColor()) {
+            updateTextColor(newTextColor)
+            updatePrimaryColor()
+            placeholder = resources.getSmallPlaceholder(textColor)
+            placeholderBig = resources.getBiggerPlaceholder(textColor)
+            notifyDataChanged()
+        }
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun notifyDataChanged() = if (itemCount == 0) {
+        notifyDataSetChanged()
+    } else {
+        notifyItemRangeChanged(0, itemCount)
+    }
 }

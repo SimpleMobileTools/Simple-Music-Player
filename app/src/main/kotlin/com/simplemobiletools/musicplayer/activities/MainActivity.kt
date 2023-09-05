@@ -8,10 +8,9 @@ import android.graphics.drawable.Drawable
 import android.media.AudioManager
 import android.net.Uri
 import android.os.Bundle
-import android.widget.ImageView
-import android.widget.TextView
 import android.widget.Toast
 import androidx.viewpager.widget.ViewPager
+import com.simplemobiletools.commons.databinding.BottomTablayoutItemBinding
 import com.simplemobiletools.commons.dialogs.FilePickerDialog
 import com.simplemobiletools.commons.dialogs.RadioGroupDialog
 import com.simplemobiletools.commons.extensions.*
@@ -22,23 +21,16 @@ import com.simplemobiletools.commons.models.Release
 import com.simplemobiletools.musicplayer.BuildConfig
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.adapters.ViewPagerAdapter
+import com.simplemobiletools.musicplayer.databinding.ActivityMainBinding
 import com.simplemobiletools.musicplayer.dialogs.NewPlaylistDialog
 import com.simplemobiletools.musicplayer.dialogs.SelectPlaylistDialog
 import com.simplemobiletools.musicplayer.dialogs.SleepTimerCustomDialog
 import com.simplemobiletools.musicplayer.extensions.*
-import com.simplemobiletools.musicplayer.fragments.MyViewPagerFragment
+import com.simplemobiletools.musicplayer.fragments.PlaylistsFragment
 import com.simplemobiletools.musicplayer.helpers.*
 import com.simplemobiletools.musicplayer.helpers.M3uImporter.ImportResult
 import com.simplemobiletools.musicplayer.models.Events
 import com.simplemobiletools.musicplayer.playback.CustomCommands
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_albums.albums_fragment_holder
-import kotlinx.android.synthetic.main.fragment_artists.artists_fragment_holder
-import kotlinx.android.synthetic.main.fragment_folders.folders_fragment_holder
-import kotlinx.android.synthetic.main.fragment_genres.genres_fragment_holder
-import kotlinx.android.synthetic.main.fragment_playlists.playlists_fragment_holder
-import kotlinx.android.synthetic.main.fragment_tracks.tracks_fragment_holder
-import kotlinx.android.synthetic.main.view_current_track_bar.current_track_bar
 import me.grantland.widget.AutofitHelper
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -52,22 +44,25 @@ class MainActivity : SimpleMusicActivity() {
     private var storedShowTabs = 0
     private var storedExcludedFolders = 0
 
+    private val binding by viewBinding(ActivityMainBinding::inflate)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         isMaterialActivity = true
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(binding.root)
         appLaunched(BuildConfig.APPLICATION_ID)
         setupOptionsMenu()
         refreshMenuItems()
-        updateMaterialActivityViews(main_coordinator, main_holder, useTransparentNavigation = false, useTopSearchMenu = true)
+        updateMaterialActivityViews(binding.mainCoordinator, binding.mainHolder, useTransparentNavigation = false, useTopSearchMenu = true)
         storeStateVariables()
         setupTabs()
+        setupCurrentTrackBar(binding.currentTrackBar.root)
 
         handlePermission(getPermissionToRequest()) {
             if (it) {
                 initActivity()
             } else {
-                toast(R.string.no_storage_permissions)
+                toast(com.simplemobiletools.commons.R.string.no_storage_permissions)
                 finish()
             }
         }
@@ -75,14 +70,6 @@ class MainActivity : SimpleMusicActivity() {
         volumeControlStream = AudioManager.STREAM_MUSIC
         checkWhatsNewDialog()
         checkAppOnSDCard()
-        withPlayer {
-            maybePreparePlayer(context = this@MainActivity) { success ->
-                if (success) {
-                    updateCurrentTrackBar()
-                    broadcastUpdateWidgetState()
-                }
-            }
-        }
     }
 
     override fun onResume() {
@@ -94,17 +81,17 @@ class MainActivity : SimpleMusicActivity() {
         }
 
         updateMenuColors()
-        updateTextColors(main_holder)
+        updateTextColors(binding.mainHolder)
         setupTabColors()
         val properTextColor = getProperTextColor()
         val properPrimaryColor = getProperPrimaryColor()
-        sleep_timer_holder.background = ColorDrawable(getProperBackgroundColor())
-        sleep_timer_stop.applyColorFilter(properTextColor)
-        loading_progress_bar.setIndicatorColor(properPrimaryColor)
-        loading_progress_bar.trackColor = properPrimaryColor.adjustAlpha(LOWER_ALPHA)
+        binding.sleepTimerHolder.background = ColorDrawable(getProperBackgroundColor())
+        binding.sleepTimerStop.applyColorFilter(properTextColor)
+        binding.loadingProgressBar.setIndicatorColor(properPrimaryColor)
+        binding.loadingProgressBar.trackColor = properPrimaryColor.adjustAlpha(LOWER_ALPHA)
 
         getAllFragments().forEach {
-            it?.setupColors(properTextColor, properPrimaryColor)
+            it.setupColors(properTextColor, properPrimaryColor)
         }
 
         if (storedExcludedFolders != config.excludedFolders.hashCode()) {
@@ -115,7 +102,7 @@ class MainActivity : SimpleMusicActivity() {
     override fun onPause() {
         super.onPause()
         storeStateVariables()
-        config.lastUsedViewPagerPage = view_pager.currentItem
+        config.lastUsedViewPagerPage = binding.viewPager.currentItem
     }
 
     override fun onDestroy() {
@@ -124,38 +111,39 @@ class MainActivity : SimpleMusicActivity() {
     }
 
     override fun onBackPressed() {
-        if (main_menu.isSearchOpen) {
-            main_menu.closeSearch()
+        if (binding.mainMenu.isSearchOpen) {
+            binding.mainMenu.closeSearch()
         } else {
             super.onBackPressed()
         }
     }
 
     private fun refreshMenuItems() {
-        main_menu.getToolbar().menu.apply {
-            findItem(R.id.create_new_playlist).isVisible = getCurrentFragment() == playlists_fragment_holder
-            findItem(R.id.create_playlist_from_folder).isVisible = getCurrentFragment() == playlists_fragment_holder
-            findItem(R.id.import_playlist).isVisible = getCurrentFragment() == playlists_fragment_holder && isOreoPlus()
-            findItem(R.id.more_apps_from_us).isVisible = !resources.getBoolean(R.bool.hide_google_relations)
+        binding.mainMenu.getToolbar().menu.apply {
+            val isPlaylistFragment = getCurrentFragment() is PlaylistsFragment
+            findItem(R.id.create_new_playlist).isVisible = isPlaylistFragment
+            findItem(R.id.create_playlist_from_folder).isVisible = isPlaylistFragment
+            findItem(R.id.import_playlist).isVisible = isPlaylistFragment && isOreoPlus()
+            findItem(R.id.more_apps_from_us).isVisible = !resources.getBoolean(com.simplemobiletools.commons.R.bool.hide_google_relations)
         }
     }
 
     private fun setupOptionsMenu() {
-        main_menu.getToolbar().inflateMenu(R.menu.menu_main)
-        main_menu.toggleHideOnScroll(false)
-        main_menu.setupMenu()
+        binding.mainMenu.getToolbar().inflateMenu(R.menu.menu_main)
+        binding.mainMenu.toggleHideOnScroll(false)
+        binding.mainMenu.setupMenu()
 
-        main_menu.onSearchClosedListener = {
+        binding.mainMenu.onSearchClosedListener = {
             getAllFragments().forEach {
-                it?.onSearchClosed()
+                it.onSearchClosed()
             }
         }
 
-        main_menu.onSearchTextChangedListener = { text ->
+        binding.mainMenu.onSearchTextChangedListener = { text ->
             getCurrentFragment()?.onSearchQueryChanged(text)
         }
 
-        main_menu.getToolbar().setOnMenuItemClickListener { menuItem ->
+        binding.mainMenu.getToolbar().setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.sort -> showSortingDialog()
                 R.id.rescan_media -> refreshAllFragments(showProgress = true)
@@ -175,7 +163,7 @@ class MainActivity : SimpleMusicActivity() {
 
     private fun updateMenuColors() {
         updateStatusbarColor(getProperBackgroundColor())
-        main_menu.updateColors()
+        binding.mainMenu.updateColors()
     }
 
     private fun storeStateVariables() {
@@ -191,28 +179,31 @@ class MainActivity : SimpleMusicActivity() {
         // trigger a scan first so that the fragments will accurately reflect the scanning state
         mediaScanner.scan()
         initFragments()
-        sleep_timer_stop.setOnClickListener { stopSleepTimer() }
+        binding.sleepTimerStop.setOnClickListener { stopSleepTimer() }
 
-        setupCurrentTrackBar(current_track_bar)
         refreshAllFragments()
     }
 
     private fun refreshAllFragments(showProgress: Boolean = config.appRunCount == 1) {
         if (showProgress) {
-            loading_progress_bar.show()
+            binding.loadingProgressBar.show()
         }
 
         handleNotificationPermission { granted ->
             mediaScanner.scan(progress = showProgress && granted) { complete ->
                 runOnUiThread {
                     getAllFragments().forEach {
-                        it?.setupFragment(this)
+                        it.setupFragment(this)
                     }
 
                     if (complete) {
-                        loading_progress_bar.hide()
+                        binding.loadingProgressBar.hide()
                         withPlayer {
-                            sendCommand(CustomCommands.RELOAD_CONTENT)
+                            if (currentMediaItem == null) {
+                                maybePreparePlayer()
+                            } else {
+                                sendCommand(CustomCommands.RELOAD_CONTENT)
+                            }
                         }
                     }
                 }
@@ -221,62 +212,61 @@ class MainActivity : SimpleMusicActivity() {
     }
 
     private fun initFragments() {
-        view_pager.adapter = ViewPagerAdapter(this)
-        view_pager.offscreenPageLimit = tabsList.size - 1
-        view_pager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+        binding.viewPager.adapter = ViewPagerAdapter(this)
+        binding.viewPager.offscreenPageLimit = tabsList.size - 1
+        binding.viewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrollStateChanged(state: Int) {}
 
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
 
             override fun onPageSelected(position: Int) {
-                main_tabs_holder.getTabAt(position)?.select()
+                binding.mainTabsHolder.getTabAt(position)?.select()
                 getAllFragments().forEach {
-                    it?.finishActMode()
+                    it.finishActMode()
                 }
                 refreshMenuItems()
             }
         })
-        view_pager.currentItem = config.lastUsedViewPagerPage
+        binding.viewPager.currentItem = config.lastUsedViewPagerPage
     }
 
     private fun setupTabs() {
-        main_tabs_holder.removeAllTabs()
-        tabsList.forEachIndexed { index, value ->
-            if (config.showTabs and value != 0) {
-                main_tabs_holder.newTab().setCustomView(R.layout.bottom_tablayout_item).apply {
-                    customView?.findViewById<ImageView>(R.id.tab_item_icon)?.setImageDrawable(getTabIcon(value))
-                    customView?.findViewById<TextView>(R.id.tab_item_label)?.text = getTabLabel(value)
-                    AutofitHelper.create(customView?.findViewById(R.id.tab_item_label))
-                    main_tabs_holder.addTab(this)
-                }
+        binding.mainTabsHolder.removeAllTabs()
+        getVisibleTabs().forEach { value ->
+            binding.mainTabsHolder.newTab().setCustomView(com.simplemobiletools.commons.R.layout.bottom_tablayout_item).apply {
+                val tabItemBinding = BottomTablayoutItemBinding.bind(customView!!)
+                tabItemBinding.tabItemIcon.setImageDrawable(getTabIcon(value))
+                tabItemBinding.tabItemLabel.text = getTabLabel(value)
+                AutofitHelper.create(tabItemBinding.tabItemLabel)
+                binding.mainTabsHolder.addTab(this)
             }
         }
 
-        main_tabs_holder.onTabSelectionChanged(
+        binding.mainTabsHolder.onTabSelectionChanged(
             tabUnselectedAction = {
                 updateBottomTabItemColors(it.customView, false)
             },
             tabSelectedAction = {
-                main_menu.closeSearch()
-                view_pager.currentItem = it.position
+                binding.mainMenu.closeSearch()
+                binding.viewPager.currentItem = it.position
                 updateBottomTabItemColors(it.customView, true)
             }
         )
 
-        main_tabs_holder.beGoneIf(main_tabs_holder.tabCount == 1)
+        binding.mainTabsHolder.beGoneIf(binding.mainTabsHolder.tabCount == 1)
     }
 
     private fun setupTabColors() {
-        val activeView = main_tabs_holder.getTabAt(view_pager.currentItem)?.customView
+        val activeView = binding.mainTabsHolder.getTabAt(binding.viewPager.currentItem)?.customView
         updateBottomTabItemColors(activeView, true)
 
-        getInactiveTabIndexes(view_pager.currentItem).forEach { index ->
-            val inactiveView = main_tabs_holder.getTabAt(index)?.customView
+        getInactiveTabIndexes(binding.viewPager.currentItem).forEach { index ->
+            val inactiveView = binding.mainTabsHolder.getTabAt(index)?.customView
             updateBottomTabItemColors(inactiveView, false)
         }
 
         val bottomBarColor = getBottomNavigationBackgroundColor()
-        main_tabs_holder.setBackgroundColor(bottomBarColor)
+        binding.mainTabsHolder.setBackgroundColor(bottomBarColor)
         updateNavigationBarColor(bottomBarColor)
     }
 
@@ -286,7 +276,7 @@ class MainActivity : SimpleMusicActivity() {
         val drawableId = when (position) {
             TAB_PLAYLISTS -> R.drawable.ic_playlist_vector
             TAB_FOLDERS -> R.drawable.ic_folders_vector
-            TAB_ARTISTS -> R.drawable.ic_person_vector
+            TAB_ARTISTS -> com.simplemobiletools.commons.R.drawable.ic_person_vector
             TAB_ALBUMS -> R.drawable.ic_album_vector
             TAB_GENRES -> R.drawable.ic_genre_vector
             else -> R.drawable.ic_music_note_vector
@@ -306,36 +296,6 @@ class MainActivity : SimpleMusicActivity() {
         }
 
         return resources.getString(stringId)
-    }
-
-    private fun getCurrentFragment(): MyViewPagerFragment? {
-        val showTabs = config.showTabs
-        val fragments = arrayListOf<MyViewPagerFragment>()
-        if (showTabs and TAB_PLAYLISTS != 0) {
-            fragments.add(playlists_fragment_holder)
-        }
-
-        if (showTabs and TAB_FOLDERS != 0) {
-            fragments.add(folders_fragment_holder)
-        }
-
-        if (showTabs and TAB_ARTISTS != 0) {
-            fragments.add(artists_fragment_holder)
-        }
-
-        if (showTabs and TAB_ALBUMS != 0) {
-            fragments.add(albums_fragment_holder)
-        }
-
-        if (showTabs and TAB_TRACKS != 0) {
-            fragments.add(tracks_fragment_holder)
-        }
-
-        if (showTabs and TAB_GENRES != 0) {
-            fragments.add(genres_fragment_holder)
-        }
-
-        return fragments.getOrNull(view_pager.currentItem)
     }
 
     private fun showSortingDialog() {
@@ -386,7 +346,7 @@ class MainActivity : SimpleMusicActivity() {
             uri.scheme == "content" -> {
                 val tempFile = getTempFile("imports", uri.path!!.getFilenameFromPath())
                 if (tempFile == null) {
-                    toast(R.string.unknown_error_occurred)
+                    toast(com.simplemobiletools.commons.R.string.unknown_error_occurred)
                     return
                 }
 
@@ -401,7 +361,7 @@ class MainActivity : SimpleMusicActivity() {
                 }
             }
 
-            else -> toast(R.string.invalid_file_format)
+            else -> toast(com.simplemobiletools.commons.R.string.invalid_file_format)
         }
     }
 
@@ -415,7 +375,7 @@ class MainActivity : SimpleMusicActivity() {
                 try {
                     startActivityForResult(this, PICK_IMPORT_SOURCE_INTENT)
                 } catch (e: ActivityNotFoundException) {
-                    toast(R.string.system_service_disabled, Toast.LENGTH_LONG)
+                    toast(com.simplemobiletools.commons.R.string.system_service_disabled, Toast.LENGTH_LONG)
                 } catch (e: Exception) {
                     showErrorToast(e)
                 }
@@ -449,21 +409,21 @@ class MainActivity : SimpleMusicActivity() {
                 runOnUiThread {
                     toast(
                         when (result) {
-                            ImportResult.IMPORT_OK -> R.string.importing_successful
-                            ImportResult.IMPORT_PARTIAL -> R.string.importing_some_entries_failed
-                            else -> R.string.importing_failed
+                            ImportResult.IMPORT_OK -> com.simplemobiletools.commons.R.string.importing_successful
+                            ImportResult.IMPORT_PARTIAL -> com.simplemobiletools.commons.R.string.importing_some_entries_failed
+                            else -> com.simplemobiletools.commons.R.string.importing_failed
                         }
                     )
 
-                    playlists_fragment_holder.setupFragment(this)
+                    getAdapter()?.getPlaylistsFragment()?.setupFragment(this)
                 }
             }.importPlaylist(path, id)
         }
     }
 
     private fun showSleepTimer() {
-        val minutes = getString(R.string.minutes_raw)
-        val hour = resources.getQuantityString(R.plurals.hours, 1, 1)
+        val minutes = getString(com.simplemobiletools.commons.R.string.minutes_raw)
+        val hour = resources.getQuantityString(com.simplemobiletools.commons.R.plurals.hours, 1, 1)
 
         val items = arrayListOf(
             RadioItem(5 * 60, "5 $minutes"),
@@ -475,12 +435,12 @@ class MainActivity : SimpleMusicActivity() {
 
         if (items.none { it.id == config.lastSleepTimerSeconds }) {
             val lastSleepTimerMinutes = config.lastSleepTimerSeconds / 60
-            val text = resources.getQuantityString(R.plurals.minutes, lastSleepTimerMinutes, lastSleepTimerMinutes)
+            val text = resources.getQuantityString(com.simplemobiletools.commons.R.plurals.minutes, lastSleepTimerMinutes, lastSleepTimerMinutes)
             items.add(RadioItem(config.lastSleepTimerSeconds, text))
         }
 
         items.sortBy { it.id }
-        items.add(RadioItem(-1, getString(R.string.custom)))
+        items.add(RadioItem(-1, getString(com.simplemobiletools.commons.R.string.custom)))
 
         RadioGroupDialog(this, items, config.lastSleepTimerSeconds) {
             if (it as Int == -1) {
@@ -502,32 +462,29 @@ class MainActivity : SimpleMusicActivity() {
     }
 
     private fun startSleepTimer() {
-        sleep_timer_holder.fadeIn()
+        binding.sleepTimerHolder.fadeIn()
         withPlayer {
             sendCommand(CustomCommands.TOGGLE_SLEEP_TIMER)
         }
     }
 
     private fun stopSleepTimer() {
-        sleep_timer_holder.fadeOut()
+        binding.sleepTimerHolder.fadeOut()
         withPlayer {
             sendCommand(CustomCommands.TOGGLE_SLEEP_TIMER)
         }
     }
 
-    private fun getAllFragments() = arrayListOf(
-        playlists_fragment_holder,
-        folders_fragment_holder,
-        artists_fragment_holder,
-        albums_fragment_holder,
-        tracks_fragment_holder,
-        genres_fragment_holder
-    )
+    private fun getAdapter() = binding.viewPager.adapter as? ViewPagerAdapter
+
+    private fun getAllFragments() = getAdapter()?.getAllFragments().orEmpty()
+
+    private fun getCurrentFragment() = getAdapter()?.getCurrentFragment()
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun sleepTimerChanged(event: Events.SleepTimerChanged) {
-        sleep_timer_value.text = event.seconds.getFormattedDuration()
-        sleep_timer_holder.beVisible()
+        binding.sleepTimerValue.text = event.seconds.getFormattedDuration()
+        binding.sleepTimerHolder.beVisible()
 
         if (event.seconds == 0) {
             finish()
@@ -536,12 +493,12 @@ class MainActivity : SimpleMusicActivity() {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun playlistsUpdated(event: Events.PlaylistsUpdated) {
-        playlists_fragment_holder?.setupFragment(this)
+        getAdapter()?.getPlaylistsFragment()?.setupFragment(this)
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun tracksUpdated(event: Events.RefreshTracks) {
-        tracks_fragment_holder?.setupFragment(this)
+        getAdapter()?.getTracksFragment()?.setupFragment(this)
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -564,14 +521,14 @@ class MainActivity : SimpleMusicActivity() {
 
         val faqItems = arrayListOf(
             FAQItem(R.string.faq_1_title, R.string.faq_1_text),
-            FAQItem(R.string.faq_1_title_commons, R.string.faq_1_text_commons),
-            FAQItem(R.string.faq_4_title_commons, R.string.faq_4_text_commons),
-            FAQItem(R.string.faq_9_title_commons, R.string.faq_9_text_commons)
+            FAQItem(com.simplemobiletools.commons.R.string.faq_1_title_commons, com.simplemobiletools.commons.R.string.faq_1_text_commons),
+            FAQItem(com.simplemobiletools.commons.R.string.faq_4_title_commons, com.simplemobiletools.commons.R.string.faq_4_text_commons),
+            FAQItem(com.simplemobiletools.commons.R.string.faq_9_title_commons, com.simplemobiletools.commons.R.string.faq_9_text_commons)
         )
 
-        if (!resources.getBoolean(R.bool.hide_google_relations)) {
-            faqItems.add(FAQItem(R.string.faq_2_title_commons, R.string.faq_2_text_commons))
-            faqItems.add(FAQItem(R.string.faq_6_title_commons, R.string.faq_6_text_commons))
+        if (!resources.getBoolean(com.simplemobiletools.commons.R.bool.hide_google_relations)) {
+            faqItems.add(FAQItem(com.simplemobiletools.commons.R.string.faq_2_title_commons, com.simplemobiletools.commons.R.string.faq_2_text_commons))
+            faqItems.add(FAQItem(com.simplemobiletools.commons.R.string.faq_6_title_commons, com.simplemobiletools.commons.R.string.faq_6_text_commons))
         }
 
         startAboutActivity(R.string.app_name, licenses, BuildConfig.VERSION_NAME, faqItems, true)

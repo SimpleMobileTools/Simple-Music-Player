@@ -4,49 +4,49 @@ import com.simplemobiletools.commons.activities.BaseSimpleActivity
 import com.simplemobiletools.commons.extensions.beGone
 import com.simplemobiletools.commons.extensions.getAlertDialogBuilder
 import com.simplemobiletools.commons.extensions.setupDialogStuff
+import com.simplemobiletools.commons.extensions.viewBinding
 import com.simplemobiletools.commons.helpers.isQPlus
 import com.simplemobiletools.commons.views.MyAppCompatCheckbox
-import com.simplemobiletools.musicplayer.R
+import com.simplemobiletools.musicplayer.databinding.DialogManageVisibleTabsBinding
 import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.helpers.*
-import kotlinx.android.synthetic.main.dialog_manage_visible_tabs.view.manage_visible_tabs_folders
 
 class ManageVisibleTabsDialog(val activity: BaseSimpleActivity, val callback: (result: Int) -> Unit) {
-    private var view = activity.layoutInflater.inflate(R.layout.dialog_manage_visible_tabs, null)
-    private val tabs = LinkedHashMap<Int, Int>()
+    private val binding by activity.viewBinding(DialogManageVisibleTabsBinding::inflate)
+    private val tabs = LinkedHashMap<Int, MyAppCompatCheckbox>()
 
     init {
         tabs.apply {
-            put(TAB_PLAYLISTS, R.id.manage_visible_tabs_playlists)
-            put(TAB_FOLDERS, R.id.manage_visible_tabs_folders)
-            put(TAB_ARTISTS, R.id.manage_visible_tabs_artists)
-            put(TAB_ALBUMS, R.id.manage_visible_tabs_albums)
-            put(TAB_TRACKS, R.id.manage_visible_tabs_tracks)
-            put(TAB_GENRES, R.id.manage_visible_tabs_genres)
+            put(TAB_PLAYLISTS, binding.manageVisibleTabsPlaylists)
+            put(TAB_FOLDERS, binding.manageVisibleTabsFolders)
+            put(TAB_ARTISTS, binding.manageVisibleTabsArtists)
+            put(TAB_ALBUMS, binding.manageVisibleTabsAlbums)
+            put(TAB_TRACKS, binding.manageVisibleTabsTracks)
+            put(TAB_GENRES, binding.manageVisibleTabsGenres)
         }
 
         if (!isQPlus()) {
             tabs.remove(TAB_FOLDERS)
-            view.manage_visible_tabs_folders.beGone()
+            binding.manageVisibleTabsFolders.beGone()
         }
 
         val showTabs = activity.config.showTabs
         for ((key, value) in tabs) {
-            view.findViewById<MyAppCompatCheckbox>(value).isChecked = showTabs and key != 0
+            value.isChecked = showTabs and key != 0
         }
 
         activity.getAlertDialogBuilder()
-            .setPositiveButton(R.string.ok) { dialog, which -> dialogConfirmed() }
-            .setNegativeButton(R.string.cancel, null)
+            .setPositiveButton(com.simplemobiletools.commons.R.string.ok) { _, _ -> dialogConfirmed() }
+            .setNegativeButton(com.simplemobiletools.commons.R.string.cancel, null)
             .apply {
-                activity.setupDialogStuff(view, this)
+                activity.setupDialogStuff(binding.root, this)
             }
     }
 
     private fun dialogConfirmed() {
         var result = 0
         for ((key, value) in tabs) {
-            if (view.findViewById<MyAppCompatCheckbox>(value).isChecked) {
+            if (value.isChecked) {
                 result += key
             }
         }

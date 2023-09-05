@@ -10,6 +10,7 @@ import com.simplemobiletools.commons.helpers.isQPlus
 import com.simplemobiletools.commons.helpers.isTiramisuPlus
 import com.simplemobiletools.commons.models.RadioItem
 import com.simplemobiletools.musicplayer.R
+import com.simplemobiletools.musicplayer.databinding.ActivitySettingsBinding
 import com.simplemobiletools.musicplayer.dialogs.ManageVisibleTabsDialog
 import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.extensions.sendCommand
@@ -17,24 +18,25 @@ import com.simplemobiletools.musicplayer.helpers.SHOW_FILENAME_ALWAYS
 import com.simplemobiletools.musicplayer.helpers.SHOW_FILENAME_IF_UNAVAILABLE
 import com.simplemobiletools.musicplayer.helpers.SHOW_FILENAME_NEVER
 import com.simplemobiletools.musicplayer.playback.CustomCommands
-import kotlinx.android.synthetic.main.activity_settings.*
 import java.util.Locale
 import kotlin.system.exitProcess
 
 class SettingsActivity : SimpleControllerActivity() {
 
+    private val binding by viewBinding(ActivitySettingsBinding::inflate)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         isMaterialActivity = true
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_settings)
+        setContentView(binding.root)
 
-        updateMaterialActivityViews(settings_coordinator, settings_holder, useTransparentNavigation = true, useTopSearchMenu = false)
-        setupMaterialScrollListener(settings_nested_scrollview, settings_toolbar)
+        updateMaterialActivityViews(binding.settingsCoordinator, binding.settingsHolder, useTransparentNavigation = true, useTopSearchMenu = false)
+        setupMaterialScrollListener(binding.settingsNestedScrollview, binding.settingsToolbar)
     }
 
     override fun onResume() {
         super.onResume()
-        setupToolbar(settings_toolbar, NavigationIcon.Arrow)
+        setupToolbar(binding.settingsToolbar, NavigationIcon.Arrow)
 
         setupPurchaseThankYou()
         setupCustomizeColors()
@@ -46,29 +48,29 @@ class SettingsActivity : SimpleControllerActivity() {
         setupSwapPrevNext()
         setupReplaceTitle()
         setupGaplessPlayback()
-        updateTextColors(settings_nested_scrollview)
+        updateTextColors(binding.settingsNestedScrollview)
 
-        arrayOf(settings_color_customization_section_label, settings_general_settings_label, settings_playback_section_label).forEach {
+        arrayOf(binding.settingsColorCustomizationSectionLabel, binding.settingsGeneralSettingsLabel, binding.settingsPlaybackSectionLabel).forEach {
             it.setTextColor(getProperPrimaryColor())
         }
     }
 
-    private fun setupPurchaseThankYou() {
-        settings_purchase_thank_you_holder.beGoneIf(isOrWasThankYouInstalled())
-        settings_purchase_thank_you_holder.setOnClickListener {
+    private fun setupPurchaseThankYou() = binding.apply {
+        settingsPurchaseThankYouHolder.beGoneIf(isOrWasThankYouInstalled())
+        settingsPurchaseThankYouHolder.setOnClickListener {
             launchPurchaseThankYouIntent()
         }
     }
 
-    private fun setupCustomizeColors() {
-        settings_color_customization_label.text = getCustomizeColorsString()
-        settings_color_customization_holder.setOnClickListener {
+    private fun setupCustomizeColors() = binding.apply {
+        settingsColorCustomizationLabel.text = getCustomizeColorsString()
+        settingsColorCustomizationHolder.setOnClickListener {
             handleCustomizeColorsClick()
         }
     }
 
     private fun setupCustomizeWidgetColors() {
-        settings_widget_color_customization_holder.setOnClickListener {
+        binding.settingsWidgetColorCustomizationHolder.setOnClickListener {
             Intent(this, WidgetConfigureActivity::class.java).apply {
                 putExtra(IS_CUSTOMIZING_COLORS, true)
                 startActivity(this)
@@ -76,44 +78,44 @@ class SettingsActivity : SimpleControllerActivity() {
         }
     }
 
-    private fun setupUseEnglish() {
-        settings_use_english_holder.beVisibleIf((config.wasUseEnglishToggled || Locale.getDefault().language != "en") && !isTiramisuPlus())
-        settings_use_english.isChecked = config.useEnglish
-        settings_use_english_holder.setOnClickListener {
-            settings_use_english.toggle()
-            config.useEnglish = settings_use_english.isChecked
+    private fun setupUseEnglish() = binding.apply {
+        settingsUseEnglishHolder.beVisibleIf((config.wasUseEnglishToggled || Locale.getDefault().language != "en") && !isTiramisuPlus())
+        settingsUseEnglish.isChecked = config.useEnglish
+        settingsUseEnglishHolder.setOnClickListener {
+            settingsUseEnglish.toggle()
+            config.useEnglish = settingsUseEnglish.isChecked
             exitProcess(0)
         }
     }
 
-    private fun setupLanguage() {
-        settings_language.text = Locale.getDefault().displayLanguage
-        settings_language_holder.beVisibleIf(isTiramisuPlus())
-        settings_language_holder.setOnClickListener {
+    private fun setupLanguage() = binding.apply {
+        settingsLanguage.text = Locale.getDefault().displayLanguage
+        settingsLanguageHolder.beVisibleIf(isTiramisuPlus())
+        settingsLanguageHolder.setOnClickListener {
             launchChangeAppLanguageIntent()
         }
     }
 
-    private fun setupSwapPrevNext() {
-        settings_swap_prev_next.isChecked = config.swapPrevNext
-        settings_swap_prev_next_holder.setOnClickListener {
-            settings_swap_prev_next.toggle()
-            config.swapPrevNext = settings_swap_prev_next.isChecked
+    private fun setupSwapPrevNext() = binding.apply {
+        settingsSwapPrevNext.isChecked = config.swapPrevNext
+        settingsSwapPrevNextHolder.setOnClickListener {
+            settingsSwapPrevNext.toggle()
+            config.swapPrevNext = settingsSwapPrevNext.isChecked
         }
     }
 
-    private fun setupReplaceTitle() {
-        settings_show_filename.text = getReplaceTitleText()
-        settings_show_filename_holder.setOnClickListener {
+    private fun setupReplaceTitle() = binding.apply {
+        settingsShowFilename.text = getReplaceTitleText()
+        settingsShowFilenameHolder.setOnClickListener {
             val items = arrayListOf(
-                RadioItem(SHOW_FILENAME_NEVER, getString(R.string.never)),
+                RadioItem(SHOW_FILENAME_NEVER, getString(com.simplemobiletools.commons.R.string.never)),
                 RadioItem(SHOW_FILENAME_IF_UNAVAILABLE, getString(R.string.title_is_not_available)),
-                RadioItem(SHOW_FILENAME_ALWAYS, getString(R.string.always))
+                RadioItem(SHOW_FILENAME_ALWAYS, getString(com.simplemobiletools.commons.R.string.always))
             )
 
             RadioGroupDialog(this@SettingsActivity, items, config.showFilename) {
                 config.showFilename = it as Int
-                settings_show_filename.text = getReplaceTitleText()
+                settingsShowFilename.text = getReplaceTitleText()
                 refreshQueueAndTracks()
             }
         }
@@ -121,15 +123,15 @@ class SettingsActivity : SimpleControllerActivity() {
 
     private fun getReplaceTitleText() = getString(
         when (config.showFilename) {
-            SHOW_FILENAME_NEVER -> R.string.never
+            SHOW_FILENAME_NEVER -> com.simplemobiletools.commons.R.string.never
             SHOW_FILENAME_IF_UNAVAILABLE -> R.string.title_is_not_available
-            else -> R.string.always
+            else -> com.simplemobiletools.commons.R.string.always
         }
     )
 
-    private fun setupManageShownTabs() {
-        settings_manage_shown_tabs_holder.setOnClickListener {
-            ManageVisibleTabsDialog(this) { result ->
+    private fun setupManageShownTabs() = binding.apply {
+        settingsManageShownTabsHolder.setOnClickListener {
+            ManageVisibleTabsDialog(this@SettingsActivity) { result ->
                 val tabsMask = config.showTabs
                 if (tabsMask != result) {
                     config.showTabs = result
@@ -142,17 +144,17 @@ class SettingsActivity : SimpleControllerActivity() {
     }
 
     private fun setupManageExcludedFolders() {
-        settings_manage_excluded_folders_holder.beVisibleIf(isQPlus())
-        settings_manage_excluded_folders_holder.setOnClickListener {
+        binding.settingsManageExcludedFoldersHolder.beVisibleIf(isQPlus())
+        binding.settingsManageExcludedFoldersHolder.setOnClickListener {
             startActivity(Intent(this, ExcludedFoldersActivity::class.java))
         }
     }
 
-    private fun setupGaplessPlayback() {
-        settings_gapless_playback.isChecked = config.gaplessPlayback
-        settings_gapless_playback_holder.setOnClickListener {
-            settings_gapless_playback.toggle()
-            config.gaplessPlayback = settings_gapless_playback.isChecked
+    private fun setupGaplessPlayback() = binding.apply {
+        settingsGaplessPlayback.isChecked = config.gaplessPlayback
+        settingsGaplessPlaybackHolder.setOnClickListener {
+            settingsGaplessPlayback.toggle()
+            config.gaplessPlayback = settingsGaplessPlayback.isChecked
             withPlayer {
                 sendCommand(CustomCommands.TOGGLE_SKIP_SILENCE)
             }

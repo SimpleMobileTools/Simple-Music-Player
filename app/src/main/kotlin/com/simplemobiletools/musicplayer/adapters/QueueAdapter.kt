@@ -17,14 +17,11 @@ import com.simplemobiletools.commons.interfaces.StartReorderDragListener
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
+import com.simplemobiletools.musicplayer.databinding.ItemTrackQueueBinding
 import com.simplemobiletools.musicplayer.extensions.*
 import com.simplemobiletools.musicplayer.helpers.EXTRA_SHUFFLE_INDICES
 import com.simplemobiletools.musicplayer.models.Track
 import com.simplemobiletools.musicplayer.playback.CustomCommands
-import kotlinx.android.synthetic.main.item_track_queue.view.track_queue_drag_handle
-import kotlinx.android.synthetic.main.item_track_queue.view.track_queue_duration
-import kotlinx.android.synthetic.main.item_track_queue.view.track_queue_frame
-import kotlinx.android.synthetic.main.item_track_queue.view.track_queue_title
 
 class QueueAdapter(activity: SimpleActivity, items: ArrayList<Track>, var currentTrack: Track? = null, recyclerView: MyRecyclerView, itemClick: (Any) -> Unit) :
     BaseMusicAdapter<Track>(items, activity, recyclerView, itemClick), ItemTouchHelperContract, RecyclerViewFastScroller.OnPopupTextUpdate {
@@ -46,7 +43,10 @@ class QueueAdapter(activity: SimpleActivity, items: ArrayList<Track>, var curren
 
     override fun getActionMenuId() = R.menu.cab_queue
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = createViewHolder(R.layout.item_track_queue, parent)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val binding = ItemTrackQueueBinding.inflate(layoutInflater, parent, false)
+        return createViewHolder(binding.root)
+    }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = items.getOrNull(position) ?: return
@@ -75,7 +75,7 @@ class QueueAdapter(activity: SimpleActivity, items: ArrayList<Track>, var curren
     override fun onActionModeDestroyed() = notifyDataChanged()
 
     fun updateCurrentTrack() {
-        ctx.withPlayer {
+        context.withPlayer {
             val track = currentMediaItem?.toTrack()
             if (track != null) {
                 val lastTrackId = currentTrack?.mediaStoreId
@@ -101,13 +101,13 @@ class QueueAdapter(activity: SimpleActivity, items: ArrayList<Track>, var curren
             }
         }
 
-        ctx.removeQueueItems(selectedTracks) {
+        context.removeQueueItems(selectedTracks) {
             refreshTracksList(positions)
         }
     }
 
     private fun deleteTracks() {
-        ConfirmationDialog(ctx, "", R.string.delete_song_warning, R.string.ok, R.string.cancel) {
+        ConfirmationDialog(context, "", R.string.delete_song_warning, com.simplemobiletools.commons.R.string.ok, com.simplemobiletools.commons.R.string.cancel) {
             val positions = ArrayList<Int>()
             val selectedTracks = getSelectedTracks()
             selectedTracks.forEach { track ->
@@ -117,14 +117,14 @@ class QueueAdapter(activity: SimpleActivity, items: ArrayList<Track>, var curren
                 }
             }
 
-            ctx.deleteTracks(selectedTracks) {
+            context.deleteTracks(selectedTracks) {
                 refreshTracksList(positions)
             }
         }
     }
 
     private fun refreshTracksList(positions: ArrayList<Int>) {
-        ctx.runOnUiThread {
+        context.runOnUiThread {
             positions.sortDescending()
             positions.forEach {
                 items.removeAt(it)
@@ -132,41 +132,45 @@ class QueueAdapter(activity: SimpleActivity, items: ArrayList<Track>, var curren
 
             removeSelectedItems(positions)
             if (items.isEmpty()) {
-                ctx.finish()
+                context.finish()
             }
         }
     }
 
     @SuppressLint("ClickableViewAccessibility")
     private fun setupView(view: View, track: Track, holder: ViewHolder) {
-        view.apply {
-            setupViewBackground(ctx)
-            track_queue_frame?.isSelected = selectedKeys.contains(track.hashCode())
-            track_queue_title.text = if (textToHighlight.isEmpty()) track.title else track.title.highlightTextPart(textToHighlight, properPrimaryColor)
+        ItemTrackQueueBinding.bind(view).apply {
+            root.setupViewBackground(context)
+            trackQueueFrame.isSelected = selectedKeys.contains(track.hashCode())
+            trackQueueTitle.text = if (textToHighlight.isEmpty()) track.title else track.title.highlightTextPart(textToHighlight, properPrimaryColor)
 
-            arrayOf(track_queue_title, track_queue_duration).forEach {
-                val color = if (track.mediaStoreId == currentTrack?.mediaStoreId) context.getProperPrimaryColor() else textColor
+            arrayOf(trackQueueTitle, trackQueueDuration).forEach {
+                val color = if (track.mediaStoreId == currentTrack?.mediaStoreId) {
+                    activity.getProperPrimaryColor()
+                } else {
+                    textColor
+                }
                 it.setTextColor(color)
             }
 
-            track_queue_duration.text = track.duration.getFormattedDuration()
-            track_queue_drag_handle.beVisibleIf(selectedKeys.isNotEmpty())
-            track_queue_drag_handle.applyColorFilter(textColor)
-            track_queue_drag_handle.setOnTouchListener { _, event ->
+            trackQueueDuration.text = track.duration.getFormattedDuration()
+            trackQueueDragHandle.beVisibleIf(selectedKeys.isNotEmpty())
+            trackQueueDragHandle.applyColorFilter(textColor)
+            trackQueueDragHandle.setOnTouchListener { _, event ->
                 if (event.action == MotionEvent.ACTION_DOWN) {
                     startReorderDragListener.requestDrag(holder)
                 }
                 false
             }
 
-            ctx.getTrackCoverArt(track) { coverArt ->
-                loadImage(findViewById(R.id.track_queue_image), coverArt, placeholderBig)
+            context.getTrackCoverArt(track) { coverArt ->
+                loadImage(trackQueueImage, coverArt, placeholderBig)
             }
         }
     }
 
     override fun updateItems(newItems: ArrayList<Track>, highlightText: String, forceUpdate: Boolean) {
-        ctx.withPlayer {
+        context.withPlayer {
             currentTrack = currentMediaItem?.toTrack()
             super.updateItems(newItems, highlightText, forceUpdate)
         }
@@ -182,14 +186,14 @@ class QueueAdapter(activity: SimpleActivity, items: ArrayList<Track>, var curren
 
     override fun onRowSelected(myViewHolder: ViewHolder?) {}
 
-    override fun onChange(position: Int) = items.getOrNull(position)?.getBubbleText(ctx.config.trackSorting) ?: ""
+    override fun onChange(position: Int) = items.getOrNull(position)?.getBubbleText(context.config.trackSorting) ?: ""
 
     /**
      * [MediaController.moveMediaItem] is the proper way to move media items but it doesn't work when shuffle mode is enabled. This method modifies
      * the shuffle order when shuffle mode is enabled and defaults to [MediaController.moveMediaItem] otherwise.
      */
     private fun swapMediaItemInQueue(fromPosition: Int, toPosition: Int) {
-        ctx.withPlayer {
+        context.withPlayer {
             if (shuffleModeEnabled) {
                 val indices = shuffledMediaItemsIndices.toMutableList()
                 indices.swap(fromPosition, toPosition)

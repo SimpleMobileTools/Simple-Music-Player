@@ -3,38 +3,41 @@ package com.simplemobiletools.musicplayer.activities
 import android.os.Bundle
 import com.simplemobiletools.commons.extensions.beVisibleIf
 import com.simplemobiletools.commons.extensions.getProperTextColor
+import com.simplemobiletools.commons.extensions.viewBinding
 import com.simplemobiletools.commons.helpers.NavigationIcon
 import com.simplemobiletools.commons.interfaces.RefreshRecyclerViewListener
-import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.adapters.ExcludedFoldersAdapter
+import com.simplemobiletools.musicplayer.databinding.ActivityExcludedFoldersBinding
 import com.simplemobiletools.musicplayer.extensions.config
-import kotlinx.android.synthetic.main.activity_excluded_folders.*
 
 class ExcludedFoldersActivity : SimpleActivity(), RefreshRecyclerViewListener {
+
+    private val binding by viewBinding(ActivityExcludedFoldersBinding::inflate)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         isMaterialActivity = true
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_excluded_folders)
+        setContentView(binding.root)
 
-        updateMaterialActivityViews(excluded_folders_coordinator, excluded_folders_list, useTransparentNavigation = true, useTopSearchMenu = false)
-        setupMaterialScrollListener(excluded_folders_list, excluded_folders_toolbar)
+        updateMaterialActivityViews(binding.excludedFoldersCoordinator, binding.excludedFoldersList, useTransparentNavigation = true, useTopSearchMenu = false)
+        setupMaterialScrollListener(binding.excludedFoldersList, binding.excludedFoldersToolbar)
         updateFolders()
     }
 
     override fun onResume() {
         super.onResume()
-        setupToolbar(excluded_folders_toolbar, NavigationIcon.Arrow)
+        setupToolbar(binding.excludedFoldersToolbar, NavigationIcon.Arrow)
     }
 
     private fun updateFolders() {
         val folders = config.excludedFolders.toMutableList() as ArrayList<String>
-        excluded_folders_placeholder.apply {
+        binding.excludedFoldersPlaceholder.apply {
             beVisibleIf(folders.isEmpty())
             setTextColor(getProperTextColor())
         }
 
-        val adapter = ExcludedFoldersAdapter(this, folders, this, excluded_folders_list) {}
-        excluded_folders_list.adapter = adapter
+        val adapter = ExcludedFoldersAdapter(this, folders, this, binding.excludedFoldersList) {}
+        binding.excludedFoldersList.adapter = adapter
     }
 
     override fun refreshItems() {

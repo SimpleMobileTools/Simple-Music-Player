@@ -5,32 +5,30 @@ import androidx.appcompat.app.AlertDialog
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.musicplayer.R
+import com.simplemobiletools.musicplayer.databinding.DialogNewPlaylistBinding
 import com.simplemobiletools.musicplayer.extensions.audioHelper
 import com.simplemobiletools.musicplayer.extensions.getPlaylistIdWithTitle
 import com.simplemobiletools.musicplayer.models.Playlist
-import kotlinx.android.synthetic.main.dialog_new_playlist.view.new_playlist_title
 
 class NewPlaylistDialog(val activity: Activity, var playlist: Playlist? = null, val callback: (playlistId: Int) -> Unit) {
-    var isNewPlaylist = playlist == null
+    private var isNewPlaylist = playlist == null
+    private val binding by activity.viewBinding(DialogNewPlaylistBinding::inflate)
 
     init {
         if (playlist == null) {
             playlist = Playlist(0, "")
         }
 
-        val view = activity.layoutInflater.inflate(R.layout.dialog_new_playlist, null).apply {
-            new_playlist_title.setText(playlist!!.title)
-        }
-
+        binding.newPlaylistTitle.setText(playlist!!.title)
         activity.getAlertDialogBuilder()
-            .setPositiveButton(R.string.ok, null)
-            .setNegativeButton(R.string.cancel, null)
+            .setPositiveButton(com.simplemobiletools.commons.R.string.ok, null)
+            .setNegativeButton(com.simplemobiletools.commons.R.string.cancel, null)
             .apply {
                 val dialogTitle = if (isNewPlaylist) R.string.create_new_playlist else R.string.rename_playlist
-                activity.setupDialogStuff(view, this, dialogTitle) { alertDialog ->
-                    alertDialog.showKeyboard(view.new_playlist_title)
+                activity.setupDialogStuff(binding.root, this, dialogTitle) { alertDialog ->
+                    alertDialog.showKeyboard(binding.newPlaylistTitle)
                     alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
-                        val title = view.new_playlist_title.value
+                        val title = binding.newPlaylistTitle.value
                         ensureBackgroundThread {
                             val playlistIdWithTitle = activity.getPlaylistIdWithTitle(title)
                             var isPlaylistTitleTaken = isNewPlaylist && playlistIdWithTitle != -1
@@ -39,7 +37,7 @@ class NewPlaylistDialog(val activity: Activity, var playlist: Playlist? = null, 
                             }
 
                             if (title.isEmpty()) {
-                                activity.toast(R.string.empty_name)
+                                activity.toast(com.simplemobiletools.commons.R.string.empty_name)
                                 return@ensureBackgroundThread
                             } else if (isPlaylistTitleTaken) {
                                 activity.toast(R.string.playlist_name_exists)
@@ -59,7 +57,7 @@ class NewPlaylistDialog(val activity: Activity, var playlist: Playlist? = null, 
                                 alertDialog.dismiss()
                                 callback(eventTypeId)
                             } else {
-                                activity.toast(R.string.unknown_error_occurred)
+                                activity.toast(com.simplemobiletools.commons.R.string.unknown_error_occurred)
                             }
                         }
                     }

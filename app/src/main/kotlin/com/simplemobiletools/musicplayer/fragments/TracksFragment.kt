@@ -4,27 +4,31 @@ import android.app.Activity
 import android.content.Context
 import android.util.AttributeSet
 import com.simplemobiletools.commons.activities.BaseSimpleActivity
-import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
 import com.simplemobiletools.commons.dialogs.PermissionRequiredDialog
-import com.simplemobiletools.commons.extensions.*
+import com.simplemobiletools.commons.extensions.areSystemAnimationsEnabled
+import com.simplemobiletools.commons.extensions.beGoneIf
+import com.simplemobiletools.commons.extensions.beVisibleIf
+import com.simplemobiletools.commons.extensions.getParentPath
+import com.simplemobiletools.commons.extensions.hideKeyboard
+import com.simplemobiletools.commons.extensions.openNotificationSettings
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.activities.SimpleActivity
 import com.simplemobiletools.musicplayer.adapters.TracksAdapter
+import com.simplemobiletools.musicplayer.databinding.FragmentTracksBinding
 import com.simplemobiletools.musicplayer.dialogs.ChangeSortingDialog
 import com.simplemobiletools.musicplayer.extensions.audioHelper
 import com.simplemobiletools.musicplayer.extensions.config
 import com.simplemobiletools.musicplayer.extensions.mediaScanner
+import com.simplemobiletools.musicplayer.extensions.viewBinding
 import com.simplemobiletools.musicplayer.helpers.TAB_TRACKS
 import com.simplemobiletools.musicplayer.models.Track
 import com.simplemobiletools.musicplayer.models.sortSafely
-import kotlinx.android.synthetic.main.fragment_tracks.view.tracks_fastscroller
-import kotlinx.android.synthetic.main.fragment_tracks.view.tracks_list
-import kotlinx.android.synthetic.main.fragment_tracks.view.tracks_placeholder
 
 // Artists -> Albums -> Tracks
 class TracksFragment(context: Context, attributeSet: AttributeSet) : MyViewPagerFragment(context, attributeSet) {
     private var tracks = ArrayList<Track>()
+    private val binding by viewBinding(FragmentTracksBinding::bind)
 
     override fun setupFragment(activity: BaseSimpleActivity) {
         ensureBackgroundThread {
@@ -37,15 +41,15 @@ class TracksFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
 
             activity.runOnUiThread {
                 val scanning = activity.mediaScanner.isScanning()
-                tracks_placeholder.text = if (scanning) {
+                binding.tracksPlaceholder.text = if (scanning) {
                     context.getString(R.string.loading_files)
                 } else {
-                    context.getString(R.string.no_items_found)
+                    context.getString(com.simplemobiletools.commons.R.string.no_items_found)
                 }
-                tracks_placeholder.beVisibleIf(tracks.isEmpty())
-                val adapter = tracks_list.adapter
+                binding.tracksPlaceholder.beVisibleIf(tracks.isEmpty())
+                val adapter = binding.tracksList.adapter
                 if (adapter == null) {
-                    TracksAdapter(activity = activity, recyclerView = tracks_list, sourceType = TracksAdapter.TYPE_TRACKS, items = tracks) {
+                    TracksAdapter(activity = activity, recyclerView = binding.tracksList, sourceType = TracksAdapter.TYPE_TRACKS, items = tracks) {
                         activity.hideKeyboard()
                         activity.handleNotificationPermission { granted ->
                             if (granted) {
@@ -53,16 +57,20 @@ class TracksFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
                                 prepareAndPlay(tracks, startIndex)
                             } else {
                                 if (context is Activity) {
-                                    PermissionRequiredDialog(activity, R.string.allow_notifications_music_player, { activity.openNotificationSettings() })
+                                    PermissionRequiredDialog(
+                                        activity,
+                                        com.simplemobiletools.commons.R.string.allow_notifications_music_player,
+                                        { activity.openNotificationSettings() }
+                                    )
                                 }
                             }
                         }
                     }.apply {
-                        tracks_list.adapter = this
+                        binding.tracksList.adapter = this
                     }
 
                     if (context.areSystemAnimationsEnabled) {
-                        tracks_list.scheduleLayoutAnimation()
+                        binding.tracksList.scheduleLayoutAnimation()
                     }
                 } else {
                     (adapter as TracksAdapter).updateItems(tracks)
@@ -72,32 +80,35 @@ class TracksFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
     }
 
     override fun finishActMode() {
-        (tracks_list.adapter as? MyRecyclerViewAdapter)?.finishActMode()
+        getAdapter()?.finishActMode()
     }
 
     override fun onSearchQueryChanged(text: String) {
         val filtered = tracks.filter {
             it.title.contains(text, true) || ("${it.artist} - ${it.album}").contains(text, true)
         }.toMutableList() as ArrayList<Track>
-        (tracks_list.adapter as? TracksAdapter)?.updateItems(filtered, text)
-        tracks_placeholder.beVisibleIf(filtered.isEmpty())
+        getAdapter()?.updateItems(filtered, text)
+        binding.tracksPlaceholder.beVisibleIf(filtered.isEmpty())
     }
 
     override fun onSearchClosed() {
-        (tracks_list.adapter as? TracksAdapter)?.updateItems(tracks)
-        tracks_placeholder.beGoneIf(tracks.isNotEmpty())
+        getAdapter()?.updateItems(tracks)
+        binding.tracksPlaceholder.beGoneIf(tracks.isNotEmpty())
     }
 
     override fun onSortOpen(activity: SimpleActivity) {
         ChangeSortingDialog(activity, TAB_TRACKS) {
-            val adapter = tracks_list.adapter as? TracksAdapter ?: return@ChangeSortingDialog
+            val adapter = getAdapter() ?: return@ChangeSortingDialog
             tracks.sortSafely(activity.config.trackSorting)
             adapter.updateItems(tracks, forceUpdate = true)
         }
     }
 
     override fun setupColors(textColor: Int, adjustedPrimaryColor: Int) {
-        tracks_placeholder.setTextColor(textColor)
-        tracks_fastscroller.updateColors(adjustedPrimaryColor)
+        binding.tracksPlaceholder.setTextColor(textColor)
+        binding.tracksFastscroller.updateColors(adjustedPrimaryColor)
+        getAdapter()?.updateColors(textColor)
     }
+
+    private fun getAdapter() = binding.tracksList.adapter as? TracksAdapter
 }
