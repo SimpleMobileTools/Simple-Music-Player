@@ -72,6 +72,7 @@ class AlbumsTracksAdapter(
     override fun prepareActionMode(menu: Menu) {
         menu.apply {
             findItem(R.id.cab_play_next).isVisible = shouldShowPlayNext()
+            findItem(R.id.cab_rename).isVisible = shouldShowRename()
         }
     }
 
