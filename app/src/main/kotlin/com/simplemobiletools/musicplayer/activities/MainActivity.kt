@@ -56,6 +56,7 @@ class MainActivity : SimpleMusicActivity() {
         updateMaterialActivityViews(binding.mainCoordinator, binding.mainHolder, useTransparentNavigation = false, useTopSearchMenu = true)
         storeStateVariables()
         setupTabs()
+        setupCurrentTrackBar(binding.currentTrackBar.root)
 
         handlePermission(getPermissionToRequest()) {
             if (it) {
@@ -69,14 +70,6 @@ class MainActivity : SimpleMusicActivity() {
         volumeControlStream = AudioManager.STREAM_MUSIC
         checkWhatsNewDialog()
         checkAppOnSDCard()
-        withPlayer {
-            maybePreparePlayer(context = this@MainActivity) { success ->
-                if (success) {
-                    updateCurrentTrackBar()
-                    broadcastUpdateWidgetState()
-                }
-            }
-        }
     }
 
     override fun onResume() {
@@ -188,7 +181,6 @@ class MainActivity : SimpleMusicActivity() {
         initFragments()
         binding.sleepTimerStop.setOnClickListener { stopSleepTimer() }
 
-        setupCurrentTrackBar(binding.currentTrackBar.root)
         refreshAllFragments()
     }
 
@@ -207,7 +199,11 @@ class MainActivity : SimpleMusicActivity() {
                     if (complete) {
                         binding.loadingProgressBar.hide()
                         withPlayer {
-                            sendCommand(CustomCommands.RELOAD_CONTENT)
+                            if (currentMediaItem == null) {
+                                maybePreparePlayer()
+                            } else {
+                                sendCommand(CustomCommands.RELOAD_CONTENT)
+                            }
                         }
                     }
                 }

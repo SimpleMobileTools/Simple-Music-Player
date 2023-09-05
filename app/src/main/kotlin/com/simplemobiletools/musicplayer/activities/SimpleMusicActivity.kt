@@ -8,7 +8,6 @@ import com.simplemobiletools.commons.dialogs.PermissionRequiredDialog
 import com.simplemobiletools.commons.extensions.hideKeyboard
 import com.simplemobiletools.commons.extensions.openNotificationSettings
 import com.simplemobiletools.musicplayer.extensions.isReallyPlaying
-import com.simplemobiletools.musicplayer.extensions.togglePlayback
 import com.simplemobiletools.musicplayer.views.CurrentTrackBar
 
 /**
@@ -24,7 +23,7 @@ abstract class SimpleMusicActivity : SimpleControllerActivity(), Player.Listener
 
     fun setupCurrentTrackBar(trackBar: CurrentTrackBar) {
         trackBarView = trackBar
-        trackBarView?.initialize { withPlayer { togglePlayback() } }
+        trackBarView?.initialize(togglePlayback = ::togglePlayback)
         trackBarView?.setOnClickListener {
             hideKeyboard()
             handleNotificationPermission { granted ->
@@ -39,7 +38,7 @@ abstract class SimpleMusicActivity : SimpleControllerActivity(), Player.Listener
         }
     }
 
-    fun updateCurrentTrackBar() {
+    private fun updateCurrentTrackBar() {
         trackBarView?.apply {
             withPlayer {
                 updateColors()
@@ -48,6 +47,8 @@ abstract class SimpleMusicActivity : SimpleControllerActivity(), Player.Listener
             }
         }
     }
+
+    override fun onPlayerPrepared(success: Boolean) = updateCurrentTrackBar()
 
     @CallSuper
     override fun onMediaItemTransition(mediaItem: MediaItem?, reason: Int) {

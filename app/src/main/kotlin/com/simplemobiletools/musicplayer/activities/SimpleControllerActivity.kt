@@ -30,6 +30,7 @@ abstract class SimpleControllerActivity : SimpleActivity(), Player.Listener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         controller = SimpleMediaController.getInstance(this)
+        maybePreparePlayer()
     }
 
     override fun onStart() {
@@ -41,6 +42,13 @@ abstract class SimpleControllerActivity : SimpleActivity(), Player.Listener {
         super.onStop()
         controller.removeListener(this)
     }
+
+    override fun onResume() {
+        super.onResume()
+        maybePreparePlayer()
+    }
+
+    open fun onPlayerPrepared(success: Boolean) {}
 
     fun withPlayer(callback: MediaController.() -> Unit) = controller.withController(callback)
 
@@ -59,6 +67,14 @@ abstract class SimpleControllerActivity : SimpleActivity(), Player.Listener {
             }
         }
     }
+
+    fun maybePreparePlayer() {
+        withPlayer {
+            maybePreparePlayer(context = this@SimpleControllerActivity, callback = ::onPlayerPrepared)
+        }
+    }
+
+    fun togglePlayback() = withPlayer { togglePlayback() }
 
     fun addTracksToQueue(tracks: List<Track>, callback: () -> Unit) {
         withPlayer {

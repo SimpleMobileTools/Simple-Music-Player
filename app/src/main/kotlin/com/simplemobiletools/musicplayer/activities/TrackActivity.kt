@@ -155,7 +155,7 @@ class TrackActivity : SimpleControllerActivity(), PlaybackSpeedListener {
     private fun setupButtons() = binding.apply {
         activityTrackToggleShuffle.setOnClickListener { withPlayer { toggleShuffle() } }
         activityTrackPrevious.setOnClickListener { withPlayer { forceSeekToPrevious() } }
-        activityTrackPlayPause.setOnClickListener { withPlayer { togglePlayback() } }
+        activityTrackPlayPause.setOnClickListener { togglePlayback() }
         activityTrackNext.setOnClickListener { withPlayer { forceSeekToNext() } }
         activityTrackProgressCurrent.setOnClickListener { seekBack() }
         activityTrackProgressMax.setOnClickListener { seekForward() }
