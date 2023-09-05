@@ -5,12 +5,9 @@ import android.view.View
 import android.view.ViewGroup
 import com.qtalk.recyclerviewfastscroller.RecyclerViewFastScroller
 import com.simplemobiletools.commons.activities.BaseSimpleActivity
-import com.simplemobiletools.commons.extensions.deleteFiles
-import com.simplemobiletools.commons.extensions.getFilenameFromPath
 import com.simplemobiletools.commons.extensions.highlightTextPart
 import com.simplemobiletools.commons.extensions.setupViewBackground
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
-import com.simplemobiletools.commons.models.FileDirItem
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.databinding.ItemPlaylistBinding
@@ -18,6 +15,7 @@ import com.simplemobiletools.musicplayer.dialogs.NewPlaylistDialog
 import com.simplemobiletools.musicplayer.dialogs.RemovePlaylistDialog
 import com.simplemobiletools.musicplayer.extensions.audioHelper
 import com.simplemobiletools.musicplayer.extensions.config
+import com.simplemobiletools.musicplayer.inlines.indexOfFirstOrNull
 import com.simplemobiletools.musicplayer.models.Events
 import com.simplemobiletools.musicplayer.models.Playlist
 import org.greenrobot.eventbus.EventBus
@@ -56,58 +54,37 @@ class PlaylistsAdapter(
     }
 
     private fun askConfirmDelete() {
-        RemovePlaylistDialog(context) { delete ->
-            val ids = getSelectedItems().map { it.id } as ArrayList<Int>
-            if (delete) {
+        RemovePlaylistDialog(context) { deleteFiles ->
+            val playlists = getSelectedItems().toMutableList() as ArrayList<Playlist>
+            val ids = playlists.map { it.id } as ArrayList<Int>
+            if (deleteFiles) {
                 ensureBackgroundThread {
-                    deletePlaylistSongs(ids) {
-                        removePlaylists()
+                    val tracksToDelete = ids.flatMap { context.audioHelper.getPlaylistTracks(it) }
+                    context.deleteTracks(tracksToDelete) {
+                        removePlaylists(playlists)
                     }
                 }
             } else {
-                removePlaylists()
+                removePlaylists(playlists)
             }
         }
     }
 
-    private fun deletePlaylistSongs(ids: ArrayList<Int>, callback: () -> Unit) {
-        var cnt = ids.size
-        ids.map { id ->
-            val paths = context.audioHelper.getPlaylistTracks(id).map { it.path }
-            val fileDirItems = paths.map { FileDirItem(it, it.getFilenameFromPath()) } as ArrayList<FileDirItem>
-            context.deleteFiles(fileDirItems) {
-                if (--cnt <= 0) {
-                    callback()
-                }
-            }
-        }
-    }
-
-    private fun removePlaylists() {
-        val playlistsToDelete = ArrayList<Playlist>(selectedKeys.size)
-        val positions = ArrayList<Int>()
-        for (key in selectedKeys) {
-            val playlist = getItemWithKey(key) ?: continue
-            val position = items.indexOfFirst { it.id == key }
-            if (position != -1) {
-                positions.add(position + positionOffset)
-            }
-            playlistsToDelete.add(playlist)
-        }
-
-        items.removeAll(playlistsToDelete.toSet())
+    private fun removePlaylists(playlistsToDelete: ArrayList<Playlist>) {
+        val positions = playlistsToDelete.mapNotNull { playlist ->
+            items.indexOfFirstOrNull { it.id == playlist.id }
+        } as ArrayList<Int>
 
         ensureBackgroundThread {
             context.audioHelper.deletePlaylists(playlistsToDelete)
             context.runOnUiThread {
+                items.removeAll(playlistsToDelete.toSet())
                 removeSelectedItems(positions)
             }
 
             EventBus.getDefault().post(Events.PlaylistsUpdated())
         }
     }
-
-    private fun getItemWithKey(key: Int): Playlist? = items.firstOrNull { it.id == key }
 
     private fun showRenameDialog() {
         NewPlaylistDialog(context, items[getItemKeyPosition(selectedKeys.first())]) {
