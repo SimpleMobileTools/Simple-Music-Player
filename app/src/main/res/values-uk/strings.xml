@@ -48,8 +48,8 @@
     <string name="all_tracks">Усі композиції</string>
     <string name="add_to_playlist">Додати до плейлисту</string>
     <string name="create_playlist_label">Ви можете створити новий список відтворення, вибравши потрібних виконавців, альбоми або композиції використовуючи Меню -&gt; Додати до плейлисту.</string>
-    <string name="export_playlist">Export playlist</string>
-    <string name="import_playlist">Import playlist</string>
+    <string name="export_playlist">Експортувати список відтворення</string>
+    <string name="import_playlist">Імпортувати список відтворення</string>
     <string name="filename_without_m3u">Ім\'я файлу (без .m3u)</string>
     <!-- Sorting -->
     <string name="track_count">Кількість композицій</string>
@@ -62,7 +62,7 @@
     <!-- Artists -->
     <string name="artists">Виконавці</string>
     <string name="folders">Теки</string>
-    <string name="genres">Genres</string>
+    <string name="genres">Жанри</string>
     <string name="albums">Альбоми</string>
     <plurals name="albums_plural">
         <item quantity="one">%d Альбом</item>
@@ -81,7 +81,7 @@
     <string name="next_track">Наступна:</string>
     <string name="track_queue">Черга композицій</string>
     <string name="add_to_queue">Додати до черги</string>
-    <string name="play_next">Play next</string>
+    <string name="play_next">Відтворити наступним</string>
     <string name="remove_from_queue">Вилучити з черги</string>
     <string name="create_playlist_from_queue">Створити плейліст із черги</string>
     <!-- Settings -->
@@ -89,7 +89,7 @@
     <string name="swap_prev_next">Змінити призначення кнопок навушників Попередній/Наступний</string>
     <string name="exclude_folder_description">Виключення папки перешкоджатиме відображенню всіх аудіофайлів у ній. Файли, додані до списків відтворення вручну, не постраждають.</string>
     <string name="gapless_playback">Відтворення без пауз</string>
-    <string name="rescan_media">Rescan media</string>
+    <string name="rescan_media">Пересканувати медіа</string>
     <!-- FAQ -->
     <string name="faq_1_title">Як я можу змінити позицію відтворення композиції\?</string>
     <string name="faq_1_text">Ви можете натиснути на текст поточної або загальної тривалості відтворення поруч із ковзним елементом відтворення, це перемістить програвання композиції або назад, або вперед.</string>
