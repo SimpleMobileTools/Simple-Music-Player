@@ -1,0 +1,5 @@
+ * Fully rewrote playback handling under the hood
+ * Added Genres tab
+ * Allow sharing songs
+ * Added Android Auto support
+ * Added some stability, translation and UI improvements
