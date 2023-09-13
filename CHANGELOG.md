@@ -1,13 +1,12 @@
 Changelog
 ==========
 
-Version 5.18.0 *(2023-09-11)*
+Version 5.18.1 *(2023-09-13)*
 ----------------------------
 
  * Fully rewrote playback handling under the hood
  * Added Genres tab
  * Allow sharing songs
- * Added Android Auto support
  * Added some stability, translation and UI improvements
 
 Version 5.17.1 *(2023-07-24)*
