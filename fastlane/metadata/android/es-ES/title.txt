@@ -1,1 +1,1 @@
-Reproductor Sencillo de Música
+Reproductor de música simple
