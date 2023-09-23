@@ -61,7 +61,7 @@
     <!-- Artists -->
     <string name="artists">Artistas</string>
     <string name="folders">Carpetas</string>
-    <string name="genres">Genres</string>
+    <string name="genres">Géneros</string>
     <string name="albums">Álbumes</string>
     <plurals name="albums_plural">
         <item quantity="one">%d Álbum</item>
@@ -78,7 +78,7 @@
     <string name="next_track">Siguiente:</string>
     <string name="track_queue">Cola de canciones</string>
     <string name="add_to_queue">Añadir a la cola</string>
-    <string name="play_next">Play next</string>
+    <string name="play_next">Reproducir la siguiente</string>
     <string name="remove_from_queue">Quitar de la cola</string>
     <string name="create_playlist_from_queue">Crear lista de reproducción de la cola</string>
     <!-- Settings -->
@@ -86,7 +86,7 @@
     <string name="swap_prev_next">Intercambiar botones de anterior/siguiente de los audífonos</string>
     <string name="exclude_folder_description">Excluir una carpeta impedirá que se muestren todos los archivos de audio que contiene. Los archivos agregados manualmente a las listas de reproducción no se verán afectados.</string>
     <string name="gapless_playback">Reproducción continua</string>
-    <string name="rescan_media">Rescan media</string>
+    <string name="rescan_media">Volver a escanear los medios</string>
     <!-- FAQ -->
     <string name="faq_1_title">¿Cómo puedo avanzar en las canciones\?</string>
     <string name="faq_1_text">Puedes hacer clic en los textos de duración actual o máxima, cerca de la barra de búsqueda, para avanzar o retroceder la canción.</string>
