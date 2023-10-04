@@ -71,6 +71,10 @@ internal class MediaItemProvider(private val context: Context) {
 
     private val audioHelper = context.audioHelper
 
+    init {
+        buildRoot()
+    }
+
     fun whenReady(performAction: (Boolean) -> Unit): Boolean {
         return when (state) {
             STATE_CREATED, STATE_INITIALIZING -> {
@@ -155,21 +159,15 @@ internal class MediaItemProvider(private val context: Context) {
         state = STATE_INITIALIZING
 
         ensureBackgroundThread {
-            val root = buildMediaItem(
-                title = context.getString(com.simplemobiletools.commons.R.string.root),
-                mediaId = SMP_ROOT_ID,
-                mediaType = MediaMetadata.MEDIA_TYPE_FOLDER_MIXED
-            )
-            val rootChildren = RootCategories.buildRootChildren(context)
-            addNodeAndChildren(item = root, children = rootChildren)
+            buildRoot()
 
             try {
-                reloadPlaylists()
-                reloadFolders()
-                reloadArtists()
-                reloadAlbums()
-                reloadTracks()
-                reloadGenres()
+                buildPlaylists()
+                buildFolders()
+                buildArtists()
+                buildAlbums()
+                buildTracks()
+                buildGenres()
             } catch (e: Exception) {
                 state = STATE_ERROR
             }
@@ -178,38 +176,48 @@ internal class MediaItemProvider(private val context: Context) {
         }
     }
 
-    private fun reloadPlaylists() = with(audioHelper) {
+    private fun buildRoot() {
+        val root = buildMediaItem(
+            title = context.getString(com.simplemobiletools.commons.R.string.root),
+            mediaId = SMP_ROOT_ID,
+            mediaType = MediaMetadata.MEDIA_TYPE_FOLDER_MIXED
+        )
+        val rootChildren = RootCategories.buildRootChildren(context)
+        addNodeAndChildren(item = root, children = rootChildren)
+    }
+
+    private fun buildPlaylists() = with(audioHelper) {
         getAllPlaylists().forEach { playlist ->
             addNodeAndChildren(SMP_PLAYLISTS_ROOT_ID, playlist.toMediaItem(), getPlaylistTracks(playlist.id).map { it.toMediaItem() })
         }
     }
 
-    private fun reloadFolders() = with(audioHelper) {
+    private fun buildFolders() = with(audioHelper) {
         getAllFolders().forEach { folder ->
             addNodeAndChildren(SMP_FOLDERS_ROOT_ID, folder.toMediaItem(), getFolderTracks(folder.title).map { it.toMediaItem() })
         }
     }
 
-    private fun reloadArtists() = with(audioHelper) {
+    private fun buildArtists() = with(audioHelper) {
         getAllArtists().forEach { artist ->
             addNodeAndChildren(SMP_ARTISTS_ROOT_ID, artist.toMediaItem(), getArtistAlbums(artist.id).map { it.toMediaItem() })
         }
     }
 
-    private fun reloadAlbums() = with(audioHelper) {
+    private fun buildAlbums() = with(audioHelper) {
         getAllAlbums().forEach { album ->
             addNodeAndChildren(SMP_ALBUMS_ROOT_ID, album.toMediaItem(), getAlbumTracks(album.id).map { it.toMediaItem() })
         }
     }
 
-    private fun reloadTracks() = with(audioHelper) {
+    private fun buildTracks() = with(audioHelper) {
         getAllTracks().forEach { track ->
             addNodeAndChildren(SMP_TRACKS_ROOT_ID, track.toMediaItem())
             titleMap[track.title.lowercase()] = MediaItemNode(track.toMediaItem())
         }
     }
 
-    private fun reloadGenres() = with(audioHelper) {
+    private fun buildGenres() = with(audioHelper) {
         getAllGenres().forEach { genre ->
             addNodeAndChildren(SMP_GENRES_ROOT_ID, genre.toMediaItem(), getGenreTracks(genre.id).map { it.toMediaItem() })
         }
