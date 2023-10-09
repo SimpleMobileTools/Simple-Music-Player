@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Simpel musikspelare</string>
+    <string name="app_name">Simple Music Player</string>
     <string name="app_launcher_name">Musikspelare</string>
     <string name="playlist_empty">Din spellista är tom</string>
     <string name="rename_song">Byt namn på låt</string>
