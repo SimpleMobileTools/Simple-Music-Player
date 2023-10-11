@@ -61,30 +61,32 @@
     <!-- Artists -->
     <string name="artists">Artistas</string>
     <string name="folders">Pastas</string>
-    <string name="genres">Genres</string>
+    <string name="genres">Gêneros</string>
     <string name="albums">Álbuns</string>
     <plurals name="albums_plural">
-        <item quantity="one">%d álbum</item>
-        <item quantity="other">%d álbuns</item>
+        <item quantity="one">%d Álbum</item>
+        <item quantity="many">%d Álbuns</item>
+        <item quantity="other">%d Álbuns</item>
     </plurals>
     <string name="tracks">Faixas</string>
     <plurals name="tracks_plural">
-        <item quantity="one">%d faixa</item>
-        <item quantity="other">%d faixas</item>
+        <item quantity="one">%d Faixa</item>
+        <item quantity="many">%d Faixas</item>
+        <item quantity="other">%d Faixas</item>
     </plurals>
     <!-- Queue -->
     <string name="next_track">Next:</string>
     <string name="track_queue">Fila de reprodução</string>
     <string name="add_to_queue">Adiiconar à fila de reprodução</string>
-    <string name="play_next">Play next</string>
+    <string name="play_next">Reproduzir próxima</string>
     <string name="remove_from_queue">Remover da fila de reprodução</string>
     <string name="create_playlist_from_queue">Criar playlist a partir da fila de reprodução</string>
     <!-- Settings -->
     <string name="equalizer">Equalizador</string>
     <string name="swap_prev_next">Trocar os botões anterior/próximo do fone de ouvido</string>
     <string name="exclude_folder_description">A exclusão de uma pasta impedirá a exibição de todos os arquivos de áudio dentro dela. Os arquivos adicionados manualmente às listas de reprodução não serão afetados.</string>
-    <string name="gapless_playback">Gapless playback</string>
-    <string name="rescan_media">Rescan media</string>
+    <string name="gapless_playback">Reprodução sem intervalos</string>
+    <string name="rescan_media">Verificar mídia novamente</string>
     <!-- FAQ -->
     <string name="faq_1_title">Como posso avançar músicas\?</string>
     <string name="faq_1_text">Você pode clicar nos textos de duração atual ou máxima perto da barra de progresso, que moverá a música para trás ou para frente.</string>
