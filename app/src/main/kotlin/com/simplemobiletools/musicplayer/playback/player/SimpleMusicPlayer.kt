@@ -8,11 +8,18 @@ import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.exoplayer.source.ShuffleOrder.DefaultShuffleOrder
 import com.simplemobiletools.musicplayer.extensions.*
 import com.simplemobiletools.musicplayer.inlines.indexOfFirstOrNull
+import kotlinx.coroutines.*
 
 private const val DEFAULT_SHUFFLE_ORDER_SEED = 42L
 
 @UnstableApi
 class SimpleMusicPlayer(private val exoPlayer: ExoPlayer) : ForwardingPlayer(exoPlayer) {
+
+    private var seekToNextCount = 0
+    private var seekToPreviousCount = 0
+
+    private val scope = CoroutineScope(Dispatchers.Default)
+    private var seekJob: Job? = null
 
     /**
      * The default implementation only advertises the seek to next and previous item in the case
@@ -53,28 +60,32 @@ class SimpleMusicPlayer(private val exoPlayer: ExoPlayer) : ForwardingPlayer(exo
     override fun seekToNext() {
         play()
         if (!maybeForceNext()) {
-            super.seekToNext()
+            seekToNextCount += 1
+            seekWithDelay()
         }
     }
 
     override fun seekToPrevious() {
         play()
         if (!maybeForcePrevious()) {
-            super.seekToPrevious()
+            seekToPreviousCount += 1
+            seekWithDelay()
         }
     }
 
     override fun seekToNextMediaItem() {
         play()
         if (!maybeForceNext()) {
-            super.seekToNextMediaItem()
+            seekToNextCount += 1
+            seekWithDelay()
         }
     }
 
     override fun seekToPreviousMediaItem() {
         play()
         if (!maybeForcePrevious()) {
-            super.seekToPreviousMediaItem()
+            seekToPreviousCount += 1
+            seekWithDelay()
         }
     }
 
@@ -121,5 +132,37 @@ class SimpleMusicPlayer(private val exoPlayer: ExoPlayer) : ForwardingPlayer(exo
             shuffledIndices.move(currentIndex = shuffledCurrentIndex, newIndex = shuffledNewIndex)
             exoPlayer.setShuffleOrder(DefaultShuffleOrder(shuffledIndices.toIntArray(), DEFAULT_SHUFFLE_ORDER_SEED))
         }
+    }
+
+    /**
+     * This is here so the player can quickly seek next/previous without doing too much work.
+     * It probably won't be needed once https://github.com/androidx/media/issues/81 is resolved.
+     */
+    private fun seekWithDelay() {
+        seekJob?.cancel()
+        seekJob = scope.launch {
+            delay(timeMillis = 400)
+            if (seekToNextCount > 0 || seekToPreviousCount > 0) {
+                runOnPlayerThread {
+                    if (currentMediaItem != null) {
+                        if (seekToNextCount > 0) {
+                            seekTo(rotateIndex(currentMediaItemIndex + seekToNextCount), 0)
+                        }
+
+                        if (seekToPreviousCount > 0) {
+                            seekTo(rotateIndex(currentMediaItemIndex - seekToPreviousCount), 0)
+                        }
+
+                        seekToNextCount = 0
+                        seekToPreviousCount = 0
+                    }
+                }
+            }
+        }
+    }
+
+    private fun rotateIndex(index: Int): Int {
+        val count = mediaItemCount
+        return (index % count + count) % count
     }
 }
