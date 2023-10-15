@@ -12,7 +12,7 @@ import androidx.media3.common.MediaMetadata
 import androidx.media3.common.MediaMetadata.MediaType
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.session.MediaSession.MediaItemsWithStartPosition
-import com.simplemobiletools.commons.helpers.ensureBackgroundThread
+import com.google.common.util.concurrent.MoreExecutors
 import com.simplemobiletools.musicplayer.R
 import com.simplemobiletools.musicplayer.extensions.*
 import com.simplemobiletools.musicplayer.helpers.TAB_ALBUMS
@@ -23,6 +23,7 @@ import com.simplemobiletools.musicplayer.helpers.TAB_PLAYLISTS
 import com.simplemobiletools.musicplayer.helpers.TAB_TRACKS
 import com.simplemobiletools.musicplayer.models.QueueItem
 import com.simplemobiletools.musicplayer.models.toMediaItems
+import java.util.concurrent.Executors
 
 private const val STATE_CREATED = 1
 private const val STATE_INITIALIZING = 2
@@ -42,6 +43,9 @@ private const val SMP_GENRES_ROOT_ID = "__GENRES__"
  */
 @UnstableApi
 internal class MediaItemProvider(private val context: Context) {
+    private val executor by lazy {
+        MoreExecutors.listeningDecorator(Executors.newSingleThreadExecutor())
+    }
 
     inner class MediaItemNode(val item: MediaItem) {
         private val children: MutableList<MediaItem> = ArrayList()
@@ -89,7 +93,16 @@ internal class MediaItemProvider(private val context: Context) {
         }
     }
 
-    operator fun get(mediaId: String) = getNode(mediaId)?.item
+    operator fun get(mediaId: String): MediaItem? {
+        val mediaItem = getNode(mediaId)?.item
+        if (mediaItem == null) {
+            // assume it's a track
+            val mediaStoreId = mediaId.toLongOrNull() ?: return null
+            return audioHelper.getTrack(mediaStoreId)?.toMediaItem()
+        }
+
+        return mediaItem
+    }
 
     fun getRootItem() = get(SMP_ROOT_ID)!!
 
@@ -145,7 +158,7 @@ internal class MediaItemProvider(private val context: Context) {
             return
         }
 
-        ensureBackgroundThread {
+        executor.execute {
             val trackId = current.mediaId.toLong()
             val queueItems = mediaItems.mapIndexed { index, mediaItem ->
                 QueueItem(trackId = mediaItem.mediaId.toLong(), trackOrder = index, isCurrent = false, lastPosition = 0)
@@ -157,8 +170,7 @@ internal class MediaItemProvider(private val context: Context) {
 
     fun reload() {
         state = STATE_INITIALIZING
-
-        ensureBackgroundThread {
+        executor.execute {
             buildRoot()
 
             try {

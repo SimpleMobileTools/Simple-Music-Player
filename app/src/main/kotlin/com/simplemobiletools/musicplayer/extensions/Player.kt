@@ -7,7 +7,7 @@ import androidx.media3.common.Player
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.musicplayer.helpers.PlaybackSetting
 import com.simplemobiletools.musicplayer.models.Track
-import com.simplemobiletools.musicplayer.models.toMediaItems
+import com.simplemobiletools.musicplayer.models.toMediaItemsFast
 
 val Player.isReallyPlaying: Boolean
     get() = when (playbackState) {
@@ -149,7 +149,7 @@ fun Player.prepareUsingTracks(
         return
     }
 
-    val mediaItems = tracks.toMediaItems()
+    val mediaItems = tracks.toMediaItemsFast()
     runOnPlayerThread {
         setMediaItems(mediaItems, startIndex, startPositionMs)
         playWhenReady = play
@@ -164,8 +164,10 @@ fun Player.prepareUsingTracks(
  * items are added using [addRemainingMediaItems]. This helps prevent delays, especially with large queues, and
  * avoids potential issues like [android.app.ForegroundServiceStartNotAllowedException] when starting from background.
  */
+var prepareInProgress = false
 inline fun Player.maybePreparePlayer(context: Context, crossinline callback: (success: Boolean) -> Unit) {
-    if (currentMediaItem == null) {
+    if (!prepareInProgress && currentMediaItem == null) {
+        prepareInProgress = true
         ensureBackgroundThread {
             var prepared = false
             context.audioHelper.getQueuedTracksLazily { tracks, startIndex, startPositionMs ->
@@ -179,7 +181,7 @@ inline fun Player.maybePreparePlayer(context: Context, crossinline callback: (su
                         return@getQueuedTracksLazily
                     }
 
-                    addRemainingMediaItems(tracks.toMediaItems(), startIndex)
+                    addRemainingMediaItems(tracks.toMediaItemsFast(), startIndex)
                 }
             }
         }

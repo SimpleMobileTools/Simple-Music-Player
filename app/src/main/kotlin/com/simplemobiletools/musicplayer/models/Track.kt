@@ -3,6 +3,7 @@ package com.simplemobiletools.musicplayer.models
 import android.content.ContentUris
 import android.net.Uri
 import android.provider.MediaStore
+import androidx.media3.common.MediaItem
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Index
@@ -101,3 +102,9 @@ data class Track(
 fun ArrayList<Track>.sortSafely(sorting: Int) = sortSafely(Track.getComparator(sorting))
 
 fun Collection<Track>.toMediaItems() = map { it.toMediaItem() }
+
+fun Collection<Track>.toMediaItemsFast() = map {
+    MediaItem.Builder()
+        .setMediaId(it.mediaStoreId.toString())
+        .build()
+}

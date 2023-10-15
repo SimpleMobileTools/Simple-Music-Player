@@ -166,52 +166,44 @@ internal fun PlaybackService.getMediaSessionCallback() = object : MediaLibrarySe
         mediaItems: MutableList<MediaItem>,
         startIndex: Int,
         startPositionMs: Long
-    ) = if (controller.packageName == packageName) {
-        Futures.immediateFuture(MediaSession.MediaItemsWithStartPosition(mediaItems, startIndex, startPositionMs))
-    } else {
-        callWhenSourceReady {
-            // this is to avoid single items in the queue: https://github.com/androidx/media/issues/156
-            var queueItems = mediaItems
-            val startItemId = mediaItems[0].mediaId
-            val currentItems = mediaItemProvider.getChildren(currentRoot).orEmpty()
-
-            queueItems = if (currentItems.any { it.mediaId == startItemId }) {
-                currentItems.toMutableList()
-            } else {
-                mediaItemProvider.getDefaultQueue()?.toMutableList() ?: queueItems
-            }
-
-            val startItemIndex = queueItems.indexOfFirst { it.mediaId == startItemId }
-            super.onSetMediaItems(mediaSession, controller, queueItems, startItemIndex, startPositionMs).get()
+    ): ListenableFuture<MediaSession.MediaItemsWithStartPosition> {
+        if (controller.packageName == packageName) {
+            return super.onSetMediaItems(mediaSession, controller, mediaItems, startIndex, startPositionMs)
         }
+
+        // this is to avoid single items in the queue: https://github.com/androidx/media/issues/156
+        var queueItems = mediaItems
+        val startItemId = mediaItems[0].mediaId
+        val currentItems = mediaItemProvider.getChildren(currentRoot).orEmpty()
+
+        queueItems = if (currentItems.any { it.mediaId == startItemId }) {
+            currentItems.toMutableList()
+        } else {
+            mediaItemProvider.getDefaultQueue()?.toMutableList() ?: queueItems
+        }
+
+        val startItemIndex = queueItems.indexOfFirst { it.mediaId == startItemId }
+        return super.onSetMediaItems(mediaSession, controller, queueItems, startItemIndex, startPositionMs)
     }
 
     override fun onAddMediaItems(
         mediaSession: MediaSession,
         controller: MediaSession.ControllerInfo,
         mediaItems: List<MediaItem>
-    ) = if (controller.packageName == packageName) {
-        Futures.immediateFuture(mediaItems)
-    } else {
-        callWhenSourceReady {
-            mediaItems.map { mediaItem ->
-                if (mediaItem.requestMetadata.searchQuery != null) {
-                    getMediaItemFromSearchQuery(mediaItem.requestMetadata.searchQuery!!)
-                } else {
-                    mediaItemProvider[mediaItem.mediaId] ?: mediaItem
-                }
+    ): ListenableFuture<List<MediaItem>> {
+        val items = mediaItems.map { mediaItem ->
+            if (mediaItem.requestMetadata.searchQuery != null) {
+                getMediaItemFromSearchQuery(mediaItem.requestMetadata.searchQuery!!)
+            } else {
+                mediaItemProvider[mediaItem.mediaId] ?: mediaItem
             }
         }
+
+        return Futures.immediateFuture(items)
     }
 
     private fun getMediaItemFromSearchQuery(query: String): MediaItem {
-        val searchQuery = if (query.startsWith("play ", ignoreCase = true)) {
-            query.drop(5).lowercase()
-        } else {
-            query.lowercase()
-        }
-
-        return mediaItemProvider.getItemFromSearch(searchQuery) ?: mediaItemProvider.getRandomItem()
+        return mediaItemProvider.getItemFromSearch(query.lowercase()) ?: mediaItemProvider.getRandomItem()
     }
 
     private fun reloadContent() {
