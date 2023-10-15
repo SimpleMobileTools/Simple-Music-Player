@@ -7,7 +7,7 @@ import androidx.media3.common.Player
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.musicplayer.helpers.PlaybackSetting
 import com.simplemobiletools.musicplayer.models.Track
-import com.simplemobiletools.musicplayer.models.toMediaItems
+import com.simplemobiletools.musicplayer.models.toMediaItemsFast
 
 val Player.isReallyPlaying: Boolean
     get() = when (playbackState) {
@@ -149,7 +149,7 @@ fun Player.prepareUsingTracks(
         return
     }
 
-    val mediaItems = tracks.toMediaItems()
+    val mediaItems = tracks.toMediaItemsFast()
     runOnPlayerThread {
         setMediaItems(mediaItems, startIndex, startPositionMs)
         playWhenReady = play
@@ -179,7 +179,7 @@ inline fun Player.maybePreparePlayer(context: Context, crossinline callback: (su
                         return@getQueuedTracksLazily
                     }
 
-                    addRemainingMediaItems(tracks.toMediaItems(), startIndex)
+                    addRemainingMediaItems(tracks.toMediaItemsFast(), startIndex)
                 }
             }
         }

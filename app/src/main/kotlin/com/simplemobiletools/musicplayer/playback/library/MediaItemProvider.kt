@@ -89,7 +89,16 @@ internal class MediaItemProvider(private val context: Context) {
         }
     }
 
-    operator fun get(mediaId: String) = getNode(mediaId)?.item
+    operator fun get(mediaId: String): MediaItem? {
+        val mediaItem = getNode(mediaId)?.item
+        if (mediaItem == null) {
+            // assume it's a track
+            val mediaStoreId = mediaId.toLongOrNull() ?: return null
+            return audioHelper.getTrack(mediaStoreId)?.toMediaItem()
+        }
+
+        return mediaItem
+    }
 
     fun getRootItem() = get(SMP_ROOT_ID)!!
 
