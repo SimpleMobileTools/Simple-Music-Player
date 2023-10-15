@@ -164,8 +164,10 @@ fun Player.prepareUsingTracks(
  * items are added using [addRemainingMediaItems]. This helps prevent delays, especially with large queues, and
  * avoids potential issues like [android.app.ForegroundServiceStartNotAllowedException] when starting from background.
  */
+var prepareInProgress = false
 inline fun Player.maybePreparePlayer(context: Context, crossinline callback: (success: Boolean) -> Unit) {
-    if (currentMediaItem == null) {
+    if (!prepareInProgress && currentMediaItem == null) {
+        prepareInProgress = true
         ensureBackgroundThread {
             var prepared = false
             context.audioHelper.getQueuedTracksLazily { tracks, startIndex, startPositionMs ->
