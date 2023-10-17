@@ -142,22 +142,31 @@ class SimpleMusicPlayer(private val exoPlayer: ExoPlayer) : ForwardingPlayer(exo
         seekJob?.cancel()
         seekJob = scope.launch {
             delay(timeMillis = 400)
-            if (seekToNextCount > 0 || seekToPreviousCount > 0) {
-                runOnPlayerThread {
-                    if (currentMediaItem != null) {
-                        if (seekToNextCount > 0) {
-                            seekTo(rotateIndex(currentMediaItemIndex + seekToNextCount), 0)
-                        }
-
-                        if (seekToPreviousCount > 0) {
-                            seekTo(rotateIndex(currentMediaItemIndex - seekToPreviousCount), 0)
-                        }
-
-                        seekToNextCount = 0
-                        seekToPreviousCount = 0
-                    }
-                }
+            val seekCount = seekToNextCount - seekToPreviousCount
+            if (seekCount != 0) {
+                seekByCount(seekCount)
             }
+        }
+    }
+
+    private fun seekByCount(seekCount: Int) {
+        runOnPlayerThread {
+            if (currentMediaItem == null) {
+                return@runOnPlayerThread
+            }
+
+            val currentIndex = currentMediaItemIndex
+            val seekIndex = if (shuffleModeEnabled) {
+                val shuffledIndex = shuffledMediaItemsIndices.indexOf(currentIndex)
+                val seekIndex = rotateIndex(shuffledIndex + seekCount)
+                shuffledMediaItemsIndices.getOrNull(seekIndex) ?: return@runOnPlayerThread
+            } else {
+                rotateIndex(currentIndex + seekCount)
+            }
+
+            seekTo(seekIndex, 0)
+            seekToNextCount = 0
+            seekToPreviousCount = 0
         }
     }
 
