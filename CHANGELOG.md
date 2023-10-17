@@ -1,6 +1,14 @@
 Changelog
 ==========
 
+Version 5.18.3 *(2023-10-17)*
+----------------------------
+
+ * Fully rewrote playback handling under the hood
+ * Added Genres tab
+ * Allow sharing songs
+ * Added some stability, translation and UI improvements
+
 Version 5.18.2 *(2023-10-16)*
 ----------------------------
 

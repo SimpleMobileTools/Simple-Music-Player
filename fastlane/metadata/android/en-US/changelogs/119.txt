@@ -1,0 +1,4 @@
+ * Fully rewrote playback handling under the hood
+ * Added Genres tab
+ * Allow sharing songs
+ * Added some stability, translation and UI improvements
