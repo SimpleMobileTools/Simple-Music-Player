@@ -22,7 +22,7 @@ private const val SKIP_SILENCE_THRESHOLD_LEVEL = 16.toShort()
 @UnstableApi
 class AudioOnlyRenderersFactory(context: Context) : DefaultRenderersFactory(context) {
 
-    override fun buildAudioSink(context: Context, enableFloatOutput: Boolean, enableAudioTrackPlaybackParams: Boolean): AudioSink {
+    override fun buildAudioSink(context: Context, enableFloatOutput: Boolean, enableAudioTrackPlaybackParams: Boolean, enableOffload: Boolean): AudioSink? {
         val silenceSkippingAudioProcessor = SilenceSkippingAudioProcessor(
             SKIP_SILENCE_MINIMUM_DURATION_US,
             DEFAULT_PADDING_SILENCE_US,
@@ -32,6 +32,13 @@ class AudioOnlyRenderersFactory(context: Context) : DefaultRenderersFactory(cont
         return DefaultAudioSink.Builder(context)
             .setEnableFloatOutput(enableFloatOutput)
             .setEnableAudioTrackPlaybackParams(enableAudioTrackPlaybackParams)
+            .setOffloadMode(
+                if (enableOffload) {
+                    DefaultAudioSink.OFFLOAD_MODE_ENABLED_GAPLESS_REQUIRED
+                } else {
+                    DefaultAudioSink.OFFLOAD_MODE_DISABLED
+                }
+            )
             .setAudioProcessorChain(
                 DefaultAudioSink.DefaultAudioProcessorChain(
                     arrayOf(),
