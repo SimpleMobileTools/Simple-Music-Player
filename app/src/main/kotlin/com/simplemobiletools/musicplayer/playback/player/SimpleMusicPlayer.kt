@@ -141,7 +141,7 @@ class SimpleMusicPlayer(private val exoPlayer: ExoPlayer) : ForwardingPlayer(exo
     private fun seekWithDelay() {
         seekJob?.cancel()
         seekJob = scope.launch {
-            delay(timeMillis = 400)
+            delay(timeMillis = 300)
             val seekCount = seekToNextCount - seekToPreviousCount
             if (seekCount != 0) {
                 seekByCount(seekCount)
