@@ -64,7 +64,11 @@ private fun PlaybackService.initializePlayer(handleAudioFocus: Boolean, handleAu
                     .build(),
                 handleAudioFocus
             )
-            .setSkipSilenceEnabled(skipSilence)
+            .setSkipSilenceEnabled(
+                // TODO: Enable when https://github.com/androidx/media/issues/712 is resolved.
+                //  See https://github.com/SimpleMobileTools/Simple-Music-Player/issues/604
+                false //skipSilence
+            )
             .setSeekBackIncrementMs(SEEK_INTERVAL_MS)
             .setSeekForwardIncrementMs(SEEK_INTERVAL_MS)
             .setLooper(playerThread.looper)
