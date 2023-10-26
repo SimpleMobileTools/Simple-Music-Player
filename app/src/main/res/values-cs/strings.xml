@@ -61,7 +61,7 @@
     <!-- Artists -->
     <string name="artists">Umělci</string>
     <string name="folders">Složky</string>
-    <string name="genres">Genres</string>
+    <string name="genres">Žánry</string>
     <string name="albums">Alba</string>
     <plurals name="albums_plural">
         <item quantity="one">%d Album</item>
@@ -78,7 +78,7 @@
     <string name="next_track">Další:</string>
     <string name="track_queue">Fronta skladeb</string>
     <string name="add_to_queue">Přidat do fronty</string>
-    <string name="play_next">Play next</string>
+    <string name="play_next">Hrát další</string>
     <string name="remove_from_queue">Odstranit z fronty</string>
     <string name="create_playlist_from_queue">Vytvořit seznam skladeb z fronty</string>
     <!-- Settings -->
