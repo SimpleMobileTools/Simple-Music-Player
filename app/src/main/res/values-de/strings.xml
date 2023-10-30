@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Schlichter Musikplayer</string>
+    <string name="app_name">Einfacher Musikplayer</string>
     <string name="app_launcher_name">Musikplayer</string>
     <string name="playlist_empty">Deine Wiedergabeliste ist leer</string>
     <string name="rename_song">Lied umbenennen</string>
