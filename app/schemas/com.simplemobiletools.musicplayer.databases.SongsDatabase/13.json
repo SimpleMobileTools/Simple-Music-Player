@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 13,
-    "identityHash": "c7cc50ecee4eade523754a064beb4aae",
+    "identityHash": "efd2d560367617e6674c425f5a1792ed",
     "entities": [
       {
         "tableName": "tracks",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `media_store_id` INTEGER NOT NULL, `title` TEXT NOT NULL, `artist` TEXT NOT NULL, `path` TEXT NOT NULL, `duration` INTEGER NOT NULL, `album` TEXT NOT NULL, `genre` TEXT NOT NULL, `cover_art` TEXT NOT NULL, `playlist_id` INTEGER NOT NULL, `track_id` INTEGER NOT NULL, `folder_name` TEXT NOT NULL, `album_id` INTEGER NOT NULL, `artist_id` INTEGER NOT NULL, `genre_id` INTEGER NOT NULL, `year` INTEGER NOT NULL, `date_added` INTEGER NOT NULL, `order_in_playlist` INTEGER NOT NULL, `flags` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `media_store_id` INTEGER NOT NULL, `title` TEXT NOT NULL, `artist` TEXT NOT NULL, `path` TEXT NOT NULL, `duration` INTEGER NOT NULL, `album` TEXT NOT NULL, `genre` TEXT NOT NULL, `cover_art` TEXT NOT NULL, `playlist_id` INTEGER NOT NULL, `track_id` INTEGER NOT NULL, `disc_id` INTEGER NOT NULL, `folder_name` TEXT NOT NULL, `album_id` INTEGER NOT NULL, `artist_id` INTEGER NOT NULL, `genre_id` INTEGER NOT NULL, `year` INTEGER NOT NULL, `date_added` INTEGER NOT NULL, `order_in_playlist` INTEGER NOT NULL, `flags` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -71,6 +71,12 @@
           {
             "fieldPath": "trackId",
             "columnName": "track_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "discId",
+            "columnName": "disc_id",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -395,7 +401,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'c7cc50ecee4eade523754a064beb4aae')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'efd2d560367617e6674c425f5a1792ed')"
     ]
   }
 }
