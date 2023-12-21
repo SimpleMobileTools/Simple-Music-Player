@@ -30,7 +30,7 @@
         android:required="false" />
 
     <application
-        android:name=".App"
+        android:name="org.fossify.musicplayer.App"
         android:allowBackup="true"
         android:appCategory="audio"
         android:enabled="true"
@@ -67,14 +67,14 @@
         </activity>
 
         <activity
-            android:name="com.simplemobiletools.commons.activities.AboutActivity"
+            android:name="org.fossify.commons.activities.AboutActivity"
             android:configChanges="orientation"
             android:exported="false"
             android:label="@string/about"
             android:parentActivityName=".activities.MainActivity" />
 
         <activity
-            android:name="com.simplemobiletools.commons.activities.CustomizationActivity"
+            android:name="org.fossify.commons.activities.CustomizationActivity"
             android:configChanges="orientation"
             android:exported="false"
             android:label="@string/customize_colors"
@@ -108,7 +108,7 @@
             android:parentActivityName=".activities.MainActivity" />
 
         <activity
-            android:name=".activities.AlbumsActivity"
+            android:name="org.fossify.musicplayer.activities.AlbumsActivity"
             android:configChanges="orientation"
             android:exported="false"
             android:label="@string/artist"
@@ -119,7 +119,7 @@
             android:configChanges="orientation"
             android:exported="false"
             android:label="@string/artist"
-            android:parentActivityName=".activities.AlbumsActivity" />
+            android:parentActivityName="org.fossify.musicplayer.activities.AlbumsActivity" />
 
         <activity
             android:name=".activities.TrackActivity"

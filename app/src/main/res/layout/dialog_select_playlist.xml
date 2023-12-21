@@ -34,7 +34,7 @@
             android:paddingEnd="@dimen/normal_margin"
             android:paddingBottom="@dimen/small_margin">
 
-            <com.simplemobiletools.commons.views.MyCompatRadioButton
+            <org.fossify.commons.views.MyCompatRadioButton
                 android:id="@+id/dialog_select_playlist_new_radio"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

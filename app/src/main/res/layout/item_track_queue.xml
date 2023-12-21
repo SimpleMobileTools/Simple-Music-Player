@@ -20,7 +20,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.simplemobiletools.commons.views.MyTextView
+    <org.fossify.commons.views.MyTextView
         android:id="@+id/track_queue_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -38,7 +38,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Track title" />
 
-    <com.simplemobiletools.commons.views.MyTextView
+    <org.fossify.commons.views.MyTextView
         android:id="@+id/track_queue_duration"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

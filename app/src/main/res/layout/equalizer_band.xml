@@ -7,7 +7,7 @@
     android:layout_marginTop="@dimen/small_margin"
     android:layout_marginBottom="@dimen/small_margin">
 
-    <com.simplemobiletools.commons.views.MySeekBar
+    <org.fossify.commons.views.MySeekBar
         android:id="@+id/equalizer_band_seek_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -15,7 +15,7 @@
         android:layout_toEndOf="@+id/equalizer_band_label"
         android:padding="@dimen/activity_margin" />
 
-    <com.simplemobiletools.commons.views.MyTextView
+    <org.fossify.commons.views.MyTextView
         android:id="@+id/equalizer_band_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

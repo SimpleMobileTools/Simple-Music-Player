@@ -33,7 +33,7 @@ app-build-kotlinJVMTarget = "17"
 #Helpers
 shortcut-badger = "1.1.22"
 #versioning
-app-version-appId = "com.simplemobiletools.musicplayer"
+app-version-appId = "org.fossify.musicplayer"
 app-version-versionCode = "1"
 app-version-versionName = "1.0.0"
 [libraries]
@@ -49,7 +49,7 @@ androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "
 androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
 #Fossify
-fossify-commons = { module = "com.fossify:commons", version.ref = "commons" }
+fossify-commons = { module = "org.fossify:commons", version.ref = "commons" }
 #EventBus
 eventbus = { module = "org.greenrobot:eventbus", version.ref = "eventbus" }
 #Helpers

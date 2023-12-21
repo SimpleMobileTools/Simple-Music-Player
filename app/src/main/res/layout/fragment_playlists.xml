@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.simplemobiletools.musicplayer.fragments.PlaylistsFragment xmlns:android="http://schemas.android.com/apk/res/android"
+<org.fossify.musicplayer.fragments.PlaylistsFragment xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/playlists_fragment_holder"
     android:layout_width="match_parent"
@@ -10,17 +10,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <com.simplemobiletools.commons.views.MyRecyclerView
+        <org.fossify.commons.views.MyRecyclerView
             android:id="@+id/playlists_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToPadding="false"
             android:layoutAnimation="@anim/layout_animation"
-            app:layoutManager="com.simplemobiletools.commons.views.MyLinearLayoutManager" />
+            app:layoutManager="org.fossify.commons.views.MyLinearLayoutManager" />
 
     </com.qtalk.recyclerviewfastscroller.RecyclerViewFastScroller>
 
-    <com.simplemobiletools.commons.views.MyTextView
+    <org.fossify.commons.views.MyTextView
         android:id="@+id/playlists_placeholder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -47,4 +47,4 @@
         android:textSize="@dimen/bigger_text_size"
         android:visibility="gone" />
 
-</com.simplemobiletools.musicplayer.fragments.PlaylistsFragment>
+</org.fossify.musicplayer.fragments.PlaylistsFragment>

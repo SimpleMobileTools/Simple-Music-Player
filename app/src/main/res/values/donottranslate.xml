@@ -1,5 +1,5 @@
 <resources>
-    <string name="package_name">com.simplemobiletools.musicplayer</string>
+    <string name="package_name">org.fossify.musicplayer</string>
 
     <!-- Release notes -->
     <string name="release_59">Allow customizing the bottom navigation bar color</string>

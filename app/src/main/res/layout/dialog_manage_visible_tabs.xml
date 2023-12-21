@@ -13,7 +13,7 @@
         android:paddingTop="@dimen/activity_margin"
         android:paddingEnd="@dimen/activity_margin">
 
-        <com.simplemobiletools.commons.views.MyAppCompatCheckbox
+        <org.fossify.commons.views.MyAppCompatCheckbox
             android:id="@+id/manage_visible_tabs_playlists"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -21,7 +21,7 @@
             android:paddingBottom="@dimen/activity_margin"
             android:text="@string/playlists" />
 
-        <com.simplemobiletools.commons.views.MyAppCompatCheckbox
+        <org.fossify.commons.views.MyAppCompatCheckbox
             android:id="@+id/manage_visible_tabs_folders"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -29,7 +29,7 @@
             android:paddingBottom="@dimen/activity_margin"
             android:text="@string/folders" />
 
-        <com.simplemobiletools.commons.views.MyAppCompatCheckbox
+        <org.fossify.commons.views.MyAppCompatCheckbox
             android:id="@+id/manage_visible_tabs_artists"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -37,7 +37,7 @@
             android:paddingBottom="@dimen/activity_margin"
             android:text="@string/artists" />
 
-        <com.simplemobiletools.commons.views.MyAppCompatCheckbox
+        <org.fossify.commons.views.MyAppCompatCheckbox
             android:id="@+id/manage_visible_tabs_albums"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -45,7 +45,7 @@
             android:paddingBottom="@dimen/activity_margin"
             android:text="@string/albums" />
 
-        <com.simplemobiletools.commons.views.MyAppCompatCheckbox
+        <org.fossify.commons.views.MyAppCompatCheckbox
             android:id="@+id/manage_visible_tabs_tracks"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -53,7 +53,7 @@
             android:paddingBottom="@dimen/activity_margin"
             android:text="@string/tracks" />
 
-        <com.simplemobiletools.commons.views.MyAppCompatCheckbox
+        <org.fossify.commons.views.MyAppCompatCheckbox
             android:id="@+id/manage_visible_tabs_genres"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -17,7 +17,7 @@
         android:layout_height="@dimen/song_image_size"
         android:visibility="gone" />
 
-    <com.simplemobiletools.commons.views.MyTextView
+    <org.fossify.commons.views.MyTextView
         android:id="@+id/track_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -36,7 +36,7 @@
         android:orientation="vertical"
         android:paddingHorizontal="@dimen/normal_margin">
 
-        <com.simplemobiletools.commons.views.MyTextView
+        <org.fossify.commons.views.MyTextView
             android:id="@+id/track_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -45,7 +45,7 @@
             android:textSize="@dimen/bigger_text_size"
             tools:text="Track title" />
 
-        <com.simplemobiletools.commons.views.MyTextView
+        <org.fossify.commons.views.MyTextView
             android:id="@+id/track_info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -57,7 +57,7 @@
 
     </LinearLayout>
 
-    <com.simplemobiletools.commons.views.MyTextView
+    <org.fossify.commons.views.MyTextView
         android:id="@+id/track_duration"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

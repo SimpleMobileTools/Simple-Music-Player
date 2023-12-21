@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.simplemobiletools.commons.views.MyCompatRadioButton xmlns:android="http://schemas.android.com/apk/res/android"
+<org.fossify.commons.views.MyCompatRadioButton xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/small_radio_button"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"

@@ -11,7 +11,7 @@
         android:orientation="vertical"
         android:paddingTop="@dimen/medium_margin">
 
-        <com.simplemobiletools.commons.views.MyTextInputLayout
+        <org.fossify.commons.views.MyTextInputLayout
             android:id="@+id/title_hint"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -30,9 +30,9 @@
                 android:textCursorDrawable="@null"
                 android:textSize="@dimen/bigger_text_size" />
 
-        </com.simplemobiletools.commons.views.MyTextInputLayout>
+        </org.fossify.commons.views.MyTextInputLayout>
 
-        <com.simplemobiletools.commons.views.MyTextInputLayout
+        <org.fossify.commons.views.MyTextInputLayout
             android:id="@+id/artist_hint"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -50,9 +50,9 @@
                 android:textCursorDrawable="@null"
                 android:textSize="@dimen/bigger_text_size" />
 
-        </com.simplemobiletools.commons.views.MyTextInputLayout>
+        </org.fossify.commons.views.MyTextInputLayout>
 
-        <com.simplemobiletools.commons.views.MyTextInputLayout
+        <org.fossify.commons.views.MyTextInputLayout
             android:id="@+id/album_hint"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -70,9 +70,9 @@
                 android:textCursorDrawable="@null"
                 android:textSize="@dimen/bigger_text_size" />
 
-        </com.simplemobiletools.commons.views.MyTextInputLayout>
+        </org.fossify.commons.views.MyTextInputLayout>
 
-        <com.simplemobiletools.commons.views.MyTextInputLayout
+        <org.fossify.commons.views.MyTextInputLayout
             android:id="@+id/file_name_hint"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -90,9 +90,9 @@
                 android:textCursorDrawable="@null"
                 android:textSize="@dimen/bigger_text_size" />
 
-        </com.simplemobiletools.commons.views.MyTextInputLayout>
+        </org.fossify.commons.views.MyTextInputLayout>
 
-        <com.simplemobiletools.commons.views.MyTextInputLayout
+        <org.fossify.commons.views.MyTextInputLayout
             android:id="@+id/extension_hint"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -108,6 +108,6 @@
                 android:textCursorDrawable="@null"
                 android:textSize="@dimen/bigger_text_size" />
 
-        </com.simplemobiletools.commons.views.MyTextInputLayout>
+        </org.fossify.commons.views.MyTextInputLayout>
     </LinearLayout>
 </ScrollView>

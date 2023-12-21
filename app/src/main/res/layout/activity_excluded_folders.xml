@@ -21,15 +21,15 @@
         android:fillViewport="true"
         android:scrollbars="none">
 
-        <com.simplemobiletools.commons.views.MyRecyclerView
+        <org.fossify.commons.views.MyRecyclerView
             android:id="@+id/excluded_folders_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToPadding="false"
             android:scrollbars="vertical"
-            app:layoutManager="com.simplemobiletools.commons.views.MyLinearLayoutManager" />
+            app:layoutManager="org.fossify.commons.views.MyLinearLayoutManager" />
 
-        <com.simplemobiletools.commons.views.MyTextView
+        <org.fossify.commons.views.MyTextView
             android:id="@+id/excluded_folders_placeholder"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
