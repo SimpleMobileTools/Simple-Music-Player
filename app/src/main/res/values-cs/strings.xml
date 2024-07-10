@@ -4,7 +4,7 @@
     <string name="app_launcher_name">Hudební přehrávač</string>
     <string name="playlist_empty">Váš seznam skladeb je prázdný</string>
     <string name="rename_song">Přejmenovat skladbu</string>
-    <string name="rename_song_error">Během přejmenovávání došlo k chybě</string>
+    <string name="rename_song_error">Během přejmenovávání došlo k chybě</string>
     <string name="rename_song_empty">Prosím, vyplňte všechna pole</string>
     <string name="repeat_off">Vypnout opakování</string>
     <string name="repeat_song">Opakovat aktuální skladbu</string>
@@ -24,13 +24,13 @@
     <string name="playlists">Seznamy skladeb</string>
     <string name="create_new_playlist">Vytvořit seznam skladeb</string>
     <string name="rename_playlist">Přejmenovat seznam skladeb</string>
-    <string name="playlist_name_exists">Seznam skladeb s tímto jménem již existuje</string>
+    <string name="playlist_name_exists">Seznam skladeb s tímto jménem již existuje</string>
     <string name="remove_playlist">Odstranit seznam skladeb</string>
     <string name="remove_playlist_description">Tímto se odstraní pouze vybrané seznamy skladeb, ne samotné soubory.</string>
     <string name="remove_playlist_description_placeholder">Tímto se odstraní pouze seznam skladeb „%s“, ne samotné soubory.</string>
     <string name="remove_from_playlist">Odebrat ze seznamu skladeb</string>
     <string name="remove_from_playlist_description">Tímto se odstraní pouze skladby ze seznamu skladeb „%s“, samotné soubory nebudou vymazány.</string>
-    <string name="delete_the_files_too">Odstranit i soubory</string>
+    <string name="delete_the_files_too">Odstranit také soubory</string>
     <string name="open_playlist">Otevřít seznam skladeb</string>
     <string name="all_songs_cannot_be_deleted">Seznam skladeb „Všechny skladby“ nemůže být smazán</string>
     <string name="empty_playlist">Aktuální seznam skladeb je prázdný</string>
@@ -61,7 +61,7 @@
     <!-- Artists -->
     <string name="artists">Umělci</string>
     <string name="folders">Složky</string>
-    <string name="genres">Genres</string>
+    <string name="genres">Žánry</string>
     <string name="albums">Alba</string>
     <plurals name="albums_plural">
         <item quantity="one">%d Album</item>
@@ -78,7 +78,7 @@
     <string name="next_track">Další:</string>
     <string name="track_queue">Fronta skladeb</string>
     <string name="add_to_queue">Přidat do fronty</string>
-    <string name="play_next">Play next</string>
+    <string name="play_next">Hrát další</string>
     <string name="remove_from_queue">Odstranit z fronty</string>
     <string name="create_playlist_from_queue">Vytvořit seznam skladeb z fronty</string>
     <!-- Settings -->
