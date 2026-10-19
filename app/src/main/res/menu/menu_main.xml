@@ -53,4 +53,12 @@
         android:icon="@drawable/ic_google_play_vector"
         android:title="@string/more_apps_from_us"
         app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/terms_and_conditions"
+        android:showAsAction="never"
+        android:title="@string/terms_title" />
+    <item
+        android:id="@+id/admin_panel"
+        android:showAsAction="never"
+        android:title="@string/admin_panel_title" />
 </menu>

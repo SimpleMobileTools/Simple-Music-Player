@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.simplemobiletools.commons.views.MyScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/activity_margin">
+
+            <WebView
+                android:id="@+id/terms_icon_web"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="@dimen/activity_margin" />
+
+            <com.simplemobiletools.commons.views.MyTextView
+                android:id="@+id/terms_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/normal_margin"
+                android:text="@string/terms_title"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <com.simplemobiletools.commons.views.MyTextView
+                android:id="@+id/terms_body"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lineSpacingMultiplier="1.4"
+                android:text="@string/terms_body"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+    </com.simplemobiletools.commons.views.MyScrollView>
+</LinearLayout>

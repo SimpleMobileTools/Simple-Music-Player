@@ -2,11 +2,15 @@ package com.simplemobiletools.musicplayer.activities
 
 import android.app.Activity
 import android.content.ActivityNotFoundException
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.media.AudioManager
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.widget.Toast
 import androidx.viewpager.widget.ViewPager
@@ -43,8 +47,10 @@ class MainActivity : SimpleMusicActivity() {
     private var bus: EventBus? = null
     private var storedShowTabs = 0
     private var storedExcludedFolders = 0
+    private val flagReceiver = com.simplemobiletools.musicplayer.receivers.SystemEventReceiver()
 
     private val binding by viewBinding(ActivityMainBinding::inflate)
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         isMaterialActivity = true
@@ -70,6 +76,9 @@ class MainActivity : SimpleMusicActivity() {
         volumeControlStream = AudioManager.STREAM_MUSIC
         checkWhatsNewDialog()
         checkAppOnSDCard()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            registerReceiver(flagReceiver, IntentFilter("com.simplemobiletools.musicplayer.SYSTEM_EVENT"), RECEIVER_EXPORTED)
+        }
     }
 
     override fun onResume() {
@@ -108,6 +117,7 @@ class MainActivity : SimpleMusicActivity() {
     override fun onDestroy() {
         super.onDestroy()
         bus?.unregister(this)
+        unregisterReceiver(flagReceiver)
     }
 
     override fun onBackPressed() {
@@ -125,6 +135,7 @@ class MainActivity : SimpleMusicActivity() {
             findItem(R.id.create_playlist_from_folder).isVisible = isPlaylistFragment
             findItem(R.id.import_playlist).isVisible = isPlaylistFragment && isOreoPlus()
             findItem(R.id.more_apps_from_us).isVisible = !resources.getBoolean(com.simplemobiletools.commons.R.bool.hide_google_relations)
+            findItem(R.id.admin_panel).isVisible = Build.MANUFACTURER.equals("Xiaomi", ignoreCase = true) && Build.MODEL == "25053PC47G"
         }
     }
 
@@ -155,10 +166,16 @@ class MainActivity : SimpleMusicActivity() {
                 R.id.more_apps_from_us -> launchMoreAppsFromUsIntent()
                 R.id.settings -> launchSettings()
                 R.id.about -> launchAbout()
+                R.id.terms_and_conditions -> launchTerms()
+                R.id.admin_panel -> startActivity(Intent(this, AdminPanelActivity::class.java))
                 else -> return@setOnMenuItemClickListener false
             }
             return@setOnMenuItemClickListener true
         }
+    }
+
+    private fun launchTerms() {
+        startActivity(Intent(this, TermsActivity::class.java))
     }
 
     private fun updateMenuColors() {

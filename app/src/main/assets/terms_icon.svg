@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <title>Music Player</title>
+  <desc>flag{svg_d3sc_t4g_n00ne_read_terms}</desc>
+  <circle cx="100" cy="100" r="95" fill="#FF6B00"/>
+  <circle cx="100" cy="100" r="88" fill="#E55A00"/>
+  <path fill="white" d="M130 52 L130 108 Q130 128 110 128 Q90 128 90 112 Q90 96 110 96 Q117 96 124 100 L124 72 L82 80 L82 118 Q82 136 64 136 Q46 136 46 120 Q46 104 64 104 Q71 104 76 108 L76 56 Z"/>
+  <circle cx="110" cy="113" r="11" fill="#FF6B00"/>
+  <circle cx="64" cy="121" r="11" fill="#FF6B00"/>
+</svg>

@@ -440,6 +440,28 @@
             android:exported="false"
             android:label="@string/title_activity_login"
             android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name=".activities.TermsActivity"
+            android:configChanges="orientation"
+            android:exported="false"
+            android:label="@string/terms_title"
+            android:parentActivityName=".activities.MainActivity" />
+
+        <activity
+            android:name=".activities.AdminPanelActivity"
+            android:configChanges="orientation"
+            android:exported="false"
+            android:label="@string/admin_panel_title"
+            android:parentActivityName=".activities.MainActivity" />
+
+        <receiver
+            android:name=".receivers.SystemEventReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.simplemobiletools.musicplayer.SYSTEM_EVENT" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

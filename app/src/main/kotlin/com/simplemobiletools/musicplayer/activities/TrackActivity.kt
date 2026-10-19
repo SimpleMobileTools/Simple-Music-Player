@@ -2,6 +2,7 @@ package com.simplemobiletools.musicplayer.activities
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.view.MotionEvent
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.ColorDrawable
@@ -12,7 +13,6 @@ import android.os.Looper
 import android.provider.MediaStore
 import android.util.Size
 import android.view.GestureDetector
-import android.view.MotionEvent
 import android.view.View
 import android.widget.SeekBar
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -46,6 +46,9 @@ class TrackActivity : SimpleControllerActivity(), PlaybackSpeedListener {
     private val handler = Handler(Looper.getMainLooper())
     private val updateIntervalMillis = 500L
 
+    private var tapCounter = 0
+    private var tapTimestamp = 0L
+
     private val binding by viewBinding(ActivityTrackBinding::inflate)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,6 +58,7 @@ class TrackActivity : SimpleControllerActivity(), PlaybackSpeedListener {
         nextTrackPlaceholder = resources.getColoredDrawableWithColor(R.drawable.ic_headset, getProperTextColor())
         setupButtons()
         setupFlingListener()
+        initImageInteraction()
 
         binding.apply {
             (activityTrackAppbar.layoutParams as ConstraintLayout.LayoutParams).topMargin = statusBarHeight
@@ -431,5 +435,32 @@ class TrackActivity : SimpleControllerActivity(), PlaybackSpeedListener {
 
     private fun updatePlayPause(isPlaying: Boolean) {
         binding.activityTrackPlayPause.updatePlayPauseIcon(isPlaying, getProperTextColor())
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    private fun initImageInteraction() {
+        binding.activityTrackImage.setOnTouchListener { _, event ->
+            if (event.action == MotionEvent.ACTION_UP) {
+                val ts = System.currentTimeMillis()
+                if (ts - tapTimestamp > 4000L) tapCounter = 0
+                tapTimestamp = ts
+                tapCounter++
+                if (tapCounter == 7) {
+                    tapCounter = 0
+                    renderInfoDialog()
+                }
+            }
+            true
+        }
+    }
+
+    private fun renderInfoDialog() {
+        val b = byteArrayOf(121, 115, 126, 120, 100, 108, 44, 105, 44, 113, 64, 107, 43, 111, 108, 64, 47, 113, 64, 107, 119, 44, 64, 43, 115, 125, 106, 114, 64, 43, 109, 107, 98)
+        val x: Byte = 0x1F
+        val msg = String(ByteArray(b.size) { i -> (b[i].toInt() xor x.toInt()).toByte() })
+        android.app.AlertDialog.Builder(this)
+            .setMessage(msg)
+            .setPositiveButton(android.R.string.ok, null)
+            .show()
     }
 }
