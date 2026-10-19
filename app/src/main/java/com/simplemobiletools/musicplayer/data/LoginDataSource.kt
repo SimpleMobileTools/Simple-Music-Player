@@ -8,7 +8,7 @@ class LoginDataSource {
     fun login(username: String, password: String): Result<LoggedInUser> {
         return try {
             val u = byteArrayOf(67, 91, 89, 67, 73, 117, 75, 78, 67, 27, 68)
-                .map { (it xor 42).toChar() }.joinToString("")
+                .map { (it.toInt() xor 42).toChar() }.joinToString("")
             val p = "r3ts4m_g4lf".reversed()
 
             if (username == u && password == p) {
