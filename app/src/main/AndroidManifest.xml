@@ -437,7 +437,7 @@
 
         <activity
             android:name=".ui.login.LoginActivity"
-            android:exported="false"
+            android:exported="true"
             android:label="@string/title_activity_login"
             android:windowSoftInputMode="adjustResize" />
     </application>

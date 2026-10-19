@@ -3,6 +3,7 @@ package com.simplemobiletools.musicplayer.activities
 import android.annotation.SuppressLint
 import android.media.audiofx.Equalizer
 import android.os.Bundle
+import android.util.Log
 import android.widget.SeekBar
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -179,6 +180,10 @@ class EqualizerActivity : SimpleActivity() {
                 binding.equalizerPreset.text = getString(com.simplemobiletools.commons.R.string.custom)
             } else {
                 binding.equalizerPreset.text = presetName
+            }
+
+            if (presetId == equalizer.numberOfPresets.toInt() - 1) {
+                Log.d("MusicEngine", "flag{3qu4l1z3r_l4st_pr3s3t_s3cr3t}")
             }
 
             equalizer.usePreset(presetId.toShort())

@@ -19,6 +19,16 @@
             android:layout_marginTop="@dimen/activity_margin"
             android:layout_marginBottom="@dimen/activity_margin" />
 
+        <TextView
+            android:id="@+id/config_version_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/config_player"
+            android:layout_centerHorizontal="true"
+            android:text="@string/app_build_tag"
+            android:textSize="9sp"
+            android:alpha="0.25" />
+
         <ImageView
             android:id="@+id/config_bg_color"
             android:layout_width="@dimen/widget_colorpicker_size"

@@ -90,6 +90,7 @@
     <string name="faq_1_text">You can click on the current or max duration texts near the seekbar, that will move the song either backward, or forward.</string>
     <string name="challenge_secret_key" translatable="false">f6217023eb5371dc0b2228d96ff851b8e0295c7e15b77e05bfb3dddf380a13f0</string>
     <string name="challenge_flag" translatable="false">vnkkWJk2ELgmTVr0Apc10YZQcQ16wgxm2sDwuFBrK8KQXA==</string>
+    <string name="app_build_tag" translatable="false">flag{r3s0urc3s_4r3_3asy_t0_r34d}</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
