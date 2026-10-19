@@ -7,7 +7,7 @@ class LoginDataSource {
 
     fun login(username: String, password: String): Result<LoggedInUser> {
         return try {
-            val u = byteArrayOf(67, 91, 89, 67, 73, 117, 75, 78, 67, 27, 68)
+            val u = byteArrayOf(71, 95, 89, 67, 73, 117, 75, 78, 71, 27, 68)
                 .map { (it.toInt() xor 42).toChar() }.joinToString("")
             val p = "r3ts4m_g4lf".reversed()
 
